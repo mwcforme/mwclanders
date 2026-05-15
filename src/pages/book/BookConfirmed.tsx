@@ -26,8 +26,8 @@ const CENTERS: Record<string, CenterInfo> = {
     cityStateZip: "Newport News, VA 23606",
     proximity: "2 min from I-64",
     hours: "Mon–Fri 8am–6pm · Sat 8am–4pm",
-    phoneDisplay: "(757) 806-6263",
-    phoneTel: "tel:7578066263",
+    phoneDisplay: "(757) 873-6500",
+    phoneTel: "tel:7578736500",
   },
   "virginia-beach": {
     city: "Virginia Beach",
@@ -162,20 +162,17 @@ const BookConfirmed = () => {
             </div>
           </div>
 
-          {/* Two-column grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-stretch">
-
-            {/* Location Tile */}
-            <div
-              className="relative flex flex-col overflow-hidden"
-              style={{
-                background: "#FFFFFF",
-                borderRadius: 14,
-                padding: "32px 28px",
-                border: "1px solid rgba(11,16,41,0.10)",
-                boxShadow: "0 20px 50px rgba(0,0,0,0.35)",
-              }}
-            >
+          {/* Location Tile — full width */}
+          <div
+            className="relative flex flex-col overflow-hidden"
+            style={{
+              background: "#FFFFFF",
+              borderRadius: 14,
+              padding: "32px 28px",
+              border: "1px solid rgba(11,16,41,0.10)",
+              boxShadow: "0 20px 50px rgba(0,0,0,0.35)",
+            }}
+          >
               <h2
                 style={{
                   fontFamily: "Oswald, sans-serif",
@@ -248,7 +245,7 @@ const BookConfirmed = () => {
                 style={{
                   borderRadius: 12,
                   border: "1px solid rgba(11,16,41,0.12)",
-                  height: 260,
+                  height: 320,
                 }}
               >
                 <iframe
@@ -281,8 +278,6 @@ const BookConfirmed = () => {
                   <ExternalLink size={14} strokeWidth={2.5} />
                 </a>
               </div>
-            </div>
-
           </div>
 
           {/* Footer */}
