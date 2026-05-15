@@ -32,7 +32,7 @@ const NewLandingPage = () => {
       </Helmet>
       <TRTHeader />
       <main className="flex-1">
-        <TRTHero />
+        <TRTHero headline={{ line1: "Get Your Energy, Drive,", line2: "and Confidence Back." }} />
         <SectionReveal><CredibilityBand /></SectionReveal>
         <SectionReveal><TRTManifesto /></SectionReveal>
         <SectionReveal><TRTHowItWorks /></SectionReveal>

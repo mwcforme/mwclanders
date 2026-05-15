@@ -27,7 +27,16 @@ const GoogleG = ({ size = 18 }: { size?: number }) => (
   </svg>
 );
 
-export const TRTHero = () => {
+interface TRTHeroProps {
+  headline?: { line1: string; line2: string; line2Color?: string };
+}
+
+export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
+  const h = headline ?? {
+    line1: "Testosterone Therapy",
+    line2: "in Virginia. Same-Day Labs.",
+    line2Color: COLORS.orange,
+  };
   const scrollToForm = () => {
     document.getElementById("hero-form")?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
@@ -104,9 +113,9 @@ export const TRTHero = () => {
               fontWeight: 700,
             }}
           >
-            Testosterone Therapy
+            {h.line1}
             <br />
-            <span style={{ color: COLORS.orange }}>in Virginia. Same-Day Labs.</span>
+            <span style={{ color: h.line2Color ?? COLORS.orange }}>{h.line2}</span>
           </h1>
 
           <p
