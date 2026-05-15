@@ -1,0 +1,16 @@
+project_id = "stmyztkmioobdbxliktn"
+
+[functions.ghl-proxy]
+verify_jwt = false
+
+[functions.ghl-sync]
+verify_jwt = false
+
+[functions.meta-capi]
+verify_jwt = false
+
+[functions.lead-intake]
+verify_jwt = false
+
+[functions.ghl-sync-validate]
+verify_jwt = false

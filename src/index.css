@@ -1,0 +1,327 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@400;500;600;700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* MWC 3-Color Palette */
+    --bg-black: #000033;
+    --bg-warm-grey: #EBEAE8;
+    --bg-charcoal: #1A1A2E;
+    --bg-white: #FFFFFF;
+
+    --text-black: #000000;
+    --text-dark-grey: #605E5D;
+    --text-mid-grey: #999999;
+    --text-white: #FFFFFF;
+    --text-light-grey: #B0B0B0;
+
+    --accent-orange: #E8670A;
+    --border-light: #D4D3D1;
+    --border-dark: #2A2A40;
+
+    /* ----------------------------------------------------------------
+       WCAG AA semantic tokens (added 2026-05-15).
+       All ratios computed against the surfaces they're used on
+       per WCAG 2.1 §1.4.3 (text ≥4.5) and §1.4.11 (UI ≥3).
+       Direct hex (not HSL) so they can be consumed inline via var().
+    ---------------------------------------------------------------- */
+
+    /* Brand surfaces (unchanged hues) */
+    --brand-navy: #000033;
+    --brand-navy-deep: #0B1029;
+    --brand-cream: #F5F0EB;
+
+    /* Accent — display only (≥24px, ≥18.66px bold, or icon vs dark) */
+    --brand-accent: #E8670A;
+
+    /* CTA fill — brand orange (locked). White ≥16px/700 = large text → 3.29:1 passes AA. */
+    --brand-cta: #E8670A;
+    --brand-cta-hover: #E8670A;
+
+    /* Text on light surfaces */
+    --c-text-on-light: #000033;        /* 17:1 on white */
+    --c-text-on-light-muted: #424857;  /* 9.5:1 on white */
+    --c-placeholder-light: #5A6072;    /* 6.0:1 on white */
+
+    /* Text on dark surfaces */
+    --c-text-on-dark: #FFFFFF;
+    --c-text-on-dark-muted: #E7DDD2;   /* 13:1 on navy */
+    --c-text-on-dark-subtle: #C5BFB7;  /*  9.4:1 on navy */
+
+    /* Functional borders / dividers (≥3:1) */
+    --c-border-on-light: #949494;      /* 3.07:1 on white */
+    --c-border-on-dark: #6B7299;       /* 3.10:1 on navy  */
+
+    /* Status */
+    --c-success-on-dark: #5DD68A;      /* 6.4:1 on navy */
+    --c-error-on-light: #A7211C;       /* 7.4:1 on white */
+    --c-error-on-dark: #FF8A8A;        /* 6.6:1 on navy */
+
+    /* Shadcn semantic tokens */
+    --background: 44 7% 92%;
+    --foreground: 0 0% 0%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 0%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
+    --primary: 0 0% 0%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 44 7% 92%;
+    --secondary-foreground: 0 0% 0%;
+    --muted: 44 4% 85%;
+    --muted-foreground: 20 2% 37%;
+    --accent: 24 90% 47%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 30 3% 82%;
+    --input: 30 3% 82%;
+    --ring: 0 0% 0%;
+    --radius: 0.5rem;
+
+    --sidebar-background: 240 100% 10%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 0 0% 100%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 240 50% 15%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 240 20% 20%;
+    --sidebar-ring: 0 0% 100%;
+
+    --chart-1: 24 90% 47%;
+    --chart-2: 0 0% 60%;
+    --chart-3: 0 0% 37%;
+    --chart-4: 30 3% 82%;
+    --chart-5: 44 7% 92%;
+
+    --font-display: 'Oswald', sans-serif;
+    --font-sans: 'Inter', system-ui, sans-serif;
+
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    --spacing: 0.25rem;
+  }
+
+  .dark {
+    --background: 240 100% 10%;
+    --foreground: 0 0% 100%;
+    --card: 240 29% 14%;
+    --card-foreground: 0 0% 100%;
+    --popover: 240 29% 14%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 240 100% 10%;
+    --secondary: 240 29% 14%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 240 20% 20%;
+    --muted-foreground: 0 0% 69%;
+    --accent: 24 90% 47%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 240 20% 20%;
+    --input: 240 20% 20%;
+    --ring: 0 0% 100%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--c-text-on-light-muted);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    line-height: 1.15;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    font-weight: 700;
+  }
+
+  h3 {
+    font-size: clamp(1.125rem, 2vw, 1.25rem);
+    font-weight: 600;
+  }
+
+  h4 {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  p {
+    @apply leading-relaxed;
+    font-size: clamp(0.938rem, 2vw, 1rem);
+    font-weight: 400;
+    line-height: 1.7;
+  }
+}
+
+@layer components {
+  .section-padding {
+    @apply py-16 md:py-20 lg:py-24;
+  }
+
+  .container-wide {
+    @apply max-w-7xl mx-auto px-6 md:px-8 lg:px-12 xl:px-16;
+  }
+
+  .skip-link {
+    @apply sr-only;
+  }
+  .skip-link:focus {
+    @apply not-sr-only fixed top-2 left-2 z-[10000] px-4 py-2 rounded-md font-bold text-sm;
+    background: var(--bg-black);
+    color: var(--text-white);
+  }
+}
+
+@layer utilities {
+  .hover-lift {
+    @apply transition-transform duration-300 hover:-translate-y-1;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Focus-visible — dual-tone ring, visible on both navy and cream */
+:focus-visible {
+  outline: 2px solid var(--brand-accent);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.85);
+}
+
+/* Scrollbar hide */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Mobile bottom bar safe area */
+@media (max-width: 767px) {
+  body {
+    padding-bottom: 56px;
+  }
+}
+
+/* Global form input styling */
+input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="hidden"]),
+textarea,
+select {
+  background-color: #FFFFFF !important;
+  color: #000033 !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--c-placeholder-light) !important;
+}
+
+/* Form focus states */
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: rgba(249, 115, 22, 0.5) !important;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
+  outline: none;
+}
+
+/* BookV2 funnel input overrides — cream inputs on white cards */
+.bookv2-funnel input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="hidden"]),
+.bookv2-funnel textarea,
+.bookv2-funnel select {
+  background-color: #F5F3F0 !important;
+  color: #0B1029 !important;
+  border: 1px solid #D1CCC5 !important;
+  border-radius: 10px !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06) !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 16px !important;
+  padding: 14px 16px !important;
+}
+
+.bookv2-funnel input::placeholder,
+.bookv2-funnel textarea::placeholder {
+  color: #0B1029 !important;
+}
+
+.bookv2-funnel input:focus,
+.bookv2-funnel textarea:focus,
+.bookv2-funnel select:focus {
+  border: 1.5px solid #E8670A !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06), 0 0 0 3px rgba(232, 103, 10, 0.1) !important;
+  outline: none !important;
+}
+
+/* Autofill override for bookv2 white cards */
+.bookv2-funnel input:-webkit-autofill,
+.bookv2-funnel input:-webkit-autofill:hover,
+.bookv2-funnel input:-webkit-autofill:focus {
+  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06), 0 0 0 1000px #F5F3F0 inset !important;
+  -webkit-text-fill-color: #0B1029 !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Button press */
+button:active,
+a[role="button"]:active {
+  transform: scale(0.97);
+  transition: transform 80ms ease;
+}
+
+/* Global: cursor pointer on all interactive elements */
+button,
+a,
+[role="button"],
+input[type="submit"],
+input[type="button"],
+select,
+label[for],
+input[type="checkbox"],
+input[type="radio"] {
+  cursor: pointer;
+}
