@@ -22,9 +22,9 @@ declare global {
   interface Window {
     GHL_CHAT?: GhlChat;
     LC_API?: LcApi;
-    dataLayer: unknown[];
-    clarity: ClarityApi;
-    gtag: (...args: unknown[]) => void;
+    dataLayer?: Array<Record<string, unknown>>;
+    clarity?: ClarityApi;
+    gtag?: (...args: unknown[]) => void;
   }
 }
 

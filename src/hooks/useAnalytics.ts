@@ -6,12 +6,6 @@
 
 import { useEffect, useRef } from "react";
 
-declare global {
-  interface Window {
-    dataLayer?: Array<Record<string, unknown>>;
-  }
-}
-
 export function trackCro(slug: string, extra?: Record<string, unknown>) {
   if (typeof window === "undefined") return;
   window.dataLayer = window.dataLayer || [];
