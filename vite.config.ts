@@ -31,7 +31,15 @@ export default defineConfig(({ mode }) => ({
   build: {
     sourcemap: true,
     target: "es2020",
+    minify: "esbuild",
+    cssMinify: true,
     chunkSizeWarningLimit: 600,
+    // Drop console.log in production only
+    esbuildOptions: {
+      drop: [],  // keep warns/errors; use define instead
+      pure: ["console.log"],
+      legalComments: "none",
+    },
     rollupOptions: {
       output: {
         manualChunks: {
