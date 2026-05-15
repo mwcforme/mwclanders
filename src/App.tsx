@@ -1,0 +1,190 @@
+import { lazy, Suspense } from "react";
+import * as Sentry from "@sentry/react";
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { ServicesProvider } from "@/app/providers/ServicesProvider";
+import { MobileFooterBar } from "./components/shared/MobileFooterBar";
+import { EnvBadge } from "./components/shared/EnvBadge";
+import { SentryTestTrigger } from "./components/SentryTestTrigger";
+import { BookingRouteGuard } from "./domain/booking/bookingRouteGuard";
+
+// ─── EAGER: TRT landing page is the PPC entry point — zero delay ───────────
+import NewLandingPage from "./pages/NewLandingPage";
+
+// ─── LAZY: everything else splits into separate chunks automatically ────────
+// WL + ED — secondary LPs, load on route match
+const NewWeightLoss   = lazy(() => import("./pages/NewWeightLoss"));
+const NewED           = lazy(() => import("./pages/NewED"));
+
+// Quiz funnel — only loads when user hits /quiz
+const TRTQuiz         = lazy(() => import("./pages/TRTQuiz"));
+const TRTQuizApproved = lazy(() => import("./pages/TRTQuizApproved"));
+
+// Booking funnel — only loads after lead form submit
+const BookSymptom     = lazy(() => import("./pages/book/BookSymptom"));
+const BookDuration    = lazy(() => import("./pages/book/BookDuration"));
+const BookSchedule    = lazy(() => import("./pages/book/BookSchedule"));
+const BookSchedule2   = lazy(() => import("./pages/book/BookSchedule2"));
+const BookConfirmed   = lazy(() => import("./pages/book/BookConfirmed"));
+const BookLetsTalk    = lazy(() => import("./pages/book/BookLetsTalk"));
+
+// Legal — rarely visited, no rush
+const PrivacyPolicy     = lazy(() => import("./pages/legal/PrivacyPolicy"));
+const TermsOfService    = lazy(() => import("./pages/legal/TermsOfService"));
+const TcpaDisclosure    = lazy(() => import("./pages/legal/TcpaDisclosure"));
+const PrescribingPolicy = lazy(() => import("./pages/legal/PrescribingPolicy"));
+
+// Admin — never visited by PPC traffic
+const AdminLogin    = lazy(() => import("./pages/admin/AdminLogin"));
+const AdminOverview = lazy(() => import("./pages/admin/AdminOverview"));
+const AdminLeads    = lazy(() => import("./pages/admin/AdminLeads"));
+const AdminEvents   = lazy(() => import("./pages/admin/AdminEvents"));
+const AdminSync     = lazy(() => import("./pages/admin/AdminSync"));
+const RequireAdmin = lazy(() =>
+  import("./components/admin/RequireAdmin").then((m) => ({ default: m.RequireAdmin }))
+);
+
+// Internal
+const LpDirectory = lazy(() => import("./pages/internal/LpDirectory"));
+const NotFound    = lazy(() => import("./pages/NotFound"));
+
+// ─── Suspense fallback: dark screen matches brand, no layout shift ──────────
+const PageLoader = () => (
+  <div
+    style={{
+      minHeight: "100vh",
+      background: "#0B1029",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    }}
+    aria-label="Loading"
+  >
+    <div
+      style={{
+        width: 36,
+        height: 36,
+        border: "3px solid rgba(232,103,10,0.25)",
+        borderTopColor: "#E8670A",
+        borderRadius: "50%",
+        animation: "spin 0.7s linear infinite",
+      }}
+    />
+    <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+  </div>
+);
+
+const queryClient = new QueryClient();
+
+const ErrorFallback = ({ resetError }: { resetError: () => void }) => (
+  <div
+    role="alert"
+    style={{
+      minHeight: "100vh",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      background: "#000814",
+      color: "#fff",
+      fontFamily: "Inter, sans-serif",
+      padding: "24px",
+      textAlign: "center",
+    }}
+  >
+    <div style={{ maxWidth: 480 }}>
+      <h1 style={{ fontFamily: "Oswald, sans-serif", fontSize: 32, marginBottom: 12 }}>
+        Something went wrong
+      </h1>
+      <p style={{ opacity: 0.8, marginBottom: 24 }}>
+        Please refresh the page or call us at{" "}
+        <a href="tel:+18663444955" style={{ color: "#E8670A" }}>(866) 344-4955</a>.
+      </p>
+      <button
+        type="button"
+        onClick={resetError}
+        style={{
+          background: "#E8670A",
+          color: "#fff",
+          border: "none",
+          borderRadius: 999,
+          padding: "12px 28px",
+          fontWeight: 600,
+          cursor: "pointer",
+        }}
+      >
+        Try again
+      </button>
+    </div>
+  </div>
+);
+
+const App = () => (
+  <Sentry.ErrorBoundary
+    fallback={({ resetError }) => <ErrorFallback resetError={resetError} />}
+    showDialog={false}
+  >
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <ServicesProvider>
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                {/* ── Primary TRT LP — eager, zero delay ── */}
+                <Route path="/" element={<NewLandingPage />} />
+
+                {/* ── Secondary LPs ── */}
+                <Route path="/wl" element={<NewWeightLoss />} />
+                <Route path="/ed" element={<NewED />} />
+                <Route path="/new" element={<Navigate to="/" replace />} />
+                <Route path="/new-wl" element={<Navigate to="/wl" replace />} />
+                <Route path="/new-ed" element={<Navigate to="/ed" replace />} />
+
+                {/* ── Quiz funnel ── */}
+                <Route path="/quiz" element={<TRTQuiz />} />
+                <Route path="/quiz/approved" element={<TRTQuizApproved />} />
+
+                {/* ── Booking funnel ── */}
+                <Route path="/book" element={<Navigate to="/book/schedule" replace />} />
+                <Route element={<BookingRouteGuard />}>
+                  <Route path="/book/symptom"   element={<BookSymptom />} />
+                  <Route path="/book/duration"  element={<BookDuration />} />
+                  <Route path="/book/schedule"  element={<BookSchedule />} />
+                  <Route path="/book/schedule2" element={<BookSchedule2 />} />
+                  <Route path="/book/confirmed" element={<BookConfirmed />} />
+                  <Route path="/book/lets-talk" element={<BookLetsTalk />} />
+                </Route>
+
+                {/* ── Legal ── */}
+                <Route path="/lp"                element={<LpDirectory />} />
+                <Route path="/privacy-policy"    element={<PrivacyPolicy />} />
+                <Route path="/terms-of-service"  element={<TermsOfService />} />
+                <Route path="/tcpa"              element={<TcpaDisclosure />} />
+                <Route path="/prescribing-policy" element={<PrescribingPolicy />} />
+
+                {/* ── Admin ── */}
+                <Route path="/admin"          element={<AdminLogin />} />
+                <Route path="/admin/login"    element={<Navigate to="/admin" replace />} />
+                <Route path="/admin/overview" element={<RequireAdmin><AdminOverview /></RequireAdmin>} />
+                <Route path="/admin/leads"    element={<RequireAdmin><AdminLeads /></RequireAdmin>} />
+                <Route path="/admin/events"   element={<RequireAdmin><AdminEvents /></RequireAdmin>} />
+                <Route path="/admin/sync"     element={<RequireAdmin><AdminSync /></RequireAdmin>} />
+
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+            <MobileFooterBar />
+            <EnvBadge />
+            <SentryTestTrigger />
+          </ServicesProvider>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </Sentry.ErrorBoundary>
+);
+
+export default App;

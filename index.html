@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="robots" content="noindex" />
+    <meta name="googlebot" content="noindex" />
+    <meta name="bingbot" content="noindex" />
+    <title>Men's Wellness Centers — TRT, ED &amp; Weight Loss in Virginia</title>
+    <meta name="theme-color" content="#0B1029" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://supabase.co" crossorigin />
+    <link rel="dns-prefetch" href="https://supabase.co" />
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <!--
+      PHI guard: strip query string + hash from any /book/* URL BEFORE
+      GTM/GA4 load, so document.location.href (read by GA4 Enhanced
+      Measurement events like scroll/click) never carries PII/PHI.
+      Must run synchronously before the GTM snippet below.
+    -->
+    <script>
+      (function () {
+        try {
+          if (location.pathname.indexOf('/book/') === 0 && (location.search || location.hash)) {
+            history.replaceState(null, '', location.pathname);
+          }
+        } catch (e) { /* no-op */ }
+      })();
+    </script>
+
+    <!-- Microsoft Clarity — global input masking ON, unmask CTAs only -->
+    <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "s0mwcclarity1");
+      // Mask all inputs by default (PHI safety — unmask only via data-clarity-unmask)
+      window.clarity = window.clarity || function(){};
+      window.clarity("set", "maskAllInputs", true);
+      window.clarity("set", "maskAllText", false);
+    </script>
+    <!-- End Microsoft Clarity -->
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-5X9DB23T');</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Google Analytics 4 — G-286547777 (Men's Wellness Centers property) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-286547777"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-286547777', { send_page_view: false, anonymize_ip: true });
+      // Sensitive category pages: redact ad data and enable URL passthrough
+      // to prevent health-condition signals from being used for audience building.
+      (function() {
+        var sensitivePaths = ['/book/', '/quiz', '/ed', '/wl'];
+        var path = window.location.pathname;
+        var isSensitive = sensitivePaths.some(function(p) { return path === p || path.startsWith(p); });
+        if (isSensitive) {
+          gtag('set', 'ads_data_redaction', true);
+          gtag('set', 'url_passthrough', true);
+        }
+      })();
+    </script>
+
+  <meta name="description" content="Men's Wellness Centers. Virginia's physician-led men's health centers since 2015. Testosterone replacement therapy, ED treatment, and weight loss at our Richmond, Newport News, and Virginia Beach locations.">
+
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Men's Wellness Centers — Physician-led men's health in Virginia">
+  <meta name="twitter:title" content="Men's Wellness Centers — Physician-led men's health in Virginia">
+  <meta property="og:description" content="Virginia's physician-led men's health centers since 2015. TRT, ED, and weight loss at our Richmond, Newport News, and Virginia Beach locations.">
+  <meta name="twitter:description" content="Virginia's physician-led men's health centers since 2015. TRT, ED, and weight loss at our Richmond, Newport News, and Virginia Beach locations.">
+  <meta property="og:url" content="https://book.menswellnesscenters.com/">
+  <meta property="og:site_name" content="Men's Wellness Centers">
+  <meta property="og:image" content="https://book.menswellnesscenters.com/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Men's Wellness Centers - Virginia's Premier Men's Health Centers">
+  <meta name="twitter:image" content="https://book.menswellnesscenters.com/og-image.png">
+</head>
+
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5X9DB23T"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
