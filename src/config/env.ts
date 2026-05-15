@@ -5,6 +5,7 @@ import { z } from "zod";
  * Fails fast at module load with a clear message if anything is misconfigured.
  */
 const EnvSchema = z.object({
+  VITE_CLARITY_PROJECT_ID: z.string().min(1).optional(),
   VITE_SUPABASE_URL: z.string().url(),
   VITE_SUPABASE_PUBLISHABLE_KEY: z.string().min(1),
   VITE_SUPABASE_PROJECT_ID: z.string().min(1),

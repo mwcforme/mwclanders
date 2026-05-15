@@ -31,7 +31,7 @@ export async function capturePartialLead(opts: {
       source: opts.source || "partial-abandon",
       page_url: typeof window !== "undefined" ? window.location.href : null,
       crm_status: "partial",
-      attribution: attr as unknown as Record<string, unknown>,
+      attribution: attr as import("@/integrations/supabase/types").Json,
     });
   } catch {
     // non-blocking — never break the UX
