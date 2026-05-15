@@ -31,17 +31,36 @@
       })();
     </script>
 
-    <!-- Microsoft Clarity — global input masking ON, unmask CTAs only -->
-    <script type="text/javascript">
-      (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-      })(window, document, "clarity", "script", "s0mwcclarity1");
-      // Mask all inputs by default (PHI safety — unmask only via data-clarity-unmask)
-      window.clarity = window.clarity || function(){};
-      window.clarity("set", "maskAllInputs", true);
-      window.clarity("set", "maskAllText", false);
+    <!-- Microsoft Clarity — env-gated (prod only), global input masking ON, unmask CTAs only -->
+    <script>
+      (function () {
+        const PROD_HOSTS = ["book.menswellnesscenters.com", "menswellnesscenters.com", "www.menswellnesscenters.com"];
+        const STORAGE_KEY = "mwc_env_override";
+        function readOverride() {
+          try {
+            var q = new URL(location.href).searchParams.get("env");
+            if (q === "prod" || q === "stage") { localStorage.setItem(STORAGE_KEY, q); return q; }
+            if (q === "auto") { localStorage.removeItem(STORAGE_KEY); return null; }
+            var stored = localStorage.getItem(STORAGE_KEY);
+            if (stored === "prod" || stored === "stage") return stored;
+          } catch (e) {}
+          return null;
+        }
+        var override = readOverride();
+        var env = override || (PROD_HOSTS.indexOf(location.hostname.toLowerCase()) >= 0 ? "prod" : "stage");
+        var clarityId = "%VITE_CLARITY_PROJECT_ID%";
+        var hasRealId = clarityId && clarityId.indexOf("VITE_CLARITY_PROJECT_ID") === -1;
+        if (env === "prod" && hasRealId) {
+          (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+          })(window, document, "clarity", "script", clarityId);
+          window.clarity = window.clarity || function(){};
+          window.clarity("set", "maskAllInputs", true);
+          window.clarity("set", "maskAllText", false);
+        }
+      })();
     </script>
     <!-- End Microsoft Clarity -->
 
