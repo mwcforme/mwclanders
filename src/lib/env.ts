@@ -19,6 +19,11 @@ const PROD_HOSTS = new Set<string>([
   "www.menswellnesscenters.com",
 ]);
 
+/** These hosts always route to stage GHL regardless of any override. */
+const FORCE_STAGE_HOSTS = new Set<string>([
+  "bookstage.menswellnesscenters.com",
+]);
+
 const STORAGE_KEY = "mwc_env_override";
 
 function readOverride(): "prod" | "stage" | null {
@@ -44,6 +49,11 @@ function readOverride(): "prod" | "stage" | null {
 
 function detect(): "prod" | "stage" {
   if (typeof window === "undefined") return "stage";
+  try {
+    const host = window.location.hostname.toLowerCase();
+    // bookstage always forces stage — no override possible
+    if (FORCE_STAGE_HOSTS.has(host)) return "stage";
+  } catch { /* ignore */ }
   const override = readOverride();
   if (override) return override;
   // Only the live custom domain hits production GHL. Everything else
