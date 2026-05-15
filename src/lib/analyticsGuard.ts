@@ -8,13 +8,6 @@
  * `/book/*` page_view.
  */
 
-declare global {
-  interface Window {
-    dataLayer?: Array<Record<string, unknown>>;
-    gtag?: (...args: unknown[]) => void;
-  }
-}
-
 const GA4_ID = "G-286547777";
 
 export function sanitizeAnalyticsForBookingRoute(pathname: string): void {
