@@ -4,54 +4,18 @@ import { useLocation } from "react-router-dom";
 import BookLayout from "@/components/book/BookLayout";
 import { useBookingStore } from "@/domain/booking/bookingStore";
 import BookedCelebrationCard from "@/components/book/BookedCelebrationCard";
+import { LOCATIONS, getMapsSearchUrl, type Location } from "@/data/locations";
 
 const EXPECT_VIDEO_SRC = "/videos/what-to-expect.mp4";
 
-type CenterInfo = {
-  city: string;
-  centerName: string;
-  street: string;
-  cityStateZip: string;
-  proximity: string;
-  hours: string;
-  phoneDisplay: string;
-  phoneTel: string;
+/** Map booking store location keys to locations.ts slugs */
+const SLUG_MAP: Record<string, string> = {
+  "newport-news": "newport-news-va",
+  "virginia-beach": "virginia-beach-va",
+  "richmond": "richmond-va",
 };
 
-const CENTERS: Record<string, CenterInfo> = {
-  "newport-news": {
-    city: "Newport News",
-    centerName: "Men's Wellness Centers, Newport News",
-    street: "827 Diligence Drive, Suite 206",
-    cityStateZip: "Newport News, VA 23606",
-    proximity: "2 min from I-64",
-    hours: "Mon–Fri 8am–6pm · Sat 8am–4pm",
-    phoneDisplay: "(757) 806-6263",
-    phoneTel: "tel:7578066263",
-  },
-  "virginia-beach": {
-    city: "Virginia Beach",
-    centerName: "Men's Wellness Centers, Virginia Beach",
-    street: "996 First Colonial Road",
-    cityStateZip: "Virginia Beach, VA 23454",
-    proximity: "3 min from I-264",
-    hours: "Mon–Fri 8am–6pm · Sat 8am–4pm",
-    phoneDisplay: "(757) 806-6263",
-    phoneTel: "tel:7578066263",
-  },
-  "richmond": {
-    city: "Glen Allen",
-    centerName: "Men's Wellness Centers, Richmond",
-    street: "4050 Innslake Dr, Suite 360",
-    cityStateZip: "Glen Allen, VA 23060",
-    proximity: "5 min from I-64",
-    hours: "Mon–Fri 8am–6pm · Sat 8am–4pm",
-    phoneDisplay: "(804) 346-4636",
-    phoneTel: "tel:8043464636",
-  },
-};
-
-const DEFAULT_CENTER = CENTERS["newport-news"];
+const DEFAULT_CENTER = LOCATIONS[1]; // Newport News
 
 
 const formatAppointment = (raw?: string): string => {
@@ -81,11 +45,12 @@ const BookConfirmed = () => {
   const location = useBookingStore((s) => s.location);
   const identity = useBookingStore((s) => s.identity);
   const apptTime = formatAppointment(effectiveAppt);
-  const center = (location && CENTERS[location]) || DEFAULT_CENTER;
-  const fullAddress = `${center.centerName}, ${center.street}, ${center.cityStateZip}`;
-  const mapsQuery = encodeURIComponent(fullAddress);
-  const PHONE_DISPLAY = center.phoneDisplay;
-  const PHONE_TEL = center.phoneTel;
+  const slug = location ? SLUG_MAP[location] : null;
+  const center: Location = (slug && LOCATIONS.find((l) => l.slug === slug)) || DEFAULT_CENTER;
+  const mapsSearchUrl = getMapsSearchUrl(center);
+  const mapsEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(center.mapsQuery)}&output=embed`;
+  const PHONE_DISPLAY = center.phone;
+  const PHONE_TEL = center.phoneHref;
   const rawFirst = (identity?.firstName ?? "").trim();
   const rawLast = (identity?.lastName ?? "").trim();
   const firstName = rawFirst.split(/\s+/)[0] || "";
@@ -112,7 +77,7 @@ const BookConfirmed = () => {
             apptTime={apptTime}
             apptIso={effectiveAppt}
             locationCity={center.city}
-            locationAddress={`${center.street}, ${center.cityStateZip}`}
+            locationAddress={`${center.address}, ${center.cityStateZip}`}
           />
 
           {/* Video — full-width, directly below celebration card for max emotional impact */}
@@ -195,7 +160,7 @@ const BookConfirmed = () => {
                   marginBottom: 18,
                 }}
               >
-                {center.centerName}
+                {center.name}
               </p>
 
               <div className="flex flex-col gap-3">
@@ -210,13 +175,13 @@ const BookConfirmed = () => {
                       textTransform: "uppercase",
                     }}
                   >
-                    {center.proximity}
+                    {center.driveTime}
                   </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <MapPin size={18} strokeWidth={2.5} style={{ color: "#E8670A", flexShrink: 0, marginTop: 3 }} />
                   <a
-                    href={`https://www.google.com/maps/search/?api=1&query=${mapsQuery}`}
+                    href={mapsSearchUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{
@@ -228,7 +193,7 @@ const BookConfirmed = () => {
                       textUnderlineOffset: 3,
                     }}
                   >
-                    {center.street}<br />
+                    {center.address}<br />
                     {center.cityStateZip}
                   </a>
                 </div>
@@ -249,15 +214,15 @@ const BookConfirmed = () => {
                 }}
               >
                 <iframe
-                  title={`Map to ${center.centerName}`}
-                  src={`https://www.google.com/maps?q=${mapsQuery}&output=embed`}
+                  title={`Map to ${center.name}`}
+                  src={mapsEmbedUrl}
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                   style={{ border: 0, width: "100%", height: "100%", display: "block" }}
                   allowFullScreen
                 />
                 <a
-                  href={`https://www.google.com/maps/search/?api=1&query=${mapsQuery}`}
+                  href={mapsSearchUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="absolute inline-flex items-center gap-2"

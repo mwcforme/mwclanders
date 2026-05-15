@@ -58,8 +58,8 @@ export async function trackConversion(
 
   // Mirror client-side via dataLayer for GTM / Meta Pixel browser events.
   if (typeof window !== "undefined") {
-    (window as any).dataLayer = (window as any).dataLayer || [];
-    (window as any).dataLayer.push({
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
       event: event_name.toLowerCase(),
       event_id,
       ...opts.custom_data,

@@ -1,4 +1,5 @@
 import { lazy, Suspense } from "react";
+import { PHONE } from "@/lib/constants";
 import * as Sentry from "@sentry/react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -100,7 +101,7 @@ const ErrorFallback = ({ resetError }: { resetError: () => void }) => (
       </h1>
       <p style={{ opacity: 0.8, marginBottom: 24 }}>
         Please refresh the page or call us at{" "}
-        <a href="tel:+18663444955" style={{ color: "#E8670A" }}>(866) 344-4955</a>.
+        <a href={PHONE.tel} style={{ color: "#E8670A" }}>{PHONE.display}</a>.
       </p>
       <button
         type="button"

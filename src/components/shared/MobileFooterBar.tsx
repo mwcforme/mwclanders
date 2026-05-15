@@ -43,10 +43,10 @@ export const MobileFooterBar = () => {
     }
 
     // Fallback: try common GHL chat open methods
-    if ((window as any).GHL_CHAT?.open) {
-      (window as any).GHL_CHAT.open();
-    } else if ((window as any).LC_API?.open_chat_window) {
-      (window as any).LC_API.open_chat_window();
+    if (window.GHL_CHAT?.open) {
+      window.GHL_CHAT.open();
+    } else if (window.LC_API?.open_chat_window) {
+      window.LC_API.open_chat_window();
     } else {
       // Ultimate fallback — scroll to booking form or navigate
       window.location.href = "/book";

@@ -93,6 +93,8 @@ export function useLeadSubmitController<TInput>(
       };
       try {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // supabase generated types don't include `attribution` jsonb — cast is safe here
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         await supabase.from("lead_captures").insert(captureRow as any);
       } catch (persistErr) {
         console.warn("[lead-capture] insert failed", persistErr);
