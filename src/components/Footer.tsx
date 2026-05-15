@@ -24,9 +24,9 @@ const socials = [
 ];
 
 const certBadges = [
-  { image: "/images/badges/clia.png", label: "CLIA Certified" },
+  { image: "/images/badges/clia.webp", label: "CLIA Certified" },
   { image: "/images/badges/legitscript.png", label: "LegitScript Certified" },
-  { image: "/images/badges/hipaa.png", label: "HIPAA Compliant" },
+  { image: "/images/badges/hipaa.webp", label: "HIPAA Compliant" },
 ];
 
 const legalLinks = [

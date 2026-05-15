@@ -1,6 +1,6 @@
-import imgDoctor from "@/assets/lp/provider-headshot.jpg";
-import imgLobby from "@/assets/lp/onsite-labs-centrifuge.jpg";
-import imgAthletic from "@/assets/lp/man-athletic-smiling.jpeg";
+import imgDoctor from "@/assets/lp/provider-headshot.webp";
+import imgLobby from "@/assets/lp/onsite-labs-centrifuge.webp";
+import imgAthletic from "@/assets/lp/man-athletic-smiling.webp";
 import imgTeam from "@/assets/lp/mwc-team.webp";
 
 const pillars = [

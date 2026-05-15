@@ -30,6 +30,38 @@ export default defineConfig(({ mode }) => ({
   ].filter(Boolean),
   build: {
     sourcemap: true,
+    target: "es2020",
+    chunkSizeWarningLimit: 600,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Core React — always needed
+          "vendor-react": ["react", "react-dom", "react-router-dom"],
+          // Supabase — network heavy, separate chunk
+          "vendor-supabase": ["@supabase/supabase-js"],
+          // Form + validation
+          "vendor-forms": ["react-hook-form", "@hookform/resolvers", "zod"],
+          // UI primitives — loaded on most pages
+          "vendor-ui": [
+            "@radix-ui/react-dialog",
+            "@radix-ui/react-label",
+            "@radix-ui/react-separator",
+            "@radix-ui/react-slot",
+            "@radix-ui/react-toast",
+            "@radix-ui/react-toggle",
+            "@radix-ui/react-tooltip",
+            "lucide-react",
+            "clsx",
+            "tailwind-merge",
+            "class-variance-authority",
+          ],
+          // State + query
+          "vendor-state": ["zustand", "@tanstack/react-query"],
+          // Sentry — error monitoring, async
+          "vendor-sentry": ["@sentry/react"],
+        },
+      },
+    },
   },
   resolve: {
     alias: {

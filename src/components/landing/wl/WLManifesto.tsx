@@ -44,7 +44,7 @@ export const WLManifesto = () => (
 
       <div className="order-1 md:order-2">
         <img
-          src="/images/services/weight-loss.jpg"
+          src="/images/services/weight-loss.webp"
           alt="Virginia man, healthier and leaner after a medical weight loss program"
           className="rounded-2xl object-cover w-full aspect-[4/3] md:aspect-auto md:h-[460px]"
           loading="lazy"

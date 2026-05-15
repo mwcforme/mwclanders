@@ -1,4 +1,4 @@
-import imgManifesto from "@/assets/lp/man-bloodwork-clinic.png";
+import imgManifesto from "@/assets/lp/man-bloodwork-clinic.webp";
 import { Quote } from "lucide-react";
 import { COPY } from "@/data/copy";
 

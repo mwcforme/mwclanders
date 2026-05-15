@@ -32,7 +32,7 @@ export const TRTMarquee = () => (
       <div aria-hidden="true" style={{ width: 1, height: 72, background: "rgba(255,255,255,0.20)", flexShrink: 0 }} />
 
       <img
-        src="/images/badges/clia.png"
+        src="/images/badges/clia.webp"
         alt="CLIA Certified Laboratory"
         style={{ height: 96, width: "auto", maxWidth: 220, objectFit: "contain" }}
         loading="lazy"
@@ -41,7 +41,7 @@ export const TRTMarquee = () => (
       <div aria-hidden="true" style={{ width: 1, height: 72, background: "rgba(255,255,255,0.20)", flexShrink: 0 }} />
 
       <img
-        src="/images/badges/hipaa.png"
+        src="/images/badges/hipaa.webp"
         alt="HIPAA Compliant"
         style={{ height: 96, width: "auto", maxWidth: 220, objectFit: "contain" }}
         loading="lazy"
