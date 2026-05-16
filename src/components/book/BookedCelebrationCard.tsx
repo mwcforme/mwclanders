@@ -1,6 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { Calendar, Check, MapPin, Clock } from "lucide-react";
-import confetti from "canvas-confetti";
+
+// Lazy-load confetti so it doesn't block the confirmation card render
+const fireConfetti = async () => {
+  const { default: confetti } = await import("canvas-confetti");
+  confetti({
+    particleCount: 120, spread: 80, startVelocity: 44, gravity: 1.0, decay: 0.91,
+    ticks: 220, origin: { x: 0.5, y: 0.15 },
+    colors: ["#E8670A", "#F97316", "#FCD9B4", "#FFFFFF", "#0B1029"],
+    disableForReducedMotion: true, scalar: 1.0,
+  });
+};
 
 interface Props {
   firstName: string;
@@ -47,14 +57,7 @@ const BookedCelebrationCard = ({ firstName, apptTime, apptIso, locationCity, loc
     const t2 = window.setTimeout(() => setDrawCheck(true), 220);
     const t3 = window.setTimeout(() => setGlow(true), 800);
     const t4 = window.setTimeout(() => setGlow(false), 2400);
-    const t5 = window.setTimeout(() => {
-      try {
-        confetti({ particleCount: 120, spread: 80, startVelocity: 44, gravity: 1.0, decay: 0.91,
-          ticks: 220, origin: { x: 0.5, y: 0.15 },
-          colors: ["#E8670A", "#F97316", "#FCD9B4", "#FFFFFF", "#0B1029"],
-          disableForReducedMotion: true, scalar: 1.0 });
-      } catch { /* no-op */ }
-    }, 260);
+    const t5 = window.setTimeout(() => void fireConfetti().catch(() => {}), 260);
 
     return () => [t1, t2, t3, t4, t5].forEach(clearTimeout);
   }, []);

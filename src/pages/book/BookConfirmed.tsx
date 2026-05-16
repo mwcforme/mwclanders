@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import { MapPin, ExternalLink, Clock } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import BookLayout from "@/components/book/BookLayout";
@@ -63,6 +63,29 @@ const BookConfirmed = () => {
     }
   }, [identity]);
 
+  // Defer map iframe until user scrolls near it — saves ~500ms on initial load
+  const mapRef = useRef<HTMLDivElement>(null);
+  const [mapVisible, setMapVisible] = useState(false);
+  useEffect(() => {
+    const el = mapRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setMapVisible(true); obs.disconnect(); } },
+      { rootMargin: "200px" }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  // Defer video autoplay by 800ms — let celebration card render first
+  const videoRef = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const t = window.setTimeout(() => {
+      videoRef.current?.play().catch(() => { /* user gesture required on some browsers */ });
+    }, 800);
+    return () => clearTimeout(t);
+  }, []);
+
   return (
     <BookLayout page="confirmed" variant="confirmation" title="You're booked | Men's Wellness Centers">
       <div
@@ -90,16 +113,16 @@ const BookConfirmed = () => {
               boxShadow: "0 20px 50px rgba(0,0,0,0.28)",
             }}
           >
-            {/* Autoplay muted — draws the eye, no audio surprise */}
+            {/* Video: no autoPlay attr — deferred 800ms via ref to let card render first */}
             <div style={{ position: "relative", width: "100%", paddingBottom: "52%", background: "#000" }}>
               <video
+                ref={videoRef}
                 src={EXPECT_VIDEO_SRC}
-                autoPlay
                 muted
                 loop={false}
                 playsInline
                 controls
-                preload="metadata"
+                preload="none"
                 style={{
                   position: "absolute", inset: 0,
                   width: "100%", height: "100%",
@@ -206,6 +229,7 @@ const BookConfirmed = () => {
               </div>
 
               <div
+                ref={mapRef}
                 className="relative mt-6 w-full overflow-hidden"
                 style={{
                   borderRadius: 12,
@@ -213,14 +237,16 @@ const BookConfirmed = () => {
                   height: 320,
                 }}
               >
-                <iframe
-                  title={`Map to ${center.name}`}
-                  src={mapsEmbedUrl}
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  style={{ border: 0, width: "100%", height: "100%", display: "block" }}
-                  allowFullScreen
-                />
+                {mapVisible && (
+                  <iframe
+                    title={`Map to ${center.name}`}
+                    src={mapsEmbedUrl}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    style={{ border: 0, width: "100%", height: "100%", display: "block" }}
+                    allowFullScreen
+                  />
+                )}
                 <a
                   href={mapsSearchUrl}
                   target="_blank"
