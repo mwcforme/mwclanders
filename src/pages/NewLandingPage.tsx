@@ -1,21 +1,30 @@
+import { lazy, Suspense } from "react";
 import { Helmet } from "react-helmet-async";
 import { TRTHeader } from "@/components/landing/trt/TRTHeader";
 import { TRTHero } from "@/components/landing/trt/TRTHero";
 import { CredibilityBand } from "@/components/landing/trt/CredibilityBand";
-import { TRTHowItWorks } from "@/components/landing/trt/TRTHowItWorks";
-import { TRTResults } from "@/components/landing/trt/TRTResults";
 import { TRTManifesto } from "@/components/landing/trt/TRTManifesto";
-import { TRTMarquee } from "@/components/landing/trt/TRTMarquee";
-import { TRTPillars } from "@/components/landing/trt/TRTPillars";
-import { TRTFinalCTA } from "@/components/landing/trt/TRTFinalCTA";
-import { TRTLocations } from "@/components/landing/trt/TRTLocations";
-import { TRTFAQ } from "@/components/landing/trt/TRTFAQ";
-import { TRTFooter } from "@/components/landing/trt/TRTFooter";
-import { StickyMobileCTA } from "@/components/landing/trt/StickyMobileCTA";
 import { SectionReveal } from "@/components/landing/trt/SectionReveal";
+import { StickyMobileCTA } from "@/components/landing/trt/StickyMobileCTA";
 import { SEO } from "@/components/SEO";
 import { useScrollDepth } from "@/hooks/useAnalytics";
 import { buildFaqJsonLd } from "@/lib/schema";
+
+// ── Below-fold sections: lazy-loaded after hero renders ───────────────────
+// Each becomes its own chunk, loaded in parallel as user scrolls.
+const TRTHowItWorks  = lazy(() => import("@/components/landing/trt/TRTHowItWorks").then(m => ({ default: m.TRTHowItWorks })));
+const TRTResults     = lazy(() => import("@/components/landing/trt/TRTResults").then(m => ({ default: m.TRTResults })));
+const TRTPillars     = lazy(() => import("@/components/landing/trt/TRTPillars").then(m => ({ default: m.TRTPillars })));
+const TRTMarquee     = lazy(() => import("@/components/landing/trt/TRTMarquee").then(m => ({ default: m.TRTMarquee })));
+const TRTLocations   = lazy(() => import("@/components/landing/trt/TRTLocations").then(m => ({ default: m.TRTLocations })));
+const TRTFAQ         = lazy(() => import("@/components/landing/trt/TRTFAQ").then(m => ({ default: m.TRTFAQ })));
+const TRTFinalCTA    = lazy(() => import("@/components/landing/trt/TRTFinalCTA").then(m => ({ default: m.TRTFinalCTA })));
+const TRTFooter      = lazy(() => import("@/components/landing/trt/TRTFooter").then(m => ({ default: m.TRTFooter })));
+
+// Minimal fallback — matches section bg colors so no layout shift
+const SectionSkeleton = ({ bg = "#F5F0EB", height = 200 }: { bg?: string; height?: number }) => (
+  <div style={{ background: bg, minHeight: height }} aria-hidden="true" />
+);
 
 const faqSchema = JSON.stringify(buildFaqJsonLd());
 
@@ -32,18 +41,37 @@ const NewLandingPage = () => {
       </Helmet>
       <TRTHeader />
       <main className="flex-1">
-        <TRTHero headline={{ line1: "Get Your Energy, Drive,", line2: "and Confidence Back." }} />
+        {/* Above fold — eager */}
+        <TRTHero />
         <SectionReveal><CredibilityBand /></SectionReveal>
         <SectionReveal><TRTManifesto /></SectionReveal>
-        <SectionReveal><TRTHowItWorks /></SectionReveal>
-        <SectionReveal><TRTResults /></SectionReveal>
-        <SectionReveal><TRTPillars /></SectionReveal>
-        <SectionReveal><TRTMarquee /></SectionReveal>
-        <SectionReveal><TRTLocations /></SectionReveal>
-        <SectionReveal><TRTFAQ /></SectionReveal>
-        <SectionReveal><TRTFinalCTA /></SectionReveal>
+
+        {/* Below fold — lazy */}
+        <Suspense fallback={<SectionSkeleton bg="#F5F0EB" height={480} />}>
+          <SectionReveal><TRTHowItWorks /></SectionReveal>
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton bg="#F5F0EB" height={400} />}>
+          <SectionReveal><TRTResults /></SectionReveal>
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton bg="#000033" height={360} />}>
+          <SectionReveal><TRTPillars /></SectionReveal>
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton bg="#111827" height={160} />}>
+          <SectionReveal><TRTMarquee /></SectionReveal>
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton bg="#FFFFFF" height={400} />}>
+          <SectionReveal><TRTLocations /></SectionReveal>
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton bg="#F5F0EB" height={480} />}>
+          <SectionReveal><TRTFAQ /></SectionReveal>
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton bg="#000033" height={400} />}>
+          <SectionReveal><TRTFinalCTA /></SectionReveal>
+        </Suspense>
       </main>
-      <TRTFooter />
+      <Suspense fallback={null}>
+        <TRTFooter />
+      </Suspense>
       <StickyMobileCTA />
       {/* Spacer so sticky CTA doesn't overlap last section — 72px matches StickyMobileCTA height */}
       <div className="md:hidden" style={{ height: 72 }} aria-hidden="true" />
@@ -52,5 +80,3 @@ const NewLandingPage = () => {
 };
 
 export default NewLandingPage;
-
-
