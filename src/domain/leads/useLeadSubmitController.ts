@@ -5,6 +5,7 @@ import { useServices } from "@/app/providers/ServicesProvider";
 import { getAttribution, attributionTags } from "@/lib/attribution";
 import { trackConversion } from "@/lib/capi";
 import { supabase } from "@/integrations/supabase/client";
+import { useBookingStore } from "@/domain/booking/bookingStore";
 import type { LeadInput, LeadResult } from "@/services/contracts/ILeadSubmitter";
 
 export type LeadSubmitStatus = "idle" | "submitting" | "success" | "error";
@@ -91,40 +92,48 @@ export function useLeadSubmitController<TInput>(
         attribution: attr as unknown as Record<string, unknown>,
         crm_status: "pending",
       };
-      try {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        // supabase generated types don't include `attribution` jsonb — cast is safe here
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        await supabase.from("lead_captures").insert(captureRow as any);
-      } catch (persistErr) {
-        console.warn("[lead-capture] insert failed", persistErr);
-      }
+      // Fire-and-forget — never block the user on Supabase write
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      void supabase.from("lead_captures").insert(captureRow as any)
+        .catch((e: unknown) => console.warn("[lead-capture] insert failed", e));
 
       try {
-        const result = await leads.submitLead(leadInput);
-
+        // Navigate immediately with a pending contactId — GHL upsert resolves async.
+        // This eliminates the 1-2s spinner before the funnel starts.
+        const pendingResult: LeadResult = { contactId: "pending" };
         setStatus("success");
-
-        const fullName = typeof v.name === "string" ? v.name.trim() : "";
-        const [firstName, ...rest] = fullName.split(/\s+/);
-        void trackConversion("Lead", {
-          user_data: {
-            email: typeof v.email === "string" ? v.email : undefined,
-            phone: typeof v.phone === "string" ? v.phone : undefined,
-            first_name: firstName || undefined,
-            last_name: rest.length ? rest.join(" ") : undefined,
-            state: typeof v.location === "string" ? "VA" : undefined,
-            external_id: result.contactId,
-          },
-          custom_data: {
-            content_name: leadInput.source,
-            lp_slug: typeof window !== "undefined" ? window.location.pathname : undefined,
-          },
-        });
-
-        await opts.onSuccess?.(result, validated);
+        await opts.onSuccess?.(pendingResult, validated);
         if (opts.navigateTo) nav.go(opts.navigateTo);
-        return result;
+
+        // Resolve real contactId in background, update store when ready
+        leads.submitLead(leadInput).then((result) => {
+          const fullName = typeof v.name === "string" ? v.name.trim() : "";
+          const [firstName, ...rest] = fullName.split(/\s+/);
+          // Update booking store with real GHL contactId
+          try {
+            const identity = useBookingStore.getState().identity;
+            if (identity) {
+              useBookingStore.getState().setIdentity({ ...identity, ghlContactId: result.contactId });
+            }
+          } catch { /* non-critical */ }
+          // Fire analytics with real contactId
+          void trackConversion("Lead", {
+            user_data: {
+              email: typeof v.email === "string" ? v.email : undefined,
+              phone: typeof v.phone === "string" ? v.phone : undefined,
+              first_name: firstName || undefined,
+              last_name: rest.length ? rest.join(" ") : undefined,
+              state: typeof v.location === "string" ? "VA" : undefined,
+              external_id: result.contactId,
+            },
+            custom_data: {
+              content_name: leadInput.source,
+              lp_slug: typeof window !== "undefined" ? window.location.pathname : undefined,
+            },
+          });
+        }).catch(() => { /* GHL failure logged server-side */ });
+
+        return pendingResult;
       } catch (e) {
         const msg = (e as Error).message || "Something went wrong. Please try again.";
         setError(msg);

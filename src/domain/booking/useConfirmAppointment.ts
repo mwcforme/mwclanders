@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useServices } from "@/app/providers/ServicesProvider";
+import { useBookingStore } from "@/domain/booking/bookingStore";
 import type { LocationKey } from "@/lib/ghlCalendars";
 import type { MwcCustomFields } from "@/services/contracts/ILeadSubmitter";
 import { trackConversion } from "@/lib/capi";
@@ -108,21 +109,39 @@ export function useConfirmAppointment(opts?: {
       setStatus("submitting");
       setError(null);
 
-      // Step 1: upsert contact (with structured PHI-safe customFields).
+      // Use stored contactId from hero form submit if available —
+      // avoids a redundant GHL upsert round-trip on every booking confirm.
+      const storedContactId = useBookingStore.getState().identity?.ghlContactId;
+
       let contactId: string;
       try {
-        const { GhlProxyLeadSubmitter } = await import(
-          "@/services/impl/GhlProxyLeadSubmitter"
-        );
-        const r = await new GhlProxyLeadSubmitter().submitLead({
-          firstName: input.firstName || "Guest",
-          lastName: input.lastName || undefined,
-          email: input.email || undefined,
-          phone: input.phone || undefined,
-          source: input.source || "mwc-book-funnel",
-          customFields: input.customFields,
-        });
-        contactId = r.contactId;
+        if (storedContactId) {
+          // Fast path: contact already exists, just update custom fields async
+          contactId = storedContactId;
+          // Fire-and-forget custom fields update — don’t block booking
+          void import("@/services/impl/GhlProxyLeadSubmitter").then(({ GhlProxyLeadSubmitter }) =>
+            new GhlProxyLeadSubmitter().submitLead({
+              firstName: input.firstName || "Guest",
+              lastName: input.lastName || undefined,
+              email: input.email || undefined,
+              phone: input.phone || undefined,
+              source: input.source || "mwc-book-funnel",
+              customFields: input.customFields,
+            })
+          ).catch(() => { /* non-blocking */ });
+        } else {
+          // Slow path: upsert contact first (guest/short-form users)
+          const { GhlProxyLeadSubmitter } = await import("@/services/impl/GhlProxyLeadSubmitter");
+          const r = await new GhlProxyLeadSubmitter().submitLead({
+            firstName: input.firstName || "Guest",
+            lastName: input.lastName || undefined,
+            email: input.email || undefined,
+            phone: input.phone || undefined,
+            source: input.source || "mwc-book-funnel",
+            customFields: input.customFields,
+          });
+          contactId = r.contactId;
+        }
       } catch (e) {
         const msg = (e as Error).message || "Booking failed. Please try another time.";
         setError(msg);
@@ -130,8 +149,7 @@ export function useConfirmAppointment(opts?: {
         return false;
       }
 
-      // Step 2: book the appointment with generic notes only — clinical
-      // detail lives on the contact's custom fields.
+      // Book the appointment — clinical detail lives on contact custom fields only.
       try {
         await booking.bookAppointment({
           location: input.location,
@@ -140,6 +158,7 @@ export function useConfirmAppointment(opts?: {
           notes: GENERIC_APPT_NOTES,
         });
         setStatus("success");
+        // Fire-and-forget analytics — never block navigation
         void trackConversion("Schedule", {
           user_data: {
             email: input.email,
