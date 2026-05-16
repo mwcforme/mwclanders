@@ -41,7 +41,7 @@ export const TRTResults = () => {
             <div
               key={t.name}
               className="rounded-2xl p-6 flex flex-col"
-              style={{ background: "#FFFFFF", border: "1px solid var(--c-border-on-light)" }}
+              style={{ background: "#FFFFFF", border: "1px solid rgba(11,16,41,0.08)", boxShadow: "0 2px 16px rgba(11,16,41,0.07), 0 8px 32px rgba(11,16,41,0.05)" }}
             >
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-0.5">

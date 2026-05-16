@@ -30,7 +30,7 @@ export const TRTManifesto = () => {
 
           <figure
             className="mt-7 rounded-xl p-6 relative"
-            style={{ background: "rgba(255,255,255,0.05)", border: "1px solid var(--c-border-on-dark)" }}
+            style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.16)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.10)" }}
           >
             <Quote
               className="h-10 w-10 absolute"
@@ -69,6 +69,7 @@ export const TRTManifesto = () => {
             src={imgManifesto}
             alt="Phlebotomist drawing labs for a Virginia man at a Men's Wellness Center"
             className="rounded-2xl w-full aspect-[4/3] md:aspect-auto md:h-[460px]"
+            style={{ boxShadow: "0 24px 64px rgba(0,0,0,0.40)" }}
             style={{ objectFit: "cover", objectPosition: "center 35%" }}
             loading="lazy"
             decoding="async"

@@ -326,18 +326,19 @@ export const TRTHeroForm = ({
           disabled={isSubmitting}
           className="w-full font-bold cursor-pointer inline-flex items-center justify-center gap-2"
           style={{
-            height: 56,
+            height: 58,
             background: "var(--brand-cta)",
             color: "#FFFFFF",
-            fontSize: 19,
+            fontSize: 17,
             border: "none",
-            borderRadius: 8,
-            letterSpacing: "0.08em",
+            borderRadius: 10,
+            letterSpacing: "0.05em",
             fontFamily: "Inter, sans-serif",
-            marginTop: 8,
+            marginTop: 10,
+            boxShadow: "0 4px 24px rgba(232,103,10,0.35)",
             opacity: isSubmitting ? 0.85 : 1,
             cursor: isSubmitting ? "wait" : "pointer",
-            transition: "background-color 180ms ease, transform 180ms ease",
+            transition: "background-color 180ms ease, transform 180ms ease, box-shadow 180ms ease",
             textTransform: "none",
           }}
           onMouseEnter={(e) => { if (!isSubmitting) { e.currentTarget.style.background = "var(--brand-cta-hover)"; e.currentTarget.style.transform = "scale(1.01)"; } }}

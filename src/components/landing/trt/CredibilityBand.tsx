@@ -48,11 +48,11 @@ export const CredibilityBand = () => {
                 className="uppercase whitespace-pre-line"
                 style={{
                   fontFamily: "Inter, sans-serif",
-                  color: "rgba(255,255,255,0.65)",
-                  fontSize: 11,
-                  letterSpacing: "0.12em",
-                  fontWeight: 600,
-                  lineHeight: 1.4,
+                  color: "rgba(255,255,255,0.70)",
+                  fontSize: 12,
+                  letterSpacing: "0.10em",
+                  fontWeight: 700,
+                  lineHeight: 1.45,
                 }}
               >
                 {s.label}

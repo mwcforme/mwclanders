@@ -27,7 +27,7 @@ export const TRTLocations = () => {
           {locations.map((l, idx) => {
             const isOpen = openIdx === idx;
             return (
-              <div key={l.slug} className="rounded-2xl p-6 flex flex-col" style={{ border: "1px solid var(--c-border-on-light)", background: "#FFFFFF" }}>
+              <div key={l.slug} className="rounded-2xl p-6 flex flex-col" style={{ border: "1px solid rgba(11,16,41,0.08)", background: "#FFFFFF", boxShadow: "0 4px 24px rgba(11,16,41,0.06), 0 1px 4px rgba(11,16,41,0.04)" }}>
                 <div className="font-bold uppercase" style={{ fontFamily: "Oswald, sans-serif", color: "#000033", fontSize: 22, letterSpacing: "0.02em" }}>
                   {l.city}
                 </div>

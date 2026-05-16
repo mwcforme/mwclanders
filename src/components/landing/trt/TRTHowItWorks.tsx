@@ -111,10 +111,12 @@ export const TRTHowItWorks = () => {
               return (
                 <div key={s.num} className="flex gap-4">
                   <div
-                    className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
+                    className="w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0"
                     style={{
                       background: isFinal ? "var(--brand-cta)" : "#000033",
-                      boxShadow: isFinal ? "0 0 0 3px rgba(232,103,10,0.18)" : "0 0 0 2px rgba(232,103,10,0.18)",
+                      boxShadow: isFinal
+                        ? "0 0 0 4px rgba(232,103,10,0.20), 0 8px 24px rgba(232,103,10,0.30)"
+                        : "0 0 0 3px rgba(11,16,41,0.12), 0 4px 16px rgba(0,0,0,0.15)",
                     }}
                   >
                     <span className="font-bold text-base" style={{ color: "#FFFFFF", fontFamily: "Oswald, sans-serif" }}>

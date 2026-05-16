@@ -141,6 +141,14 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+
+  /* Brand selection color */
+  ::selection {
+    background: rgba(232, 103, 10, 0.25);
+    color: inherit;
   }
 
   body {

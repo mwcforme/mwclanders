@@ -48,16 +48,19 @@ export const TRTPillars = () => (
             key={p.title}
             className="rounded-xl overflow-hidden text-center transition-all duration-300"
             style={{
-              background: "rgba(255,255,255,0.10)",
-              border: "1px solid rgba(255,255,255,0.18)",
+              background: "rgba(255,255,255,0.07)",
+              border: "1px solid rgba(255,255,255,0.14)",
+              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.08)",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = "rgba(255,255,255,0.14)";
-              e.currentTarget.style.borderColor = "rgba(255,255,255,0.30)";
+              e.currentTarget.style.background = "rgba(255,255,255,0.13)";
+              e.currentTarget.style.borderColor = "rgba(232,103,10,0.50)";
+              e.currentTarget.style.boxShadow = "inset 0 1px 0 rgba(255,255,255,0.10), 0 0 0 1px rgba(232,103,10,0.20)";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.background = "rgba(255,255,255,0.10)";
-              e.currentTarget.style.borderColor = "rgba(255,255,255,0.18)";
+              e.currentTarget.style.background = "rgba(255,255,255,0.07)";
+              e.currentTarget.style.borderColor = "rgba(255,255,255,0.14)";
+              e.currentTarget.style.boxShadow = "inset 0 1px 0 rgba(255,255,255,0.08)";
             }}
           >
             <div className="flex justify-center mt-6">
