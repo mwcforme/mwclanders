@@ -38,7 +38,6 @@ export const COPY = {
   },
   offer: {
     /** Hero subhead under the H1. */
-    heroSubhead: "Same-day and next-day appointments at 3 Virginia clinics. Labs drawn on-site, results reviewed same visit.",
     /** Final CTA / WL / ED subhead. */
     finalSubhead: "No-cost consult. Same- or next-day visits.",
     /** Manifesto / proof closer. */

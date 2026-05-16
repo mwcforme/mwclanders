@@ -1,42 +1,9 @@
 import { useState } from "react";
 import { MapPin, Phone, Clock, ChevronDown } from "lucide-react";
-import { COPY } from "@/data/copy";
+import { LOCATIONS } from "@/data/locations";
 
-const locations = [
-  {
-    slug: "richmond-va",
-    name: "Men's Wellness Centers, Richmond",
-    city: "Glen Allen",
-    address: "4050 Innslake Dr, Suite 360",
-    cityStateZip: "Glen Allen, VA 23060",
-    phone: "(804) 346-4636",
-    phoneHref: "tel:8043464636",
-    hours: "Mon–Fri 8:00 AM – 6:00 PM · Sat 8:00 AM – 4:00 PM",
-    driveTime: "5 min from I-64",
-  },
-  {
-    slug: "newport-news-va",
-    name: "Men's Wellness Centers, Newport News",
-    city: "Newport News",
-    address: "827 Diligence Drive, Suite 206",
-    cityStateZip: "Newport News, VA 23606",
-    phone: "(757) 806-6263",
-    phoneHref: "tel:7578066263",
-    hours: "Mon–Fri 8:00 AM – 6:00 PM · Sat 8:00 AM – 4:00 PM",
-    driveTime: "3 min from I-64, Exit 258A",
-  },
-  {
-    slug: "virginia-beach-va",
-    name: "Men's Wellness Centers, Virginia Beach",
-    city: "Virginia Beach",
-    address: "996 First Colonial Road",
-    cityStateZip: "Virginia Beach, VA 23454",
-    phone: "(757) 806-6263",
-    phoneHref: "tel:7578066263",
-    hours: "Mon–Fri 8:00 AM – 6:00 PM · Sat 8:00 AM – 4:00 PM",
-    driveTime: "5 min from I-264",
-  },
-];
+// Alias for local use — LOCATIONS is the single source of truth
+const locations = LOCATIONS;
 
 export const TRTLocations = () => {
   const [openIdx, setOpenIdx] = useState<number | null>(null);

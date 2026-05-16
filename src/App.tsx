@@ -191,7 +191,7 @@ const App = () => (
             </Suspense>
             <MobileFooterBar />
             <EnvBadge />
-            <SentryTestTrigger />
+            {import.meta.env.DEV && <SentryTestTrigger />}
           </ServicesProvider>
         </BrowserRouter>
       </TooltipProvider>
