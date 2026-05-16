@@ -32,18 +32,18 @@ export const TRTMarquee = () => (
       <div aria-hidden="true" style={{ width: 1, height: 72, background: "rgba(255,255,255,0.20)", flexShrink: 0 }} />
 
       <img
-        src="/images/badges/clia.webp"
+        src="/images/badges/clia.png"
         alt="CLIA Certified Laboratory"
-        style={{ height: 80, width: "auto", maxWidth: 200, objectFit: "contain", filter: "brightness(0) invert(1) opacity(0.85)" }}
+        style={{ height: 96, width: "auto", maxWidth: 220, objectFit: "contain" }}
         loading="lazy"
       />
 
       <div aria-hidden="true" style={{ width: 1, height: 72, background: "rgba(255,255,255,0.20)", flexShrink: 0 }} />
 
       <img
-        src="/images/badges/hipaa.webp"
+        src="/images/badges/hipaa.png"
         alt="HIPAA Compliant"
-        style={{ height: 80, width: "auto", maxWidth: 200, objectFit: "contain", filter: "brightness(0) invert(1) opacity(0.85)" }}
+        style={{ height: 96, width: "auto", maxWidth: 220, objectFit: "contain" }}
         loading="lazy"
       />
     </div>

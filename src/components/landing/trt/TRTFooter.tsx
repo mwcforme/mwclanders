@@ -97,9 +97,9 @@ export const TRTFooter = () => {
           }}
         >
           <img
-            src="/images/badges/clia.webp"
+            src="/images/badges/clia.png"
             alt="CLIA Certified Laboratory"
-            style={{ height: 72, width: "auto", filter: "brightness(0) invert(1) opacity(0.85)" }}
+            style={{ height: 72, width: "auto", opacity: 0.9 }}
             loading="lazy"
             decoding="async"
           />
@@ -119,9 +119,9 @@ export const TRTFooter = () => {
             />
           </a>
           <img
-            src="/images/badges/hipaa.webp"
+            src="/images/badges/hipaa.png"
             alt="HIPAA Compliant"
-            style={{ height: 72, width: "auto", filter: "brightness(0) invert(1) opacity(0.85)" }}
+            style={{ height: 72, width: "auto", opacity: 0.9 }}
             loading="lazy"
             decoding="async"
           />
