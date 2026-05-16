@@ -33,5 +33,5 @@ export function enterBookingFunnel(
     source: args.source,
     lpSlug: args.lpSlug,
   });
-  navigate("/book/symptom");
+  navigate("/book/contact");
 }

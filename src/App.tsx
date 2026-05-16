@@ -26,6 +26,8 @@ const TRTQuiz         = lazy(() => import("./pages/TRTQuiz"));
 const TRTQuizApproved = lazy(() => import("./pages/TRTQuizApproved"));
 
 // Booking funnel — only loads after lead form submit
+const BookContact     = lazy(() => import("./pages/book/BookContact"));
+const BookLocation    = lazy(() => import("./pages/book/BookLocation"));
 const BookSymptom     = lazy(() => import("./pages/book/BookSymptom"));
 const BookDuration    = lazy(() => import("./pages/book/BookDuration"));
 const BookSchedule    = lazy(() => import("./pages/book/BookSchedule"));
@@ -162,16 +164,20 @@ const App = () => (
                 <Route path="/quiz/approved" element={<TRTQuizApproved />} />
 
                 {/* ── Booking funnel ── */}
-                <Route path="/book" element={<Navigate to="/book/schedule" replace />} />
+                <Route path="/book" element={<Navigate to="/book/contact" replace />} />
                 {/* WordPress handoff — token exchange, no BookingRouteGuard */}
                 <Route path="/book/entry" element={<BookEntry />} />
+                {/* New funnel entry — no guard needed, is the start */}
+                <Route path="/book/contact" element={<BookContact />} />
                 <Route element={<BookingRouteGuard />}>
-                  <Route path="/book/symptom"   element={<BookSymptom />} />
-                  <Route path="/book/duration"  element={<BookDuration />} />
+                  <Route path="/book/location"  element={<BookLocation />} />
                   <Route path="/book/schedule"  element={<BookSchedule />} />
-                  <Route path="/book/schedule2" element={<BookSchedule2 />} />
                   <Route path="/book/confirmed" element={<BookConfirmed />} />
                   <Route path="/book/lets-talk" element={<BookLetsTalk />} />
+                  {/* Legacy routes kept for WP-entry flow */}
+                  <Route path="/book/symptom"   element={<BookSymptom />} />
+                  <Route path="/book/duration"  element={<BookDuration />} />
+                  <Route path="/book/schedule2" element={<BookSchedule2 />} />
                 </Route>
 
                 {/* ── Legal ── */}

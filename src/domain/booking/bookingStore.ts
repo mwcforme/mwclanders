@@ -35,6 +35,7 @@ export interface BookingState {
   appointmentTime?: string;
   source?: string;
   lpSlug?: string;
+  attribution?: string;
 }
 
 interface BookingActions {
@@ -65,6 +66,7 @@ export const useBookingStore = create<BookingState & BookingActions>()(
           appointmentTime: undefined,
           source: undefined,
           lpSlug: undefined,
+          attribution: undefined,
         }),
       setIdentity: (identity) => set({ identity }),
       setService: (service) => set({ service }),
@@ -94,6 +96,7 @@ export const useBookingStore = create<BookingState & BookingActions>()(
         appointmentTime: s.appointmentTime,
         source: s.source,
         lpSlug: s.lpSlug,
+        attribution: s.attribution,
       }),
     },
   ),

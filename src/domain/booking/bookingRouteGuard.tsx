@@ -62,11 +62,17 @@ export const BookingRouteGuard = () => {
     return <Navigate to={lpFor(service)} replace />;
   }
 
-  // Step prerequisites: any step past /book/symptom requires a symptom choice.
+  // Step prerequisites: /book/location and beyond require identity.
+  // /book/schedule requires location to be set.
+  if (identity && !useBookingStore.getState().location && path === "/book/schedule") {
+    return <Navigate to="/book/location" replace />;
+  }
+
+  // Legacy symptom/duration guard (kept for WP-entry flow compatibility)
   if (
     identity &&
     !symptom &&
-    (path === "/book/duration" || path === "/book/schedule" || path === "/book/schedule2" || path === "/book/confirmed")
+    (path === "/book/duration")
   ) {
     return <Navigate to="/book/symptom" replace />;
   }

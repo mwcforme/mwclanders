@@ -6,6 +6,136 @@ import { useBookingStore } from "@/domain/booking/bookingStore";
 import BookedCelebrationCard from "@/components/book/BookedCelebrationCard";
 import { LOCATIONS, getMapsSearchUrl, type Location } from "@/data/locations";
 
+const ATTRIBUTION_OPTIONS = [
+  "Google Search",
+  "Google Maps",
+  "Facebook / Instagram",
+  "Friend or Family",
+  "Doctor Referral",
+  "TV / Radio",
+  "Billboard",
+  "Other",
+];
+
+/** Post-booking email + attribution capture — shown once, updates GHL. */
+const PostBookingCapture = ({ contactId, onComplete }: { contactId?: string; onComplete: () => void }) => {
+  const [email, setEmail] = useState("");
+  const [attribution, setAttribution] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const patchStore = useBookingStore((s) => s.patch);
+  const setIdentity = useBookingStore((s) => s.setIdentity);
+  const identity = useBookingStore((s) => s.identity);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const emailTrimmed = email.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailTrimmed)) {
+      setEmailError("Please enter a valid email address");
+      return;
+    }
+    setEmailError("");
+    setLoading(true);
+
+    // Update store
+    if (identity) setIdentity({ ...identity, email: emailTrimmed });
+    if (attribution) patchStore({ attribution });
+
+    // Fire-and-forget GHL update
+    if (contactId) {
+      try {
+        const { supabase } = await import("@/integrations/supabase/client");
+        supabase.functions.invoke("ghl-proxy", {
+          body: {
+            path: `/contacts/${contactId}`,
+            method: "PUT",
+            body: {
+              email: emailTrimmed,
+              ...(attribution ? { customFields: { mwc_attribution_source: attribution } } : {}),
+            },
+            __env: import.meta.env.VITE_APP_ENV ?? "stage",
+          },
+        }).catch(() => { /* non-blocking */ });
+      } catch { /* never block UX */ }
+    }
+
+    setSubmitted(true);
+    setLoading(false);
+    onComplete();
+  };
+
+  if (submitted) return null;
+
+  const inp: React.CSSProperties = {
+    width: "100%", height: 50, borderRadius: 8, border: "1px solid #D1D5DB",
+    background: "#FFFFFF", color: "#0B1029", fontSize: 16,
+    fontFamily: "Inter, sans-serif", padding: "0 14px", outline: "none",
+    transition: "border-color 0.15s",
+  };
+
+  return (
+    <div
+      style={{
+        background: "#FFFFFF",
+        borderRadius: 14,
+        padding: "28px 24px",
+        border: "1px solid #E5E7EB",
+        boxShadow: "0 8px 30px rgba(0,0,0,0.14)",
+      }}
+    >
+      <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#E8670A", marginBottom: 8 }}>
+        Almost done
+      </p>
+      <h2 style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 22, color: "#0B1029", marginBottom: 6 }}>
+        Where should we send your confirmation?
+      </h2>
+      <p style={{ fontSize: 14, color: "#6B7280", marginBottom: 20, lineHeight: 1.5 }}>
+        We'll email your appointment details and prep instructions.
+      </p>
+      <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
+        <div>
+          <input
+            type="email"
+            placeholder="Email address"
+            value={email}
+            autoComplete="email"
+            inputMode="email"
+            onChange={(e) => { setEmail(e.target.value); setEmailError(""); }}
+            onFocus={(e) => (e.currentTarget.style.borderColor = "#E8670A")}
+            onBlur={(e) => (e.currentTarget.style.borderColor = emailError ? "#DC2626" : "#D1D5DB")}
+            style={{ ...inp, borderColor: emailError ? "#DC2626" : "#D1D5DB" }}
+          />
+          {emailError && <p style={{ color: "#DC2626", fontSize: 13, marginTop: 4, fontFamily: "Inter, sans-serif" }}>{emailError}</p>}
+        </div>
+        <div>
+          <select
+            value={attribution}
+            onChange={(e) => setAttribution(e.target.value)}
+            style={{ ...inp, color: attribution ? "#0B1029" : "#9CA3AF", appearance: "none", WebkitAppearance: "none" }}
+          >
+            <option value="">How did you hear about us? (optional)</option>
+            {ATTRIBUTION_OPTIONS.map((o) => <option key={o} value={o}>{o}</option>)}
+          </select>
+        </div>
+        <button
+          type="submit"
+          disabled={loading}
+          style={{
+            width: "100%", height: 52, background: loading ? "rgba(232,103,10,0.6)" : "#E8670A",
+            color: "#FFFFFF", border: "none", borderRadius: 8, fontSize: 17, fontWeight: 700,
+            letterSpacing: "0.04em", textTransform: "uppercase", fontFamily: "Inter, sans-serif",
+            cursor: loading ? "not-allowed" : "pointer",
+            boxShadow: loading ? "none" : "0 4px 14px rgba(232,103,10,0.40)",
+          }}
+        >
+          {loading ? "Saving…" : "Complete My Booking"}
+        </button>
+      </form>
+    </div>
+  );
+};
+
 const EXPECT_VIDEO_SRC = "/videos/what-to-expect.mp4";
 
 /** Map booking store location keys to locations.ts slugs */
@@ -55,6 +185,7 @@ const BookConfirmed = () => {
   const rawLast = (identity?.lastName ?? "").trim();
   const firstName = rawFirst.split(/\s+/)[0] || "";
   void rawLast;
+  const [captureComplete, setCaptureComplete] = useState(false);
 
   // One-time cleanup: clear corrupt persisted identity (no phone AND no email).
   useEffect(() => {
@@ -102,6 +233,14 @@ const BookConfirmed = () => {
             locationCity={center.city}
             locationAddress={`${center.address}, ${center.cityStateZip}`}
           />
+
+          {/* Email + Attribution capture — shown until submitted */}
+          {!captureComplete && (
+            <PostBookingCapture
+              contactId={identity?.ghlContactId}
+              onComplete={() => setCaptureComplete(true)}
+            />
+          )}
 
           {/* Video — full-width, directly below celebration card for max emotional impact */}
           <div
