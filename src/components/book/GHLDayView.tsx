@@ -439,12 +439,13 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
                   setShowLeftFade(el.scrollLeft > 4);
                   setShowRightFade(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
                 }}
-                className="flex gap-2 overflow-x-auto"
+                className="flex gap-2 overflow-x-auto justify-center"
                 style={{
                   scrollSnapType: "x mandatory",
                   WebkitOverflowScrolling: "touch",
                   paddingBottom: 4,
                   scrollbarWidth: "none",
+                  flexWrap: "nowrap",
                 }}
               >
                 {days.map((d) => {
