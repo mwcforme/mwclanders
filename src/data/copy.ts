@@ -14,17 +14,17 @@
 export const COPY = {
   cta: {
     /** Primary booking CTA. Header, hero submit, locations, sticky bar, final CTA. */
-    bookConsult: "Book My Consultation",
+    bookConsult: "Get My Labs Checked",
     /** Results section CTA. */
-    startConsult: "Book My Consultation",
+    startConsult: "Book My Visit",
     /** Inline link variant inside FAQ answers. */
-    bookConsultInline: "Book a no-cost consult",
+    bookConsultInline: "book a no-cost visit",
     /** ED service final-CTA + ED form card title. */
     bookDiscreetVisit: "Book My Discreet Visit",
     /** WL service final-CTA + WL manifesto. */
     seeIfIQualify: "See If I Qualify",
     /** TRT manifesto secondary CTA. */
-    seeIfYouQualify: "See If You Qualify",
+    seeIfYouQualify: "Get My Levels Checked",
     /** Phone CTA prefix. */
     callNow: "Call Now",
   },
@@ -38,7 +38,7 @@ export const COPY = {
   },
   offer: {
     /** Hero subhead under the H1. */
-    heroSubhead: "Same-day and next-day appointments at 3 Virginia clinics. Book in under 5 minutes. Labs drawn on-site, results reviewed same visit, and a personalized care plan.",
+    heroSubhead: "Same-day and next-day appointments at 3 Virginia clinics. Labs drawn on-site, results reviewed same visit.",
     /** Final CTA / WL / ED subhead. */
     finalSubhead: "No-cost consult. Same- or next-day visits.",
     /** Manifesto / proof closer. */

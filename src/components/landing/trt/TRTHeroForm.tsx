@@ -44,7 +44,7 @@ function getLocationFromUrl(): string {
 export const TRTHeroForm = ({
   service = "trt",
   heading = COPY.cta.bookConsult,
-  subheading = "Same or next day. Takes about a minute.",
+  subheading = "Most slots fill by noon. Takes under 2 minutes.",
   ctaLabel = COPY.cta.bookConsult,
 }: TRTHeroFormProps = {}) => {
   const [name, setName] = useState("");

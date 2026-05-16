@@ -2,11 +2,11 @@ import { Minus } from "lucide-react";
 import { COPY } from "@/data/copy";
 
 const symptoms = [
-  "Persistent fatigue",
-  "Loss of drive and motivation",
-  "Difficulty focusing",
-  "Stubborn belly fat and muscle loss",
-  "Bloodwork that comes back fine, but you still don't feel right",
+  "Running out of gas by mid-afternoon",
+  "Drive and motivation have gone quiet",
+  "Can't focus the way you used to",
+  "Gaining weight despite doing the same things",
+  "Labs come back 'normal' but you know something's off",
 ];
 
 const steps = [
@@ -17,8 +17,8 @@ const steps = [
   },
   {
     num: "2",
-    title: "Doctor Who Actually Listens",
-    desc: "A physician who specializes in men's hormones sits with you, goes over every number, and actually explains what's going on.",
+    title: "A Doctor Who Actually Explains Your Labs",
+    desc: "A physician who specializes in men's hormones sits with you, goes over every number, and tells you exactly what's driving your symptoms.",
   },
   {
     num: "3",
@@ -75,7 +75,7 @@ export const TRTHowItWorks = () => {
             className="mt-5 text-base leading-relaxed"
             style={{ color: "#4A4A4A", fontFamily: "Inter, sans-serif", maxWidth: 520 }}
           >
-            Many men in their 40s, 50s, and beyond tell us the same story. The energy, focus, and drive they used to have just are not there. Their doctor says their labs are "normal," but they know something is off.
+            Most men who come in have already Googled their symptoms, gotten bloodwork, and been told everything looks fine. They know it isn't. That gap between how you feel and what your labs say is exactly what we look at.
           </p>
           <ul className="mt-8 space-y-4">
             {symptoms.map((s) => (

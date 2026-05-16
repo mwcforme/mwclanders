@@ -52,6 +52,9 @@ export const TRTLocations = () => {
         <h2 className="font-bold uppercase text-center" style={{ fontFamily: "Oswald, sans-serif", color: "#000033", fontSize: "clamp(26px, 3vw, 38px)", letterSpacing: "0.02em" }}>
           3 Virginia Centers
         </h2>
+        <p className="text-center mt-3" style={{ fontFamily: "Inter, sans-serif", fontSize: 15, color: "#5A6072" }}>
+          Same-day appointments available. Pick the location closest to you.
+        </p>
 
         <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
           {locations.map((l, idx) => {

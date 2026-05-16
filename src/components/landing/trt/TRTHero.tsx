@@ -5,9 +5,10 @@ import { trackCro } from "@/hooks/useAnalytics";
 import { COPY } from "@/data/copy";
 
 const trustChecks = [
-  "Same or next-day appointments",
-  "Face-to-face physician, every visit",
   "No-cost consult, no insurance needed",
+  "Same-day labs drawn on-site",
+  "Your actual doctor, not a PA or telehealth chat",
+  "Treatment can start same day, if appropriate",
 ];
 
 const COLORS = {
@@ -127,7 +128,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
               lineHeight: 1.5,
             }}
           >
-            Same-day labs. Real physician. Walk out with a plan.
+            Most men leave their first visit with answers and a plan. Labs drawn on-site. Real physician, same visit. Virginia's men's health practice since 2015.
           </p>
 
           {/* Star rating row — clickable, links to GBP */}

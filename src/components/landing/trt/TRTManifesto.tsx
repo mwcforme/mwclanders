@@ -22,10 +22,10 @@ export const TRTManifesto = () => {
           </h2>
 
           <p className="text-base mt-5 leading-[1.7]" style={{ color: "rgba(255,255,255,0.85)", fontFamily: "Inter, sans-serif", fontSize: 16 }}>
-            Sharp. Confident. Performing at your level. That's the man your wife married, your team respects, and your kids look up to. When the energy goes, the rest follows.
+            You know the version of yourself that handled things, stayed sharp, showed up. That guy didn't disappear. But somewhere along the way, the energy to access him did.
           </p>
           <p className="text-base mt-4 leading-[1.7]" style={{ color: "rgba(255,255,255,0.85)", fontFamily: "Inter, sans-serif", fontSize: 16 }}>
-            We are men's health. Not a side service at a general practice. Not a faceless app. A Virginia physician, your numbers, and a plan that fits your life.
+            We are men's health. Not a side service tacked onto a general practice. Not an app that mails you pills and calls it care. One physician, your numbers, a plan built around your life.
           </p>
 
           <figure
