@@ -71,6 +71,7 @@ export const TRTManifesto = () => {
             className="rounded-2xl w-full aspect-[4/3] md:aspect-auto md:h-[460px]"
             style={{ objectFit: "cover", objectPosition: "center 35%" }}
             loading="lazy"
+            decoding="async"
           />
         </div>
       </div>

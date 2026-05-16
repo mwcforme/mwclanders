@@ -33,13 +33,12 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
     const childEls = staggerChildren ? Array.from(el.children) as HTMLElement[] : [];
 
     el.style.opacity = "0";
-    el.style.willChange = "opacity";
-    el.style.transition = `opacity 600ms cubic-bezier(0.16,1,0.3,1)`;
+    el.style.transition = `opacity 500ms cubic-bezier(0.16,1,0.3,1)`;
+    // No willChange — avoids creating compositor layers on all 10 LP sections
 
     childEls.forEach((c, i) => {
       c.style.opacity = "0";
-      c.style.willChange = "opacity";
-      c.style.transition = `opacity 600ms cubic-bezier(0.16,1,0.3,1) ${i * staggerDelay}ms`;
+      c.style.transition = `opacity 500ms cubic-bezier(0.16,1,0.3,1) ${i * staggerDelay}ms`;
     });
 
     const observer = new IntersectionObserver(
@@ -47,14 +46,10 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
         if (entry.isIntersecting) {
           el.style.opacity = "1";
           childEls.forEach((c) => { c.style.opacity = "1"; });
-          window.setTimeout(() => {
-            el.style.willChange = "auto";
-            childEls.forEach((c) => { c.style.willChange = "auto"; });
-          }, 1200);
           observer.unobserve(el);
         }
       },
-      { threshold, rootMargin: "0px 0px -60px 0px" }
+      { threshold, rootMargin: "0px 0px -40px 0px" }
     );
 
     observer.observe(el);

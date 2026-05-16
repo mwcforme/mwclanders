@@ -33,6 +33,7 @@ export const TRTHeader = ({ minimal = false }: { minimal?: boolean } = {}) => {
         <Link to="/" aria-label="Men's Wellness Centers home" className="inline-flex">
           <img
             src="/logos/Text_Logo_white.png"
+            decoding="async"
             alt="Men's Wellness Centers"
             className="h-7 w-auto"
           />

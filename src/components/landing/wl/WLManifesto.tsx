@@ -48,6 +48,7 @@ export const WLManifesto = () => (
           alt="Virginia man, healthier and leaner after a medical weight loss program"
           className="rounded-2xl object-cover w-full aspect-[4/3] md:aspect-auto md:h-[460px]"
           loading="lazy"
+          decoding="async"
         />
       </div>
     </div>

@@ -79,7 +79,16 @@ const PageLoader = () => (
   </div>
 );
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60_000,        // don't refetch data younger than 60s
+      gcTime: 5 * 60_000,       // keep unused cache for 5 min
+      retry: 1,                 // one retry on failure, not three
+      refetchOnWindowFocus: false, // don't hammer APIs on tab switch
+    },
+  },
+});
 
 const ErrorFallback = ({ resetError }: { resetError: () => void }) => (
   <div
