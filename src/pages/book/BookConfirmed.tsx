@@ -17,11 +17,13 @@ const ATTRIBUTION_OPTIONS = [
   "Other",
 ];
 
-/** Post-booking email + attribution capture — shown once, updates GHL. */
+/** Post-booking email + attribution + commitment capture — shown once, updates GHL. */
 const PostBookingCapture = ({ contactId, onComplete }: { contactId?: string; onComplete: () => void }) => {
   const [email, setEmail] = useState("");
   const [attribution, setAttribution] = useState("");
+  const [committed, setCommitted] = useState(false);
   const [emailError, setEmailError] = useState("");
+  const [commitError, setCommitError] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const patchStore = useBookingStore((s) => s.patch);
@@ -30,12 +32,21 @@ const PostBookingCapture = ({ contactId, onComplete }: { contactId?: string; onC
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    let valid = true;
     const emailTrimmed = email.trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailTrimmed)) {
       setEmailError("Please enter a valid email address");
-      return;
+      valid = false;
+    } else {
+      setEmailError("");
     }
-    setEmailError("");
+    if (!committed) {
+      setCommitError(true);
+      valid = false;
+    } else {
+      setCommitError(false);
+    }
+    if (!valid) return;
     setLoading(true);
 
     // Update store
@@ -52,7 +63,10 @@ const PostBookingCapture = ({ contactId, onComplete }: { contactId?: string; onC
             method: "PUT",
             body: {
               email: emailTrimmed,
-              ...(attribution ? { customFields: { mwc_attribution_source: attribution } } : {}),
+              customFields: {
+                ...(attribution ? { mwc_attribution_source: attribution } : {}),
+                mwc_commitment_given: "true",
+              },
             },
             __env: import.meta.env.VITE_APP_ENV ?? "stage",
           },
@@ -94,6 +108,37 @@ const PostBookingCapture = ({ contactId, onComplete }: { contactId?: string; onC
         We'll email your appointment details and prep instructions.
       </p>
       <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
+
+        {/* Commitment checkbox — behavioral anchor */}
+        <label
+          style={{
+            display: "flex",
+            alignItems: "flex-start",
+            gap: 12,
+            padding: "14px 16px",
+            borderRadius: 10,
+            border: `2px solid ${commitError ? "#DC2626" : committed ? "#16A34A" : "#E5E7EB"}`,
+            background: committed ? "rgba(22,163,74,0.05)" : commitError ? "rgba(220,38,38,0.04)" : "#F9FAFB",
+            cursor: "pointer",
+            transition: "border-color 0.15s, background 0.15s",
+          }}
+        >
+          <input
+            type="checkbox"
+            checked={committed}
+            onChange={(e) => { setCommitted(e.target.checked); if (e.target.checked) setCommitError(false); }}
+            style={{ marginTop: 2, accentColor: "#16A34A", width: 18, height: 18, flexShrink: 0 }}
+          />
+          <span style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "#374151", lineHeight: 1.5, fontWeight: 500 }}>
+            I understand a provider is setting aside time specifically for me. I commit to attending or canceling at least 24 hours in advance.
+          </span>
+        </label>
+        {commitError && (
+          <p style={{ color: "#DC2626", fontSize: 13, marginTop: -8, fontFamily: "Inter, sans-serif" }}>
+            Please confirm your commitment to attend.
+          </p>
+        )}
+
         <div>
           <input
             type="email"
@@ -412,19 +457,42 @@ const BookConfirmed = () => {
           </div>
 
           {/* Footer */}
-          <p
-            className="text-center text-sm md:text-base"
-            style={{ color: "rgba(255,255,255,0.72)", fontFamily: "Inter, sans-serif" }}
-          >
-            Need to reschedule or running late? Call or text{" "}
-            <a
-              href={PHONE_TEL}
-              style={{ color: "#FFFFFF", fontWeight: 700, textDecoration: "underline", textUnderlineOffset: 4 }}
-            >
-              {PHONE_DISPLAY}
-            </a>
-            .
-          </p>
+          <div className="text-center flex flex-col gap-3" style={{ fontFamily: "Inter, sans-serif" }}>
+            <p style={{ color: "rgba(255,255,255,0.72)", fontSize: 14 }}>
+              Need to reschedule? Life happens — just give us a heads up.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+              <a
+                href={PHONE_TEL}
+                style={{
+                  display: "inline-flex", alignItems: "center", gap: 6,
+                  background: "rgba(255,255,255,0.08)",
+                  border: "1px solid rgba(255,255,255,0.18)",
+                  color: "#FFFFFF", fontWeight: 600, fontSize: 14,
+                  padding: "10px 20px", borderRadius: 8,
+                  textDecoration: "none", minHeight: 44,
+                }}
+              >
+                📞 Call or text {PHONE_DISPLAY}
+              </a>
+              <a
+                href={`/book/contact`}
+                style={{
+                  display: "inline-flex", alignItems: "center", gap: 6,
+                  background: "rgba(232,103,10,0.15)",
+                  border: "1px solid rgba(232,103,10,0.35)",
+                  color: "#E8670A", fontWeight: 600, fontSize: 14,
+                  padding: "10px 20px", borderRadius: 8,
+                  textDecoration: "none", minHeight: 44,
+                }}
+              >
+                🗓️ Book a different time
+              </a>
+            </div>
+            <p style={{ color: "rgba(255,255,255,0.30)", fontSize: 12, marginTop: 4 }}>
+              Please cancel or reschedule at least 24 hours in advance so we can offer your slot to someone else.
+            </p>
+          </div>
         </div>
       </div>
 

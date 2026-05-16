@@ -158,7 +158,7 @@ const BookedCelebrationCard = ({ firstName, apptTime, apptIso, locationCity, loc
               {first ? `This is your moment, ${first}.` : "This is your moment."}
             </h1>
             <p style={{ fontSize: 15, color: "#6B7280", fontWeight: 400, lineHeight: 1.5 }}>
-              You took the step. We'll take it from here. Your consultation is locked in.
+              Your provider has reserved this hour for your labs, exam, and consultation. No waiting rooms. No rushed visits. Just real answers.
             </p>
           </div>
         </div>
@@ -224,7 +224,7 @@ const BookedCelebrationCard = ({ firstName, apptTime, apptIso, locationCity, loc
 
         {/* Status chips — always horizontal, wrap if needed */}
         <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", gap: 6, marginBottom: 28 }}>
-          {["Confirmation sent", "No-cost, no obligation", "Bring photo ID"].map((label) => (
+          {["Confirmation sent", "No-cost visit", "Provider reserved", "Bring photo ID"].map((label) => (
             <span key={label} style={{
               display: "inline-flex", alignItems: "center", gap: 5,
               background: "rgba(22,163,74,0.07)",
