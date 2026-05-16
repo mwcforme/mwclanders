@@ -140,6 +140,8 @@ export const TRTHowItWorks = () => {
             onClick={scrollToForm}
             className="mt-10 w-full sm:w-auto inline-flex items-center justify-center rounded-lg px-8 font-bold cursor-pointer transition-colors duration-200"
             style={{
+              height: 56,
+              minHeight: 56,
               background: "var(--brand-cta)",
               color: "#FFFFFF",
               fontSize: "clamp(15px, 3.5vw, 19px)",

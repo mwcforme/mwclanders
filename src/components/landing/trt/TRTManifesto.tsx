@@ -54,7 +54,7 @@ export const TRTManifesto = () => {
           <button
             onClick={() => document.getElementById("final-cta")?.scrollIntoView({ behavior: "smooth" })}
             className="mt-7 w-full sm:w-auto inline-flex items-center justify-center rounded-lg px-8 font-bold cursor-pointer border-none"
-            style={{ height: 58, minHeight: 58, background: "var(--brand-cta)", color: "#FFFFFF", fontSize: "clamp(15px, 3.5vw, 19px)", letterSpacing: "0.06em", fontFamily: "Inter, sans-serif", whiteSpace: "nowrap" }}
+            style={{ height: 56, minHeight: 56, background: "var(--brand-cta)", color: "#FFFFFF", fontSize: "clamp(15px, 3.5vw, 19px)", letterSpacing: "0.06em", fontFamily: "Inter, sans-serif", whiteSpace: "nowrap" }}
           >
             {COPY.cta.seeIfYouQualify}
           </button>
