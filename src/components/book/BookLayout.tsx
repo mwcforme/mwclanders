@@ -25,9 +25,23 @@ const DEFAULT_DESC: Record<BookLayoutProps["page"], string> = {
   "lets-talk": "Talk to a Men's Wellness Centers care team member to figure out the right next step.",
 };
 
-/** Minimal footer for funnel steps — just phone, no marketing content */
+/** Minimal footer for funnel steps — phone + required LegitScript badge */
 const FunnelFooter = () => (
   <footer style={{ background: "#000814", borderTop: "1px solid rgba(255,255,255,0.08)", padding: "20px 24px", textAlign: "center", fontFamily: "Inter, sans-serif" }}>
+    <a
+      href="https://www.legitscript.com/websites/?checker_keywords=menswellnesscenters.com"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Verify LegitScript Certification"
+      style={{ display: "inline-block", marginBottom: 12 }}
+    >
+      <img
+        src="/images/badges/legitscript.png"
+        alt="LegitScript Certified"
+        style={{ height: 40, width: "auto", opacity: 0.8 }}
+        loading="lazy"
+      />
+    </a>
     <p style={{ fontSize: 13, color: "rgba(255,255,255,0.50)", margin: 0 }}>
       Need help?{" "}
       <a href={PHONE.tel} style={{ color: "#E8670A", fontWeight: 600, textDecoration: "none" }}>
