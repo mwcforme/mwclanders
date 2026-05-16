@@ -278,7 +278,7 @@ export const TRTHeroForm = ({
             aria-invalid={!!errors.location}
             style={{
               ...inputBase("location"),
-              color: location ? "#0B1029" : "rgba(11,16,41,0.45)",
+              color: location ? "#0B1029" : "rgba(11,16,41,0.60)",
               appearance: "none",
               backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%230B1029' opacity='0.5' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")`,
               backgroundRepeat: "no-repeat",

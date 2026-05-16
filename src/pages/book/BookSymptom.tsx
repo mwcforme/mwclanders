@@ -142,7 +142,7 @@ const BookSymptom = () => {
                 width: "100%",
                 minHeight: 52,
                 background: otherNote.trim().length < 3 ? "#D1D5DB" : "#E8670A",
-                color: otherNote.trim().length < 3 ? "#6B7280" : "#FFFFFF",
+                color: otherNote.trim().length < 3 ? "#374151" : "#FFFFFF",
                 border: 0,
                 borderRadius: 10,
                 fontSize: 17,

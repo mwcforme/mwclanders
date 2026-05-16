@@ -46,7 +46,7 @@ const OptionRow = ({ icon: Icon, label, selected, onClick }: OptionRowProps) => 
       <Icon
         size={22}
         strokeWidth={2.25}
-        style={{ color: selected ? "#FFFFFF" : "#E8670A" }}
+        style={{ color: selected ? "#FFFFFF" : "#0B1029" }}
       />
     </span>
     <span

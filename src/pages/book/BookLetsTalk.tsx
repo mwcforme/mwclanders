@@ -247,7 +247,7 @@ const BookLetsTalk = () => {
                 <span>{PHONE_DISPLAY}</span>
               </a>
 
-              <p style={{ color: "#9CA3AF", fontSize: 12, marginTop: 10, textAlign: "center" }}>
+              <p style={{ color: "#6B7280", fontSize: 12, marginTop: 10, textAlign: "center" }}>
                 Replies from (866) 344-4955. Standard messaging rates apply.
               </p>
             </section>

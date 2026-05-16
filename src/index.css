@@ -36,9 +36,13 @@
     /* Accent — display only (≥24px, ≥18.66px bold, or icon vs dark) */
     --brand-accent: #E8670A;
 
-    /* CTA fill — brand orange (locked). White ≥16px/700 = large text → 3.29:1 passes AA. */
+    /* CTA fill — brand orange.
+       #E8670A: 3.29:1 vs white — passes AA for large text (≥18px or ≥14px bold).
+       --brand-cta-accessible: #BF5608 — 4.62:1 vs white — passes AA for ALL text sizes.
+       Use --brand-cta-accessible for small/normal text on orange (header pill, sticky bar). */
     --brand-cta: #E8670A;
-    --brand-cta-hover: #E8670A;
+    --brand-cta-hover: #CF5B09;
+    --brand-cta-accessible: #BF5608;  /* darkened for AA on any text size */
 
     /* Text on light surfaces */
     --c-text-on-light: #000033;        /* 17:1 on white */
@@ -268,6 +272,14 @@
 .light-form input::placeholder,
 .light-form textarea::placeholder {
   color: var(--c-placeholder-light) !important;
+}
+
+/* Hero form white inputs — placeholder must hit 4.5:1 on white */
+/* rgba(11,16,41,0.60) on white = ~5.7:1 ✓ */
+[data-form="hero"] input::placeholder,
+[data-form="hero"] select:not([value]):invalid {
+  color: rgba(11,16,41,0.60) !important;
+  opacity: 1;
 }
 
 /* Form focus states — for light-form contexts */
