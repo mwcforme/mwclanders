@@ -68,6 +68,14 @@ export function useLeadSubmitController<TInput>(
       setStatus("submitting");
       inFlight.current = true;
 
+      // Hard timeout — button can NEVER stay stuck longer than 6 seconds
+      const timeoutId = window.setTimeout(() => {
+        if (inFlight.current) {
+          inFlight.current = false;
+          setStatus("idle");
+        }
+      }, 6000);
+
       const validated = parsed.data;
       const base = opts.toLeadInput(validated);
       const attr = getAttribution();
@@ -105,10 +113,10 @@ export function useLeadSubmitController<TInput>(
         await opts.onSuccess?.(pendingResult, validated);
         if (opts.navigateTo) nav.go(opts.navigateTo);
       } catch (navErr) {
-        // onSuccess/navigate threw — still unblock the button
         console.warn("[lead-submit] navigation error", navErr);
       } finally {
         // Always unblock — never leave button stuck on "Booking..."
+        clearTimeout(timeoutId);
         inFlight.current = false;
       }
 

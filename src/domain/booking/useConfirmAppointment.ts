@@ -109,6 +109,12 @@ export function useConfirmAppointment(opts?: {
       setStatus("submitting");
       setError(null);
 
+      // Hard timeout — confirm button can never hang longer than 12 seconds
+      const confirmTimeout = window.setTimeout(() => {
+        setStatus("error");
+        setError("Something took too long. Please try again or call us.");
+      }, 12000);
+
       // Use stored contactId from hero form submit if available —
       // avoids a redundant GHL upsert round-trip on every booking confirm.
       const storedContactId = useBookingStore.getState().identity?.ghlContactId;
@@ -143,6 +149,7 @@ export function useConfirmAppointment(opts?: {
           contactId = r.contactId;
         }
       } catch (e) {
+        clearTimeout(confirmTimeout);
         const msg = (e as Error).message || "Booking failed. Please try another time.";
         setError(msg);
         setStatus("error");
@@ -157,8 +164,8 @@ export function useConfirmAppointment(opts?: {
           startTime: input.slotIso,
           notes: GENERIC_APPT_NOTES,
         });
+        clearTimeout(confirmTimeout);
         setStatus("success");
-        // Fire-and-forget analytics — never block navigation
         void trackConversion("Schedule", {
           user_data: {
             email: input.email,
@@ -176,6 +183,7 @@ export function useConfirmAppointment(opts?: {
         opts?.onBooked?.(input.slotIso);
         return true;
       } catch (bookErr) {
+        clearTimeout(confirmTimeout);
         try {
           sessionStorage.setItem(
             FAILED_INTENT_KEY,
