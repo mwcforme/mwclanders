@@ -30,7 +30,7 @@ const fetchCachedSlots = async (
     .gte("slot_start", start.toISOString())
     .lt("slot_start", end.toISOString())
     .order("slot_start", { ascending: true })
-    .limit(1000);
+    .limit(200);
   if (error) throw new Error(error.message);
   const out: Record<string, string[]> = {};
   for (const row of data || []) {
@@ -301,14 +301,13 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
 
 
     load(refreshNonce > 0 ? "manual" : "initial");
-    // Auto-refresh every 30 sec so the live-availability badge reflects real demand.
-    // On tab focus, force-refresh if data is >30s old.
-    const interval = window.setInterval(() => load("timer"), 30 * 1000);
+    // Auto-refresh every 2 min — slots update hourly in Supabase, 30s was too aggressive.
+    // On tab focus, only refresh if data is >2 min old.
+    const REFRESH_MS = 2 * 60 * 1000;
+    const interval = window.setInterval(() => load("timer"), REFRESH_MS);
     const onFocus = () => {
-      // Read freshest lastUpdated from closure-safe ref via state setter pattern
-      // (acceptable here: at worst we refresh once when not strictly needed)
       const last = lastUpdatedRef.current;
-      if (!last || Date.now() - last.getTime() > 30 * 1000) load("focus");
+      if (!last || Date.now() - last.getTime() > REFRESH_MS) load("focus");
     };
     window.addEventListener("focus", onFocus);
 

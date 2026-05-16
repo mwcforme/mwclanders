@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect } from "react";
+
 import { useNavigate } from "react-router-dom";
 import { Zap, Heart, Scale, HelpCircle } from "lucide-react";
 import BookLayout from "@/components/book/BookLayout";
+
 import SurveyCard from "@/components/book/SurveyCard";
 import OptionRow from "@/components/book/OptionRow";
 import { useBookingStore } from "@/domain/booking/bookingStore";
@@ -24,6 +26,13 @@ const BookSymptom = () => {
 
   useEffect(() => () => {
     if (advanceTimer.current) window.clearTimeout(advanceTimer.current);
+  }, []);
+
+  // Prefetch next funnel steps while user is reading options
+  useEffect(() => {
+    void import("../book/BookDuration");
+    void import("../book/BookSchedule");
+    void import("@/components/book/GHLDayView");
   }, []);
 
   const handleSelect = (value: string) => {
