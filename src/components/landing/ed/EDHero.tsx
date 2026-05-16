@@ -23,7 +23,7 @@ export const EDHero = () => {
   return (
     <section
       id="hero"
-      className="relative overflow-hidden flex items-start lg:items-center"
+      className="relative flex items-start lg:items-center"
       style={{ background: COLORS.navyDeep, minHeight: 720 }}
     >
       <a
