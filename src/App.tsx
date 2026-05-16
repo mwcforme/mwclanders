@@ -32,6 +32,7 @@ const BookSchedule    = lazy(() => import("./pages/book/BookSchedule"));
 const BookSchedule2   = lazy(() => import("./pages/book/BookSchedule2"));
 const BookConfirmed   = lazy(() => import("./pages/book/BookConfirmed"));
 const BookLetsTalk    = lazy(() => import("./pages/book/BookLetsTalk"));
+const BookEntry       = lazy(() => import("./pages/book/BookEntry"));
 
 // Legal — rarely visited, no rush
 const PrivacyPolicy     = lazy(() => import("./pages/legal/PrivacyPolicy"));
@@ -162,6 +163,8 @@ const App = () => (
 
                 {/* ── Booking funnel ── */}
                 <Route path="/book" element={<Navigate to="/book/schedule" replace />} />
+                {/* WordPress handoff — token exchange, no BookingRouteGuard */}
+                <Route path="/book/entry" element={<BookEntry />} />
                 <Route element={<BookingRouteGuard />}>
                   <Route path="/book/symptom"   element={<BookSymptom />} />
                   <Route path="/book/duration"  element={<BookDuration />} />

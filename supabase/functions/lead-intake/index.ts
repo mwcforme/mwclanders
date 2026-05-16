@@ -144,11 +144,6 @@ async function forwardToGhl(c: CanonicalLead, accessToken: string, locationId: s
   if (!contactId) throw new Error("GHL response missing contact id");
   return { contactId };
 }
-  const data = JSON.parse(text);
-  const contactId = data?.contact?.id ?? data?.id;
-  if (!contactId) throw new Error("GHL response missing contact id");
-  return { contactId };
-}
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
@@ -247,7 +242,42 @@ Deno.serve(async (req) => {
       .from("lead_captures")
       .update({ crm_status: "synced", crm_contact_id: contactId })
       .eq("id", captureId);
-    return json(200, { ok: true, capture_id: captureId, crm_contact_id: contactId });
+
+    // ---- Issue a short-lived funnel handoff token ----
+    // Allows WordPress (or any external site) to redirect the user into the
+    // booking funnel with their identity pre-seeded — no PHI in the URL.
+    const { firstName, lastName } = splitName(canonical.fullName);
+    const funnelBase = Deno.env.get("FUNNEL_BASE_URL") ?? "https://book.menswellnesscenters.com";
+    let funnelUrl: string | null = null;
+
+    const { data: tokenRow, error: tokenErr } = await supabase
+      .from("wp_intake_tokens")
+      .insert({
+        capture_id: captureId,
+        contact_id: contactId,
+        first_name: firstName,
+        last_name: lastName ?? null,
+        email: canonical.email ?? null,
+        phone: canonical.phone ?? "",
+        location: canonical.location ?? null,
+        service: canonical.service ?? null,
+        source: canonical.form_source_label ?? "wordpress-intake",
+      })
+      .select("token")
+      .single();
+
+    if (!tokenErr && tokenRow?.token) {
+      funnelUrl = `${funnelBase}/book/entry?t=${tokenRow.token}`;
+    } else {
+      console.warn("[lead-intake] token insert failed", tokenErr);
+    }
+
+    return json(200, {
+      ok: true,
+      capture_id: captureId,
+      crm_contact_id: contactId,
+      ...(funnelUrl ? { funnel_url: funnelUrl } : {}),
+    });
   } catch (e) {
     const msg = (e as Error).message ?? "GHL forward failed";
     console.error("[lead-intake] ghl forward failed", msg);
