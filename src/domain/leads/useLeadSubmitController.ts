@@ -43,8 +43,9 @@ export interface LeadSubmitController<TInput> {
 
 /** Fire-and-forget Supabase capture — never throws, never blocks. */
 function persistCapture(row: Record<string, unknown>): void {
+  // Use Promise.resolve to ensure we have a real thenable before .catch
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  void supabase.from("lead_captures").insert(row as any)
+  void Promise.resolve(supabase.from("lead_captures").insert(row as any))
     .catch(() => { /* non-critical, logged server-side */ });
 }
 
