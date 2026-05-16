@@ -4,6 +4,7 @@ import { HelmetProvider } from "react-helmet-async";
 import App from "./App.tsx";
 import "./index.css";
 import { initAttribution } from "./lib/attribution";
+import { initBookingQueue } from "./lib/bookingQueue";
 import { sanitizeAnalyticsForBookingRoute, fireSanitizedPageView } from "./lib/analyticsGuard";
 
 // Clear the legacy v1 attribution cookie (which could contain first/last name
@@ -14,6 +15,9 @@ if (typeof document !== "undefined") {
 
 // Capture URL-borne attribution (utm_*, click ids only) into the v2 cookie.
 initAttribution();
+
+// Initialize offline booking queue — retries any failed bookings on load/focus/online.
+initBookingQueue();
 
 // Fire a sanitized GA4 page_view manually so /book/* never reports its raw
 // (potentially PHI-laden) URL. send_page_view is set to false in index.html.

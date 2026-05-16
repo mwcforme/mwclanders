@@ -39,7 +39,7 @@ export const TRTLocations = () => {
                 {/* Mobile: collapsed by default */}
                 <button
                   onClick={() => setOpenIdx(isOpen ? null : idx)}
-                  className="md:hidden flex items-center justify-between w-full text-sm font-semibold uppercase py-2 mb-2 cursor-pointer"
+                  className="md:hidden flex items-center justify-between w-full font-semibold uppercase py-3 mb-2 cursor-pointer" style={{ fontSize: 15, minHeight: 48 }}
                   style={{ color: "#000033", fontFamily: "Inter, sans-serif", background: "none", border: "none", letterSpacing: "0.06em" }}
                 >
                   <span>Address &amp; Hours</span>
@@ -67,14 +67,14 @@ export const TRTLocations = () => {
                   <a
                     href={l.phoneHref}
                     className="text-xs font-semibold uppercase text-center rounded-full inline-flex items-center justify-center gap-2"
-                    style={{ height: 48, minHeight: 48, color: "#000033", border: "1px solid #000033", letterSpacing: "0.08em", fontFamily: "Inter, sans-serif", textDecoration: "none" }}
+                    style={{ height: 52, minHeight: 52, fontSize: 15, color: "#000033", border: "1px solid #000033", letterSpacing: "0.06em", fontFamily: "Inter, sans-serif", textDecoration: "none" }}
                   >
                     <Phone className="h-4 w-4" /> Call {l.phone}
                   </a>
                   <button
                     onClick={bookAt(l.slug)}
                     className="font-bold uppercase text-center rounded-full cursor-pointer inline-flex items-center justify-center"
-                    style={{ height: 48, minHeight: 48, background: "var(--brand-cta)", color: "#FFFFFF", fontSize: 15, letterSpacing: "0.06em", fontFamily: "Inter, sans-serif", border: "none" }}
+                    style={{ height: 52, minHeight: 52, background: "var(--brand-cta)", color: "#FFFFFF", fontSize: 15, letterSpacing: "0.06em", fontFamily: "Inter, sans-serif", border: "none" }}
                   >
                     Book No-Cost Consult
                   </button>

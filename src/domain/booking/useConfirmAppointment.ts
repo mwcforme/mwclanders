@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useServices } from "@/app/providers/ServicesProvider";
 import { useBookingStore } from "@/domain/booking/bookingStore";
+import { enqueueBooking } from "@/lib/bookingQueue";
+import { CENTER_CALENDARS } from "@/lib/ghlCalendars";
 import type { LocationKey } from "@/lib/ghlCalendars";
 import type { MwcCustomFields } from "@/services/contracts/ILeadSubmitter";
 import { trackConversion } from "@/lib/capi";
@@ -201,6 +203,21 @@ export function useConfirmAppointment(opts?: {
           );
         } catch {
           /* ignore */
+        }
+        // Queue the booking offline — never lose a lead even if GHL is down
+        const cal = CENTER_CALENDARS[input.location];
+        if (cal && contactId) {
+          enqueueBooking({
+            slotIso: input.slotIso,
+            location: input.location,
+            contactId,
+            calendarId: cal.calendarId,
+            source: input.source || "booking-funnel",
+          });
+          // Tell user they're confirmed — we'll sync in background
+          setStatus("success");
+          opts?.onBooked?.(input.slotIso);
+          return true;
         }
         setError(
           "That time was just taken. We'll have a coordinator call you to confirm another slot.",

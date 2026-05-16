@@ -315,7 +315,7 @@ export const TRTHeroForm = ({
               aria-invalid={!!errors.tcpa}
             />
           </span>
-          <span style={{ color: "rgba(245,240,235,0.65)", fontSize: 12, lineHeight: 1.45, paddingTop: 4 }}>
+          <span style={{ color: "rgba(245,240,235,0.65)", fontSize: 14, lineHeight: 1.5, paddingTop: 4 }}>
             I agree to receive SMS/calls about my appointment. Reply STOP to opt out. Msg & data rates may apply.
           </span>
         </label>
@@ -352,8 +352,8 @@ export const TRTHeroForm = ({
         )}
       </form>
 
-      <p className="text-center mt-4 inline-flex items-center justify-center gap-1.5 w-full" style={{ color: "rgba(245,240,235,0.60)", fontFamily: "Inter, sans-serif", fontSize: 12 }}>
-        <Lock size={12} /> HIPAA secure. No spam, ever.
+      <p className="text-center mt-4 inline-flex items-center justify-center gap-1.5 w-full" style={{ color: "rgba(245,240,235,0.65)", fontFamily: "Inter, sans-serif", fontSize: 14 }}>
+        <Lock size={14} /> HIPAA secure. No spam, ever.
       </p>
     </div>
   );

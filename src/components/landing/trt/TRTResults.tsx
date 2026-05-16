@@ -73,7 +73,7 @@ export const TRTResults = () => {
         </div>
 
         <div className="mt-10 text-center">
-          <p className="text-xs mb-4" style={{ color: "#5A6072", fontFamily: "Inter, sans-serif", fontStyle: "italic" }}>
+          <p className="mb-4" style={{ fontSize: 14 }} style={{ color: "#5A6072", fontFamily: "Inter, sans-serif", fontStyle: "italic" }}>
             Testimonials reflect individual experiences. Individual results vary.
           </p>
           <button
