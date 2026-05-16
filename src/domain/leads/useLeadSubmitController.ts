@@ -105,20 +105,22 @@ export function useLeadSubmitController<TInput>(
       void supabase.from("lead_captures").insert(captureRow as any)
         .catch((e: unknown) => console.warn("[lead-capture] insert failed", e));
 
-      // Navigate immediately — never block on GHL
+      // Navigate immediately — synchronous, no await, no async microtask gaps
       const pendingResult: LeadResult = { contactId: "pending" };
 
-      try {
-        setStatus("success");
-        await opts.onSuccess?.(pendingResult, validated);
-        if (opts.navigateTo) nav.go(opts.navigateTo);
-      } catch (navErr) {
-        console.warn("[lead-submit] navigation error", navErr);
-      } finally {
-        // Always unblock — never leave button stuck on "Booking..."
-        clearTimeout(timeoutId);
-        inFlight.current = false;
-      }
+      clearTimeout(timeoutId);
+      inFlight.current = false;
+      setStatus("success");
+
+      // Run navigation in next frame so React flushes the success state first
+      window.requestAnimationFrame(() => {
+        try {
+          opts.onSuccess?.(pendingResult, validated);
+          if (opts.navigateTo) nav.go(opts.navigateTo);
+        } catch (navErr) {
+          console.warn("[lead-submit] navigation error", navErr);
+        }
+      });
 
       // GHL upsert + analytics fire fully async after navigation
       leads.submitLead(leadInput).then((result) => {
