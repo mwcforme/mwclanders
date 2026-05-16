@@ -73,8 +73,8 @@ export const TRTResults = () => {
         </div>
 
         <div className="mt-10 text-center">
-          <p className="text-base mb-4" style={{ color: "#1a1a2e", fontFamily: "Inter, sans-serif", fontSize: 16 }}>
-            Join 10,000+ Virginia men who have taken the first step.
+          <p className="text-xs mb-4" style={{ color: "#5A6072", fontFamily: "Inter, sans-serif", fontStyle: "italic" }}>
+            Testimonials reflect individual experiences. Individual results vary.
           </p>
           <button
             onClick={scrollToForm}

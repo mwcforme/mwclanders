@@ -128,7 +128,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
               lineHeight: 1.5,
             }}
           >
-            Most men leave their first visit with answers and a plan. Labs drawn on-site. Real physician, same visit. Virginia's men's health practice since 2015.
+            Most men leave their first visit with a clear picture of their labs and a care plan. Labs drawn on-site, results reviewed same visit. Virginia's men's health practice since 2015. Individual results vary.
           </p>
 
           {/* Star rating row — clickable, links to GBP */}

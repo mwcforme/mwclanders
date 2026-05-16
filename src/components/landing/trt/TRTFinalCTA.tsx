@@ -30,7 +30,7 @@ export const TRTFinalCTA = () => {
               className="text-base md:text-lg leading-relaxed"
               style={{ color: "rgba(255,255,255,0.85)", fontFamily: "Inter, sans-serif" }}
             >
-              This isn't about vanity. It's about getting back to being the man you've always been: sharp, confident, and performing at your level.
+              This isn't about vanity. It's about getting back to being the man you've always been: sharp, confident, and performing at your level. Individual results vary.
             </p>
 
             <ul className="mt-6 space-y-3">

@@ -284,7 +284,7 @@ function Section5Outcome() {
         className="font-bold uppercase"
         style={{ fontFamily: "Oswald, sans-serif", fontSize: "clamp(24px, 4.5vw, 34px)", letterSpacing: "0.02em", color: "#000814" }}
       >
-        Most men get their energy, strength, and drive locked in within 6 months.
+        Based on published clinical data, many men on physician-supervised TRT report improvements in energy, strength, and drive within the first few months. Individual results vary.
       </h2>
       <p className="mt-3 text-sm md:text-base" style={{ color: "#475569" }}>
         With clinically supervised TRT, most men reach peak energy, strength, and drive within 6 months.
