@@ -111,12 +111,12 @@ export const TRTHeroFormShort = ({
   const inputBase = (field: string): React.CSSProperties => ({
     width: "100%",
     height: 52,
-    background: "rgba(11,16,41,0.6)",
-    border: `1px solid ${errors[field] ? ERROR_RED : focused === field ? "var(--brand-accent)" : "var(--c-border-on-dark)"}`,
+    background: "#FFFFFF",
+    border: `1px solid ${errors[field] ? ERROR_RED : focused === field ? "var(--brand-accent)" : "rgba(0,0,0,0.15)"}`,
     borderRadius: 8,
     padding: "0 16px",
     fontSize: 16,
-    color: "#F5F0EB",
+    color: "#0B1029",
     outline: "none",
     fontFamily: "Inter, sans-serif",
     transition: "border-color 150ms ease",
@@ -178,9 +178,9 @@ export const TRTHeroFormShort = ({
             aria-invalid={!!errors.location}
             style={{
               ...inputBase("location"),
-              color: location ? "#F5F0EB" : "rgba(245,240,235,0.50)",
+              color: location ? "#0B1029" : "rgba(11,16,41,0.40)",
               appearance: "none",
-              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23F5F1E8' opacity='0.6' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")`,
+              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%230B1029' opacity='0.5' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")`,
               backgroundRepeat: "no-repeat",
               backgroundPosition: "right 14px center",
               paddingRight: 40,
