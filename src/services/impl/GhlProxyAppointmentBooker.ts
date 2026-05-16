@@ -1,5 +1,5 @@
 import { bookAppointment, getFreeSlots, TIMEZONE, CENTER_CALENDARS } from "@/lib/ghlCalendars";
-import { supabase } from "@/integrations/supabase/client";
+const getSupabase = () => import("@/integrations/supabase/client").then(m => m.supabase);
 import type {
   AppointmentInput,
   AppointmentResult,
@@ -17,6 +17,7 @@ async function logBookingEvent(row: {
   meta?: Record<string, unknown>;
 }) {
   try {
+    const supabase = await getSupabase();
     await supabase.from("booking_event_log").insert({
       event_type: row.event_type,
       location: row.location,

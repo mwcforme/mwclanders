@@ -1,7 +1,7 @@
 // Client helper: fire a server-side conversion via the meta-capi edge function.
 // Always pair with a client-side dataLayer push that uses the same event_id
 // so Meta + GA4 dedupe browser and server events.
-import { supabase } from "@/integrations/supabase/client";
+const getSupabase = () => import("@/integrations/supabase/client").then(m => m.supabase);
 import { getAttribution } from "@/lib/attribution";
 
 export type CapiEventName =
@@ -70,6 +70,7 @@ export async function trackConversion(
   }
 
   try {
+    const supabase = await getSupabase();
     await supabase.functions.invoke("meta-capi", {
       body: {
         event_name,

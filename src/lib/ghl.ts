@@ -1,4 +1,4 @@
-import { supabase } from "@/integrations/supabase/client";
+const getSupabase = () => import("@/integrations/supabase/client").then(m => m.supabase);
 import { APP_ENV } from "@/lib/env";
 
 export interface GHLRequest {
@@ -21,6 +21,7 @@ export interface GHLResponse<T = unknown> {
  * `__env` tells the proxy which credentials/location to use (stage vs prod).
  */
 export async function ghl<T = unknown>(req: GHLRequest): Promise<GHLResponse<T>> {
+  const supabase = await getSupabase();
   const { data, error } = await supabase.functions.invoke<GHLResponse<T>>("ghl-proxy", {
     body: { ...req, __env: APP_ENV },
   });

@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 import { sentryVitePlugin } from "@sentry/vite-plugin";
+import { compression } from "vite-plugin-compression2";
 // @ts-expect-error - .mjs file, no declaration needed
 import { vitePluginCheckBannedWording } from "./scripts/check-banned-wording.mjs";
 // @ts-expect-error - .mjs file, no declaration needed
@@ -19,6 +20,9 @@ export default defineConfig(({ mode }) => ({
     vitePluginCheckHardcodedColors(),
     react(),
     mode === "development" && componentTagger(),
+    // Brotli + gzip pre-compressed assets — Hostinger/Netlify/Vercel serve .br first
+    compression({ algorithm: "brotliCompress", exclude: [/\.(png|jpg|jpeg|webp|gif|svg|ico)$/] }),
+    compression({ algorithm: "gzip", exclude: [/\.(png|jpg|jpeg|webp|gif|svg|ico)$/] }),
     process.env.SENTRY_AUTH_TOKEN
       ? sentryVitePlugin({
           org: "REPLACE_WITH_SENTRY_ORG_SLUG",
@@ -29,7 +33,7 @@ export default defineConfig(({ mode }) => ({
       : null,
   ].filter(Boolean),
   build: {
-    sourcemap: true,
+    sourcemap: false, // disabled for prod — reduces transfer size; re-enable if debugging production errors
     target: "es2020",
     minify: "esbuild",
     cssMinify: true,

@@ -9,7 +9,9 @@
  * confirmed success from GHL (status 2xx + appointmentId present).
  */
 
-import { supabase } from "@/integrations/supabase/client";
+// Lazy-loaded to keep Supabase out of the critical-path bundle.
+// Only needed when retrying queued bookings (background, not page load).
+const getSupabase = () => import("@/integrations/supabase/client").then(m => m.supabase);
 
 const QUEUE_KEY = "mwc_booking_queue_v1";
 const MAX_RETRIES = 5;
@@ -62,6 +64,7 @@ export function getQueue(): QueuedBooking[] {
 
 async function attemptBooking(b: QueuedBooking): Promise<boolean> {
   try {
+    const supabase = await getSupabase();
     const { data, error } = await supabase.functions.invoke("ghl-proxy", {
       body: {
         path: "/calendars/events/appointments",
@@ -94,7 +97,7 @@ async function attemptBooking(b: QueuedBooking): Promise<boolean> {
 
     // Success — remove from queue, log to Supabase
     removeFromQueue(b.id);
-    void supabase.from("booking_event_log").insert({
+    void supabase.from("booking_event_log").insert({ // supabase already loaded above
       event_type: "success",
       location: b.location as never,
       calendar_id: b.calendarId,
@@ -126,6 +129,7 @@ export async function flushBookingQueue(): Promise<void> {
 
   console.info("[booking-queue] flushing", q.length, "queued bookings");
 
+  const supabase = await getSupabase();
   for (const booking of q) {
     if (booking.retries >= MAX_RETRIES) {
       // Give up — escalate to Supabase for manual review

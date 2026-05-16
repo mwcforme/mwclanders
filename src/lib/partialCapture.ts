@@ -3,7 +3,8 @@
  * but abandons before submitting. Writes to lead_captures with status "partial"
  * so zero form-fill data is lost.
  */
-import { supabase } from "@/integrations/supabase/client";
+// Lazy-loaded — keeps Supabase out of the hero form's critical-path bundle.
+const getSupabase = () => import("@/integrations/supabase/client").then(m => m.supabase);
 import { getAttribution } from "@/lib/attribution";
 
 const FIRED_KEY = "mwc_partial_fired";
@@ -23,6 +24,7 @@ export async function capturePartialLead(opts: {
 
   const attr = getAttribution();
   try {
+    const supabase = await getSupabase();
     await supabase.from("lead_captures").insert({
       name: opts.name || null,
       phone: opts.phone,
