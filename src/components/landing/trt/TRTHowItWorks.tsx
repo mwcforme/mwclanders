@@ -77,7 +77,7 @@ export const TRTHowItWorks = () => {
           >
             Most men who come in have already Googled their symptoms, gotten bloodwork, and been told everything looks fine. They know it isn't. That gap between how you feel and what your labs say is exactly what we look at.
           </p>
-          <ul className="mt-8 space-y-4">
+          <ul className="mt-8 space-y-5">
             {symptoms.map((s) => (
               <li key={s} className="flex items-start gap-3">
                 <span
@@ -94,7 +94,7 @@ export const TRTHowItWorks = () => {
                 >
                   <Minus className="h-3.5 w-3.5" strokeWidth={3} />
                 </span>
-                <span className="text-base" style={{ color: "#1A1A1A", fontFamily: "Inter, sans-serif" }}>{s}</span>
+                <span style={{ color: "#1A1A1A", fontFamily: "Inter, sans-serif", fontSize: 17, lineHeight: 1.5 }}>{s}</span>
               </li>
             ))}
           </ul>
@@ -127,7 +127,7 @@ export const TRTHowItWorks = () => {
                     <h3 className="font-bold text-lg" style={{ color: "#000033", fontFamily: "Inter, sans-serif" }}>
                       {s.title}
                     </h3>
-                    <p className="text-base mt-1 leading-relaxed" style={{ color: "#4A4A4A", fontFamily: "Inter, sans-serif" }}>
+                    <p style={{ color: "#4A4A4A", fontFamily: "Inter, sans-serif", fontSize: 17, lineHeight: 1.6, marginTop: 4 }}>
                       {s.desc}
                     </p>
                   </div>

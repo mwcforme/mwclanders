@@ -158,18 +158,18 @@ export const TRTHeroForm = ({
 
   const inputBase = (field: string): React.CSSProperties => ({
     width: "100%",
-    height: 50,
-    background: "rgba(11,16,41,0.6)",
-    border: `1px solid ${
+    height: 58,
+    background: "rgba(5,8,28,0.65)",
+    border: `1.5px solid ${
       errors[field]
         ? ERROR_RED
         : focused === field
           ? "var(--brand-accent)"
-          : "var(--c-border-on-dark)"
+          : "rgba(255,255,255,0.18)"
     }`,
-    borderRadius: 8,
-    padding: "0 16px",
-    fontSize: 15,
+    borderRadius: 10,
+    padding: "0 18px",
+    fontSize: 17,
     color: "#F5F0EB",
     outline: "none",
     fontFamily: "Inter, sans-serif",
@@ -307,7 +307,7 @@ export const TRTHeroForm = ({
               type="checkbox"
               checked={tcpa}
               onChange={(e) => { setTcpa(e.target.checked); clearError("tcpa"); }}
-              className="w-5 h-5 min-w-[20px] min-h-[20px] rounded border bg-transparent cursor-pointer"
+              className="w-6 h-6 min-w-[24px] min-h-[24px] rounded border bg-transparent cursor-pointer"
               style={{
                 accentColor: "#E8670A",
                 borderColor: errors.tcpa ? ERROR_RED : "rgba(255,255,255,0.30)",

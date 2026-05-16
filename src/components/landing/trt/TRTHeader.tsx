@@ -79,18 +79,19 @@ export const TRTHeader = ({ minimal = false }: { minimal?: boolean } = {}) => {
             aria-label="Call 866-344-4955"
             className="relative inline-flex items-center justify-center rounded-full"
             style={{
-              width: 44,
-              height: 44,
+              width: 52,
+              height: 52,
               background: "var(--brand-cta)",
               color: "#FFFFFF",
+              boxShadow: "0 4px 16px rgba(232,103,10,0.40)",
             }}
           >
             <span
               aria-hidden="true"
               className="absolute inset-0 rounded-full animate-ping"
-              style={{ background: "var(--brand-cta)", opacity: 0.5 }}
+              style={{ background: "var(--brand-cta)", opacity: 0.4 }}
             />
-            <Phone size={20} className="relative" strokeWidth={2.5} />
+            <Phone size={22} className="relative" strokeWidth={2.5} />
           </a>
         </div>
         )}

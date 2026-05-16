@@ -122,10 +122,10 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
           <p
             className="mt-6 max-w-[540px]"
             style={{
-              color: "rgba(245,240,235,0.85)",
+              color: "rgba(245,240,235,0.88)",
               fontFamily: "Inter, sans-serif",
-              fontSize: 18,
-              lineHeight: 1.5,
+              fontSize: 19,
+              lineHeight: 1.6,
             }}
           >
             Most men leave their first visit with a clear picture of their labs and a care plan. Labs drawn on-site, results reviewed same visit. Virginia's men's health practice since 2015. Individual results vary.
@@ -147,13 +147,13 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
                 <Star key={i} className="h-[18px] w-[18px]" fill={COLORS.gold} stroke={COLORS.gold} />
               ))}
             </span>
-            <span style={{ fontSize: 15, fontWeight: 600 }}>4.9</span>
-            <span style={{ fontSize: 14, color: "rgba(245,240,235,0.75)" }}>
+            <span style={{ fontSize: 17, fontWeight: 700 }}>4.9</span>
+            <span style={{ fontSize: 15, color: "rgba(245,240,235,0.80)" }}>
               from 200+ verified Google reviews
             </span>
           </a>
 
-          <ul className="mt-7 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 max-w-[600px]">
+          <ul className="mt-7 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 max-w-[600px]">
             {trustChecks.map((t) => (
               <li
                 key={t}
@@ -161,7 +161,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
                 style={{ color: COLORS.cream, fontFamily: "Inter, sans-serif" }}
               >
                 <Check className="h-[18px] w-[18px] flex-shrink-0" strokeWidth={3} style={{ color: COLORS.orange }} />
-                <span style={{ fontSize: 15, fontWeight: 500 }}>{t}</span>
+                <span style={{ fontSize: 17, fontWeight: 500 }}>{t}</span>
               </li>
             ))}
           </ul>
@@ -172,7 +172,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
 
           <div
             className="mt-6"
-            style={{ color: "rgba(245,240,235,0.60)", fontFamily: "Inter, sans-serif", fontSize: 12 }}
+            style={{ color: "rgba(245,240,235,0.65)", fontFamily: "Inter, sans-serif", fontSize: 14 }}
           >
             Medically reviewed by licensed Virginia providers. Individual results vary.
           </div>

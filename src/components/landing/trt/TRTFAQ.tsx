@@ -42,7 +42,7 @@ export const TRTFAQ = () => {
                   aria-expanded={isOpen}
                   aria-controls={panelId}
                 >
-                  <span className="font-semibold text-base">{f.q}</span>
+                  <span className="font-semibold" style={{ fontSize: 17 }}>{f.q}</span>
                   <ChevronDown
                     className="h-5 w-5 flex-shrink-0 transition-transform duration-200"
                     style={{
@@ -54,7 +54,7 @@ export const TRTFAQ = () => {
                 {isOpen && (
                   <div
                     id={panelId}
-                    className="px-5 pb-5 text-sm leading-relaxed"
+                    className="px-5 pb-5 leading-relaxed" style={{ fontSize: 16 }}
                     style={{ color: "#1a1a2e", fontFamily: "Inter, sans-serif" }}
                   >
                     <p>{f.a}</p>

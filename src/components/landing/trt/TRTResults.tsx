@@ -58,15 +58,15 @@ export const TRTResults = () => {
                   </span>
                 )}
               </div>
-              <p className="text-sm italic leading-relaxed flex-1" style={{ color: "#1a1a2e", fontFamily: "Inter, sans-serif" }}>
+              <p className="italic flex-1" style={{ color: "#1a1a2e", fontFamily: "Inter, sans-serif", fontSize: 17, lineHeight: 1.65 }}>
                 "{t.quote}"
               </p>
               <div className="mt-4 pt-4 border-t flex items-center justify-between" style={{ borderColor: "var(--c-border-on-light)" }}>
                 <div>
-                  <div className="text-sm font-semibold" style={{ color: "#000033", fontFamily: "Inter, sans-serif" }}>{t.name}</div>
-                  <div className="text-xs" style={{ color: "var(--c-text-on-light-muted)", fontFamily: "Inter, sans-serif" }}>{t.city}</div>
+                  <div className="font-semibold" style={{ color: "#000033", fontFamily: "Inter, sans-serif", fontSize: 16 }}>{t.name}</div>
+                  <div style={{ color: "var(--c-text-on-light-muted)", fontFamily: "Inter, sans-serif", fontSize: 14 }}>{t.city}</div>
                 </div>
-                <div className="text-xs" style={{ color: "var(--c-text-on-light-muted)", fontFamily: "Inter, sans-serif" }}>{t.monthYear}</div>
+                <div style={{ color: "var(--c-text-on-light-muted)", fontFamily: "Inter, sans-serif", fontSize: 14 }}>{t.monthYear}</div>
               </div>
             </div>
           ))}

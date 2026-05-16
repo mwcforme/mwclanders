@@ -90,21 +90,22 @@ export const StickyMobileCTA = () => {
         href={nearest.phoneHref}
         data-cro="mobile_sticky_call"
         onClick={() => trackCro("mobile_sticky_call", { clinic: nearest.slug })}
-        className="flex-1 flex flex-col items-center justify-center gap-0.5 text-[12px] font-bold uppercase"
+        className="flex-1 flex flex-col items-center justify-center gap-0.5 font-bold uppercase"
         style={{
-          height: 64,
+          height: 72,
           background: "transparent",
           color: "#F5F0EB",
           textDecoration: "none",
           fontFamily: "Inter, sans-serif",
-          letterSpacing: "0.08em",
+          letterSpacing: "0.06em",
+          fontSize: 13,
           borderRight: "1px solid var(--c-border-on-dark)",
         }}
       >
         <span className="inline-flex items-center gap-1.5">
-          <Phone size={14} /> Call now
+          <Phone size={16} /> Call Us
         </span>
-        <span className="text-[11px] font-medium opacity-80">{nearest.phone}</span>
+        <span style={{ fontSize: 13, fontWeight: 600, opacity: 0.85 }}>{nearest.phone}</span>
       </a>
       <button
         type="button"
@@ -112,15 +113,16 @@ export const StickyMobileCTA = () => {
         data-cro="mobile_sticky_book_scroll"
         className="flex-1 flex items-center justify-center font-bold uppercase cursor-pointer border-none"
         style={{
-          height: 64,
+          height: 72,
           background: "var(--brand-cta)",
           color: "#FFFFFF",
-          fontSize: 19,
+          fontSize: 18,
           fontFamily: "Inter, sans-serif",
-          letterSpacing: "0.08em",
+          letterSpacing: "0.05em",
+          boxShadow: "inset 0 1px 0 rgba(255,255,255,0.15)",
         }}
       >
-        Book Now. No Cost.
+        Get My Labs Checked
       </button>
     </div>
   );
