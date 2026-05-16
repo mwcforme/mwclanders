@@ -2,6 +2,7 @@
  * Trust / certification band — responsive flex row.
  * Mobile: badges wrap, dividers hidden. Desktop: full row with dividers.
  * Order: LegitScript → CLIA → HIPAA
+ * Images: WebP with PNG fallback via <picture> for maximum compression.
  */
 export const TRTMarquee = () => (
   <section
@@ -21,14 +22,19 @@ export const TRTMarquee = () => (
         gap: "20px 36px",
       }}
     >
-      <img
-        src="/images/badges/legitscript.png"
-        alt="LegitScript Certified"
-        className="h-14 md:h-20 w-auto"
-        style={{ maxWidth: 160, objectFit: "contain" }}
-        loading="lazy"
-        decoding="async"
-      />
+      <picture>
+        <source srcSet="/images/badges/legitscript.webp" type="image/webp" />
+        <img
+          src="/images/badges/legitscript.png"
+          alt="LegitScript Certified"
+          className="h-14 md:h-20 w-auto"
+          style={{ maxWidth: 160, objectFit: "contain" }}
+          loading="lazy"
+          decoding="async"
+          width="160"
+          height="80"
+        />
+      </picture>
 
       <div
         aria-hidden="true"
@@ -36,14 +42,19 @@ export const TRTMarquee = () => (
         style={{ width: 1, height: 52, background: "rgba(255,255,255,0.20)", flexShrink: 0 }}
       />
 
-      <img
-        src="/images/badges/clia.png"
-        alt="CLIA Certified Laboratory"
-        className="h-14 md:h-20 w-auto"
-        style={{ maxWidth: 160, objectFit: "contain" }}
-        loading="lazy"
-        decoding="async"
-      />
+      <picture>
+        <source srcSet="/images/badges/clia.webp" type="image/webp" />
+        <img
+          src="/images/badges/clia.png"
+          alt="CLIA Certified Laboratory"
+          className="h-14 md:h-20 w-auto"
+          style={{ maxWidth: 160, objectFit: "contain" }}
+          loading="lazy"
+          decoding="async"
+          width="160"
+          height="80"
+        />
+      </picture>
 
       <div
         aria-hidden="true"
@@ -51,14 +62,19 @@ export const TRTMarquee = () => (
         style={{ width: 1, height: 52, background: "rgba(255,255,255,0.20)", flexShrink: 0 }}
       />
 
-      <img
-        src="/images/badges/hipaa.png"
-        alt="HIPAA Compliant"
-        className="h-14 md:h-20 w-auto"
-        style={{ maxWidth: 160, objectFit: "contain" }}
-        loading="lazy"
-        decoding="async"
-      />
+      <picture>
+        <source srcSet="/images/badges/hipaa.webp" type="image/webp" />
+        <img
+          src="/images/badges/hipaa.png"
+          alt="HIPAA Compliant"
+          className="h-14 md:h-20 w-auto"
+          style={{ maxWidth: 160, objectFit: "contain" }}
+          loading="lazy"
+          decoding="async"
+          width="160"
+          height="80"
+        />
+      </picture>
     </div>
   </section>
 );

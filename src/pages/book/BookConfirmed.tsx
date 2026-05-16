@@ -118,6 +118,7 @@ const BookConfirmed = () => {
               <video
                 ref={videoRef}
                 src={EXPECT_VIDEO_SRC}
+                poster="/images/video-poster.webp"
                 muted
                 loop={false}
                 playsInline

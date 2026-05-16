@@ -3,7 +3,7 @@ import { Loader2, ChevronDown } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { CENTER_CALENDARS, TIMEZONE, type LocationKey } from "@/lib/ghlCalendars";
 import { addDaysInTimeZone, dateFromYmdInTimeZone, isSundayInTimeZone, ymdInTimeZone } from "@/lib/etDate";
-import { supabase } from "@/integrations/supabase/client";
+const getSupabase = () => import("@/integrations/supabase/client").then(m => m.supabase);
 import { useConfirmAppointment } from "@/domain/booking/useConfirmAppointment";
 
 // banned-wording-allow-next-line — GHL API table/endpoint name
@@ -12,6 +12,7 @@ const fetchCachedSlots = async (
   start: Date,
   end: Date,
 ): Promise<Record<string, string[]>> => {
+  const supabase = await getSupabase();
   const { data, error } = await supabase
     .from("ghl_free_slots")
     .select("slot_start")
