@@ -79,7 +79,7 @@ export const EDHowItWorks = () => {
 
           <button
             onClick={scrollToForm}
-            className="mt-10 inline-flex items-center justify-center rounded-full px-8 py-4 font-bold text-sm uppercase cursor-pointer transition-colors duration-200"
+            className="mt-10 w-full sm:w-auto inline-flex items-center justify-center rounded-lg px-8 font-bold cursor-pointer transition-colors duration-200"
             style={{ background: "#E8670A", color: "#FFFFFF", letterSpacing: "0.08em", fontFamily: "Inter, sans-serif", border: "none" }}
             onMouseEnter={(e) => { e.currentTarget.style.background = "#CF5B09"; }}
             onMouseLeave={(e) => { e.currentTarget.style.background = "#E8670A"; }}

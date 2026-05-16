@@ -73,12 +73,12 @@ export const TRTResults = () => {
         </div>
 
         <div className="mt-10 text-center">
-          <p className="mb-4" style={{ fontSize: 14 }} style={{ color: "#5A6072", fontFamily: "Inter, sans-serif", fontStyle: "italic" }}>
+          <p className="mb-4" style={{ fontSize: 14, color: "#5A6072", fontFamily: "Inter, sans-serif", fontStyle: "italic" }}>
             Testimonials reflect individual experiences. Individual results vary.
           </p>
           <button
             onClick={scrollToForm}
-            className="inline-flex items-center justify-center rounded-full px-8 font-bold cursor-pointer border-none"
+            className="w-full sm:w-auto inline-flex items-center justify-center rounded-lg px-8 font-bold cursor-pointer border-none"
             style={{ height: 56, minHeight: 56, background: "var(--brand-cta)", color: "#FFFFFF", fontSize: "clamp(15px, 3.5vw, 19px)", letterSpacing: "0.06em", fontFamily: "Inter, sans-serif", whiteSpace: "nowrap" }}
           >
             {COPY.cta.startConsult}

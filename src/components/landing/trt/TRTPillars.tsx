@@ -26,61 +26,115 @@ const pillars = [
   },
 ];
 
+const cardStyle: React.CSSProperties = {
+  background: "rgba(255,255,255,0.07)",
+  border: "1px solid rgba(255,255,255,0.14)",
+  boxShadow: "inset 0 1px 0 rgba(255,255,255,0.08)",
+};
+
+const cardEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+  e.currentTarget.style.background = "rgba(255,255,255,0.13)";
+  e.currentTarget.style.borderColor = "rgba(232,103,10,0.50)";
+  e.currentTarget.style.boxShadow = "inset 0 1px 0 rgba(255,255,255,0.10), 0 0 0 1px rgba(232,103,10,0.20)";
+};
+const cardLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+  e.currentTarget.style.background = "rgba(255,255,255,0.07)";
+  e.currentTarget.style.borderColor = "rgba(255,255,255,0.14)";
+  e.currentTarget.style.boxShadow = "inset 0 1px 0 rgba(255,255,255,0.08)";
+};
+
 export const TRTPillars = () => (
   <section className="py-14 md:py-20" style={{ background: "#000033" }}>
     <div className="max-w-[1200px] mx-auto px-6">
       <h2
-        className="font-bold uppercase text-center mb-12"
+        className="font-bold uppercase text-center mb-10 md:mb-12"
         style={{
           fontFamily: "Oswald, sans-serif",
-          fontSize: "clamp(28px, 4vw, 40px)",
+          fontSize: "clamp(24px, 4vw, 40px)",
           color: "#FFFFFF",
           fontWeight: 700,
         }}
       >
-        EVERYTHING YOU NEED FOR TRT, ED,<br />
+        EVERYTHING YOU NEED FOR TRT, ED,<br className="hidden sm:block" />
         AND WEIGHT LOSS, UNDER ONE ROOF.
       </h2>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+      {/* Desktop + tablet: grid */}
+      <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         {pillars.map((p) => (
           <div
             key={p.title}
             className="rounded-xl overflow-hidden text-center transition-all duration-300"
-            style={{
-              background: "rgba(255,255,255,0.07)",
-              border: "1px solid rgba(255,255,255,0.14)",
-              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.08)",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = "rgba(255,255,255,0.13)";
-              e.currentTarget.style.borderColor = "rgba(232,103,10,0.50)";
-              e.currentTarget.style.boxShadow = "inset 0 1px 0 rgba(255,255,255,0.10), 0 0 0 1px rgba(232,103,10,0.20)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "rgba(255,255,255,0.07)";
-              e.currentTarget.style.borderColor = "rgba(255,255,255,0.14)";
-              e.currentTarget.style.boxShadow = "inset 0 1px 0 rgba(255,255,255,0.08)";
-            }}
+            style={cardStyle}
+            onMouseEnter={cardEnter}
+            onMouseLeave={cardLeave}
           >
             <div className="flex justify-center mt-6">
               <img
                 src={p.image}
                 alt={p.title}
-                className="w-[140px] h-[140px] rounded-full object-cover"
+                className="w-[120px] h-[120px] rounded-full object-cover"
                 style={{ border: "3px solid var(--c-border-on-dark)" }}
                 loading="lazy"
                 decoding="async"
               />
             </div>
             <h3
-              className="font-bold text-base uppercase mt-4 tracking-wide"
+              className="font-bold text-base uppercase mt-4 tracking-wide px-3"
               style={{ fontFamily: "Oswald, sans-serif", color: "#FFFFFF", fontWeight: 700 }}
             >
               {p.title}
             </h3>
             <p
               className="text-sm px-5 pb-6 mt-2 leading-relaxed"
+              style={{ color: "rgba(255,255,255,0.85)", fontFamily: "Inter, sans-serif" }}
+            >
+              {p.desc}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* Mobile: horizontal snap-scroll strip */}
+      <div
+        className="sm:hidden flex gap-3 overflow-x-auto pb-3 scrollbar-hide"
+        style={{
+          scrollSnapType: "x mandatory",
+          WebkitOverflowScrolling: "touch",
+          marginLeft: -24,
+          marginRight: -24,
+          paddingLeft: 24,
+          paddingRight: 24,
+        }}
+      >
+        {pillars.map((p) => (
+          <div
+            key={p.title}
+            className="rounded-xl overflow-hidden text-center flex-shrink-0"
+            style={{
+              width: 188,
+              scrollSnapAlign: "start",
+              ...cardStyle,
+            }}
+          >
+            <div className="flex justify-center mt-5">
+              <img
+                src={p.image}
+                alt={p.title}
+                className="w-[96px] h-[96px] rounded-full object-cover"
+                style={{ border: "3px solid var(--c-border-on-dark)" }}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <h3
+              className="font-bold text-sm uppercase mt-3 tracking-wide px-3"
+              style={{ fontFamily: "Oswald, sans-serif", color: "#FFFFFF", fontWeight: 700 }}
+            >
+              {p.title}
+            </h3>
+            <p
+              className="text-xs px-4 pb-5 mt-1.5 leading-relaxed"
               style={{ color: "rgba(255,255,255,0.85)", fontFamily: "Inter, sans-serif" }}
             >
               {p.desc}

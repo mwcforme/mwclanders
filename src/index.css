@@ -248,30 +248,32 @@
   }
 }
 
-/* Mobile bottom bar safe area */
+/* Mobile bottom bar safe area — matches StickyMobileCTA height (72px) */
 @media (max-width: 767px) {
   body {
-    padding-bottom: 56px;
+    padding-bottom: 72px;
   }
 }
 
-/* Global form input styling */
-input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="hidden"]),
-textarea,
-select {
+/* Global form input styling — scoped to non-hero, non-dark contexts.
+   LP hero form has its own dark-glass styling via inline styles.
+   We only apply white background on explicitly light-bg forms. */
+.light-form input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="hidden"]),
+.light-form textarea,
+.light-form select {
   background-color: #FFFFFF !important;
   color: #000033 !important;
 }
 
-input::placeholder,
-textarea::placeholder {
+.light-form input::placeholder,
+.light-form textarea::placeholder {
   color: var(--c-placeholder-light) !important;
 }
 
-/* Form focus states */
-input:focus,
-textarea:focus,
-select:focus {
+/* Form focus states — for light-form contexts */
+.light-form input:focus,
+.light-form textarea:focus,
+.light-form select:focus {
   border-color: rgba(249, 115, 22, 0.5) !important;
   box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
   outline: none;

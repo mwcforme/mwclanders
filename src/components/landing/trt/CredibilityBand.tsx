@@ -28,16 +28,24 @@ export const CredibilityBand = () => {
 
   return (
     <section style={{ background: "#0A1628" }}>
-      <div className="max-w-[1200px] mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-4 text-center" style={{ paddingTop: 32, paddingBottom: 32 }}>
+      {/*
+        2-col grid on mobile (2×2), 4-col on md+.
+        Dividers: right border on col 0 (both rows), bottom border on top row mobile.
+        On md+: right border on all except last.
+      */}
+      <div
+        className="max-w-[1200px] mx-auto grid grid-cols-2 md:grid-cols-4 text-center"
+        style={{ paddingTop: 0, paddingBottom: 0 }}
+      >
         {stats.map((s, i) => {
           const inner = (
-            <div className="flex flex-col items-center gap-2 px-2">
+            <div className="flex flex-col items-center gap-2 px-2 py-5 md:py-7">
               <div
                 className="font-bold uppercase"
                 style={{
                   fontFamily: "Oswald, sans-serif",
                   color: "#FFFFFF",
-                  fontSize: "clamp(28px, 4vw, 44px)",
+                  fontSize: "clamp(26px, 4vw, 44px)",
                   lineHeight: 1,
                   letterSpacing: "-0.01em",
                 }}
@@ -49,7 +57,7 @@ export const CredibilityBand = () => {
                 style={{
                   fontFamily: "Inter, sans-serif",
                   color: "rgba(255,255,255,0.70)",
-                  fontSize: 12,
+                  fontSize: 11,
                   letterSpacing: "0.10em",
                   fontWeight: 700,
                   lineHeight: 1.45,
@@ -60,8 +68,25 @@ export const CredibilityBand = () => {
             </div>
           );
 
+          // Mobile 2×2: right border on items 0,2; bottom border on items 0,1
+          // Desktop 1×4: right border on items 0,1,2
+          const col = i % 2; // 0 or 1
+          const row = Math.floor(i / 2); // 0 or 1
           const dividerStyle: React.CSSProperties = {
-            borderRight: i < stats.length - 1 ? "1px solid var(--c-border-on-dark)" : "none",
+            // Right border: always on left col (col 0), except on md+ last item
+            borderRight: col === 0 || (i < stats.length - 1)
+              ? "1px solid rgba(255,255,255,0.12)"
+              : "none",
+            // Bottom border: on first row items on mobile
+            borderBottom: row === 0
+              ? "1px solid rgba(255,255,255,0.12)"
+              : "none",
+          };
+
+          // On desktop: only right border (no bottom), override with md class trick via inline check
+          // We use a wrapper div for cleaner control
+          const wrapStyle: React.CSSProperties = {
+            borderRight: i < stats.length - 1 ? "1px solid rgba(255,255,255,0.12)" : "none",
           };
 
           if (s.href) {

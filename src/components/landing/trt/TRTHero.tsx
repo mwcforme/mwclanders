@@ -168,10 +168,27 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
 
 
 
-          {/* Mobile primary CTA — hidden; form is directly below on mobile */}
+          {/* Mobile primary CTA — scrolls to hero-form below, keeps above-fold action visible on phones */}
+          <button
+            onClick={scrollToForm}
+            className="lg:hidden mt-7 w-full font-bold cursor-pointer inline-flex items-center justify-center rounded-lg"
+            style={{
+              height: 56,
+              background: "var(--brand-cta)",
+              color: "#FFFFFF",
+              fontSize: 17,
+              border: "none",
+              letterSpacing: "0.06em",
+              fontFamily: "Inter, sans-serif",
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "var(--brand-cta-hover)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "var(--brand-cta)"; }}
+          >
+            Book My Consultation
+          </button>
 
           <div
-            className="mt-6"
+            className="mt-5"
             style={{ color: "rgba(245,240,235,0.65)", fontFamily: "Inter, sans-serif", fontSize: 14 }}
           >
             Medically reviewed by licensed Virginia providers. Individual results vary.

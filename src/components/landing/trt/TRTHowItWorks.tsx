@@ -65,7 +65,7 @@ export const TRTHowItWorks = () => {
   );
 
   return (
-    <section id="how-it-works" className="py-10 md:py-20" style={{ background: "#F5F0EB" }} aria-label="Symptoms and how it works">
+    <section id="how-it-works" className="py-10 md:py-20" style={{ background: "#F5F0EB", scrollMarginTop: 64 }} aria-label="Symptoms and how it works">
       <div className="max-w-[1200px] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
         {/* Left: Symptoms (mobile shown second) */}
         <div className="order-2 md:order-1">
@@ -138,7 +138,7 @@ export const TRTHowItWorks = () => {
 
           <button
             onClick={scrollToForm}
-            className="mt-10 w-full sm:w-auto inline-flex items-center justify-center rounded-full px-8 py-4 font-bold cursor-pointer transition-colors duration-200"
+            className="mt-10 w-full sm:w-auto inline-flex items-center justify-center rounded-lg px-8 font-bold cursor-pointer transition-colors duration-200"
             style={{
               background: "var(--brand-cta)",
               color: "#FFFFFF",

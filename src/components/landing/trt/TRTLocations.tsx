@@ -14,7 +14,7 @@ export const TRTLocations = () => {
   };
 
   return (
-    <section id="locations" style={{ background: "#FFFFFF" }}>
+    <section id="locations" style={{ background: "#FFFFFF", scrollMarginTop: 64 }}>
       <div className="max-w-[1200px] mx-auto px-6 py-16 md:py-24">
         <h2 className="font-bold uppercase text-center" style={{ fontFamily: "Oswald, sans-serif", color: "#000033", fontSize: "clamp(26px, 3vw, 38px)", letterSpacing: "0.02em" }}>
           3 Virginia Centers
@@ -73,7 +73,7 @@ export const TRTLocations = () => {
                   </a>
                   <button
                     onClick={bookAt(l.slug)}
-                    className="font-bold uppercase text-center rounded-full cursor-pointer inline-flex items-center justify-center"
+                    className="font-bold uppercase text-center rounded-lg cursor-pointer inline-flex items-center justify-center"
                     style={{ height: 52, minHeight: 52, background: "var(--brand-cta)", color: "#FFFFFF", fontSize: 15, letterSpacing: "0.06em", fontFamily: "Inter, sans-serif", border: "none" }}
                   >
                     Book No-Cost Consult

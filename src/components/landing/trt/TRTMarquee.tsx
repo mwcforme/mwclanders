@@ -1,5 +1,6 @@
 /**
- * Trust / certification band — single row, images only on mobile, labels on desktop.
+ * Trust / certification band — responsive flex row.
+ * Mobile: badges wrap, dividers hidden. Desktop: full row with dividers.
  * Order: LegitScript → CLIA → HIPAA
  */
 export const TRTMarquee = () => (
@@ -12,39 +13,51 @@ export const TRTMarquee = () => (
     }}
   >
     <div
+      className="flex flex-row flex-wrap items-center justify-center"
       style={{
         maxWidth: 960,
         margin: "0 auto",
-        padding: "52px 40px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: 80,
+        padding: "32px 24px",
+        gap: "20px 36px",
       }}
     >
       <img
         src="/images/badges/legitscript.png"
         alt="LegitScript Certified"
-        style={{ height: 96, width: "auto", maxWidth: 220, objectFit: "contain" }}
+        className="h-14 md:h-20 w-auto"
+        style={{ maxWidth: 160, objectFit: "contain" }}
         loading="lazy"
+        decoding="async"
       />
 
-      <div aria-hidden="true" style={{ width: 1, height: 72, background: "rgba(255,255,255,0.20)", flexShrink: 0 }} />
+      <div
+        aria-hidden="true"
+        className="hidden sm:block"
+        style={{ width: 1, height: 52, background: "rgba(255,255,255,0.20)", flexShrink: 0 }}
+      />
 
       <img
         src="/images/badges/clia.png"
         alt="CLIA Certified Laboratory"
-        style={{ height: 96, width: "auto", maxWidth: 220, objectFit: "contain" }}
+        className="h-14 md:h-20 w-auto"
+        style={{ maxWidth: 160, objectFit: "contain" }}
         loading="lazy"
+        decoding="async"
       />
 
-      <div aria-hidden="true" style={{ width: 1, height: 72, background: "rgba(255,255,255,0.20)", flexShrink: 0 }} />
+      <div
+        aria-hidden="true"
+        className="hidden sm:block"
+        style={{ width: 1, height: 52, background: "rgba(255,255,255,0.20)", flexShrink: 0 }}
+      />
 
       <img
         src="/images/badges/hipaa.png"
         alt="HIPAA Compliant"
-        style={{ height: 96, width: "auto", maxWidth: 220, objectFit: "contain" }}
+        className="h-14 md:h-20 w-auto"
+        style={{ maxWidth: 160, objectFit: "contain" }}
         loading="lazy"
+        decoding="async"
       />
     </div>
   </section>
