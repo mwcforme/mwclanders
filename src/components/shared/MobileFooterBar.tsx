@@ -2,10 +2,14 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Phone, CalendarCheck, MessageSquare } from "lucide-react";
 
-/** Exact routes where this bar should NOT appear (LP pages have their own StickyMobileCTA) */
-const EXCLUDED_EXACT = ["/", "/wl", "/ed", "/new", "/new-wl", "/new-ed"];
+/**
+ * Exact routes where this bar should NOT appear.
+ * LP pages have their own purpose-built StickyMobileCTA which is funnel-aware.
+ * The generic GHL bar competes with it and dilutes conversion focus.
+ */
+const EXCLUDED_EXACT = ["/", "/wl", "/ed", "/trt", "/new", "/new-wl", "/new-ed"];
 /** Route prefixes (entire funnels) where this bar should NOT appear */
-const EXCLUDED_PREFIXES = ["/book", "/bookv2", "/intake", "/lp/", "/quiz"];
+const EXCLUDED_PREFIXES = ["/book", "/bookv2", "/intake", "/lp/", "/quiz", "/trt"];
 
 export const MobileFooterBar = () => {
   const { pathname } = useLocation();
