@@ -97,52 +97,48 @@ export function useLeadSubmitController<TInput>(
       void supabase.from("lead_captures").insert(captureRow as any)
         .catch((e: unknown) => console.warn("[lead-capture] insert failed", e));
 
+      // Navigate immediately — never block on GHL
+      const pendingResult: LeadResult = { contactId: "pending" };
+
       try {
-        // Navigate immediately with a pending contactId — GHL upsert resolves async.
-        // This eliminates the 1-2s spinner before the funnel starts.
-        const pendingResult: LeadResult = { contactId: "pending" };
         setStatus("success");
         await opts.onSuccess?.(pendingResult, validated);
         if (opts.navigateTo) nav.go(opts.navigateTo);
-
-        // Resolve real contactId in background, update store when ready
-        leads.submitLead(leadInput).then((result) => {
-          const fullName = typeof v.name === "string" ? v.name.trim() : "";
-          const [firstName, ...rest] = fullName.split(/\s+/);
-          // Update booking store with real GHL contactId
-          try {
-            const identity = useBookingStore.getState().identity;
-            if (identity) {
-              useBookingStore.getState().setIdentity({ ...identity, ghlContactId: result.contactId });
-            }
-          } catch { /* non-critical */ }
-          // Fire analytics with real contactId
-          void trackConversion("Lead", {
-            user_data: {
-              email: typeof v.email === "string" ? v.email : undefined,
-              phone: typeof v.phone === "string" ? v.phone : undefined,
-              first_name: firstName || undefined,
-              last_name: rest.length ? rest.join(" ") : undefined,
-              state: typeof v.location === "string" ? "VA" : undefined,
-              external_id: result.contactId,
-            },
-            custom_data: {
-              content_name: leadInput.source,
-              lp_slug: typeof window !== "undefined" ? window.location.pathname : undefined,
-            },
-          });
-        }).catch(() => { /* GHL failure logged server-side */ });
-
-        return pendingResult;
-      } catch (e) {
-        const msg = (e as Error).message || "Something went wrong. Please try again.";
-        setError(msg);
-        setStatus("error");
-        if (opts.toastOnError !== false) toast.error(msg);
-        return null;
+      } catch (navErr) {
+        // onSuccess/navigate threw — still unblock the button
+        console.warn("[lead-submit] navigation error", navErr);
       } finally {
+        // Always unblock — never leave button stuck on "Booking..."
         inFlight.current = false;
       }
+
+      // GHL upsert + analytics fire fully async after navigation
+      leads.submitLead(leadInput).then((result) => {
+        const fullName = typeof v.name === "string" ? v.name.trim() : "";
+        const [firstName, ...rest] = fullName.split(/\s+/);
+        try {
+          const identity = useBookingStore.getState().identity;
+          if (identity) {
+            useBookingStore.getState().setIdentity({ ...identity, ghlContactId: result.contactId });
+          }
+        } catch { /* non-critical */ }
+        void trackConversion("Lead", {
+          user_data: {
+            email: typeof v.email === "string" ? v.email : undefined,
+            phone: typeof v.phone === "string" ? v.phone : undefined,
+            first_name: firstName || undefined,
+            last_name: rest.length ? rest.join(" ") : undefined,
+            state: typeof v.location === "string" ? "VA" : undefined,
+            external_id: result.contactId,
+          },
+          custom_data: {
+            content_name: leadInput.source,
+            lp_slug: typeof window !== "undefined" ? window.location.pathname : undefined,
+          },
+        });
+      }).catch(() => { /* GHL failure logged server-side */ });
+
+      return pendingResult;
     },
     [leads, nav, opts],
   );
