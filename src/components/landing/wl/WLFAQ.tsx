@@ -1,16 +1,14 @@
-import { useState } from "react";
-import { ChevronDown, ArrowRight } from "lucide-react";
+import { useState, useRef } from "react";
+import { ChevronDown } from "lucide-react";
 
 const faqs = [
   {
     q: "How much weight can I expect to lose?",
     a: "In manufacturer trials, GLP-1 medications like semaglutide and tirzepatide produced an average of 15-20% body weight loss when paired with diet and exercise changes. Your physician will set a realistic target based on your starting labs and health history. Individual results vary.",
-    cta: true,
   },
   {
     q: "Which medications do you prescribe?",
     a: "When clinically appropriate, we prescribe FDA-approved GLP-1 medications including semaglutide and tirzepatide, plus supporting tools like lipotropic injections and metabolic protocols. Selection is based on your labs, history, and goals.",
-    cta: true,
   },
   {
     q: "Does insurance cover this?",
@@ -36,13 +34,25 @@ const faqs = [
 
 export const WLFAQ = () => {
   const [open, setOpen] = useState<number | null>(0);
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+
   const scrollToBooking = () => {
     const el = document.getElementById("booking") || document.getElementById("final-cta");
     el?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const handleToggle = (i: number) => {
+    const isOpening = open !== i;
+    setOpen(isOpening ? i : null);
+    if (isOpening) {
+      window.setTimeout(() => {
+        itemRefs.current[i]?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }, 50);
+    }
+  };
+
   return (
-    <section id="faq" style={{ background: "#F5F0EB" }}>
+    <section id="faq" style={{ background: "#F5F0EB", scrollMarginTop: 64 }}>
       <div className="max-w-[820px] mx-auto px-6 py-16 md:py-24">
         <h2 className="font-bold uppercase text-center" style={{ fontFamily: "Oswald, sans-serif", color: "#000033", fontSize: "clamp(26px, 3vw, 38px)", letterSpacing: "0.02em" }}>
           Frequently Asked Questions
@@ -52,27 +62,41 @@ export const WLFAQ = () => {
           {faqs.map((f, i) => {
             const isOpen = open === i;
             return (
-              <div key={f.q} className="rounded-xl overflow-hidden" style={{ background: "#FFFFFF", border: "1px solid #E5E5EA" }}>
+              <div
+                key={f.q}
+                ref={(el) => { itemRefs.current[i] = el; }}
+                className="rounded-xl overflow-hidden"
+                style={{ background: "#FFFFFF", border: "1px solid #E5E5EA" }}
+              >
                 <button
-                  onClick={() => setOpen(isOpen ? null : i)}
+                  onClick={() => handleToggle(i)}
                   className="w-full flex items-center justify-between gap-4 text-left px-5 py-4 cursor-pointer"
                   style={{ color: "#000033", fontFamily: "Inter, sans-serif" }}
+                  aria-expanded={isOpen}
                 >
-                  <span className="font-semibold text-base">{f.q}</span>
+                  <span className="font-semibold" style={{ fontSize: 17 }}>{f.q}</span>
                   <ChevronDown className="h-5 w-5 flex-shrink-0 transition-transform duration-200" style={{ color: "#E8670A", transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }} />
                 </button>
                 {isOpen && (
-                  <div className="px-5 pb-5 text-sm leading-relaxed" style={{ color: "#1a1a2e", fontFamily: "Inter, sans-serif" }}>
+                  <div className="px-5 pb-5 leading-relaxed" style={{ color: "#1a1a2e", fontFamily: "Inter, sans-serif", fontSize: 16 }}>
                     <p>{f.a}</p>
-                    {f.cta && (
-                      <button
-                        onClick={scrollToBooking}
-                        className="mt-4 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold uppercase cursor-pointer"
-                        style={{ background: "#E8670A", color: "#FFFFFF", letterSpacing: "0.08em", border: "none" }}
-                      >
-                        See If I Qualify <ArrowRight className="h-3.5 w-3.5" />
-                      </button>
-                    )}
+                    <button
+                      onClick={scrollToBooking}
+                      className="mt-4 w-full font-bold cursor-pointer inline-flex items-center justify-center rounded-lg"
+                      style={{
+                        height: 52,
+                        background: "#E8670A",
+                        color: "#FFFFFF",
+                        fontSize: 15,
+                        letterSpacing: "0.07em",
+                        fontFamily: "Inter, sans-serif",
+                        border: "none",
+                      }}
+                      onMouseEnter={(e) => { e.currentTarget.style.background = "#cf5a08"; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.background = "#E8670A"; }}
+                    >
+                      See If I Qualify
+                    </button>
                   </div>
                 )}
               </div>
