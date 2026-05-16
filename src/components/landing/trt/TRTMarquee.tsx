@@ -34,7 +34,7 @@ export const TRTMarquee = () => (
       <img
         src="/images/badges/clia.webp"
         alt="CLIA Certified Laboratory"
-        style={{ height: 96, width: "auto", maxWidth: 220, objectFit: "contain" }}
+        style={{ height: 80, width: "auto", maxWidth: 200, objectFit: "contain", filter: "brightness(0) invert(1) opacity(0.85)" }}
         loading="lazy"
       />
 
@@ -43,7 +43,7 @@ export const TRTMarquee = () => (
       <img
         src="/images/badges/hipaa.webp"
         alt="HIPAA Compliant"
-        style={{ height: 96, width: "auto", maxWidth: 220, objectFit: "contain" }}
+        style={{ height: 80, width: "auto", maxWidth: 200, objectFit: "contain", filter: "brightness(0) invert(1) opacity(0.85)" }}
         loading="lazy"
       />
     </div>
