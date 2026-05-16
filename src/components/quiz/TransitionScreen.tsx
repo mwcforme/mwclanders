@@ -49,7 +49,7 @@ export function TransitionScreen({
       className="flex flex-col items-center justify-center px-6 py-10"
     >
       <img
-        src="/logos/Text_Logo_white.png"
+        src="/logos/Text_Logo_white.webp" onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/logos/Text_Logo_white.png"; }}
         alt="Men's Wellness Centers"
         className="h-7 md:h-8 w-auto mb-10"
       />

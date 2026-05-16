@@ -219,7 +219,13 @@ export const TRTHeroForm = ({
             placeholder="Full Name"
             value={name}
             onChange={(e) => { setName(e.target.value); clearError("name"); }}
-            onFocus={() => setFocused("name")}
+            onFocus={() => {
+                setFocused("name");
+                // Prefetch booking funnel when user starts engaging with the form
+                void import("@/pages/book/BookSymptom");
+                void import("@/pages/book/BookDuration");
+                void import("@/domain/booking/bookingStore");
+              }}
             onBlur={() => setFocused(null)}
             style={inputBase("name")}
             autoComplete="name"

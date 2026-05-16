@@ -34,7 +34,7 @@ export const TRTFooter = () => {
           {/* Brand column */}
           <div>
             <img
-              src="/logos/Text_Logo_white.png"
+              src="/logos/Text_Logo_white.webp" onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/logos/Text_Logo_white.png"; }}
               alt="Men's Wellness Centers"
               style={{ height: 44, width: "auto" }}
               loading="lazy"

@@ -34,7 +34,7 @@ export default defineConfig(({ mode }) => ({
   ].filter(Boolean),
   build: {
     sourcemap: false, // disabled for prod — reduces transfer size; re-enable if debugging production errors
-    target: "es2020",
+    target: "es2022",   // smaller output: native optional chaining, nullish coalescing etc
     minify: "esbuild",
     cssMinify: true,
     chunkSizeWarningLimit: 600,

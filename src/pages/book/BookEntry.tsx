@@ -18,7 +18,7 @@
  */
 import { useEffect, useRef } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
+// supabase loaded lazily inside exchangeToken — not needed at module parse time
 import { useBookingStore } from "@/domain/booking/bookingStore";
 import { PHONE } from "@/lib/constants";
 
@@ -120,6 +120,7 @@ interface TokenPayload {
 
 async function exchangeToken(token: string): Promise<TokenPayload | null> {
   try {
+    const supabase = await import("@/integrations/supabase/client").then(m => m.supabase);
     const { data, error } = await supabase.functions.invoke("wp-token-exchange", {
       body: { token },
     });

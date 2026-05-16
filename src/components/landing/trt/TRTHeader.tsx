@@ -32,7 +32,7 @@ export const TRTHeader = ({ minimal = false }: { minimal?: boolean } = {}) => {
       <div className="flex items-center justify-between px-6 mx-auto max-w-[1200px] h-full">
         <Link to="/" aria-label="Men's Wellness Centers home" className="inline-flex">
           <img
-            src="/logos/Text_Logo_white.png"
+            src="/logos/Text_Logo_white.webp" onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/logos/Text_Logo_white.png"; }}
             decoding="async"
             alt="Men's Wellness Centers"
             className="h-7 w-auto"

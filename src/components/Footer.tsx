@@ -52,7 +52,7 @@ export const Footer = () => (
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 md:gap-8">
         {/* Col 1 — Brand */}
         <div className="col-span-2 md:col-span-3 lg:col-span-2">
-          <img src="/logos/Text_Logo_white.png" alt="Men's Wellness Centers" style={{ height: 32, width: "auto" }} className="opacity-80" loading="lazy" decoding="async" />
+          <img src="/logos/Text_Logo_white.webp" onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/logos/Text_Logo_white.png"; }} alt="Men's Wellness Centers" style={{ height: 32, width: "auto" }} className="opacity-80" loading="lazy" decoding="async" />
 
           <p className="mt-3 md:mt-4 text-[13px] italic leading-relaxed max-w-[280px]" style={{ color: "rgba(255,255,255,0.55)" }}>
             Giving men's sexual and restorative healthcare a good name.
