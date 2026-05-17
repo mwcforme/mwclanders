@@ -22,7 +22,7 @@ const faqSchema = JSON.stringify(buildFaqJsonLd());
 const TRTLandingPage = () => {
   useScrollDepth();
   return (
-    <div className="min-h-screen flex flex-col" style={{ fontFamily: "Inter, sans-serif" }}>
+    <div className="min-h-screen flex flex-col" style={{ fontFamily: "Inter, sans-serif", overflowX: "hidden" }}>
       <SEO
         title="TRT in Virginia | Men's Wellness Centers"
         description="Provider-supervised testosterone replacement therapy at 3 Virginia locations. Testing and results reviewed in-visit. Walk in today."

@@ -2,6 +2,8 @@ import { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
 import { SEO } from "@/components/SEO";
+import { TRTHeader } from "@/components/landing/trt/TRTHeader";
+import { TRTFooter } from "@/components/landing/trt/TRTFooter";
 
 interface LegalPageProps {
   title: string;
@@ -16,8 +18,9 @@ export const LegalPage = ({ title, updated, children }: LegalPageProps) => {
         title={`${title} | Men's Wellness Centers`}
         description={`${title} for Men's Wellness Centers booking site.`}
       />
+      <TRTHeader minimal />
       <main style={{ background: "#000814", minHeight: "100vh", color: "rgba(255,255,255,0.92)" }}>
-        <div className="max-w-[820px] mx-auto px-6 py-20" style={{ fontFamily: "Inter, sans-serif" }}>
+        <div className="max-w-[820px] mx-auto px-6 pt-28 pb-20" style={{ fontFamily: "Inter, sans-serif" }}>
           <Link to="/" className="inline-flex items-center gap-1 text-xs uppercase tracking-[0.18em]" style={{ color: "#F97316" }}>
             <ChevronLeft size={14} /> Back to Men’s Wellness Centers
           </Link>
@@ -36,6 +39,7 @@ export const LegalPage = ({ title, updated, children }: LegalPageProps) => {
           </div>
         </div>
       </main>
+      <TRTFooter />
     </>
   );
 };
