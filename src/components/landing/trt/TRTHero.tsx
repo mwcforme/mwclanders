@@ -1,5 +1,7 @@
 import { Check, Star } from "lucide-react";
 import { TRTHeroForm } from "./TRTHeroForm";
+import { DifferentiatorPills } from "./DifferentiatorPills";
+import { SymptomChecklist } from "./SymptomChecklist";
 import { GBP_REVIEWS_URL } from "@/data/testimonials";
 import { trackCro } from "@/hooks/useAnalytics";
 import { COPY } from "@/data/copy";
@@ -34,8 +36,8 @@ interface TRTHeroProps {
 
 export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
   const h = headline ?? {
-    line1: "Get Your Energy, Drive,",
-    line2: "and Confidence Back",
+    line1: "We Treat the Man's Symptoms.",
+    line2: "Not Just the Numbers.",
     line2Color: COLORS.orange,
   };
   const scrollToForm = () => {
@@ -153,7 +155,12 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
             </span>
           </a>
 
-          <ul className="mt-7 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 max-w-[600px]">
+          {/* Differentiator pills — 4 moat claims below H1 */}
+          <div className="mt-5 max-w-[600px]">
+            <DifferentiatorPills />
+          </div>
+
+          <ul className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 max-w-[600px]">
             {trustChecks.map((t) => (
               <li
                 key={t}
@@ -166,12 +173,17 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
             ))}
           </ul>
 
+          {/* Symptom self-id block — non-interactive, scannable */}
+          <div className="mt-7 max-w-[600px]">
+            <SymptomChecklist formId="hero-form" />
+          </div>
+
 
 
           {/* Mobile primary CTA — scrolls to hero-form below, keeps above-fold action visible on phones */}
           <button
             onClick={scrollToForm}
-            className="lg:hidden mt-7 w-full font-bold cursor-pointer inline-flex items-center justify-center rounded-lg"
+            className="lg:hidden mt-6 w-full font-bold cursor-pointer inline-flex items-center justify-center rounded-lg"
             style={{
               height: 56,
               background: "var(--brand-cta)",
@@ -184,7 +196,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
             onMouseEnter={(e) => { e.currentTarget.style.background = "var(--brand-cta-hover)"; }}
             onMouseLeave={(e) => { e.currentTarget.style.background = "var(--brand-cta)"; }}
           >
-            Book My Consultation
+            Book My Physician Assessment
           </button>
 
           <div

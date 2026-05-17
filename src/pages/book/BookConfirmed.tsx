@@ -279,13 +279,38 @@ const BookConfirmed = () => {
             locationAddress={`${center.address}, ${center.cityStateZip}`}
           />
 
-          {/* Email + Attribution capture — shown until submitted */}
-          {!captureComplete && (
-            <PostBookingCapture
-              contactId={identity?.ghlContactId}
-              onComplete={() => setCaptureComplete(true)}
-            />
-          )}
+          {/* What you'll walk away with */}
+          <div style={{
+            background: "#FFFFFF", borderRadius: 14, padding: "28px 24px",
+            border: "1px solid #E5E7EB", boxShadow: "0 8px 30px rgba(0,0,0,0.10)",
+          }}>
+            <p style={{
+              fontSize: 11, fontWeight: 700, letterSpacing: "0.12em",
+              textTransform: "uppercase", color: "#E8670A", marginBottom: 10,
+              fontFamily: "Inter, sans-serif",
+            }}>
+              What you’ll walk away with
+            </p>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+              {[
+                "Your bloodwork results, explained in plain English",
+                "A clear answer on whether treatment fits your situation",
+                "If yes — a personalized protocol you can start the same day, when medically appropriate",
+              ].map((item) => (
+                <li key={item} style={{
+                  display: "flex", alignItems: "flex-start", gap: 10,
+                  padding: "8px 0", borderBottom: "1px solid #F3F4F6",
+                  fontSize: 15, color: "#0B1029", lineHeight: 1.5,
+                  fontFamily: "Inter, sans-serif", fontWeight: 400,
+                }}>
+                  <span style={{
+                    color: "#E8670A", fontWeight: 800, fontSize: 15, flexShrink: 0, marginTop: 1,
+                  }}>✓</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
 
           {/* Video — full-width, directly below celebration card for max emotional impact */}
           <div

@@ -179,7 +179,7 @@ const FloatInput = ({
 export const TRTHeroForm = ({
   service    = "trt",
   heading    = COPY.cta.bookConsult,
-  subheading = "Same-day and next-day availability. Takes under 2 minutes.",
+  subheading = "No-cost for new members. Same-day availability.",
   ctaLabel   = COPY.cta.bookConsult,
 }: TRTHeroFormProps = {}) => {
   const [name,     setName]     = useState("");
@@ -329,6 +329,10 @@ export const TRTHeroForm = ({
             void capturePartialLead({ phone, name, location: location || undefined, source: "hero-form-blur" });
           }}
         />
+        {/* Phone micro-copy */}
+        <p style={{ fontSize: 12, color: "rgba(245,240,235,0.45)", fontFamily: "Inter, sans-serif", marginTop: -4, lineHeight: 1.4 }}>
+          We’ll use this to confirm your visit and send reminders. No spam.
+        </p>
 
         {/* ── Location ───────────────────────────────────────────────────────── */}
         <div ref={locationRef} role="radiogroup" aria-label="Select clinic location" aria-required="true">
@@ -457,8 +461,12 @@ export const TRTHeroForm = ({
               id="hf-tcpa-text"
               style={{ fontSize: 14, color: "rgba(245,240,235,0.55)", lineHeight: 1.55 }}
             >
-              I agree to receive SMS/calls about my appointment. Reply STOP to opt out.
-              Msg &amp; data rates may apply.
+              Yes, text me my appointment confirmation and reminders from Men’s Wellness Centers.
+              Msg &amp; data rates may apply. Reply STOP to opt out. Reply HELP for help.
+              Consent is not a condition of service.{" "}
+              <a href="/privacy-policy" style={{ color: "#E8670A", textDecoration: "none" }}>Privacy Policy</a>
+              {" "}&amp;{" "}
+              <a href="/hipaa-and-terms-of-service" style={{ color: "#E8670A", textDecoration: "none" }}>HIPAA Notice</a>.
             </span>
           </label>
           {errors.tcpa && (
@@ -501,6 +509,15 @@ export const TRTHeroForm = ({
             : <>{ctaLabel} →</>
           }
         </button>
+
+        {/* Helper line under CTA */}
+        <p style={{
+          textAlign: "center", fontSize: 12,
+          color: "rgba(245,240,235,0.40)",
+          fontFamily: "Inter, sans-serif", lineHeight: 1.5, marginTop: 2,
+        }}>
+          No-cost for new members · Takes under 2 minutes
+        </p>
 
         {controller.error && !Object.keys(errors).length && (
           <p style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 12, color: ERR_RED }}>

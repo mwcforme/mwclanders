@@ -14,27 +14,27 @@
 export const COPY = {
   cta: {
     /** Primary booking CTA. Header, hero submit, locations, sticky bar, final CTA. */
-    bookConsult: "Meet with a Real Provider",
+    bookConsult: "Book My Physician Assessment",
     /** Results section CTA. */
-    startConsult: "Book My Visit",
+    startConsult: "Book My Physician Assessment",
     /** Inline link variant inside FAQ answers. */
-    bookConsultInline: "book a no-cost visit",
+    bookConsultInline: "book a no-cost Physician Assessment",
     /** ED service final-CTA + ED form card title. */
-    bookDiscreetVisit: "Book My Discreet Visit",
+    bookDiscreetVisit: "Book My Physician Assessment",
     /** WL service final-CTA + WL manifesto. */
-    seeIfIQualify: "See If I Qualify",
+    seeIfIQualify: "Book My Physician Assessment",
     /** TRT manifesto secondary CTA. */
-    seeIfYouQualify: "Get My Levels Checked",
+    seeIfYouQualify: "Book My Physician Assessment",
     /** Phone CTA prefix. */
     callNow: "Call Now",
   },
   badge: {
     /** Hero pill / trust chip describing the offer. */
-    noCostConsult: "No-cost consult",
+    noCostConsult: "No-cost Physician Assessment",
     /** Stat-card value used in CredibilityBand. */
     offerValue: "No-Cost",
     /** Stat-card label paired with offerValue. */
-    offerLabel: "Initial Consult\nNo Insurance Needed",
+    offerLabel: "60-Min Physician Assessment\nNo Insurance Needed",
   },
   offer: {
     /** Hero subhead under the H1. */
