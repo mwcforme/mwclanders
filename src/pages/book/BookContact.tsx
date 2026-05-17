@@ -33,8 +33,16 @@ const BookContact = () => {
   const existingSource = useBookingStore((s) => s.source);
   const existingService = useBookingStore((s) => s.service);
 
+  // Pre-populate from store if short form already captured phone
+  const existingIdentity = useBookingStore((s) => s.identity);
+  const existingPhone = existingIdentity?.phone ?? "";
+  // Format stored E.164 (+1XXXXXXXXXX) back to display format for the field
+  const prefilledPhone = existingPhone.startsWith("+1")
+    ? formatPhone(existingPhone.slice(2))
+    : formatPhone(existingPhone);
+
   const [firstName, setFirstName] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState(prefilledPhone);
   const [smsConsent, setSmsConsent] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
@@ -63,17 +71,32 @@ const BookContact = () => {
     const formattedPhone = `+1${digits}`;
 
     try {
-      // Upsert GHL contact immediately — capture lead before any further steps
-      const { upsertContact } = await import("@/lib/ghlCalendars");
-      const contactId = await upsertContact({
-        firstName: firstName.trim(),
-        phone: formattedPhone,
-        source: existingSource || "mwc-book-funnel",
-        tags: ["funnel-contact"],
-        customFields: existingService
-          ? { mwc_funnel_service: existingService }
-          : undefined,
-      });
+      let contactId = existingIdentity?.ghlContactId;
+
+      if (contactId) {
+        // Already have a GHL contact (from short form) — just update name
+        const { supabase } = await import("@/integrations/supabase/client");
+        supabase.functions.invoke("ghl-proxy", {
+          body: {
+            path: `/contacts/${contactId}`,
+            method: "PUT",
+            body: { firstName: firstName.trim() },
+            __env: import.meta.env.VITE_APP_ENV ?? "stage",
+          },
+        }).catch(() => { /* non-blocking */ });
+      } else {
+        // No prior contact — upsert via phone (idempotent)
+        const { upsertContact } = await import("@/lib/ghlCalendars");
+        contactId = await upsertContact({
+          firstName: firstName.trim(),
+          phone: formattedPhone,
+          source: existingSource || "mwc-book-funnel",
+          tags: ["funnel-contact"],
+          customFields: existingService
+            ? { mwc_funnel_service: existingService }
+            : undefined,
+        });
+      }
 
       setIdentity({
         firstName: firstName.trim(),
@@ -91,6 +114,7 @@ const BookContact = () => {
         firstName: firstName.trim(),
         phone: formattedPhone,
         email: "",
+        ghlContactId: existingIdentity?.ghlContactId,
       });
       navigate("/book/location");
     } finally {

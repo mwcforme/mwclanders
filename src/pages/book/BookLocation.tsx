@@ -46,7 +46,8 @@ const BookLocation = () => {
   const navigate = useNavigate();
   const setLocation = useBookingStore((s) => s.setLocation);
   const identity = useBookingStore((s) => s.identity);
-  const [selected, setSelected] = useState<LocationKey | null>(null);
+  const existingLocation = useBookingStore((s) => s.location) as LocationKey | undefined;
+  const [selected, setSelected] = useState<LocationKey | null>(existingLocation ?? null);
   const [advancing, setAdvancing] = useState(false);
 
   const handleSelect = async (key: LocationKey) => {
