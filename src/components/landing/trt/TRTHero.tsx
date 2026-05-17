@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Check, Star } from "lucide-react";
 import { TRTHeroForm } from "./TRTHeroForm";
 import { SymptomChecklist } from "./SymptomChecklist";
@@ -35,6 +36,47 @@ const GoogleG = ({ size = 18 }: { size?: number }) => (
   </svg>
 );
 
+const ROTATING_LINES = [
+  "TESTOSTERONE THERAPY",
+  "ED TREATMENT",
+  "MEDICAL WEIGHT LOSS",
+  "HORMONE OPTIMIZATION",
+  "SAME-DAY LABS",
+];
+
+/** Animated rotating second line — fades out/in every 2.8s */
+const RotatingLine = () => {
+  const [index, setIndex] = useState(0);
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setVisible(false);
+      setTimeout(() => {
+        setIndex((i) => (i + 1) % ROTATING_LINES.length);
+        setVisible(true);
+      }, 350);
+    }, 2800);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <span
+      aria-live="polite"
+      aria-atomic="true"
+      style={{
+        display: "block",
+        color: COLORS.orange,
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(-6px)",
+        transition: "opacity 300ms ease, transform 300ms ease",
+      }}
+    >
+      {ROTATING_LINES[index]}
+    </span>
+  );
+};
+
 interface TRTHeroProps {
   headline?: { line1: string; line2: string; line2Color?: string };
 }
@@ -45,6 +87,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
     line2: "Not Just the Numbers.",
     line2Color: COLORS.orange,
   };
+  void h; // h kept for external headline prop support, rotating version is default
   const scrollToForm = () => {
     document.getElementById("hero-form")?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
@@ -117,16 +160,15 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
             className="font-bold uppercase"
             style={{
               fontFamily: "Oswald, 'Bebas Neue', Anton, sans-serif",
-              fontSize: "clamp(48px, 6vw, 96px)",
+              fontSize: "clamp(44px, 6vw, 88px)",
               lineHeight: 0.95,
               letterSpacing: "-0.01em",
               color: COLORS.cream,
               fontWeight: 700,
             }}
           >
-            {h.line1}
-            <br />
-            <span style={{ color: h.line2Color ?? COLORS.orange }}>{h.line2}</span>
+            <span style={{ display: "block" }}>VIRGINIA&rsquo;S LEADER IN</span>
+            <RotatingLine />
           </h1>
 
           <p
