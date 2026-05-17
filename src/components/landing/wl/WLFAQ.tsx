@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { ChevronDown } from "lucide-react";
+import { COPY } from "@/data/copy";
 
 const faqs = [
   {
@@ -12,7 +13,7 @@ const faqs = [
   },
   {
     q: "Does insurance cover this?",
-    a: "Consults with our providers are always complimentary, including labs and your care plan. We don't bill insurance directly, but we accept FSA and HSA. Many men find our straightforward cash-pay process simpler than navigating insurance approvals.",
+    a: "Consultations and labs are always complimentary. GLP-1 medications are a separate cost, but most men find our straightforward pricing simpler than dealing with insurance prior authorizations, which typically run 2 to 4 weeks and are frequently denied on first submission. We accept FSA and HSA cards.",
   },
   {
     q: "How is this different from Hims, Ro, or online weight loss programs?",
@@ -95,7 +96,7 @@ export const WLFAQ = () => {
                       onMouseEnter={(e) => { e.currentTarget.style.background = "#cf5a08"; }}
                       onMouseLeave={(e) => { e.currentTarget.style.background = "#E8670A"; }}
                     >
-                      See If I Qualify
+                      {COPY.cta.bookConsult}
                     </button>
                   </div>
                 )}

@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { ChevronDown } from "lucide-react";
+import { COPY } from "@/data/copy";
 
 const faqs = [
   {
@@ -20,7 +21,7 @@ const faqs = [
   },
   {
     q: "Does insurance cover this?",
-    a: "Consults with our providers are always complimentary, including labs review and your care plan. We don't bill insurance directly, but we accept FSA and HSA.",
+    a: "Consultations and labs are always complimentary. We do not bill insurance, which means no claim trail and no record filed with your employer or insurer. We accept FSA and HSA cards.",
   },
   {
     q: "Will I leave my first visit with treatment?",
@@ -95,7 +96,7 @@ export const EDFAQ = () => {
                       onMouseEnter={(e) => { e.currentTarget.style.background = "#cf5a08"; }}
                       onMouseLeave={(e) => { e.currentTarget.style.background = "#E8670A"; }}
                     >
-                      Book My Discreet Visit
+                      {COPY.cta.bookConsult}
                     </button>
                   </div>
                 )}

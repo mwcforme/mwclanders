@@ -1,4 +1,5 @@
 import { X } from "lucide-react";
+import { COPY } from "@/data/copy";
 
 const symptoms = [
   "Stubborn belly fat that diet and exercise will not move.",
@@ -96,7 +97,7 @@ export const WLHowItWorks = () => {
             onMouseEnter={(e) => { e.currentTarget.style.background = "#CF5B09"; }}
             onMouseLeave={(e) => { e.currentTarget.style.background = "#E8670A"; }}
           >
-            See If I Qualify
+            {COPY.cta.bookConsult}
           </button>
         </div>
       </div>
