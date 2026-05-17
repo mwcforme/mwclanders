@@ -101,7 +101,7 @@ const ErrorFallback = ({ resetError }: { resetError: () => void }) => (
       alignItems: "center",
       justifyContent: "center",
       background: "#000814",
-      color: "#fff",
+      color: "var(--c-text-on-dark)",
       fontFamily: "Inter, sans-serif",
       padding: "24px",
       textAlign: "center",
@@ -120,7 +120,7 @@ const ErrorFallback = ({ resetError }: { resetError: () => void }) => (
         onClick={resetError}
         style={{
           background: "#E8670A",
-          color: "#fff",
+          color: "var(--c-text-on-dark)",
           border: "none",
           borderRadius: 999,
           padding: "12px 28px",

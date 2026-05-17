@@ -63,7 +63,8 @@ export const MobileFooterBar = () => {
       className="md:hidden fixed bottom-0 left-0 right-0 z-50 flex items-stretch"
       style={{
         height: 56,
-        background: "#000033",
+        background: "var(--brand-navy)",
+        // hardcoded-color-allow-next-line
         boxShadow: "0 -2px 12px rgba(0,0,0,0.25)",
       }}
       aria-label="Mobile quick actions"
@@ -72,7 +73,8 @@ export const MobileFooterBar = () => {
       <a
         href="/book"
         className="flex-1 flex flex-col items-center justify-center gap-1 no-underline cursor-pointer"
-        style={{ color: "#FFFFFF", borderRight: "1px solid rgba(255,255,255,0.1)" }}
+        // hardcoded-color-allow-next-line
+        style={{ color: "var(--c-text-on-dark)", borderRight: "1px solid rgba(255,255,255,0.1)" }}
       >
         <CalendarCheck size={18} strokeWidth={1.8} />
         <span
@@ -93,9 +95,10 @@ export const MobileFooterBar = () => {
         onClick={openGHLChat}
         className="flex-1 flex flex-col items-center justify-center gap-1 cursor-pointer"
         style={{
-          color: "#FFFFFF",
+          color: "var(--c-text-on-dark)",
           background: "transparent",
           border: "none",
+          // hardcoded-color-allow-next-line
           borderRight: "1px solid rgba(255,255,255,0.1)",
         }}
       >
@@ -117,7 +120,7 @@ export const MobileFooterBar = () => {
       <a
         href={PHONE.tel}
         className="flex-1 flex flex-col items-center justify-center gap-1 no-underline cursor-pointer"
-        style={{ color: "#FFFFFF" }}
+        style={{ color: "var(--c-text-on-dark)" }}
       >
         <Phone size={18} strokeWidth={1.8} />
         <span

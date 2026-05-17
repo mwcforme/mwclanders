@@ -52,9 +52,11 @@ const SurveyCard = ({
         className="w-full"
         style={{
           maxWidth: 680,
-          background: "#FFFFFF",
+          background: "var(--bg-white)",
+          // hardcoded-color-allow-next-line
           border: "3px solid #5A6478",
           borderRadius: 16,
+          // hardcoded-color-allow-next-line
           boxShadow: "0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04)",
         }}
       >
@@ -64,6 +66,7 @@ const SurveyCard = ({
               className="mb-3 text-center"
               style={{
                 fontSize: 14,
+                // hardcoded-color-allow-next-line
                 color: "#3A4258",
                 letterSpacing: "0.04em",
                 fontWeight: 700,
@@ -89,6 +92,7 @@ const SurveyCard = ({
                 <div
                   key={i}
                   className="flex-1 relative overflow-hidden"
+                  // hardcoded-color-allow-next-line
                   style={{ height: 8, borderRadius: 4, background: "#E5E7EB" }}
                 >
                   <div
@@ -96,7 +100,7 @@ const SurveyCard = ({
                       position: "absolute",
                       inset: 0,
                       width: isFilled ? "100%" : "0%",
-                      background: "#E8670A",
+                      background: "var(--brand-cta)",
                       borderRadius: 4,
                       transition: "width 240ms ease",
                     }}
@@ -115,7 +119,7 @@ const SurveyCard = ({
               fontSize: "clamp(24px, 4vw, 36px)",
               lineHeight: 1.2,
               letterSpacing: "-0.01em",
-              color: "#0B1029",
+              color: "var(--brand-navy-deep)",
               textTransform: "none",
               textWrap: "balance",
               marginBottom: 8,
@@ -127,6 +131,7 @@ const SurveyCard = ({
             className="text-center text-base md:text-xl"
             style={{
               fontWeight: 500,
+              // hardcoded-color-allow-next-line
               color: "#3A4258",
               lineHeight: 1.4,
               marginBottom: helperText ? 4 : 18,
@@ -139,6 +144,7 @@ const SurveyCard = ({
             <p
               className="text-center text-sm"
               style={{
+                // hardcoded-color-allow-next-line
                 color: "#6B7280",
                 fontFamily: "Inter, sans-serif",
                 marginBottom: 18,
@@ -160,6 +166,7 @@ const SurveyCard = ({
               style={{
                 background: "transparent",
                 border: 0,
+                // hardcoded-color-allow-next-line
                 color: "#5A6478",
                 fontFamily: "Inter, sans-serif",
                 fontSize: 18,

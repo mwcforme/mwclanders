@@ -34,6 +34,7 @@ export function EnvChangeHistory() {
   }, []);
 
   return (
+    {/* hardcoded-color-allow-next-line */}
     <div className="rounded-xl border border-white/10 bg-[#070B1F]">
       <div className="flex items-center gap-2 border-b border-white/10 px-4 py-3">
         <History size={14} className="text-white/50" />

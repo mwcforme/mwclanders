@@ -18,7 +18,7 @@ const EDFAQ         = lazy(() => import("@/components/landing/ed/EDFAQ").then(m 
 const ServiceFinalCTA = lazy(() => import("@/components/landing/shared/ServiceFinalCTA").then(m => ({ default: m.ServiceFinalCTA })));
 const TRTFooter     = lazy(() => import("@/components/landing/trt/TRTFooter").then(m => ({ default: m.TRTFooter })));
 
-const S = ({ bg = "#F5F0EB", h = 200 }: { bg?: string; h?: number }) => (
+const S = ({ bg = "var(--brand-cream)", h = 200 }: { bg?: string; h?: number }) => (
   <div style={{ background: bg, minHeight: h }} aria-hidden="true" />
 );
 
@@ -35,25 +35,26 @@ const NewED = () => {
         <EDHero />
         <SectionReveal><CredibilityBand /></SectionReveal>
         <SectionReveal><EDManifesto /></SectionReveal>
-        <Suspense fallback={<S bg="#F5F0EB" h={480} />}>
+        <Suspense fallback={<S bg="var(--brand-cream)" h={480} />}>
           <SectionReveal><EDHowItWorks /></SectionReveal>
         </Suspense>
-        <Suspense fallback={<S bg="#F5F0EB" h={400} />}>
+        <Suspense fallback={<S bg="var(--brand-cream)" h={400} />}>
           <SectionReveal><TRTResults /></SectionReveal>
         </Suspense>
-        <Suspense fallback={<S bg="#000033" h={360} />}>
+        <Suspense fallback={<S bg="var(--brand-navy)" h={360} />}>
           <SectionReveal><TRTPillars /></SectionReveal>
         </Suspense>
+        // hardcoded-color-allow-next-line
         <Suspense fallback={<S bg="#111827" h={160} />}>
           <SectionReveal><TRTMarquee /></SectionReveal>
         </Suspense>
-        <Suspense fallback={<S bg="#FFFFFF" h={400} />}>
+        <Suspense fallback={<S bg="var(--c-text-on-dark)" h={400} />}>
           <SectionReveal><TRTLocations /></SectionReveal>
         </Suspense>
-        <Suspense fallback={<S bg="#F5F0EB" h={480} />}>
+        <Suspense fallback={<S bg="var(--brand-cream)" h={480} />}>
           <SectionReveal><EDFAQ /></SectionReveal>
         </Suspense>
-        <Suspense fallback={<S bg="#000033" h={400} />}>
+        <Suspense fallback={<S bg="var(--brand-navy)" h={400} />}>
           <SectionReveal>
             <ServiceFinalCTA
               service="ed"

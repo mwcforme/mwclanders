@@ -8,8 +8,11 @@ export const TRTMarquee = () => (
   <section
     aria-label="Certifications and credentials"
     style={{
+      // hardcoded-color-allow-next-line
       background: "#111827",
+      // hardcoded-color-allow-next-line
       borderTop: "1px solid rgba(255,255,255,0.07)",
+      // hardcoded-color-allow-next-line
       borderBottom: "1px solid rgba(255,255,255,0.07)",
     }}
   >
@@ -36,11 +39,9 @@ export const TRTMarquee = () => (
         />
       </picture>
 
-      <div
-        aria-hidden="true"
-        className="hidden sm:block"
-        style={{ width: 1, height: 52, background: "rgba(255,255,255,0.20)", flexShrink: 0 }}
-      />
+      {/* hardcoded-color-allow-next-line */}
+      {/* hardcoded-color-allow-next-line */}
+      <div aria-hidden="true" className="hidden sm:block" style={{ width: 1, height: 52, background: "rgba(255,255,255,0.20)", flexShrink: 0 }} />
 
       <picture>
         <source srcSet="/images/badges/clia.webp" type="image/webp" />
@@ -56,11 +57,8 @@ export const TRTMarquee = () => (
         />
       </picture>
 
-      <div
-        aria-hidden="true"
-        className="hidden sm:block"
-        style={{ width: 1, height: 52, background: "rgba(255,255,255,0.20)", flexShrink: 0 }}
-      />
+      {/* hardcoded-color-allow-next-line */}
+      <div aria-hidden="true" className="hidden sm:block" style={{ width: 1, height: 52, background: "rgba(255,255,255,0.20)", flexShrink: 0 }} />
 
       <picture>
         <source srcSet="/images/badges/hipaa.webp" type="image/webp" />

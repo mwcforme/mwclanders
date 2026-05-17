@@ -41,8 +41,11 @@ export const DifferentiatorPills = ({ compact = false }: DifferentiatorPillsProp
             fontSize: compact ? 10 : 11,
             letterSpacing: "0.08em",
             textTransform: "uppercase",
+            // hardcoded-color-allow-next-line
             color: "#F5F3F0",
+            // hardcoded-color-allow-next-line
             background: "#161B3A",
+            // hardcoded-color-allow-next-line
             border: "1px solid #2B3247",
             padding: compact ? "5px 10px" : "6px 12px",
             borderRadius: 999,
@@ -58,7 +61,7 @@ export const DifferentiatorPills = ({ compact = false }: DifferentiatorPillsProp
               width: 6,
               height: 6,
               borderRadius: "50%",
-              background: "#E8670A",
+              background: "var(--brand-cta)",
               flexShrink: 0,
               display: "inline-block",
             }}

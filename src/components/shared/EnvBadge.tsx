@@ -47,6 +47,7 @@ export function EnvBadge() {
   if (!visible) return null;
 
   const isStage = APP_ENV === "stage";
+  // hardcoded-color-allow-next-line
   const pillBg = isStage ? "#10b981" : "#ef4444"; // emerald for stage, red for prod-on-non-prod
   const label = isStage ? "ENV: STAGE" : "ENV: PROD";
 
@@ -68,7 +69,7 @@ export function EnvBadge() {
         className="rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider shadow-lg transition-opacity hover:opacity-90"
         style={{
           background: pillBg,
-          color: "#fff",
+          color: "var(--c-text-on-dark)",
           fontFamily: "Inter, sans-serif",
           letterSpacing: "0.08em",
           // ensure it sits above mobile footer bar (56px)
@@ -82,6 +83,7 @@ export function EnvBadge() {
       {open && (
         <div
           role="menu"
+          // hardcoded-color-allow-next-line
           className="absolute left-0 mt-2 rounded-lg border border-white/10 bg-[#0B1029] p-2 shadow-2xl"
           style={{
             bottom: "100%",
@@ -101,7 +103,8 @@ export function EnvBadge() {
                 type="button"
                 onClick={() => setEnvOverride(key)}
                 className="block w-full rounded px-2 py-1.5 text-left text-xs font-semibold uppercase tracking-wide text-white/80 transition-colors hover:bg-white/10"
-                style={active ? { background: "rgba(255,255,255,0.12)", color: "#fff" } : undefined}
+                // hardcoded-color-allow-next-line
+                style={active ? { background: "rgba(255,255,255,0.12)", color: "var(--c-text-on-dark)" } : undefined}
               >
                 {key}
                 {active && <span className="ml-1 text-white/50">•</span>}

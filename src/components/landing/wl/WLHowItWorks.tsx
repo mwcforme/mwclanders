@@ -31,31 +31,33 @@ export const WLHowItWorks = () => {
   const scrollToForm = () => document.getElementById("final-cta")?.scrollIntoView({ behavior: "smooth" });
 
   const eyebrow = (text: string) => (
-    <div className="uppercase mb-3 inline-flex items-center gap-2" style={{ color: "#000033", fontFamily: "Inter, sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: "0.12em" }}>
+    <div className="uppercase mb-3 inline-flex items-center gap-2" style={{ color: "var(--brand-navy)", fontFamily: "Inter, sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: "0.12em" }}>
       <span aria-hidden="true" style={{ display: "inline-block", width: 18, height: 2, background: "var(--brand-cta)", flexShrink: 0 }} />
       {text}
     </div>
   );
 
   const heading = (text: string) => (
-    <h2 className="font-bold uppercase" style={{ fontFamily: "Oswald, sans-serif", fontSize: "clamp(28px, 4vw, 44px)", color: "#000033", fontWeight: 700, lineHeight: 1.05, letterSpacing: "-0.01em" }}>
+    <h2 className="font-bold uppercase" style={{ fontFamily: "Oswald, sans-serif", fontSize: "clamp(28px, 4vw, 44px)", color: "var(--brand-navy)", fontWeight: 700, lineHeight: 1.05, letterSpacing: "-0.01em" }}>
       {text}
     </h2>
   );
 
   return (
-    <section id="how-it-works" className="py-10 md:py-20" style={{ background: "#F5F0EB" }}>
+    <section id="how-it-works" className="py-10 md:py-20" style={{ background: "var(--brand-cream)" }}>
       <div className="max-w-[1200px] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
         <div className="order-2 md:order-1">
           {eyebrow("Sound Familiar?")}
           {heading("Why traditional weight loss stops working")}
+          // hardcoded-color-allow-next-line
           <p className="mt-5 text-base leading-relaxed" style={{ color: "#4A4A4A", fontFamily: "Inter, sans-serif", maxWidth: 520 }}>
             For men in their 40s and beyond, hormones, metabolism, and sleep all start working against you. Willpower alone is not the problem.
           </p>
           <ul className="mt-8 space-y-4">
             {symptoms.map((s) => (
               <li key={s} className="flex items-start gap-3">
-                <X className="h-5 w-5 flex-shrink-0 mt-0.5" strokeWidth={3} style={{ color: "#E8670A" }} />
+                <X className="h-5 w-5 flex-shrink-0 mt-0.5" strokeWidth={3} style={{ color: "var(--brand-cta)" }} />
+                // hardcoded-color-allow-next-line
                 <span className="text-base" style={{ color: "#1A1A1A", fontFamily: "Inter, sans-serif" }}>{s}</span>
               </li>
             ))}
@@ -73,16 +75,19 @@ export const WLHowItWorks = () => {
                   <div
                     className="w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0"
                     style={{
-                      background: isFinal ? "var(--brand-cta)" : "#000033",
+                      background: isFinal ? "var(--brand-cta)" : "var(--brand-navy)",
                       boxShadow: isFinal
+                        // hardcoded-color-allow-next-line
                         ? "0 0 0 4px rgba(232,103,10,0.20), 0 8px 24px rgba(232,103,10,0.30)"
+                        // hardcoded-color-allow-next-line
                         : "0 0 0 3px rgba(11,16,41,0.12), 0 4px 16px rgba(0,0,0,0.15)",
                     }}
                   >
-                    <span className="font-bold text-base" style={{ color: "#FFFFFF", fontFamily: "Oswald, sans-serif" }}>{s.num}</span>
+                    <span className="font-bold text-base" style={{ color: "var(--c-text-on-dark)", fontFamily: "Oswald, sans-serif" }}>{s.num}</span>
                   </div>
                   <div>
-                    <h3 className="font-bold text-lg" style={{ color: "#000033", fontFamily: "Inter, sans-serif" }}>{s.title}</h3>
+                    <h3 className="font-bold text-lg" style={{ color: "var(--brand-navy)", fontFamily: "Inter, sans-serif" }}>{s.title}</h3>
+                    // hardcoded-color-allow-next-line
                     <p style={{ color: "#4A4A4A", fontFamily: "Inter, sans-serif", fontSize: 17, lineHeight: 1.6, marginTop: 4 }}>{s.desc}</p>
                   </div>
                 </div>
@@ -93,9 +98,9 @@ export const WLHowItWorks = () => {
           <button
             onClick={scrollToForm}
             className="mt-10 w-full sm:w-auto inline-flex items-center justify-center rounded-lg px-8 font-bold cursor-pointer transition-colors duration-200"
-            style={{ height: 56, minHeight: 56, background: "#E8670A", color: "#FFFFFF", fontSize: 15, letterSpacing: "0.07em", fontFamily: "Inter, sans-serif", border: "none", whiteSpace: "nowrap" }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = "#CF5B09"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = "#E8670A"; }}
+            style={{ height: 56, minHeight: 56, background: "var(--brand-cta)", color: "var(--c-text-on-dark)", fontSize: 15, letterSpacing: "0.07em", fontFamily: "Inter, sans-serif", border: "none", whiteSpace: "nowrap" }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "var(--brand-cta-hover)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "var(--brand-cta)"; }}
           >
             {COPY.cta.bookConsult}
           </button>

@@ -14,12 +14,12 @@ export const TRTLocations = () => {
   };
 
   return (
-    <section id="locations" style={{ background: "#FFFFFF", scrollMarginTop: 64 }}>
+    <section id="locations" style={{ background: "var(--bg-white)", scrollMarginTop: 64 }}>
       <div className="max-w-[1200px] mx-auto px-6 py-16 md:py-24">
-        <h2 className="font-bold uppercase text-center" style={{ fontFamily: "Oswald, sans-serif", color: "#000033", fontSize: "clamp(26px, 3vw, 38px)", letterSpacing: "0.02em" }}>
+        <h2 className="font-bold uppercase text-center" style={{ fontFamily: "Oswald, sans-serif", color: "var(--brand-navy)", fontSize: "clamp(26px, 3vw, 38px)", letterSpacing: "0.02em" }}>
           3 Virginia Centers
         </h2>
-        <p className="text-center mt-3" style={{ fontFamily: "Inter, sans-serif", fontSize: 15, color: "#5A6072" }}>
+        <p className="text-center mt-3" style={{ fontFamily: "Inter, sans-serif", fontSize: 15, color: "var(--c-placeholder-light)" }}>
           Same-day appointments available. Pick the location closest to you.
         </p>
 
@@ -27,12 +27,18 @@ export const TRTLocations = () => {
           {locations.map((l, idx) => {
             const isOpen = openIdx === idx;
             return (
-              <div key={l.slug} className="rounded-2xl p-6 flex flex-col" style={{ border: "1px solid rgba(11,16,41,0.08)", background: "#FFFFFF", boxShadow: "0 4px 24px rgba(11,16,41,0.06), 0 1px 4px rgba(11,16,41,0.04)" }}>
-                <div className="font-bold uppercase" style={{ fontFamily: "Oswald, sans-serif", color: "#000033", fontSize: 22, letterSpacing: "0.02em" }}>
+              <div key={l.slug} className="rounded-2xl p-6 flex flex-col" style={{
+                // hardcoded-color-allow-next-line
+                border: "1px solid rgba(11,16,41,0.08)",
+                background: "var(--bg-white)",
+                // hardcoded-color-allow-next-line
+                boxShadow: "0 4px 24px rgba(11,16,41,0.06), 0 1px 4px rgba(11,16,41,0.04)",
+              }}>
+                <div className="font-bold uppercase" style={{ fontFamily: "Oswald, sans-serif", color: "var(--brand-navy)", fontSize: 22, letterSpacing: "0.02em" }}>
                   {l.city}
                 </div>
                 <div className="text-xs mt-1 mb-3" style={{ color: "var(--c-text-on-light-muted)", fontFamily: "Inter, sans-serif" }}>{l.name}</div>
-                <div className="flex items-center gap-2 mb-4 text-xs font-semibold uppercase" style={{ color: "#000033", fontFamily: "Inter, sans-serif", letterSpacing: "0.06em" }}>
+                <div className="flex items-center gap-2 mb-4 text-xs font-semibold uppercase" style={{ color: "var(--brand-navy)", fontFamily: "Inter, sans-serif", letterSpacing: "0.06em" }}>
                   <MapPin className="h-3.5 w-3.5" style={{ color: "var(--brand-cta)" }} /> {l.driveTime}
                 </div>
 
@@ -40,19 +46,19 @@ export const TRTLocations = () => {
                 <button
                   onClick={() => setOpenIdx(isOpen ? null : idx)}
                   className="md:hidden flex items-center justify-between w-full font-semibold uppercase py-3 mb-2 cursor-pointer"
-                  style={{ fontSize: 15, minHeight: 48, color: "#000033", fontFamily: "Inter, sans-serif", background: "none", border: "none", letterSpacing: "0.06em" }}
+                  style={{ fontSize: 15, minHeight: 48, color: "var(--brand-navy)", fontFamily: "Inter, sans-serif", background: "none", border: "none", letterSpacing: "0.06em" }}
                 >
                   <span>Address &amp; Hours</span>
                   <ChevronDown className="h-4 w-4 transition-transform" style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0)" }} />
                 </button>
 
-                <div className={`space-y-2.5 text-sm ${isOpen ? "block" : "hidden"} md:block`} style={{ color: "#1a1a2e", fontFamily: "Inter, sans-serif" }}>
+                <div className={`space-y-2.5 text-sm ${isOpen ? "block" : "hidden"} md:block`} style={{ color: "var(--bg-charcoal)", fontFamily: "Inter, sans-serif" }}>
                   <a
                     href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${l.name}, ${l.address}, ${l.cityStateZip}`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-start gap-2 hover:opacity-70 transition-opacity"
-                    style={{ color: "#1a1a2e", textDecoration: "none" }}
+                    style={{ color: "var(--bg-charcoal)", textDecoration: "none" }}
                   >
                     <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0" style={{ color: "var(--brand-cta)" }} />
                     <div className="underline underline-offset-2">{l.address}<br />{l.cityStateZip}</div>
@@ -67,14 +73,14 @@ export const TRTLocations = () => {
                   <a
                     href={l.phoneHref}
                     className="text-xs font-semibold uppercase text-center rounded-full inline-flex items-center justify-center gap-2"
-                    style={{ height: 52, minHeight: 52, fontSize: 15, color: "#000033", border: "1px solid #000033", letterSpacing: "0.06em", fontFamily: "Inter, sans-serif", textDecoration: "none" }}
+                    style={{ height: 52, minHeight: 52, fontSize: 15, color: "var(--brand-navy)", border: "1px solid var(--brand-navy)", letterSpacing: "0.06em", fontFamily: "Inter, sans-serif", textDecoration: "none" }}
                   >
                     <Phone className="h-4 w-4" /> Call {l.phone}
                   </a>
                   <button
                     onClick={bookAt(l.slug)}
                     className="font-bold uppercase text-center rounded-lg cursor-pointer inline-flex items-center justify-center"
-                    style={{ height: 52, minHeight: 52, background: "var(--brand-cta)", color: "#FFFFFF", fontSize: 15, letterSpacing: "0.06em", fontFamily: "Inter, sans-serif", border: "none" }}
+                    style={{ height: 52, minHeight: 52, background: "var(--brand-cta)", color: "var(--c-text-on-dark)", fontSize: 15, letterSpacing: "0.06em", fontFamily: "Inter, sans-serif", border: "none" }}
                   >
                     Book No-Cost Consult
                   </button>

@@ -41,9 +41,10 @@ class BookingErrorBoundary extends React.Component<Props, State> {
     return (
       <div
         style={{
-          background: "#0B1029",
+          background: "var(--brand-navy-deep)",
           borderRadius: 12,
           padding: "28px 24px",
+          // hardcoded-color-allow-next-line
           border: "1px solid rgba(255,255,255,0.10)",
           fontFamily: "Inter, sans-serif",
           textAlign: "center",
@@ -51,7 +52,7 @@ class BookingErrorBoundary extends React.Component<Props, State> {
       >
         <p
           style={{
-            color: "#FFFFFF",
+            color: "var(--c-text-on-dark)",
             fontSize: 16,
             fontWeight: 600,
             lineHeight: 1.5,
@@ -67,14 +68,15 @@ class BookingErrorBoundary extends React.Component<Props, State> {
             alignItems: "center",
             justifyContent: "center",
             gap: 8,
-            background: "#E8670A",
-            color: "#FFFFFF",
+            background: "var(--brand-cta)",
+            color: "var(--c-text-on-dark)",
             padding: "12px 28px",
             borderRadius: 8,
             fontWeight: 700,
             fontSize: 15,
             textDecoration: "none",
             letterSpacing: "0.04em",
+            // hardcoded-color-allow-next-line
             boxShadow: "0 4px 16px rgba(232,103,10,0.40)",
           }}
         >

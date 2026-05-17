@@ -65,7 +65,7 @@ export function EnvSwitcher() {
           role="switch"
           aria-checked={stageEnabled}
           onClick={() => setStageEnabled((v) => !v)}
-          className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8670A] ${
+          className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-cta)] ${
             stageEnabled ? "bg-emerald-500" : "bg-white/20"
           }`}
         >
@@ -81,7 +81,7 @@ export function EnvSwitcher() {
         type="button"
         onClick={handleSubmit}
         disabled={stageEnabled === (APP_ENV === "stage")}
-        className="rounded-md bg-[#E8670A] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-white transition-colors hover:bg-[#E8670A]/90 disabled:opacity-40 disabled:cursor-not-allowed"
+        className="rounded-md bg-[var(--brand-cta)] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-white transition-colors hover:bg-[var(--brand-cta)]/90 disabled:opacity-40 disabled:cursor-not-allowed"
       >
         Apply
       </button>

@@ -102,6 +102,7 @@ function Stat({
         ? "border-amber-500/40"
         : "border-white/10";
   return (
+    // hardcoded-color-allow-next-line
     <div className={`rounded-xl border ${ring} bg-[#070B1F] p-5`}>
       <div className="text-xs font-semibold uppercase tracking-widest text-white/50">{label}</div>
       <div className="mt-2 text-2xl font-bold" style={{ fontFamily: "Oswald, Inter, sans-serif" }}>

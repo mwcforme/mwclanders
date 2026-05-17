@@ -10,9 +10,10 @@ const trustChecks = [
 ];
 
 const COLORS = {
-  navyDeep: "#0B1029",
-  cream: "#F5F0EB",
-  orange: "#E8670A",
+  navyDeep: "var(--brand-navy-deep)",
+  cream: "var(--brand-cream)",
+  orange: "var(--brand-cta)",
+  // hardcoded-color-allow-next-line
   gold: "#C9A961",
 };
 
@@ -49,6 +50,7 @@ export const WLHero = () => {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
+            // hardcoded-color-allow-next-line
             "radial-gradient(ellipse 60% 50% at 85% 10%, rgba(232,103,10,0.18) 0%, rgba(11,16,41,0) 60%)",
         }}
       />
@@ -57,6 +59,7 @@ export const WLHero = () => {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
+            // hardcoded-color-allow-next-line
             "radial-gradient(ellipse 100% 80% at 50% 50%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.55) 100%)",
         }}
       />
@@ -82,6 +85,7 @@ export const WLHero = () => {
           <p
             className="mt-6 max-w-[520px]"
             style={{
+              // hardcoded-color-allow-next-line
               color: "rgba(245,240,235,0.85)",
               fontFamily: "Inter, sans-serif",
               fontSize: 18,
@@ -122,7 +126,7 @@ export const WLHero = () => {
             style={{
               height: 56,
               background: COLORS.orange,
-              color: "#FFFFFF",
+              color: "var(--c-text-on-dark)",
               fontSize: 14,
               border: "none",
               borderRadius: 8,
@@ -135,6 +139,7 @@ export const WLHero = () => {
 
           <div
             className="mt-6"
+            // hardcoded-color-allow-next-line
             style={{ color: "rgba(245,240,235,0.60)", fontFamily: "Inter, sans-serif", fontSize: 12 }}
           >
             Medically reviewed by licensed Virginia providers. Individual results vary.

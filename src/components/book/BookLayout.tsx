@@ -29,7 +29,15 @@ const DEFAULT_DESC: Record<BookLayoutProps["page"], string> = {
 
 /** Minimal footer for funnel steps — phone + required LegitScript badge */
 const FunnelFooter = () => (
-  <footer style={{ background: "#000814", borderTop: "1px solid rgba(255,255,255,0.08)", padding: "20px 24px", textAlign: "center", fontFamily: "Inter, sans-serif" }}>
+  <footer style={{
+    // hardcoded-color-allow-next-line
+    background: "#000814",
+    // hardcoded-color-allow-next-line
+    borderTop: "1px solid rgba(255,255,255,0.08)",
+    padding: "20px 24px",
+    textAlign: "center",
+    fontFamily: "Inter, sans-serif",
+  }}>
     <a
       href="https://www.legitscript.com/websites/?checker_keywords=menswellnesscenters.com"
       target="_blank"
@@ -46,9 +54,10 @@ const FunnelFooter = () => (
         loading="lazy"
       />
     </a>
+    {/* hardcoded-color-allow-next-line */}
     <p style={{ fontSize: 13, color: "rgba(255,255,255,0.50)", margin: 0 }}>
       Need help?{" "}
-      <a href={PHONE.tel} style={{ color: "#E8670A", fontWeight: 600, textDecoration: "none" }}>
+      <a href={PHONE.tel} style={{ color: "var(--brand-cta)", fontWeight: 600, textDecoration: "none" }}>
         {PHONE.display}
       </a>
       {" · "}
@@ -69,7 +78,7 @@ const BookLayout = ({ page, title, description, variant = "default", children }:
   const isConfirmation = page === "confirmed";
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ fontFamily: "Inter, sans-serif", background: "#0B1029", overflowX: "hidden" }}>
+    <div className="min-h-screen flex flex-col" style={{ fontFamily: "Inter, sans-serif", background: "var(--brand-navy-deep)", overflowX: "hidden" }}>
       <SEO title={title} description={description || DEFAULT_DESC[page]} />
       <TRTHeader minimal={variant === "confirmation"} />
       <main className="flex-1 pt-16 animate-in fade-in duration-200">{children}</main>

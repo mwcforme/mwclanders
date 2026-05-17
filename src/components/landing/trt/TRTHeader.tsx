@@ -24,6 +24,7 @@ export const TRTHeader = ({ minimal = false }: { minimal?: boolean } = {}) => {
     <header
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 md:bg-transparent"
       style={{
+        // hardcoded-color-allow-next-line
         background: scrolled ? "rgba(11,16,41,0.95)" : "rgba(11,16,41,0.85)",
         backdropFilter: "blur(12px)",
         height: 64,
@@ -47,7 +48,7 @@ export const TRTHeader = ({ minimal = false }: { minimal?: boolean } = {}) => {
             data-cro="header_phone_click"
             onClick={() => trackCro("header_phone_click")}
             className="text-sm font-medium transition-opacity hover:opacity-80"
-            style={{ color: "#FFFFFF", fontFamily: "Inter, sans-serif" }}
+            style={{ color: "var(--c-text-on-dark)", fontFamily: "Inter, sans-serif" }}
           >
             866-344-4955
           </a>
@@ -57,7 +58,7 @@ export const TRTHeader = ({ minimal = false }: { minimal?: boolean } = {}) => {
             className="rounded-full px-5 py-2.5 text-xs font-bold cursor-pointer transition-colors duration-200"
             style={{
               background: "var(--brand-cta)",
-              color: "#FFFFFF",
+              color: "var(--c-text-on-dark)",
               letterSpacing: "0.08em",
               fontFamily: "Inter, sans-serif",
             }}
@@ -82,7 +83,8 @@ export const TRTHeader = ({ minimal = false }: { minimal?: boolean } = {}) => {
               width: 52,
               height: 52,
               background: "var(--brand-cta)",
-              color: "#FFFFFF",
+              color: "var(--c-text-on-dark)",
+              // hardcoded-color-allow-next-line
               boxShadow: "0 4px 16px rgba(232,103,10,0.40)",
             }}
           >

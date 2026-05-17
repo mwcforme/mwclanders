@@ -35,16 +35,16 @@ describe("Brand palette", () => {
   it.each([
     ["TRTHeroForm", HERO_FORM],
     ["TRTFinalCTA", FINAL_CTA],
-  ])("%s primary CTA uses brand orange #E8670A", (_, src) => {
-    expect(src).toMatch(/#E8670A/i);
+  ])("%s primary CTA uses brand orange #E8670A or var(--brand-cta)", (_, src) => {
+    expect(src).toMatch(/#E8670A|var\(--brand-cta\)|var\(--brand-accent\)/i);
   });
 
   it.each([
     ["TRTHeroForm", HERO_FORM],
     ["TRTFinalCTA", FINAL_CTA],
     ["LpDirectory", LP_DIRECTORY],
-  ])("%s uses an approved navy (#000814 or #000033 or #0B1029)", (_, src) => {
-    expect(src).toMatch(/#000814|#000033|#0B1029/i);
+  ])("%s uses an approved navy (#000814 or #000033 or #0B1029) or token", (_, src) => {
+    expect(src).toMatch(/#000814|#000033|#0B1029|var\(--brand-navy|var\(--brand-navy-deep\)/i);
   });
 });
 

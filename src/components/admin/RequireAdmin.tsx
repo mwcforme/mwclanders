@@ -38,7 +38,7 @@ export function RequireAdmin({ children }: Props) {
 
   if (state === "loading") {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#0B1029] text-white">
+      <div className="flex min-h-screen items-center justify-center bg-[var(--brand-navy-deep)] text-white">
         <Loader2 className="h-6 w-6 animate-spin" />
       </div>
     );

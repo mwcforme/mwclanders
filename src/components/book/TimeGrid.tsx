@@ -5,13 +5,17 @@
 import { TIMEZONE } from "@/lib/ghlCalendars";
 
 // Brand tokens
-const INK    = "#0B1029";
+const INK    = "var(--brand-navy-deep)";
+// hardcoded-color-allow-next-line
 const MUTED  = "#4B5563";
+// hardcoded-color-allow-next-line
 const LINE   = "#E5E7EB";
+// hardcoded-color-allow-next-line
 const BORDER = "#8B92A0";
-const SURFACE = "#FFFFFF";
+const SURFACE = "var(--bg-white)";
+// hardcoded-color-allow-next-line
 const CANVAS  = "#F7F8FB";
-const ORANGE  = "#E8670A";
+const ORANGE  = "var(--brand-cta)";
 
 // ─── Helper ───────────────────────────────────────────────────────────────────
 
@@ -64,7 +68,7 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
                 border: active ? "1px solid transparent" : `1px solid ${BORDER}`,
                 borderRadius: 12, padding: "16px 18px",
                 display: "flex", alignItems: "center", justifyContent: "center",
-                color: active ? "#FFFFFF" : INK, cursor: "pointer", textAlign: "center",
+                color: active ? "var(--c-text-on-dark)" : INK, cursor: "pointer", textAlign: "center",
                 transition: "background-color 120ms ease",
               }}
             >
@@ -72,7 +76,7 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
                 <span style={{ fontFamily: "Oswald, Inter, sans-serif", fontWeight: 700, fontSize: 22, letterSpacing: "0.01em" }}>
                   {time}
                 </span>
-                <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.1em", color: active ? "#FFFFFF" : MUTED }}>
+                <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.1em", color: active ? "var(--c-text-on-dark)" : MUTED }}>
                   {ampm}
                 </span>
               </div>

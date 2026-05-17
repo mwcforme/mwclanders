@@ -43,8 +43,9 @@ export function AdminLayout({ title, children }: Props) {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B1029] text-white">
+    <div className="min-h-screen bg-[var(--brand-navy-deep)] text-white">
       <div className="flex min-h-screen">
+        {/* hardcoded-color-allow-next-line */}
         <aside className="hidden w-60 shrink-0 border-r border-white/10 bg-[#070B1F] md:flex md:flex-col">
           <div className="flex h-14 items-center border-b border-white/10 px-5">
             <span className="font-bold tracking-wide" style={{ fontFamily: "Oswald, Inter, sans-serif" }}>
@@ -62,7 +63,7 @@ export function AdminLayout({ title, children }: Props) {
                   className={({ isActive }) =>
                     `flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
                       isActive
-                        ? "bg-[#E8670A] text-white"
+                        ? "bg-[var(--brand-cta)] text-white"
                         : "text-white/70 hover:bg-white/5 hover:text-white"
                     }`
                   }
@@ -85,6 +86,7 @@ export function AdminLayout({ title, children }: Props) {
         </aside>
 
         <div className="flex min-w-0 flex-1 flex-col">
+          {/* hardcoded-color-allow-next-line */}
           <header className="flex h-14 items-center justify-between border-b border-white/10 bg-[#070B1F] px-5">
             <h1 className="text-lg font-semibold tracking-wide" style={{ fontFamily: "Oswald, Inter, sans-serif" }}>
               {title}

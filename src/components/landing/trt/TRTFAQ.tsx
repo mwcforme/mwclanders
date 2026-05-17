@@ -22,13 +22,13 @@ export const TRTFAQ = () => {
   };
 
   return (
-    <section id="faq" style={{ background: "#F5F0EB", scrollMarginTop: 64 }}>
+    <section id="faq" style={{ background: "var(--brand-cream)", scrollMarginTop: 64 }}>
       <div className="max-w-[820px] mx-auto px-6 py-16 md:py-24">
         <h2
           className="font-bold uppercase text-center"
           style={{
             fontFamily: "Oswald, sans-serif",
-            color: "#000033",
+            color: "var(--brand-navy)",
             fontSize: "clamp(26px, 3vw, 38px)",
             letterSpacing: "0.02em",
           }}
@@ -45,12 +45,12 @@ export const TRTFAQ = () => {
                 key={f.q}
                 ref={(el) => { itemRefs.current[i] = el; }}
                 className="rounded-xl overflow-hidden"
-                style={{ background: "#FFFFFF", border: "1px solid var(--c-border-on-light)" }}
+                style={{ background: "var(--bg-white)", border: "1px solid var(--c-border-on-light)" }}
               >
                 <button
                   onClick={() => handleToggle(i)}
                   className="w-full flex items-center justify-between gap-4 text-left px-5 py-4 cursor-pointer"
-                  style={{ color: "#000033", fontFamily: "Inter, sans-serif" }}
+                  style={{ color: "var(--brand-navy)", fontFamily: "Inter, sans-serif" }}
                   aria-expanded={isOpen}
                   aria-controls={panelId}
                 >
@@ -67,7 +67,7 @@ export const TRTFAQ = () => {
                   <div
                     id={panelId}
                     className="px-5 pb-5 leading-relaxed"
-                    style={{ color: "#1a1a2e", fontFamily: "Inter, sans-serif", fontSize: 16 }}
+                    style={{ color: "var(--bg-charcoal)", fontFamily: "Inter, sans-serif", fontSize: 16 }}
                   >
                     <p>{f.a}</p>
                     <button
@@ -76,7 +76,7 @@ export const TRTFAQ = () => {
                       style={{
                         height: 52,
                         background: "var(--brand-cta)",
-                        color: "#FFFFFF",
+                        color: "var(--c-text-on-dark)",
                         fontSize: 15,
                         letterSpacing: "0.07em",
                         fontFamily: "Inter, sans-serif",
