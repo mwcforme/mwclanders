@@ -27,6 +27,8 @@ export const COPY = {
     seeIfYouQualify: "Book My Physician Assessment",
     /** Phone CTA prefix. */
     callNow: "Call Now",
+    /** Sticky mobile bar primary action — short, action-oriented. */
+    getLabsChecked: "Get My Labs Checked",
   },
   badge: {
     /** Hero pill / trust chip describing the offer. */

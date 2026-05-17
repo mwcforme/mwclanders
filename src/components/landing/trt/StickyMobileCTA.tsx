@@ -122,7 +122,7 @@ export const StickyMobileCTA = () => {
           boxShadow: "inset 0 1px 0 rgba(255,255,255,0.15)",
         }}
       >
-        Get My Labs Checked
+        {COPY.cta.getLabsChecked}
       </button>
     </div>
   );

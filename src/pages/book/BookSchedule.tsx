@@ -13,6 +13,7 @@ import { useState, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Clock, MapPin, AlertCircle, Check } from "lucide-react";
 import BookLayout from "@/components/book/BookLayout";
+import { COPY } from "@/data/copy";
 import GHLDayView from "@/components/book/GHLDayView";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
 import { contactUpdater } from "@/services/contactUpdater";
@@ -144,7 +145,7 @@ const InlineEmailCapture = ({ recap, contactId, onComplete }: InlineEmailProps) 
             boxShadow: "0 4px 16px rgba(232,103,10,0.40)",
           }}
         >
-          <span className="inline-flex items-center gap-2">Book My Physician Assessment <ArrowRight size={18} strokeWidth={2.5} /></span>
+          <span className="inline-flex items-center gap-2">{COPY.cta.bookConsult} <ArrowRight size={18} strokeWidth={2.5} /></span>
         </button>
       </form>
     </div>
@@ -285,7 +286,7 @@ const BookSchedule = () => {
           {/* Single progress bar: step 1 complete (full orange), step 2 in progress */}
           <div className="flex gap-1 mt-2" role="progressbar" aria-label="Step 2 of 2" aria-valuemin={0} aria-valuemax={2} aria-valuenow={2}>
             <div className="flex-1" style={{ height: 3, borderRadius: 2, background: "#E8670A" }} />
-            <div className="flex-1" style={{ height: 3, borderRadius: 2, background: "rgba(232,103,10,0.30)" }} />
+            <div className="flex-1" style={{ height: 3, borderRadius: 2, background: "#E8670A" }} />
           </div>
           <div className="hidden md:block text-center mt-3" style={{
             fontSize: 12, color: "#FFFFFF", letterSpacing: "0.08em",

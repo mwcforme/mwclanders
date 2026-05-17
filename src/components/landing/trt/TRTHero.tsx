@@ -190,7 +190,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
             onMouseEnter={(e) => { e.currentTarget.style.background = "var(--brand-cta-hover)"; }}
             onMouseLeave={(e) => { e.currentTarget.style.background = "var(--brand-cta)"; }}
           >
-            Book My Physician Assessment
+            {COPY.cta.bookConsult}
           </button>
 
           <div
