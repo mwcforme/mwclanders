@@ -44,8 +44,11 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#0B1029] px-4 text-white">
-      <div className="w-full max-w-sm rounded-2xl border border-white/10 bg-[#070B1F] p-8 shadow-2xl">
+    <div
+      className="flex min-h-screen items-center justify-center bg-[#0B1029] px-4 text-white"
+      style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#0B1029" }}
+    >
+      <div className="w-full max-w-sm rounded-2xl border border-white/10 bg-[#070B1F] p-8 shadow-2xl" style={{ width: "100%", maxWidth: 400 }}>
         <div className="mb-6 text-center">
           <div
             className="text-2xl font-bold tracking-wide"
