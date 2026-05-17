@@ -51,7 +51,7 @@ export const TRTFooter = () => {
             </p>
             <div style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 6 }}>
               <a href={PHONE.tel} style={{ fontSize: 14, color: "rgba(255,255,255,0.80)", textDecoration: "none" }}>
-                📞 {PHONE.display}
+                ☎ {PHONE.display}
               </a>
             </div>
           </div>
@@ -102,15 +102,17 @@ export const TRTFooter = () => {
             flexWrap: "wrap",
           }}
         >
+          {/* CLIA — same official webp as WordPress site */}
           <img
-            src="/images/badges/clia-white.png"
-            alt="CLIA Certified Laboratory"
-            style={{ height: 64, width: "auto", opacity: 0.85 }}
-            width={120}
-            height={72}
+            src="/images/badges/clia-color.webp"
+            alt="Clinical Laboratory Improvements Amendments"
+            style={{ height: 64, width: "auto" }}
+            width={140}
+            height={64}
             loading="lazy"
             decoding="async"
           />
+          {/* LegitScript — official certified badge, links to verification */}
           <a
             href="https://www.legitscript.com/websites/?checker_keywords=menswellnesscenters.com"
             target="_blank"
@@ -119,21 +121,22 @@ export const TRTFooter = () => {
             style={{ display: "inline-block" }}
           >
             <img
-              src="/images/badges/legitscript.png"
-              alt="LegitScript Certified"
-              style={{ height: 64, width: "auto", opacity: 0.85 }}
-              width={120}
-              height={72}
+              src="/images/badges/legitscript-color.png"
+              alt="LegitScript Certified Healthcare Website"
+              style={{ height: 80, width: "auto" }}
+              width={110}
+              height={80}
               loading="lazy"
               decoding="async"
             />
           </a>
+          {/* HIPAA — same official webp as WordPress site */}
           <img
-            src="/images/badges/hipaa-white.png"
-            alt="HIPAA Compliant"
-            style={{ height: 64, width: "auto", opacity: 0.85 }}
-            width={120}
-            height={72}
+            src="/images/badges/hipaa-color.webp"
+            alt="Health Insurance Portability and Accountability Act"
+            style={{ height: 64, width: "auto" }}
+            width={140}
+            height={64}
             loading="lazy"
             decoding="async"
           />
