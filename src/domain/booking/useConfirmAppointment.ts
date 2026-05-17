@@ -191,18 +191,15 @@ export function useConfirmAppointment(opts?: {
       } catch (bookErr) {
         clearTimeout(confirmTimeout);
         try {
+          // PHI contract: only non-PII fields stored on failure.
+          // firstName/lastName/email/phone are intentionally excluded.
           sessionStorage.setItem(
             FAILED_INTENT_KEY,
             JSON.stringify({
               contactId,
               location: input.location,
-              startTime: input.slotIso,
-              firstName: input.firstName,
-              lastName: input.lastName,
-              email: input.email,
-              phone: input.phone,
+              slotIso: input.slotIso,
               failedAt: new Date().toISOString(),
-              error: (bookErr as Error).message,
             }),
           );
         } catch {
