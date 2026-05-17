@@ -484,7 +484,7 @@ const BookConfirmed = () => {
           {/* Footer */}
           <div className="text-center flex flex-col gap-3" style={{ fontFamily: "Inter, sans-serif" }}>
             <p style={{ color: "rgba(255,255,255,0.72)", fontSize: 14 }}>
-              Need to reschedule? Life happens — just give us a heads up.
+              Need to reschedule? Life happens. Just give us a heads up.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <a
@@ -514,7 +514,7 @@ const BookConfirmed = () => {
                 🗓️ Book a different time
               </a>
             </div>
-            <p style={{ color: "rgba(255,255,255,0.30)", fontSize: 12, marginTop: 4 }}>
+            <p style={{ color: "rgba(255,255,255,0.65)", fontSize: 12, marginTop: 4 }}>
               Please cancel or reschedule at least 24 hours in advance so we can offer your slot to someone else.
             </p>
           </div>

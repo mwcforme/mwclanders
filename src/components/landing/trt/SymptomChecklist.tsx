@@ -11,6 +11,7 @@
  */
 
 import { CheckCircle, ChevronDown } from "lucide-react";
+import { COPY } from "@/data/copy";
 
 const SYMPTOMS = [
   "Energy drops by 2pm no matter how much you sleep",
@@ -129,7 +130,7 @@ export const SymptomChecklist = ({ formId = "hero-form" }: SymptomChecklistProps
         onMouseLeave={(e) => (e.currentTarget.style.color = "#E8670A")}
       >
           <ChevronDown size={14} strokeWidth={2.5} style={{ flexShrink: 0 }} />
-        Book My Physician Assessment
+        {COPY.cta.bookConsult}
       </a>
     </div>
   );

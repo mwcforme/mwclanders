@@ -1,5 +1,6 @@
 import { Check, Star } from "lucide-react";
 import { TRTHeroForm } from "@/components/landing/trt/TRTHeroForm";
+import { COPY } from "@/data/copy";
 
 const trustChecks = [
   "Provider-supervised GLP-1 medications",
@@ -129,7 +130,7 @@ export const WLHero = () => {
               fontFamily: "Inter, sans-serif",
             }}
           >
-            See If I Qualify
+            {COPY.cta.seeIfIQualify}
           </button>
 
           <div

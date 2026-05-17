@@ -11,7 +11,7 @@
 
 import { useState, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Clock, MapPin, AlertCircle, Check } from "lucide-react";
+import { ArrowLeft, ArrowRight, Clock, MapPin, AlertCircle, Check } from "lucide-react";
 import BookLayout from "@/components/book/BookLayout";
 import GHLDayView from "@/components/book/GHLDayView";
 import { useBookingStore } from "@/domain/booking/bookingStore";
@@ -152,7 +152,7 @@ const InlineEmailCapture = ({ recap, contactId, onComplete }: InlineEmailProps) 
             boxShadow: "0 4px 16px rgba(232,103,10,0.40)",
           }}
         >
-          Book My Physician Assessment →
+          <span className="inline-flex items-center gap-2">Book My Physician Assessment <ArrowRight size={18} strokeWidth={2.5} /></span>
         </button>
       </form>
     </div>

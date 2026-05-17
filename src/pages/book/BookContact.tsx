@@ -7,6 +7,7 @@
  */
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 import BookLayout from "@/components/book/BookLayout";
 import { useBookingStore } from "@/domain/booking/bookingStore";
 import { PHONE } from "@/lib/constants";
@@ -258,7 +259,7 @@ const BookContact = () => {
                 marginTop: 4,
               }}
             >
-              {loading ? "Setting up…" : "Continue →"}
+              {loading ? "Setting up…" : <span className="inline-flex items-center gap-2">Continue <ArrowRight size={18} strokeWidth={2.5} /></span>}
             </button>
           </form>
 

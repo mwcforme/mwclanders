@@ -41,11 +41,11 @@ export const TRTManifesto = () => {
               className="text-base leading-relaxed italic mt-2"
               style={{ color: "rgba(255,255,255,0.92)", fontFamily: "Inter, sans-serif" }}
             >
-              "I felt like I was running on fumes for two years. One visit, real labs, a real plan. Six weeks in I was sleeping again. Six months in I felt like myself."
+              "Saw two GPs who told me my levels were fine. I knew they weren't. Three weeks after starting treatment I was sleeping through the night again. The difference in energy over the next few months was something no standard lab panel ever captured."
             </blockquote>
             <figcaption className="mt-3 text-sm" style={{ color: "rgba(255,255,255,0.65)", fontFamily: "Inter, sans-serif" }}>
               <span className="flex items-center gap-2">
-                <span>Mark B., 52, Richmond</span>
+                <span>James T., 48, Norfolk</span>
               </span>
               <span className="block mt-1" style={{ fontSize: 11, color: "rgba(255,255,255,0.40)", fontStyle: "normal" }}>Verified patient. Individual results vary.</span>
             </figcaption>

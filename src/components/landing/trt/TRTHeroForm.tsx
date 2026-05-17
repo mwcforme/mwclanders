@@ -330,7 +330,7 @@ export const TRTHeroForm = ({
           }}
         />
         {/* Phone micro-copy */}
-        <p style={{ fontSize: 12, color: "rgba(245,240,235,0.45)", fontFamily: "Inter, sans-serif", marginTop: -4, lineHeight: 1.4 }}>
+        <p style={{ fontSize: 12, color: "rgba(245,240,235,0.65)", fontFamily: "Inter, sans-serif", marginTop: -4, lineHeight: 1.4 }}>
           We’ll use this to confirm your visit and send reminders. No spam.
         </p>
 
@@ -339,7 +339,7 @@ export const TRTHeroForm = ({
           <p style={{
             fontSize: 11, fontWeight: 700, letterSpacing: "0.09em",
             textTransform: "uppercase",
-            color: errors.location ? ERR_RED : "rgba(245,240,235,0.45)",
+            color: errors.location ? ERR_RED : "rgba(245,240,235,0.65)",
             marginBottom: 8,
           }}>
             Nearest location
@@ -513,7 +513,7 @@ export const TRTHeroForm = ({
         {/* Helper line under CTA */}
         <p style={{
           textAlign: "center", fontSize: 12,
-          color: "rgba(245,240,235,0.40)",
+          color: "rgba(245,240,235,0.65)",
           fontFamily: "Inter, sans-serif", lineHeight: 1.5, marginTop: 2,
         }}>
           Same-day availability · No obligation to proceed
@@ -533,7 +533,7 @@ export const TRTHeroForm = ({
         justifyContent: "center",
         gap: 6,
         marginTop: 20,
-        color: "rgba(245,240,235,0.40)",
+        color: "rgba(245,240,235,0.65)",
         fontSize: 12,
       }}>
         <Lock size={12} strokeWidth={2} aria-hidden />

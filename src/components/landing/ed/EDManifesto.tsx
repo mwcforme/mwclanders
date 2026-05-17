@@ -1,4 +1,5 @@
 import { Quote } from "lucide-react";
+import { COPY } from "@/data/copy";
 
 export const EDManifesto = () => (
   <section className="py-10 md:py-16" style={{ background: "#000033" }}>
@@ -33,7 +34,7 @@ export const EDManifesto = () => (
           className="mt-7 w-full sm:w-auto inline-flex items-center justify-center rounded-lg px-8 font-bold cursor-pointer border-none"
           style={{ height: 56, minHeight: 56, background: "#E8670A", color: "#FFFFFF", fontSize: 15, letterSpacing: "0.08em", fontFamily: "Inter, sans-serif" }}
         >
-          Book My Discreet Visit
+          {COPY.cta.bookDiscreetVisit}
         </button>
         <p className="mt-3 text-xs" style={{ color: "rgba(255,255,255,0.55)", fontFamily: "Inter, sans-serif" }}>
           Private, in-person visit. Individual results vary.
@@ -44,7 +45,7 @@ export const EDManifesto = () => (
         <img
           src="/assets/lp/man-bloodwork-clinic.webp"
           decoding="async"
-          alt="Patient having labs reviewed with a physician at a Men's Wellness Center in Virginia"
+          alt="Patient having labs reviewed with a provider at a Men's Wellness Center in Virginia"
           className="rounded-2xl object-cover w-full aspect-[4/3] md:aspect-auto md:h-[460px]"
           loading="lazy"
         />

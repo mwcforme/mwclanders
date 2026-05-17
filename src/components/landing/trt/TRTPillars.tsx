@@ -6,7 +6,7 @@ import imgTeam from "@/assets/lp/mwc-team.webp";
 const pillars = [
   {
     title: "LICENSED PROVIDERS",
-    desc: "Licensed Virginia physicians and nurse practitioners. A real provider, every visit.",
+    desc: "Licensed Virginia providers and nurse practitioners. A real provider, every visit.",
     image: imgDoctor,
   },
   {

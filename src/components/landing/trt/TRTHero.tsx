@@ -201,7 +201,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
 
           <div
             className="mt-5"
-            style={{ color: "rgba(245,240,235,0.45)", fontFamily: "Inter, sans-serif", fontSize: 12 }}
+            style={{ color: "rgba(245,240,235,0.65)", fontFamily: "Inter, sans-serif", fontSize: 12 }}
           >
             Treatment requires a clinical evaluation and is only provided when medically appropriate. Individual results vary.
           </div>

@@ -1,4 +1,4 @@
-import { Star } from "lucide-react";
+import { Star, ArrowUpRight } from "lucide-react";
 import { COPY } from "@/data/copy";
 import { TESTIMONIALS, GBP_REVIEWS_URL } from "@/data/testimonials";
 
@@ -32,7 +32,7 @@ export const TRTResults = () => {
             className="underline underline-offset-2 hover:opacity-70 transition-opacity"
             style={{ color: "#000033" }}
           >
-            See all reviews on Google →
+            See all reviews on Google <ArrowUpRight className="inline-block h-3.5 w-3.5" aria-hidden="true" />
           </a>
         </p>
 

@@ -172,7 +172,7 @@ function Section2Status({ indicatorPct, bracket, totalScore }: { indicatorPct: n
         />
       </div>
       <div className="mt-3 grid grid-cols-3 text-[11px] md:text-xs font-semibold" style={{ color: "#64748B" }}>
-        <span>Optimal</span>
+        <span>Healthy</span>
         <span className="text-center">Normal</span>
         <span className="text-right">Low</span>
       </div>
@@ -198,7 +198,7 @@ function Section2Status({ indicatorPct, bracket, totalScore }: { indicatorPct: n
         </p>
       )}
 
-      <p className="mt-4 text-[11px]" style={{ color: "#94A3B8" }}>
+      <p className="mt-4 text-[11px]" style={{ color: "#64748B" }}>
         Symptom score: {totalScore} of 69 . Tier: {bracket}. This is a screening, not a diagnosis.
       </p>
     </section>
@@ -328,7 +328,7 @@ function Section5Outcome() {
           </div>
         </div>
       </div>
-      <p className="mt-3 text-xs" style={{ color: "#94A3B8" }}>
+      <p className="mt-3 text-xs" style={{ color: "#64748B" }}>
         Based on testosterone level changes observed in published clinical studies of men on TRT. Individual results vary.
       </p>
     </section>
@@ -564,14 +564,14 @@ function Footer({ ctaHref, ctaLabel }: { ctaHref: string; ctaLabel: string }) {
         <a href={PHONE_HREF} className="underline" style={{ color: "#0B1029" }}>{PHONE_DISPLAY}</a>
       </div>
 
-      <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs" style={{ color: "#94A3B8" }}>
+      <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs" style={{ color: "#64748B" }}>
         <Link to="/privacy-policy" className="hover:underline">Privacy Policy</Link>
         <span>.</span>
         <Link to="/terms-of-service" className="hover:underline">Terms of Service</Link>
         <span>.</span>
         <Link to="/tcpa" className="hover:underline">TCPA Disclosure</Link>
       </div>
-      <p className="mt-4 text-center text-[11px]" style={{ color: "#94A3B8" }}>
+      <p className="mt-4 text-center text-[11px]" style={{ color: "#64748B" }}>
         © 2026 Men's Wellness Centers. Individual results vary.
       </p>
     </footer>

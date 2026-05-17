@@ -23,7 +23,7 @@ export const TESTIMONIALS: Testimonial[] = [
     rating: 5,
     source: "verified_patient",
     quote:
-      "Six months on TRT and I finally feel like myself again. Energy is up, mood is stable, and I'm sleeping through the night for the first time in years.",
+      "Six months on TRT and the difference is night and day. Energy is up, mood is stable, and I'm sleeping through the night for the first time in years.",
   },
   {
     name: "David K.",
@@ -41,7 +41,7 @@ export const TESTIMONIALS: Testimonial[] = [
     rating: 5,
     source: "verified_patient",
     quote:
-      "Two GP visits, same results both times. 'Everything\'s in range.' Came here on a friend's recommendation. The provider actually walked me through every number. Turns out range isn't the same as optimal. Night and day difference in how I feel now.",
+      "Two GP visits, same results both times. 'Everything\'s in range.' Came here on a friend's recommendation. The provider actually walked me through every number. Turns out range isn't the same as the right level. Night and day difference in how I feel now.",
   },
 ];
 
