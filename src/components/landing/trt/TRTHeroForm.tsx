@@ -19,6 +19,7 @@ import { heroLeadSchema, type HeroLeadInput } from "@/domain/leads/leadFormSchem
 import { enterBookingFunnel } from "@/domain/booking/bookingEntry";
 import { COPY } from "@/data/copy";
 import { capturePartialLead, markSessionSubmitted } from "@/lib/partialCapture";
+import { trackFunnelEvent } from "@/hooks/useAnalytics";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
@@ -206,6 +207,7 @@ export const TRTHeroForm = ({
     },
     onSuccess: (result, v) => {
       markSessionSubmitted();
+      trackFunnelEvent("booking_started", { service, location: v.location });
       const [first, ...rest] = v.name.trim().split(/\s+/);
       enterBookingFunnel({
         identity: {

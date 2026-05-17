@@ -14,6 +14,7 @@ import {
   ymdInTimeZone,
 } from "@/lib/etDate";
 import { useConfirmAppointment } from "@/domain/booking/useConfirmAppointment";
+import { trackFunnelEvent } from "@/hooks/useAnalytics";
 import DayStrip from "./DayStrip";
 import TimeGrid from "./TimeGrid";
 // ConfirmDialog removed — slot tap confirms directly, no modal step
@@ -131,7 +132,12 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
   // modalOpen removed — no confirmation dialog
   const [refreshNonce, setRefreshNonce] = useState(0);
 
-  const confirmCtl = useConfirmAppointment({ onBooked: (slot) => onBooked?.(slot) });
+  const confirmCtl = useConfirmAppointment({
+    onBooked: (slot) => {
+      trackFunnelEvent("booking_completed", { location });
+      onBooked?.(slot);
+    },
+  });
   const submitting  = confirmCtl.isSubmitting;
   const submitError = confirmCtl.error;
 
@@ -263,7 +269,7 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
           loadError={loadError}
           onPrevWeek={() => setWeekStart(addDaysInTimeZone(weekStart, -7, TIMEZONE))}
           onNextWeek={() => setWeekStart(addDaysInTimeZone(weekStart, 7, TIMEZONE))}
-          onDaySelect={(key) => { setSelectedDay(key); setSelectedSlot(null); }}
+          onDaySelect={(key) => { setSelectedDay(key); setSelectedSlot(null); trackFunnelEvent("date_selected", { location }); }}
         />
 
         <TimeGrid
@@ -271,7 +277,7 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
           times={times}
           selectedSlot={selectedSlot}
           loading={loading}
-          onSlotSelect={setSelectedSlot}
+          onSlotSelect={(iso) => { setSelectedSlot(iso); trackFunnelEvent("time_selected", { location }); }}
         />
 
         {/* Confirm bar */}

@@ -12,6 +12,7 @@ import BookLayout from "@/components/book/BookLayout";
 import { useBookingStore } from "@/domain/booking/bookingStore";
 import { contactUpdater } from "@/services/contactUpdater";
 import type { LocationKey } from "@/lib/ghlCalendars";
+import { trackFunnelEvent } from "@/hooks/useAnalytics";
 
 const ORANGE = "#E8670A";
 
@@ -66,6 +67,9 @@ const BookLocation = () => {
       contactUpdater.addTag(identity.ghlContactId, `location-${key}`).catch(() => { /* non-blocking */ });
     }
 
+    // Track conversion event (PII-free — only the location key, not contact info)
+    trackFunnelEvent("location_selected", { location: key });
+
     // Brief visual confirmation then advance
     if (advanceTimerRef.current !== null) clearTimeout(advanceTimerRef.current);
     advanceTimerRef.current = window.setTimeout(() => { navigate("/book/schedule"); }, 300);
@@ -93,17 +97,17 @@ const BookLocation = () => {
             <ArrowLeft size={15} /> Back
           </button>
 
-          <div className="flex gap-1 mb-2" role="progressbar" aria-label="Step 2 of 3" aria-valuemin={0} aria-valuemax={3} aria-valuenow={2}>
-            {[0, 1, 2].map((i) => (
+          <div className="flex gap-1 mb-2" role="progressbar" aria-label="Step 1 of 2" aria-valuemin={0} aria-valuemax={2} aria-valuenow={1}>
+            {[0, 1].map((i) => (
               <div
                 key={i}
                 className="flex-1"
-                style={{ height: 3, borderRadius: 2, background: i <= 1 ? ORANGE : "rgba(255,255,255,0.15)" }}
+                style={{ height: 3, borderRadius: 2, background: i === 0 ? ORANGE : "rgba(255,255,255,0.15)" }}
               />
             ))}
           </div>
           <p style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", fontFamily: "Inter, sans-serif", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 24 }}>
-            Step 2 of 3
+            Step 1 of 2
           </p>
 
           {/* Heading */}
