@@ -88,7 +88,7 @@ function ResultsTopBar() {
       style={{ background: "#000814", color: "var(--c-text-on-dark)" }}
     >
       <div className="mx-auto flex items-center justify-between px-5 md:px-8 h-14" style={{ maxWidth: 1180 }}>
-        <img src="/logos/Text_Logo_white.webp" onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/logos/Text_Logo_white.png"; }} alt="Men's Wellness Centers" className="h-5 md:h-6 w-auto" />
+        <img src="/logos/Text_Logo_white.webp" onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/logos/Text_Logo_white.png"; }} alt="Men's Wellness Centers" className="h-5 md:h-6 w-auto" width={150} height={24} loading="lazy" decoding="async" />
         <a
           href={PHONE_HREF}
           className="flex items-center gap-2 text-xs md:text-sm font-semibold"

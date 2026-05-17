@@ -26,7 +26,7 @@ export function QuizShell({ progress, children, cta }: QuizShellProps) {
           />
         </div>
         <div className="flex items-center justify-between px-5 md:px-8 h-12">
-          <img src="/logos/Text_Logo_white.webp" onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/logos/Text_Logo_white.png"; }} alt="Men's Wellness Centers" className="h-5 md:h-6 w-auto" />
+          <img src="/logos/Text_Logo_white.webp" onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/logos/Text_Logo_white.png"; }} alt="Men's Wellness Centers" className="h-5 md:h-6 w-auto" width={150} height={24} loading="lazy" decoding="async" />
           <span className="text-[11px] md:text-xs tabular-nums font-semibold tracking-wider" style={{ color: "var(--brand-cta)" }}>
             {pct}%
           </span>

@@ -73,18 +73,21 @@ export const EDFAQ = () => {
                 }}
               >
                 <button
+                  type="button"
                   onClick={() => handleToggle(i)}
                   className="w-full flex items-center justify-between gap-4 text-left px-5 py-4 cursor-pointer"
                   style={{ color: "var(--brand-navy)", fontFamily: "Inter, sans-serif" }}
                   aria-expanded={isOpen}
+                  aria-controls={`ed-faq-panel-${i}`}
                 >
                   <span className="font-semibold" style={{ fontSize: 17 }}>{f.q}</span>
                   <ChevronDown className="h-5 w-5 flex-shrink-0 transition-transform duration-200" style={{ color: "var(--brand-cta)", transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }} />
                 </button>
                 {isOpen && (
-                  <div className="px-5 pb-5 leading-relaxed" style={{ color: "var(--bg-charcoal)", fontFamily: "Inter, sans-serif", fontSize: 16 }}>
+                  <div id={`ed-faq-panel-${i}`} className="px-5 pb-5 leading-relaxed" style={{ color: "var(--bg-charcoal)", fontFamily: "Inter, sans-serif", fontSize: 16 }}>
                     <p>{f.a}</p>
                     <button
+                      type="button"
                       onClick={scrollToBooking}
                       className="mt-4 w-full font-bold cursor-pointer inline-flex items-center justify-center rounded-lg"
                       style={{

@@ -75,6 +75,7 @@ export function AdminLayout({ title, children }: Props) {
           </nav>
           <div className="border-t border-white/10 p-3">
             <button
+              type="button"
               onClick={signOut}
               className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm text-white/70 transition-colors hover:bg-white/5 hover:text-white"
             >

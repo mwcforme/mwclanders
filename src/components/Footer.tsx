@@ -137,7 +137,7 @@ export const Footer = () => (
     <div className="border-t border-white/[0.06]">
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-10 flex items-center justify-center gap-12 md:gap-20">
         {certBadges.map((b) => (
-          <img key={b.label} src={b.image} alt={b.label} className="h-16 md:h-20 w-auto opacity-80" />
+          <img key={b.label} src={b.image} alt={b.label} className="h-16 md:h-20 w-auto opacity-80" width={120} height={80} loading="lazy" decoding="async" />
         ))}
       </div>
     </div>

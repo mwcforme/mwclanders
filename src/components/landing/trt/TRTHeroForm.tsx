@@ -455,8 +455,8 @@ export const TRTHeroForm = ({
               id="hf-tcpa-text"
               style={{ fontSize: 11, color: "rgba(245,240,235,0.45)", lineHeight: 1.4 }}
             >
-              I agree to receive texts from Men&rsquo;s Wellness Centers. Msg &amp; data rates may apply. Reply STOP to opt out.{" "}
-              Not a condition of service.{" "}
+              I agree to receive SMS/calls & texts from Men&rsquo;s Wellness Centers. Msg & data rates may apply. Reply STOP to opt out.{" "}
+              Not a condition of service. HIPAA Compliant.{" "}
               <a href="/privacy-policy" style={{ color: "var(--brand-cta)", textDecoration: "none" }}>Privacy Policy</a>
             </span>
           </label>

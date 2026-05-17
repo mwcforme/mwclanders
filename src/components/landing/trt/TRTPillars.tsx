@@ -76,6 +76,8 @@ export const TRTPillars = () => (
                   alt={p.title}
                   className="w-[120px] h-[120px] rounded-full object-cover"
                   style={{ border: "3px solid var(--c-border-on-dark)" }}
+                  width={120}
+                  height={120}
                   loading="lazy"
                   decoding="async"
                 />
@@ -130,6 +132,8 @@ export const TRTPillars = () => (
                   alt={p.title}
                   className="w-[96px] h-[96px] rounded-full object-cover"
                   style={{ border: "3px solid var(--c-border-on-dark)" }}
+                  width={96}
+                  height={96}
                   loading="lazy"
                   decoding="async"
                 />

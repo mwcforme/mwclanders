@@ -48,6 +48,7 @@ export const TRTFAQ = () => {
                 style={{ background: "var(--bg-white)", border: "1px solid var(--c-border-on-light)" }}
               >
                 <button
+                  type="button"
                   onClick={() => handleToggle(i)}
                   className="w-full flex items-center justify-between gap-4 text-left px-5 py-4 cursor-pointer"
                   style={{ color: "var(--brand-navy)", fontFamily: "Inter, sans-serif" }}
@@ -71,6 +72,7 @@ export const TRTFAQ = () => {
                   >
                     <p>{f.a}</p>
                     <button
+                      type="button"
                       onClick={scrollToForm}
                       className="mt-4 w-full font-bold cursor-pointer inline-flex items-center justify-center rounded-lg"
                       style={{

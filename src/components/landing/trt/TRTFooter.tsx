@@ -41,6 +41,8 @@ export const TRTFooter = () => {
               src="/logos/Text_Logo_white.webp" onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/logos/Text_Logo_white.png"; }}
               alt="Men's Wellness Centers"
               style={{ height: 44, width: "auto" }}
+              width={220}
+              height={44}
               loading="lazy"
               decoding="async"
             />
@@ -104,6 +106,8 @@ export const TRTFooter = () => {
             src="/images/badges/clia.png"
             alt="CLIA Certified Laboratory"
             style={{ height: 72, width: "auto", opacity: 0.9 }}
+            width={120}
+            height={72}
             loading="lazy"
             decoding="async"
           />
@@ -118,6 +122,8 @@ export const TRTFooter = () => {
               src="/images/badges/legitscript.png"
               alt="LegitScript Certified"
               style={{ height: 72, width: "auto", opacity: 0.9 }}
+              width={120}
+              height={72}
               loading="lazy"
               decoding="async"
             />
@@ -126,6 +132,8 @@ export const TRTFooter = () => {
             src="/images/badges/hipaa.png"
             alt="HIPAA Compliant"
             style={{ height: 72, width: "auto", opacity: 0.9 }}
+            width={120}
+            height={72}
             loading="lazy"
             decoding="async"
           />

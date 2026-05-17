@@ -54,15 +54,16 @@ const EmailCapture = ({ contactId, onComplete }: { contactId?: string; onComplet
       background: "var(--c-text-on-dark)", borderRadius: 12, padding: "24px",
       border: "1px solid #E5E7EB",
     }}>
-      <p style={{ fontFamily: "Inter, sans-serif", fontSize: 15, fontWeight: 600, color: "var(--brand-navy-deep)", marginBottom: 4 }}>
+      <label htmlFor="confirmed-email" style={{ fontFamily: "Inter, sans-serif", fontSize: 15, fontWeight: 600, color: "var(--brand-navy-deep)", marginBottom: 4, display: "block" }}>
         Where should we send your appointment details?
-      </p>
+      </label>
       <p style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: "#6B7280", marginBottom: 16, lineHeight: 1.5 }}>
         We'll email your confirmation and prep instructions. Takes 2 seconds.
       </p>
       <form onSubmit={handleSubmit} noValidate style={{ display: "flex", gap: 8 }}>
         <div style={{ flex: 1 }}>
           <input
+            id="confirmed-email"
             type="email"
             placeholder="your@email.com"
             value={email}

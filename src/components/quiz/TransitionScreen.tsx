@@ -52,6 +52,10 @@ export function TransitionScreen({
         src="/logos/Text_Logo_white.webp" onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/logos/Text_Logo_white.png"; }}
         alt="Men's Wellness Centers"
         className="h-7 md:h-8 w-auto mb-10"
+        width={180}
+        height={32}
+        loading="lazy"
+        decoding="async"
       />
 
       <h1

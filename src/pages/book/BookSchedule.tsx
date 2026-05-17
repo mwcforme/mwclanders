@@ -169,6 +169,7 @@ const NoAvailFallback = ({ onChangeCenter }: { onChangeCenter: () => void }) => 
     </p>
     <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
       <button
+        type="button"
         onClick={onChangeCenter}
         style={{
           flex: 1, height: 44, background: "#161B3A", border: "1px solid #3A4360",

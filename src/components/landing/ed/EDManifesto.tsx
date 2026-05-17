@@ -33,6 +33,7 @@ export const EDManifesto = () => (
         </figure>
 
         <button
+          type="button"
           onClick={() => document.getElementById("final-cta")?.scrollIntoView({ behavior: "smooth" })}
           className="mt-7 w-full sm:w-auto inline-flex items-center justify-center rounded-lg px-8 font-bold cursor-pointer border-none"
           style={{ height: 56, minHeight: 56, background: "var(--brand-cta)", color: "var(--c-text-on-dark)", fontSize: 15, letterSpacing: "0.08em", fontFamily: "Inter, sans-serif" }}
@@ -50,6 +51,8 @@ export const EDManifesto = () => (
           decoding="async"
           alt="Patient having labs reviewed with a provider at a Men's Wellness Center in Virginia"
           className="rounded-2xl object-cover w-full aspect-[4/3] md:aspect-auto md:h-[460px]"
+          width={600}
+          height={450}
           loading="lazy"
         />
       </div>

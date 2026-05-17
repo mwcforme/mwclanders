@@ -47,6 +47,8 @@ export const WLManifesto = () => (
           src="/images/services/weight-loss.webp"
           alt="Virginia man, healthier and leaner after a medical weight loss program"
           className="rounded-2xl object-cover w-full aspect-[4/3] md:aspect-auto md:h-[460px]"
+          width={600}
+          height={450}
           loading="lazy"
           decoding="async"
         />

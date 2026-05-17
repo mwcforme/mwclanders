@@ -80,6 +80,8 @@ export const TRTManifesto = () => {
               objectFit: "cover", objectPosition: "center 35%",
               boxShadow: "0 24px 64px rgba(0,0,0,0.40)",
             }}
+            width={600}
+            height={450}
             loading="lazy"
             decoding="async"
           />

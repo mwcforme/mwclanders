@@ -117,6 +117,7 @@ export const EDHero = () => {
           </ul>
 
           <button
+            type="button"
             onClick={scrollToForm}
             className="lg:hidden mt-7 w-full uppercase font-bold cursor-pointer"
             style={{

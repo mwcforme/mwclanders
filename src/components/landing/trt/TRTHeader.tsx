@@ -34,6 +34,9 @@ export const TRTHeader = ({ minimal = false }: { minimal?: boolean } = {}) => {
           <img
             src="/logos/Text_Logo_white.webp" onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/logos/Text_Logo_white.png"; }}
             decoding="async"
+            loading="eager"
+            width={180}
+            height={28}
             alt="Men's Wellness Centers"
             className="h-7 w-auto"
           />
@@ -52,6 +55,7 @@ export const TRTHeader = ({ minimal = false }: { minimal?: boolean } = {}) => {
             866-344-4955
           </a>
           <button
+            type="button"
             data-cro="header_book_click"
             onClick={() => { trackCro("header_book_click"); scrollTo("hero-form"); }}
             className="rounded-full px-5 py-2.5 text-xs font-bold cursor-pointer transition-colors duration-200"
