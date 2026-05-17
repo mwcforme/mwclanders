@@ -31,11 +31,13 @@ export const tcpaField = z.literal(true, {
   errorMap: () => ({ message: "Consent required to continue" }),
 });
 
-/** Hero-form schema: all fields required, TCPA must be checked. */
+/**
+ * Hero-form schema: name + phone + location + TCPA.
+ * Email removed — collected post-booking on /book/confirmed.
+ */
 export const heroLeadSchema = z.object({
   name: nameField,
   phone: phoneField,
-  email: emailField,
   location: locationField,
   tcpa: tcpaField,
 });

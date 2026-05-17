@@ -15,14 +15,14 @@ const formatPhone = (v: string) => {
 };
 
 const ERR_MSG = {
-  name: "Please enter your full name",
+  name: "Please enter your name",
   phone: "Please enter a valid 10-digit phone number",
-  email: "Please enter a valid email address",
-  location: "Please select a location",
+  location: "Please choose a location",
   tcpa: "Please agree to receive SMS so we can confirm your appointment",
 } as const;
 
 const ERROR_RED = "#DC2626";
+const ORANGE = "#E8670A";
 
 type Service = "trt" | "wl" | "ed";
 
@@ -34,11 +34,18 @@ interface TRTHeroFormProps {
 }
 
 const VALID_LOCATIONS = ["richmond", "virginia-beach", "newport-news"] as const;
+type LocationKey = typeof VALID_LOCATIONS[number];
 
-function getLocationFromUrl(): string {
+const LOCATION_OPTIONS: { key: LocationKey; label: string }[] = [
+  { key: "richmond", label: "Richmond" },
+  { key: "virginia-beach", label: "Virginia Beach" },
+  { key: "newport-news", label: "Newport News" },
+];
+
+function getLocationFromUrl(): LocationKey | "" {
   if (typeof window === "undefined") return "";
   const param = new URLSearchParams(window.location.search).get("location") ?? "";
-  return VALID_LOCATIONS.includes(param as typeof VALID_LOCATIONS[number]) ? param : "";
+  return VALID_LOCATIONS.includes(param as LocationKey) ? (param as LocationKey) : "";
 }
 
 export const TRTHeroForm = ({
@@ -49,18 +56,16 @@ export const TRTHeroForm = ({
 }: TRTHeroFormProps = {}) => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [location, setLocation] = useState(() => getLocationFromUrl());
+  const [location, setLocation] = useState<LocationKey | "">(() => getLocationFromUrl());
   const [tcpa, setTcpa] = useState(false);
   const [focused, setFocused] = useState<string | null>(null);
   const [localErrors, setLocalErrors] = useState<Record<string, string>>({});
   const navigate = useNavigate();
 
-  const refs: Record<string, React.RefObject<HTMLElement>> = {
+  const refs = {
     name: useRef<HTMLInputElement>(null),
     phone: useRef<HTMLInputElement>(null),
-    email: useRef<HTMLInputElement>(null),
-    location: useRef<HTMLSelectElement>(null),
+    location: useRef<HTMLDivElement>(null),
     tcpa: useRef<HTMLLabelElement>(null),
   };
 
@@ -72,7 +77,7 @@ export const TRTHeroForm = ({
       return {
         firstName: first || "Guest",
         lastName: rest.join(" ") || undefined,
-        email: v.email,
+        email: undefined,
         phone: v.phone,
       };
     },
@@ -84,7 +89,7 @@ export const TRTHeroForm = ({
           identity: {
             firstName: first || "Guest",
             lastName: rest.join(" ") || undefined,
-            email: v.email,
+            email: "",
             phone: v.phone,
             ghlContactId: result.contactId,
           },
@@ -99,7 +104,7 @@ export const TRTHeroForm = ({
     toastOnError: false,
   });
 
-  // Mirror controller-validation errors into local state so we can clear per-field onChange.
+  // Mirror controller validation errors into local state
   useEffect(() => {
     const fe = controller.fieldErrors;
     if (Object.keys(fe).length === 0) return;
@@ -108,11 +113,10 @@ export const TRTHeroForm = ({
       mapped[k] = ERR_MSG[k as keyof typeof ERR_MSG] || fe[k];
     }
     setLocalErrors(mapped);
-    // Smooth-scroll to first failing field
-    const order = ["name", "phone", "email", "location", "tcpa"];
+    const order = ["name", "phone", "location", "tcpa"];
     const firstKey = order.find((k) => mapped[k]);
     if (firstKey) {
-      const el = refs[firstKey]?.current;
+      const el = refs[firstKey as keyof typeof refs]?.current;
       if (el && typeof el.scrollIntoView === "function") {
         el.scrollIntoView({ behavior: "smooth", block: "center" });
         if ("focus" in el) (el as HTMLInputElement).focus({ preventScroll: true });
@@ -125,27 +129,22 @@ export const TRTHeroForm = ({
 
   const clearError = (key: string) => {
     if (!errors[key]) return;
-    setLocalErrors((p) => {
-      const { [key]: _, ...rest } = p;
-      return rest;
-    });
+    setLocalErrors((p) => { const { [key]: _, ...rest } = p; return rest; });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Pre-validate locally so errors render even if controller short-circuits.
     const fe: Record<string, string> = {};
     if (!name.trim()) fe.name = ERR_MSG.name;
     if (phone.replace(/\D/g, "").length !== 10) fe.phone = ERR_MSG.phone;
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) fe.email = ERR_MSG.email;
     if (!location) fe.location = ERR_MSG.location;
     if (!tcpa) fe.tcpa = ERR_MSG.tcpa;
     if (Object.keys(fe).length) {
       setLocalErrors(fe);
-      const order = ["name", "phone", "email", "location", "tcpa"];
+      const order = ["name", "phone", "location", "tcpa"];
       const firstKey = order.find((k) => fe[k]);
       if (firstKey) {
-        const el = refs[firstKey]?.current;
+        const el = refs[firstKey as keyof typeof refs]?.current;
         if (el && typeof el.scrollIntoView === "function") {
           el.scrollIntoView({ behavior: "smooth", block: "center" });
           if ("focus" in el) (el as HTMLInputElement).focus({ preventScroll: true });
@@ -153,7 +152,7 @@ export const TRTHeroForm = ({
       }
       return;
     }
-    void controller.submit({ name, phone, email, location, tcpa });
+    void controller.submit({ name, phone, location: location as LocationKey, tcpa });
   };
 
   const inputBase = (field: string): React.CSSProperties => ({
@@ -161,11 +160,7 @@ export const TRTHeroForm = ({
     height: 58,
     background: "#FFFFFF",
     border: `1.5px solid ${
-      errors[field]
-        ? ERROR_RED
-        : focused === field
-          ? "var(--brand-accent)"
-          : "rgba(0,0,0,0.15)"
+      errors[field] ? ERROR_RED : focused === field ? "var(--brand-accent)" : "rgba(0,0,0,0.15)"
     }`,
     borderRadius: 10,
     padding: "0 18px",
@@ -210,34 +205,37 @@ export const TRTHeroForm = ({
       </p>
 
       <form onSubmit={handleSubmit} className="space-y-3" noValidate>
+
+        {/* Name */}
         <div>
-          <label htmlFor="hf-name" className="sr-only">Full Name</label>
+          <label htmlFor="hf-name" className="sr-only">First Name</label>
           <input
             id="hf-name"
-            ref={refs.name as React.RefObject<HTMLInputElement>}
+            ref={refs.name}
             type="text"
-            placeholder="Full Name"
+            placeholder="First Name"
             value={name}
             onChange={(e) => { setName(e.target.value); clearError("name"); }}
             onFocus={() => {
-                setFocused("name");
-                // Prefetch booking funnel when user starts engaging with the form
-                void import("@/pages/book/BookSymptom");
-                void import("@/pages/book/BookDuration");
-                void import("@/domain/booking/bookingStore");
-              }}
+              setFocused("name");
+              void import("@/pages/book/BookContact");
+              void import("@/pages/book/BookLocation");
+              void import("@/domain/booking/bookingStore");
+            }}
             onBlur={() => setFocused(null)}
             style={inputBase("name")}
-            autoComplete="name"
+            autoComplete="given-name"
             aria-invalid={!!errors.name}
           />
           {errors.name && <p role="alert" className="text-xs mt-1" style={{ color: ERROR_RED }}>{errors.name}</p>}
         </div>
+
+        {/* Phone */}
         <div>
           <label htmlFor="hf-phone" className="sr-only">Phone Number</label>
           <input
             id="hf-phone"
-            ref={refs.phone as React.RefObject<HTMLInputElement>}
+            ref={refs.phone}
             type="tel"
             placeholder="Phone Number"
             value={phone}
@@ -245,7 +243,7 @@ export const TRTHeroForm = ({
             onFocus={() => setFocused("phone")}
             onBlur={() => {
               setFocused(null);
-              void capturePartialLead({ phone, name, email, location, source: "hero-form-blur" });
+              void capturePartialLead({ phone, name, location: location || undefined, source: "hero-form-blur" });
             }}
             style={inputBase("phone")}
             autoComplete="tel"
@@ -254,70 +252,71 @@ export const TRTHeroForm = ({
           />
           {errors.phone && <p role="alert" className="text-xs mt-1" style={{ color: ERROR_RED }}>{errors.phone}</p>}
         </div>
-        <div>
-          <label htmlFor="hf-email" className="sr-only">Email Address</label>
-          <input
-            id="hf-email"
-            ref={refs.email as React.RefObject<HTMLInputElement>}
-            type="email"
-            placeholder="Email Address"
-            value={email}
-            onChange={(e) => { setEmail(e.target.value.slice(0, 255)); clearError("email"); }}
-            onFocus={() => setFocused("email")}
-            onBlur={() => setFocused(null)}
-            style={inputBase("email")}
-            autoComplete="email"
-            inputMode="email"
-            aria-invalid={!!errors.email}
-          />
-          {errors.email && <p role="alert" className="text-xs mt-1" style={{ color: ERROR_RED }}>{errors.email}</p>}
-        </div>
-        <div>
-          <label htmlFor="hf-loc" className="sr-only">Location</label>
-          <select
-            id="hf-loc"
-            ref={refs.location as React.RefObject<HTMLSelectElement>}
-            value={location}
-            onChange={(e) => { setLocation(e.target.value); clearError("location"); }}
-            onFocus={() => setFocused("location")}
-            onBlur={() => setFocused(null)}
-            aria-invalid={!!errors.location}
+
+        {/* Location — tap buttons instead of dropdown */}
+        <div ref={refs.location}>
+          <p
             style={{
-              ...inputBase("location"),
-              color: location ? "#0B1029" : "rgba(11,16,41,0.60)",
-              appearance: "none",
-              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%230B1029' opacity='0.5' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")`,
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "right 14px center",
-              paddingRight: 40,
+              fontSize: 13,
+              fontWeight: 600,
+              color: errors.location ? ERROR_RED : "rgba(245,240,235,0.70)",
+              fontFamily: "Inter, sans-serif",
+              marginBottom: 8,
+              letterSpacing: "0.02em",
             }}
           >
-            <option value="" disabled style={{ color: "#0B1029" }}>Location</option>
-            <option value="virginia-beach" style={{ color: "#0B1029" }}>Virginia Beach</option>
-            <option value="newport-news" style={{ color: "#0B1029" }}>Newport News</option>
-            <option value="richmond" style={{ color: "#0B1029" }}>Richmond</option>
-          </select>
-          {errors.location && <p role="alert" className="text-xs mt-1" style={{ color: ERROR_RED }}>{errors.location}</p>}
+            Nearest location
+          </p>
+          <div style={{ display: "flex", gap: 8 }}>
+            {LOCATION_OPTIONS.map((opt) => {
+              const isSelected = location === opt.key;
+              return (
+                <button
+                  key={opt.key}
+                  type="button"
+                  onClick={() => { setLocation(opt.key); clearError("location"); }}
+                  aria-pressed={isSelected}
+                  style={{
+                    flex: 1,
+                    height: 44,
+                    borderRadius: 8,
+                    border: `2px solid ${
+                      isSelected ? ORANGE : errors.location ? ERROR_RED : "rgba(255,255,255,0.20)"
+                    }`,
+                    background: isSelected ? "rgba(232,103,10,0.18)" : "rgba(255,255,255,0.06)",
+                    color: isSelected ? "#FFFFFF" : "rgba(245,240,235,0.70)",
+                    fontFamily: "Inter, sans-serif",
+                    fontSize: 13,
+                    fontWeight: isSelected ? 700 : 500,
+                    cursor: "pointer",
+                    transition: "border-color 0.15s, background 0.15s, color 0.15s",
+                    whiteSpace: "nowrap",
+                    padding: "0 6px",
+                  }}
+                >
+                  {opt.label}
+                </button>
+              );
+            })}
+          </div>
+          {errors.location && (
+            <p role="alert" className="text-xs mt-1" style={{ color: ERROR_RED }}>{errors.location}</p>
+          )}
         </div>
 
+        {/* TCPA */}
         <label
-          ref={refs.tcpa as React.RefObject<HTMLLabelElement>}
+          ref={refs.tcpa}
           className="flex items-start gap-3 cursor-pointer select-none"
           style={{ minHeight: 44, padding: "10px 0" }}
         >
-          <span
-            className="flex items-center justify-center flex-shrink-0"
-            style={{ width: 44, height: 44, marginLeft: -10 }}
-          >
+          <span className="flex items-center justify-center flex-shrink-0" style={{ width: 44, height: 44, marginLeft: -10 }}>
             <input
               type="checkbox"
               checked={tcpa}
               onChange={(e) => { setTcpa(e.target.checked); clearError("tcpa"); }}
               className="w-6 h-6 min-w-[24px] min-h-[24px] rounded border bg-transparent cursor-pointer"
-              style={{
-                accentColor: "#E8670A",
-                borderColor: errors.tcpa ? ERROR_RED : "rgba(255,255,255,0.30)",
-              }}
+              style={{ accentColor: ORANGE, borderColor: errors.tcpa ? ERROR_RED : "rgba(255,255,255,0.30)" }}
               aria-invalid={!!errors.tcpa}
             />
           </span>
@@ -327,6 +326,7 @@ export const TRTHeroForm = ({
         </label>
         {errors.tcpa && <p role="alert" className="text-xs" style={{ color: ERROR_RED }}>{errors.tcpa}</p>}
 
+        {/* Submit */}
         <button
           type="submit"
           disabled={isSubmitting}
@@ -353,6 +353,7 @@ export const TRTHeroForm = ({
           {isSubmitting && <Loader2 size={16} className="animate-spin" />}
           {isSubmitting ? "Booking..." : ctaLabel}
         </button>
+
         {controller.error && !Object.keys(errors).length && (
           <p className="text-xs" style={{ color: ERROR_RED }}>{controller.error}</p>
         )}
