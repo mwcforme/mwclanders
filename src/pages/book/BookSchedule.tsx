@@ -86,7 +86,7 @@ const InlineEmailCapture = ({ recap, contactId, onComplete }: InlineEmailProps) 
         fontFamily: "Oswald, sans-serif", fontWeight: 600, fontSize: 10,
         letterSpacing: "1.5px", color: "#E8670A", textTransform: "uppercase", marginBottom: 6,
       }}>
-        Your Physician Assessment
+        Your Appointment
       </p>
 
       {/* Recap line */}
@@ -129,9 +129,8 @@ const InlineEmailCapture = ({ recap, contactId, onComplete }: InlineEmailProps) 
             <AlertCircle size={12} strokeWidth={2} /> {error}
           </p>
         )}
-        <p style={{ fontSize: 11, color: "#7A8294", lineHeight: 1.45, marginTop: 8, fontFamily: "Inter, sans-serif" }}>
-          A licensed Virginia provider is reserving this hour for you. We'll text and email
-          your confirmation with cancellation and reschedule links.
+        <p style={{ fontSize: 13, color: "rgba(245,243,240,0.65)", lineHeight: 1.5, marginTop: 10, fontFamily: "Inter, sans-serif" }}>
+          A licensed Virginia provider is reserving this hour for you. We'll text and email your confirmation.
         </p>
         <button
           type="submit"

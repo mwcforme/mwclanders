@@ -74,7 +74,7 @@ export const TRTFinalCTA = () => {
             </div>
           </div>
 
-          {/* Right: reuse the hero form — same GHL integration, same booking funnel */}
+          {/* Right: reuse the hero form - same GHL integration, same booking funnel */}
           <div className="order-1 md:order-2 flex lg:justify-center">
             <div className="w-full lg:max-w-[440px]">
               <TRTHeroForm

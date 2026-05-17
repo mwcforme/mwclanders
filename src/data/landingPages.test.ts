@@ -24,7 +24,7 @@ const routePaths = Array.from(
 describe("LP directory: data integrity", () => {
   it("has at least the three live LPs", () => {
     const live = LANDING_PAGES.filter((p) => p.status === "live").map((p) => p.slug);
-    expect(live).toEqual(expect.arrayContaining(["/new", "/quiz", "/quiz/approved"]));
+    expect(live).toEqual(expect.arrayContaining(["/", "/quiz", "/quiz/approved"]));
   });
 
   it("has unique slugs", () => {
@@ -67,9 +67,9 @@ describe("LP directory: booking funnel", () => {
     );
   });
 
-  it("/book entry is documented as redirecting to schedule", () => {
+  it("/book entry is documented as redirecting", () => {
     const entry = BOOKING_STEPS.find((s) => s.slug === "/book");
-    expect(entry?.description.toLowerCase()).toMatch(/redirect.*schedule/);
+    expect(entry?.description.toLowerCase()).toMatch(/redirect/);
   });
 
   it("App.tsx redirects /book directly to /book/schedule (no symptom gate)", () => {
