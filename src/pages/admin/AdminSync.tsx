@@ -74,7 +74,6 @@ export default function AdminSync() {
           type="button"
           onClick={runSync}
           disabled={busy !== null}
-          // hardcoded-color-allow-next-line
           className="flex h-10 items-center gap-2 rounded-md bg-[#E8670A] px-4 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50"
         >
           {busy === "sync" ? <Loader2 size={14} className="animate-spin" /> : <Play size={14} />}
@@ -84,7 +83,6 @@ export default function AdminSync() {
           type="button"
           onClick={runValidate}
           disabled={busy !== null}
-          // hardcoded-color-allow-next-line
           className="flex h-10 items-center gap-2 rounded-md border border-white/10 bg-[#070B1F] px-4 text-sm hover:bg-white/5 disabled:opacity-50"
         >
           {busy === "validate" ? <Loader2 size={14} className="animate-spin" /> : <ShieldCheck size={14} />}
@@ -93,7 +91,6 @@ export default function AdminSync() {
         <button
           type="button"
           onClick={load}
-          // hardcoded-color-allow-next-line
           className="flex h-10 items-center gap-2 rounded-md border border-white/10 bg-[#070B1F] px-3 text-sm hover:bg-white/5"
         >
           <RefreshCw size={14} /> Refresh
@@ -108,7 +105,6 @@ export default function AdminSync() {
       )}
 
       {validation !== null && (
-        // hardcoded-color-allow-next-line
         <div className="mb-4 rounded-md border border-white/10 bg-[#070B1F] p-3">
           <div className="mb-2 text-xs font-semibold uppercase tracking-wider text-white/50">
             Validation result
@@ -126,7 +122,6 @@ export default function AdminSync() {
       )}
 
       {rows && (
-        // hardcoded-color-allow-next-line
         <div className="overflow-auto rounded-xl border border-white/10 bg-[#070B1F]">
           <table className="w-full text-left text-sm">
             <thead className="border-b border-white/10 text-xs uppercase tracking-wider text-white/50">
