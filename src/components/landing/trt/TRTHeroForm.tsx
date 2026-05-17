@@ -304,7 +304,7 @@ export const TRTHeroForm = ({
         {/* ── First Name ─────────────────────────────────────────────────────── */}
         <FloatInput
           id="hf-name"
-          label="First Name"
+          label="Name"
           type="text"
           autoComplete="given-name"
           placeholder="John"
@@ -324,7 +324,7 @@ export const TRTHeroForm = ({
         {/* ── Phone ──────────────────────────────────────────────────────────── */}
         <FloatInput
           id="hf-phone"
-          label="Phone Number"
+          label="Phone"
           type="tel"
           inputMode="tel"
           autoComplete="tel"
@@ -339,11 +339,6 @@ export const TRTHeroForm = ({
             void capturePartialLead({ phone, name, location: location || undefined, source: "hero-form-blur" });
           }}
         />
-        {/* Phone micro-copy */}
-        {/* hardcoded-color-allow-next-line */}
-        <p style={{ fontSize: 12, color: "#B0ADA8", fontFamily: "Inter, sans-serif", fontWeight: 400, marginTop: -4, lineHeight: 1.4 }}>
-          We'll use this to confirm your visit and send reminders. No spam.
-        </p>
 
         {/* ── Location ───────────────────────────────────────────────────────── */}
         <div ref={locationRef} role="radiogroup" aria-label="Select clinic location" aria-required="true">
@@ -493,20 +488,6 @@ export const TRTHeroForm = ({
         </div>
 
         {/* ── Submit ─────────────────────────────────────────────────────────── */}
-
-        {/* Trust badge row above submit */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 0", borderTop: "1px solid rgba(255,255,255,0.08)" }}>
-          {[
-            { label: "LegitScript Certified", src: "/images/badges/legitscript.webp" },
-            { label: "CLIA Certified", src: "/images/badges/clia.webp" },
-            { label: "HIPAA Compliant", src: "/images/badges/hipaa.webp" },
-          ].map(({ label, src }) => (
-            <div key={label} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
-              <img src={src} alt={label} height={20} style={{ height: 20, width: "auto", mixBlendMode: "screen", opacity: 0.75 }} />
-              <span style={{ fontSize: 10, color: "#B0ADA8", fontFamily: "Inter, sans-serif", fontWeight: 500, textAlign: "center", lineHeight: 1.2, whiteSpace: "nowrap" }}>{label}</span>
-            </div>
-          ))}
-        </div>
 
         <button
           type="submit"
