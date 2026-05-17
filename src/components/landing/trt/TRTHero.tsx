@@ -85,7 +85,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
     line2: "Not Just the Numbers.",
     line2Color: COLORS.orange,
   };
-  void h; // legacy prop — rotating headline is now default
+  void h; // legacy prop - rotating headline is now default
   const scrollToForm = () => {
     document.getElementById("hero-form")?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
@@ -118,7 +118,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
         }}
       />
 
-      {/* Radial behind H1 — pushes navy slightly brighter under headline */}
+      {/* Radial behind H1 - pushes navy slightly brighter under headline */}
       <div
         aria-hidden="true"
         className="absolute inset-0 pointer-events-none"
@@ -189,7 +189,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
             Sit down with a licensed Virginia provider. Labs drawn on-site and reviewed in the same visit. No-cost consultation. Virginia's men's health practice since 2015.
           </p>
 
-          {/* Star rating row — clickable, links to GBP */}
+          {/* Star rating row - clickable, links to GBP */}
           <a
             href={GBP_REVIEWS_URL}
             target="_blank"
@@ -212,36 +212,25 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
             </span>
           </a>
 
-          <ul className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-3 w-full">
-            {trustChecks.map((t) => (
-              <li
-                key={t}
-                className="flex items-center gap-2.5"
-                style={{ color: COLORS.cream, fontFamily: "Inter, sans-serif" }}
-              >
-                <Check className="h-[18px] w-[18px] flex-shrink-0" strokeWidth={3} style={{ color: COLORS.orange }} />
-                <span style={{ fontSize: 17, fontWeight: 500 }}>{t}</span>
-              </li>
-            ))}
-          </ul>
+
 
           {/* Disclaimer moved inside form card via TRTHeroForm footer */}
         </div>
 
-        {/* RIGHT — form. No decoration. DO NOT add borders, accents, or wrappers around the form. */}
+        {/* RIGHT - form. No decoration. DO NOT add borders, accents, or wrappers around the form. */}
         <div id="hero-form" className="w-full flex lg:justify-end">
           <div className="w-full lg:max-w-[440px]">
             <TRTHeroForm />
           </div>
         </div>
 
-        {/* FULL-WIDTH ROW — dot + sentence, max readability */}
+        {/* FULL-WIDTH ROW - dot + sentence, max readability */}
         <div className="col-span-1 lg:col-span-2 grid grid-cols-1 lg:grid-cols-4 gap-4 mt-8 pt-6" style={{borderTop:"1px solid rgba(255,255,255,0.10)"}}>
           {[
-            "Tired by noon no matter how much you sleep.",
-            "Workouts stopped producing results.",
-            "Sex drive is down. You’ve noticed. So has she.",
-            "Labs say normal. You don’t feel it.",
+            "Tired by noon. Coffee stopped working.",
+            "Same gym effort. Nothing to show.",
+            "Sex drive is down. She's noticed too.",
+            "Labs are fine. You're not.",
           ].map((text) => (
             <div
               key={text}
