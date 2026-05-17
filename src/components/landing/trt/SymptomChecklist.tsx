@@ -11,7 +11,7 @@
 
 import { CheckCircle } from "lucide-react";
 
-const HEADING = "Sound familiar?";
+const HEADING = "The signs we hear most.";
 
 const SYMPTOMS = [
   "Tired by noon. Coffee stopped working.",

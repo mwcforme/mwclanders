@@ -1,9 +1,7 @@
 
 
 import { useState, useEffect } from "react";
-import { Check, Star } from "lucide-react";
 import { TRTHeroForm } from "./TRTHeroForm";
-import { SymptomChecklist } from "./SymptomChecklist";
 import { GBP_REVIEWS_URL } from "@/data/testimonials";
 import { trackCro } from "@/hooks/useAnalytics";
 import { COPY } from "@/data/copy";
@@ -23,7 +21,7 @@ const RotatingService = () => {
   }, []);
   return (
     <span style={{ display: "inline-block", position: "relative", whiteSpace: "nowrap" }}>
-      <span style={{ visibility: "hidden", whiteSpace: "nowrap" }}>TESTOSTERONE</span>
+      <span aria-hidden="true" style={{ visibility: "hidden", whiteSpace: "nowrap" }}>TESTOSTERONE</span>
       {ROTATING_SERVICES.map((word, i) => (
         <span key={word} aria-hidden={i !== index} style={{
           position: "absolute", left: 0, top: 0, whiteSpace: "nowrap",
@@ -35,12 +33,6 @@ const RotatingService = () => {
     </span>
   );
 };
-
-const trustChecks = [
-  "Licensed Virginia providers",
-  "Labs drawn and reviewed in the same 60-minute visit",
-  "Treatment starts the same day, when clinically appropriate",
-];
 
 const COLORS = {
   navyDeep: "var(--brand-navy-deep)",

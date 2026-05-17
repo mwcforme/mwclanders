@@ -175,8 +175,7 @@ const NoAvailFallback = ({ onChangeCenter }: { onChangeCenter: () => void }) => 
     <p style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 13, letterSpacing: "0.5px", color: "var(--brand-cream)", textTransform: "uppercase", marginBottom: 8 }}>
       No times for this day
     </p>
-    // hardcoded-color-allow-next-line
-    <p style={{ fontSize: 13, color: "#B0ADA8", marginBottom: 12 }}>
+    <p style={{ fontSize: 13, color: "#767676", marginBottom: 12 }}>
       Try a different date or another Men's Wellness Centers location.
     </p>
     <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -345,7 +344,7 @@ const BookSchedule = () => {
                   background: "none", border: "none", color: "var(--brand-cta)",
                   fontSize: 12, fontWeight: 600, cursor: "pointer",
                   fontFamily: "Inter, sans-serif", flexShrink: 0,
-                  padding: "4px 0",
+                  minHeight: 44, padding: "8px 0",
                 }}
               >
                 Change
