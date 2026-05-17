@@ -59,7 +59,7 @@ export const TRTHowItWorks = () => {
   );
 
   return (
-    <section id="how-it-works" className="py-10 md:py-20" style={{ background: "var(--brand-cream)", scrollMarginTop: 64 }} aria-label="Symptoms and how it works">
+    <section id="how-it-works" className="py-12 md:py-20" style={{ background: "var(--brand-cream)", scrollMarginTop: 64 }} aria-label="Symptoms and how it works">
       {/* How It Works — full width, left column removed */}
       <div className="max-w-[720px] mx-auto px-6">
         <div>

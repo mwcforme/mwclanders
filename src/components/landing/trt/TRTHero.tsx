@@ -2,9 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { TRTHeroForm } from "./TRTHeroForm";
-import { GBP_REVIEWS_URL } from "@/data/testimonials";
-import { trackCro } from "@/hooks/useAnalytics";
-import { COPY } from "@/data/copy";
 
 
 
@@ -36,26 +33,9 @@ const RotatingService = () => {
 
 const COLORS = {
   navyDeep: "var(--brand-navy-deep)",
-  // hardcoded-color-allow-next-line
-  navy: "#1B2B4B",
   cream: "var(--brand-cream)",
   orange: "var(--brand-cta)",
-  // hardcoded-color-allow-next-line
-  gold: "#C9A961",
 };
-
-const GoogleG = ({ size = 18 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 48 48" aria-hidden="true">
-    {/* hardcoded-color-allow-next-line */}
-    <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.4 29.3 35.5 24 35.5c-6.4 0-11.5-5.1-11.5-11.5S17.6 12.5 24 12.5c2.9 0 5.6 1.1 7.7 2.9l5.7-5.7C33.6 6.4 29 4.5 24 4.5 13.2 4.5 4.5 13.2 4.5 24S13.2 43.5 24 43.5c10.5 0 19.5-7.6 19.5-19.5 0-1.2-.1-2.4-.4-3.5z"/>
-    {/* hardcoded-color-allow-next-line */}
-    <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 16 19 12.5 24 12.5c2.9 0 5.6 1.1 7.7 2.9l5.7-5.7C33.6 6.4 29 4.5 24 4.5 16.4 4.5 9.8 8.7 6.3 14.7z"/>
-    {/* hardcoded-color-allow-next-line */}
-    <path fill="#4CAF50" d="M24 43.5c5 0 9.5-1.7 13-4.6l-6-5.1c-2 1.4-4.4 2.2-7 2.2-5.3 0-9.7-3.1-11.3-7.5l-6.6 5.1C9.7 39.2 16.3 43.5 24 43.5z"/>
-    {/* hardcoded-color-allow-next-line */}
-    <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.7 2-2.1 3.7-3.9 5l6 5.1c4.2-3.9 6.6-9.6 6.6-16 0-1.2-.1-2.4-.4-3.5z"/>
-  </svg>
-);
 
 
 
@@ -68,10 +48,6 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
   // no prop = home route with rotation
   const isStatic = !!headline;
   const h = headline ?? { line1: "VIRGINIA'S CHOICE", line2: "FOR MEN'S HEALTH", line2Color: COLORS.orange };
-  const scrollToForm = () => {
-    document.getElementById("hero-form")?.scrollIntoView({ behavior: "smooth", block: "center" });
-  };
-
   return (
     <section
       id="hero"

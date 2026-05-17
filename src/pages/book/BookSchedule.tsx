@@ -73,7 +73,7 @@ const InlineEmailCapture = ({ recap, contactId, onComplete }: InlineEmailProps) 
         // hardcoded-color-allow-next-line
         border: "2px solid #E8670A",
         borderRadius: 12,
-        padding: "18px 16px",
+        padding: "24px 20px",
         animation: "ieReveal 220ms ease-out",
       }}
     >
@@ -333,7 +333,7 @@ const BookSchedule = () => {
                   {locationData.name.replace("Men's Wellness Centers, ", "")}
                 </div>
                 // hardcoded-color-allow-next-line
-                <div style={{ fontSize: 12, color: "#808CA0", marginTop: 2, lineHeight: 1.3 }}>
+                <div style={{ fontSize: 12, color: "rgba(255,255,255,0.60)", marginTop: 2, lineHeight: 1.3 }}>
                   {locationData.address} &middot; {locationData.cityStateZip}
                 </div>
               </div>
@@ -364,7 +364,7 @@ const BookSchedule = () => {
             {heading}
           </h1>
           // hardcoded-color-allow-next-line
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "rgba(255,255,255,0.60)", margin: 0 }}>
+          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 15, color: "rgba(255,255,255,0.70)", margin: 0 }}>
             {locationData ? locationData.name.replace("Men's Wellness Centers, ", "") : ""} · Licensed provider, same-day labs
           </p>
         </section>
@@ -414,7 +414,7 @@ const BookSchedule = () => {
             // hardcoded-color-allow-next-line
             <div style={{ background: "#161B3A", border: "1px solid #2B3247", borderRadius: 12, padding: 20, fontFamily: "Inter, sans-serif" }}>
               // hardcoded-color-allow-next-line
-              <div style={{ fontSize: 13, color: "#808CA0", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: 700, marginBottom: 12 }}>
+              <div style={{ fontSize: 13, color: "rgba(255,255,255,0.55)", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: 700, marginBottom: 12 }}>
                 Choose your center
               </div>
               <div className="grid gap-2">

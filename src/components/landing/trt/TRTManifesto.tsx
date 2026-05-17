@@ -4,7 +4,7 @@ import { COPY } from "@/data/copy";
 
 export const TRTManifesto = () => {
   return (
-    <section className="py-10 md:py-16" style={{ background: "var(--brand-navy)" }}>
+    <section className="py-12 md:py-16" style={{ background: "var(--brand-navy)" }}>
       <div className="max-w-[1200px] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-center">
         {/* Left: copy (mobile second) */}
         <div className="order-2 md:order-1">
