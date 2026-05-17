@@ -97,14 +97,14 @@ async function attemptBooking(b: QueuedBooking): Promise<boolean> {
 
     // Success — remove from queue, log to Supabase
     removeFromQueue(b.id);
-    void supabase.from("booking_event_log").insert({ // supabase already loaded above
+    void Promise.resolve(supabase.from("booking_event_log").insert({ // supabase already loaded above
       event_type: "success",
       location: b.location as never,
       calendar_id: b.calendarId,
       slot_iso: b.slotIso,
       contact_id: b.contactId,
       meta: { queued: true, retries: b.retries, queuedAt: b.queuedAt } as never,
-    }).catch(() => {});
+    })).catch(() => {});
 
     console.info("[booking-queue] queued booking confirmed", b.id);
     return true;
