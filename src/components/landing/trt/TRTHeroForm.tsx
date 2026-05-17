@@ -266,86 +266,63 @@ export const TRTHeroForm = ({
           aria-label="Select clinic location"
           aria-required="true"
         >
-          {/* Section label — visually separates inputs from choices */}
           <p style={{
-            fontSize: 11,
-            fontWeight: 700,
-            letterSpacing: "0.10em",
+            fontSize: 11, fontWeight: 700, letterSpacing: "0.10em",
             textTransform: "uppercase",
             color: errors.location ? ERROR_RED : "rgba(245,240,235,0.55)",
-            marginBottom: 8,
-            fontFamily: "Inter, sans-serif",
+            marginBottom: 8, fontFamily: "Inter, sans-serif",
           }}>
             {errors.location ? "⚠ Choose your location" : "Nearest location"}
           </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {LOCATION_OPTIONS.map((opt) => {
               const isSelected = location === opt.key;
               const isHovered = hoveredLocation === opt.key && !isSelected;
-
               return (
                 <label
                   key={opt.key}
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    height: 44,
-                    borderRadius: 8,
+                    height: 52,
+                    borderRadius: 10,
                     border: isSelected
                       ? "2px solid #FF6A00"
                       : errors.location
                         ? `1.5px solid ${ERROR_RED}`
                         : isHovered
-                          ? "1.5px solid rgba(255,106,0,0.50)"
-                          : "1.5px solid rgba(255,255,255,0.18)",
-                    background: isSelected
-                      ? "#FF6A00"
-                      : isHovered
-                        ? "rgba(255,255,255,0.10)"
-                        : "rgba(255,255,255,0.07)",
+                          ? "1.5px solid rgba(255,106,0,0.45)"
+                          : "1.5px solid rgba(255,255,255,0.12)",
+                    background: isSelected ? "#FF6A00" : "rgba(255,255,255,0.07)",
                     color: "#FFFFFF",
                     fontFamily: "Inter, sans-serif",
                     cursor: "pointer",
                     transition: "background 150ms ease, border-color 150ms ease, box-shadow 150ms ease",
-                    padding: "0 14px",
-                    gap: 10,
-                    boxShadow: isSelected
-                      ? "0 4px 16px rgba(255,106,0,0.40)"
-                      : "none",
+                    padding: "0 16px",
+                    gap: 12,
+                    boxShadow: isSelected ? "0 4px 16px rgba(255,106,0,0.35)" : "none",
                     userSelect: "none",
                   }}
                   onMouseEnter={() => setHoveredLocation(opt.key)}
                   onMouseLeave={() => setHoveredLocation(null)}
                 >
-                  {/* Visually hidden native radio — keyboard + a11y */}
                   <input
-                    type="radio"
-                    name="location"
-                    value={opt.key}
+                    type="radio" name="location" value={opt.key}
                     checked={isSelected}
                     onChange={() => { setLocation(opt.key); clearError("location"); }}
                     aria-label={opt.label}
                     style={{ position: "absolute", opacity: 0, width: 0, height: 0, pointerEvents: "none" }}
                   />
-                  {/* Pin icon — orange always, white when selected */}
-                  <svg
-                    aria-hidden="true"
-                    width="14" height="18" viewBox="0 0 18 22" fill="none"
-                    style={{ flexShrink: 0 }}
-                  >
-                    <path
-                      d="M9 0C4.589 0 1 3.589 1 8c0 5.25 7.2 13.4 7.51 13.757a.664.664 0 0 0 .99 0C9.8 21.4 17 13.25 17 8c0-4.411-3.589-8-8-8Z"
-                      fill={isSelected ? "#FFFFFF" : "#FF6A00"}
-                    />
+                  <svg aria-hidden="true" width="14" height="18" viewBox="0 0 18 22" fill="none" style={{ flexShrink: 0 }}>
+                    <path d="M9 0C4.589 0 1 3.589 1 8c0 5.25 7.2 13.4 7.51 13.757a.664.664 0 0 0 .99 0C9.8 21.4 17 13.25 17 8c0-4.411-3.589-8-8-8Z"
+                      fill={isSelected ? "#FFFFFF" : "#FF6A00"} />
                     <circle cx="9" cy="8" r="3" fill={isSelected ? "#FF6A00" : "#FFFFFF"} />
                   </svg>
-                  {/* City label */}
-                  <span style={{ fontSize: 14, fontWeight: 600, lineHeight: 1, flex: 1 }}>
+                  <span style={{ fontSize: 15, fontWeight: 700, lineHeight: 1, flex: 1 }}>
                     {opt.label}
                   </span>
-                  {/* Checkmark on selected */}
                   {isSelected && (
-                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
+                    <svg width="15" height="15" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
                       <path d="M3 8L6.5 11.5L13 4.5" stroke="#FFFFFF" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   )}
@@ -361,49 +338,57 @@ export const TRTHeroForm = ({
           `}</style>
         </div>
 
-        {/* TCPA — custom checkbox, TCPA compliant */}
-        <div
-          ref={refs.tcpa}
-          style={{ display: "flex", alignItems: "flex-start", gap: 10, padding: "2px 0", cursor: "pointer" }}
-          onClick={() => { setTcpa((v) => !v); clearError("tcpa"); }}
-          role="checkbox"
-          aria-checked={tcpa}
+        {/* TCPA — native checkbox hidden, custom box rendered via CSS */}
+        <style>{`
+          #hf-tcpa { position: absolute; opacity: 0; width: 0; height: 0; }
+          .tcpa-box {
+            width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px;
+            border-radius: 4px; border: 2px solid rgba(255,255,255,0.40);
+            background: transparent;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.14s ease, border-color 0.14s ease;
+            cursor: pointer;
+          }
+          #hf-tcpa:checked ~ label .tcpa-box,
+          .tcpa-box.checked {
+            background: #FF6A00 !important;
+            border-color: #FF6A00 !important;
+          }
+          #hf-tcpa:focus-visible ~ label .tcpa-box {
+            outline: 2px solid #FF6A00;
+            outline-offset: 2px;
+          }
+        `}</style>
+        <input
+          id="hf-tcpa"
+          type="checkbox"
+          checked={tcpa}
+          onChange={(e) => { setTcpa(e.target.checked); clearError("tcpa"); }}
+          aria-invalid={!!errors.tcpa}
           aria-describedby="tcpa-text"
-          tabIndex={0}
-          onKeyDown={(e) => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); setTcpa((v) => !v); clearError("tcpa"); } }}
+        />
+        <label
+          ref={refs.tcpa as React.RefObject<HTMLLabelElement>}
+          htmlFor="hf-tcpa"
+          style={{ display: "flex", alignItems: "flex-start", gap: 10, cursor: "pointer", userSelect: "none" }}
         >
-          {/* Visual checkbox box */}
           <div
-            aria-hidden="true"
+            className={`tcpa-box${tcpa ? " checked" : ""}`}
             style={{
-              width: 20,
-              height: 20,
-              borderRadius: 4,
-              border: `2px solid ${
-                tcpa ? ORANGE : errors.tcpa ? ERROR_RED : "rgba(255,255,255,0.45)"
-              }`,
-              background: tcpa ? ORANGE : "transparent",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              flexShrink: 0,
-              marginTop: 2,
-              transition: "background 0.14s ease, border-color 0.14s ease",
+              borderColor: errors.tcpa ? ERROR_RED : undefined,
             }}
+            aria-hidden="true"
           >
             {tcpa && (
               <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
-                <path d="M2 6L5 9L10 3" stroke="#FFFFFF" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M2 6L5 9L10 3" stroke="#FFFFFF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             )}
           </div>
-          <span
-            id="tcpa-text"
-            style={{ color: "rgba(245,240,235,0.60)", fontSize: 12, lineHeight: 1.5, userSelect: "none" }}
-          >
+          <span id="tcpa-text" style={{ color: "rgba(245,240,235,0.60)", fontSize: 12, lineHeight: 1.5 }}>
             I agree to receive SMS/calls about my appointment. Reply STOP to opt out. Msg &amp; data rates may apply.
           </span>
-        </div>
+        </label>
         {errors.tcpa && <p role="alert" className="text-xs mt-1" style={{ color: ERROR_RED, fontFamily: "Inter, sans-serif" }}>{errors.tcpa}</p>}
 
         {/* Submit */}
