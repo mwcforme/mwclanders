@@ -261,7 +261,8 @@ Deno.serve(async (req) => {
 
   let outBody: string | undefined;
   if (method !== "GET" && method !== "DELETE") {
-    outBody = JSON.stringify({ locationId, ...validated.body });
+    const skipLoc = NO_LOC_INJECT.some((re) => re.test(cleanPath));
+    outBody = JSON.stringify(skipLoc ? validated.body : { locationId, ...validated.body });
   }
 
   try {
