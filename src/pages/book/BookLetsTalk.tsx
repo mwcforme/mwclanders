@@ -1,9 +1,6 @@
-import { useEffect } from "react";
 import { Phone, MessageSquareText, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import BookLayout from "@/components/book/BookLayout";
-import { useBookingStore } from "@/domain/booking/bookingStore";
-const getSupabase = () => import("@/integrations/supabase/client").then(m => m.supabase);
 
 const PHONE_DISPLAY = "(866) 344-4955";
 const PHONE_TEL = "tel:8663444955";
@@ -42,21 +39,6 @@ const isTeamAvailable = (): boolean => {
  *   - Two contact methods so the user picks whichever they're comfortable with
  */
 const BookLetsTalk = () => {
-  const identity = useBookingStore((s) => s.identity);
-
-  // CRO: tag lead as booking_failed in GHL so coordinator can call within 5 min
-  useEffect(() => {
-    if (!identity?.ghlContactId) return;
-    getSupabase().then(sb => sb.functions.invoke("ghl-proxy", {
-      body: {
-        path: `/contacts/${identity.ghlContactId}/tags`,
-        method: "POST",
-        body: { tags: ["booking_failed"] },
-        __env: import.meta.env.VITE_APP_ENV ?? "stage",
-      },
-    })).catch(() => { /* non-blocking — never break the UX */ });
-  }, [identity?.ghlContactId]);
-
   const trackCallClick = () => {
     const dl = (window as unknown as { dataLayer?: unknown[] }).dataLayer;
     if (typeof window !== "undefined" && dl) {
