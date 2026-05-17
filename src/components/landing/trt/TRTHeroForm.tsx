@@ -59,6 +59,121 @@ interface TRTHeroFormProps {
   ctaLabel?:  string;
 }
 
+// ─── Floating Label Input ───────────────────────────────────────────────────
+/**
+ * Persistent floating label — label sits above the field at all times.
+ * Placeholder disappears on focus; label never does. Critical for 55+ users.
+ */
+interface FloatInputProps {
+  id: string;
+  label: string;
+  type?: string;
+  inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"];
+  autoComplete?: string;
+  value: string;
+  onChange: (v: string) => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
+  error?: string;
+  icon: React.ReactNode;
+  inputRef?: React.RefObject<HTMLInputElement>;
+  placeholder?: string;
+  ariaInvalid?: boolean;
+}
+
+const FloatInput = ({
+  id, label, type = "text", inputMode, autoComplete,
+  value, onChange, onFocus, onBlur,
+  error, icon, inputRef, placeholder, ariaInvalid,
+}: FloatInputProps) => {
+  const [focused, setFocused] = useState(false);
+  const lifted = focused || value.length > 0;
+
+  return (
+    <div style={{ position: "relative" }}>
+      {/* Persistent label — always visible above field */}
+      <label
+        htmlFor={id}
+        style={{
+          display: "block",
+          fontSize: 11,
+          fontWeight: 700,
+          letterSpacing: "0.08em",
+          textTransform: "uppercase",
+          color: error ? ERR_RED : focused ? ORANGE : "rgba(245,240,235,0.55)",
+          marginBottom: 6,
+          fontFamily: "Inter, sans-serif",
+          transition: "color 150ms ease",
+        }}
+      >
+        {label}
+      </label>
+      {/* Input wrapper */}
+      <div style={{ position: "relative" }}>
+        {/* Left icon */}
+        <div
+          aria-hidden
+          style={{
+            position: "absolute", left: 14, top: "50%",
+            transform: "translateY(-50%)",
+            color: error ? ERR_RED : focused ? ORANGE : "rgba(11,16,41,0.35)",
+            transition: "color 150ms ease",
+            pointerEvents: "none",
+            display: "flex",
+          }}
+        >
+          {icon}
+        </div>
+        <input
+          id={id}
+          ref={inputRef}
+          type={type}
+          inputMode={inputMode}
+          autoComplete={autoComplete}
+          placeholder={focused ? placeholder : ""}
+          value={value}
+          aria-invalid={ariaInvalid}
+          onChange={(e) => onChange(e.target.value)}
+          onFocus={() => { setFocused(true); onFocus?.(); }}
+          onBlur={() => { setFocused(false); onBlur?.(); }}
+          style={{
+            width: "100%",
+            height: 56,
+            background: WHITE,
+            border: `2px solid ${error ? ERR_RED : focused ? ORANGE : "rgba(0,0,0,0.14)"}`,
+            borderRadius: 8,
+            padding: "0 16px 0 44px",
+            fontSize: 16,
+            color: NAVY,
+            outline: "none",
+            fontFamily: "Inter, sans-serif",
+            transition: "border-color 150ms ease",
+            WebkitAppearance: "none",
+          }}
+        />
+        {/* Green check when phone is complete */}
+        {type === "tel" && value.replace(/\D/g, "").length === 10 && !error && (
+          <div style={{
+            position: "absolute", right: 14, top: "50%", transform: "translateY(-50%)",
+            color: "#16A34A",
+          }}>
+            <Check size={18} strokeWidth={2.5} />
+          </div>
+        )}
+      </div>
+      {error && (
+        <p role="alert" style={{
+          display: "flex", alignItems: "center", gap: 4,
+          fontSize: 12, color: ERR_RED, marginTop: 5,
+          fontFamily: "Inter, sans-serif",
+        }}>
+          <AlertCircle size={12} strokeWidth={2} /> {error}
+        </p>
+      )}
+    </div>
+  );
+};
+
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export const TRTHeroForm = ({
@@ -71,7 +186,6 @@ export const TRTHeroForm = ({
   const [phone,    setPhone]    = useState("");
   const [location, setLocation] = useState<LocationKey | "">(() => getLocationFromUrl());
   const [tcpa,     setTcpa]     = useState(false);
-  const [focused,  setFocused]  = useState<string | null>(null);
   const [hovered,  setHovered]  = useState<LocationKey | null>(null);
   const [errors,   setErrors]   = useState<Record<string, string>>({});
   const navigate = useNavigate();
@@ -140,20 +254,6 @@ export const TRTHeroForm = ({
   };
 
   // ── Shared input styles ─────────────────────────────────────────────────────
-  const inp = (field: string): React.CSSProperties => ({
-    width: "100%",
-    height: 52,
-    background: WHITE,
-    border: `1.5px solid ${errors[field] ? ERR_RED : focused === field ? ORANGE : "rgba(0,0,0,0.14)"}`,
-    borderRadius: 8,
-    padding: "0 16px 0 44px",
-    fontSize: 15,
-    color: NAVY,
-    outline: "none",
-    fontFamily: "Inter, sans-serif",
-    transition: "border-color 150ms ease",
-  });
-
   // ── Render ──────────────────────────────────────────────────────────────────
   return (
     <div
@@ -194,78 +294,42 @@ export const TRTHeroForm = ({
       <form onSubmit={handleSubmit} noValidate style={{ display: "flex", flexDirection: "column", gap: 12 }}>
 
         {/* ── First Name ─────────────────────────────────────────────────────── */}
-        <div style={{ position: "relative" }}>
-          <label htmlFor="hf-name" className="sr-only">First Name</label>
-          <User
-            size={16}
-            strokeWidth={1.75}
-            aria-hidden
-            style={{
-              position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)",
-              color: errors.name ? ERR_RED : focused === "name" ? ORANGE : "rgba(11,16,41,0.35)",
-              transition: "color 150ms ease", pointerEvents: "none",
-            }}
-          />
-          <input
-            id="hf-name"
-            ref={nameRef}
-            type="text"
-            placeholder="First Name"
-            value={name}
-            autoComplete="given-name"
-            aria-invalid={!!errors.name}
-            onChange={(e) => { setName(e.target.value); clearErr("name"); }}
-            onFocus={() => {
-              setFocused("name");
-              void import("@/pages/book/BookLocation");
-              void import("@/domain/booking/bookingStore");
-            }}
-            onBlur={() => setFocused(null)}
-            style={inp("name")}
-          />
-          {errors.name && (
-            <p role="alert" style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 12, color: ERR_RED, marginTop: 4 }}>
-              <AlertCircle size={12} strokeWidth={2} /> {errors.name}
-            </p>
-          )}
-        </div>
+        <FloatInput
+          id="hf-name"
+          label="First Name"
+          type="text"
+          autoComplete="given-name"
+          placeholder="John"
+          value={name}
+          inputRef={nameRef}
+          error={errors.name}
+          ariaInvalid={!!errors.name}
+          icon={<User size={16} strokeWidth={1.75} />}
+          onChange={(v) => { setName(v); clearErr("name"); }}
+          onFocus={() => {
+            void import("@/pages/book/BookLocation");
+            void import("@/domain/booking/bookingStore");
+          }}
+        />
 
         {/* ── Phone ──────────────────────────────────────────────────────────── */}
-        <div style={{ position: "relative" }}>
-          <label htmlFor="hf-phone" className="sr-only">Phone Number</label>
-          <Phone
-            size={16}
-            strokeWidth={1.75}
-            aria-hidden
-            style={{
-              position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)",
-              color: errors.phone ? ERR_RED : focused === "phone" ? ORANGE : "rgba(11,16,41,0.35)",
-              transition: "color 150ms ease", pointerEvents: "none",
-            }}
-          />
-          <input
-            id="hf-phone"
-            ref={phoneRef}
-            type="tel"
-            inputMode="numeric"
-            placeholder="Phone Number"
-            value={phone}
-            autoComplete="tel"
-            aria-invalid={!!errors.phone}
-            onChange={(e) => { setPhone(formatPhone(e.target.value)); clearErr("phone"); }}
-            onFocus={() => setFocused("phone")}
-            onBlur={() => {
-              setFocused(null);
-              void capturePartialLead({ phone, name, location: location || undefined, source: "hero-form-blur" });
-            }}
-            style={inp("phone")}
-          />
-          {errors.phone && (
-            <p role="alert" style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 12, color: ERR_RED, marginTop: 4 }}>
-              <AlertCircle size={12} strokeWidth={2} /> {errors.phone}
-            </p>
-          )}
-        </div>
+        <FloatInput
+          id="hf-phone"
+          label="Phone Number"
+          type="tel"
+          inputMode="tel"
+          autoComplete="tel"
+          placeholder="(555) 000-0000"
+          value={phone}
+          inputRef={phoneRef}
+          error={errors.phone}
+          ariaInvalid={!!errors.phone}
+          icon={<Phone size={16} strokeWidth={1.75} />}
+          onChange={(v) => { setPhone(formatPhone(v)); clearErr("phone"); }}
+          onBlur={() => {
+            void capturePartialLead({ phone, name, location: location || undefined, source: "hero-form-blur" });
+          }}
+        />
 
         {/* ── Location ───────────────────────────────────────────────────────── */}
         <div ref={locationRef} role="radiogroup" aria-label="Select clinic location" aria-required="true">
@@ -362,16 +426,23 @@ export const TRTHeroForm = ({
           />
           <label
             htmlFor="hf-tcpa"
-            style={{ display: "flex", alignItems: "flex-start", gap: 10, cursor: "pointer", userSelect: "none" }}
+            style={{
+              display: "flex", alignItems: "flex-start", gap: 12,
+              cursor: "pointer", userSelect: "none",
+              // Full-row tap target for large thumbs (55+ a11y)
+              padding: "10px 12px",
+              margin: "0 -12px",
+              borderRadius: 8,
+            }}
           >
-            {/* Custom checkbox visual — reads tcpa state directly */}
+            {/* Custom checkbox visual — 24×24 for easy tap */}
             <div
               aria-hidden="true"
               style={{
-                width: 18,
-                height: 18,
-                borderRadius: 4,
-                border: `2px solid ${tcpa ? ORANGE : errors.tcpa ? ERR_RED : "rgba(255,255,255,0.35)"}`,
+                width: 24,
+                height: 24,
+                borderRadius: 5,
+                border: `2px solid ${tcpa ? ORANGE : errors.tcpa ? ERR_RED : "rgba(255,255,255,0.40)"}`,
                 background: tcpa ? ORANGE : "transparent",
                 display: "flex",
                 alignItems: "center",
@@ -381,11 +452,11 @@ export const TRTHeroForm = ({
                 transition: "background 150ms ease, border-color 150ms ease",
               }}
             >
-              {tcpa && <Check size={11} strokeWidth={3} style={{ color: WHITE }} />}
+              {tcpa && <Check size={14} strokeWidth={3} style={{ color: WHITE }} />}
             </div>
             <span
               id="hf-tcpa-text"
-              style={{ fontSize: 12, color: "rgba(245,240,235,0.50)", lineHeight: 1.5 }}
+              style={{ fontSize: 14, color: "rgba(245,240,235,0.55)", lineHeight: 1.55 }}
             >
               I agree to receive SMS/calls about my appointment. Reply STOP to opt out.
               Msg &amp; data rates may apply.
