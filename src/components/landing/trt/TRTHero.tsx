@@ -1,10 +1,48 @@
 
+import { useState, useEffect } from "react";
 import { Check, Star } from "lucide-react";
 import { TRTHeroForm } from "./TRTHeroForm";
 import { SymptomChecklist } from "./SymptomChecklist";
 import { GBP_REVIEWS_URL } from "@/data/testimonials";
 import { trackCro } from "@/hooks/useAnalytics";
 import { COPY } from "@/data/copy";
+
+const ROTATING_SERVICES = [
+  "TESTOSTERONE",
+  "ED THERAPY",
+  "WEIGHT LOSS",
+  "MEN'S HEALTH",
+];
+
+const RotatingService = () => {
+  const [index, setIndex] = useState(0);
+  const [visible, setVisible] = useState(true);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setVisible(false);
+      setTimeout(() => {
+        setIndex((i) => (i + 1) % ROTATING_SERVICES.length);
+        setVisible(true);
+      }, 350);
+    }, 2800);
+    return () => clearInterval(interval);
+  }, []);
+  return (
+    <span
+      aria-live="polite"
+      aria-atomic="true"
+      style={{
+        display: "inline-block",
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(-6px)",
+        transition: "opacity 280ms ease, transform 280ms ease",
+        whiteSpace: "nowrap",
+      }}
+    >
+      {ROTATING_SERVICES[index]}
+    </span>
+  );
+};
 
 const trustChecks = [
   "Licensed Virginia providers",
@@ -125,15 +163,17 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
             className="font-bold uppercase"
             style={{
               fontFamily: "Oswald, 'Bebas Neue', Anton, sans-serif",
-              fontSize: "clamp(48px, 6vw, 96px)",
-              lineHeight: 0.95,
+              fontSize: "clamp(36px, 9vw, 96px)",
+              lineHeight: 1.0,
               letterSpacing: "-0.01em",
               color: COLORS.cream,
               fontWeight: 700,
             }}
           >
-            <span style={{ display: "block" }}>VIRGINIA&rsquo;S CHOICE</span>
-            <span style={{ display: "block", color: COLORS.orange }}>FOR MEN&rsquo;S HEALTH</span>
+            <span style={{ display: "block", whiteSpace: "nowrap" }}>VIRGINIA&rsquo;S CHOICE</span>
+            <span style={{ display: "block", color: COLORS.orange, whiteSpace: "nowrap" }}>
+              FOR <RotatingService />
+            </span>
           </h1>
 
           <p
