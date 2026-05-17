@@ -293,6 +293,7 @@ export const TRTHeroForm = ({
                     gap: 10,
                     cursor: "pointer",
                     userSelect: "none",
+                    borderRadius: 8,
                     border: sel
                       ? `2px solid ${ORANGE}`
                       : errors.location
@@ -350,11 +351,21 @@ export const TRTHeroForm = ({
 
         {/* ── TCPA ───────────────────────────────────────────────────────────── */}
         <div ref={tcpaRef}>
+          {/* Native checkbox — hidden, drives state */}
+          <input
+            id="hf-tcpa"
+            type="checkbox"
+            checked={tcpa}
+            onChange={(e) => { setTcpa(e.target.checked); clearErr("tcpa"); }}
+            aria-describedby="hf-tcpa-text"
+            aria-invalid={!!errors.tcpa}
+            style={{ position: "absolute", opacity: 0, width: 0, height: 0, pointerEvents: "none" }}
+          />
           <label
             htmlFor="hf-tcpa"
             style={{ display: "flex", alignItems: "flex-start", gap: 10, cursor: "pointer", userSelect: "none" }}
           >
-            {/* Custom checkbox visual */}
+            {/* Custom checkbox visual — reads tcpa state directly */}
             <div
               aria-hidden="true"
               style={{
@@ -373,16 +384,6 @@ export const TRTHeroForm = ({
             >
               {tcpa && <Check size={11} strokeWidth={3} style={{ color: WHITE }} />}
             </div>
-            {/* Native checkbox — hidden but functional */}
-            <input
-              id="hf-tcpa"
-              type="checkbox"
-              checked={tcpa}
-              onChange={(e) => { setTcpa(e.target.checked); clearErr("tcpa"); }}
-              aria-describedby="hf-tcpa-text"
-              aria-invalid={!!errors.tcpa}
-              style={{ position: "absolute", opacity: 0, width: 0, height: 0 }}
-            />
             <span
               id="hf-tcpa-text"
               style={{ fontSize: 12, color: "rgba(245,240,235,0.50)", lineHeight: 1.5 }}
