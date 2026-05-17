@@ -13,6 +13,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Lock, Loader2, MapPin, Check, Phone, User, AlertCircle, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
 import { useLeadSubmitController } from "@/domain/leads/useLeadSubmitController";
 import { heroLeadSchema, type HeroLeadInput } from "@/domain/leads/leadFormSchema";
 import { enterBookingFunnel } from "@/domain/booking/bookingEntry";
@@ -241,20 +242,17 @@ export const TRTHeroForm = ({
   const clearErr = (k: string) => setErrors((p) => { const { [k]: _, ...r } = p; return r; });
   const isSubmitting = controller.isSubmitting;
 
-  // ── Validation ──────────────────────────────────────────────────────────────
+  // ── Submit — Zod (via controller.submit) is the single validation source ────
+  // Field errors come back through controller.fieldErrors → the useEffect above
+  // maps them to local `errors` state and scrolls to the first invalid field.
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const fe: Record<string, string> = {};
-    if (!name.trim())                           fe.name     = "Name is required";
-    if (phone.replace(/\D/g, "").length !== 10) fe.phone    = "Enter a valid 10-digit number";
-    if (!location)                              fe.location = "Choose a location";
-    if (!tcpa)                                  fe.tcpa     = "Please agree to continue";
-    if (Object.keys(fe).length) { setErrors(fe); return; }
     void controller.submit({ name, phone, location: location as LocationKey, tcpa });
   };
 
   // ── Render ──────────────────────────────────────────────────────────────────
   return (
+    <BookingErrorBoundary>
     <div
       style={{
         background: "rgba(255,255,255,0.07)",
@@ -541,5 +539,6 @@ export const TRTHeroForm = ({
         HIPAA secure · No spam, ever
       </div>
     </div>
+    </BookingErrorBoundary>
   );
 };
