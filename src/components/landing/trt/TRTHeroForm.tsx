@@ -272,9 +272,9 @@ export const TRTHeroForm = ({
                     minHeight: 64,
                     borderRadius: 10,
                     border: `2px solid ${
-                      isSelected ? ORANGE : errors.location ? ERROR_RED : "rgba(255,255,255,0.18)"
+                      isSelected ? ORANGE : errors.location ? ERROR_RED : "rgba(255,255,255,0.45)"
                     }`,
-                    background: isSelected ? ORANGE : "rgba(255,255,255,0.08)",
+                    background: isSelected ? ORANGE : "rgba(255,255,255,0.11)",
                     color: "#FFFFFF",
                     fontFamily: "Inter, sans-serif",
                     cursor: "pointer",
@@ -290,24 +290,25 @@ export const TRTHeroForm = ({
                     textAlign: "left",
                   }}
                 >
-                  {/* Left: radio circle */}
+                  {/* Left: radio circle — larger, high-contrast border */}
                   <div
                     style={{
-                      width: 22,
-                      height: 22,
+                      width: 24,
+                      height: 24,
                       borderRadius: "50%",
-                      border: `2px solid ${isSelected ? "#FFFFFF" : "rgba(255,255,255,0.35)"}`,
-                      background: isSelected ? "rgba(255,255,255,0.25)" : "transparent",
+                      border: `2.5px solid ${isSelected ? "#FFFFFF" : "rgba(255,255,255,0.70)"}`,
+                      background: isSelected ? "rgba(255,255,255,0.20)" : "transparent",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       flexShrink: 0,
                       transition: "all 0.14s ease",
+                      marginRight: 12,
                     }}
                   >
                     {isSelected && (
-                      <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
-                        <path d="M2 6L5 9L10 3" stroke="#FFFFFF" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                        <path d="M2 6L5 9L10 3" stroke="#FFFFFF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     )}
                   </div>
@@ -326,27 +327,57 @@ export const TRTHeroForm = ({
           </div>
         </div>
 
-        {/* TCPA */}
+        {/* TCPA — custom styled checkbox, fully TCPA compliant */}
         <label
           ref={refs.tcpa}
+          htmlFor="hf-tcpa"
           className="flex items-start gap-3 cursor-pointer select-none"
-          style={{ minHeight: 44, padding: "10px 0" }}
+          style={{ padding: "4px 0" }}
         >
-          <span className="flex items-center justify-center flex-shrink-0" style={{ width: 44, height: 44, marginLeft: -10 }}>
-            <input
-              type="checkbox"
-              checked={tcpa}
-              onChange={(e) => { setTcpa(e.target.checked); clearError("tcpa"); }}
-              className="w-6 h-6 min-w-[24px] min-h-[24px] rounded border bg-transparent cursor-pointer"
-              style={{ accentColor: ORANGE, borderColor: errors.tcpa ? ERROR_RED : "rgba(255,255,255,0.30)" }}
-              aria-invalid={!!errors.tcpa}
-            />
-          </span>
-          <span style={{ color: "rgba(245,240,235,0.65)", fontSize: 14, lineHeight: 1.5, paddingTop: 4 }}>
-            I agree to receive SMS/calls about my appointment. Reply STOP to opt out. Msg & data rates may apply.
+          {/* Hidden native checkbox — accessible, keyboard navigable */}
+          <input
+            id="hf-tcpa"
+            type="checkbox"
+            checked={tcpa}
+            onChange={(e) => { setTcpa(e.target.checked); clearError("tcpa"); }}
+            aria-invalid={!!errors.tcpa}
+            aria-describedby="tcpa-text"
+            style={{ position: "absolute", opacity: 0, width: 0, height: 0, pointerEvents: "none" }}
+          />
+          {/* Custom visual checkbox */}
+          <div
+            aria-hidden="true"
+            style={{
+              width: 22,
+              height: 22,
+              borderRadius: 5,
+              border: `2px solid ${
+                tcpa ? ORANGE : errors.tcpa ? ERROR_RED : "rgba(255,255,255,0.55)"
+              }`,
+              background: tcpa ? ORANGE : "transparent",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
+              marginTop: 1,
+              transition: "all 0.14s ease",
+              boxShadow: tcpa ? "0 2px 8px rgba(232,103,10,0.40)" : "none",
+            }}
+          >
+            {tcpa && (
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <path d="M2 6L5 9L10 3" stroke="#FFFFFF" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            )}
+          </div>
+          <span
+            id="tcpa-text"
+            style={{ color: "rgba(245,240,235,0.65)", fontSize: 13, lineHeight: 1.5 }}
+          >
+            I agree to receive SMS/calls about my appointment. Reply STOP to opt out. Msg &amp; data rates may apply.
           </span>
         </label>
-        {errors.tcpa && <p role="alert" className="text-xs" style={{ color: ERROR_RED }}>{errors.tcpa}</p>}
+        {errors.tcpa && <p role="alert" className="text-xs" style={{ color: ERROR_RED, fontFamily: "Inter, sans-serif" }}>{errors.tcpa}</p>}
 
         {/* Submit */}
         <button
