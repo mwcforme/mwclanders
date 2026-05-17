@@ -36,10 +36,10 @@ interface TRTHeroFormProps {
 const VALID_LOCATIONS = ["richmond", "virginia-beach", "newport-news"] as const;
 type LocationKey = typeof VALID_LOCATIONS[number];
 
-const LOCATION_OPTIONS: { key: LocationKey; label: string }[] = [
-  { key: "richmond", label: "Richmond" },
-  { key: "virginia-beach", label: "Virginia Beach" },
-  { key: "newport-news", label: "Newport News" },
+const LOCATION_OPTIONS: { key: LocationKey; label: string; hint: string }[] = [
+  { key: "richmond", label: "Richmond", hint: "Midlothian Turnpike · Short Pump area" },
+  { key: "virginia-beach", label: "Virginia Beach", hint: "Hilltop · Town Center · Chesapeake" },
+  { key: "newport-news", label: "Newport News", hint: "Oyster Point · Williamsburg area" },
 ];
 
 function getLocationFromUrl(): LocationKey | "" {
@@ -253,22 +253,12 @@ export const TRTHeroForm = ({
           {errors.phone && <p role="alert" className="text-xs mt-1" style={{ color: ERROR_RED }}>{errors.phone}</p>}
         </div>
 
-        {/* Location — pill tap buttons with checkmark on select */}
+        {/* Location — stacked cards with city + neighborhood hint */}
         <div ref={refs.location}>
-          <p
-            style={{
-              fontSize: 13,
-              fontWeight: 700,
-              color: errors.location ? ERROR_RED : "rgba(245,240,235,0.90)",
-              fontFamily: "Inter, sans-serif",
-              marginBottom: 8,
-              letterSpacing: "0.04em",
-              textTransform: "uppercase",
-            }}
-          >
-            {errors.location ? "⚠ Choose your location" : "Choose your location"}
-          </p>
-          <div style={{ display: "flex", gap: 8 }}>
+          {errors.location && (
+            <p role="alert" className="text-xs mb-1" style={{ color: ERROR_RED, fontFamily: "Inter, sans-serif" }}>Please choose a location to continue</p>
+          )}
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {LOCATION_OPTIONS.map((opt) => {
               const isSelected = location === opt.key;
               return (
@@ -278,44 +268,62 @@ export const TRTHeroForm = ({
                   onClick={() => { setLocation(opt.key); clearError("location"); }}
                   aria-pressed={isSelected}
                   style={{
-                    flex: 1,
-                    height: 52,
-                    borderRadius: 999,
+                    width: "100%",
+                    minHeight: 64,
+                    borderRadius: 10,
                     border: `2px solid ${
-                      isSelected ? ORANGE : errors.location ? ERROR_RED : "rgba(255,255,255,0.35)"
+                      isSelected ? ORANGE : errors.location ? ERROR_RED : "rgba(255,255,255,0.18)"
                     }`,
-                    background: isSelected ? ORANGE : "rgba(255,255,255,0.10)",
+                    background: isSelected ? ORANGE : "rgba(255,255,255,0.08)",
                     color: "#FFFFFF",
                     fontFamily: "Inter, sans-serif",
-                    fontSize: 13,
-                    fontWeight: 700,
                     cursor: "pointer",
-                    transition: "all 0.15s ease",
-                    whiteSpace: "nowrap",
-                    padding: "0 6px",
+                    transition: "all 0.14s ease",
+                    padding: "0 16px",
                     boxShadow: isSelected
-                      ? "0 4px 16px rgba(232,103,10,0.50)"
-                      : "inset 0 1px 0 rgba(255,255,255,0.15), 0 2px 4px rgba(0,0,0,0.25)",
+                      ? "0 6px 20px rgba(232,103,10,0.45)"
+                      : "0 2px 6px rgba(0,0,0,0.30)",
+                    transform: isSelected ? "scale(0.985)" : "scale(1)",
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: "center",
-                    gap: 5,
-                    letterSpacing: "0.01em",
+                    justifyContent: "space-between",
+                    textAlign: "left",
                   }}
                 >
-                  {isSelected && (
-                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" style={{ flexShrink: 0 }}>
-                      <path d="M2 6.5L5.5 10L11 3.5" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  )}
-                  {opt.label}
+                  {/* Left: city + neighborhood */}
+                  <div>
+                    <div style={{ fontSize: 15, fontWeight: 700, lineHeight: 1.2 }}>
+                      {opt.label}
+                    </div>
+                    <div style={{ fontSize: 12, fontWeight: 400, opacity: isSelected ? 0.85 : 0.55, marginTop: 2 }}>
+                      {opt.hint}
+                    </div>
+                  </div>
+                  {/* Right: checkmark or empty circle */}
+                  <div
+                    style={{
+                      width: 24,
+                      height: 24,
+                      borderRadius: "50%",
+                      border: `2px solid ${isSelected ? "#FFFFFF" : "rgba(255,255,255,0.30)"}`,
+                      background: isSelected ? "rgba(255,255,255,0.25)" : "transparent",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexShrink: 0,
+                      transition: "all 0.14s ease",
+                    }}
+                  >
+                    {isSelected && (
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                        <path d="M2 6L5 9L10 3" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    )}
+                  </div>
                 </button>
               );
             })}
           </div>
-          {errors.location && (
-            <p role="alert" className="text-xs mt-1" style={{ color: ERROR_RED }}>{errors.location}</p>
-          )}
         </div>
 
         {/* TCPA */}
