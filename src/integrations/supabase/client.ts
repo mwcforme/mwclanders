@@ -13,7 +13,7 @@ export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABL
     storage: localStorage,
     persistSession: true,
     autoRefreshToken: true,
-    detectSessionInUrl: false, // skip URL hash parsing on every load
+    detectSessionInUrl: true, // needed for direct Supabase OAuth callback (Google sign-in)
   },
   global: {
     headers: { "x-client-info": "mwc-booking-lp" },
