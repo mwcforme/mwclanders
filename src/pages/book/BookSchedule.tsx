@@ -449,7 +449,7 @@ const BookSchedule = () => {
               fontFamily: "Inter, sans-serif", fontSize: 14, color: "#10B981",
             }}>
               <Check size={16} strokeWidth={2.5} />
-              Booking confirmed — taking you to your summary…
+              Booking confirmed. Taking you to your summary…
             </div>
           </div>
         )}

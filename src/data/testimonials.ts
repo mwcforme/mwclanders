@@ -41,7 +41,7 @@ export const TESTIMONIALS: Testimonial[] = [
     rating: 5,
     source: "verified_patient",
     quote:
-      "Two GP visits, same results both times \u2014 'everything\'s in range.' Came here on a friend's recommendation. The physician actually walked me through every number. Turns out range isn't the same as optimal. Night and day difference in how I feel now.",
+      "Two GP visits, same results both times. 'Everything\'s in range.' Came here on a friend's recommendation. The provider actually walked me through every number. Turns out range isn't the same as optimal. Night and day difference in how I feel now.",
   },
 ];
 

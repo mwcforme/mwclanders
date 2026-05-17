@@ -295,7 +295,7 @@ const BookConfirmed = () => {
               {[
                 "Your bloodwork results, explained in plain English",
                 "A clear answer on whether treatment fits your situation",
-                "If yes — a personalized protocol you can start the same day, when medically appropriate",
+                "If yes, a personalized protocol you can start the same day, when medically appropriate",
               ].map((item) => (
                 <li key={item} style={{
                   display: "flex", alignItems: "flex-start", gap: 10,

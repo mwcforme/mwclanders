@@ -25,7 +25,7 @@ export const TRTManifesto = () => {
             Most men wait two years before saying something out loud. They get bloodwork. Their GP says everything looks fine. They go home. Nothing changes.
           </p>
           <p className="text-base mt-4 leading-[1.7]" style={{ color: "rgba(255,255,255,0.85)", fontFamily: "Inter, sans-serif", fontSize: 16 }}>
-            We specialize in men's health. One licensed provider, your labs, and a real conversation — not a telehealth chat, not a coordinator reading from a script. If treatment is right for you, you leave with a plan the same day.
+            We specialize in men's health. One licensed provider, your labs, and a real conversation. No telehealth chat, no coordinator reading from a script. If treatment is right for you, you leave with a plan the same day.
           </p>
 
           <figure
