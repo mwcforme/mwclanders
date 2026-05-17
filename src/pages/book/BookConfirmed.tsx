@@ -1,208 +1,132 @@
+/**
+ * /book/confirmed — Post-booking confirmation page.
+ *
+ * Section order (CRO-optimised):
+ * 1. Confirmed hero card  — unambiguous "You're booked" signal
+ * 2. What you'll walk away with — reinforce the decision immediately
+ * 3. Email capture — framed as delivery, not a gate
+ * 4. What to expect — prep instructions
+ * 5. Video — optional, below the fold
+ * 6. Location + map
+ * 7. Reschedule footer
+ */
 import { useEffect, useState, useRef } from "react";
 import { contactUpdater } from "@/services/contactUpdater";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
-import { MapPin, ExternalLink, Clock } from "lucide-react";
+import { MapPin, ExternalLink, Clock, Send } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import BookLayout from "@/components/book/BookLayout";
 import { useBookingStore } from "@/domain/booking/bookingStore";
 import BookedCelebrationCard from "@/components/book/BookedCelebrationCard";
 import { LOCATIONS, getMapsSearchUrl, type Location } from "@/data/locations";
 
-const ATTRIBUTION_OPTIONS = [
-  "Google Search",
-  "Google Maps",
-  "Facebook / Instagram",
-  "Friend or Family",
-  "Doctor Referral",
-  "TV / Radio",
-  "Billboard",
-  "Other",
-];
+// ─── Email capture ────────────────────────────────────────────────────────────
 
-/** Post-booking email + attribution + commitment capture — shown once, updates GHL. */
-const PostBookingCapture = ({ contactId, onComplete }: { contactId?: string; onComplete: () => void }) => {
+const EmailCapture = ({ contactId, onComplete }: { contactId?: string; onComplete: () => void }) => {
   const [email, setEmail] = useState("");
-  const [attribution, setAttribution] = useState("");
-  const [committed, setCommitted] = useState(false);
   const [emailError, setEmailError] = useState("");
-  const [commitError, setCommitError] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const patchStore = useBookingStore((s) => s.patch);
   const setIdentity = useBookingStore((s) => s.setIdentity);
   const identity = useBookingStore((s) => s.identity);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    let valid = true;
-    const emailTrimmed = email.trim();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailTrimmed)) {
+    const trimmed = email.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
       setEmailError("Please enter a valid email address");
-      valid = false;
-    } else {
-      setEmailError("");
+      return;
     }
-    if (!committed) {
-      setCommitError(true);
-      valid = false;
-    } else {
-      setCommitError(false);
-    }
-    if (!valid) return;
+    setEmailError("");
     setLoading(true);
 
-    // Update store
-    if (identity) setIdentity({ ...identity, email: emailTrimmed });
-    if (attribution) patchStore({ attribution });
+    if (identity) setIdentity({ ...identity, email: trimmed });
 
-    // Fire-and-forget GHL update
     if (contactId) {
-      contactUpdater.updateContact(contactId, {
-        email: emailTrimmed,
-        customFields: {
-          ...(attribution ? { mwc_attribution_source: attribution } : {}),
-          mwc_commitment_given: "true",
-        },
-      }).catch(() => { /* non-blocking */ });
+      contactUpdater.updateContact(contactId, { email: trimmed }).catch(() => {});
     }
 
-    setSubmitted(true);
     setLoading(false);
     onComplete();
   };
 
-  if (submitted) return null;
-
-  const inp: React.CSSProperties = {
-    width: "100%", height: 50, borderRadius: 8, border: "1px solid #D1D5DB",
-    background: "#FFFFFF", color: "#0B1029", fontSize: 16,
-    fontFamily: "Inter, sans-serif", padding: "0 14px", outline: "none",
-    transition: "border-color 0.15s",
-  };
-
   return (
-    <div
-      style={{
-        background: "#FFFFFF",
-        borderRadius: 14,
-        padding: "28px 24px",
-        border: "1px solid #E5E7EB",
-        boxShadow: "0 8px 30px rgba(0,0,0,0.14)",
-      }}
-    >
-      <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#E8670A", marginBottom: 8 }}>
-        Almost done
+    <div style={{
+      background: "#FFFFFF", borderRadius: 12, padding: "24px",
+      border: "1px solid #E5E7EB",
+    }}>
+      <p style={{ fontFamily: "Inter, sans-serif", fontSize: 15, fontWeight: 600, color: "#0B1029", marginBottom: 4 }}>
+        Where should we send your appointment details?
       </p>
-      <h2 style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 22, color: "#0B1029", marginBottom: 6 }}>
-        Where should we send your confirmation?
-      </h2>
-      <p style={{ fontSize: 14, color: "#6B7280", marginBottom: 20, lineHeight: 1.5 }}>
-        We'll email your appointment details and prep instructions.
+      <p style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: "#6B7280", marginBottom: 16, lineHeight: 1.5 }}>
+        We'll email your confirmation and prep instructions. Takes 2 seconds.
       </p>
-      <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
-
-        {/* Commitment checkbox — behavioral anchor */}
-        <label
-          style={{
-            display: "flex",
-            alignItems: "flex-start",
-            gap: 12,
-            padding: "14px 16px",
-            borderRadius: 10,
-            border: `2px solid ${commitError ? "#DC2626" : committed ? "#16A34A" : "#E5E7EB"}`,
-            background: committed ? "rgba(22,163,74,0.05)" : commitError ? "rgba(220,38,38,0.04)" : "#F9FAFB",
-            cursor: "pointer",
-            transition: "border-color 0.15s, background 0.15s",
-          }}
-        >
-          <input
-            type="checkbox"
-            checked={committed}
-            onChange={(e) => { setCommitted(e.target.checked); if (e.target.checked) setCommitError(false); }}
-            style={{ marginTop: 2, accentColor: "#16A34A", width: 18, height: 18, flexShrink: 0 }}
-          />
-          <span style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "#374151", lineHeight: 1.5, fontWeight: 500 }}>
-            I understand a provider is setting aside time specifically for me. I commit to attending or canceling at least 24 hours in advance.
-          </span>
-        </label>
-        {commitError && (
-          <p style={{ color: "#DC2626", fontSize: 13, marginTop: -8, fontFamily: "Inter, sans-serif" }}>
-            Please confirm your commitment to attend.
-          </p>
-        )}
-
-        <div>
+      <form onSubmit={handleSubmit} noValidate style={{ display: "flex", gap: 8 }}>
+        <div style={{ flex: 1 }}>
           <input
             type="email"
-            placeholder="Email address"
+            placeholder="your@email.com"
             value={email}
             autoComplete="email"
             inputMode="email"
             onChange={(e) => { setEmail(e.target.value); setEmailError(""); }}
             onFocus={(e) => (e.currentTarget.style.borderColor = "#E8670A")}
             onBlur={(e) => (e.currentTarget.style.borderColor = emailError ? "#DC2626" : "#D1D5DB")}
-            style={{ ...inp, borderColor: emailError ? "#DC2626" : "#D1D5DB" }}
+            style={{
+              width: "100%", height: 48, borderRadius: 8,
+              border: `1.5px solid ${emailError ? "#DC2626" : "#D1D5DB"}`,
+              background: "#FFFFFF", color: "#0B1029", fontSize: 15,
+              fontFamily: "Inter, sans-serif", padding: "0 14px", outline: "none",
+            }}
           />
-          {emailError && <p style={{ color: "#DC2626", fontSize: 13, marginTop: 4, fontFamily: "Inter, sans-serif" }}>{emailError}</p>}
-        </div>
-        <div>
-          <select
-            value={attribution}
-            onChange={(e) => setAttribution(e.target.value)}
-            style={{ ...inp, color: attribution ? "#0B1029" : "#636B80", appearance: "none", WebkitAppearance: "none" }} /* #636B80 = 5.32:1 on white PASS */
-          >
-            <option value="">How did you hear about us? (optional)</option>
-            {ATTRIBUTION_OPTIONS.map((o) => <option key={o} value={o}>{o}</option>)}
-          </select>
+          {emailError && <p style={{ color: "#DC2626", fontSize: 12, marginTop: 4, fontFamily: "Inter, sans-serif" }}>{emailError}</p>}
         </div>
         <button
           type="submit"
           disabled={loading}
           style={{
-            width: "100%", height: 52, background: loading ? "rgba(232,103,10,0.6)" : "#E8670A",
-            color: "#FFFFFF", border: "none", borderRadius: 8, fontSize: 17, fontWeight: 700,
-            letterSpacing: "0.04em", textTransform: "uppercase", fontFamily: "Inter, sans-serif",
+            height: 48, padding: "0 18px",
+            background: loading ? "rgba(232,103,10,0.6)" : "#E8670A",
+            color: "#FFFFFF", border: "none", borderRadius: 8,
+            fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 700,
             cursor: loading ? "not-allowed" : "pointer",
-            boxShadow: loading ? "none" : "0 4px 14px rgba(232,103,10,0.40)",
+            display: "flex", alignItems: "center", gap: 6, flexShrink: 0,
+            boxShadow: "0 4px 12px rgba(232,103,10,0.35)",
           }}
         >
-          {loading ? "Saving…" : "Complete My Booking"}
+          <Send size={15} strokeWidth={2} />
+          Send
         </button>
       </form>
     </div>
   );
 };
 
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
 const EXPECT_VIDEO_SRC = "/videos/what-to-expect.mp4";
 
-/** Map booking store location keys to locations.ts slugs */
 const SLUG_MAP: Record<string, string> = {
   "newport-news": "newport-news-va",
   "virginia-beach": "virginia-beach-va",
   "richmond": "richmond-va",
 };
 
-const DEFAULT_CENTER = LOCATIONS[1]; // Newport News
-
+const DEFAULT_CENTER = LOCATIONS[1];
 
 const formatAppointment = (raw?: string): string => {
   if (!raw) return "Time to be confirmed";
   const d = new Date(raw);
   if (Number.isNaN(d.getTime())) return "Time to be confirmed";
   const datePart = new Intl.DateTimeFormat("en-US", {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-    timeZone: "America/New_York",
+    weekday: "long", month: "long", day: "numeric", timeZone: "America/New_York",
   }).format(d);
   const timePart = new Intl.DateTimeFormat("en-US", {
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true,
-    timeZone: "America/New_York",
+    hour: "numeric", minute: "2-digit", hour12: true, timeZone: "America/New_York",
   }).format(d);
   return `${datePart}  ·  ${timePart}`;
 };
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
 
 const BookConfirmed = () => {
   const appointmentTime = useBookingStore((s) => s.appointmentTime);
@@ -211,29 +135,23 @@ const BookConfirmed = () => {
   const effectiveAppt = appointmentTime || navState.appointmentTime;
   const location = useBookingStore((s) => s.location);
   const identity = useBookingStore((s) => s.identity);
+  const patchAction = useBookingStore((s) => s.patch);
   const apptTime = formatAppointment(effectiveAppt);
   const slug = location ? SLUG_MAP[location] : null;
   const center: Location = (slug && LOCATIONS.find((l) => l.slug === slug)) || DEFAULT_CENTER;
   const mapsSearchUrl = getMapsSearchUrl(center);
   const mapsEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(center.mapsQuery)}&output=embed`;
-  const PHONE_DISPLAY = center.phone;
-  const PHONE_TEL = center.phoneHref;
-  const rawFirst = (identity?.firstName ?? "").trim();
-  const rawLast = (identity?.lastName ?? "").trim();
-  const firstName = rawFirst.split(/\s+/)[0] || "";
-  void rawLast;
-  const [captureComplete, setCaptureComplete] = useState(false);
+  const firstName = (identity?.firstName ?? "").trim().split(/\s+/)[0] || "";
+  const [emailCaptured, setEmailCaptured] = useState(false);
 
-  const patchAction = useBookingStore((s) => s.patch);
-
-  // One-time cleanup: clear corrupt persisted identity (no phone AND no email).
+  // Clean up corrupt persisted identity
   useEffect(() => {
     if (identity && !identity.phone && !identity.email) {
       patchAction({ identity: undefined });
     }
   }, [identity, patchAction]);
 
-  // Defer map iframe until user scrolls near it — saves ~500ms on initial load
+  // Lazy map iframe
   const mapRef = useRef<HTMLDivElement>(null);
   const [mapVisible, setMapVisible] = useState(false);
   useEffect(() => {
@@ -247,24 +165,21 @@ const BookConfirmed = () => {
     return () => obs.disconnect();
   }, []);
 
-  // Defer video autoplay by 800ms — let celebration card render first
+  // Deferred video autoplay
   const videoRef = useRef<HTMLVideoElement>(null);
   useEffect(() => {
     const t = window.setTimeout(() => {
-      videoRef.current?.play().catch(() => { /* user gesture required on some browsers */ });
-    }, 800);
+      videoRef.current?.play().catch(() => {});
+    }, 1200);
     return () => clearTimeout(t);
   }, []);
 
   return (
     <BookLayout page="confirmed" variant="confirmation" title="You're booked | Men's Wellness Centers">
-      <div
-        className="px-4 md:px-8 py-6 md:py-10 pb-12"
-        style={{ background: "#000814" }}
-      >
-        <div className="mx-auto flex flex-col gap-8 md:gap-10" style={{ maxWidth: 1100, fontFamily: "Inter, sans-serif" }}>
+      <div className="px-4 md:px-8 py-6 md:py-10 pb-12" style={{ background: "#000814" }}>
+        <div className="mx-auto flex flex-col gap-6 md:gap-8" style={{ maxWidth: 800, fontFamily: "Inter, sans-serif" }}>
 
-          {/* Celebration Hero Card */}
+          {/* 1 ── Confirmed hero — unambiguous booking signal */}
           <BookedCelebrationCard
             firstName={firstName}
             apptTime={apptTime}
@@ -273,258 +188,197 @@ const BookConfirmed = () => {
             locationAddress={`${center.address}, ${center.cityStateZip}`}
           />
 
-          {/* Post-booking capture — email + attribution + commitment */}
-          {!captureComplete && (
-            <BookingErrorBoundary>
-              <PostBookingCapture
-                contactId={identity?.ghlContactId}
-                onComplete={() => setCaptureComplete(true)}
-              />
-            </BookingErrorBoundary>
-          )}
-
-          {/* What you'll walk away with */}
+          {/* 2 ── What you'll walk away with — reinforce the decision */}
           <div style={{
-            background: "#FFFFFF", borderRadius: 14, padding: "28px 24px",
-            border: "1px solid #E5E7EB", boxShadow: "0 8px 30px rgba(0,0,0,0.10)",
+            background: "#FFFFFF", borderRadius: 12, padding: "24px",
+            border: "1px solid #E5E7EB",
           }}>
             <p style={{
-              fontSize: 11, fontWeight: 700, letterSpacing: "0.12em",
-              textTransform: "uppercase", color: "#E8670A", marginBottom: 10,
+              fontSize: 11, fontWeight: 700, letterSpacing: "0.10em",
+              textTransform: "uppercase", color: "#E8670A", marginBottom: 12,
               fontFamily: "Inter, sans-serif",
             }}>
-              What you’ll walk away with
+              What you'll walk away with
             </p>
-            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 0 }}>
               {[
                 "Your bloodwork results, explained in plain English",
                 "A clear answer on whether treatment fits your situation",
-                "If yes, a personalized protocol you can start the same day, when medically appropriate",
+                "A personalized protocol you can start the same day, when medically appropriate",
               ].map((item) => (
                 <li key={item} style={{
                   display: "flex", alignItems: "flex-start", gap: 10,
-                  padding: "8px 0", borderBottom: "1px solid #F3F4F6",
+                  padding: "10px 0", borderBottom: "1px solid #F3F4F6",
                   fontSize: 15, color: "#0B1029", lineHeight: 1.5,
-                  fontFamily: "Inter, sans-serif", fontWeight: 400,
+                  fontFamily: "Inter, sans-serif",
                 }}>
-                  <span style={{
-                    color: "#E8670A", fontWeight: 800, fontSize: 15, flexShrink: 0, marginTop: 1,
-                  }}>✓</span>
+                  <span style={{ color: "#E8670A", fontWeight: 800, fontSize: 16, flexShrink: 0, marginTop: 1 }}>✓</span>
                   {item}
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Video — full-width, directly below celebration card for max emotional impact */}
-          <div
-            style={{
-              background: "#FFFFFF",
-              borderRadius: 16,
-              overflow: "hidden",
-              border: "1px solid #E5E7EB",
-              boxShadow: "0 20px 50px rgba(0,0,0,0.28)",
-            }}
-          >
-            {/* Video: no autoPlay attr — deferred 800ms via ref to let card render first */}
+          {/* 3 ── Email capture — delivery framing, not a gate */}
+          {!emailCaptured && (
+            <BookingErrorBoundary>
+              <EmailCapture
+                contactId={identity?.ghlContactId}
+                onComplete={() => setEmailCaptured(true)}
+              />
+            </BookingErrorBoundary>
+          )}
+
+          {/* 4 ── What to expect — prep instructions */}
+          <div style={{
+            background: "#FFFFFF", borderRadius: 12, padding: "24px",
+            border: "1px solid #E5E7EB",
+          }}>
+            <p style={{
+              fontSize: 11, fontWeight: 700, letterSpacing: "0.10em",
+              textTransform: "uppercase", color: "#E8670A", marginBottom: 12,
+              fontFamily: "Inter, sans-serif",
+            }}>
+              Before you arrive
+            </p>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 10 }}>
+              {[
+                "Bring photo ID and your insurance card if you have one (we don't bill insurance, but it helps your provider understand your history).",
+                "Drink water before labs. No need to fast unless your provider says so.",
+                "Plan for 60 minutes from check-in to leaving with your results.",
+              ].map((item) => (
+                <li key={item} style={{
+                  display: "flex", alignItems: "flex-start", gap: 10,
+                  fontSize: 14, color: "#374151", lineHeight: 1.55,
+                  fontFamily: "Inter, sans-serif",
+                }}>
+                  <span style={{ color: "#E8670A", fontWeight: 700, flexShrink: 0, marginTop: 1 }}>·</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* 5 ── Video — optional, below the fold */}
+          <div style={{
+            background: "#FFFFFF", borderRadius: 12,
+            overflow: "hidden", border: "1px solid #E5E7EB",
+          }}>
             <div style={{ position: "relative", width: "100%", paddingBottom: "52%", background: "#000" }}>
               <video
                 ref={videoRef}
                 src={EXPECT_VIDEO_SRC}
                 poster="/images/video-poster.webp"
-                muted
-                loop={false}
-                playsInline
-                controls
-                preload="none"
-                style={{
-                  position: "absolute", inset: 0,
-                  width: "100%", height: "100%",
-                  objectFit: "cover", border: 0,
-                }}
+                muted loop={false} playsInline controls preload="none"
+                style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", border: 0 }}
               />
             </div>
-            <div style={{ padding: "24px 28px 28px" }}>
-              <p style={{
-                fontSize: 11, fontWeight: 700, letterSpacing: "0.14em",
-                textTransform: "uppercase", color: "#E8670A", marginBottom: 8,
-              }}>
-                2-min watch · Before you arrive
+            <div style={{ padding: "20px 24px 24px" }}>
+              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#E8670A", marginBottom: 6 }}>
+                2-min watch
               </p>
               <h2 style={{
                 fontFamily: "Oswald, sans-serif", fontWeight: 700,
-                fontSize: "clamp(20px, 2.8vw, 26px)", color: "#0B1029",
-                letterSpacing: "0.01em", marginBottom: 8, textTransform: "none",
+                fontSize: "clamp(18px, 2.5vw, 24px)", color: "#0B1029",
+                marginBottom: 6, textTransform: "none",
               }}>
                 Here's exactly what happens when you walk in.
               </h2>
-              <p style={{ fontSize: 15, color: "#5B6478", lineHeight: 1.55, fontWeight: 400 }}>
+              <p style={{ fontSize: 14, color: "#5B6478", lineHeight: 1.55 }}>
                 No waiting room anxiety. Labs, a quick exam, and a real conversation with your provider. All in under an hour.
               </p>
             </div>
           </div>
 
-          {/* Location Tile — full width */}
-          <div
-            className="relative flex flex-col overflow-hidden"
-            style={{
-              background: "#FFFFFF",
-              borderRadius: 14,
-              padding: "32px 28px",
-              border: "1px solid rgba(11,16,41,0.10)",
-              boxShadow: "0 20px 50px rgba(0,0,0,0.35)",
-            }}
-          >
-              <h2
-                style={{
-                  fontFamily: "Oswald, sans-serif",
-                  fontWeight: 700,
-                  fontSize: "clamp(26px, 3vw, 34px)",
-                  color: "#0B1029",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.02em",
-                  lineHeight: 1.05,
-                  marginBottom: 8,
-                }}
-              >
-                {center.city}
-              </h2>
-              <p
-                style={{
-                  color: "#5B6478",
-                  fontSize: 15,
-                  fontWeight: 500,
-                  marginBottom: 18,
-                }}
-              >
-                {center.name}
-              </p>
+          {/* 6 ── Location + map */}
+          <div style={{
+            background: "#FFFFFF", borderRadius: 12, padding: "24px 24px 0",
+            border: "1px solid #E5E7EB", overflow: "hidden",
+          }}>
+            <h2 style={{
+              fontFamily: "Oswald, sans-serif", fontWeight: 700,
+              fontSize: "clamp(20px, 2.5vw, 26px)", color: "#0B1029",
+              textTransform: "uppercase", letterSpacing: "0.02em", marginBottom: 4,
+            }}>
+              {center.city}
+            </h2>
+            <p style={{ color: "#5B6478", fontSize: 14, marginBottom: 16 }}>{center.name}</p>
 
-              <div className="flex flex-col gap-3">
-                <div className="flex items-start gap-3">
-                  <MapPin size={18} strokeWidth={2.5} style={{ color: "#E8670A", flexShrink: 0, marginTop: 2 }} />
-                  <span
-                    style={{
-                      color: "#E8670A",
-                      fontWeight: 700,
-                      fontSize: 14,
-                      letterSpacing: "0.06em",
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    {center.driveTime}
-                  </span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <MapPin size={18} strokeWidth={2.5} style={{ color: "#E8670A", flexShrink: 0, marginTop: 3 }} />
-                  <a
-                    href={mapsSearchUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      color: "#0B1029",
-                      fontWeight: 600,
-                      fontSize: 16,
-                      lineHeight: 1.4,
-                      textDecoration: "underline",
-                      textUnderlineOffset: 3,
-                    }}
-                  >
-                    {center.address}<br />
-                    {center.cityStateZip}
-                  </a>
-                </div>
-                <div className="flex items-start gap-3">
-                  <Clock size={18} strokeWidth={2.5} style={{ color: "#E8670A", flexShrink: 0, marginTop: 3 }} />
-                  <span style={{ color: "#0B1029", fontSize: 16, fontWeight: 500 }}>
-                    {center.hours}
-                  </span>
-                </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 20 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <MapPin size={16} strokeWidth={2.5} style={{ color: "#E8670A", flexShrink: 0 }} />
+                <span style={{ color: "#E8670A", fontWeight: 700, fontSize: 13, letterSpacing: "0.05em", textTransform: "uppercase" }}>
+                  {center.driveTime}
+                </span>
               </div>
-
-              <div
-                ref={mapRef}
-                className="relative mt-6 w-full overflow-hidden"
-                style={{
-                  borderRadius: 12,
-                  border: "1px solid rgba(11,16,41,0.12)",
-                  height: 320,
-                }}
-              >
-                {mapVisible && (
-                  <iframe
-                    title={`Map to ${center.name}`}
-                    src={mapsEmbedUrl}
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    style={{ border: 0, width: "100%", height: "100%", display: "block" }}
-                    allowFullScreen
-                  />
-                )}
-                <a
-                  href={mapsSearchUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="absolute inline-flex items-center gap-2"
-                  style={{
-                    top: 12,
-                    left: 12,
-                    background: "#FFFFFF",
-                    color: "#0B1029",
-                    padding: "10px 16px",
-                    borderRadius: 8,
-                    fontWeight: 600,
-                    fontSize: 15,
-                    textDecoration: "none",
-                    boxShadow: "0 4px 12px rgba(0,0,0,0.18)",
-                  }}
-                >
-                  Open in Maps
-                  <ExternalLink size={14} strokeWidth={2.5} />
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
+                <MapPin size={16} strokeWidth={2.5} style={{ color: "#E8670A", flexShrink: 0, marginTop: 2 }} />
+                <a href={mapsSearchUrl} target="_blank" rel="noopener noreferrer"
+                  style={{ color: "#0B1029", fontWeight: 500, fontSize: 14, lineHeight: 1.4, textDecoration: "underline", textUnderlineOffset: 3 }}>
+                  {center.address}<br />{center.cityStateZip}
                 </a>
               </div>
-          </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <Clock size={16} strokeWidth={2.5} style={{ color: "#E8670A", flexShrink: 0 }} />
+                <span style={{ color: "#0B1029", fontSize: 14, fontWeight: 500 }}>{center.hours}</span>
+              </div>
+            </div>
 
-          {/* Footer */}
-          <div className="text-center flex flex-col gap-3" style={{ fontFamily: "Inter, sans-serif" }}>
-            <p style={{ color: "rgba(255,255,255,0.72)", fontSize: 14 }}>
-              Need to reschedule? Life happens. Just give us a heads up.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-              <a
-                href={PHONE_TEL}
+            <div ref={mapRef} style={{ position: "relative", height: 280, overflow: "hidden" }}>
+              {mapVisible && (
+                <iframe
+                  title={`Map to ${center.name}`}
+                  src={mapsEmbedUrl}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  style={{ border: 0, width: "100%", height: "100%", display: "block" }}
+                  allowFullScreen
+                />
+              )}
+              <a href={mapsSearchUrl} target="_blank" rel="noopener noreferrer"
                 style={{
+                  position: "absolute", top: 12, left: 12,
+                  background: "#FFFFFF", color: "#0B1029",
+                  padding: "8px 14px", borderRadius: 8,
+                  fontWeight: 600, fontSize: 13, textDecoration: "none",
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.18)",
                   display: "inline-flex", alignItems: "center", gap: 6,
-                  background: "rgba(255,255,255,0.08)",
-                  border: "1px solid rgba(255,255,255,0.18)",
-                  color: "#FFFFFF", fontWeight: 600, fontSize: 14,
-                  padding: "10px 20px", borderRadius: 8,
-                  textDecoration: "none", minHeight: 44,
-                }}
-              >
-                📞 Call or text {PHONE_DISPLAY}
-              </a>
-              <a
-                href="/book/location"
-                style={{
-                  display: "inline-flex", alignItems: "center", gap: 6,
-                  background: "rgba(232,103,10,0.15)",
-                  border: "1px solid rgba(232,103,10,0.35)",
-                  color: "#E8670A", fontWeight: 600, fontSize: 14,
-                  padding: "10px 20px", borderRadius: 8,
-                  textDecoration: "none", minHeight: 44,
-                }}
-              >
-                🗓️ Book a different time
+                }}>
+                Open in Maps <ExternalLink size={13} strokeWidth={2.5} />
               </a>
             </div>
-            <p style={{ color: "rgba(255,255,255,0.65)", fontSize: 12, marginTop: 4 }}>
-              Please cancel or reschedule at least 24 hours in advance so we can offer your slot to someone else.
+          </div>
+
+          {/* 7 ── Reschedule footer */}
+          <div style={{ textAlign: "center", display: "flex", flexDirection: "column", gap: 10, paddingBottom: 8 }}>
+            <p style={{ color: "rgba(255,255,255,0.55)", fontSize: 13, fontFamily: "Inter, sans-serif" }}>
+              Need to reschedule? Just give us a heads up.
+            </p>
+            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 10 }}>
+              <a href={center.phoneHref} style={{
+                display: "inline-flex", alignItems: "center", gap: 6,
+                background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.15)",
+                color: "#FFFFFF", fontWeight: 600, fontSize: 13, padding: "10px 18px",
+                borderRadius: 8, textDecoration: "none", minHeight: 44, fontFamily: "Inter, sans-serif",
+              }}>
+                Call or text {center.phone}
+              </a>
+              <a href="/book/location" style={{
+                display: "inline-flex", alignItems: "center", gap: 6,
+                background: "rgba(232,103,10,0.12)", border: "1px solid rgba(232,103,10,0.30)",
+                color: "#E8670A", fontWeight: 600, fontSize: 13, padding: "10px 18px",
+                borderRadius: 8, textDecoration: "none", minHeight: 44, fontFamily: "Inter, sans-serif",
+              }}>
+                Book a different time
+              </a>
+            </div>
+            <p style={{ color: "rgba(255,255,255,0.30)", fontSize: 11, fontFamily: "Inter, sans-serif" }}>
+              Please cancel or reschedule at least 24 hours in advance.
             </p>
           </div>
+
         </div>
       </div>
-
     </BookLayout>
   );
 };
