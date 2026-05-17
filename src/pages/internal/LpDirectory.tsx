@@ -15,25 +15,18 @@ import { ATTRIBUTION_KEYS, getAttribution } from "@/lib/attribution";
 type Health = "ok" | "fail" | "pending";
 
 const COLORS = {
-  // hardcoded-color-allow-next-line
   navyDeep: "#000814",
   navy: "var(--brand-navy-deep)",
   cream: "var(--brand-cream)",
   orange: "var(--brand-cta)",
-  // hardcoded-color-allow-next-line
   green: "#22C55E",
-  // hardcoded-color-allow-next-line
   red: "#EF4444",
-  // hardcoded-color-allow-next-line
   amber: "#F59E0B",
 };
 
 const STATUS_STYLES: Record<LandingPageEntry["status"], { bg: string; fg: string; label: string }> = {
-  // hardcoded-color-allow-next-line
   live: { bg: "rgba(34,197,94,0.15)", fg: "#4ADE80", label: "LIVE" },
-  // hardcoded-color-allow-next-line
   draft: { bg: "rgba(245,158,11,0.15)", fg: "#FBBF24", label: "DRAFT" },
-  // hardcoded-color-allow-next-line
   scaffold: { bg: "rgba(148,163,184,0.15)", fg: "#94A3B8", label: "SCAFFOLD" },
 };
 
@@ -126,9 +119,7 @@ const LpDirectory = () => {
           <div
             className="rounded-xl p-6 mb-10 flex items-start gap-4"
             style={{
-              // hardcoded-color-allow-next-line
               background: "rgba(232,103,10,0.08)",
-              // hardcoded-color-allow-next-line
               border: `1px solid rgba(232,103,10,0.30)`,
             }}
           >
@@ -145,7 +136,6 @@ const LpDirectory = () => {
               >
                 Landing Page Directory
               </h1>
-              // hardcoded-color-allow-next-line
               <p className="mt-2" style={{ color: "rgba(245,240,235,0.75)", fontSize: 14 }}>
                 Internal QA index. Do not share. <strong>Noindex.</strong> {liveCount} live LP
                 {liveCount === 1 ? "" : "s"}. Loaded {buildTime}.
@@ -164,9 +154,7 @@ const LpDirectory = () => {
                   key={lp.slug}
                   className="rounded-xl p-5"
                   style={{
-                    // hardcoded-color-allow-next-line
                     background: "rgba(255,255,255,0.04)",
-                    // hardcoded-color-allow-next-line
                     border: "1px solid rgba(255,255,255,0.10)",
                   }}
                 >
@@ -196,7 +184,6 @@ const LpDirectory = () => {
                     </span>
                   </div>
 
-                  // hardcoded-color-allow-next-line
                   <div className="grid grid-cols-2 gap-x-3 gap-y-1.5 text-xs mb-4" style={{ color: "rgba(245,240,235,0.70)" }}>
                     <div>Slug</div><div className="font-mono" style={{ color: COLORS.cream }}>{lp.slug}</div>
                     <div>Service</div><div className="uppercase" style={{ color: COLORS.cream }}>{lp.service}</div>
@@ -205,7 +192,6 @@ const LpDirectory = () => {
                   </div>
 
                   {lp.notes && (
-                    // hardcoded-color-allow-next-line
                     <p className="text-xs mb-4" style={{ color: "rgba(245,240,235,0.55)" }}>
                       {lp.notes}
                     </p>
@@ -233,7 +219,6 @@ const LpDirectory = () => {
                       style={{
                         background: "transparent",
                         color: COLORS.cream,
-                        // hardcoded-color-allow-next-line
                         border: "1px solid rgba(255,255,255,0.20)",
                         padding: "8px 12px",
                         letterSpacing: "0.08em",
@@ -251,30 +236,22 @@ const LpDirectory = () => {
           <SectionTitle>Booking funnel routes</SectionTitle>
           <div
             className="rounded-xl overflow-hidden mb-12"
-            // hardcoded-color-allow-next-line
             style={{ border: "1px solid rgba(255,255,255,0.10)" }}
           >
             <table className="w-full text-sm">
               <thead>
-                // hardcoded-color-allow-next-line
                 <tr style={{ background: "rgba(255,255,255,0.04)" }}>
-                  // hardcoded-color-allow-next-line
                   <th className="text-left px-4 py-3 font-semibold" style={{ color: "rgba(245,240,235,0.60)", fontSize: 11, letterSpacing: "0.08em" }}>STEP</th>
-                  // hardcoded-color-allow-next-line
                   <th className="text-left px-4 py-3 font-semibold" style={{ color: "rgba(245,240,235,0.60)", fontSize: 11, letterSpacing: "0.08em" }}>SLUG</th>
-                  // hardcoded-color-allow-next-line
                   <th className="text-left px-4 py-3 font-semibold" style={{ color: "rgba(245,240,235,0.60)", fontSize: 11, letterSpacing: "0.08em" }}>DESCRIPTION</th>
                   <th className="px-4 py-3" />
                 </tr>
               </thead>
               <tbody>
                 {BOOKING_STEPS.map((s, i) => (
-                  // hardcoded-color-allow-next-line
                   <tr key={s.slug} style={{ borderTop: i === 0 ? "none" : "1px solid rgba(255,255,255,0.06)" }}>
                     <td className="px-4 py-3 font-semibold">{s.name}</td>
-                    // hardcoded-color-allow-next-line
                     <td className="px-4 py-3 font-mono text-xs" style={{ color: "rgba(245,240,235,0.75)" }}>{s.slug}</td>
-                    // hardcoded-color-allow-next-line
                     <td className="px-4 py-3" style={{ color: "rgba(245,240,235,0.70)" }}>{s.description}</td>
                     <td className="px-4 py-3 text-right">
                       <a
@@ -297,29 +274,21 @@ const LpDirectory = () => {
           <SectionTitle>Compliance pages</SectionTitle>
           <div
             className="rounded-xl overflow-hidden mb-12"
-            // hardcoded-color-allow-next-line
             style={{ border: "1px solid rgba(255,255,255,0.10)" }}
           >
             <table className="w-full text-sm">
               <thead>
-                // hardcoded-color-allow-next-line
                 <tr style={{ background: "rgba(255,255,255,0.04)" }}>
-                  // hardcoded-color-allow-next-line
                   <th className="text-left px-4 py-3 font-semibold" style={{ color: "rgba(245,240,235,0.60)", fontSize: 11, letterSpacing: "0.08em" }}>PAGE</th>
-                  // hardcoded-color-allow-next-line
                   <th className="text-left px-4 py-3 font-semibold" style={{ color: "rgba(245,240,235,0.60)", fontSize: 11, letterSpacing: "0.08em" }}>SLUG</th>
-                  // hardcoded-color-allow-next-line
                   <th className="text-left px-4 py-3 font-semibold" style={{ color: "rgba(245,240,235,0.60)", fontSize: 11, letterSpacing: "0.08em" }}>STATUS</th>
-                  // hardcoded-color-allow-next-line
                   <th className="text-left px-4 py-3 font-semibold" style={{ color: "rgba(245,240,235,0.60)", fontSize: 11, letterSpacing: "0.08em" }}>NOTES</th>
                 </tr>
               </thead>
               <tbody>
                 {COMPLIANCE_PAGES.map((p, i) => (
-                  // hardcoded-color-allow-next-line
                   <tr key={p.slug} style={{ borderTop: i === 0 ? "none" : "1px solid rgba(255,255,255,0.06)" }}>
                     <td className="px-4 py-3 font-semibold">{p.name}</td>
-                    // hardcoded-color-allow-next-line
                     <td className="px-4 py-3 font-mono text-xs" style={{ color: "rgba(245,240,235,0.75)" }}>{p.slug}</td>
                     <td className="px-4 py-3">
                       {p.exists ? (
@@ -332,7 +301,6 @@ const LpDirectory = () => {
                         </span>
                       )}
                     </td>
-                    // hardcoded-color-allow-next-line
                     <td className="px-4 py-3 text-xs" style={{ color: "rgba(245,240,235,0.65)" }}>{p.notes ?? "-"}</td>
                   </tr>
                 ))}
@@ -353,14 +321,11 @@ const LpDirectory = () => {
                 key={c.label}
                 className="rounded-xl p-4 flex items-center justify-between"
                 style={{
-                  // hardcoded-color-allow-next-line
                   background: "rgba(255,255,255,0.04)",
-                  // hardcoded-color-allow-next-line
                   border: "1px solid rgba(255,255,255,0.10)",
                 }}
               >
                 <div>
-                  // hardcoded-color-allow-next-line
                   <div className="text-xs uppercase mb-1" style={{ color: "rgba(245,240,235,0.55)", letterSpacing: "0.08em" }}>
                     Check
                   </div>
@@ -373,7 +338,6 @@ const LpDirectory = () => {
 
           {/* Attribution capture */}
           <SectionTitle>Attribution capture (cookies + URL)</SectionTitle>
-          // hardcoded-color-allow-next-line
           <p className="text-xs mb-4" style={{ color: "rgba(245,240,235,0.55)" }}>
             Hidden fields auto-populated from URL params on first visit and persisted to a 90-day first-party cookie.
             Override the visible First/Last Name on submit when present.
@@ -381,16 +345,12 @@ const LpDirectory = () => {
           </p>
           <div
             className="rounded-xl overflow-hidden mb-12"
-            // hardcoded-color-allow-next-line
             style={{ border: "1px solid rgba(255,255,255,0.10)" }}
           >
             <table className="w-full text-sm">
               <thead>
-                // hardcoded-color-allow-next-line
                 <tr style={{ background: "rgba(255,255,255,0.04)" }}>
-                  // hardcoded-color-allow-next-line
                   <th className="text-left px-4 py-3 font-semibold" style={{ color: "rgba(245,240,235,0.60)", fontSize: 11, letterSpacing: "0.08em" }}>FIELD</th>
-                  // hardcoded-color-allow-next-line
                   <th className="text-left px-4 py-3 font-semibold" style={{ color: "rgba(245,240,235,0.60)", fontSize: 11, letterSpacing: "0.08em" }}>VALUE</th>
                 </tr>
               </thead>
@@ -398,11 +358,8 @@ const LpDirectory = () => {
                 {ATTRIBUTION_KEYS.map((k, i) => {
                   const v = getAttribution()[k];
                   return (
-                    // hardcoded-color-allow-next-line
                     <tr key={k} style={{ borderTop: i === 0 ? "none" : "1px solid rgba(255,255,255,0.06)" }}>
-                      // hardcoded-color-allow-next-line
                       <td className="px-4 py-3 font-mono text-xs" style={{ color: "rgba(245,240,235,0.75)" }}>{k}</td>
-                      // hardcoded-color-allow-next-line
                       <td className="px-4 py-3 font-mono text-xs" style={{ color: v ? COLORS.cream : "rgba(245,240,235,0.35)" }}>
                         {v ?? "(empty)"}
                       </td>
@@ -413,7 +370,6 @@ const LpDirectory = () => {
             </table>
           </div>
 
-          // hardcoded-color-allow-next-line
           <div className="text-center text-xs pt-8" style={{ color: "rgba(245,240,235,0.45)" }}>
             <Link to="/" className="inline-flex items-center gap-1" style={{ color: COLORS.orange }}><ChevronLeft size={14} /> Back to live site</Link>
           </div>

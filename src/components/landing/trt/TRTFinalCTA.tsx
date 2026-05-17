@@ -21,7 +21,6 @@ export const TRTFinalCTA = () => {
           >
             What You Get On Day One.
           </h2>
-          {/* hardcoded-color-allow-next-line */}
           <p className="text-base mt-2" style={{ color: "rgba(255,255,255,0.85)", fontFamily: "Inter, sans-serif", fontSize: 16 }}>
             Same-day labs. Results reviewed in the same visit. No-cost consultation.
           </p>
@@ -33,7 +32,6 @@ export const TRTFinalCTA = () => {
             <p
               className="text-base md:text-lg leading-relaxed"
               style={{
-                // hardcoded-color-allow-next-line
                 color: "rgba(255,255,255,0.85)",
                 fontFamily: "Inter, sans-serif",
               }}
@@ -48,7 +46,6 @@ export const TRTFinalCTA = () => {
                 "If TRT isn't right for you, our providers will tell you. Treatment is only prescribed when clinically appropriate.",
               ].map((t) => (
                 <li key={t} className="flex items-start gap-3" style={{ color: "rgba(255,255,255,0.92)", fontFamily: "Inter, sans-serif" }}>
-                  {/* hardcoded-color-allow-next-line */}
                   <Check className="h-5 w-5 flex-shrink-0 mt-0.5" strokeWidth={3} style={{ color: "#2ECC71" }} />
                   <span className="text-base">{t}</span>
                 </li>
@@ -59,7 +56,6 @@ export const TRTFinalCTA = () => {
               <div
                 className="text-xs font-semibold uppercase mb-3"
                 style={{
-                  // hardcoded-color-allow-next-line
                   color: "rgba(255,255,255,0.55)",
                   letterSpacing: "0.12em",
                   fontFamily: "Inter, sans-serif",
@@ -79,7 +75,6 @@ export const TRTFinalCTA = () => {
                       href={l.to}
                       className="text-base underline underline-offset-4 hover:text-white transition-colors"
                       style={{
-                        // hardcoded-color-allow-next-line
                         color: "rgba(255,255,255,0.92)",
                         fontFamily: "Inter, sans-serif",
                       }}

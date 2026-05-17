@@ -19,7 +19,6 @@ export function PrimaryQuizButton({ children, disabled, style, ...rest }: Primar
         color: "var(--c-text-on-dark)",
         opacity: disabled ? 0.45 : 1,
         cursor: disabled ? "not-allowed" : "pointer",
-        // hardcoded-color-allow-next-line
         boxShadow: "0 16px 40px rgba(232,103,10,0.40)",
         fontFamily: "Inter, sans-serif",
         WebkitTapHighlightColor: "transparent",

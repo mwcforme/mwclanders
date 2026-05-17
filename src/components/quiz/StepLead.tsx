@@ -88,9 +88,7 @@ export function StepLead({
   const inputBase = (field: string): React.CSSProperties => ({
     width: "100%",
     height: 52,
-    // hardcoded-color-allow-next-line
     background: "rgba(11,16,41,0.55)",
-    // hardcoded-color-allow-next-line
     border: `1.5px solid ${focused === field ? "var(--brand-cta)" : "rgba(245,240,235,0.32)"}`,
     borderRadius: 10,
     padding: "0 16px",
@@ -152,11 +150,9 @@ export function StepLead({
         </h1>
         <p
           className="mt-4 text-base md:text-lg max-w-[600px]"
-          // hardcoded-color-allow-next-line
           style={{ color: "rgba(245,240,235,0.85)" }}
         >
           Enter my details to confirm eligibility and view my results securely.{" "}
-          // hardcoded-color-allow-next-line
           <span style={{ color: "rgba(245,240,235,0.65)" }}>
             Score: {totalScore} of 69 . Tier: {bracket}.
           </span>
@@ -227,7 +223,6 @@ export function StepLead({
           <ChevronDown
             size={18}
             className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2"
-            // hardcoded-color-allow-next-line
             style={{ color: "rgba(245,240,235,0.75)" }}
           />
           {errors.state ? (
@@ -237,14 +232,12 @@ export function StepLead({
 
         <label
           className="flex items-start gap-3 text-xs md:text-sm leading-relaxed select-none pt-2"
-          // hardcoded-color-allow-next-line
           style={{ color: "rgba(245,240,235,0.85)" }}
         >
           <input
             type="checkbox"
             checked={tcpa}
             onChange={(e) => setTcpa(e.target.checked)}
-            // hardcoded-color-allow-next-line
             className="mt-0.5 w-5 h-5 accent-[#E8670A]"
           />
           <span>
@@ -260,11 +253,8 @@ export function StepLead({
           <div
             className="rounded-md p-3 text-xs"
             style={{
-              // hardcoded-color-allow-next-line
               background: "rgba(255,176,122,0.10)",
-              // hardcoded-color-allow-next-line
               border: "1px solid rgba(255,176,122,0.35)",
-              // hardcoded-color-allow-next-line
               color: "#FFB07A",
             }}
           >
@@ -274,30 +264,25 @@ export function StepLead({
       </form>
 
       {/* Trust + testimonial */}
-      // hardcoded-color-allow-next-line
       <div className="mt-8 flex items-center justify-center gap-2 text-xs" style={{ color: "rgba(245,240,235,0.75)" }}>
         <Lock size={12} /> 256-bit encrypted . Private . HIPAA-conscious
       </div>
 
       <div
         className="mt-6 rounded-xl p-5"
-        // hardcoded-color-allow-next-line
         style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.14)" }}
       >
         <div className="flex items-center gap-2 mb-2">
           {Array.from({ length: 5 }).map((_, i) => (
             <Star key={i} size={14} fill="var(--brand-cta)" stroke="var(--brand-cta)" />
           ))}
-          // hardcoded-color-allow-next-line
           <span className="text-xs font-semibold" style={{ color: "rgba(245,240,235,0.85)" }}>
             Excellent . 4.9 average
           </span>
         </div>
-        // hardcoded-color-allow-next-line
         <p className="text-sm leading-relaxed" style={{ color: "rgba(245,240,235,0.92)" }}>
           "Now that I've started TRT, I can't believe how much has changed. My ED is improving. My muscles are coming back. It's only been two weeks. The depression and mental fog are finally lifting. MWC helped me feel like myself again."
         </p>
-        // hardcoded-color-allow-next-line
         <p className="mt-2 text-xs" style={{ color: "rgba(245,240,235,0.65)" }}>
           Johnathan W. . Verified MWC patient
         </p>

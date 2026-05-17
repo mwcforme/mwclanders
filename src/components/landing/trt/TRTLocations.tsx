@@ -28,10 +28,8 @@ export const TRTLocations = () => {
             const isOpen = openIdx === idx;
             return (
               <div key={l.slug} className="rounded-2xl p-6 flex flex-col" style={{
-                // hardcoded-color-allow-next-line
                 border: "1px solid rgba(11,16,41,0.08)",
                 background: "var(--bg-white)",
-                // hardcoded-color-allow-next-line
                 boxShadow: "0 4px 24px rgba(11,16,41,0.06), 0 1px 4px rgba(11,16,41,0.04)",
               }}>
                 <div className="font-bold uppercase" style={{ fontFamily: "Oswald, sans-serif", color: "var(--brand-navy)", fontSize: 22, letterSpacing: "0.02em" }}>

@@ -46,11 +46,8 @@ interface Props {
 }
 
 const INK = "var(--brand-navy-deep)";
-// hardcoded-color-allow-next-line
 const MUTED = "#4B5563";
-// hardcoded-color-allow-next-line
 const LINE = "#E5E7EB";
-// hardcoded-color-allow-next-line
 const BORDER = "#8B92A0";
 const SURFACE = "var(--bg-white)";
 const ORANGE = "var(--brand-cta)";
@@ -181,7 +178,6 @@ const AccordionDay = memo(function AccordionDay({
         onClick={handleToggle}
         style={{
           width: "100%",
-          // hardcoded-color-allow-next-line
           background: disabled ? "#F1F2F6" : headerBg,
           color: disabled ? MUTED : headerColor,
           border: 0,
@@ -355,7 +351,6 @@ const GHLAccordionView = ({ location, firstName, lastName, email, phone, source,
           overflow: "hidden",
           color: INK,
           fontFamily: "Inter, system-ui, sans-serif",
-          // hardcoded-color-allow-next-line
       boxShadow: "0 1px 2px rgba(11,16,41,0.04), 0 24px 48px -24px rgba(11,16,41,0.18)",
         }}
       >
@@ -393,15 +388,12 @@ const GHLAccordionView = ({ location, firstName, lastName, email, phone, source,
             disabled={!canConfirm}
             style={{
               width: "100%", minHeight: 56,
-              // hardcoded-color-allow-next-line
               background: canConfirm ? ORANGE : "#E5E7EB",
-              // hardcoded-color-allow-next-line
               color: canConfirm ? "var(--c-text-on-dark)" : "#5B6271",
               border: 0, borderRadius: 12, fontSize: 15, fontWeight: 700,
               letterSpacing: "0.06em", textTransform: "uppercase",
               cursor: canConfirm ? "pointer" : "not-allowed",
               fontFamily: "Oswald, Inter, sans-serif",
-              // hardcoded-color-allow-next-line
               boxShadow: canConfirm ? "0 10px 24px -10px rgba(232,103,10,0.55)" : "none",
             }}
           >
@@ -423,7 +415,6 @@ const GHLAccordionView = ({ location, firstName, lastName, email, phone, source,
               Confirm your appointment
             </DialogTitle>
           </DialogHeader>
-          {/* hardcoded-color-allow-next-line */}
           <div style={{ background: "#F7F8FB", border: `1px solid ${LINE}`, borderRadius: 12, padding: 16, marginTop: 4 }}>
             <div style={{ fontSize: 12, color: MUTED, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 700, marginBottom: 8 }}>
               You're booking
@@ -447,11 +438,8 @@ const GHLAccordionView = ({ location, firstName, lastName, email, phone, source,
           {submitError && (
             <div role="alert" style={{
               marginTop: 12, padding: "12px 14px",
-              // hardcoded-color-allow-next-line
               background: "#FEF2F2",
-              // hardcoded-color-allow-next-line
               border: "1px solid #EF4444",
-              // hardcoded-color-allow-next-line
               borderRadius: 8, color: "#B91C1C", fontSize: 13 }}>
               {submitError}
             </div>
@@ -471,7 +459,6 @@ const GHLAccordionView = ({ location, firstName, lastName, email, phone, source,
                 opacity: submitting ? 0.6 : 1,
                 fontFamily: "Oswald, Inter, sans-serif",
                 display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
-                // hardcoded-color-allow-next-line
                 boxShadow: "0 10px 24px -10px rgba(232,103,10,0.55)",
               }}
             >

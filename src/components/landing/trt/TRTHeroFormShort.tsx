@@ -21,7 +21,6 @@ const formatPhone = (v: string) => {
   return `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}`;
 };
 
-// hardcoded-color-allow-next-line
 const ERROR_RED = "#DC2626";
 
 const VALID_LOCATIONS = ["richmond", "virginia-beach", "newport-news"] as const;
@@ -113,7 +112,6 @@ export const TRTHeroFormShort = ({
     width: "100%",
     height: 52,
     background: "var(--bg-white)",
-    // hardcoded-color-allow-next-line
     border: `1px solid ${errors[field] ? ERROR_RED : focused === field ? "var(--brand-accent)" : "rgba(0,0,0,0.15)"}`,
     borderRadius: 8,
     padding: "0 16px",
@@ -128,14 +126,11 @@ export const TRTHeroFormShort = ({
     <div
       className="rounded-2xl p-7 md:p-8 w-full"
       style={{
-        // hardcoded-color-allow-next-line
         background: "rgba(255,255,255,0.06)",
         backdropFilter: "blur(20px)",
         WebkitBackdropFilter: "blur(20px)",
-        // hardcoded-color-allow-next-line
         border: "1px solid rgba(255,255,255,0.12)",
         maxWidth: 420,
-        // hardcoded-color-allow-next-line
         boxShadow: "0 20px 60px rgba(0,0,0,0.45)",
       }}
     >
@@ -145,7 +140,6 @@ export const TRTHeroFormShort = ({
       >
         {heading}
       </h2>
-      {/* hardcoded-color-allow-next-line */}
       <p className="mt-1.5 mb-5" style={{ color: "rgba(245,240,235,0.70)", fontFamily: "Inter, sans-serif", fontSize: 14 }}>
         {subheading}
       </p>
@@ -184,7 +178,6 @@ export const TRTHeroFormShort = ({
             aria-invalid={!!errors.location}
             style={{
               ...inputBase("location"),
-              // hardcoded-color-allow-next-line
               color: location ? "var(--brand-navy-deep)" : "rgba(11,16,41,0.60)",
               appearance: "none",
               backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%230B1029' opacity='0.5' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")`,
@@ -215,13 +208,11 @@ export const TRTHeroFormShort = ({
               className="w-5 h-5 min-w-[20px] min-h-[20px] rounded border bg-transparent cursor-pointer"
               style={{
                 accentColor: "var(--brand-cta)",
-                // hardcoded-color-allow-next-line
                 borderColor: errors.tcpa ? ERROR_RED : "rgba(255,255,255,0.30)",
               }}
               aria-invalid={!!errors.tcpa}
             />
           </span>
-          {/* hardcoded-color-allow-next-line */}
           <span style={{ color: "rgba(245,240,235,0.65)", fontSize: 12, lineHeight: 1.45, paddingTop: 4 }}>
             I agree to receive SMS/calls about my appointment. Reply STOP to opt out.
           </span>
@@ -257,7 +248,6 @@ export const TRTHeroFormShort = ({
         )}
       </form>
 
-      {/* hardcoded-color-allow-next-line */}
       <p className="text-center mt-4 inline-flex items-center justify-center gap-1.5 w-full" style={{ color: "rgba(245,240,235,0.60)", fontFamily: "Inter, sans-serif", fontSize: 12 }}>
         <Lock size={12} /> HIPAA secure · No spam, ever.
       </p>

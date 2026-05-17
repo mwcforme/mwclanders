@@ -16,12 +16,9 @@ interface QuizShellProps {
 export function QuizShell({ progress, children, cta }: QuizShellProps) {
   const pct = Math.max(0, Math.min(100, Math.round(progress)));
   return (
-    // hardcoded-color-allow-next-line
     <div style={{ background: "#000814", color: "var(--brand-cream)", minHeight: "100vh", fontFamily: "Inter, sans-serif" }}>
       {/* Progress bar (fixed at top, full-width) */}
-      // hardcoded-color-allow-next-line
       <div className="fixed top-0 left-0 right-0 z-40" style={{ background: "rgba(0,8,20,0.92)", backdropFilter: "blur(8px)" }}>
-        // hardcoded-color-allow-next-line
         <div className="h-1.5 w-full" style={{ background: "rgba(255,255,255,0.10)" }}>
           <div
             className="h-full transition-all duration-500 ease-out"
@@ -53,7 +50,6 @@ export function QuizShell({ progress, children, cta }: QuizShellProps) {
         <div
           className="fixed left-0 right-0 bottom-0 z-40 px-4 pt-4"
           style={{
-            // hardcoded-color-allow-next-line
             background: "linear-gradient(to top, rgba(0,8,20,1) 60%, rgba(0,8,20,0))",
             paddingBottom: "max(1rem, env(safe-area-inset-bottom))",
           }}

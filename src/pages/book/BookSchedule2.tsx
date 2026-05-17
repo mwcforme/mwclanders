@@ -79,7 +79,6 @@ const BookSchedule2 = () => {
           >
             {heading}
           </h1>
-          // hardcoded-color-allow-next-line
           <p style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: "#6B7280", margin: 0 }}>
             {metaLine}
           </p>
@@ -101,9 +100,7 @@ const BookSchedule2 = () => {
               }}
             />
           ) : (
-            // hardcoded-color-allow-next-line
             <div style={{ background: "var(--c-text-on-dark)", border: "1px solid #E5E7EB", borderRadius: 12, padding: 20, fontFamily: "Inter, sans-serif" }}>
-              // hardcoded-color-allow-next-line
               <div style={{ fontSize: 13, color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.04em", fontWeight: 700, marginBottom: 10 }}>
                 Choose your center
               </div>
@@ -113,7 +110,6 @@ const BookSchedule2 = () => {
                     key={c.key}
                     type="button"
                     onClick={() => setLocation(c.key)}
-                    // hardcoded-color-allow-next-line
                     style={{ padding: "14px 16px", borderRadius: 8, border: "1px solid #D1D5DB", background: "var(--c-text-on-dark)", color: "var(--brand-navy-deep)", fontSize: 16, fontWeight: 600, textAlign: "left", cursor: "pointer" }}
                   >
                     {c.label}

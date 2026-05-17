@@ -48,7 +48,6 @@ export const EDHowItWorks = () => {
         <div className="order-2 md:order-1">
           {eyebrow("Sound Familiar?")}
           {heading("What we hear from men every week")}
-          {/* hardcoded-color-allow-next-line */}
           <p className="mt-5 text-base leading-relaxed" style={{ color: "#4A4A4A", fontFamily: "Inter, sans-serif", maxWidth: 520 }}>
             Most men wait years before bringing this up. By the time they do, the issue has already changed how they feel about themselves and their relationship. It does not have to.
           </p>
@@ -56,7 +55,6 @@ export const EDHowItWorks = () => {
             {symptoms.map((s) => (
               <li key={s} className="flex items-start gap-3">
                 <X className="h-5 w-5 flex-shrink-0 mt-0.5" strokeWidth={3} style={{ color: "var(--brand-cta)" }} />
-                {/* hardcoded-color-allow-next-line */}
                 <span className="text-base" style={{ color: "#1A1A1A", fontFamily: "Inter, sans-serif" }}>{s}</span>
               </li>
             ))}
@@ -76,9 +74,7 @@ export const EDHowItWorks = () => {
                     style={{
                       background: isFinal ? "var(--brand-cta)" : "var(--brand-navy)",
                       boxShadow: isFinal
-                        // hardcoded-color-allow-next-line
                         ? "0 0 0 4px rgba(232,103,10,0.20), 0 8px 24px rgba(232,103,10,0.30)"
-                        // hardcoded-color-allow-next-line
                         : "0 0 0 3px rgba(11,16,41,0.12), 0 4px 16px rgba(0,0,0,0.15)",
                     }}
                   >
@@ -86,7 +82,6 @@ export const EDHowItWorks = () => {
                   </div>
                   <div>
                     <h3 className="font-bold text-lg" style={{ color: "var(--brand-navy)", fontFamily: "Inter, sans-serif" }}>{s.title}</h3>
-                    {/* hardcoded-color-allow-next-line */}
                   <p style={{ color: "#4A4A4A", fontFamily: "Inter, sans-serif", fontSize: 17, lineHeight: 1.6, marginTop: 4 }}>{s.desc}</p>
                   </div>
                 </div>
@@ -100,7 +95,6 @@ export const EDHowItWorks = () => {
             className="mt-10 w-full sm:w-auto inline-flex items-center justify-center rounded-lg px-8 font-bold cursor-pointer transition-colors duration-200"
             style={{ height: 56, minHeight: 56, background: "var(--brand-cta)", color: "var(--c-text-on-dark)", fontSize: 15, letterSpacing: "0.07em", fontFamily: "Inter, sans-serif", border: "none", whiteSpace: "nowrap" }}
             onMouseEnter={(e) => {
-              // hardcoded-color-allow-next-line
               e.currentTarget.style.background = "#CF5B09";
             }}
             onMouseLeave={(e) => { e.currentTarget.style.background = "var(--brand-cta)"; }}

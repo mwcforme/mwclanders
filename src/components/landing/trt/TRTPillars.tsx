@@ -27,28 +27,19 @@ const pillars = [
 ];
 
 const cardStyle: React.CSSProperties = {
-  // hardcoded-color-allow-next-line
   background: "rgba(255,255,255,0.07)",
-  // hardcoded-color-allow-next-line
   border: "1px solid rgba(255,255,255,0.14)",
-  // hardcoded-color-allow-next-line
   boxShadow: "inset 0 1px 0 rgba(255,255,255,0.08)",
 };
 
 const cardEnter = (e: React.MouseEvent<HTMLDivElement>) => {
-  // hardcoded-color-allow-next-line
   e.currentTarget.style.background = "rgba(255,255,255,0.13)";
-  // hardcoded-color-allow-next-line
   e.currentTarget.style.borderColor = "rgba(232,103,10,0.50)";
-  // hardcoded-color-allow-next-line
   e.currentTarget.style.boxShadow = "inset 0 1px 0 rgba(255,255,255,0.10), 0 0 0 1px rgba(232,103,10,0.20)";
 };
 const cardLeave = (e: React.MouseEvent<HTMLDivElement>) => {
-  // hardcoded-color-allow-next-line
   e.currentTarget.style.background = "rgba(255,255,255,0.07)";
-  // hardcoded-color-allow-next-line
   e.currentTarget.style.borderColor = "rgba(255,255,255,0.14)";
-  // hardcoded-color-allow-next-line
   e.currentTarget.style.boxShadow = "inset 0 1px 0 rgba(255,255,255,0.08)";
 };
 
@@ -102,7 +93,6 @@ export const TRTPillars = () => (
             </h3>
             <p
               className="text-sm px-5 pb-6 mt-2 leading-relaxed"
-              // hardcoded-color-allow-next-line
               style={{ color: "rgba(255,255,255,0.85)", fontFamily: "Inter, sans-serif" }}
             >
               {p.desc}
@@ -157,7 +147,6 @@ export const TRTPillars = () => (
             </h3>
             <p
               className="text-xs px-4 pb-5 mt-1.5 leading-relaxed"
-              // hardcoded-color-allow-next-line
               style={{ color: "rgba(255,255,255,0.85)", fontFamily: "Inter, sans-serif" }}
             >
               {p.desc}

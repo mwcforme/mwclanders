@@ -76,9 +76,7 @@ export const TRTHowItWorks = () => {
                     style={{
                       background: isFinal ? "var(--brand-cta)" : "var(--brand-navy)",
                       boxShadow: isFinal
-                        // hardcoded-color-allow-next-line
                         ? "0 0 0 4px rgba(232,103,10,0.20), 0 8px 24px rgba(232,103,10,0.30)"
-                        // hardcoded-color-allow-next-line
                         : "0 0 0 3px rgba(11,16,41,0.12), 0 4px 16px rgba(0,0,0,0.15)",
                     }}
                   >
@@ -90,7 +88,6 @@ export const TRTHowItWorks = () => {
                     <h3 className="font-bold text-lg" style={{ color: "var(--brand-navy)", fontFamily: "Inter, sans-serif" }}>
                       {s.title}
                     </h3>
-                    {/* hardcoded-color-allow-next-line */}
                     <p style={{ color: "#4A4A4A", fontFamily: "Inter, sans-serif", fontSize: 17, lineHeight: 1.6, marginTop: 4 }}>
                       {s.desc}
                     </p>

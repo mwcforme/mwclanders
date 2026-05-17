@@ -80,14 +80,12 @@ export function StepSymptoms({ symptoms, onChange, onSubmit }: StepSymptomsProps
         </h1>
         <p
           className="mt-5 text-base md:text-lg max-w-[600px]"
-          // hardcoded-color-allow-next-line
           style={{ color: "rgba(245,240,235,0.85)" }}
         >
           Score your symptoms below. We map your results to a clinical severity tier and tell you whether an in-person evaluation makes sense.
         </p>
         <p
           className="mt-4 italic text-sm md:text-[15px] font-medium"
-          // hardcoded-color-allow-next-line
           style={{ color: "#FFB07A" }}
         >
           Score each symptom: 0 = none, 1 = mild, 2 = moderate, 3 = severe.
@@ -102,7 +100,6 @@ export function StepSymptoms({ symptoms, onChange, onSubmit }: StepSymptomsProps
               <div className="flex items-start gap-3 md:gap-4 mb-2">
                 <span
                   className="flex items-center justify-center shrink-0 w-10 h-10 md:w-11 md:h-11 rounded-lg"
-                  // hardcoded-color-allow-next-line
                   style={{ background: "rgba(232,103,10,0.18)", border: "1px solid rgba(232,103,10,0.35)" }}
                   aria-hidden="true"
                 >
@@ -119,7 +116,6 @@ export function StepSymptoms({ symptoms, onChange, onSubmit }: StepSymptomsProps
                   {cat.title}
                 </h2>
               </div>
-              // hardcoded-color-allow-next-line
               <p className="text-sm mb-4 ml-[52px] md:ml-[60px]" style={{ color: "rgba(245,240,235,0.75)" }}>
                 {cat.description}
               </p>
@@ -151,7 +147,6 @@ export function StepSymptoms({ symptoms, onChange, onSubmit }: StepSymptomsProps
         })}
       </div>
 
-      // hardcoded-color-allow-next-line
       <p className="mt-10 text-xs text-center" style={{ color: "rgba(245,240,235,0.55)" }}>
         {answeredCount} of {totalCount} answered.
       </p>

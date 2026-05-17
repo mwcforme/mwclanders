@@ -28,9 +28,7 @@ export const SymptomChecklist = ({ formId = "hero-form" }: SymptomChecklistProps
   return (
     <div
       style={{
-        // hardcoded-color-allow-next-line
         background: "rgba(255,255,255,0.07)",
-        // hardcoded-color-allow-next-line
         border: "1px solid rgba(255,255,255,0.11)",
         borderRadius: 16,
         padding: "28px 28px 24px",
@@ -71,7 +69,6 @@ export const SymptomChecklist = ({ formId = "hero-form" }: SymptomChecklistProps
               gap: 12,
               padding: "6px 0",
               fontSize: 16,
-              // hardcoded-color-allow-next-line
               color: "#F5F3F0",
               lineHeight: 1.35,
               fontFamily: "Inter, sans-serif",

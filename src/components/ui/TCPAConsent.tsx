@@ -23,7 +23,6 @@ export const TCPAConsent = ({
       />
       <span
         className="text-xs leading-relaxed"
-        // hardcoded-color-allow-next-line
         style={{ color: isDark ? "rgba(255,255,255,0.7)" : "#475569" }}
       >
         By checking this box, I consent to receive appointment-related calls, texts, and emails from

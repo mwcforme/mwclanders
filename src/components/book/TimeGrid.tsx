@@ -6,14 +6,10 @@ import { TIMEZONE } from "@/lib/ghlCalendars";
 
 // Brand tokens
 const INK    = "var(--brand-navy-deep)";
-// hardcoded-color-allow-next-line
 const MUTED  = "#4B5563";
-// hardcoded-color-allow-next-line
 const LINE   = "#E5E7EB";
-// hardcoded-color-allow-next-line
 const BORDER = "#8B92A0";
 const SURFACE = "var(--bg-white)";
-// hardcoded-color-allow-next-line
 const CANVAS  = "#F7F8FB";
 const ORANGE  = "var(--brand-cta)";
 

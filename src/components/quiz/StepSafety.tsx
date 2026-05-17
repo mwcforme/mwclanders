@@ -41,9 +41,7 @@ export function StepSafety({ selected, onChange, onSubmit }: StepSafetyProps) {
         onClick={() => toggle(id)}
         className="w-full text-left rounded-xl p-4 md:p-5 flex items-start gap-3 md:gap-4 transition-colors active:scale-[0.99]"
         style={{
-          // hardcoded-color-allow-next-line
           background: checked ? "rgba(232,103,10,0.10)" : "rgba(255,255,255,0.06)",
-          // hardcoded-color-allow-next-line
           border: `1.5px solid ${checked ? "var(--brand-cta)" : "rgba(255,255,255,0.18)"}`,
           WebkitTapHighlightColor: "transparent",
         }}
@@ -52,7 +50,6 @@ export function StepSafety({ selected, onChange, onSubmit }: StepSafetyProps) {
           className="flex items-center justify-center shrink-0 w-6 h-6 rounded-md mt-0.5"
           style={{
             background: checked ? "var(--brand-cta)" : "transparent",
-            // hardcoded-color-allow-next-line
             border: `1.5px solid ${checked ? "var(--brand-cta)" : "rgba(255,255,255,0.40)"}`,
           }}
           aria-hidden="true"
@@ -61,7 +58,6 @@ export function StepSafety({ selected, onChange, onSubmit }: StepSafetyProps) {
         </span>
         <span
           className="text-[15px] md:text-base font-medium leading-snug"
-          // hardcoded-color-allow-next-line
           style={{ color: "rgba(245,240,235,0.95)" }}
         >
           {label}
@@ -91,7 +87,6 @@ export function StepSafety({ selected, onChange, onSubmit }: StepSafetyProps) {
           Quick safety check.{" "}
           <span style={{ color: "var(--brand-cta)" }}>Do any of these apply to you?</span>
         </h1>
-        // hardcoded-color-allow-next-line
         <p className="mt-4 text-base md:text-lg max-w-[600px]" style={{ color: "rgba(245,240,235,0.85)" }}>
           This helps your provider confirm whether TRT is safe and appropriate for you.
         </p>
@@ -99,14 +94,12 @@ export function StepSafety({ selected, onChange, onSubmit }: StepSafetyProps) {
 
       <div className="space-y-3">
         <Tile id={SAFETY_NONE_ID} label="None of the below" />
-        // hardcoded-color-allow-next-line
         <div className="my-4" style={{ height: 1, background: "rgba(255,255,255,0.12)" }} />
         {SAFETY_CONDITIONS.map((opt) => (
           <Tile key={opt.id} id={opt.id} label={opt.label} />
         ))}
       </div>
 
-      // hardcoded-color-allow-next-line
       <p className="mt-8 text-xs" style={{ color: "rgba(245,240,235,0.65)" }}>
         Your answers are private. If anything here applies, you can still continue. A licensed Virginia provider will review your information in person before any prescription is written.
       </p>
