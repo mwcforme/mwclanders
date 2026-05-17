@@ -133,7 +133,7 @@ export async function flushBookingQueue(): Promise<void> {
   for (const booking of q) {
     if (booking.retries >= MAX_RETRIES) {
       // Give up — escalate to Supabase for manual review
-      void supabase.from("booking_event_log").insert({
+      void Promise.resolve(supabase.from("booking_event_log").insert({
         event_type: "error",
         location: booking.location as never,
         calendar_id: booking.calendarId,
@@ -141,7 +141,7 @@ export async function flushBookingQueue(): Promise<void> {
         contact_id: booking.contactId,
         error: `Abandoned after ${MAX_RETRIES} retries: ${booking.lastError}`,
         meta: { queued: true, abandoned: true } as never,
-      }).catch(() => {});
+      })).catch(() => {});
       removeFromQueue(booking.id);
       continue;
     }
