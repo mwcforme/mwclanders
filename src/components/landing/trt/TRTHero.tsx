@@ -163,19 +163,21 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
             className="font-bold uppercase"
             style={{
               fontFamily: "Oswald, 'Bebas Neue', Anton, sans-serif",
-              fontSize: "clamp(46px, 6.5vw, 88px)",
-              lineHeight: 1.0,
+              /* 8.5vw fits 'FOR TESTOSTERONE' on one line from 375px upward.
+                 clamp floor prevents it going below 36px on tiny screens. */
+              fontSize: "clamp(36px, 8.5vw, 88px)",
+              lineHeight: 1.05,
               letterSpacing: "-0.01em",
               color: COLORS.cream,
               fontWeight: 700,
-              /* Lock to 2 lines so subtitle never shifts */
-              minHeight: "clamp(92px, 13vw, 176px)",
+              /* Exactly 2 lines locked — subtitle never shifts */
+              minHeight: "calc(clamp(36px, 8.5vw, 88px) * 2 * 1.05)",
             }}
           >
-            {/* Line 1 — static */}
-            <span style={{ display: "block" }}>VIRGINIA&rsquo;S CHOICE</span>
-            {/* Lines 2-3 — 'FOR' + rotating service, always together */}
-            <span style={{ display: "block", color: COLORS.orange }}>
+            {/* Line 1 — static, always one line */}
+            <span style={{ display: "block", whiteSpace: "nowrap" }}>VIRGINIA&rsquo;S CHOICE</span>
+            {/* Line 2 — FOR + service, forced to one line with nowrap */}
+            <span style={{ display: "block", color: COLORS.orange, whiteSpace: "nowrap" }}>
               FOR <RotatingService />
             </span>
           </h1>
