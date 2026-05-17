@@ -17,28 +17,24 @@ const ORANGE = "#E8670A";
 interface LocationOption {
   key: LocationKey;
   label: string;
-  sublabel: string;
-  emoji: string;
+  address: string;
 }
 
 const OPTIONS: LocationOption[] = [
   {
     key: "richmond",
     label: "Richmond",
-    sublabel: "Midlothian Turnpike · Short Pump area",
-    emoji: "🏙️",
+    address: "Glen Allen, VA",
   },
   {
     key: "virginia-beach",
     label: "Virginia Beach",
-    sublabel: "Serving VB, Norfolk & Chesapeake",
-    emoji: "🌊",
+    address: "Virginia Beach, VA",
   },
   {
     key: "newport-news",
     label: "Newport News",
-    sublabel: "Serving the Peninsula & Williamsburg",
-    emoji: "⚓",
+    address: "Newport News, VA",
   },
 ];
 
@@ -158,33 +154,21 @@ const BookLocation = () => {
                       e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)";
                   }}
                 >
-                  {/* Icon */}
-                  <div
-                    style={{
-                      width: 44,
-                      height: 44,
-                      borderRadius: 10,
-                      background: isSelected ? "rgba(232,103,10,0.20)" : "rgba(255,255,255,0.07)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                      fontSize: 22,
-                    }}
-                  >
-                    {isSelected
-                      ? <MapPin size={20} style={{ color: ORANGE }} />
-                      : <span>{opt.emoji}</span>
-                    }
-                  </div>
+                  {/* Pin icon — always Lucide MapPin */}
+                  <MapPin
+                    size={18}
+                    strokeWidth={2}
+                    aria-hidden
+                    style={{ color: isSelected ? ORANGE : "rgba(255,255,255,0.45)", flexShrink: 0 }}
+                  />
 
                   {/* Text */}
                   <div>
-                    <div style={{ fontSize: 17, fontWeight: 700, lineHeight: 1.2, marginBottom: 3 }}>
+                    <div style={{ fontSize: 16, fontWeight: 700, lineHeight: 1.2 }}>
                       {opt.label}
                     </div>
-                    <div style={{ fontSize: 13, color: "rgba(255,255,255,0.50)", fontWeight: 400 }}>
-                      {opt.sublabel}
+                    <div style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", fontWeight: 400, marginTop: 2 }}>
+                      {opt.address}
                     </div>
                   </div>
 
