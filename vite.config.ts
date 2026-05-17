@@ -25,8 +25,8 @@ export default defineConfig(({ mode }) => ({
     compression({ algorithms: ["gzip"], exclude: [/\.(png|jpg|jpeg|webp|gif|svg|ico)$/] }),
     process.env.SENTRY_AUTH_TOKEN
       ? sentryVitePlugin({
-          org: "REPLACE_WITH_SENTRY_ORG_SLUG",
-          project: "mwc-booking-lp",
+          org: process.env.SENTRY_ORG ?? "SENTRY_ORG_NOT_SET",
+          project: process.env.SENTRY_PROJECT ?? "mwc-booking-lp",
           authToken: process.env.SENTRY_AUTH_TOKEN,
           telemetry: false,
         })

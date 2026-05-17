@@ -40,6 +40,8 @@ const FunnelFooter = () => (
       <img
         src="/images/badges/legitscript.png"
         alt="LegitScript Certified"
+        width={120}
+        height={40}
         style={{ height: 40, width: "auto", opacity: 0.8 }}
         loading="lazy"
       />

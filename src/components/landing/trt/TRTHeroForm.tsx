@@ -306,8 +306,9 @@ export const TRTHeroForm = ({
           icon={<User size={16} strokeWidth={1.75} />}
           onChange={(v) => { setName(v); clearErr("name"); }}
           onFocus={() => {
+            // Prefetch booking funnel chunks on first focus — bookingStore is
+            // already in the static bundle so only BookLocation needs fetching.
             void import("@/pages/book/BookLocation");
-            void import("@/domain/booking/bookingStore");
           }}
         />
 
@@ -466,7 +467,7 @@ export const TRTHeroForm = ({
               Consent is not a condition of service.{" "}
               <a href="/privacy-policy" style={{ color: "#E8670A", textDecoration: "none" }}>Privacy Policy</a>
               {" "}&amp;{" "}
-              <a href="/privacy-policy" style={{ color: "#E8670A", textDecoration: "none" }}>HIPAA Notice</a>.
+              <a href="/tcpa" style={{ color: "#E8670A", textDecoration: "none" }}>HIPAA Notice</a>.
             </span>
           </label>
           {errors.tcpa && (

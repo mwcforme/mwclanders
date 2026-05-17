@@ -158,26 +158,6 @@ function validateBody(method: string, path: string, body: unknown): { ok: true; 
     };
   }
 
-  if (path === "/calendars/events/appointments") {
-    if (!isStr(b.calendarId)) return { ok: false, error: "calendarId required" };
-    if (!isStr(b.contactId)) return { ok: false, error: "contactId required" };
-    if (!isStr(b.startTime)) return { ok: false, error: "startTime required" };
-    return {
-      ok: true,
-      body: {
-        calendarId: b.calendarId,
-        contactId: b.contactId,
-        startTime: b.startTime,
-        ...(isStr(b.endTime) ? { endTime: b.endTime } : {}),
-        title: isStr(b.title) ? b.title : "Consultation",
-        appointmentStatus: "confirmed",
-        ignoreDateRange: false,
-        toNotify: true,
-        ...(isStr(b.notes) ? { notes: b.notes } : {}),
-      },
-    };
-  }
-
   // PUT /contacts/{id} — partial update. Reuse the upsert allowlist for safe fields.
   if (method === "PUT" && /^\/contacts\/[A-Za-z0-9_-]+$/.test(path)) {
     const ALLOWED_CF = new Set([

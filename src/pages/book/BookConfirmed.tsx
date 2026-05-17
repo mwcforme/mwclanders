@@ -232,12 +232,14 @@ const BookConfirmed = () => {
   void rawLast;
   const [captureComplete, setCaptureComplete] = useState(false);
 
+  const patchAction = useBookingStore((s) => s.patch);
+
   // One-time cleanup: clear corrupt persisted identity (no phone AND no email).
   useEffect(() => {
     if (identity && !identity.phone && !identity.email) {
-      useBookingStore.setState({ identity: undefined });
+      patchAction({ identity: undefined });
     }
-  }, [identity]);
+  }, [identity, patchAction]);
 
   // Defer map iframe until user scrolls near it — saves ~500ms on initial load
   const mapRef = useRef<HTMLDivElement>(null);

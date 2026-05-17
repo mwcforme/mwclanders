@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Phone, CalendarCheck, MessageSquare } from "lucide-react";
+import { PHONE } from "@/lib/constants";
 
 /**
  * Exact routes where this bar should NOT appear.
@@ -77,7 +78,7 @@ export const MobileFooterBar = () => {
         <span
           style={{
             fontSize: 10,
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "Inter, sans-serif",
             fontWeight: 700,
             letterSpacing: "0.06em",
             textTransform: "uppercase",
@@ -102,7 +103,7 @@ export const MobileFooterBar = () => {
         <span
           style={{
             fontSize: 10,
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "Inter, sans-serif",
             fontWeight: 700,
             letterSpacing: "0.06em",
             textTransform: "uppercase",
@@ -114,7 +115,7 @@ export const MobileFooterBar = () => {
 
       {/* CALL NOW */}
       <a
-        href="tel:8663444955"
+        href={PHONE.tel}
         className="flex-1 flex flex-col items-center justify-center gap-1 no-underline cursor-pointer"
         style={{ color: "#FFFFFF" }}
       >
@@ -122,7 +123,7 @@ export const MobileFooterBar = () => {
         <span
           style={{
             fontSize: 10,
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "Inter, sans-serif",
             fontWeight: 700,
             letterSpacing: "0.06em",
             textTransform: "uppercase",

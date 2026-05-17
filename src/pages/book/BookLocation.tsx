@@ -5,7 +5,7 @@
  * Tapping a card sets location in the store and auto-advances to /book/schedule.
  * Updates GHL contact with selected location tag.
  */
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, MapPin } from "lucide-react";
 import BookLayout from "@/components/book/BookLayout";
@@ -46,6 +46,14 @@ const BookLocation = () => {
   const [selected, setSelected] = useState<LocationKey | null>(existingLocation ?? null);
   const [advancing, setAdvancing] = useState(false);
 
+  const advanceTimerRef = useRef<number | null>(null);
+
+  useEffect(() => () => {
+    if (advanceTimerRef.current !== null) clearTimeout(advanceTimerRef.current);
+  }, []);
+
+  // Cleanup on unmount — prevent navigating after component is gone
+  // (e.g. user hits browser back before the 300ms delay fires)
   const handleSelect = async (key: LocationKey) => {
     if (advancing) return;
     setSelected(key);
@@ -53,7 +61,8 @@ const BookLocation = () => {
     setLocation(key);
 
     // Brief visual confirmation then advance
-    setTimeout(() => navigate("/book/schedule"), 300);
+    if (advanceTimerRef.current !== null) clearTimeout(advanceTimerRef.current);
+    advanceTimerRef.current = window.setTimeout(() => { navigate("/book/schedule"); }, 300);
   };
 
   const firstName = identity?.firstName;

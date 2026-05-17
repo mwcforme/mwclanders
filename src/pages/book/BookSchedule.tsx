@@ -17,6 +17,7 @@ import GHLDayView from "@/components/book/GHLDayView";
 import { useBookingStore } from "@/domain/booking/bookingStore";
 import { CENTER_CALENDARS, type LocationKey } from "@/lib/ghlCalendars";
 import { LOCATIONS } from "@/data/locations";
+import { PHONE } from "@/lib/constants";
 
 // ─── Location lookup ─────────────────────────────────────────────────────────
 
@@ -187,7 +188,7 @@ const NoAvailFallback = ({ onChangeCenter }: { onChangeCenter: () => void }) => 
         Try Another Center
       </button>
       <a
-        href="tel:8663444955"
+        href={PHONE.tel}
         style={{
           flex: 1, height: 44, background: "#161B3A", border: "1px solid #3A4360",
           color: "#F5F3F0", borderRadius: 8, fontSize: 12, fontWeight: 700,
@@ -458,8 +459,8 @@ const BookSchedule = () => {
         {/* ── Help line ──────────────────────────────────────────────────── */}
         <div className="hidden md:block mx-auto text-center" style={{ maxWidth: 720, color: "#FFFFFF", opacity: 0.85, fontSize: 13, fontFamily: "Inter, sans-serif" }}>
           Need help?{" "}
-          <a href="tel:8663444955" style={{ color: "#FFFFFF", textDecoration: "underline", fontWeight: 600 }}>
-            Call (866) 344-4955
+          <a href={PHONE.tel} style={{ color: "#FFFFFF", textDecoration: "underline", fontWeight: 600 }}>
+            Call {PHONE.display}
           </a>
         </div>
       </div>

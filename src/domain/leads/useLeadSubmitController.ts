@@ -19,6 +19,9 @@ import { trackConversion } from "@/lib/capi";
 const getSupabase = () => import("@/integrations/supabase/client").then(m => m.supabase);
 import { useBookingStore } from "@/domain/booking/bookingStore";
 import type { LeadInput, LeadResult } from "@/services/contracts/ILeadSubmitter";
+import type { Database } from "@/integrations/supabase/types";
+
+type LeadCaptureInsert = Database["public"]["Tables"]["lead_captures"]["Insert"];
 
 export type LeadSubmitStatus = "idle" | "submitting" | "success" | "error";
 
@@ -43,9 +46,9 @@ export interface LeadSubmitController<TInput> {
 }
 
 /** Fire-and-forget Supabase capture — never throws, never blocks. */
-function persistCapture(row: Record<string, unknown>): void {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  void getSupabase().then(sb => sb.from("lead_captures").insert(row as any))
+function persistCapture(row: LeadCaptureInsert): void {
+  void getSupabase()
+    .then(sb => sb.from("lead_captures").insert(row))
     .catch(() => { /* non-critical, logged server-side */ });
 }
 
@@ -163,7 +166,7 @@ export function useLeadSubmitController<TInput>(
       source: leadInput.source ?? null,
       page_url: typeof window !== "undefined" ? window.location.href : null,
       tags: leadInput.tags ?? null,
-      attribution: attr,
+      attribution: attr as Database["public"]["Tables"]["lead_captures"]["Insert"]["attribution"],
       crm_status: "pending",
     });
 

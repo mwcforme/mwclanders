@@ -52,6 +52,10 @@ export function useConfirmAppointment(opts?: {
   onBooked?: (slotIso: string) => void;
 }): ConfirmAppointmentController {
   const { booking } = useServices();
+  // Stable ref for opts.onBooked — prevents `confirm` from being recreated on
+  // every render when the caller doesn't memoize the opts object.
+  const onBookedRef = useRef(opts?.onBooked);
+  onBookedRef.current = opts?.onBooked;
   const [status, setStatus] = useState<ConfirmStatus>("idle");
   const [error, setError] = useState<string | null>(null);
   const [redirect, setRedirect] = useState<RedirectState | null>(null);
@@ -182,7 +186,7 @@ export function useConfirmAppointment(opts?: {
             content_category: "appointment",
           },
         });
-        opts?.onBooked?.(input.slotIso);
+        onBookedRef.current?.(input.slotIso);
         return true;
       } catch (bookErr) {
         clearTimeout(confirmTimeout);
@@ -216,7 +220,7 @@ export function useConfirmAppointment(opts?: {
           });
           // Tell user they're confirmed — we'll sync in background
           setStatus("success");
-          opts?.onBooked?.(input.slotIso);
+          onBookedRef.current?.(input.slotIso);
           return true;
         }
         setError(
@@ -227,7 +231,7 @@ export function useConfirmAppointment(opts?: {
         return false;
       }
     },
-    [booking, cancelRedirect, opts, scheduleRedirect, status],
+    [booking, cancelRedirect, scheduleRedirect, status],
   );
 
   return {

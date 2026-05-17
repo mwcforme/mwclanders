@@ -121,11 +121,15 @@ async function attemptBooking(b: QueuedBooking): Promise<boolean> {
 }
 
 let retryTimer: number | null = null;
+/** Guards against concurrent flushes (e.g. focus + online firing simultaneously). */
+let isFlushing = false;
 
 /** Flush the queue — retry all pending bookings. Called on load + focus. */
 export async function flushBookingQueue(): Promise<void> {
+  if (isFlushing) return;
   const q = readQueue();
   if (q.length === 0) return;
+  isFlushing = true;
 
   console.info("[booking-queue] flushing", q.length, "queued bookings");
 
@@ -150,6 +154,7 @@ export async function flushBookingQueue(): Promise<void> {
 
   // Schedule next retry if queue still has items
   const remaining = readQueue();
+  isFlushing = false;
   if (remaining.length > 0) {
     if (retryTimer) clearTimeout(retryTimer);
     retryTimer = window.setTimeout(flushBookingQueue, RETRY_DELAY_MS);

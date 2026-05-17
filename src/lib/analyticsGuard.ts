@@ -7,8 +7,7 @@
  * `page_location` to `origin + pathname` (no query, no fragment) for any
  * `/book/*` page_view.
  */
-
-const GA4_ID = "G-286547777";
+import { GA4_ID } from "@/lib/constants";
 
 export function sanitizeAnalyticsForBookingRoute(pathname: string): void {
   if (typeof window === "undefined") return;

@@ -37,6 +37,7 @@ export const BookingRouteGuard = () => {
   const identity = useBookingStore((s) => s.identity);
   const symptom = useBookingStore((s) => s.symptom);
   const service = useBookingStore((s) => s.service);
+  const storedLocation = useBookingStore((s) => s.location);
 
   // Run analytics + Sentry hardening on every /book/* navigation, BEFORE any
   // potential redirect, so the unsanitized URL is never reported.
@@ -64,7 +65,7 @@ export const BookingRouteGuard = () => {
 
   // Step prerequisites: /book/location and beyond require identity.
   // /book/schedule requires location to be set.
-  if (identity && !useBookingStore.getState().location && path === "/book/schedule") {
+  if (identity && !storedLocation && path === "/book/schedule") {
     return <Navigate to="/book/location" replace />;
   }
 
