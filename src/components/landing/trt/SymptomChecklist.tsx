@@ -15,10 +15,8 @@ const HEADING = "IF THIS SOUNDS LIKE THE LAST 12 MONTHS";
 
 const SYMPTOMS = [
   "Tired by noon. Coffee stopped working.",
-  "Gym three times a week. Nothing to show for it.",
+  "Workouts stopped producing results.",
   "Sex drive is down. You've noticed. So has she.",
-  "Sharp at 35. Not at 45. The gap is real.",
-  "Same diet. Same routine. Still gaining.",
   "Labs came back normal. You don't feel normal.",
 ] as const;
 
@@ -34,8 +32,8 @@ export const SymptomChecklist = ({ formId = "hero-form" }: SymptomChecklistProps
         background: "#161B3A",
         // hardcoded-color-allow-next-line
         border: "1px solid #2B3247",
-        borderRadius: 16,
-        padding: "24px 20px 20px",
+        borderRadius: 14,
+        padding: "20px 20px 16px",
       }}
     >
       <h2
@@ -64,22 +62,20 @@ export const SymptomChecklist = ({ formId = "hero-form" }: SymptomChecklistProps
         }}
         aria-label="Symptom self-identification list"
       >
-        {SYMPTOMS.map((symptom, idx) => (
+        {SYMPTOMS.map((symptom) => (
           <li
             key={symptom}
             style={{
               display: "flex",
-              alignItems: "flex-start",
-              gap: 10,
-              padding: "8px 0",
-              // hardcoded-color-allow-next-line
-              borderBottom: idx < SYMPTOMS.length - 1 ? "1px solid rgba(43,50,71,0.60)" : "none",
-              fontSize: 14,
+              alignItems: "center",
+              gap: 12,
+              padding: "6px 0",
+              fontSize: 16,
               // hardcoded-color-allow-next-line
               color: "#F5F3F0",
-              lineHeight: 1.4,
+              lineHeight: 1.35,
               fontFamily: "Inter, sans-serif",
-              fontWeight: 400,
+              fontWeight: 500,
             }}
           >
             <CheckCircle

@@ -232,7 +232,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
           </ul>
 
           {/* Symptom self-id block — visible on both mobile and desktop in left column */}
-          <div className="mt-7 max-w-[600px]">
+          <div className="mt-7 w-full">
             <SymptomChecklist formId="hero-form" />
           </div>
 
