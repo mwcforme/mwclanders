@@ -34,8 +34,8 @@ interface TRTHeroProps {
 
 export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
   const h = headline ?? {
-    line1: "Testosterone Therapy",
-    line2: "in Virginia. Same-Day Labs.",
+    line1: "Get Your Energy, Drive,",
+    line2: "and Confidence Back",
     line2Color: COLORS.orange,
   };
   const scrollToForm = () => {
