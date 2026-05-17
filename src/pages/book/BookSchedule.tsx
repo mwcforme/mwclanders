@@ -222,7 +222,7 @@ const BookSchedule = () => {
 
   const firstName = identity?.firstName || "";
   const lastName = identity?.lastName || "";
-  const heading = firstName ? `${firstName}, pick your time.` : "Pick your time.";
+  const heading = "Your 60-Minute Assessment";
 
   // Resolve location data for compact bar
   const locationSlug = location ? SLUG_MAP[location] : null;
@@ -355,7 +355,7 @@ const BookSchedule = () => {
             {heading}
           </h1>
           <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "rgba(255,255,255,0.60)", margin: 0 }}>
-            60-min Assessment · No-cost
+            {locationData ? locationData.name.replace("Men's Wellness Centers, ", "") : ""} · Licensed provider, same-day labs
           </p>
         </section>
 
