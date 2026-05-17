@@ -19,7 +19,7 @@ export const TRTFinalCTA = () => {
             Meet Your Virginia Physician.
           </h2>
           <p className="text-base mt-2" style={{ color: "rgba(255,255,255,0.85)", fontFamily: "Inter, sans-serif", fontSize: 16 }}>
-            Same-day labs. Results reviewed in the same visit. No-cost for new members.
+            Same-day labs. Results reviewed in the same visit. No-cost consultation.
           </p>
         </div>
 

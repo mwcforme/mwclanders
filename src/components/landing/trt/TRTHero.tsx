@@ -130,7 +130,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
               lineHeight: 1.6,
             }}
           >
-            Sit down with a Virginia physician. Labs drawn on-site and reviewed in the same visit. No-cost for new members. Virginia's men's health practice since 2015.
+            Sit down with a Virginia physician. Labs drawn on-site and reviewed in the same visit. No-cost consultation. Virginia's men's health practice since 2015.
           </p>
 
           {/* Star rating row — clickable, links to GBP */}

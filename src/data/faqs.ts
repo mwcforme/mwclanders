@@ -32,7 +32,7 @@ export const TRT_FAQS: FaqItem[] = [
   },
   {
     q: "What should I expect at my first visit, and what's included?",
-    a: "Plan for 60 minutes. Your labs are drawn on-site \u2014 a full hormone panel, not a standard GP metabolic panel. Your Virginia physician then reviews every result with you in the same visit, explains what they mean in plain language, and if treatment is appropriate, you leave with a protocol that day. No-cost for new members. No obligation to proceed.",
+    a: "Plan for 60 minutes. Your labs are drawn on-site \u2014 a full hormone panel, not a standard GP metabolic panel. Your Virginia physician then reviews every result with you in the same visit, explains what they mean in plain language, and if treatment is appropriate, you leave with a protocol that day. No-cost consultation. No obligation to proceed.",
   },
   {
     q: "How soon do patients typically notice changes?",

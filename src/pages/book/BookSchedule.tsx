@@ -354,7 +354,7 @@ const BookSchedule = () => {
             {heading}
           </h1>
           <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "rgba(255,255,255,0.50)", margin: 0 }}>
-            60-Minute Physician Assessment · No-cost for new members
+            60-Minute Physician Assessment · No-cost consultation
           </p>
         </section>
 

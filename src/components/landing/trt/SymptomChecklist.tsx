@@ -104,7 +104,7 @@ export const SymptomChecklist = ({ formId = "hero-form" }: SymptomChecklistProps
         <strong style={{ color: "#F5F3F0", fontWeight: 600 }}>
           60-Minute Physician Assessment
         </strong>{" "}
-        is no-cost for new members.
+        is no-cost.
       </p>
 
       {/* Anchor CTA */}

@@ -18,7 +18,7 @@ export const COPY = {
     /** Results section CTA. */
     startConsult: "Book My Physician Assessment",
     /** Inline link variant inside FAQ answers. */
-    bookConsultInline: "book a no-cost Physician Assessment",
+    bookConsultInline: "book a no-cost consultation",
     /** ED service final-CTA + ED form card title. */
     bookDiscreetVisit: "Book My Physician Assessment",
     /** WL service final-CTA + WL manifesto. */
@@ -30,7 +30,7 @@ export const COPY = {
   },
   badge: {
     /** Hero pill / trust chip describing the offer. */
-    noCostConsult: "No-cost Physician Assessment",
+    noCostConsult: "No-cost consultation",
     /** Stat-card value used in CredibilityBand. */
     offerValue: "No-Cost",
     /** Stat-card label paired with offerValue. */
@@ -39,7 +39,7 @@ export const COPY = {
   offer: {
     /** Hero subhead under the H1. */
     /** Final CTA / WL / ED subhead. */
-    finalSubhead: "No-cost consult. Same- or next-day visits.",
+    finalSubhead: "No-cost consultation. Same- or next-day availability.",
     /** Manifesto / proof closer. */
     manifestoTag: "No-obligation consult. Individual results vary.",
     /** Reschedule reassurance bullet. */
