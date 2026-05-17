@@ -52,23 +52,6 @@ const BookLocation = () => {
     setAdvancing(true);
     setLocation(key);
 
-    // Fire-and-forget: update GHL contact with location tag
-    if (identity?.ghlContactId) {
-      try {
-        const { supabase } = await import("@/integrations/supabase/client");
-        supabase.functions.invoke("ghl-proxy", {
-          body: {
-            path: `/contacts/${identity.ghlContactId}/tags`,
-            method: "POST",
-            body: { tags: [`location-${key}`] },
-            __env: import.meta.env.VITE_APP_ENV ?? "stage",
-          },
-        }).catch(() => { /* non-blocking */ });
-      } catch {
-        /* never block UX */
-      }
-    }
-
     // Brief visual confirmation then advance
     setTimeout(() => navigate("/book/schedule"), 300);
   };
