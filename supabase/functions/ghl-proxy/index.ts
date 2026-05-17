@@ -48,6 +48,15 @@ const ALLOW: { m: string; re: RegExp }[] = [
   { m: "GET",  re: /^\/calendars\/[A-Za-z0-9_-]+\/free-slots$/ },
   { m: "POST", re: /^\/contacts\/upsert$/ },
   { m: "POST", re: /^\/calendars\/events\/appointments$/ },
+  { m: "PUT",  re: /^\/contacts\/[A-Za-z0-9_-]+$/ },
+  { m: "POST", re: /^\/contacts\/[A-Za-z0-9_-]+\/tags$/ },
+];
+
+// Paths where we must NOT inject locationId into the upstream body
+// (GHL contact update + tag endpoints reject extra fields).
+const NO_LOC_INJECT = [
+  /^\/contacts\/[A-Za-z0-9_-]+$/,
+  /^\/contacts\/[A-Za-z0-9_-]+\/tags$/,
 ];
 
 interface ProxyRequest {
