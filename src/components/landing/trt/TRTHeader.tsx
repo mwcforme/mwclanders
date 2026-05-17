@@ -56,13 +56,13 @@ export const TRTHeader = ({ minimal = false }: { minimal?: boolean } = {}) => {
             onClick={() => { trackCro("header_book_click"); scrollTo("hero-form"); }}
             className="rounded-full px-5 py-2.5 text-xs font-bold cursor-pointer transition-colors duration-200"
             style={{
-              background: "var(--brand-cta-accessible)",
+              background: "var(--brand-cta)",
               color: "#FFFFFF",
               letterSpacing: "0.08em",
               fontFamily: "Inter, sans-serif",
             }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = "var(--brand-cta)"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = "var(--brand-cta-accessible)"; }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "var(--brand-cta-hover)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "var(--brand-cta)"; }}
           >
             {COPY.cta.bookConsult}
           </button>
