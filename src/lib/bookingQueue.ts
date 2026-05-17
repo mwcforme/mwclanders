@@ -97,14 +97,14 @@ async function attemptBooking(b: QueuedBooking): Promise<boolean> {
 
     // Success — remove from queue, log to Supabase
     removeFromQueue(b.id);
-    void supabase.from("booking_event_log").insert({ // supabase already loaded above
+    void Promise.resolve(supabase.from("booking_event_log").insert({ // supabase already loaded above
       event_type: "success",
       location: b.location as never,
       calendar_id: b.calendarId,
       slot_iso: b.slotIso,
       contact_id: b.contactId,
       meta: { queued: true, retries: b.retries, queuedAt: b.queuedAt } as never,
-    }).catch(() => {});
+    })).catch(() => {});
 
     console.info("[booking-queue] queued booking confirmed", b.id);
     return true;
@@ -133,7 +133,7 @@ export async function flushBookingQueue(): Promise<void> {
   for (const booking of q) {
     if (booking.retries >= MAX_RETRIES) {
       // Give up — escalate to Supabase for manual review
-      void supabase.from("booking_event_log").insert({
+      void Promise.resolve(supabase.from("booking_event_log").insert({
         event_type: "error",
         location: booking.location as never,
         calendar_id: booking.calendarId,
@@ -141,7 +141,7 @@ export async function flushBookingQueue(): Promise<void> {
         contact_id: booking.contactId,
         error: `Abandoned after ${MAX_RETRIES} retries: ${booking.lastError}`,
         meta: { queued: true, abandoned: true } as never,
-      }).catch(() => {});
+      })).catch(() => {});
       removeFromQueue(booking.id);
       continue;
     }

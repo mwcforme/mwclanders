@@ -39,8 +39,8 @@ export const TRTLocations = () => {
                 {/* Mobile: collapsed by default */}
                 <button
                   onClick={() => setOpenIdx(isOpen ? null : idx)}
-                  className="md:hidden flex items-center justify-between w-full font-semibold uppercase py-3 mb-2 cursor-pointer" style={{ fontSize: 15, minHeight: 48 }}
-                  style={{ color: "#000033", fontFamily: "Inter, sans-serif", background: "none", border: "none", letterSpacing: "0.06em" }}
+                  className="md:hidden flex items-center justify-between w-full font-semibold uppercase py-3 mb-2 cursor-pointer"
+                  style={{ fontSize: 15, minHeight: 48, color: "#000033", fontFamily: "Inter, sans-serif", background: "none", border: "none", letterSpacing: "0.06em" }}
                 >
                   <span>Address &amp; Hours</span>
                   <ChevronDown className="h-4 w-4 transition-transform" style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0)" }} />

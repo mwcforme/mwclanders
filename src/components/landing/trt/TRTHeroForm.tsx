@@ -180,7 +180,7 @@ export const TRTHeroForm = ({
   service    = "trt",
   heading    = COPY.cta.bookConsult,
   subheading = "Same-day and next-day availability. Takes under 2 minutes.",
-  ctaLabel   = "Book My Free Consultation",
+  ctaLabel   = COPY.cta.bookConsult,
 }: TRTHeroFormProps = {}) => {
   const [name,     setName]     = useState("");
   const [phone,    setPhone]    = useState("");

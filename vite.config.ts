@@ -21,8 +21,8 @@ export default defineConfig(({ mode }) => ({
     react(),
     mode === "development" && componentTagger(),
     // Brotli + gzip pre-compressed assets — Hostinger/Netlify/Vercel serve .br first
-    compression({ algorithm: "brotliCompress", exclude: [/\.(png|jpg|jpeg|webp|gif|svg|ico)$/] }),
-    compression({ algorithm: "gzip", exclude: [/\.(png|jpg|jpeg|webp|gif|svg|ico)$/] }),
+    compression({ algorithms: ["brotliCompress"], exclude: [/\.(png|jpg|jpeg|webp|gif|svg|ico)$/] }),
+    compression({ algorithms: ["gzip"], exclude: [/\.(png|jpg|jpeg|webp|gif|svg|ico)$/] }),
     process.env.SENTRY_AUTH_TOKEN
       ? sentryVitePlugin({
           org: "REPLACE_WITH_SENTRY_ORG_SLUG",
