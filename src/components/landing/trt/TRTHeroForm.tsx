@@ -42,11 +42,10 @@ const LOCATION_OPTIONS: { key: LocationKey; label: string }[] = [
   { key: "newport-news", label: "Newport News" },
 ];
 
-// Location radio-card states (Stripe Payment Element pattern):
-// UNSELECTED: #243042 bg, rgba(255,255,255,0.08) border, neutral radio stroke
-// HOVER:      slightly brighter bg, #FF6A00 border at 50% opacity
-// SELECTED:   rgba(255,106,0,0.10) tinted fill, 2px #FF6A00 border, filled dot, outer glow
-// FOCUS:      2px #FFFFFF at 60% opacity focus ring, 2px offset (keyboard only)
+// Location radio-card states (matches GHLDayView calendar day-picker pattern):
+// UNSELECTED: white card, dark navy text, 1px border, hover lifts shadow
+// SELECTED:   orange fill (#FF6A00), white text, white radio dot
+// FOCUS:      2px #FF6A00 outline, 2px offset (keyboard only)
 
 function getLocationFromUrl(): LocationKey | "" {
   if (typeof window === "undefined") return "";
@@ -277,27 +276,18 @@ export const TRTHeroForm = ({
               const isSelected = location === opt.key;
               const isHovered = hoveredLocation === opt.key && !isSelected;
 
-              let borderColor: string;
-              let bgColor: string;
-              let boxShadow: string;
-
-              if (isSelected) {
-                borderColor = "#FF6A00";
-                bgColor = "rgba(255,106,0,0.10)";
-                boxShadow = "0 0 0 3px rgba(255,106,0,0.18)";
-              } else if (errors.location) {
-                borderColor = ERROR_RED;
-                bgColor = "#243042";
-                boxShadow = "none";
-              } else if (isHovered) {
-                borderColor = "rgba(255,122,26,0.50)";
-                bgColor = "#283548";
-                boxShadow = "none";
-              } else {
-                borderColor = "rgba(255,255,255,0.08)";
-                bgColor = "#243042";
-                boxShadow = "none";
-              }
+              const cardBg    = isSelected ? "#FF6A00" : "#FFFFFF";
+              const cardColor = isSelected ? "#FFFFFF" : "#0B1029";
+              const cardBorder = isSelected
+                ? "2px solid #FF6A00"
+                : errors.location
+                  ? `2px solid ${ERROR_RED}`
+                  : "1px solid #E5E7EB";
+              const cardShadow = isSelected
+                ? "0 4px 14px rgba(255,106,0,0.40)"
+                : isHovered
+                  ? "0 4px 12px rgba(0,0,0,0.18)"
+                  : "0 1px 4px rgba(0,0,0,0.10)";
 
               return (
                 <label
@@ -307,15 +297,15 @@ export const TRTHeroForm = ({
                     alignItems: "center",
                     height: 48,
                     borderRadius: 10,
-                    border: `2px solid ${borderColor}`,
-                    background: bgColor,
-                    color: "#FFFFFF",
+                    border: cardBorder,
+                    background: cardBg,
+                    color: cardColor,
                     fontFamily: "Inter, sans-serif",
                     cursor: "pointer",
-                    transition: "border-color 150ms ease, background 150ms ease, box-shadow 150ms ease",
+                    transition: "background 150ms ease, border-color 150ms ease, box-shadow 150ms ease",
                     padding: "0 14px",
                     gap: 12,
-                    boxShadow,
+                    boxShadow: cardShadow,
                     userSelect: "none",
                   }}
                   onMouseEnter={() => setHoveredLocation(opt.key)}
@@ -337,16 +327,14 @@ export const TRTHeroForm = ({
                       pointerEvents: "none",
                     }}
                   />
-                  {/* Custom radio visual */}
+                  {/* Radio dot — calendar-style: white ring, filled on select */}
                   <div
                     aria-hidden="true"
                     style={{
                       width: 18,
                       height: 18,
                       borderRadius: "50%",
-                      border: `1.5px solid ${
-                        isSelected ? "#FF6A00" : "rgba(255,255,255,0.45)"
-                      }`,
+                      border: `2px solid ${isSelected ? "#FFFFFF" : "#D1D5DB"}`,
                       background: "transparent",
                       display: "flex",
                       alignItems: "center",
@@ -356,29 +344,21 @@ export const TRTHeroForm = ({
                     }}
                   >
                     {isSelected && (
-                      <div
-                        style={{
-                          width: 8,
-                          height: 8,
-                          borderRadius: "50%",
-                          background: "#FF6A00",
-                        }}
-                      />
+                      <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#FFFFFF" }} />
                     )}
                   </div>
-                  {/* Label */}
-                  <span style={{ fontSize: 15, fontWeight: 600, lineHeight: 1 }}>
+                  {/* City label */}
+                  <span style={{ fontSize: 15, fontWeight: 700, lineHeight: 1 }}>
                     {opt.label}
                   </span>
                 </label>
               );
             })}
           </div>
-          {/* Inject focus-visible ring via global style — only on keyboard nav */}
+          {/* Inject focus-visible ring via global style — keyboard nav only */}
           <style>{`
-            input[name="location"]:focus-visible + div,
             label:has(input[name="location"]:focus-visible) {
-              outline: 2px solid rgba(255,255,255,0.60);
+              outline: 2px solid #FF6A00;
               outline-offset: 2px;
             }
           `}</style>
