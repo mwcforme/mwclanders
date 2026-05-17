@@ -4,7 +4,6 @@ import { TRTHeader } from "@/components/landing/trt/TRTHeader";
 import { TRTHero } from "@/components/landing/trt/TRTHero";
 import { CredibilityBand } from "@/components/landing/trt/CredibilityBand";
 import { TRTManifesto } from "@/components/landing/trt/TRTManifesto";
-import { SymptomChecklist } from "@/components/landing/trt/SymptomChecklist";
 import { SectionReveal } from "@/components/landing/trt/SectionReveal";
 import { StickyMobileCTA } from "@/components/landing/trt/StickyMobileCTA";
 import { SEO } from "@/components/SEO";
@@ -45,30 +44,6 @@ const NewLandingPage = () => {
         {/* Above fold — eager */}
         <TRTHero />
         <SectionReveal><CredibilityBand /></SectionReveal>
-
-        {/* Symptom checklist + stat reinforcement — mid-page section */}
-        <SectionReveal>
-          <div style={{ background: "var(--brand-navy-deep)", padding: "56px 24px 64px" }}>
-            <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }}>
-              <SymptomChecklist formId="final-cta" />
-              {/* Right: reinforcement stat + differentiator */}
-              <div style={{ fontFamily: "Inter, sans-serif" }}>
-                <p style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 56, color: "var(--brand-cta)", lineHeight: 1, margin: 0 }}>10,000+</p>
-                <p style={{ fontSize: 18, color: "var(--brand-cream)", fontWeight: 600, marginTop: 12, lineHeight: 1.4 }}>Virginia men who came in saying their doctor told them they were fine.</p>
-                {/* hardcoded-color-allow-next-line */}
-                <p style={{ fontSize: 15, color: "#B0ADA8", marginTop: 12, lineHeight: 1.6 }}>Standard bloodwork isn't the same as a hormone panel reviewed by a licensed men's health provider. The gap between the two is usually where the answer is.</p>
-                <div style={{ marginTop: 28, display: "flex", flexDirection: "column", gap: 10 }}>
-                  {["Licensed Virginia providers, in-person", "Same-day labs drawn and reviewed in one visit", "Treatment starts the same day, when clinically appropriate"].map(item => (
-                    <div key={item} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
-                      <span style={{ color: "var(--brand-cta)", fontWeight: 800, fontSize: 16, flexShrink: 0, marginTop: 1 }}>✓</span>
-                      <span style={{ color: "var(--brand-cream)", fontSize: 15, lineHeight: 1.5 }}>{item}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </SectionReveal>
 
         <SectionReveal><TRTManifesto /></SectionReveal>
 
