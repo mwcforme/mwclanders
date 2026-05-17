@@ -130,9 +130,9 @@ export const ServiceFinalCTA = ({
               </div>
               <ul className="space-y-2">
                 {[
-                  { label: "Richmond, VA", to: "/locations/richmond" },
-                  { label: "Newport News, VA", to: "/locations/newport-news" },
-                  { label: "Virginia Beach, VA", to: "/locations/virginia-beach" },
+                  { label: "Richmond, VA", to: "#locations" },
+                  { label: "Newport News, VA", to: "#locations" },
+                  { label: "Virginia Beach, VA", to: "#locations" },
                 ].map((l) => (
                   <li key={l.label} className="flex items-center gap-2">
                     <MapPin className="h-4 w-4 flex-shrink-0" style={{ color: "#E8670A" }} />
