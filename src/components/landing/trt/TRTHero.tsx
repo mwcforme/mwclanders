@@ -7,7 +7,7 @@ import { trackCro } from "@/hooks/useAnalytics";
 import { COPY } from "@/data/copy";
 
 const trustChecks = [
-  "Licensed Virginia providers: physicians and NPs, in-person only",
+  "Licensed Virginia providers",
   "Labs drawn and reviewed in the same 60-minute visit",
   "3 Virginia locations, same-day availability",
   "Treatment starts the same day, when clinically appropriate",
