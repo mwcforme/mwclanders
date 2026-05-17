@@ -155,6 +155,66 @@ function validateBody(method: string, path: string, body: unknown): { ok: true; 
     };
   }
 
+  if (path === "/calendars/events/appointments") {
+    if (!isStr(b.calendarId)) return { ok: false, error: "calendarId required" };
+    if (!isStr(b.contactId)) return { ok: false, error: "contactId required" };
+    if (!isStr(b.startTime)) return { ok: false, error: "startTime required" };
+    return {
+      ok: true,
+      body: {
+        calendarId: b.calendarId,
+        contactId: b.contactId,
+        startTime: b.startTime,
+        ...(isStr(b.endTime) ? { endTime: b.endTime } : {}),
+        title: isStr(b.title) ? b.title : "Consultation",
+        appointmentStatus: "confirmed",
+        ignoreDateRange: false,
+        toNotify: true,
+        ...(isStr(b.notes) ? { notes: b.notes } : {}),
+      },
+    };
+  }
+
+  // PUT /contacts/{id} — partial update. Reuse the upsert allowlist for safe fields.
+  if (method === "PUT" && /^\/contacts\/[A-Za-z0-9_-]+$/.test(path)) {
+    const ALLOWED_CF = new Set([
+      "mwc_symptom",
+      "mwc_symptom_duration",
+      "mwc_urgency_tier",
+      "mwc_clinical_note",
+      "mwc_funnel_service",
+      "mwc_lp_slug",
+      "mwc_attribution_source",
+      "mwc_commitment_given",
+    ]);
+    const out: Record<string, unknown> = {};
+    if (isStr(b.firstName)) out.firstName = b.firstName;
+    if (isStr(b.lastName)) out.lastName = b.lastName;
+    if (isStr(b.email)) out.email = b.email;
+    if (isStr(b.phone)) out.phone = b.phone;
+    if (b.customFields && typeof b.customFields === "object" && !Array.isArray(b.customFields)) {
+      const cf: Record<string, string> = {};
+      for (const [k, v] of Object.entries(b.customFields as Record<string, unknown>)) {
+        if (!ALLOWED_CF.has(k)) continue;
+        if (typeof v !== "string" || v.length === 0 || v.length > 500) continue;
+        cf[k] = v;
+      }
+      if (Object.keys(cf).length) out.customFields = cf;
+    }
+    if (!Object.keys(out).length) return { ok: false, error: "no updatable fields" };
+    return { ok: true, body: out };
+  }
+
+  // POST /contacts/{id}/tags — add tags.
+  if (method === "POST" && /^\/contacts\/[A-Za-z0-9_-]+\/tags$/.test(path)) {
+    if (!Array.isArray(b.tags)) return { ok: false, error: "tags must be array" };
+    const tags = (b.tags as unknown[])
+      .filter((t): t is string => typeof t === "string" && t.length > 0 && t.length <= 100)
+      .slice(0, 30);
+    if (!tags.length) return { ok: false, error: "tags empty" };
+    return { ok: true, body: { tags } };
+  }
+
   return { ok: false, error: "unsupported path" };
 }
 
