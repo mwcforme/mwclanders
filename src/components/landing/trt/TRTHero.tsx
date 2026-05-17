@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+
 import { Check, Star } from "lucide-react";
 import { TRTHeroForm } from "./TRTHeroForm";
 import { SymptomChecklist } from "./SymptomChecklist";
@@ -35,44 +35,7 @@ const GoogleG = ({ size = 18 }: { size?: number }) => (
   </svg>
 );
 
-const ROTATING_SERVICES = [
-  "TESTOSTERONE",
-  "ED THERAPY",
-  "WEIGHT LOSS",
-  "MEN'S HEALTH",
-];
 
-/** Rotating service word — only the service name animates, 'IN' stays static */
-const RotatingService = () => {
-  const [index, setIndex] = useState(0);
-  const [visible, setVisible] = useState(true);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setVisible(false);
-      setTimeout(() => {
-        setIndex((i) => (i + 1) % ROTATING_SERVICES.length);
-        setVisible(true);
-      }, 350);
-    }, 2800);
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <span
-      aria-live="polite"
-      aria-atomic="true"
-      style={{
-        display: "inline-block",
-        opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(-8px)",
-        transition: "opacity 280ms ease, transform 280ms ease",
-      }}
-    >
-      {ROTATING_SERVICES[index]}
-    </span>
-  );
-};
 
 interface TRTHeroProps {
   headline?: { line1: string; line2: string; line2Color?: string };
@@ -162,23 +125,15 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
             className="font-bold uppercase"
             style={{
               fontFamily: "Oswald, 'Bebas Neue', Anton, sans-serif",
-              /* 8.5vw fits 'FOR TESTOSTERONE' on one line from 375px upward.
-                 clamp floor prevents it going below 36px on tiny screens. */
-              fontSize: "clamp(36px, 8.5vw, 88px)",
-              lineHeight: 1.05,
+              fontSize: "clamp(48px, 6vw, 96px)",
+              lineHeight: 0.95,
               letterSpacing: "-0.01em",
               color: COLORS.cream,
               fontWeight: 700,
-              /* Exactly 2 lines locked — subtitle never shifts */
-              minHeight: "calc(clamp(36px, 8.5vw, 88px) * 2 * 1.05)",
             }}
           >
-            {/* Line 1 — static, always one line */}
-            <span style={{ display: "block", whiteSpace: "nowrap" }}>VIRGINIA&rsquo;S CHOICE</span>
-            {/* Line 2 — FOR + service, forced to one line with nowrap */}
-            <span style={{ display: "block", color: COLORS.orange, whiteSpace: "nowrap" }}>
-              FOR <RotatingService />
-            </span>
+            <span style={{ display: "block" }}>VIRGINIA&rsquo;S CHOICE</span>
+            <span style={{ display: "block", color: COLORS.orange }}>FOR MEN&rsquo;S HEALTH</span>
           </h1>
 
           <p
