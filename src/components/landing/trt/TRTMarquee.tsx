@@ -1,7 +1,7 @@
 /**
  * Trust / certification band — compact white strip.
- * LegitScript → CLIA → HIPAA on white background.
- * Badges render with their original dark artwork on white — correct display.
+ * Uses black-transparent badge variants on white background.
+ * No CSS filters needed — proper transparent PNGs.
  */
 export const TRTMarquee = () => (
   <section
@@ -26,35 +26,35 @@ export const TRTMarquee = () => (
         <img
           src="/images/badges/legitscript.png"
           alt="LegitScript Certified"
-          style={{ height: 52, width: "auto", objectFit: "contain" }}
+          style={{ height: 48, width: "auto", objectFit: "contain" }}
           loading="lazy"
           decoding="async"
           width="160"
-          height="52"
+          height="48"
         />
       </picture>
       <picture>
-        <source srcSet="/images/badges/clia.webp" type="image/webp" />
+        <source srcSet="/images/badges/clia-black.webp" type="image/webp" />
         <img
-          src="/images/badges/clia.png"
+          src="/images/badges/clia-black.png"
           alt="CLIA Certified Laboratory"
-          style={{ height: 52, width: "auto", objectFit: "contain" }}
+          style={{ height: 48, width: "auto", objectFit: "contain" }}
           loading="lazy"
           decoding="async"
           width="160"
-          height="52"
+          height="48"
         />
       </picture>
       <picture>
-        <source srcSet="/images/badges/hipaa.webp" type="image/webp" />
+        <source srcSet="/images/badges/hipaa-black.webp" type="image/webp" />
         <img
-          src="/images/badges/hipaa.png"
+          src="/images/badges/hipaa-black.png"
           alt="HIPAA Compliant"
-          style={{ height: 52, width: "auto", objectFit: "contain" }}
+          style={{ height: 48, width: "auto", objectFit: "contain" }}
           loading="lazy"
           decoding="async"
           width="160"
-          height="52"
+          height="48"
         />
       </picture>
     </div>

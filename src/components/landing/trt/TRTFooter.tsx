@@ -103,9 +103,9 @@ export const TRTFooter = () => {
           }}
         >
           <img
-            src="/images/badges/clia.png"
+            src="/images/badges/clia-white.png"
             alt="CLIA Certified Laboratory"
-            style={{ height: 72, width: "auto", filter: "brightness(0) invert(1)", opacity: 0.7 }}
+            style={{ height: 64, width: "auto", opacity: 0.85 }}
             width={120}
             height={72}
             loading="lazy"
@@ -121,7 +121,7 @@ export const TRTFooter = () => {
             <img
               src="/images/badges/legitscript.png"
               alt="LegitScript Certified"
-              style={{ height: 72, width: "auto", filter: "brightness(0) invert(1)", opacity: 0.7 }}
+              style={{ height: 64, width: "auto", opacity: 0.85 }}
               width={120}
               height={72}
               loading="lazy"
@@ -129,9 +129,9 @@ export const TRTFooter = () => {
             />
           </a>
           <img
-            src="/images/badges/hipaa.png"
+            src="/images/badges/hipaa-white.png"
             alt="HIPAA Compliant"
-            style={{ height: 72, width: "auto", filter: "brightness(0) invert(1)", opacity: 0.7 }}
+            style={{ height: 64, width: "auto", opacity: 0.85 }}
             width={120}
             height={72}
             loading="lazy"
