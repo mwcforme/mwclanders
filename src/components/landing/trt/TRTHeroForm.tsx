@@ -187,6 +187,7 @@ export const TRTHeroForm = ({
         border: "1px solid rgba(255,255,255,0.12)",
         maxWidth: 420,
         boxShadow: "0 20px 60px rgba(0,0,0,0.45)",
+        fontFamily: "Inter, sans-serif",
       }}
     >
       <h2
@@ -210,7 +211,7 @@ export const TRTHeroForm = ({
         {subheading}
       </p>
 
-      <form onSubmit={handleSubmit} className="space-y-3" noValidate>
+      <form onSubmit={handleSubmit} className="space-y-3" noValidate style={{ fontFamily: "Inter, sans-serif" }}>
 
         {/* Name */}
         <div>
@@ -355,7 +356,7 @@ export const TRTHeroForm = ({
               );
             })}
           </div>
-          {/* Inject focus-visible ring via global style — keyboard nav only */}
+          {/* Focus ring + font inheritance for location cards */}
           <style>{`
             label:has(input[name="location"]:focus-visible) {
               outline: 2px solid #FF6A00;
