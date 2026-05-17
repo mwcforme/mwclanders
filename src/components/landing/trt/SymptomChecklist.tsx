@@ -11,7 +11,7 @@
 
 import { CheckCircle } from "lucide-react";
 
-const HEADING = "IF THIS SOUNDS LIKE THE LAST 12 MONTHS";
+const HEADING = "Sound familiar?";
 
 const SYMPTOMS = [
   "Tired by noon. Coffee stopped working.",
@@ -36,20 +36,20 @@ export const SymptomChecklist = ({ formId = "hero-form" }: SymptomChecklistProps
         padding: "20px 20px 16px",
       }}
     >
-      <h2
+      <p
         style={{
-          fontFamily: "Oswald, sans-serif",
+          fontFamily: "Inter, sans-serif",
           fontWeight: 700,
-          fontSize: 15,
-          letterSpacing: "0.06em",
-          textTransform: "uppercase",
+          fontSize: 13,
+          letterSpacing: "0.02em",
           color: "var(--brand-cta)",
-          marginBottom: 16,
+          marginBottom: 12,
           lineHeight: 1.2,
+          textTransform: "none",
         }}
       >
         {HEADING}
-      </h2>
+      </p>
 
       <ul
         style={{
@@ -89,36 +89,7 @@ export const SymptomChecklist = ({ formId = "hero-form" }: SymptomChecklistProps
         ))}
       </ul>
 
-      {/* Mobile-only CTA — hidden on lg+ via both Tailwind and inline style */}
-      <style>{`@media (min-width: 1024px) { .symptom-cta { display: none !important; } }`}</style>
-      <a
-        href={`#${formId}`}
-        className="symptom-cta lg:hidden"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 6,
-          fontFamily: "Oswald, sans-serif",
-          fontWeight: 700,
-          fontSize: 13,
-          letterSpacing: "0.08em",
-          textTransform: "uppercase",
-          color: "var(--brand-cta)",
-          padding: "14px 0 2px",
-          marginTop: 8,
-          textDecoration: "none",
-          // hardcoded-color-allow-next-line
-          borderTop: "1px solid #2B3247",
-        }}
-        onMouseEnter={(e) => {
-          // hardcoded-color-allow-next-line
-          e.currentTarget.style.color = "#F5F3F0";
-        }}
-        onMouseLeave={(e) => (e.currentTarget.style.color = "var(--brand-cta)")}
-      >
-        Book My Physician Assessment
-      </a>
+
     </div>
   );
 };

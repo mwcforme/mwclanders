@@ -238,25 +238,6 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
 
 
 
-          {/* Mobile primary CTA — scrolls to hero-form below, keeps above-fold action visible on phones */}
-          <button
-            onClick={scrollToForm}
-            className="lg:hidden mt-6 w-full font-bold cursor-pointer inline-flex items-center justify-center rounded-lg"
-            style={{
-              height: 56,
-              background: "var(--brand-cta)",
-              color: "var(--c-text-on-dark)",
-              fontSize: 17,
-              border: "none",
-              letterSpacing: "0.06em",
-              fontFamily: "Inter, sans-serif",
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = "var(--brand-cta-hover)"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = "var(--brand-cta)"; }}
-          >
-            {COPY.cta.bookConsult}
-          </button>
-
           {/* Disclaimer moved inside form card via TRTHeroForm footer */}
         </div>
 

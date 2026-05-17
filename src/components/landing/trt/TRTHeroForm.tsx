@@ -185,8 +185,8 @@ const FloatInput = ({
 
 export const TRTHeroForm = ({
   service    = "trt",
-  heading    = COPY.cta.bookConsult,
-  subheading = "No-cost consultation. Same-day availability.",
+  heading    = "Get Your Assessment",
+  subheading = "No-cost. Same-day availability.",
   ctaLabel   = COPY.cta.bookConsult,
 }: TRTHeroFormProps = {}) => {
   const [name,     setName]     = useState("");
