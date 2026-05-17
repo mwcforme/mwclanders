@@ -9,11 +9,11 @@ export const TRTMarquee = () => (
     aria-label="Certifications and credentials"
     style={{
       // hardcoded-color-allow-next-line
-      background: "#000000",
+      background: "#FFFFFF",
       // hardcoded-color-allow-next-line
-      borderTop: "1px solid rgba(255,255,255,0.07)",
+      borderTop: "1px solid #E5E7EB",
       // hardcoded-color-allow-next-line
-      borderBottom: "1px solid rgba(255,255,255,0.07)",
+      borderBottom: "1px solid #E5E7EB",
     }}
   >
     <div
@@ -31,7 +31,7 @@ export const TRTMarquee = () => (
           src="/images/badges/legitscript.png"
           alt="LegitScript Certified"
           className="h-14 md:h-20 w-auto"
-          style={{ maxWidth: 160, objectFit: "contain", mixBlendMode: "screen" }}
+          style={{ maxWidth: 160, objectFit: "contain",  }}
           loading="lazy"
           decoding="async"
           width="160"
@@ -45,7 +45,7 @@ export const TRTMarquee = () => (
           src="/images/badges/clia.png"
           alt="CLIA Certified Laboratory"
           className="h-14 md:h-20 w-auto"
-          style={{ maxWidth: 160, objectFit: "contain", mixBlendMode: "screen" }}
+          style={{ maxWidth: 160, objectFit: "contain",  }}
           loading="lazy"
           decoding="async"
           width="160"
@@ -59,7 +59,7 @@ export const TRTMarquee = () => (
           src="/images/badges/hipaa.png"
           alt="HIPAA Compliant"
           className="h-14 md:h-20 w-auto"
-          style={{ maxWidth: 160, objectFit: "contain", mixBlendMode: "screen" }}
+          style={{ maxWidth: 160, objectFit: "contain",  }}
           loading="lazy"
           decoding="async"
           width="160"
