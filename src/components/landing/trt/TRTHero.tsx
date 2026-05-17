@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+
 import { Check, Star } from "lucide-react";
 import { TRTHeroForm } from "./TRTHeroForm";
 import { SymptomChecklist } from "./SymptomChecklist";
@@ -7,64 +7,7 @@ import { GBP_REVIEWS_URL } from "@/data/testimonials";
 import { trackCro } from "@/hooks/useAnalytics";
 import { COPY } from "@/data/copy";
 
-const ROTATING_SERVICES = [
-  "TESTOSTERONE",
-  "ED THERAPY",
-  "WEIGHT LOSS",
-  "MEN'S HEALTH",
-];
 
-/**
- * All words rendered simultaneously, stacked via position:absolute.
- * The container width = widest word (TESTOSTERONE) — never changes.
- * Only opacity transitions. Zero layout shift. Zero reflow.
- */
-const RotatingService = () => {
-  const [index, setIndex] = useState(0);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((i) => (i + 1) % ROTATING_SERVICES.length);
-    }, 2800);
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <span
-      aria-live="polite"
-      aria-atomic="true"
-      style={{
-        display: "inline-block",
-        position: "relative",
-        whiteSpace: "nowrap",
-        /* Width locked to longest word so container never resizes */
-        minWidth: "1em",
-      }}
-    >
-      {/* Invisible longest word holds the width */}
-      <span style={{ visibility: "hidden", whiteSpace: "nowrap" }}>
-        TESTOSTERONE
-      </span>
-      {/* All words absolutely positioned, only active one visible */}
-      {ROTATING_SERVICES.map((word, i) => (
-        <span
-          key={word}
-          style={{
-            position: "absolute",
-            left: 0,
-            top: 0,
-            whiteSpace: "nowrap",
-            opacity: i === index ? 1 : 0,
-            transform: i === index ? "translateY(0)" : "translateY(-6px)",
-            transition: "opacity 300ms ease, transform 300ms ease",
-            willChange: "opacity, transform",
-          }}
-        >
-          {word}
-        </span>
-      ))}
-    </span>
-  );
-};
 
 const trustChecks = [
   "Licensed Virginia providers",
@@ -103,11 +46,10 @@ interface TRTHeroProps {
 
 export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
   const h = headline ?? {
-    line1: "We Treat the Man's Symptoms.",
-    line2: "Not Just the Numbers.",
+    line1: "VIRGINIA'S CHOICE",
+    line2: "FOR MEN'S HEALTH",
     line2Color: COLORS.orange,
   };
-  void h; // legacy prop - rotating headline is now default
   const scrollToForm = () => {
     document.getElementById("hero-form")?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
@@ -193,9 +135,9 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
 
             }}
           >
-            <span style={{ display: "block", whiteSpace: "nowrap" }}>VIRGINIA&rsquo;S CHOICE</span>
-            <span style={{ display: "block", color: COLORS.orange, whiteSpace: "nowrap" }}>
-              FOR <RotatingService />
+            <span style={{ display: "block" }}>VIRGINIA&rsquo;S CHOICE</span>
+            <span style={{ display: "block", color: COLORS.orange }}>
+              {h.line2}
             </span>
           </h1>
 

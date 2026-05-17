@@ -32,7 +32,7 @@ const TRTLandingPage = () => {
       </Helmet>
       <TRTHeader />
       <main className="flex-1">
-        <TRTHero />
+        <TRTHero headline={{ line1: "VIRGINIA'S CHOICE", line2: "FOR TESTOSTERONE" }} />
         <SectionReveal><CredibilityBand /></SectionReveal>
         <SectionReveal><TRTManifesto /></SectionReveal>
         <SectionReveal><TRTHowItWorks /></SectionReveal>

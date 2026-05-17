@@ -77,9 +77,9 @@ export const WLHero = () => {
               fontWeight: 700,
             }}
           >
-            Medical Weight Loss
+            VIRGINIA&rsquo;S CHOICE
             <br />
-            <span style={{ color: COLORS.orange }}>for Men in Virginia</span>
+            <span style={{ color: COLORS.orange }}>FOR WEIGHT LOSS</span>
           </h1>
 
           <p

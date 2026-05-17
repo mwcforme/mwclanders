@@ -77,9 +77,9 @@ export const EDHero = () => {
               fontWeight: 700,
             }}
           >
-            ED Treatment
+            VIRGINIA&rsquo;S CHOICE
             <br />
-            <span style={{ color: COLORS.orange }}>In Virginia. In Person.</span>
+            <span style={{ color: COLORS.orange }}>FOR ED THERAPY</span>
           </h1>
 
           <p
