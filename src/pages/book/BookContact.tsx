@@ -82,7 +82,7 @@ const BookContact = () => {
             path: `/contacts/${contactId}`,
             method: "PUT",
             body: { firstName: firstName.trim() },
-            __env: import.meta.env.VITE_APP_ENV ?? "stage",
+            __env: (await import("@/lib/env")).APP_ENV,
           },
         }).catch(() => { /* non-blocking */ });
       } else {

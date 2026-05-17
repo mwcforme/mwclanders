@@ -72,9 +72,9 @@ describe("LP directory: booking funnel", () => {
     expect(entry?.description.toLowerCase()).toMatch(/redirect/);
   });
 
-  it("App.tsx redirects /book directly to /book/schedule (no symptom gate)", () => {
+  it("App.tsx redirects /book directly to /book/location (entry gate)", () => {
     expect(appSource).toMatch(
-      /path="\/book"\s+element=\{<Navigate\s+to="\/book\/schedule"\s+replace\s*\/>\}/,
+      /path="\/book"\s+element=\{<Navigate\s+to="\/book\/location"\s+replace\s*\/>/,
     );
   });
 });

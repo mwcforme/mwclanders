@@ -32,9 +32,9 @@ export function AdminLayout({ title, children }: Props) {
   const [email, setEmail] = useState<string>("");
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setEmail(session?.user.email ?? "");
-    });
+    supabase.auth.getSession()
+      .then(({ data: { session } }) => { setEmail(session?.user.email ?? ""); })
+      .catch(() => { /* best-effort: admin header email non-critical */ });
   }, []);
 
   const signOut = async () => {

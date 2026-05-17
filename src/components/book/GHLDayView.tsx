@@ -239,10 +239,10 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
 
   const handleFinalConfirm = async () => {
     if (!selectedSlot) return;
-    const ok = await confirmCtl.confirm({
+    // Return value not used here — navigation is driven by onBooked callback.
+    await confirmCtl.confirm({
       slotIso: selectedSlot, location, firstName, lastName, email, phone, source, customFields,
     });
-    // navigation handled by onBooked callback
   };
 
   return (

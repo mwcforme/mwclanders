@@ -27,20 +27,19 @@ export interface IContactUpdater {
 
 // ─── Implementation ───────────────────────────────────────────────────────────
 
-const env = (): string =>
-  typeof import.meta !== "undefined"
-    ? ((import.meta as { env?: { VITE_APP_ENV?: string } }).env?.VITE_APP_ENV ?? "stage")
-    : "stage";
-
 async function invokeGhlProxy(
   path: string,
   method: "PUT" | "POST",
   body: Record<string, unknown>,
 ): Promise<void> {
-  const { supabase } = await import("@/integrations/supabase/client");
+  // Lazy-import both supabase and the runtime env to keep this module lean.
+  const [{ supabase }, { APP_ENV }] = await Promise.all([
+    import("@/integrations/supabase/client"),
+    import("@/lib/env"),
+  ]);
   supabase.functions
-    .invoke("ghl-proxy", { body: { path, method, body, __env: env() } })
-    .catch(() => { /* non-blocking — UX must never depend on this */ });
+    .invoke("ghl-proxy", { body: { path, method, body, __env: APP_ENV } })
+    .catch(() => { /* non-blocking - UX must never depend on this */ });
 }
 
 export const contactUpdater: IContactUpdater = {

@@ -27,8 +27,10 @@ class BookingErrorBoundary extends React.Component<Props, State> {
     return { hasError: true };
   }
 
-  componentDidCatch(error: Error, info: React.ErrorInfo): void {
-    console.error("[BookingErrorBoundary] Caught render error", error, info.componentStack);
+  componentDidCatch(error: Error, _info: React.ErrorInfo): void {
+    // PHI safety: do not log componentStack - it may contain rendered PII
+    // from the booking form. Log only the error message (no stack trace).
+    console.error("[BookingErrorBoundary] Caught render error:", error.message);
   }
 
   render(): React.ReactNode {

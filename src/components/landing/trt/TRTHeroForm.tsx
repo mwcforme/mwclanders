@@ -461,7 +461,7 @@ export const TRTHeroForm = ({
               style={{ fontSize: 14, color: "rgba(245,240,235,0.55)", lineHeight: 1.55 }}
             >
               By checking this box, I agree to receive SMS/calls (including automated messages) from Men's Wellness Centers about my appointment.
-              Msg &amp; data rates may apply. Reply STOP to opt out. Reply HELP for help.
+              Msg & data rates may apply. Reply STOP to opt out. Reply HELP for help.
               Consent is not a condition of service.{" "}
               <a href="/privacy-policy" style={{ color: "#E8670A", textDecoration: "none" }}>Privacy Policy</a>
               {" "}&amp;{" "}
