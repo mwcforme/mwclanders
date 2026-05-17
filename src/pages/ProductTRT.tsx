@@ -1,5 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  Check, FlaskConical, Stethoscope, ClipboardList,
+  Zap, Heart, Smile, Moon, Dumbbell, Scale,
+  ChevronDown, ChevronUp,
+} from "lucide-react";
 import { TRTHeader } from "@/components/landing/trt/TRTHeader";
 import { TRTFooter } from "@/components/landing/trt/TRTFooter";
 import { COPY } from "@/data/copy";
@@ -48,23 +53,9 @@ const OrangeCTA = ({
 );
 
 const CheckIcon = () => (
-  <svg
-    aria-hidden="true"
-    width="22"
-    height="22"
-    viewBox="0 0 22 22"
-    fill="none"
-    style={{ flexShrink: 0 }}
-  >
-    <circle cx="11" cy="11" r="11" fill="var(--brand-cta)" />
-    <path
-      d="M6.5 11.2l3 3L15.5 8"
-      stroke="#fff"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
+  <span style={{ width: 22, height: 22, borderRadius: "50%", background: "var(--brand-cta)", display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+    <Check size={13} strokeWidth={3} color="#fff" aria-hidden />
+  </span>
 );
 
 /* ─── FAQ data ──────────────────────────────────────────────────────────────── */
@@ -205,21 +196,21 @@ const ProductTRT = () => {
 
                 {[
                   {
-                    icon: "🧪",
+                    icon: <FlaskConical size={18} strokeWidth={1.75} style={{ color: "var(--brand-cta)" }} />,
                     title: "Comprehensive Lab Panel",
                     sub: "Full hormone panel drawn on-site",
                     note: "Typically $100–$300",
                     value: "Included",
                   },
                   {
-                    icon: "👨‍⚕️",
+                    icon: <Stethoscope size={18} strokeWidth={1.75} style={{ color: "var(--brand-cta)" }} />,
                     title: "Provider Consultation",
                     sub: "Private 1-on-1 with a licensed Virginia provider",
                     note: "Typically $150–$300",
                     value: "Included",
                   },
                   {
-                    icon: "📋",
+                    icon: <ClipboardList size={18} strokeWidth={1.75} style={{ color: "var(--brand-cta)" }} />,
                     title: "Personalized Treatment Plan",
                     sub: "Results reviewed same-day · Custom protocol",
                     note: "If clinically appropriate",
@@ -700,7 +691,7 @@ const ProductTRT = () => {
                   const parent = el.parentElement;
                   if (parent) {
                     parent.style.background = "linear-gradient(135deg, #e8e8e8 0%, #ccc 100%)";
-                    parent.innerHTML = `<span style="font-size:80px;opacity:0.4">💪</span>`;
+                    parent.style.display="flex"; parent.style.alignItems="center"; parent.style.justifyContent="center";
                   }
                 }}
               />
@@ -795,12 +786,12 @@ const ProductTRT = () => {
               }}
             >
               {[
-                { icon: "😴", label: "Fatigue" },
-                { icon: "❤️", label: "Low Libido" },
-                { icon: "😞", label: "Mood Changes" },
-                { icon: "🌙", label: "Poor Sleep" },
-                { icon: "💪", label: "Reduced Strength" },
-                { icon: "⚖️", label: "Weight Gain" },
+                { icon: <Zap size={24} strokeWidth={1.75} style={{ color: "var(--brand-cta)" }} />, label: "Fatigue" },
+                { icon: <Heart size={24} strokeWidth={1.75} style={{ color: "var(--brand-cta)" }} />, label: "Low Libido" },
+                { icon: <Smile size={24} strokeWidth={1.75} style={{ color: "var(--brand-cta)" }} />, label: "Mood Changes" },
+                { icon: <Moon size={24} strokeWidth={1.75} style={{ color: "var(--brand-cta)" }} />, label: "Poor Sleep" },
+                { icon: <Dumbbell size={24} strokeWidth={1.75} style={{ color: "var(--brand-cta)" }} />, label: "Reduced Strength" },
+                { icon: <Scale size={24} strokeWidth={1.75} style={{ color: "var(--brand-cta)" }} />, label: "Weight Gain" },
               ].map(({ icon, label }) => (
                 <div
                   key={label}
@@ -935,16 +926,9 @@ const ProductTRT = () => {
                       </span>
                       <span
                         aria-hidden="true"
-                        style={{
-                          fontSize: 20,
-                          color: "var(--brand-cta)",
-                          flexShrink: 0,
-                          transform: isOpen ? "rotate(45deg)" : "none",
-                          transition: "transform 0.2s",
-                          display: "inline-block",
-                        }}
+                        style={{ flexShrink: 0, color: "var(--brand-cta)", transition: "transform 0.2s", transform: isOpen ? "rotate(180deg)" : "none" }}
                       >
-                        +
+                        <ChevronDown size={20} strokeWidth={2} />
                       </span>
                     </button>
                     {isOpen && (
