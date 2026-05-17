@@ -345,16 +345,17 @@ const BookSchedule = () => {
         )}
 
         {/* ── Heading ────────────────────────────────────────────────────── */}
-        <section className="mx-auto text-center" style={{ maxWidth: 720, color: "#FFFFFF" }}>
+        <section className="mx-auto" style={{ maxWidth: 720 }}>
           <h1 style={{
-            fontFamily: "Inter, sans-serif", fontWeight: 700,
-            fontSize: "clamp(20px, 2.6vw, 28px)", lineHeight: 1.15,
-            letterSpacing: "-0.01em", marginBottom: 4, color: "#FFFFFF",
+            fontFamily: "Oswald, sans-serif", fontWeight: 600,
+            fontSize: "clamp(22px, 3vw, 30px)", lineHeight: 1.1,
+            letterSpacing: "0.02em", marginBottom: 6, color: "#FFFFFF",
+            textTransform: "uppercase",
           }}>
             {heading}
           </h1>
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 15, color: "rgba(255,255,255,0.80)", margin: 0 }}>
-            60-Minute Physician Assessment · No-cost consultation
+          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "rgba(255,255,255,0.60)", margin: 0 }}>
+            60-min Assessment · No-cost
           </p>
         </section>
 
@@ -363,11 +364,11 @@ const BookSchedule = () => {
           <div className="mx-auto w-full text-center" style={{ maxWidth: 720 }}>
             <div
               className="inline-flex items-center gap-2.5 rounded-full px-4 py-2"
-              style={{ background: "rgba(46,204,113,0.12)", border: "1px solid rgba(46,204,113,0.30)" }}
+              style={{ background: "rgba(232,103,10,0.12)", border: "1px solid rgba(232,103,10,0.30)" }}
             >
-              <Clock size={14} style={{ color: "#2ECC71", flexShrink: 0 }} />
+              <Clock size={14} style={{ color: "#E8670A", flexShrink: 0 }} />
               <span style={{ fontFamily: "Inter, sans-serif", fontSize: 13, fontWeight: 600, color: "#FFFFFF" }}>
-                Next available: <span style={{ color: "#2ECC71" }}>{nextAvailableLabel}</span>
+                Next: {nextAvailableLabel}
               </span>
             </div>
           </div>
