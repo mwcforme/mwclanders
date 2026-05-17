@@ -70,7 +70,7 @@ export interface BookingStep {
 }
 
 export const BOOKING_STEPS: BookingStep[] = [
-  { slug: "/book", name: "Book (entry)", description: "Redirects directly to /book/schedule. No symptom gating." },
+  { slug: "/book", name: "Book (entry)", description: "Redirects directly to /book/location. Location selection is the first step." },
   { slug: "/book/symptom", name: "Symptom", description: "Optional: symptom selection. Stores to URL state." },
   { slug: "/book/duration", name: "Duration", description: "Optional: how long the user has been dealing with the issue." },
   { slug: "/book/schedule", name: "Schedule", description: "Lead form + real GHL calendar slot picker." },

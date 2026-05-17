@@ -16,7 +16,7 @@ import {
 import { useConfirmAppointment } from "@/domain/booking/useConfirmAppointment";
 import DayStrip from "./DayStrip";
 import TimeGrid from "./TimeGrid";
-import ConfirmDialog from "./ConfirmDialog";
+// ConfirmDialog removed — slot tap confirms directly, no modal step
 
 // Brand tokens (confirm bar only — child components manage their own)
 const INK    = "#0B1029";
@@ -128,7 +128,7 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
   const [loadError, setLoadError]     = useState<string | null>(null);
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
-  const [modalOpen, setModalOpen]     = useState(false);
+  // modalOpen removed — no confirmation dialog
   const [refreshNonce, setRefreshNonce] = useState(0);
 
   const confirmCtl = useConfirmAppointment({ onBooked: (slot) => onBooked?.(slot) });
@@ -242,7 +242,7 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
     const ok = await confirmCtl.confirm({
       slotIso: selectedSlot, location, firstName, lastName, email, phone, source, customFields,
     });
-    if (ok) setModalOpen(false);
+    // navigation handled by onBooked callback
   };
 
   return (
@@ -279,7 +279,7 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
           <button
             ref={confirmBtnRef}
             type="button"
-            onClick={() => canConfirm && setModalOpen(true)}
+            onClick={() => canConfirm && handleFinalConfirm()}
             disabled={!canConfirm}
             style={{
               width: "100%", minHeight: 56,
@@ -307,19 +307,7 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
         </div>
       </div>
 
-      <ConfirmDialog
-        open={modalOpen}
-        onOpenChange={setModalOpen}
-        selectedSlot={selectedSlot}
-        calLabel={cal.label}
-        fullName={fullName}
-        submitting={submitting}
-        submitError={submitError}
-        redirect={confirmCtl.redirect}
-        onConfirm={handleFinalConfirm}
-        onCancel={() => { if (!submitting) { confirmCtl.cancelRedirect(); setModalOpen(false); } }}
-        onCancelRedirect={confirmCtl.cancelRedirect}
-      />
+      {/* ConfirmDialog removed — booking fires directly on button tap */}
     </>
   );
 };

@@ -1,11 +1,11 @@
 /**
- * TRTHeroForm — LP hero lead capture form.
+ * TRTHeroForm - LP hero lead capture form.
  *
  * Design system:
  * - 8px base grid throughout
  * - Inter for all UI text; Oswald for display heading only
  * - Lucide React for all icons (consistent 1.5px stroke, 24px grid)
- * - White inputs on dark panel — maximum contrast
+ * - White inputs on dark panel - maximum contrast
  * - Location cards: dark semi-transparent, orange fill + Lucide Check on select
  * - TCPA checkbox: custom visual, native <input> hidden for a11y
  */
@@ -62,7 +62,7 @@ interface TRTHeroFormProps {
 
 // ─── Floating Label Input ───────────────────────────────────────────────────
 /**
- * Persistent floating label — label sits above the field at all times.
+ * Persistent floating label - label sits above the field at all times.
  * Placeholder disappears on focus; label never does. Critical for 55+ users.
  */
 interface FloatInputProps {
@@ -92,7 +92,7 @@ const FloatInput = ({
 
   return (
     <div style={{ position: "relative" }}>
-      {/* Persistent label — always visible above field */}
+      {/* Persistent label - always visible above field */}
       <label
         htmlFor={id}
         style={{
@@ -242,7 +242,7 @@ export const TRTHeroForm = ({
   const clearErr = (k: string) => setErrors((p) => { const { [k]: _, ...r } = p; return r; });
   const isSubmitting = controller.isSubmitting;
 
-  // ── Submit — Zod (via controller.submit) is the single validation source ────
+  // ── Submit - Zod (via controller.submit) is the single validation source ────
   // Field errors come back through controller.fieldErrors → the useEffect above
   // maps them to local `errors` state and scrolls to the first invalid field.
   const handleSubmit = (e: React.FormEvent) => {
@@ -304,7 +304,7 @@ export const TRTHeroForm = ({
           icon={<User size={16} strokeWidth={1.75} />}
           onChange={(v) => { setName(v); clearErr("name"); }}
           onFocus={() => {
-            // Prefetch booking funnel chunks on first focus — bookingStore is
+            // Prefetch booking funnel chunks on first focus - bookingStore is
             // already in the static bundle so only BookLocation needs fetching.
             void import("@/pages/book/BookLocation");
           }}
@@ -330,7 +330,7 @@ export const TRTHeroForm = ({
         />
         {/* Phone micro-copy */}
         <p style={{ fontSize: 12, color: "rgba(245,240,235,0.65)", fontFamily: "Inter, sans-serif", marginTop: -4, lineHeight: 1.4 }}>
-          We’ll use this to confirm your visit and send reminders. No spam.
+          We'll use this to confirm your visit and send reminders. No spam.
         </p>
 
         {/* ── Location ───────────────────────────────────────────────────────── */}
@@ -416,7 +416,7 @@ export const TRTHeroForm = ({
 
         {/* ── TCPA ───────────────────────────────────────────────────────────── */}
         <div ref={tcpaRef}>
-          {/* Native checkbox — hidden, drives state */}
+          {/* Native checkbox - hidden, drives state */}
           <input
             id="hf-tcpa"
             type="checkbox"
@@ -437,7 +437,7 @@ export const TRTHeroForm = ({
               borderRadius: 8,
             }}
           >
-            {/* Custom checkbox visual — 24×24 for easy tap */}
+            {/* Custom checkbox visual - 24×24 for easy tap */}
             <div
               aria-hidden="true"
               style={{
@@ -460,7 +460,7 @@ export const TRTHeroForm = ({
               id="hf-tcpa-text"
               style={{ fontSize: 14, color: "rgba(245,240,235,0.55)", lineHeight: 1.55 }}
             >
-              Yes, text me my appointment confirmation and reminders from Men’s Wellness Centers.
+              By checking this box, I agree to receive SMS/calls (including automated messages) from Men's Wellness Centers about my appointment.
               Msg &amp; data rates may apply. Reply STOP to opt out. Reply HELP for help.
               Consent is not a condition of service.{" "}
               <a href="/privacy-policy" style={{ color: "#E8670A", textDecoration: "none" }}>Privacy Policy</a>
@@ -504,7 +504,7 @@ export const TRTHeroForm = ({
           onMouseLeave={(e) => { e.currentTarget.style.background = ORANGE; e.currentTarget.style.transform = "translateY(0)"; }}
         >
           {isSubmitting
-            ? <><Loader2 size={16} className="animate-spin" /> Booking…</>
+            ? <><Loader2 size={16} className="animate-spin" /> Booking...</>
             : <>{ctaLabel} <ArrowRight size={16} strokeWidth={2.5} /></>
           }
         </button>

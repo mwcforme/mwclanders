@@ -2,6 +2,9 @@ import { Check, MapPin } from "lucide-react";
 import { TRTHeroForm } from "@/components/landing/trt/TRTHeroForm";
 import { COPY } from "@/data/copy";
 
+/** Trust chip text - must match design.regression.test.ts assertions. */
+const TRUST_LINE = "HIPAA Compliant · No Spam, Ever";
+
 export const TRTFinalCTA = () => {
   return (
     <section id="final-cta" className="py-14 md:py-20" style={{ background: "#000033" }}>

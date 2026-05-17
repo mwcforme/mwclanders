@@ -222,25 +222,7 @@ const BookedCelebrationCard = ({ firstName, apptTime, apptIso, locationCity, loc
           </div>
         </div>
 
-        {/* Status chips — always horizontal, wrap if needed */}
-        <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", gap: 6, marginBottom: 28 }}>
-          {["Confirmation sent", "No-cost visit", "Provider reserved", "Bring photo ID"].map((label) => (
-            <span key={label} style={{
-              display: "inline-flex", alignItems: "center", gap: 5,
-              background: "rgba(22,163,74,0.07)",
-              border: "1px solid rgba(22,163,74,0.20)",
-              color: "#15803D",
-              borderRadius: 999,
-              padding: "5px 12px",
-              fontSize: 11, fontWeight: 700,
-              letterSpacing: "0.07em", textTransform: "uppercase",
-              whiteSpace: "nowrap",
-            }}>
-              <Check size={10} strokeWidth={3} style={{ color: "#22C55E", flexShrink: 0 }} />
-              {label}
-            </span>
-          ))}
-        </div>
+
 
         {/* Calendar buttons — orange primary, outlined secondary */}
         {calLinks && (
