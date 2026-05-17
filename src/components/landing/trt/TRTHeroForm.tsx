@@ -290,22 +290,13 @@ export const TRTHeroForm = ({
                     textAlign: "left",
                   }}
                 >
-                  {/* Left: city + neighborhood */}
-                  <div>
-                    <div style={{ fontSize: 15, fontWeight: 700, lineHeight: 1.2 }}>
-                      {opt.label}
-                    </div>
-                    <div style={{ fontSize: 12, fontWeight: 400, opacity: isSelected ? 0.85 : 0.55, marginTop: 2 }}>
-                      {opt.hint}
-                    </div>
-                  </div>
-                  {/* Right: checkmark or empty circle */}
+                  {/* Left: radio circle */}
                   <div
                     style={{
-                      width: 24,
-                      height: 24,
+                      width: 22,
+                      height: 22,
                       borderRadius: "50%",
-                      border: `2px solid ${isSelected ? "#FFFFFF" : "rgba(255,255,255,0.30)"}`,
+                      border: `2px solid ${isSelected ? "#FFFFFF" : "rgba(255,255,255,0.35)"}`,
                       background: isSelected ? "rgba(255,255,255,0.25)" : "transparent",
                       display: "flex",
                       alignItems: "center",
@@ -315,10 +306,19 @@ export const TRTHeroForm = ({
                     }}
                   >
                     {isSelected && (
-                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                        <path d="M2 6L5 9L10 3" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
+                        <path d="M2 6L5 9L10 3" stroke="#FFFFFF" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     )}
+                  </div>
+                  {/* Right: city + neighborhood */}
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: 15, fontWeight: 700, lineHeight: 1.2 }}>
+                      {opt.label}
+                    </div>
+                    <div style={{ fontSize: 12, fontWeight: 400, opacity: isSelected ? 0.85 : 0.55, marginTop: 2 }}>
+                      {opt.hint}
+                    </div>
                   </div>
                 </button>
               );
