@@ -253,7 +253,6 @@ export const TRTHeroForm = ({
     void controller.submit({ name, phone, location: location as LocationKey, tcpa });
   };
 
-  // ── Shared input styles ─────────────────────────────────────────────────────
   // ── Render ──────────────────────────────────────────────────────────────────
   return (
     <div
