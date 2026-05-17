@@ -61,7 +61,7 @@ const NewWeightLoss = () => {
               subhead={COPY.offer.finalSubhead}
               cardTitle={COPY.cta.seeIfIQualify}
               ctaLabel={COPY.cta.seeIfIQualify}
-              intro="No more cycles of strict diets and bounce-back. A Virginia physician, real labs, and the right medication for your body."
+              intro="No more cycles of strict diets and bounce-back. A licensed Virginia provider, real labs, and the right medication for your body."
               bullets={[
                 "100% private. Your employer or insurance is never notified.",
                 COPY.offer.cancelReschedule,

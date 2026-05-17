@@ -466,7 +466,7 @@ export const TRTHeroForm = ({
               Consent is not a condition of service.{" "}
               <a href="/privacy-policy" style={{ color: "#E8670A", textDecoration: "none" }}>Privacy Policy</a>
               {" "}&amp;{" "}
-              <a href="/hipaa-and-terms-of-service" style={{ color: "#E8670A", textDecoration: "none" }}>HIPAA Notice</a>.
+              <a href="/privacy-policy" style={{ color: "#E8670A", textDecoration: "none" }}>HIPAA Notice</a>.
             </span>
           </label>
           {errors.tcpa && (
