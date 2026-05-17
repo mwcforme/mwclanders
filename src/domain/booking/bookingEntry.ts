@@ -6,11 +6,8 @@
  * identity data is in memory only — never written to the URL or analytics.
  *
  * Routing logic:
- *  - Full hero form (has real name + email + location): skip to /book/schedule
- *    (identity + location already captured).
- *  - Short hero form (firstName="Guest", no email): send to /book/contact
- *    to collect real name + phone before calendar.
- *  - `forceContact=true`: always go to /book/contact (for edge cases).
+ *  - Full hero form (name + phone + location): skip straight to /book/schedule.
+ *  - Identity set but no location: go to /book/location picker.
  *
  * PHI: never include in URL — see BookingRouteGuard.
  */
@@ -23,8 +20,6 @@ export interface EnterBookingArgs {
   location?: string;
   source?: string;
   lpSlug?: string;
-  /** Force navigation to /book/contact even if identity is complete. */
-  forceContact?: boolean;
 }
 
 export function enterBookingFunnel(
@@ -41,24 +36,12 @@ export function enterBookingFunnel(
     lpSlug: args.lpSlug,
   });
 
-  // Short form produces a Guest identity — send to /book/contact to collect
-  // real first name and phone before the calendar.
-  const isGuestIdentity =
-    !args.identity.firstName ||
-    args.identity.firstName === "Guest" ||
-    !args.identity.email;
-
-  if (args.forceContact || isGuestIdentity) {
-    navigate("/book/contact");
-    return;
-  }
-
-  // Full identity + location already set — skip straight to calendar.
+  // Location already set (full LP form) — skip straight to calendar.
   if (args.location) {
     navigate("/book/schedule");
     return;
   }
 
-  // Full identity but no location — go to location picker.
+  // No location — go to location picker.
   navigate("/book/location");
 }

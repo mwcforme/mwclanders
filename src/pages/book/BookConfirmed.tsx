@@ -476,7 +476,7 @@ const BookConfirmed = () => {
                 📞 Call or text {PHONE_DISPLAY}
               </a>
               <a
-                href={`/book/contact`}
+                href="/book/location"
                 style={{
                   display: "inline-flex", alignItems: "center", gap: 6,
                   background: "rgba(232,103,10,0.15)",

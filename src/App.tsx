@@ -26,7 +26,6 @@ const TRTQuiz         = lazy(() => import("./pages/TRTQuiz"));
 const TRTQuizApproved = lazy(() => import("./pages/TRTQuizApproved"));
 
 // Booking funnel — only loads after lead form submit
-const BookContact     = lazy(() => import("./pages/book/BookContact"));
 const BookLocation    = lazy(() => import("./pages/book/BookLocation"));
 const BookSymptom     = lazy(() => import("./pages/book/BookSymptom"));
 const BookDuration    = lazy(() => import("./pages/book/BookDuration"));
@@ -164,11 +163,11 @@ const App = () => (
                 <Route path="/quiz/approved" element={<TRTQuizApproved />} />
 
                 {/* ── Booking funnel ── */}
-                <Route path="/book" element={<Navigate to="/book/contact" replace />} />
+                <Route path="/book" element={<Navigate to="/book/location" replace />} />
+                {/* Legacy contact route — redirect to location */}
+                <Route path="/book/contact" element={<Navigate to="/book/location" replace />} />
                 {/* WordPress handoff — token exchange, no BookingRouteGuard */}
                 <Route path="/book/entry" element={<BookEntry />} />
-                {/* New funnel entry — no guard needed, is the start */}
-                <Route path="/book/contact" element={<BookContact />} />
                 <Route element={<BookingRouteGuard />}>
                   <Route path="/book/location"  element={<BookLocation />} />
                   <Route path="/book/schedule"  element={<BookSchedule />} />

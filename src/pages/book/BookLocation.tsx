@@ -87,7 +87,7 @@ const BookLocation = () => {
           {/* Back + Progress */}
           <button
             type="button"
-            onClick={() => navigate("/book/contact")}
+            onClick={() => navigate("/")}
             className="inline-flex items-center gap-1 mb-4"
             style={{
               background: "transparent", border: 0, color: "#FFFFFF",

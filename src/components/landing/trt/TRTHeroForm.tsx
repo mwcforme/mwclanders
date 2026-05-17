@@ -225,7 +225,6 @@ export const TRTHeroForm = ({
             onChange={(e) => { setName(e.target.value); clearError("name"); }}
             onFocus={() => {
               setFocused("name");
-              void import("@/pages/book/BookContact");
               void import("@/pages/book/BookLocation");
               void import("@/domain/booking/bookingStore");
             }}
