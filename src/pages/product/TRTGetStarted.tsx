@@ -5,12 +5,13 @@
 
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Check, AlertCircle, Loader2, ArrowRight } from "lucide-react";
+import { Check, AlertCircle, Loader2, ArrowRight, Lock } from "lucide-react";
 import { TRTHeader } from "@/components/landing/trt/TRTHeader";
 import { TRTFooter } from "@/components/landing/trt/TRTFooter";
 import { SEO } from "@/components/SEO";
 import { useBookingStore } from "@/domain/booking/bookingStore";
 import { capturePartialLead, markSessionSubmitted } from "@/lib/partialCapture";
+import { upsertContact } from "@/lib/ghlCalendars";
 
 const ORANGE = "#E8670A";
 const NAVY   = "#0B1029";
@@ -174,7 +175,7 @@ export default function TRTGetStarted() {
     setSubmitting(true);
     markSessionSubmitted();
 
-    // Store identity in booking store
+    // Store identity in booking store (optimistically — no ghlContactId yet)
     setIdentity({
       firstName: fields.firstName.trim(),
       lastName: fields.lastName.trim(),
@@ -182,12 +183,31 @@ export default function TRTGetStarted() {
       phone: fields.phone,
     });
 
-    // Fire-and-forget partial capture (GHL upsert happens async)
+    // GHL upsert — fire-and-forget, never block navigation
+    upsertContact({
+      firstName: fields.firstName.trim(),
+      lastName: fields.lastName.trim(),
+      email: fields.email.trim(),
+      phone: fields.phone,
+      source: "product-trt-funnel",
+      tags: ["product-trt"],
+    }).then((ghlContactId) => {
+      // Back-fill the contactId so downstream steps can tag the contact
+      setIdentity({
+        firstName: fields.firstName.trim(),
+        lastName: fields.lastName.trim(),
+        email: fields.email.trim(),
+        phone: fields.phone,
+        ghlContactId,
+      });
+    }).catch(() => { /* non-blocking — UX must never depend on this */ });
+
+    // Fire-and-forget partial capture (Supabase fallback)
     void capturePartialLead({
       phone: fields.phone,
       name: `${fields.firstName} ${fields.lastName}`,
       email: fields.email,
-      source: "product-trt-get-started",
+      source: "product-trt-funnel",
     });
 
     navigate("/product/trt/medical-protocol");
@@ -249,8 +269,18 @@ export default function TRTGetStarted() {
             </span>
           </div>
 
+          {/* Step indicator */}
+          <div style={{ padding: "16px 28px 0", textAlign: "center" }}>
+            <span style={{
+              fontSize: 12, fontWeight: 600, color: "#9CA3AF",
+              fontFamily: "Inter, sans-serif", letterSpacing: "0.05em",
+            }}>
+              STEP 1 OF 3
+            </span>
+          </div>
+
           {/* Form */}
-          <form onSubmit={handleSubmit} noValidate style={{ padding: "28px 28px 32px" }}>
+          <form onSubmit={handleSubmit} noValidate style={{ padding: "20px 28px 32px" }}>
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               <SimpleInput
                 id="gs-first"
@@ -337,6 +367,7 @@ export default function TRTGetStarted() {
               </div>
 
               {/* CTA */}
+              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               <button
                 type="submit"
                 disabled={submitting}
@@ -357,6 +388,18 @@ export default function TRTGetStarted() {
                   : <>Continue <ArrowRight size={18} strokeWidth={2.5} /></>
                 }
               </button>
+
+              {/* Security trust line */}
+              <div style={{
+                display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
+                padding: "10px 0 2px",
+              }}>
+                <Lock size={13} strokeWidth={2} style={{ color: "#6B7280", flexShrink: 0 }} />
+                <span style={{ fontSize: 12, color: "#6B7280", fontFamily: "Inter, sans-serif" }}>
+                  Your information is encrypted and HIPAA protected
+                </span>
+              </div>
+              </div>
 
               {/* Legal line */}
               <p style={{ fontSize: 11, color: "#9CA3AF", textAlign: "center", lineHeight: 1.5, fontFamily: "Inter, sans-serif" }}>

@@ -9,6 +9,8 @@ import { ArrowRight, ArrowLeft } from "lucide-react";
 import { TRTHeader } from "@/components/landing/trt/TRTHeader";
 import { TRTFooter } from "@/components/landing/trt/TRTFooter";
 import { SEO } from "@/components/SEO";
+import { useBookingStore } from "@/domain/booking/bookingStore";
+import { contactUpdater } from "@/services/contactUpdater";
 
 const ORANGE  = "#E8670A";
 const NAVY    = "#0B1029";
@@ -71,7 +73,8 @@ function RadioGroup({
               display: "flex", alignItems: "center", gap: 12,
               padding: "14px 16px", borderRadius: 10, cursor: "pointer",
               border: `1.5px solid ${sel ? ORANGE : "#E5E7EB"}`,
-              background: sel ? "rgba(232,103,10,0.04)" : "#FAFAFA",
+              borderLeft: sel ? `4px solid ${ORANGE}` : `1.5px solid #E5E7EB`,
+              background: sel ? "rgba(232,103,10,0.07)" : "#FAFAFA",
               transition: "all 150ms ease", userSelect: "none",
             }}
           >
@@ -123,7 +126,8 @@ function CheckGroup({
               display: "flex", alignItems: "center", gap: 12,
               padding: "14px 16px", borderRadius: 10, cursor: "pointer",
               border: `1.5px solid ${sel ? ORANGE : "#E5E7EB"}`,
-              background: sel ? "rgba(232,103,10,0.04)" : "#FAFAFA",
+              borderLeft: sel ? `4px solid ${ORANGE}` : `1.5px solid #E5E7EB`,
+              background: sel ? "rgba(232,103,10,0.07)" : "#FAFAFA",
               transition: "all 150ms ease", userSelect: "none",
             }}
           >
@@ -227,7 +231,8 @@ function SelectInput({
 }
 
 export default function TRTQuestionnaire() {
-  const navigate = useNavigate();
+  const navigate   = useNavigate();
+  const identity   = useBookingStore((s) => s.identity);
   const [step, setStep] = useState(1);
   const [answers, setAnswers] = useState<IntakeAnswers>({
     symptoms: [], conditions: [], additionalServices: [],
@@ -271,6 +276,16 @@ export default function TRTQuestionnaire() {
 
   const handleSubmit = () => {
     window.sessionStorage.setItem("mwc_intake_v1", JSON.stringify(answers));
+
+    // Send intake data to GHL — fire-and-forget
+    const contactId = identity?.ghlContactId;
+    if (contactId) {
+      contactUpdater.updateContact(contactId, {
+        customFields: { mwc_intake_notes: JSON.stringify(answers) },
+      }).catch(() => {});
+      contactUpdater.addTag(contactId, "questionnaire-complete").catch(() => {});
+    }
+
     navigate("/product/trt/identity-verification");
   };
 
@@ -563,7 +578,7 @@ export default function TRTQuestionnaire() {
           <div style={{ marginBottom: 24 }}>
             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
               <span style={{ fontSize: 13, fontWeight: 600, color: NAVY, fontFamily: "Inter, sans-serif" }}>
-                Step {step} of {TOTAL}
+                Question {step} of {TOTAL}
               </span>
               <span style={{ fontSize: 13, color: "#9CA3AF" }}>
                 {Math.round(pct)}% complete
@@ -587,6 +602,7 @@ export default function TRTQuestionnaire() {
             padding: "32px 28px",
             marginBottom: 20,
             fontFamily: "Inter, sans-serif",
+            minHeight: 240,
           }}>
             {renderQuestion()}
           </div>

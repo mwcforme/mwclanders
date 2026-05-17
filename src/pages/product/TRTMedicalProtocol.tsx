@@ -9,6 +9,8 @@ import { ArrowRight } from "lucide-react";
 import { TRTHeader } from "@/components/landing/trt/TRTHeader";
 import { TRTFooter } from "@/components/landing/trt/TRTFooter";
 import { SEO } from "@/components/SEO";
+import { useBookingStore } from "@/domain/booking/bookingStore";
+import { contactUpdater } from "@/services/contactUpdater";
 
 const ORANGE = "#E8670A";
 const NAVY   = "#0B1029";
@@ -34,8 +36,16 @@ const STEPS = [
 ];
 
 export default function TRTMedicalProtocol() {
-  const navigate  = useNavigate();
-  const countdown = useCountdown(30 * 60); // 30 minutes
+  const navigate   = useNavigate();
+  const countdown  = useCountdown(30 * 60); // 30 minutes
+  const identity   = useBookingStore((s) => s.identity);
+
+  // Tag contact on mount — fire-and-forget
+  useEffect(() => {
+    const contactId = identity?.ghlContactId;
+    if (contactId) contactUpdater.addTag(contactId, "intake-started").catch(() => {});
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "#FFFFFF" }}>
@@ -56,9 +66,18 @@ export default function TRTMedicalProtocol() {
         }}>
 
           {/* Eyebrow pill */}
+          <style>{`
+            @keyframes pulseOrangeDot {
+              0%, 100% { opacity: 1; transform: scale(1); }
+              50%       { opacity: 0.5; transform: scale(0.75); }
+            }
+            .pulsing-dot {
+              animation: pulseOrangeDot 1.5s ease-in-out infinite;
+            }
+          `}</style>
           <div style={{ textAlign: "center", marginBottom: 20 }}>
             <span style={{
-              display: "inline-block",
+              display: "inline-flex", alignItems: "center", gap: 8,
               background: "rgba(232,103,10,0.10)",
               color: ORANGE,
               fontFamily: "Oswald, sans-serif",
@@ -70,6 +89,15 @@ export default function TRTMedicalProtocol() {
               borderRadius: 999,
               border: `1px solid rgba(232,103,10,0.25)`,
             }}>
+              <span
+                className="pulsing-dot"
+                style={{
+                  width: 8, height: 8, borderRadius: "50%",
+                  background: ORANGE, flexShrink: 0,
+                  display: "inline-block",
+                }}
+                aria-hidden="true"
+              />
               APPOINTMENT PENDING
             </span>
           </div>
@@ -102,11 +130,11 @@ export default function TRTMedicalProtocol() {
               Reservation expires in
             </p>
             <span style={{
-              fontFamily: "Oswald, sans-serif",
+              fontFamily: "'Courier New', 'Courier', monospace",
               fontWeight: 700,
-              fontSize: "clamp(40px, 10vw, 56px)",
+              fontSize: "clamp(44px, 10vw, 60px)",
               color: ORANGE,
-              letterSpacing: "0.02em",
+              letterSpacing: "0.06em",
               lineHeight: 1,
             }}>
               {countdown}
@@ -147,20 +175,40 @@ export default function TRTMedicalProtocol() {
                 Licensed Virginia Provider · Men's Health Specialist
               </p>
             </div>
-            {/* Badge */}
-            <span style={{
-              background: "rgba(232,103,10,0.10)",
-              color: ORANGE,
-              fontSize: 11,
-              fontWeight: 700,
-              letterSpacing: "0.06em",
-              padding: "4px 10px",
-              borderRadius: 999,
-              whiteSpace: "nowrap",
-              flexShrink: 0,
-            }}>
-              Your Assigned Provider
-            </span>
+            {/* Badges */}
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 6, flexShrink: 0 }}>
+              <span style={{
+                background: "rgba(232,103,10,0.10)",
+                color: ORANGE,
+                fontSize: 11,
+                fontWeight: 700,
+                letterSpacing: "0.06em",
+                padding: "4px 10px",
+                borderRadius: 999,
+                whiteSpace: "nowrap",
+              }}>
+                Your Assigned Provider
+              </span>
+              <span style={{
+                background: "#DCFCE7",
+                color: "#16A34A",
+                fontSize: 11,
+                fontWeight: 700,
+                letterSpacing: "0.06em",
+                padding: "4px 10px",
+                borderRadius: 999,
+                whiteSpace: "nowrap",
+                display: "flex",
+                alignItems: "center",
+                gap: 5,
+              }}>
+                <span style={{
+                  width: 6, height: 6, borderRadius: "50%",
+                  background: "#16A34A", display: "inline-block",
+                }} aria-hidden="true" />
+                Online Now
+              </span>
+            </div>
           </div>
 
           {/* Next steps */}

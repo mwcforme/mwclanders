@@ -3,11 +3,13 @@
  * Step 7 (final) of the 10-step TRT funnel.
  */
 
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useBookingStore } from "@/domain/booking/bookingStore";
 import { TRTHeader } from "@/components/landing/trt/TRTHeader";
 import { TRTFooter } from "@/components/landing/trt/TRTFooter";
 import { SEO } from "@/components/SEO";
+import { contactUpdater } from "@/services/contactUpdater";
 
 const ORANGE = "#E8670A";
 const NAVY   = "#0B1029";
@@ -35,7 +37,7 @@ function buildGoogleCalendarUrl(title: string, startIso: string | undefined, loc
   return `${base}&text=${encodeURIComponent(title)}&dates=${fmt(start)}/${fmt(end)}&location=${encodeURIComponent(location ?? "Men's Wellness Centers")}`;
 }
 
-function buildIcsContent(title: string, startIso: string | undefined, location: string | undefined): string {
+function buildIcsContent(startIso: string | undefined, location: string | undefined): string {
   const start = startIso ? new Date(startIso) : new Date();
   const end   = new Date(start.getTime() + 60 * 60 * 1000);
   const fmt   = (d: Date) => d.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
@@ -46,8 +48,9 @@ function buildIcsContent(title: string, startIso: string | undefined, location: 
     "BEGIN:VEVENT",
     `DTSTART:${fmt(start)}`,
     `DTEND:${fmt(end)}`,
-    `SUMMARY:${title}`,
+    `SUMMARY:Men's Wellness Centers Appointment`,
     `LOCATION:${location ?? "Men's Wellness Centers"}`,
+    `DESCRIPTION:Your no-cost testosterone consultation`,
     "END:VEVENT",
     "END:VCALENDAR",
   ].join("\r\n");
@@ -69,13 +72,37 @@ export default function TRTSuccess() {
   const navigate     = useNavigate();
   const location     = useBookingStore((s) => s.location);
   const apptTime     = useBookingStore((s) => s.appointmentTime);
+  const identity     = useBookingStore((s) => s.identity);
 
   const locationLabel = location ? (LOCATION_LABELS[location] ?? location) : "Men's Wellness Centers";
   const apptLabel     = formatApptTime(apptTime);
-  const calTitle      = "TRT Consultation — Men's Wellness Centers";
+  const calTitle      = "Men's Wellness Centers Appointment";
+
+  // On mount: confetti, GHL tag, analytics event
+  useEffect(() => {
+    // Confetti celebration
+    import("canvas-confetti").then(({ default: confetti }) => {
+      confetti({
+        particleCount: 120,
+        spread: 80,
+        colors: ["#E8670A", "#F97316", "#FCD9B4", "#FFFFFF"],
+      });
+    }).catch(() => {});
+
+    // GHL tag — fire-and-forget
+    const contactId = identity?.ghlContactId;
+    if (contactId) contactUpdater.addTag(contactId, "funnel-complete").catch(() => {});
+
+    // Analytics event — no PHI
+    (window as Window & { dataLayer?: unknown[] }).dataLayer?.push({
+      event: "product_trt_funnel_complete",
+      location: location ?? undefined,
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleIcsDownload = () => {
-    const content = buildIcsContent(calTitle, apptTime, locationLabel);
+    const content = buildIcsContent(apptTime, locationLabel);
     const blob = new Blob([content], { type: "text/calendar;charset=utf-8" });
     const url  = URL.createObjectURL(blob);
     const a    = document.createElement("a");

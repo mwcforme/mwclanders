@@ -160,9 +160,27 @@ const ProductTRT = () => {
       />
 
       {/* ── ANNOUNCEMENT BAR ──────────────────────────────────────────────── */}
+      <style>{`
+        @keyframes shimmerLR {
+          0%   { background-position: -200% center; }
+          100% { background-position: 200% center; }
+        }
+        .announcement-shimmer {
+          background: linear-gradient(90deg, #0B1029 0%, #0B1029 35%, #1a2448 50%, #0B1029 65%, #0B1029 100%);
+          background-size: 200% auto;
+          animation: shimmerLR 3s linear infinite;
+        }
+        @keyframes floatVial {
+          0%, 100% { transform: translateY(0); }
+          50%       { transform: translateY(-8px); }
+        }
+        .hero-vial-float {
+          animation: floatVial 3s ease-in-out infinite;
+        }
+      `}</style>
       <div
+        className="announcement-shimmer"
         style={{
-          background: "#0B1029",
           padding: "9px 16px",
           textAlign: "center",
         }}
@@ -217,6 +235,7 @@ const ProductTRT = () => {
               <img
                 src="/images/trt-vial.svg"
                 alt="Men's Wellness Centers Testosterone Protocol"
+                className="hero-vial-float"
                 style={{ width: "100%", height: "100%", objectFit: "contain", minHeight: 480, padding: "32px" }}
               />
               {/* "Virginia's Choice" pill badge overlay */}
@@ -390,8 +409,12 @@ const ProductTRT = () => {
                         fontSize: 13,
                         color: "#16a34a",
                         flexShrink: 0,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 4,
                       }}
                     >
+                      <Check size={13} strokeWidth={3} color="#16a34a" aria-hidden />
                       {value}
                     </span>
                   </div>
@@ -526,6 +549,7 @@ const ProductTRT = () => {
                     letterSpacing: "0.12em",
                     color: "#444",
                     textTransform: "uppercase" as const,
+                    boxShadow: "0 1px 6px rgba(0,0,0,0.08)",
                   }}
                 >
                   {pub}

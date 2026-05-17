@@ -9,6 +9,8 @@ import { FlaskConical, Check, Minus, ArrowRight } from "lucide-react";
 import { TRTHeader } from "@/components/landing/trt/TRTHeader";
 import { TRTFooter } from "@/components/landing/trt/TRTFooter";
 import { SEO } from "@/components/SEO";
+import { useBookingStore } from "@/domain/booking/bookingStore";
+import { contactUpdater } from "@/services/contactUpdater";
 
 const ORANGE = "#E8670A";
 const NAVY   = "#0B1029";
@@ -16,8 +18,19 @@ const NAVY   = "#0B1029";
 type LabChoice = "yes" | "no" | null;
 
 export default function TRTBloodwork() {
-  const navigate = useNavigate();
+  const navigate   = useNavigate();
+  const identity   = useBookingStore((s) => s.identity);
   const [choice, setChoice] = useState<LabChoice>(null);
+
+  const handleSelect = (value: "yes" | "no") => {
+    setChoice(value);
+    // Tag contact immediately on selection — fire-and-forget
+    const contactId = identity?.ghlContactId;
+    if (contactId) {
+      const tag = value === "yes" ? "has-recent-labs" : "labs-needed";
+      contactUpdater.addTag(contactId, tag).catch(() => {});
+    }
+  };
 
   const handleContinue = () => {
     if (!choice) return;
@@ -38,7 +51,7 @@ export default function TRTBloodwork() {
     return (
       <button
         type="button"
-        onClick={() => setChoice(value)}
+        onClick={() => handleSelect(value)}
         style={{
           width: "100%", padding: "20px 24px",
           border: `2px solid ${sel ? ORANGE : "#E5E7EB"}`,

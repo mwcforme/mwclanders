@@ -9,12 +9,15 @@ import { ShieldCheck, Upload } from "lucide-react";
 import { TRTHeader } from "@/components/landing/trt/TRTHeader";
 import { TRTFooter } from "@/components/landing/trt/TRTFooter";
 import { SEO } from "@/components/SEO";
+import { useBookingStore } from "@/domain/booking/bookingStore";
+import { contactUpdater } from "@/services/contactUpdater";
 
 const ORANGE = "#E8670A";
 const NAVY   = "#0B1029";
 
 export default function TRTIdentityVerification() {
-  const navigate = useNavigate();
+  const navigate   = useNavigate();
+  const identity   = useBookingStore((s) => s.identity);
   const [file, setFile] = useState<File | null>(null);
   const [dragOver, setDragOver] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -31,11 +34,15 @@ export default function TRTIdentityVerification() {
   };
 
   const handleUpload = () => {
-    // Upload is placeholder — navigate immediately
+    // No actual file upload backend yet — just tag the contact
+    const contactId = identity?.ghlContactId;
+    if (contactId) contactUpdater.addTag(contactId, "id-uploaded").catch(() => {});
     navigate("/product/trt/bloodwork");
   };
 
   const handleSkip = () => {
+    const contactId = identity?.ghlContactId;
+    if (contactId) contactUpdater.addTag(contactId, "id-skipped").catch(() => {});
     navigate("/product/trt/bloodwork");
   };
 
