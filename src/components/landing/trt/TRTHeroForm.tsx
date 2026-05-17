@@ -65,7 +65,7 @@ export const TRTHeroForm = ({
   service    = "trt",
   heading    = COPY.cta.bookConsult,
   subheading = "Same-day and next-day availability. Takes under 2 minutes.",
-  ctaLabel   = COPY.cta.bookConsult,
+  ctaLabel   = "Book My Free Consultation",
 }: TRTHeroFormProps = {}) => {
   const [name,     setName]     = useState("");
   const [phone,    setPhone]    = useState("");
@@ -293,7 +293,6 @@ export const TRTHeroForm = ({
                     gap: 10,
                     cursor: "pointer",
                     userSelect: "none",
-                    borderRadius: 8,
                     border: sel
                       ? `2px solid ${ORANGE}`
                       : errors.location
@@ -415,7 +414,6 @@ export const TRTHeroForm = ({
             fontWeight: 700,
             letterSpacing: "0.06em",
             fontFamily: "Inter, sans-serif",
-            textTransform: "uppercase",
             cursor: isSubmitting ? "wait" : "pointer",
             opacity: isSubmitting ? 0.80 : 1,
             boxShadow: isSubmitting ? "none" : "0 4px 20px rgba(232,103,10,0.40)",
@@ -430,7 +428,7 @@ export const TRTHeroForm = ({
         >
           {isSubmitting
             ? <><Loader2 size={16} className="animate-spin" /> Booking…</>
-            : ctaLabel
+            : <>{ctaLabel} →</>
           }
         </button>
 
