@@ -36,6 +36,7 @@ const RotatingService = () => {
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0)" : "translateY(-6px)",
         transition: "opacity 280ms ease, transform 280ms ease",
+        willChange: "opacity, transform",
         whiteSpace: "nowrap",
       }}
     >
@@ -168,6 +169,8 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
               letterSpacing: "-0.01em",
               color: COLORS.cream,
               fontWeight: 700,
+              /* Lock height to exactly 2 lines — prevents layout shift on word change */
+              minHeight: "calc(clamp(36px, 9vw, 96px) * 2)",
             }}
           >
             <span style={{ display: "block", whiteSpace: "nowrap" }}>VIRGINIA&rsquo;S CHOICE</span>
