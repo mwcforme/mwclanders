@@ -36,11 +36,17 @@ interface TRTHeroFormProps {
 const VALID_LOCATIONS = ["richmond", "virginia-beach", "newport-news"] as const;
 type LocationKey = typeof VALID_LOCATIONS[number];
 
-const LOCATION_OPTIONS: { key: LocationKey; label: string; hint: string }[] = [
-  { key: "richmond", label: "Richmond", hint: "Serving Richmond & surrounding areas" },
-  { key: "virginia-beach", label: "Virginia Beach", hint: "Serving Hampton Roads & Chesapeake" },
-  { key: "newport-news", label: "Newport News", hint: "Serving the Peninsula & Williamsburg" },
+const LOCATION_OPTIONS: { key: LocationKey; label: string }[] = [
+  { key: "richmond", label: "Richmond" },
+  { key: "virginia-beach", label: "Virginia Beach" },
+  { key: "newport-news", label: "Newport News" },
 ];
+
+// Location radio-card states (Stripe Payment Element pattern):
+// UNSELECTED: #243042 bg, rgba(255,255,255,0.08) border, neutral radio stroke
+// HOVER:      slightly brighter bg, #FF6A00 border at 50% opacity
+// SELECTED:   rgba(255,106,0,0.10) tinted fill, 2px #FF6A00 border, filled dot, outer glow
+// FOCUS:      2px #FFFFFF at 60% opacity focus ring, 2px offset (keyboard only)
 
 function getLocationFromUrl(): LocationKey | "" {
   if (typeof window === "undefined") return "";
@@ -59,6 +65,7 @@ export const TRTHeroForm = ({
   const [location, setLocation] = useState<LocationKey | "">(() => getLocationFromUrl());
   const [tcpa, setTcpa] = useState(false);
   const [focused, setFocused] = useState<string | null>(null);
+  const [hoveredLocation, setHoveredLocation] = useState<LocationKey | null>(null);
   const [localErrors, setLocalErrors] = useState<Record<string, string>>({});
   const navigate = useNavigate();
 
@@ -253,78 +260,128 @@ export const TRTHeroForm = ({
           {errors.phone && <p role="alert" className="text-xs mt-1" style={{ color: ERROR_RED }}>{errors.phone}</p>}
         </div>
 
-        {/* Location — stacked cards with city + neighborhood hint */}
-        <div ref={refs.location}>
+        {/* Location radio-card group */}
+        <div
+          ref={refs.location}
+          role="radiogroup"
+          aria-label="Select clinic location"
+          aria-required="true"
+        >
           {errors.location && (
-            <p role="alert" className="text-xs mb-1" style={{ color: ERROR_RED, fontFamily: "Inter, sans-serif" }}>Please choose a location to continue</p>
+            <p role="alert" className="text-xs mb-2" style={{ color: ERROR_RED, fontFamily: "Inter, sans-serif" }}>
+              Please choose a location to continue
+            </p>
           )}
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {LOCATION_OPTIONS.map((opt) => {
               const isSelected = location === opt.key;
+              const isHovered = hoveredLocation === opt.key && !isSelected;
+
+              let borderColor: string;
+              let bgColor: string;
+              let boxShadow: string;
+
+              if (isSelected) {
+                borderColor = "#FF6A00";
+                bgColor = "rgba(255,106,0,0.10)";
+                boxShadow = "0 0 0 3px rgba(255,106,0,0.18)";
+              } else if (errors.location) {
+                borderColor = ERROR_RED;
+                bgColor = "#243042";
+                boxShadow = "none";
+              } else if (isHovered) {
+                borderColor = "rgba(255,122,26,0.50)";
+                bgColor = "#283548";
+                boxShadow = "none";
+              } else {
+                borderColor = "rgba(255,255,255,0.08)";
+                bgColor = "#243042";
+                boxShadow = "none";
+              }
+
               return (
-                <button
+                <label
                   key={opt.key}
-                  type="button"
-                  onClick={() => { setLocation(opt.key); clearError("location"); }}
-                  aria-pressed={isSelected}
                   style={{
-                    width: "100%",
-                    minHeight: 64,
+                    display: "flex",
+                    alignItems: "center",
+                    height: 48,
                     borderRadius: 10,
-                    border: `2px solid ${
-                      isSelected ? ORANGE : errors.location ? ERROR_RED : "rgba(255,255,255,0.45)"
-                    }`,
-                    background: isSelected ? ORANGE : "rgba(255,255,255,0.11)",
+                    border: `2px solid ${borderColor}`,
+                    background: bgColor,
                     color: "#FFFFFF",
                     fontFamily: "Inter, sans-serif",
                     cursor: "pointer",
-                    transition: "all 0.14s ease",
-                    padding: "0 16px",
-                    boxShadow: isSelected
-                      ? "0 6px 20px rgba(232,103,10,0.45)"
-                      : "0 2px 6px rgba(0,0,0,0.30)",
-                    transform: isSelected ? "scale(0.985)" : "scale(1)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    textAlign: "left",
+                    transition: "border-color 150ms ease, background 150ms ease, box-shadow 150ms ease",
+                    padding: "0 14px",
+                    gap: 12,
+                    boxShadow,
+                    userSelect: "none",
                   }}
+                  onMouseEnter={() => setHoveredLocation(opt.key)}
+                  onMouseLeave={() => setHoveredLocation(null)}
                 >
-                  {/* Left: radio circle — larger, high-contrast border */}
-                  <div
+                  {/* Visually hidden native radio — keyboard + a11y */}
+                  <input
+                    type="radio"
+                    name="location"
+                    value={opt.key}
+                    checked={isSelected}
+                    onChange={() => { setLocation(opt.key); clearError("location"); }}
+                    aria-label={opt.label}
                     style={{
-                      width: 24,
-                      height: 24,
+                      position: "absolute",
+                      opacity: 0,
+                      width: 0,
+                      height: 0,
+                      pointerEvents: "none",
+                    }}
+                  />
+                  {/* Custom radio visual */}
+                  <div
+                    aria-hidden="true"
+                    style={{
+                      width: 18,
+                      height: 18,
                       borderRadius: "50%",
-                      border: `2.5px solid ${isSelected ? "#FFFFFF" : "rgba(255,255,255,0.70)"}`,
-                      background: isSelected ? "rgba(255,255,255,0.20)" : "transparent",
+                      border: `1.5px solid ${
+                        isSelected ? "#FF6A00" : "rgba(255,255,255,0.45)"
+                      }`,
+                      background: "transparent",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       flexShrink: 0,
-                      transition: "all 0.14s ease",
-                      marginRight: 12,
+                      transition: "border-color 150ms ease",
                     }}
                   >
                     {isSelected && (
-                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                        <path d="M2 6L5 9L10 3" stroke="#FFFFFF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
+                      <div
+                        style={{
+                          width: 8,
+                          height: 8,
+                          borderRadius: "50%",
+                          background: "#FF6A00",
+                        }}
+                      />
                     )}
                   </div>
-                  {/* Right: city + neighborhood */}
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: 15, fontWeight: 700, lineHeight: 1.2 }}>
-                      {opt.label}
-                    </div>
-                    <div style={{ fontSize: 12, fontWeight: 400, opacity: isSelected ? 0.85 : 0.55, marginTop: 2 }}>
-                      {opt.hint}
-                    </div>
-                  </div>
-                </button>
+                  {/* Label */}
+                  <span style={{ fontSize: 15, fontWeight: 600, lineHeight: 1 }}>
+                    {opt.label}
+                  </span>
+                </label>
               );
             })}
           </div>
+          {/* Inject focus-visible ring via global style — only on keyboard nav */}
+          <style>{`
+            input[name="location"]:focus-visible + div,
+            label:has(input[name="location"]:focus-visible) {
+              outline: 2px solid rgba(255,255,255,0.60);
+              outline-offset: 2px;
+            }
+          `}</style>
         </div>
 
         {/* TCPA — custom styled checkbox, fully TCPA compliant */}
