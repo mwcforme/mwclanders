@@ -74,11 +74,11 @@ const EmailCapture = ({ contactId, onComplete }: { contactId?: string; onComplet
             style={{
               width: "100%", height: 48, borderRadius: 8,
               border: `1.5px solid ${emailError ? "#DC2626" : "#D1D5DB"}`,
-              background: "#FFFFFF", color: "#0B1029", fontSize: 15,
+              background: "#FFFFFF", color: "#0B1029", fontSize: 16,
               fontFamily: "Inter, sans-serif", padding: "0 14px", outline: "none",
             }}
           />
-          {emailError && <p style={{ color: "#DC2626", fontSize: 12, marginTop: 4, fontFamily: "Inter, sans-serif" }}>{emailError}</p>}
+          {emailError && <p role="alert" style={{ color: "#DC2626", fontSize: 12, marginTop: 4, fontFamily: "Inter, sans-serif" }}>{emailError}</p>}
         </div>
         <button
           type="submit"

@@ -69,7 +69,7 @@ const BookLayout = ({ page, title, description, variant = "default", children }:
   const isConfirmation = page === "confirmed";
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ fontFamily: "Inter, sans-serif", background: "#0B1029" }}>
+    <div className="min-h-screen flex flex-col" style={{ fontFamily: "Inter, sans-serif", background: "#0B1029", overflowX: "hidden" }}>
       <SEO title={title} description={description || DEFAULT_DESC[page]} />
       <TRTHeader minimal={variant === "confirmation"} />
       <main className="flex-1 pt-16 animate-in fade-in duration-200">{children}</main>

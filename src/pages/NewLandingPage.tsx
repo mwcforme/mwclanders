@@ -32,7 +32,7 @@ const faqSchema = JSON.stringify(buildFaqJsonLd());
 const NewLandingPage = () => {
   useScrollDepth();
   return (
-    <div className="min-h-screen flex flex-col" style={{ fontFamily: "Inter, sans-serif" }}>
+    <div className="min-h-screen flex flex-col" style={{ fontFamily: "Inter, sans-serif", overflowX: "hidden" }}>
       <SEO
         title="TRT in Virginia | Men's Wellness Centers"
         description="Provider-supervised testosterone replacement therapy at 3 Virginia locations. Testing and results reviewed in-visit. Walk in today."
@@ -98,8 +98,6 @@ const NewLandingPage = () => {
         <TRTFooter />
       </Suspense>
       <StickyMobileCTA />
-      {/* Spacer so sticky CTA doesn't overlap last section — 72px matches StickyMobileCTA height */}
-      <div className="md:hidden" style={{ height: 72 }} aria-hidden="true" />
     </div>
   );
 };

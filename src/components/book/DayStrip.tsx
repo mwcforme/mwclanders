@@ -153,13 +153,15 @@ const DayStrip = ({
                 setShowLeftFade(el.scrollLeft > 4);
                 setShowRightFade(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
               }}
-              className="flex gap-2 overflow-x-auto justify-center"
+              className="flex gap-2 overflow-x-auto scrollbar-hide"
               style={{
                 scrollSnapType: "x mandatory",
                 WebkitOverflowScrolling: "touch",
                 paddingBottom: 4,
                 scrollbarWidth: "none",
                 flexWrap: "nowrap",
+                /* justify-start — overflow-x-auto + justify-center breaks scroll-to-start on narrow screens */
+                justifyContent: "flex-start",
               }}
             >
               {days.map((d) => {
