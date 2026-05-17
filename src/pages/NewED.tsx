@@ -61,7 +61,7 @@ const NewED = () => {
               subhead={COPY.offer.finalSubhead}
               cardTitle={COPY.cta.bookDiscreetVisit}
               ctaLabel={COPY.cta.bookDiscreetVisit}
-              intro="No mail-order pills. No rotating clinicians. A Virginia physician who diagnoses the cause and prescribes what actually works for your case."
+              intro="No mail-order pills. No rotating clinicians. A licensed Virginia provider who diagnoses the cause and prescribes what actually works for your case."
               bullets={[
                 "100% private. Your employer or insurance is never notified.",
                 COPY.offer.cancelReschedule,

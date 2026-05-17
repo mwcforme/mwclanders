@@ -166,7 +166,7 @@ export const FAQ_ITEMS: { q: string; a: string }[] = [
   },
   {
     q: "What about increasing estrogen?",
-    a: "We monitor estradiol with every lab panel and adjust your protocol to keep it in the optimal range.",
+    a: "We monitor estradiol with every lab panel and adjust your protocol to keep it within a healthy target range.",
   },
   {
     q: "Need more help?",
