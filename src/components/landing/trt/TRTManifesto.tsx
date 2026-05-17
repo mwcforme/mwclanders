@@ -9,8 +9,8 @@ export const TRTManifesto = () => {
         {/* Left: copy (mobile second) */}
         <div className="order-2 md:order-1">
           <div
-            className="uppercase mb-3"
-            style={{ color: "var(--brand-cta)", fontFamily: "Inter, sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: "0.12em" }}
+            className="uppercase mb-4 inline-flex"
+            style={{ color: "var(--brand-cta)", fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", background: "rgba(232,103,10,0.10)", border: "1px solid rgba(232,103,10,0.25)", borderRadius: 999, padding: "4px 12px" }}
           >
             Why Men Choose Us
           </div>
