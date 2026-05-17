@@ -11,7 +11,7 @@
  */
 
 import { useState, useRef, useEffect } from "react";
-import { Lock, Loader2, MapPin, Check, Phone, User, AlertCircle, ArrowRight } from "lucide-react";
+import { Loader2, MapPin, Check, Phone, User, AlertCircle, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
 import { useLeadSubmitController } from "@/domain/leads/useLeadSubmitController";
@@ -277,27 +277,7 @@ export const TRTHeroForm = ({
         fontFamily: "Inter, sans-serif",
       }}
     >
-      {/* Heading */}
-      <h2 style={{
-        fontFamily: "Oswald, sans-serif",
-        fontSize: 21,
-        fontWeight: 600,
-        color: "var(--brand-cream)",
-        letterSpacing: "0.04em",
-        lineHeight: 1.2,
-        marginBottom: 6,
-      }}>
-        {heading}
-      </h2>
-      <p style={{
-        fontSize: 13,
-        // hardcoded-color-allow-next-line
-        color: "rgba(245,240,235,0.60)",
-        lineHeight: 1.5,
-        marginBottom: 24,
-      }}>
-        {subheading}
-      </p>
+
 
       <form onSubmit={handleSubmit} noValidate style={{ display: "flex", flexDirection: "column", gap: 12 }}>
 
@@ -525,16 +505,6 @@ export const TRTHeroForm = ({
           }
         </button>
 
-        {/* Helper line under CTA */}
-        <p style={{
-          textAlign: "center", fontSize: 12,
-          // hardcoded-color-allow-next-line
-          color: "rgba(245,240,235,0.65)",
-          fontFamily: "Inter, sans-serif", lineHeight: 1.5, marginTop: 2,
-        }}>
-          Same-day availability · No obligation to proceed
-        </p>
-
         {controller.error && !Object.keys(errors).length && (
           <p style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 12, color: ERR_RED }}>
             <AlertCircle size={12} strokeWidth={2} /> {controller.error}
@@ -542,29 +512,7 @@ export const TRTHeroForm = ({
         )}
       </form>
 
-      {/* Footer */}
-      <div style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: 6,
-        marginTop: 20,
-        // hardcoded-color-allow-next-line
-        color: "rgba(245,240,235,0.65)",
-        fontSize: 12,
-      }}>
-        <Lock size={12} strokeWidth={2} aria-hidden />
-        HIPAA secure · No spam, ever
-      </div>
-      <p style={{
-        textAlign: "center", fontSize: 10,
-        // hardcoded-color-allow-next-line
-        color: "rgba(245,240,235,0.30)",
-        fontFamily: "Inter, sans-serif",
-        marginTop: 10, lineHeight: 1.4, padding: "0 4px",
-      }}>
-        Treatment requires a clinical evaluation and is only provided when medically appropriate. Individual results vary.
-      </p>
+
     </div>
     </BookingErrorBoundary>
   );

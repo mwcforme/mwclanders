@@ -177,7 +177,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
           </h1>
 
           <p
-            className="mt-6 max-w-[540px]"
+            className="mt-6 w-full"
             style={{
               // hardcoded-color-allow-next-line
               color: "rgba(245,240,235,0.88)",

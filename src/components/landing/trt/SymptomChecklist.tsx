@@ -29,11 +29,11 @@ export const SymptomChecklist = ({ formId = "hero-form" }: SymptomChecklistProps
     <div
       style={{
         // hardcoded-color-allow-next-line
-        background: "#161B3A",
+        background: "rgba(255,255,255,0.07)",
         // hardcoded-color-allow-next-line
-        border: "1px solid #2B3247",
-        borderRadius: 14,
-        padding: "20px 20px 16px",
+        border: "1px solid rgba(255,255,255,0.11)",
+        borderRadius: 16,
+        padding: "28px 28px 24px",
       }}
     >
       <p
