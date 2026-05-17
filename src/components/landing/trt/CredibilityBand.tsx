@@ -74,25 +74,8 @@ export const CredibilityBand = () => {
           // Desktop 1×4: right border on items 0,1,2
           const col = i % 2; // 0 or 1
           const row = Math.floor(i / 2); // 0 or 1
-          const dividerStyle: React.CSSProperties = {
-            // Right border: always on left col (col 0), except on md+ last item
-            borderRight: col === 0 || (i < stats.length - 1)
-              // hardcoded-color-allow-next-line
-              ? "1px solid rgba(255,255,255,0.12)"
-              : "none",
-            // Bottom border: on first row items on mobile
-            borderBottom: row === 0
-              // hardcoded-color-allow-next-line
-              ? "1px solid rgba(255,255,255,0.12)"
-              : "none",
-          };
-
-          // On desktop: only right border (no bottom), override with md class trick via inline check
-          // We use a wrapper div for cleaner control
-          const wrapStyle: React.CSSProperties = {
-            // hardcoded-color-allow-next-line
-            borderRight: i < stats.length - 1 ? "1px solid rgba(255,255,255,0.12)" : "none",
-          };
+          const dividerStyle: React.CSSProperties = {};
+          const wrapStyle: React.CSSProperties = {};
 
           if (s.href) {
             return (
