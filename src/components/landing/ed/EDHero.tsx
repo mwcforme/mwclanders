@@ -87,7 +87,7 @@ export const EDHero = () => {
               lineHeight: 1.5,
             }}
           >
-            A Virginia physician diagnoses the cause. Not a pill subscription. A real protocol built around your labs, with treatment options that go beyond what online clinics can offer.
+            A licensed Virginia provider diagnoses the cause. Not a pill subscription. A real protocol built around your labs, with treatment options that go beyond what online clinics can offer.
           </p>
 
           <div
@@ -144,7 +144,7 @@ export const EDHero = () => {
           <TRTHeroForm
             service="ed"
             heading="This isn't something your GP is trained for."
-            subheading="Physician-led ED care. Private, in-person. Same or next day."
+            subheading="Provider-led ED care. Private, in-person. Same or next day."
             ctaLabel="Meet with a Real Provider"
             ctaLabel="Book My Discreet Visit"
           />

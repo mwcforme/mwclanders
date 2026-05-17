@@ -137,7 +137,7 @@ const InlineEmailCapture = ({ recap, contactId, onComplete }: InlineEmailProps) 
           </p>
         )}
         <p style={{ fontSize: 11, color: "#7A8294", lineHeight: 1.45, marginTop: 8, fontFamily: "Inter, sans-serif" }}>
-          A Virginia physician is reserving this hour for you. We'll text and email
+          A licensed Virginia provider is reserving this hour for you. We'll text and email
           your confirmation with cancellation and reschedule links.
         </p>
         <button

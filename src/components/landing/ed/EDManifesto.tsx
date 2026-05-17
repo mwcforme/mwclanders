@@ -15,7 +15,7 @@ export const EDManifesto = () => (
           A blue pill in the mail does not ask why this is happening. We do. ED is often the first sign of a hormone issue, a vascular issue, or both. Treating it without that picture is a coin flip.
         </p>
         <p className="text-base mt-4 leading-[1.7]" style={{ color: "rgba(255,255,255,0.85)", fontFamily: "Inter, sans-serif", fontSize: 16 }}>
-          You see the same Virginia physician at the same center. Labs run on-site. Treatment options that go beyond what an app can offer, prescribed when clinically appropriate for your case.
+          You see the same licensed provider at the same center. Labs run on-site. Treatment options that go beyond what an app can offer, prescribed when clinically appropriate for your case.
         </p>
 
         <figure className="mt-7 rounded-xl p-5" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)" }}>

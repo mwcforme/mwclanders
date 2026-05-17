@@ -13,16 +13,16 @@ export const WLManifesto = () => (
         </h2>
 
         <p className="text-base mt-5 leading-[1.7]" style={{ color: "rgba(255,255,255,0.85)", fontFamily: "Inter, sans-serif", fontSize: 16 }}>
-          Prescription weight loss medications work. What changes the outcome is what wraps around them: a physician who knows your labs, a plan that fits your life, and check-ins that catch the small things before they stall your progress.
+          Prescription weight loss medications work. What changes the outcome is what wraps around them: a licensed provider who knows your labs, a plan that fits your life, and check-ins that catch the small things before they stall your progress.
         </p>
         <p className="text-base mt-4 leading-[1.7]" style={{ color: "rgba(255,255,255,0.85)", fontFamily: "Inter, sans-serif", fontSize: 16 }}>
-          That is what you get here. Not a script in the mail. Not a new clinician every visit. A Virginia physician, your numbers, and a plan that adjusts as you do.
+          That is what you get here. Not a script in the mail. Not a new clinician every visit. A licensed Virginia provider, your numbers, and a plan that adjusts as you do.
         </p>
 
         <figure className="mt-7 rounded-xl p-5" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)" }}>
           <Quote className="h-5 w-5 mb-2" style={{ color: "#E8670A" }} />
           <blockquote className="text-base leading-relaxed italic" style={{ color: "rgba(255,255,255,0.92)", fontFamily: "Inter, sans-serif" }}>
-            "I lost 38 pounds in six months and, more importantly, I kept it off. The difference was the doctor actually adjusting my dose and checking in. It was not a pill in a box."
+            "I lost 38 pounds in six months and, more importantly, I kept it off. The difference was the provider actually adjusting my dose and checking in. It was not a pill in a box."
           </blockquote>
           <figcaption className="mt-3 text-sm" style={{ color: "rgba(255,255,255,0.65)", fontFamily: "Inter, sans-serif" }}>
             David K., 54, Norfolk

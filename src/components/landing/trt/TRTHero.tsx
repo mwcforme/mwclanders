@@ -7,7 +7,7 @@ import { trackCro } from "@/hooks/useAnalytics";
 import { COPY } from "@/data/copy";
 
 const trustChecks = [
-  "Licensed Virginia physicians — not telehealth, not a PA",
+  "Licensed Virginia providers — physicians and NPs, not telehealth",
   "Labs drawn and reviewed in the same 60-minute visit",
   "3 Virginia locations, same-day availability",
   "Treatment starts the same day, when clinically appropriate",
@@ -130,7 +130,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
               lineHeight: 1.6,
             }}
           >
-            Sit down with a Virginia physician. Labs drawn on-site and reviewed in the same visit. No-cost consultation. Virginia's men's health practice since 2015.
+            Sit down with a licensed Virginia provider. Labs drawn on-site and reviewed in the same visit. No-cost consultation. Virginia's men's health practice since 2015.
           </p>
 
           {/* Star rating row — clickable, links to GBP */}

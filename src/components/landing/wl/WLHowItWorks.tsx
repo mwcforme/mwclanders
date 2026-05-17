@@ -16,13 +16,13 @@ const steps = [
   },
   {
     num: "2",
-    title: "Labs And A Real Physician, Same Visit",
-    desc: "We run metabolic labs in-center and a Virginia physician reviews them with you. No mail-order chatbot, no rotating clinicians.",
+    title: "Labs And A Real Provider, Same Visit",
+    desc: "We run metabolic labs in-center and a licensed Virginia provider reviews them with you. No mail-order chatbot, no rotating clinicians.",
   },
   {
     num: "3",
     title: "Walk Out With A Plan And, If Right For You, Your First Dose",
-    desc: "Physician-supervised weight loss medication when clinically appropriate, paired with a sustainable nutrition plan and ongoing monitoring.",
+    desc: "Provider-supervised weight loss medication when clinically appropriate, paired with a sustainable nutrition plan and ongoing monitoring.",
   },
 ];
 

@@ -8,8 +8,8 @@ const steps = [
   },
   {
     num: "2",
-    title: "A Doctor Who Actually Explains Your Labs",
-    desc: "A physician who specializes in men's hormones sits with you, goes over every number, and tells you exactly what's driving your symptoms.",
+    title: "A Provider Who Actually Explains Your Labs",
+    desc: "A licensed provider who specializes in men's health sits with you, goes over every number, and tells you exactly what's driving your symptoms.",
   },
   {
     num: "3",
@@ -72,7 +72,7 @@ export const TRTHowItWorks = () => {
             className="mt-4 text-base leading-relaxed"
             style={{ color: "#4A4A4A", fontFamily: "Inter, sans-serif", maxWidth: 520 }}
           >
-            Standard bloodwork doesn't measure what we measure. A hormone panel reviewed by a physician who specializes in men's health tells a different story than a general metabolic panel flagged for abnormals.
+            Standard bloodwork doesn't measure what we measure. A hormone panel reviewed by a licensed men's health provider tells a different story than a general metabolic panel flagged for abnormals.
           </p>
           <div
             className="mt-8 rounded-xl p-6"

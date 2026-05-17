@@ -4,11 +4,11 @@ import { ChevronDown } from "lucide-react";
 const faqs = [
   {
     q: "Is the visit really discreet?",
-    a: "Yes. You check in like any other appointment, you meet your physician one-on-one in a private room, and the conversation never leaves that room. We do not bill insurance, so there is no claim trail. Treatment is dispensed on-site or through a licensed pharmacy under a code, not a label.",
+    a: "Yes. You check in like any other appointment, you meet your provider one-on-one in a private room, and the conversation never leaves that room. We do not bill insurance, so there is no claim trail. Treatment is dispensed on-site or through a licensed pharmacy under a code, not a label.",
   },
   {
     q: "What treatments do you offer?",
-    a: "FDA-approved oral medications including Sildenafil and Tadalafil, plus injectable options like TriMix and PT-141 for men who do not respond to oral therapy. Your physician chooses based on labs, medical history, and what has and has not worked for you in the past.",
+    a: "FDA-approved oral medications including Sildenafil and Tadalafil, plus injectable options like TriMix and PT-141 for men who do not respond to oral therapy. Your provider chooses based on labs, medical history, and what has and has not worked for you in the past.",
   },
   {
     q: "I tried pills from an online site and they did nothing.",
@@ -16,7 +16,7 @@ const faqs = [
   },
   {
     q: "How is this different from Hims, BlueChew, or online ED?",
-    a: "We are an in-person Virginia center, not a chat-and-ship pharmacy. You see the same physician at the same center, your labs are drawn on-site, and your treatment includes options online services do not carry, like TriMix and PT-141.",
+    a: "We are an in-person Virginia center, not a chat-and-ship pharmacy. You see the same provider at the same center, your labs are drawn on-site, and your treatment includes options online services do not carry, like TriMix and PT-141.",
   },
   {
     q: "Does insurance cover this?",
@@ -24,11 +24,11 @@ const faqs = [
   },
   {
     q: "Will I leave my first visit with treatment?",
-    a: "When clinically appropriate, yes. Many men begin treatment the same day after labs and the physician visit are complete.",
+    a: "When clinically appropriate, yes. Many men begin treatment the same day after labs and the provider visit are complete.",
   },
   {
     q: "Are these treatments safe?",
-    a: "All medications we prescribe are FDA-approved and dispensed under physician supervision. Like any prescription treatment, they have potential side effects, which your provider will review with you. Ongoing follow-up is part of every plan.",
+    a: "All medications we prescribe are FDA-approved and dispensed under provider supervision. Like any prescription treatment, they have potential side effects, which your provider will review with you. Ongoing follow-up is part of every plan.",
   },
 ];
 

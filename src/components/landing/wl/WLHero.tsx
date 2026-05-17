@@ -2,9 +2,9 @@ import { Check, Star } from "lucide-react";
 import { TRTHeroForm } from "@/components/landing/trt/TRTHeroForm";
 
 const trustChecks = [
-  "Physician-supervised GLP-1 medications",
+  "Provider-supervised GLP-1 medications",
   "Dose adjusted at every visit, not auto-refilled",
-  "Face-to-face Virginia physician",
+  "Face-to-face Virginia provider",
   "FSA and HSA accepted",
 ];
 
@@ -144,7 +144,7 @@ export const WLHero = () => {
           <TRTHeroForm
             service="wl"
             heading="Diets don't fail you. The wrong diagnosis does."
-            subheading="Physician-supervised weight loss that treats the whole man. Same-day availability."
+            subheading="Provider-supervised weight loss that treats the whole man. Same-day availability."
             ctaLabel="Meet with a Real Provider"
           />
         </div>

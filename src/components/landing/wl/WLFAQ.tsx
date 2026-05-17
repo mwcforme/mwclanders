@@ -4,7 +4,7 @@ import { ChevronDown } from "lucide-react";
 const faqs = [
   {
     q: "How much weight can I expect to lose?",
-    a: "In manufacturer trials, GLP-1 medications like semaglutide and tirzepatide produced an average of 15-20% body weight loss when paired with diet and exercise changes. Your physician will set a realistic target based on your starting labs and health history. Individual results vary.",
+    a: "In manufacturer trials, GLP-1 medications like semaglutide and tirzepatide produced an average of 15-20% body weight loss when paired with diet and exercise changes. Your provider will set a realistic target based on your starting labs and health history. Individual results vary.",
   },
   {
     q: "Which medications do you prescribe?",
@@ -16,11 +16,11 @@ const faqs = [
   },
   {
     q: "How is this different from Hims, Ro, or online weight loss programs?",
-    a: "We are an in-person Virginia center, not a telehealth app. Your labs are drawn on-site, you see the same physician each visit, and your dose is adjusted based on real bloodwork, not a self-reported form.",
+    a: "We are an in-person Virginia center, not a telehealth app. Your labs are drawn on-site, you see the same provider each visit, and your dose is adjusted based on real bloodwork, not a self-reported form.",
   },
   {
     q: "Are GLP-1 medications safe?",
-    a: "GLP-1 medications are FDA-approved for weight management when prescribed and monitored by a licensed provider. Like any prescription, they carry potential side effects, which your physician will review with you. Ongoing lab monitoring is part of every plan.",
+    a: "GLP-1 medications are FDA-approved for weight management when prescribed and monitored by a licensed provider. Like any prescription, they carry potential side effects, which your provider will review with you. Ongoing lab monitoring is part of every plan.",
   },
   {
     q: "How soon will I see results?",
@@ -28,7 +28,7 @@ const faqs = [
   },
   {
     q: "What happens after I lose the weight?",
-    a: "We build a maintenance plan together. For some men that means continued low-dose GLP-1 therapy. For others it means transitioning off with structured nutrition and lab follow-up. Your physician decides with you, based on your numbers.",
+    a: "We build a maintenance plan together. For some men that means continued low-dose GLP-1 therapy. For others it means transitioning off with structured nutrition and lab follow-up. Your provider decides with you, based on your numbers.",
   },
 ];
 

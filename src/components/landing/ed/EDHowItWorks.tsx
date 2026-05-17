@@ -17,7 +17,7 @@ const steps = [
   },
   {
     num: "2",
-    title: "A Real Physician Diagnoses The Cause",
+    title: "A Licensed Provider Diagnoses The Cause",
     desc: "ED is often a symptom, not the disease. We test hormones, cardiovascular markers, and more so we treat what is actually happening.",
   },
   {

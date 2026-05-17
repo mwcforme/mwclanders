@@ -24,7 +24,7 @@ export const TRT_FAQS: FaqItem[] = [
   },
   {
     q: "How is this different from Hims, Hone, or an online TRT clinic?",
-    a: "We're in-person only. You see the same physician at the same center, labs are drawn on-site and reviewed that day, and your provider knows your full case. No mail-order chatbots, no rotating clinicians, no waiting on shipping.",
+    a: "We're in-person only. You see the same licensed provider at the same center, labs are drawn on-site and reviewed that day, and your provider knows your full case. No mail-order chatbots, no rotating clinicians, no waiting on shipping.",
   },
   {
     q: "How do I know if testosterone treatment is right for me?",
@@ -32,7 +32,7 @@ export const TRT_FAQS: FaqItem[] = [
   },
   {
     q: "What should I expect at my first visit, and what's included?",
-    a: "Plan for 60 minutes. Your labs are drawn on-site \u2014 a full hormone panel, not a standard GP metabolic panel. Your Virginia physician then reviews every result with you in the same visit, explains what they mean in plain language, and if treatment is appropriate, you leave with a protocol that day. No-cost consultation. No obligation to proceed.",
+    a: "Plan for 60 minutes. Your labs are drawn on-site \u2014 a full hormone panel, not a standard GP metabolic panel. Your Virginia provider then reviews every result with you in the same visit, explains what they mean in plain language, and if treatment is appropriate, you leave with a protocol that day. No-cost consultation. No obligation to proceed.",
   },
   {
     q: "How soon do patients typically notice changes?",
