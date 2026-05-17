@@ -37,11 +37,11 @@ const GoogleG = ({ size = 18 }: { size?: number }) => (
 );
 
 const ROTATING_SERVICES = [
-  "MEN'S HEALTH",
   "TESTOSTERONE THERAPY",
-  "ED TREATMENT",
+  "ED THERAPY",
   "MEDICAL WEIGHT LOSS",
-  "HORMONE OPTIMIZATION",
+  "HORMONE THERAPY",
+  "MEN'S HEALTH",
 ];
 
 /** Rotating service word — only the service name animates, 'IN' stays static */
@@ -159,18 +159,18 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
             className="font-bold uppercase"
             style={{
               fontFamily: "Oswald, 'Bebas Neue', Anton, sans-serif",
-              fontSize: "clamp(44px, 6vw, 88px)",
+              fontSize: "clamp(38px, 5.5vw, 82px)",
               lineHeight: 0.95,
               letterSpacing: "-0.01em",
               color: COLORS.cream,
               fontWeight: 700,
             }}
           >
-            {/* Line 1 — static */}
-            <span style={{ display: "block" }}>LEADING THE CHARGE</span>
-            {/* Line 2 — 'IN' static, service rotates */}
+            {/* Line 1 — static, cream */}
+            <span style={{ display: "block" }}>VIRGINIA&rsquo;S CHOICE</span>
+            {/* Line 2 — 'FOR' locks with the rotating word, no orphan */}
             <span style={{ display: "block", color: COLORS.orange }}>
-              IN <RotatingService />
+              FOR <RotatingService />
             </span>
           </h1>
 
