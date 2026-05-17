@@ -46,9 +46,9 @@ const NewLandingPage = () => {
         <TRTHero />
         <SectionReveal><CredibilityBand /></SectionReveal>
 
-        {/* Symptom checklist — desktop only (mobile version shown in hero) */}
+        {/* Symptom checklist + stat reinforcement — mid-page section */}
         <SectionReveal>
-          <div className="hidden lg:block" style={{ background: "var(--brand-navy-deep)", padding: "56px 24px 64px" }}>
+          <div style={{ background: "var(--brand-navy-deep)", padding: "56px 24px 64px" }}>
             <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }}>
               <SymptomChecklist formId="final-cta" />
               {/* Right: reinforcement stat + differentiator */}

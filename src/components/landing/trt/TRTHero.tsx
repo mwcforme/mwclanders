@@ -231,8 +231,8 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
             ))}
           </ul>
 
-          {/* Symptom self-id block — mobile only (desktop: shown below hero in its own section) */}
-          <div className="lg:hidden mt-7 max-w-[600px]">
+          {/* Symptom self-id block — visible on both mobile and desktop in left column */}
+          <div className="mt-7 max-w-[600px]">
             <SymptomChecklist formId="hero-form" />
           </div>
 

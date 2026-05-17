@@ -1,29 +1,34 @@
 /**
- * SymptomChecklist — scannable self-identification block.
+ * SymptomChecklist — self-identification block used in the hero.
  *
- * Non-interactive display list. 6 items. Orange circle check prefix.
- * Followed by bridge copy and an anchor CTA scrolling to the form.
+ * Desktop: shown in left column to fill space alongside the form.
+ * Mobile: shown below the trust checks.
  *
- * Based on: Defy Medical "Why do I feel this way?" pattern + Ideal Image
- * symptom self-id, adapted to scannable-not-interactive per brief constraint.
- *
- * NOT a quiz. Does not collect answers. Does not navigate.
+ * Bullets: specific, no AI slop, no em dashes, Google Ads healthcare compliant.
+ * Bridge copy leads to our services, not a generic CTA.
+ * Anchor CTA hidden on desktop (form is right there); visible on mobile only.
  */
 
-import { CheckCircle, ChevronDown } from "lucide-react";
-import { COPY } from "@/data/copy";
+import { CheckCircle } from "lucide-react";
+
+const HEADING = "IF THIS SOUNDS LIKE THE LAST 12 MONTHS";
 
 const SYMPTOMS = [
-  "Energy drops by 2pm no matter how much you sleep",
-  "Workouts stopped producing results",
+  "Tired by noon. Coffee stopped working.",
+  "Gym three times a week. Nothing to show for it.",
   "Sex drive is down. You've noticed. So has she.",
-  "You can't focus the way you used to",
-  "Gaining weight doing the same things that used to work",
-  "Your doctor says your bloodwork looks fine",
+  "Sharp at 35. Not at 45. The gap is real.",
+  "Same diet. Same routine. Still gaining.",
+  "Labs came back normal. You don't feel normal.",
 ] as const;
 
+const BRIDGE =
+  "Most of our patients were told the same thing. " +
+  "Bloodwork reviewed by a provider who specializes in men's health tells a different story. " +
+  "We offer testosterone therapy, ED care, and medical weight loss with same-day labs.";
+
 interface SymptomChecklistProps {
-  formId?: string; // id of the form to scroll to on anchor click
+  formId?: string;
 }
 
 export const SymptomChecklist = ({ formId = "hero-form" }: SymptomChecklistProps) => {
@@ -42,15 +47,15 @@ export const SymptomChecklist = ({ formId = "hero-form" }: SymptomChecklistProps
         style={{
           fontFamily: "Oswald, sans-serif",
           fontWeight: 700,
-          fontSize: 18,
-          letterSpacing: "0.02em",
+          fontSize: 15,
+          letterSpacing: "0.06em",
           textTransform: "uppercase",
           color: "var(--brand-cta)",
           marginBottom: 16,
-          lineHeight: 1.15,
+          lineHeight: 1.2,
         }}
       >
-        Men come to us when this sounds familiar
+        {HEADING}
       </h2>
 
       <ul
@@ -62,7 +67,7 @@ export const SymptomChecklist = ({ formId = "hero-form" }: SymptomChecklistProps
           flexDirection: "column",
           gap: 0,
         }}
-        aria-label="Symptom self-identification checklist"
+        aria-label="Symptom self-identification list"
       >
         {SYMPTOMS.map((symptom) => (
           <li
@@ -70,54 +75,50 @@ export const SymptomChecklist = ({ formId = "hero-form" }: SymptomChecklistProps
             style={{
               display: "flex",
               alignItems: "flex-start",
-              gap: 12,
-              padding: "9px 0",
+              gap: 10,
+              padding: "8px 0",
               // hardcoded-color-allow-next-line
               borderBottom: "1px solid rgba(43,50,71,0.60)",
               fontSize: 14,
               // hardcoded-color-allow-next-line
               color: "#F5F3F0",
-              lineHeight: 1.45,
+              lineHeight: 1.4,
               fontFamily: "Inter, sans-serif",
               fontWeight: 400,
             }}
           >
             <CheckCircle
-              size={18}
+              size={16}
               strokeWidth={2}
               aria-hidden
-              style={{ color: "var(--brand-cta)", flexShrink: 0, marginTop: 1 }}
+              style={{ color: "var(--brand-cta)", flexShrink: 0, marginTop: 2 }}
             />
             {symptom}
           </li>
         ))}
       </ul>
 
-      {/* Bridge copy */}
+      {/* Bridge copy — leads to services, no generic CTA */}
       <p
         style={{
           fontSize: 13,
           // hardcoded-color-allow-next-line
           color: "#B0ADA8",
           lineHeight: 1.55,
-          marginTop: 16,
+          marginTop: 14,
           paddingTop: 14,
           // hardcoded-color-allow-next-line
           borderTop: "1px solid #2B3247",
           fontFamily: "Inter, sans-serif",
         }}
       >
-        If any of these sound like you, your{" "}
-        {/* hardcoded-color-allow-next-line */}
-        <strong style={{ color: "#F5F3F0", fontWeight: 600 }}>
-          60-Minute Physician Assessment
-        </strong>{" "}
-        is a no-cost consultation.
+        {BRIDGE}
       </p>
 
-      {/* Anchor CTA */}
+      {/* Anchor CTA — mobile only. On desktop the form is right there. */}
       <a
         href={`#${formId}`}
+        className="lg:hidden"
         style={{
           display: "flex",
           alignItems: "center",
@@ -129,7 +130,7 @@ export const SymptomChecklist = ({ formId = "hero-form" }: SymptomChecklistProps
           letterSpacing: "0.08em",
           textTransform: "uppercase",
           color: "var(--brand-cta)",
-          padding: "10px 0 2px",
+          padding: "12px 0 2px",
           marginTop: 6,
           textDecoration: "none",
         }}
@@ -139,8 +140,7 @@ export const SymptomChecklist = ({ formId = "hero-form" }: SymptomChecklistProps
         }}
         onMouseLeave={(e) => (e.currentTarget.style.color = "var(--brand-cta)")}
       >
-          <ChevronDown size={14} strokeWidth={2.5} style={{ flexShrink: 0 }} />
-        {COPY.cta.bookConsult}
+        Book My Physician Assessment
       </a>
     </div>
   );
