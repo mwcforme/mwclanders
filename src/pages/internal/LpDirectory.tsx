@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Copy, ExternalLink, AlertTriangle, CheckCircle2, XCircle } from "lucide-react";
+import { Copy, ExternalLink, AlertTriangle, CheckCircle2, XCircle, ChevronLeft } from "lucide-react";
 import { SEO } from "@/components/SEO";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -371,7 +371,7 @@ const LpDirectory = () => {
           </div>
 
           <div className="text-center text-xs pt-8" style={{ color: "rgba(245,240,235,0.45)" }}>
-            <Link to="/" style={{ color: COLORS.orange }}>← Back to live site</Link>
+            <Link to="/" className="inline-flex items-center gap-1" style={{ color: COLORS.orange }}><ChevronLeft size={14} /> Back to live site</Link>
           </div>
         </div>
       </div>

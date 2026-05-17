@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
+import { ChevronLeft } from "lucide-react";
 import { SEO } from "@/components/SEO";
 
 interface LegalPageProps {
@@ -17,8 +18,8 @@ export const LegalPage = ({ title, updated, children }: LegalPageProps) => {
       />
       <main style={{ background: "#000814", minHeight: "100vh", color: "rgba(255,255,255,0.92)" }}>
         <div className="max-w-[820px] mx-auto px-6 py-20" style={{ fontFamily: "Inter, sans-serif" }}>
-          <Link to="/" className="text-xs uppercase tracking-[0.18em]" style={{ color: "#F97316" }}>
-            ← Back to Men's Wellness Centers
+          <Link to="/" className="inline-flex items-center gap-1 text-xs uppercase tracking-[0.18em]" style={{ color: "#F97316" }}>
+            <ChevronLeft size={14} /> Back to Men’s Wellness Centers
           </Link>
           <h1 className="mt-6 text-4xl md:text-5xl" style={{ fontFamily: "Oswald, sans-serif", letterSpacing: "0.02em" }}>
             {title}

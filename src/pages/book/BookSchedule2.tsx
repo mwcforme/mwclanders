@@ -79,7 +79,7 @@ const BookSchedule2 = () => {
           >
             {heading}
           </h1>
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: "#9CA3AF", margin: 0 }}>
+          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: "#6B7280", margin: 0 }}>
             {metaLine}
           </p>
         </section>

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState, memo, useCallback } from "react";
-import { Loader2, ChevronDown } from "lucide-react";
+import { Loader2, ChevronDown, ChevronLeft } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { CENTER_CALENDARS, TIMEZONE, type LocationKey } from "@/lib/ghlCalendars";
 import { addDaysInTimeZone, dateFromYmdInTimeZone, isSundayInTimeZone, ymdInTimeZone } from "@/lib/etDate";
@@ -402,7 +402,7 @@ const GHLAccordionView = ({ location, firstName, lastName, email, phone, source,
               ? (() => {
                   const dayLabel = new Date(selectedSlot).toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", timeZone: TIMEZONE }).toUpperCase();
                   const { time, ampm } = fmtTimeParts(selectedSlot);
-                  return `Confirm ${dayLabel} · ${time} ${ampm} →`;
+                  return `Confirm ${dayLabel} · ${time} ${ampm}`;
                 })()
               : "Tap a time above to continue"}
           </button>
@@ -465,9 +465,9 @@ const GHLAccordionView = ({ location, firstName, lastName, email, phone, source,
             <button
               type="button"
               onClick={() => { if (!submitting) { confirmCtl.cancelRedirect(); setModalOpen(false); } }}
-              style={{ width: "100%", minHeight: 44, background: "transparent", color: MUTED, border: 0, fontSize: 14, fontWeight: 600, cursor: "pointer" }}
+              style={{ width: "100%", minHeight: 44, background: "transparent", color: MUTED, border: 0, fontSize: 14, fontWeight: 600, cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 4 }}
             >
-              ← Change time
+              <ChevronLeft size={14} /> Change time
             </button>
           </div>
         </DialogContent>

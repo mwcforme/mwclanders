@@ -88,7 +88,7 @@ export const WLHero = () => {
               lineHeight: 1.5,
             }}
           >
-            Physician-supervised weight loss medications with a provider who adjusts your dose, watches your labs, and shows up for every visit. Not a chatbot. Not a pill in the mail.
+            Provider-supervised weight loss medications with a clinician who adjusts your dose, watches your labs, and shows up for every visit. Not a chatbot. Not a pill in the mail.
           </p>
 
           <div
