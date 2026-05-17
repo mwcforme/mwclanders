@@ -1,22 +1,16 @@
 /**
  * Trust / certification band.
- * Text-based badges — always readable, no image quality issues.
- * LegitScript uses its actual badge image (solid dark bg, works on white).
+ * Dark background matches the WordPress site badge display context.
+ * CLIA + HIPAA = black-bg official webp images from menswellnesscenters.com
+ * LegitScript = official certified badge
  */
-
-const CERTS = [
-  { label: "CLIA Certified", sub: "Clinical Laboratory" },
-  { label: "HIPAA Compliant", sub: "Patient Privacy Protected" },
-  { label: "Operating Since 2015", sub: "Virginia's Men's Health Practice" },
-];
-
 export const TRTMarquee = () => (
   <section
     aria-label="Certifications and credentials"
     style={{
-      background: "#FFFFFF",
-      borderTop: "1px solid #E5E7EB",
-      borderBottom: "1px solid #E5E7EB",
+      background: "#111827",
+      borderTop: "1px solid rgba(255,255,255,0.07)",
+      borderBottom: "1px solid rgba(255,255,255,0.07)",
     }}
   >
     <div
@@ -24,64 +18,50 @@ export const TRTMarquee = () => (
       style={{
         maxWidth: 960,
         margin: "0 auto",
-        padding: "20px 24px",
-        gap: "16px 48px",
+        padding: "28px 24px",
+        gap: "24px 56px",
       }}
     >
-      {/* LegitScript — image works because it has its own solid dark background */}
+      {/* CLIA — official black-bg webp from WordPress site */}
+      <img
+        src="/images/badges/clia-color.webp"
+        alt="Clinical Laboratory Improvements Amendments"
+        style={{ height: 56, width: "auto", objectFit: "contain" }}
+        loading="lazy"
+        decoding="async"
+        width="120"
+        height="56"
+      />
+
+      {/* LegitScript — verified certified badge */}
       <a
         href="https://www.legitscript.com/websites/?checker_keywords=menswellnesscenters.com"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Verify LegitScript Certification"
+        aria-label="Verify LegitScript Certification for menswellnesscenters.com"
+        style={{ display: "inline-block" }}
       >
-        <picture>
-          <source srcSet="/images/badges/legitscript.webp" type="image/webp" />
-          <img
-            src="/images/badges/legitscript.png"
-            alt="LegitScript Certified"
-            style={{ height: 48, width: "auto", objectFit: "contain" }}
-            loading="lazy"
-            decoding="async"
-            width="120"
-            height="48"
-          />
-        </picture>
+        <img
+          src="/images/badges/legitscript-color.png"
+          alt="LegitScript Certified Healthcare Website"
+          style={{ height: 72, width: "auto", objectFit: "contain" }}
+          loading="lazy"
+          decoding="async"
+          width="110"
+          height="72"
+        />
       </a>
 
-      {/* Text-based cert badges — always readable */}
-      {CERTS.map(({ label, sub }) => (
-        <div
-          key={label}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: 2,
-          }}
-        >
-          <span style={{
-            fontFamily: "Oswald, sans-serif",
-            fontWeight: 700,
-            fontSize: 13,
-            letterSpacing: "0.06em",
-            textTransform: "uppercase",
-            color: "#0B1029",
-            lineHeight: 1.2,
-          }}>
-            {label}
-          </span>
-          <span style={{
-            fontFamily: "Inter, sans-serif",
-            fontWeight: 400,
-            fontSize: 11,
-            color: "#6B7280",
-            letterSpacing: "0.02em",
-          }}>
-            {sub}
-          </span>
-        </div>
-      ))}
+      {/* HIPAA — official black-bg webp from WordPress site */}
+      <img
+        src="/images/badges/hipaa-color.webp"
+        alt="Health Insurance Portability and Accountability Act"
+        style={{ height: 56, width: "auto", objectFit: "contain" }}
+        loading="lazy"
+        decoding="async"
+        width="120"
+        height="56"
+      />
     </div>
   </section>
 );
