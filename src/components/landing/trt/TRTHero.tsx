@@ -235,23 +235,28 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
           </div>
         </div>
 
-        {/* FULL-WIDTH ROW — horizontal symptom statements */}
-        <div className="col-span-1 lg:col-span-2 grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-4 mt-6 pt-6" style={{borderTop:"1px solid rgba(255,255,255,0.10)"}}>
+        {/* FULL-WIDTH ROW — orange-border accent cards */}
+        <div className="col-span-1 lg:col-span-2 grid grid-cols-2 lg:grid-cols-4 gap-3 mt-6">
           {[
-            ["01", "Tired by noon.", "Coffee stopped working."],
-            ["02", "Workouts flatlined.", "Same effort. Zero results."],
-            ["03", "Sex drive is down.", "You've noticed. So has she."],
-            ["04", "Labs say normal.", "You don't feel normal."],
-          ].map(([num, line1, line2]) => (
+            "Tired by noon. Coffee stopped working.",
+            "Workouts stopped producing results.",
+            "Sex drive is down. You've noticed. So has she.",
+            "Labs came back normal. You don't feel normal.",
+          ].map((text) => (
             <div
-              key={num}
-              style={{ display: "flex", flexDirection: "column", gap: 4 }}
+              key={text}
+              style={{
+                borderLeft: `3px solid ${COLORS.orange}`,
+                // hardcoded-color-allow-next-line
+                background: "rgba(255,255,255,0.04)",
+                borderRadius: "0 10px 10px 0",
+                padding: "14px 16px",
+                display: "flex",
+                alignItems: "center",
+              }}
             >
-              <span style={{ fontFamily: "Oswald, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", color: COLORS.orange }}>{num}</span>
               {/* hardcoded-color-allow-next-line */}
-              <span style={{ fontFamily: "Inter, sans-serif", fontSize: 15, fontWeight: 700, color: "rgba(245,240,235,0.95)", lineHeight: 1.2 }}>{line1}</span>
-              {/* hardcoded-color-allow-next-line */}
-              <span style={{ fontFamily: "Inter, sans-serif", fontSize: 13, fontWeight: 400, color: "rgba(245,240,235,0.55)", lineHeight: 1.3 }}>{line2}</span>
+              <span style={{ fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 600, color: "rgba(245,240,235,0.90)", lineHeight: 1.4 }}>{text}</span>
             </div>
           ))}
         </div>
