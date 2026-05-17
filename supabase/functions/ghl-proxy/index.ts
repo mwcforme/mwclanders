@@ -73,6 +73,9 @@ const json = (status: number, data: unknown) =>
     headers: { ...corsHeaders, "Content-Type": "application/json" },
   });
 
+const proxyError = (status: number, error: string) =>
+  json(200, { ok: false, status, error, data: null });
+
 // Lightweight body-shape validators (avoids Zod dep). Keep additive: unknown
 // fields are dropped rather than rejected so GHL schema changes don't 500 us.
 const isStr = (v: unknown): v is string => typeof v === "string" && v.length > 0 && v.length < 500;
@@ -239,16 +242,16 @@ Deno.serve(async (req) => {
 
   const { path, method = "GET", query = {}, body } = payload;
   if (!path || typeof path !== "string" || !path.startsWith("/")) {
-    return json(400, { error: "`path` must start with /" });
+    return proxyError(400, "`path` must start with /");
   }
 
   // Allowlist check — strip query/hash before matching
   const cleanPath = path.split("?")[0].split("#")[0];
   const allowed = ALLOW.some((a) => a.m === method && a.re.test(cleanPath));
-  if (!allowed) return json(403, { error: "endpoint not allowed" });
+  if (!allowed) return proxyError(403, "endpoint not allowed");
 
   const validated = validateBody(method, cleanPath, body);
-  if (!validated.ok) return json(400, { error: validated.error });
+  if (!validated.ok) return proxyError(400, validated.error);
 
   const search = new URLSearchParams();
   for (const [k, v] of Object.entries(query)) {
@@ -287,7 +290,7 @@ Deno.serve(async (req) => {
     return json(200, { ok: upstream.ok, status: upstream.status, data });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Unknown error";
-    return json(502, { error: `GHL request failed: ${message}` });
+    return proxyError(502, `GHL request failed: ${message}`);
   }
 });
 
