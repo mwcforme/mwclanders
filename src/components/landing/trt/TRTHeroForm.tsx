@@ -477,16 +477,12 @@ export const TRTHeroForm = ({
             <span
               id="hf-tcpa-text"
               // hardcoded-color-allow-next-line
-              style={{ fontSize: 14, color: "rgba(245,240,235,0.55)", lineHeight: 1.55 }}
+              style={{ fontSize: 11, color: "rgba(245,240,235,0.45)", lineHeight: 1.4 }}
             >
-              By checking this box, I agree to receive SMS/calls (including automated messages) from Men's Wellness Centers about my appointment.
-              Msg & data rates may apply. Reply STOP to opt out. Reply HELP for help.
-              Consent is not a condition of service.{" "}
+              I agree to receive texts from Men&rsquo;s Wellness Centers. Msg &amp; data rates may apply. Reply STOP to opt out.{" "}
+              Not a condition of service.{" "}
               {/* hardcoded-color-allow-next-line */}
               <a href="/privacy-policy" style={{ color: "var(--brand-cta)", textDecoration: "none" }}>Privacy Policy</a>
-              {" "}&amp;{" "}
-              {/* hardcoded-color-allow-next-line */}
-              <a href="/tcpa" style={{ color: "var(--brand-cta)", textDecoration: "none" }}>HIPAA Notice</a>.
             </span>
           </label>
           {errors.tcpa && (
