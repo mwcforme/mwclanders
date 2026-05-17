@@ -320,38 +320,30 @@ export const TRTHeroForm = ({
                     checked={isSelected}
                     onChange={() => { setLocation(opt.key); clearError("location"); }}
                     aria-label={opt.label}
-                    style={{
-                      position: "absolute",
-                      opacity: 0,
-                      width: 0,
-                      height: 0,
-                      pointerEvents: "none",
-                    }}
+                    style={{ position: "absolute", opacity: 0, width: 0, height: 0, pointerEvents: "none" }}
                   />
-                  {/* Radio dot — calendar-style: white ring, filled on select */}
-                  <div
+                  {/* Location pin icon (Amazon-style) */}
+                  <svg
                     aria-hidden="true"
-                    style={{
-                      width: 18,
-                      height: 18,
-                      borderRadius: "50%",
-                      border: `2px solid ${isSelected ? "#FFFFFF" : "#D1D5DB"}`,
-                      background: "transparent",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                      transition: "border-color 150ms ease",
-                    }}
+                    width="18" height="22" viewBox="0 0 18 22" fill="none"
+                    style={{ flexShrink: 0, transition: "fill 150ms ease" }}
                   >
-                    {isSelected && (
-                      <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#FFFFFF" }} />
-                    )}
-                  </div>
+                    <path
+                      d="M9 0C4.589 0 1 3.589 1 8c0 5.25 7.2 13.4 7.51 13.757a.664.664 0 0 0 .99 0C9.8 21.4 17 13.25 17 8c0-4.411-3.589-8-8-8Z"
+                      fill={isSelected ? "#FFFFFF" : "#9CA3AF"}
+                    />
+                    <circle cx="9" cy="8" r="3" fill={isSelected ? "#FF6A00" : "#FFFFFF"} />
+                  </svg>
                   {/* City label */}
-                  <span style={{ fontSize: 15, fontWeight: 700, lineHeight: 1 }}>
+                  <span style={{ fontSize: 15, fontWeight: 700, lineHeight: 1, flex: 1 }}>
                     {opt.label}
                   </span>
+                  {/* Checkmark on selected */}
+                  {isSelected && (
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
+                      <path d="M3 8L6.5 11.5L13 4.5" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  )}
                 </label>
               );
             })}
