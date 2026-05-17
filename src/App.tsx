@@ -20,6 +20,7 @@ import NewLandingPage from "./pages/NewLandingPage";
 const NewWeightLoss   = lazy(() => import("./pages/NewWeightLoss"));
 const NewED           = lazy(() => import("./pages/NewED"));
 const TRTLandingPage  = lazy(() => import("./pages/TRTLandingPage"));
+const ProductTRT      = lazy(() => import("./pages/ProductTRT"));
 
 // Quiz funnel — only loads when user hits /quiz
 const TRTQuiz         = lazy(() => import("./pages/TRTQuiz"));
@@ -152,6 +153,7 @@ const App = () => (
 
                 {/* ── Secondary LPs ── */}
                 <Route path="/trt" element={<TRTLandingPage />} />
+                <Route path="/product/trt" element={<ProductTRT />} />
                 <Route path="/wl" element={<NewWeightLoss />} />
                 <Route path="/ed" element={<NewED />} />
                 <Route path="/new" element={<Navigate to="/" replace />} />

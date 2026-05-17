@@ -1,0 +1,1051 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { TRTHeader } from "@/components/landing/trt/TRTHeader";
+import { TRTFooter } from "@/components/landing/trt/TRTFooter";
+import { COPY } from "@/data/copy";
+import { SEO } from "@/components/SEO";
+
+/* ─── helpers ──────────────────────────────────────────────────────────────── */
+
+const OrangeCTA = ({
+  children,
+  onClick,
+  style,
+}: {
+  children: React.ReactNode;
+  onClick: () => void;
+  style?: React.CSSProperties;
+}) => (
+  <button
+    type="button"
+    onClick={onClick}
+    style={{
+      background: "var(--brand-cta)",
+      color: "#fff",
+      border: "none",
+      borderRadius: 999,
+      padding: "14px 36px",
+      fontSize: 16,
+      fontWeight: 700,
+      fontFamily: "Inter, sans-serif",
+      letterSpacing: "0.04em",
+      cursor: "pointer",
+      display: "inline-block",
+      transition: "background 0.2s",
+      ...style,
+    }}
+    onMouseEnter={(e) => {
+      (e.currentTarget as HTMLButtonElement).style.background =
+        "var(--brand-cta-hover)";
+    }}
+    onMouseLeave={(e) => {
+      (e.currentTarget as HTMLButtonElement).style.background =
+        "var(--brand-cta)";
+    }}
+  >
+    {children}
+  </button>
+);
+
+const CheckIcon = () => (
+  <svg
+    aria-hidden="true"
+    width="22"
+    height="22"
+    viewBox="0 0 22 22"
+    fill="none"
+    style={{ flexShrink: 0 }}
+  >
+    <circle cx="11" cy="11" r="11" fill="var(--brand-cta)" />
+    <path
+      d="M6.5 11.2l3 3L15.5 8"
+      stroke="#fff"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+/* ─── FAQ data ──────────────────────────────────────────────────────────────── */
+
+const FAQ_ITEMS = [
+  {
+    q: "What is included in the no-cost consultation?",
+    a: "Your no-cost consultation includes a face-to-face visit with a licensed Virginia provider, a complete review of your symptoms and health history, and on-site lab work. You'll get your results and a personalized recommendation during the same visit — no waiting, no runaround.",
+  },
+  {
+    q: "What is TRT?",
+    a: "Testosterone Replacement Therapy (TRT) is a clinician-supervised treatment that restores testosterone to healthy levels. It's prescribed after lab testing confirms low T and a provider determines you're a good candidate. Common delivery options include injections and topical formulations.",
+  },
+  {
+    q: "Who needs TRT?",
+    a: "TRT may be appropriate for men experiencing persistent fatigue, reduced sex drive, loss of muscle mass, mood changes, or poor sleep — especially when bloodwork confirms low testosterone. A licensed provider reviews your labs and symptoms before recommending any treatment.",
+  },
+  {
+    q: "Do I need a prescription for testosterone?",
+    a: "Yes. Testosterone is a controlled substance and requires a prescription from a licensed provider. At Men's Wellness Centers, your prescribing provider reviews your labs and health history in person before any treatment is considered.",
+  },
+  {
+    q: "What are the benefits of testosterone replacement therapy?",
+    a: "Men on clinician-supervised TRT commonly report increased energy, improved body composition, better sexual health, sharper mental focus, and improved sleep quality. Individual results vary and depend on your baseline levels and overall health.",
+  },
+  {
+    q: "How long before I notice improvement with TRT?",
+    a: "Most patients begin to notice changes within 4–8 weeks. Energy and mood often improve first, followed by body composition and libido over the following months. Your provider monitors your labs regularly and adjusts your protocol as needed.",
+  },
+];
+
+/* ─── Main component ────────────────────────────────────────────────────────── */
+
+const ProductTRT = () => {
+  const navigate = useNavigate();
+  const goBook = () => navigate("/book/location");
+
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  return (
+    <div
+      style={{
+        background: "#ffffff",
+        fontFamily: "Inter, sans-serif",
+        overflowX: "hidden",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <SEO
+        title="Testosterone Replacement Therapy | Men's Wellness Centers"
+        description="In-person TRT at Virginia's physician-led men's health practice. On-site labs, same-day results, and personalized protocols. No-cost consultation."
+      />
+
+      <TRTHeader minimal />
+
+      <main style={{ flex: 1 }}>
+        {/* ── 1. HERO ──────────────────────────────────────────────────────── */}
+        <section
+          id="hero"
+          style={{
+            background: "#ffffff",
+            paddingTop: 88,
+            paddingBottom: 64,
+          }}
+        >
+          <div
+            style={{
+              maxWidth: 1200,
+              margin: "0 auto",
+              padding: "0 24px",
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+              gap: 48,
+              alignItems: "center",
+            }}
+          >
+            {/* Left */}
+            <div>
+              {/* Provider avatar */}
+              <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 24 }}>
+                <div
+                  style={{
+                    width: 120,
+                    height: 120,
+                    borderRadius: "50%",
+                    border: "3px solid var(--brand-cta)",
+                    overflow: "hidden",
+                    flexShrink: 0,
+                    background: "#f0f0f0",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <img
+                    src="/src/assets/lp/provider-headshot.webp"
+                    alt="Men's Wellness Centers provider"
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    onError={(e) => {
+                      const el = e.currentTarget as HTMLImageElement;
+                      el.style.display = "none";
+                      const parent = el.parentElement;
+                      if (parent) {
+                        parent.innerHTML = `<span style="font-size:48px">👨‍⚕️</span>`;
+                      }
+                    }}
+                  />
+                </div>
+                <div>
+                  <p
+                    style={{
+                      fontSize: 11,
+                      fontWeight: 700,
+                      letterSpacing: "0.14em",
+                      textTransform: "uppercase",
+                      color: "var(--brand-cta)",
+                      marginBottom: 4,
+                    }}
+                  >
+                    Testosterone Protocol by:
+                  </p>
+                  <p
+                    style={{
+                      fontSize: 18,
+                      fontWeight: 700,
+                      color: "var(--brand-navy)",
+                      fontFamily: "Oswald, sans-serif",
+                      lineHeight: 1.2,
+                    }}
+                  >
+                    Men's Wellness Centers
+                  </p>
+                </div>
+              </div>
+
+              <h1
+                style={{
+                  fontFamily: "Oswald, sans-serif",
+                  fontSize: "clamp(32px, 5vw, 56px)",
+                  fontWeight: 700,
+                  color: "var(--brand-navy)",
+                  lineHeight: 1.1,
+                  marginBottom: 16,
+                  letterSpacing: "-0.01em",
+                }}
+              >
+                Be the Man You Were Built to Be
+              </h1>
+
+              <p
+                style={{
+                  fontSize: 17,
+                  color: "#444",
+                  lineHeight: 1.6,
+                  marginBottom: 32,
+                }}
+              >
+                Virginia's physician-led men's health practice since 2015. In-person visits, on-site labs, and personalized testosterone protocols — all in a single appointment.
+              </p>
+
+              {/* Trust badges */}
+              <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
+                <a
+                  href="https://www.legitscript.com/websites/?checker_keywords=menswellnesscenters.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Verify LegitScript Certification"
+                >
+                  <img
+                    src="/images/badges/legitscript-color.png"
+                    alt="LegitScript Certified"
+                    style={{ height: 56, width: "auto" }}
+                    loading="lazy"
+                  />
+                </a>
+                <img
+                  src="/images/badges/hipaa-color.webp"
+                  alt="HIPAA Compliant"
+                  style={{ height: 48, width: "auto" }}
+                  loading="lazy"
+                />
+              </div>
+            </div>
+
+            {/* Right */}
+            <div
+              style={{
+                background: "#f8f8f8",
+                borderRadius: 16,
+                padding: "32px 28px",
+                border: "1px solid #e8e8e8",
+              }}
+            >
+              <p
+                style={{
+                  fontSize: 12,
+                  fontWeight: 700,
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  color: "var(--brand-cta)",
+                  marginBottom: 16,
+                }}
+              >
+                What you get
+              </p>
+              <ul style={{ listStyle: "none", padding: 0, margin: "0 0 24px" }}>
+                {[
+                  "Same-day lab results & provider review",
+                  "Clinician-prescribed personalized protocol",
+                  "In-person visit at Virginia locations",
+                  "Ongoing monitoring with regular labs",
+                  "No insurance needed",
+                ].map((item) => (
+                  <li
+                    key={item}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 12,
+                      marginBottom: 14,
+                      fontSize: 15,
+                      color: "#222",
+                    }}
+                  >
+                    <CheckIcon />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+
+              <div
+                style={{
+                  background: "#fff",
+                  borderRadius: 10,
+                  padding: "14px 20px",
+                  border: "2px solid var(--brand-cta)",
+                  marginBottom: 20,
+                  textAlign: "center",
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: 22,
+                    fontWeight: 800,
+                    color: "var(--brand-cta)",
+                    fontFamily: "Oswald, sans-serif",
+                    letterSpacing: "0.02em",
+                  }}
+                >
+                  {COPY.badge.noCostConsult}
+                </span>
+              </div>
+
+              <OrangeCTA onClick={goBook} style={{ width: "100%", textAlign: "center" }}>
+                {COPY.cta.bookConsult}
+              </OrangeCTA>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 2. MEDIA STRIP ───────────────────────────────────────────────── */}
+        <section
+          style={{
+            background: "#f4f4f4",
+            padding: "20px 24px",
+          }}
+        >
+          <div
+            style={{
+              maxWidth: 1200,
+              margin: "0 auto",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 12,
+              flexWrap: "wrap",
+            }}
+          >
+            <span
+              style={{
+                fontSize: 11,
+                fontWeight: 700,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                color: "#888",
+                marginRight: 8,
+              }}
+            >
+              As seen in:
+            </span>
+            {["MEN'S HEALTH", "PEOPLE", "SPORTS ILLUSTRATED", "WEBMD"].map((pub) => (
+              <span
+                key={pub}
+                style={{
+                  background: "#fff",
+                  border: "1px solid #ddd",
+                  borderRadius: 999,
+                  padding: "6px 16px",
+                  fontSize: 11,
+                  fontWeight: 800,
+                  letterSpacing: "0.12em",
+                  color: "#444",
+                  textTransform: "uppercase" as const,
+                }}
+              >
+                {pub}
+              </span>
+            ))}
+          </div>
+        </section>
+
+        {/* ── 3. SYMPTOM HOOK ──────────────────────────────────────────────── */}
+        <section
+          style={{
+            background: "#ffffff",
+            padding: "72px 24px",
+          }}
+        >
+          <div
+            style={{
+              maxWidth: 720,
+              margin: "0 auto",
+              textAlign: "center",
+            }}
+          >
+            <h2
+              style={{
+                fontFamily: "Oswald, sans-serif",
+                fontSize: "clamp(26px, 4vw, 42px)",
+                fontWeight: 700,
+                color: "var(--brand-navy)",
+                marginBottom: 36,
+                lineHeight: 1.2,
+              }}
+            >
+              Have you noticed a drop in your energy levels?
+            </h2>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+                gap: 16,
+                marginBottom: 32,
+                textAlign: "left",
+              }}
+            >
+              {[
+                "Tired even after sleeping",
+                "Loss of muscle despite working out",
+                "Low sex drive",
+                "Brain fog",
+              ].map((symptom) => (
+                <div
+                  key={symptom}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 12,
+                    background: "#f8f8f8",
+                    borderRadius: 10,
+                    padding: "14px 18px",
+                    border: "1px solid #e8e8e8",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 20,
+                      height: 20,
+                      borderRadius: 4,
+                      border: "2px solid var(--brand-cta)",
+                      flexShrink: 0,
+                      background: "rgba(232,103,10,0.08)",
+                    }}
+                    aria-hidden="true"
+                  />
+                  <span style={{ fontSize: 15, color: "#333", fontWeight: 500 }}>{symptom}</span>
+                </div>
+              ))}
+            </div>
+
+            <p style={{ fontSize: 17, color: "#555", lineHeight: 1.6 }}>
+              If any of these sound familiar, you may have low testosterone.
+            </p>
+          </div>
+        </section>
+
+        {/* ── 4. 3-STEP PROCESS ────────────────────────────────────────────── */}
+        <section
+          style={{
+            background: "#ffffff",
+            padding: "72px 24px",
+            borderTop: "1px solid #f0f0f0",
+          }}
+        >
+          <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+            <h2
+              style={{
+                fontFamily: "Oswald, sans-serif",
+                fontSize: "clamp(26px, 4vw, 40px)",
+                fontWeight: 700,
+                color: "var(--brand-navy)",
+                textAlign: "center",
+                marginBottom: 48,
+              }}
+            >
+              How It Works
+            </h2>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+                gap: 24,
+              }}
+            >
+              {[
+                {
+                  num: "1",
+                  title: "Complete Medical Intake",
+                  desc: "Answer a few health questions online before your visit.",
+                },
+                {
+                  num: "2",
+                  title: "Meet Your Provider",
+                  desc: "Sit down with a licensed Virginia provider. Labs drawn on-site.",
+                },
+                {
+                  num: "3",
+                  title: "Start Treatment",
+                  desc: "If appropriate, begin your personalized protocol the same day.",
+                },
+              ].map((step) => (
+                <div
+                  key={step.num}
+                  style={{
+                    background: "#f8f8f8",
+                    borderRadius: 16,
+                    padding: "32px 28px",
+                    border: "1px solid #e8e8e8",
+                    position: "relative",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 44,
+                      height: 44,
+                      borderRadius: "50%",
+                      background: "var(--brand-cta)",
+                      color: "#fff",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: 20,
+                      fontWeight: 800,
+                      fontFamily: "Oswald, sans-serif",
+                      marginBottom: 20,
+                    }}
+                  >
+                    {step.num}
+                  </div>
+                  <h3
+                    style={{
+                      fontFamily: "Oswald, sans-serif",
+                      fontSize: 22,
+                      fontWeight: 700,
+                      color: "var(--brand-navy)",
+                      marginBottom: 10,
+                    }}
+                  >
+                    {step.title}
+                  </h3>
+                  <p style={{ fontSize: 15, color: "#555", lineHeight: 1.6 }}>{step.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── 5. TREATMENT OPTIONS ─────────────────────────────────────────── */}
+        <section
+          style={{
+            background: "#f8f8f8",
+            padding: "72px 24px",
+          }}
+        >
+          <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+            <h2
+              style={{
+                fontFamily: "Oswald, sans-serif",
+                fontSize: "clamp(26px, 4vw, 40px)",
+                fontWeight: 700,
+                color: "var(--brand-navy)",
+                textAlign: "center",
+                marginBottom: 48,
+              }}
+            >
+              Treatment Options
+            </h2>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+                gap: 24,
+              }}
+            >
+              {/* Card 1: Testosterone Therapy */}
+              <div
+                style={{
+                  background: "#fff",
+                  borderRadius: 16,
+                  padding: "32px 28px",
+                  border: "2px solid var(--brand-cta)",
+                  position: "relative",
+                }}
+              >
+                <span
+                  style={{
+                    position: "absolute",
+                    top: -14,
+                    left: 28,
+                    background: "var(--brand-cta)",
+                    color: "#fff",
+                    fontSize: 11,
+                    fontWeight: 800,
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase",
+                    borderRadius: 999,
+                    padding: "4px 14px",
+                  }}
+                >
+                  Most Popular
+                </span>
+                <h3
+                  style={{
+                    fontFamily: "Oswald, sans-serif",
+                    fontSize: 26,
+                    fontWeight: 700,
+                    color: "var(--brand-navy)",
+                    marginBottom: 20,
+                    marginTop: 8,
+                  }}
+                >
+                  Testosterone Therapy
+                </h3>
+                <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                  {[
+                    "Most common treatment for low T",
+                    "Clinician-prescribed, multiple delivery options",
+                    "Monitored with regular labs",
+                    "Most patients notice changes within weeks",
+                  ].map((item) => (
+                    <li
+                      key={item}
+                      style={{
+                        display: "flex",
+                        alignItems: "flex-start",
+                        gap: 10,
+                        marginBottom: 12,
+                        fontSize: 15,
+                        color: "#333",
+                        lineHeight: 1.5,
+                      }}
+                    >
+                      <CheckIcon />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <div style={{ marginTop: 24 }}>
+                  <OrangeCTA onClick={goBook} style={{ width: "100%", textAlign: "center" }}>
+                    {COPY.cta.bookConsult}
+                  </OrangeCTA>
+                </div>
+              </div>
+
+              {/* Card 2: ED Treatment */}
+              <div
+                style={{
+                  background: "#fff",
+                  borderRadius: 16,
+                  padding: "32px 28px",
+                  border: "1px solid #e0e0e0",
+                }}
+              >
+                <h3
+                  style={{
+                    fontFamily: "Oswald, sans-serif",
+                    fontSize: 26,
+                    fontWeight: 700,
+                    color: "var(--brand-navy)",
+                    marginBottom: 20,
+                  }}
+                >
+                  ED Treatment
+                </h3>
+                <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                  {[
+                    "FDA-approved oral and injectable options",
+                    "Personalized protocol based on labs and history",
+                    "Private, in-person visit",
+                    "Options beyond what online clinics offer",
+                  ].map((item) => (
+                    <li
+                      key={item}
+                      style={{
+                        display: "flex",
+                        alignItems: "flex-start",
+                        gap: 10,
+                        marginBottom: 12,
+                        fontSize: 15,
+                        color: "#333",
+                        lineHeight: 1.5,
+                      }}
+                    >
+                      <CheckIcon />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <div style={{ marginTop: 24 }}>
+                  <OrangeCTA onClick={goBook} style={{ width: "100%", textAlign: "center", background: "var(--brand-navy)" }}>
+                    {COPY.cta.bookConsult}
+                  </OrangeCTA>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 6. BENEFITS SECTION ──────────────────────────────────────────── */}
+        <section
+          style={{
+            background: "#ffffff",
+            padding: "72px 24px",
+          }}
+        >
+          <div
+            style={{
+              maxWidth: 1200,
+              margin: "0 auto",
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+              gap: 56,
+              alignItems: "center",
+            }}
+          >
+            {/* Left: image */}
+            <div
+              style={{
+                borderRadius: 16,
+                overflow: "hidden",
+                background: "#f0f0f0",
+                minHeight: 400,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <img
+                src="/src/assets/lp/man-gym-confident.webp"
+                alt="Man at gym, confident and fit"
+                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                loading="lazy"
+                onError={(e) => {
+                  const el = e.currentTarget as HTMLImageElement;
+                  el.style.display = "none";
+                  const parent = el.parentElement;
+                  if (parent) {
+                    parent.style.background = "linear-gradient(135deg, #e8e8e8 0%, #ccc 100%)";
+                    parent.innerHTML = `<span style="font-size:80px;opacity:0.4">💪</span>`;
+                  }
+                }}
+              />
+            </div>
+
+            {/* Right: benefits list */}
+            <div>
+              <h2
+                style={{
+                  fontFamily: "Oswald, sans-serif",
+                  fontSize: "clamp(26px, 4vw, 40px)",
+                  fontWeight: 700,
+                  color: "var(--brand-navy)",
+                  marginBottom: 32,
+                  lineHeight: 1.2,
+                }}
+              >
+                Benefits of{" "}
+                <span style={{ color: "var(--brand-cta)" }}>Testosterone</span>{" "}
+                Replacement Therapy
+              </h2>
+
+              <ul style={{ listStyle: "none", padding: 0, margin: "0 0 32px" }}>
+                {[
+                  "Increased energy & vitality",
+                  "Improved body composition",
+                  "Sexual health & performance",
+                  "Mental clarity & focus",
+                  "Better sleep quality",
+                ].map((benefit) => (
+                  <li
+                    key={benefit}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 14,
+                      marginBottom: 16,
+                      fontSize: 17,
+                      color: "#222",
+                      fontWeight: 500,
+                    }}
+                  >
+                    <CheckIcon />
+                    {benefit}
+                  </li>
+                ))}
+              </ul>
+
+              <OrangeCTA onClick={goBook}>Learn If You Qualify</OrangeCTA>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 7. SIGNS SECTION ─────────────────────────────────────────────── */}
+        <section
+          style={{
+            background: "#f8f8f8",
+            padding: "72px 24px",
+          }}
+        >
+          <div style={{ maxWidth: 1200, margin: "0 auto", textAlign: "center" }}>
+            <h2
+              style={{
+                fontFamily: "Oswald, sans-serif",
+                fontSize: "clamp(26px, 4vw, 42px)",
+                fontWeight: 700,
+                color: "var(--brand-navy)",
+                marginBottom: 12,
+              }}
+            >
+              You Don't Have to Feel This Way
+            </h2>
+            <p
+              style={{
+                fontSize: 17,
+                color: "#555",
+                marginBottom: 48,
+                lineHeight: 1.6,
+                maxWidth: 600,
+                margin: "0 auto 48px",
+              }}
+            >
+              If you're struggling with any of these symptoms, testosterone therapy may help.
+            </p>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+                gap: 16,
+                marginBottom: 48,
+              }}
+            >
+              {[
+                { icon: "😴", label: "Fatigue" },
+                { icon: "❤️", label: "Low Libido" },
+                { icon: "😞", label: "Mood Changes" },
+                { icon: "🌙", label: "Poor Sleep" },
+                { icon: "💪", label: "Reduced Strength" },
+                { icon: "⚖️", label: "Weight Gain" },
+              ].map(({ icon, label }) => (
+                <div
+                  key={label}
+                  style={{
+                    background: "#fff",
+                    borderRadius: 12,
+                    padding: "24px 16px",
+                    border: "1px solid #e8e8e8",
+                    textAlign: "center",
+                  }}
+                >
+                  <div style={{ fontSize: 32, marginBottom: 10 }} aria-hidden="true">
+                    {icon}
+                  </div>
+                  <p
+                    style={{
+                      fontSize: 14,
+                      fontWeight: 700,
+                      color: "var(--brand-navy)",
+                      letterSpacing: "0.04em",
+                    }}
+                  >
+                    {label}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* Stat callout */}
+            <div
+              style={{
+                background: "var(--brand-navy)",
+                borderRadius: 16,
+                padding: "28px 32px",
+                maxWidth: 640,
+                margin: "0 auto 40px",
+                display: "flex",
+                alignItems: "center",
+                gap: 20,
+                flexWrap: "wrap",
+                justifyContent: "center",
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: "Oswald, sans-serif",
+                  fontSize: 52,
+                  fontWeight: 800,
+                  color: "var(--brand-cta)",
+                  lineHeight: 1,
+                }}
+              >
+                ~40%
+              </span>
+              <p
+                style={{
+                  color: "rgba(255,255,255,0.85)",
+                  fontSize: 16,
+                  lineHeight: 1.5,
+                  maxWidth: 340,
+                  textAlign: "left",
+                }}
+              >
+                of men over 45 experience low testosterone symptoms
+              </p>
+            </div>
+
+            <OrangeCTA onClick={goBook}>Check My Levels Today</OrangeCTA>
+          </div>
+        </section>
+
+        {/* ── 8. FAQ ───────────────────────────────────────────────────────── */}
+        <section
+          style={{
+            background: "#ffffff",
+            padding: "72px 24px",
+          }}
+        >
+          <div style={{ maxWidth: 800, margin: "0 auto" }}>
+            <h2
+              style={{
+                fontFamily: "Oswald, sans-serif",
+                fontSize: "clamp(26px, 4vw, 40px)",
+                fontWeight: 700,
+                color: "var(--brand-navy)",
+                textAlign: "center",
+                marginBottom: 48,
+              }}
+            >
+              Frequently Asked Questions
+            </h2>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+              {FAQ_ITEMS.map((item, i) => {
+                const isOpen = openFaq === i;
+                return (
+                  <div
+                    key={i}
+                    style={{
+                      border: "1px solid #e8e8e8",
+                      borderRadius: 12,
+                      overflow: "hidden",
+                    }}
+                  >
+                    <button
+                      type="button"
+                      aria-expanded={isOpen}
+                      onClick={() => setOpenFaq(isOpen ? null : i)}
+                      style={{
+                        width: "100%",
+                        background: isOpen ? "#f8f8f8" : "#fff",
+                        border: "none",
+                        padding: "20px 24px",
+                        textAlign: "left",
+                        cursor: "pointer",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        gap: 16,
+                        fontFamily: "Inter, sans-serif",
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontSize: 16,
+                          fontWeight: 600,
+                          color: "var(--brand-navy)",
+                          lineHeight: 1.4,
+                        }}
+                      >
+                        {item.q}
+                      </span>
+                      <span
+                        aria-hidden="true"
+                        style={{
+                          fontSize: 20,
+                          color: "var(--brand-cta)",
+                          flexShrink: 0,
+                          transform: isOpen ? "rotate(45deg)" : "none",
+                          transition: "transform 0.2s",
+                          display: "inline-block",
+                        }}
+                      >
+                        +
+                      </span>
+                    </button>
+                    {isOpen && (
+                      <div
+                        style={{
+                          padding: "0 24px 20px",
+                          background: "#f8f8f8",
+                          fontSize: 15,
+                          color: "#444",
+                          lineHeight: 1.7,
+                        }}
+                      >
+                        {item.a}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* ── 9. FINAL CTA BANNER ──────────────────────────────────────────── */}
+        <section
+          style={{
+            background: "var(--brand-navy)",
+            padding: "80px 24px",
+            textAlign: "center",
+          }}
+        >
+          <div style={{ maxWidth: 640, margin: "0 auto" }}>
+            <h2
+              style={{
+                fontFamily: "Oswald, sans-serif",
+                fontSize: "clamp(28px, 5vw, 48px)",
+                fontWeight: 700,
+                color: "#ffffff",
+                marginBottom: 16,
+                lineHeight: 1.1,
+              }}
+            >
+              Start Your Health Journey Today
+            </h2>
+            <p
+              style={{
+                fontSize: 17,
+                color: "rgba(255,255,255,0.75)",
+                marginBottom: 36,
+                lineHeight: 1.6,
+              }}
+            >
+              Virginia's physician-led men's health practice since 2015.
+            </p>
+            <OrangeCTA onClick={goBook} style={{ fontSize: 18, padding: "16px 48px" }}>
+              {COPY.cta.bookConsult}
+            </OrangeCTA>
+          </div>
+        </section>
+      </main>
+
+      <TRTFooter />
+    </div>
+  );
+};
+
+export default ProductTRT;
