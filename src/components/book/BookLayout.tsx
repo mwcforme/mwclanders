@@ -10,7 +10,7 @@ const TRTFooter = lazy(() =>
 );
 
 interface BookLayoutProps {
-  page: "symptom" | "duration" | "schedule" | "confirmed" | "lets-talk";
+  page: "symptom" | "duration" | "schedule" | "confirmed" | "lets-talk" | "contact" | "location";
   title: string;
   description?: string;
   variant?: "default" | "confirmation";
@@ -23,6 +23,8 @@ const DEFAULT_DESC: Record<BookLayoutProps["page"], string> = {
   schedule: "Pick a consultation time at a Men's Wellness Centers location in Virginia.",
   confirmed: "Your consultation is booked. Center details and what to expect.",
   "lets-talk": "Talk to a Men's Wellness Centers care team member to figure out the right next step.",
+  contact: "Enter your contact details to book your consultation at a Virginia center.",
+  location: "Choose a Men's Wellness Centers location in Virginia for your consultation.",
 };
 
 /** Minimal footer for funnel steps — phone + required LegitScript badge */
