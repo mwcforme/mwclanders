@@ -40,7 +40,6 @@ const ROTATING_SERVICES = [
   "TESTOSTERONE",
   "ED THERAPY",
   "WEIGHT LOSS",
-  "HORMONE THERAPY",
   "MEN'S HEALTH",
 ];
 
@@ -164,13 +163,13 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
             className="font-bold uppercase"
             style={{
               fontFamily: "Oswald, 'Bebas Neue', Anton, sans-serif",
-              fontSize: "clamp(32px, 4.8vw, 72px)",
+              fontSize: "clamp(46px, 6.5vw, 88px)",
               lineHeight: 1.0,
               letterSpacing: "-0.01em",
               color: COLORS.cream,
               fontWeight: 700,
-              /* Fixed height = 4 lines × 1.0 line-height × clamp(32px) = 128px min */
-              minHeight: "clamp(128px, 19.2vw, 288px)",
+              /* Lock to 2 lines so subtitle never shifts */
+              minHeight: "clamp(92px, 13vw, 176px)",
             }}
           >
             {/* Line 1 — static */}
