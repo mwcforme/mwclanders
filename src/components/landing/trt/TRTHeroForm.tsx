@@ -278,20 +278,21 @@ export const TRTHeroForm = ({
                   aria-pressed={isSelected}
                   style={{
                     flex: 1,
-                    height: 44,
-                    borderRadius: 8,
+                    height: 58,
+                    borderRadius: 10,
                     border: `2px solid ${
-                      isSelected ? ORANGE : errors.location ? ERROR_RED : "rgba(255,255,255,0.20)"
+                      isSelected ? ORANGE : errors.location ? ERROR_RED : "rgba(0,0,0,0.15)"
                     }`,
-                    background: isSelected ? "rgba(232,103,10,0.18)" : "rgba(255,255,255,0.06)",
-                    color: isSelected ? "#FFFFFF" : "rgba(245,240,235,0.70)",
+                    background: isSelected ? ORANGE : "#FFFFFF",
+                    color: isSelected ? "#FFFFFF" : "#0B1029",
                     fontFamily: "Inter, sans-serif",
                     fontSize: 13,
-                    fontWeight: isSelected ? 700 : 500,
+                    fontWeight: 700,
                     cursor: "pointer",
                     transition: "border-color 0.15s, background 0.15s, color 0.15s",
                     whiteSpace: "nowrap",
                     padding: "0 6px",
+                    boxShadow: isSelected ? "0 4px 14px rgba(232,103,10,0.40)" : "none",
                   }}
                 >
                   {opt.label}
