@@ -560,6 +560,15 @@ export const TRTHeroForm = ({
         <Lock size={12} strokeWidth={2} aria-hidden />
         HIPAA secure · No spam, ever
       </div>
+      <p style={{
+        textAlign: "center", fontSize: 10,
+        // hardcoded-color-allow-next-line
+        color: "rgba(245,240,235,0.30)",
+        fontFamily: "Inter, sans-serif",
+        marginTop: 10, lineHeight: 1.4, padding: "0 4px",
+      }}>
+        Treatment requires a clinical evaluation and is only provided when medically appropriate. Individual results vary.
+      </p>
     </div>
     </BookingErrorBoundary>
   );

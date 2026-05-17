@@ -93,10 +93,11 @@ export const SymptomChecklist = ({ formId = "hero-form" }: SymptomChecklistProps
         ))}
       </ul>
 
-      {/* Mobile-only CTA — desktop has the form right there */}
+      {/* Mobile-only CTA — hidden on lg+ via both Tailwind and inline style */}
+      <style>{`@media (min-width: 1024px) { .symptom-cta { display: none !important; } }`}</style>
       <a
         href={`#${formId}`}
-        className="lg:hidden"
+        className="symptom-cta lg:hidden"
         style={{
           display: "flex",
           alignItems: "center",

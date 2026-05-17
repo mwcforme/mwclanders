@@ -257,17 +257,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
             {COPY.cta.bookConsult}
           </button>
 
-          <div
-            className="mt-5"
-            style={{
-              // hardcoded-color-allow-next-line
-              color: "rgba(245,240,235,0.65)",
-              fontFamily: "Inter, sans-serif",
-              fontSize: 12,
-            }}
-          >
-            Treatment requires a clinical evaluation and is only provided when medically appropriate. Individual results vary.
-          </div>
+          {/* Disclaimer moved inside form card via TRTHeroForm footer */}
         </div>
 
         {/* RIGHT — form. No decoration. DO NOT add borders, accents, or wrappers around the form. */}
