@@ -115,9 +115,9 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
         }}
       />
 
-      <div className="relative z-10 w-full max-w-[1280px] mx-auto px-5 sm:px-6 pt-24 pb-12 lg:pt-32 lg:pb-24 grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-8 lg:gap-16 items-start">
+      <div className="relative z-10 w-full max-w-[1280px] mx-auto px-5 sm:px-6 pt-24 pb-12 lg:pt-32 lg:pb-24 grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-8 lg:gap-16 items-stretch">
         {/* LEFT */}
-        <div>
+        <div className="flex flex-col">
           {/*
             H1 height is locked so rotating service never shifts the subtitle.
             Font is clamped small enough that the longest service
@@ -154,8 +154,8 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
             Sit down with a licensed Virginia provider. Labs drawn on-site and reviewed in the same visit. No-cost consultation. Virginia's men's health practice since 2015.
           </p>
 
-          {/* Symptom statements fill left column void */}
-          <div className="mt-8 flex flex-col gap-4">
+          {/* Symptom statements — pushed to bottom with auto top margin */}
+          <div className="mt-auto pt-8 flex flex-col gap-4">
             {[
               "Tired by noon. Coffee stopped working.",
               "Same gym effort. Nothing to show.",
