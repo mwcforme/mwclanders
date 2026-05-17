@@ -516,7 +516,7 @@ export const TRTHeroForm = ({
           color: "rgba(245,240,235,0.40)",
           fontFamily: "Inter, sans-serif", lineHeight: 1.5, marginTop: 2,
         }}>
-          No-cost for new members · Takes under 2 minutes
+          Same-day availability · No obligation to proceed
         </p>
 
         {controller.error && !Object.keys(errors).length && (
