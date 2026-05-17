@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 520" fill="none">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="400" y2="520" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#E8EDF4"/>
+      <stop offset="100%" stop-color="#D4DCE8"/>
+    </linearGradient>
+    <!-- Vial body glass gradient -->
+    <linearGradient id="vialGrad" x1="80" y1="0" x2="320" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#D0D8E4" stop-opacity="0.9"/>
+      <stop offset="15%" stop-color="#EEF2F8" stop-opacity="0.95"/>
+      <stop offset="50%" stop-color="#F8FAFC"/>
+      <stop offset="85%" stop-color="#EEF2F8" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#C8D0DC" stop-opacity="0.9"/>
+    </linearGradient>
+    <!-- Silver cap gradient -->
+    <linearGradient id="capGrad" x1="120" y1="0" x2="280" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#A0A8B4"/>
+      <stop offset="20%" stop-color="#D8DCE4"/>
+      <stop offset="50%" stop-color="#ECEEF2"/>
+      <stop offset="80%" stop-color="#D8DCE4"/>
+      <stop offset="100%" stop-color="#A0A8B4"/>
+    </linearGradient>
+    <!-- Orange cap gradient -->
+    <linearGradient id="orangeCapGrad" x1="130" y1="0" x2="270" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#C45A08"/>
+      <stop offset="30%" stop-color="#E8670A"/>
+      <stop offset="60%" stop-color="#F07820"/>
+      <stop offset="100%" stop-color="#C45A08"/>
+    </linearGradient>
+    <!-- Label gradient -->
+    <linearGradient id="labelGrad" x1="90" y1="0" x2="310" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#E8ECF2"/>
+      <stop offset="10%" stop-color="#F8F9FB"/>
+      <stop offset="50%" stop-color="#FFFFFF"/>
+      <stop offset="90%" stop-color="#F8F9FB"/>
+      <stop offset="100%" stop-color="#E8ECF2"/>
+    </linearGradient>
+    <!-- Drop shadow -->
+    <filter id="shadow" x="-10%" y="-5%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#0B1029" flood-opacity="0.20"/>
+    </filter>
+    <!-- Vial shine -->
+    <linearGradient id="shineGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="white" stop-opacity="0"/>
+      <stop offset="40%" stop-color="white" stop-opacity="0.35"/>
+      <stop offset="60%" stop-color="white" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="520" fill="url(#bgGrad)" rx="24"/>
+
+  <!-- Shadow under vial -->
+  <ellipse cx="200" cy="478" rx="85" ry="14" fill="#0B1029" opacity="0.12"/>
+
+  <!-- ── VIAL BODY ── -->
+  <g filter="url(#shadow)">
+    <!-- Main glass body -->
+    <rect x="88" y="148" width="224" height="308" rx="18" fill="url(#vialGrad)" stroke="#C8D0DC" stroke-width="1.5"/>
+    
+    <!-- Glass shine highlight (left) -->
+    <rect x="96" y="158" width="18" height="288" rx="9" fill="white" opacity="0.45"/>
+    
+    <!-- ── LABEL ── -->
+    <rect x="92" y="200" width="216" height="210" rx="4" fill="url(#labelGrad)" stroke="#D8DCE4" stroke-width="1"/>
+    
+    <!-- Label left edge shadow -->
+    <rect x="92" y="200" width="8" height="210" rx="2" fill="#D8DCE4" opacity="0.5"/>
+    <rect x="300" y="200" width="8" height="210" rx="2" fill="#D8DCE4" opacity="0.5"/>
+    
+    <!-- ── LABEL CONTENT ── -->
+    <!-- Brand name: Men's Wellness -->
+    <text x="200" y="233" font-family="Georgia, serif" font-size="15" font-weight="700" fill="#0B1029" text-anchor="middle" letter-spacing="1">Men's Wellness</text>
+    <!-- Centers in orange -->
+    <text x="200" y="250" font-family="Georgia, serif" font-size="13" font-weight="600" fill="#E8670A" text-anchor="middle" letter-spacing="3">CENTERS</text>
+    
+    <!-- Thin divider -->
+    <line x1="120" y1="258" x2="280" y2="258" stroke="#D0D4DC" stroke-width="0.75"/>
+    
+    <!-- "Physician-Prescribed" small label -->
+    <text x="200" y="277" font-family="Georgia, 'Times New Roman', serif" font-size="12" font-style="italic" fill="#666E7A" text-anchor="middle">Physician-Prescribed</text>
+    
+    <!-- Main product name -->
+    <text x="200" y="310" font-family="Georgia, 'Times New Roman', serif" font-size="28" font-weight="800" fill="#0B1029" text-anchor="middle">Testosterone</text>
+    <text x="200" y="340" font-family="Georgia, 'Times New Roman', serif" font-size="28" font-weight="800" fill="#0B1029" text-anchor="middle">Protocol</text>
+    
+    <!-- Specs divider with boxes -->
+    <line x1="112" y1="356" x2="288" y2="356" stroke="#C8CCD4" stroke-width="0.75"/>
+    <line x1="112" y1="375" x2="288" y2="375" stroke="#C8CCD4" stroke-width="0.75"/>
+    <!-- Vertical divider between specs -->
+    <line x1="200" y1="356" x2="200" y2="375" stroke="#C8CCD4" stroke-width="0.75"/>
+    
+    <!-- Specs text -->
+    <text x="155" y="370" font-family="'Helvetica Neue', Arial, sans-serif" font-size="11" fill="#4A5060" text-anchor="middle">200 mg/ml</text>
+    <text x="245" y="370" font-family="'Helvetica Neue', Arial, sans-serif" font-size="11" fill="#4A5060" text-anchor="middle">10 mL Vial</text>
+    
+    <!-- Rx Only -->
+    <text x="200" y="398" font-family="'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#E8670A" text-anchor="middle" letter-spacing="1">Rx Only</text>
+    
+    <!-- ── VIAL NECK ── -->
+    <!-- Neck taper left -->
+    <path d="M88 148 Q88 100 130 90 L130 148 Z" fill="url(#vialGrad)" stroke="#C8D0DC" stroke-width="1"/>
+    <!-- Neck taper right -->
+    <path d="M312 148 Q312 100 270 90 L270 148 Z" fill="url(#vialGrad)" stroke="#C8D0DC" stroke-width="1.5"/>
+    <!-- Neck center -->
+    <rect x="130" y="90" width="140" height="58" fill="url(#vialGrad)" stroke="#C8D0DC" stroke-width="1"/>
+    <!-- Neck shine -->
+    <rect x="136" y="95" width="12" height="48" rx="6" fill="white" opacity="0.40"/>
+    
+    <!-- ── SILVER CRIMP CAP ── -->
+    <rect x="122" y="56" width="156" height="40" rx="6" fill="url(#capGrad)" stroke="#909BA8" stroke-width="1"/>
+    <!-- Silver cap shine -->
+    <rect x="128" y="60" width="20" height="32" rx="4" fill="white" opacity="0.30"/>
+    <!-- Crimp lines -->
+    <line x1="122" y1="72" x2="278" y2="72" stroke="#909BA8" stroke-width="0.5" opacity="0.6"/>
+    <line x1="122" y1="84" x2="278" y2="84" stroke="#909BA8" stroke-width="0.5" opacity="0.6"/>
+    
+    <!-- ── ORANGE FLIP-TOP CAP ── -->
+    <rect x="130" y="30" width="140" height="34" rx="8" fill="url(#orangeCapGrad)"/>
+    <!-- Orange cap top curve -->
+    <ellipse cx="200" cy="30" rx="70" ry="10" fill="#E8670A"/>
+    <!-- Orange highlight -->
+    <ellipse cx="174" cy="35" rx="22" ry="6" fill="white" opacity="0.20"/>
+    <!-- Orange cap shade at bottom -->
+    <rect x="130" y="56" width="140" height="8" rx="0" fill="#C45A08" opacity="0.5"/>
+  </g>
+</svg>

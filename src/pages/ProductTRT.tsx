@@ -215,23 +215,9 @@ const ProductTRT = () => {
               }}
             >
               <img
-                src="/src/assets/lp/onsite-labs-centrifuge.webp"
-                alt="Men's Wellness Centers on-site lab"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  minHeight: 520,
-                  display: "block",
-                }}
-                onError={(e) => {
-                  const el = e.currentTarget as HTMLImageElement;
-                  el.style.display = "none";
-                  const parent = el.parentElement;
-                  if (parent) {
-                    parent.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:64px"><svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#E8670A" stroke-width="1.5"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg><p style="font-family:Oswald,sans-serif;font-size:20px;color:#0B1029;font-weight:700;text-align:center">On-Site Labs<br/>Same-Day Results</p></div>`;
-                  }
-                }}
+                src="/images/trt-vial.svg"
+                alt="Men's Wellness Centers Testosterone Protocol"
+                style={{ width: "100%", height: "100%", objectFit: "contain", minHeight: 480, padding: "32px" }}
               />
               {/* "Virginia's Choice" pill badge overlay */}
               <div
