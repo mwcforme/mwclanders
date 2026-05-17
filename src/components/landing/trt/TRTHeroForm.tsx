@@ -11,7 +11,8 @@
  */
 
 import { useState, useRef, useEffect } from "react";
-import { Loader2, MapPin, Check, Phone, User, AlertCircle, ArrowRight } from "lucide-react";
+import { Loader2, MapPin, Check, Phone, User, AlertCircle, ArrowRight, Star } from "lucide-react";
+import { GBP_REVIEWS_URL } from "@/data/testimonials";
 import { useNavigate } from "react-router-dom";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
 import { useLeadSubmitController } from "@/domain/leads/useLeadSubmitController";
@@ -278,6 +279,22 @@ export const TRTHeroForm = ({
       }}
     >
 
+
+      {/* Stars above form — trust at decision point */}
+      <a
+        href={GBP_REVIEWS_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ display: "inline-flex", alignItems: "center", gap: 8, textDecoration: "none", marginBottom: 16 }}
+      >
+        <span style={{ display: "flex", gap: 2 }}>
+          {[...Array(5)].map((_, i) => (
+            <Star key={i} size={14} fill="#C9A961" stroke="#C9A961" />
+          ))}
+        </span>
+        {/* hardcoded-color-allow-next-line */}
+        <span style={{ fontSize: 13, fontWeight: 600, color: "rgba(245,240,235,0.80)", fontFamily: "Inter, sans-serif" }}>4.9 · 200+ Google reviews</span>
+      </a>
 
       <form onSubmit={handleSubmit} noValidate style={{ display: "flex", flexDirection: "column", gap: 12 }}>
 

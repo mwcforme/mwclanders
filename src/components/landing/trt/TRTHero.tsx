@@ -192,30 +192,21 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
             Sit down with a licensed Virginia provider. Labs drawn on-site and reviewed in the same visit. No-cost consultation. Virginia's men's health practice since 2015.
           </p>
 
-          {/* Star rating row - clickable, links to GBP */}
-          <a
-            href={GBP_REVIEWS_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-cro="hero_reviews_link"
-            onClick={() => trackCro("hero_reviews_link")}
-            className="mt-5 inline-flex items-center gap-2.5 hover:opacity-80 transition-opacity"
-            style={{ color: COLORS.cream, fontFamily: "Inter, sans-serif", textDecoration: "none" }}
-          >
-            <GoogleG size={20} />
-            <span className="flex items-center gap-0.5">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="h-[18px] w-[18px]" fill={COLORS.gold} stroke={COLORS.gold} />
-              ))}
-            </span>
-            <span style={{ fontSize: 17, fontWeight: 700 }}>4.9</span>
-            {/* hardcoded-color-allow-next-line */}
-            <span style={{ fontSize: 15, color: "rgba(245,240,235,0.80)" }}>
-              from 200+ verified Google reviews
-            </span>
-          </a>
-
-
+          {/* Symptom statements fill left column void */}
+          <div className="mt-8 flex flex-col gap-4">
+            {[
+              "Tired by noon. Coffee stopped working.",
+              "Same gym effort. Nothing to show.",
+              "Sex drive is down. She\u2019s noticed too.",
+              "Labs are fine. You\u2019re not.",
+            ].map((text) => (
+              <div key={text} style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <div style={{ width: 8, height: 8, borderRadius: "50%", background: COLORS.orange, flexShrink: 0 }} />
+                {/* hardcoded-color-allow-next-line */}
+                <span style={{ fontFamily: "Inter, sans-serif", fontSize: 16, fontWeight: 500, color: "rgba(245,240,235,0.88)", lineHeight: 1.4 }}>{text}</span>
+              </div>
+            ))}
+          </div>
 
           {/* Disclaimer moved inside form card via TRTHeroForm footer */}
         </div>
@@ -227,28 +218,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
           </div>
         </div>
 
-        {/* FULL-WIDTH ROW - dot + sentence, max readability */}
-        <div className="col-span-1 lg:col-span-2 grid grid-cols-1 lg:grid-cols-4 gap-4 mt-8 pt-6" style={{borderTop:"1px solid rgba(255,255,255,0.10)"}}>
-          {[
-            "Tired by noon. Coffee stopped working.",
-            "Same gym effort. Nothing to show.",
-            "Sex drive is down. She's noticed too.",
-            "Labs are fine. You're not.",
-          ].map((text) => (
-            <div
-              key={text}
-              style={{
-                display: "flex",
-                alignItems: "flex-start",
-                gap: 12,
-              }}
-            >
-              <div style={{ width: 8, height: 8, borderRadius: "50%", background: COLORS.orange, flexShrink: 0, marginTop: 6 }} />
-              {/* hardcoded-color-allow-next-line */}
-              <span style={{ fontFamily: "Inter, sans-serif", fontSize: 16, fontWeight: 500, color: "rgba(245,240,235,0.88)", lineHeight: 1.45 }}>{text}</span>
-            </div>
-          ))}
-        </div>
+
       </div>
     </section>
   );
