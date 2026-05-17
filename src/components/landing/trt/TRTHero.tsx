@@ -86,7 +86,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
     line2: "Not Just the Numbers.",
     line2Color: COLORS.orange,
   };
-  void h; // h kept for external headline prop support, rotating version is default
+  void h; // legacy prop — rotating headline is now default
   const scrollToForm = () => {
     document.getElementById("hero-form")?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
