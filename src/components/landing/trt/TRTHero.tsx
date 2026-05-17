@@ -36,16 +36,16 @@ const GoogleG = ({ size = 18 }: { size?: number }) => (
   </svg>
 );
 
-const ROTATING_LINES = [
+const ROTATING_SERVICES = [
+  "MEN'S HEALTH",
   "TESTOSTERONE THERAPY",
   "ED TREATMENT",
   "MEDICAL WEIGHT LOSS",
   "HORMONE OPTIMIZATION",
-  "SAME-DAY LABS",
 ];
 
-/** Animated rotating second line — fades out/in every 2.8s */
-const RotatingLine = () => {
+/** Rotating service word — only the service name animates, 'IN' stays static */
+const RotatingService = () => {
   const [index, setIndex] = useState(0);
   const [visible, setVisible] = useState(true);
 
@@ -53,7 +53,7 @@ const RotatingLine = () => {
     const interval = setInterval(() => {
       setVisible(false);
       setTimeout(() => {
-        setIndex((i) => (i + 1) % ROTATING_LINES.length);
+        setIndex((i) => (i + 1) % ROTATING_SERVICES.length);
         setVisible(true);
       }, 350);
     }, 2800);
@@ -65,14 +65,13 @@ const RotatingLine = () => {
       aria-live="polite"
       aria-atomic="true"
       style={{
-        display: "block",
-        color: COLORS.orange,
+        display: "inline-block",
         opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(-6px)",
-        transition: "opacity 300ms ease, transform 300ms ease",
+        transform: visible ? "translateY(0)" : "translateY(-8px)",
+        transition: "opacity 280ms ease, transform 280ms ease",
       }}
     >
-      {ROTATING_LINES[index]}
+      {ROTATING_SERVICES[index]}
     </span>
   );
 };
@@ -167,8 +166,12 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
               fontWeight: 700,
             }}
           >
-            <span style={{ display: "block" }}>VIRGINIA&rsquo;S LEADER IN</span>
-            <RotatingLine />
+            {/* Line 1 — static */}
+            <span style={{ display: "block" }}>LEADING THE CHARGE</span>
+            {/* Line 2 — 'IN' static, service rotates */}
+            <span style={{ display: "block", color: COLORS.orange }}>
+              IN <RotatingService />
+            </span>
           </h1>
 
           <p
