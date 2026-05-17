@@ -23,6 +23,15 @@ const TRTLandingPage  = lazy(() => import("./pages/TRTLandingPage"));
 const ProductTRT         = lazy(() => import("./pages/ProductTRT"));
 const ProductTRTSchedule = lazy(() => import("./pages/ProductTRTSchedule"));
 
+// TRT funnel — loads on route match
+const TRTGetStarted          = lazy(() => import("./pages/product/TRTGetStarted"));
+const TRTMedicalProtocol     = lazy(() => import("./pages/product/TRTMedicalProtocol"));
+const TRTQuestionnaire       = lazy(() => import("./pages/product/TRTQuestionnaire"));
+const TRTIdentityVerification = lazy(() => import("./pages/product/TRTIdentityVerification"));
+const TRTBloodwork           = lazy(() => import("./pages/product/TRTBloodwork"));
+const TRTLabRequisition      = lazy(() => import("./pages/product/TRTLabRequisition"));
+const TRTSuccess             = lazy(() => import("./pages/product/TRTSuccess"));
+
 // Quiz funnel — only loads when user hits /quiz
 const TRTQuiz         = lazy(() => import("./pages/TRTQuiz"));
 const TRTQuizApproved = lazy(() => import("./pages/TRTQuizApproved"));
@@ -156,6 +165,13 @@ const App = () => (
                 <Route path="/trt" element={<TRTLandingPage />} />
                 <Route path="/product/trt" element={<ProductTRT />} />
                 <Route path="/product/trt/schedule" element={<ProductTRTSchedule />} />
+                <Route path="/product/trt/get-started" element={<TRTGetStarted />} />
+                <Route path="/product/trt/medical-protocol" element={<TRTMedicalProtocol />} />
+                <Route path="/product/trt/questionnaire" element={<TRTQuestionnaire />} />
+                <Route path="/product/trt/identity-verification" element={<TRTIdentityVerification />} />
+                <Route path="/product/trt/bloodwork" element={<TRTBloodwork />} />
+                <Route path="/product/trt/bloodwork/lab-requisition" element={<TRTLabRequisition />} />
+                <Route path="/product/trt/success" element={<TRTSuccess />} />
                 <Route path="/wl" element={<NewWeightLoss />} />
                 <Route path="/ed" element={<NewED />} />
                 <Route path="/new" element={<Navigate to="/" replace />} />

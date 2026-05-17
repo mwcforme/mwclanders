@@ -59,7 +59,7 @@ export default function ProductTRTSchedule() {
 
   const handleBooked = (slotIso: string) => {
     setApptTime(slotIso);
-    navigate("/book/confirmed", { state: { appointmentTime: slotIso } });
+    navigate("/product/trt/get-started");
   };
 
   return (
