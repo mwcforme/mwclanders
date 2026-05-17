@@ -31,16 +31,17 @@ export default function AdminLogin() {
     setBusy(true);
     setError(null);
     try {
-      const result = await lovable.auth.signInWithOAuth("google", {
-        redirect_uri: `${window.location.origin}/admin/overview`,
-        queryParams: { prompt: "select_account" },
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/admin/overview`,
+          queryParams: { prompt: "select_account" },
+        },
       });
-      if (result.error) {
+      if (error) {
         setBusy(false);
-        setError(`Auth error: ${result.error.message ?? "Sign in failed. Check Supabase Google OAuth config."}`);
-        return;
+        setError(`Auth error: ${error.message ?? "Sign in failed. Check Supabase Google OAuth config."}`);
       }
-      if (result.redirected) return;
     } catch (err) {
       setBusy(false);
       setError(`Unexpected error: ${err instanceof Error ? err.message : String(err)}`);
