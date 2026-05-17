@@ -146,7 +146,7 @@ export const WLHero = () => {
             service="wl"
             heading="Diets don't fail you. The wrong diagnosis does."
             subheading="Provider-supervised weight loss that treats the whole man. Same-day availability."
-            ctaLabel="Meet with a Real Provider"
+            ctaLabel={COPY.cta.seeIfIQualify}
           />
         </div>
       </div>

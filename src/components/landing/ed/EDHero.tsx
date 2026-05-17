@@ -1,5 +1,6 @@
 import { Check, Star } from "lucide-react";
 import { TRTHeroForm } from "@/components/landing/trt/TRTHeroForm";
+import { COPY } from "@/data/copy";
 
 const trustChecks = [
   "In-person Virginia visits, not an app",
@@ -145,7 +146,7 @@ export const EDHero = () => {
             service="ed"
             heading="This isn't something your GP is trained for."
             subheading="Provider-led ED care. Private, in-person. Same or next day."
-            ctaLabel="Book My Discreet Visit"
+            ctaLabel={COPY.cta.bookDiscreetVisit}
           />
         </div>
       </div>

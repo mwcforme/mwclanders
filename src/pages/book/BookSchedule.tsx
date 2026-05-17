@@ -324,7 +324,7 @@ const BookSchedule = () => {
                 <span style={{ fontSize: 13, fontWeight: 600, color: "#F5F3F0" }}>
                   {locationData.name.replace("Men's Wellness Centers, ", "")}
                 </span>
-                <span style={{ fontSize: 12, color: "#7A8294", marginLeft: 6 }}>
+                <span style={{ fontSize: 12, color: "#808CA0", marginLeft: 6 }}>
                   · {locationData.address}, {locationData.cityStateZip}
                 </span>
               </div>
@@ -398,7 +398,7 @@ const BookSchedule = () => {
           ) : (
             /* No location set — show center picker inline */
             <div style={{ background: "#161B3A", border: "1px solid #2B3247", borderRadius: 12, padding: 20, fontFamily: "Inter, sans-serif" }}>
-              <div style={{ fontSize: 13, color: "#7A8294", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: 700, marginBottom: 12 }}>
+              <div style={{ fontSize: 13, color: "#808CA0", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: 700, marginBottom: 12 }}>
                 Choose your center
               </div>
               <div className="grid gap-2">
