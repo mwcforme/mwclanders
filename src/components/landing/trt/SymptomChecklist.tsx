@@ -22,11 +22,6 @@ const SYMPTOMS = [
   "Labs came back normal. You don't feel normal.",
 ] as const;
 
-const BRIDGE =
-  "Most of our patients were told the same thing. " +
-  "Bloodwork reviewed by a provider who specializes in men's health tells a different story. " +
-  "We offer testosterone therapy, ED care, and medical weight loss with same-day labs.";
-
 interface SymptomChecklistProps {
   formId?: string;
 }
@@ -69,7 +64,7 @@ export const SymptomChecklist = ({ formId = "hero-form" }: SymptomChecklistProps
         }}
         aria-label="Symptom self-identification list"
       >
-        {SYMPTOMS.map((symptom) => (
+        {SYMPTOMS.map((symptom, idx) => (
           <li
             key={symptom}
             style={{
@@ -78,7 +73,7 @@ export const SymptomChecklist = ({ formId = "hero-form" }: SymptomChecklistProps
               gap: 10,
               padding: "8px 0",
               // hardcoded-color-allow-next-line
-              borderBottom: "1px solid rgba(43,50,71,0.60)",
+              borderBottom: idx < SYMPTOMS.length - 1 ? "1px solid rgba(43,50,71,0.60)" : "none",
               fontSize: 14,
               // hardcoded-color-allow-next-line
               color: "#F5F3F0",
@@ -98,24 +93,7 @@ export const SymptomChecklist = ({ formId = "hero-form" }: SymptomChecklistProps
         ))}
       </ul>
 
-      {/* Bridge copy — leads to services, no generic CTA */}
-      <p
-        style={{
-          fontSize: 13,
-          // hardcoded-color-allow-next-line
-          color: "#B0ADA8",
-          lineHeight: 1.55,
-          marginTop: 14,
-          paddingTop: 14,
-          // hardcoded-color-allow-next-line
-          borderTop: "1px solid #2B3247",
-          fontFamily: "Inter, sans-serif",
-        }}
-      >
-        {BRIDGE}
-      </p>
-
-      {/* Anchor CTA — mobile only. On desktop the form is right there. */}
+      {/* Mobile-only CTA — desktop has the form right there */}
       <a
         href={`#${formId}`}
         className="lg:hidden"
@@ -130,9 +108,11 @@ export const SymptomChecklist = ({ formId = "hero-form" }: SymptomChecklistProps
           letterSpacing: "0.08em",
           textTransform: "uppercase",
           color: "var(--brand-cta)",
-          padding: "12px 0 2px",
-          marginTop: 6,
+          padding: "14px 0 2px",
+          marginTop: 8,
           textDecoration: "none",
+          // hardcoded-color-allow-next-line
+          borderTop: "1px solid #2B3247",
         }}
         onMouseEnter={(e) => {
           // hardcoded-color-allow-next-line
