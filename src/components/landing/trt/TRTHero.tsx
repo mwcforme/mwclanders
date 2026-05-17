@@ -37,9 +37,9 @@ const GoogleG = ({ size = 18 }: { size?: number }) => (
 );
 
 const ROTATING_SERVICES = [
-  "TESTOSTERONE THERAPY",
+  "TESTOSTERONE",
   "ED THERAPY",
-  "MEDICAL WEIGHT LOSS",
+  "WEIGHT LOSS",
   "HORMONE THERAPY",
   "MEN'S HEALTH",
 ];
@@ -155,20 +155,27 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
       <div className="relative z-10 w-full max-w-[1280px] mx-auto px-5 sm:px-6 pt-24 pb-12 lg:pt-32 lg:pb-24 grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-8 lg:gap-16 items-start">
         {/* LEFT */}
         <div>
+          {/*
+            H1 height is locked so rotating service never shifts the subtitle.
+            Font is clamped small enough that the longest service
+            (TESTOSTERONE THERAPY) stays within 4 lines on 375px mobile.
+          */}
           <h1
             className="font-bold uppercase"
             style={{
               fontFamily: "Oswald, 'Bebas Neue', Anton, sans-serif",
-              fontSize: "clamp(38px, 5.5vw, 82px)",
-              lineHeight: 0.95,
+              fontSize: "clamp(32px, 4.8vw, 72px)",
+              lineHeight: 1.0,
               letterSpacing: "-0.01em",
               color: COLORS.cream,
               fontWeight: 700,
+              /* Fixed height = 4 lines × 1.0 line-height × clamp(32px) = 128px min */
+              minHeight: "clamp(128px, 19.2vw, 288px)",
             }}
           >
-            {/* Line 1 — static, cream */}
+            {/* Line 1 — static */}
             <span style={{ display: "block" }}>VIRGINIA&rsquo;S CHOICE</span>
-            {/* Line 2 — 'FOR' locks with the rotating word, no orphan */}
+            {/* Lines 2-3 — 'FOR' + rotating service, always together */}
             <span style={{ display: "block", color: COLORS.orange }}>
               FOR <RotatingService />
             </span>
