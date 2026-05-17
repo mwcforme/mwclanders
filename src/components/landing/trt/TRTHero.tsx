@@ -14,33 +14,54 @@ const ROTATING_SERVICES = [
   "MEN'S HEALTH",
 ];
 
+/**
+ * All words rendered simultaneously, stacked via position:absolute.
+ * The container width = widest word (TESTOSTERONE) — never changes.
+ * Only opacity transitions. Zero layout shift. Zero reflow.
+ */
 const RotatingService = () => {
   const [index, setIndex] = useState(0);
-  const [visible, setVisible] = useState(true);
   useEffect(() => {
     const interval = setInterval(() => {
-      setVisible(false);
-      setTimeout(() => {
-        setIndex((i) => (i + 1) % ROTATING_SERVICES.length);
-        setVisible(true);
-      }, 350);
+      setIndex((i) => (i + 1) % ROTATING_SERVICES.length);
     }, 2800);
     return () => clearInterval(interval);
   }, []);
+
   return (
     <span
       aria-live="polite"
       aria-atomic="true"
       style={{
         display: "inline-block",
-        opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(-6px)",
-        transition: "opacity 280ms ease, transform 280ms ease",
-        willChange: "opacity, transform",
+        position: "relative",
         whiteSpace: "nowrap",
+        /* Width locked to longest word so container never resizes */
+        minWidth: "1em",
       }}
     >
-      {ROTATING_SERVICES[index]}
+      {/* Invisible longest word holds the width */}
+      <span style={{ visibility: "hidden", whiteSpace: "nowrap" }}>
+        TESTOSTERONE
+      </span>
+      {/* All words absolutely positioned, only active one visible */}
+      {ROTATING_SERVICES.map((word, i) => (
+        <span
+          key={word}
+          style={{
+            position: "absolute",
+            left: 0,
+            top: 0,
+            whiteSpace: "nowrap",
+            opacity: i === index ? 1 : 0,
+            transform: i === index ? "translateY(0)" : "translateY(-6px)",
+            transition: "opacity 300ms ease, transform 300ms ease",
+            willChange: "opacity, transform",
+          }}
+        >
+          {word}
+        </span>
+      ))}
     </span>
   );
 };
@@ -169,8 +190,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
               letterSpacing: "-0.01em",
               color: COLORS.cream,
               fontWeight: 700,
-              /* Lock height to exactly 2 lines — prevents layout shift on word change */
-              minHeight: "calc(clamp(36px, 9vw, 96px) * 2)",
+
             }}
           >
             <span style={{ display: "block", whiteSpace: "nowrap" }}>VIRGINIA&rsquo;S CHOICE</span>
