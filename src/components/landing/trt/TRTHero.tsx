@@ -102,7 +102,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
         }}
       />
 
-      <div className="relative z-10 w-full max-w-[1280px] mx-auto px-5 sm:px-6 pt-24 pb-12 lg:pt-32 lg:pb-24 grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-8 lg:gap-16 items-center">
+      <div className="relative z-10 w-full max-w-[1280px] mx-auto px-5 sm:px-6 pt-24 pb-12 lg:pt-32 lg:pb-24 grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-8 lg:gap-16 items-start">
         {/* LEFT */}
         <div>
           <h1
@@ -130,7 +130,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
               lineHeight: 1.6,
             }}
           >
-            Most men leave their first visit with a clear picture of their labs and a care plan. Labs drawn on-site, results reviewed same visit. Virginia's men's health practice since 2015. Individual results vary.
+            Sit down with a Virginia physician. Labs drawn on-site and reviewed in the same visit. No-cost for new members. Virginia's men's health practice since 2015.
           </p>
 
           {/* Star rating row — clickable, links to GBP */}
@@ -173,8 +173,8 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
             ))}
           </ul>
 
-          {/* Symptom self-id block — non-interactive, scannable */}
-          <div className="mt-7 max-w-[600px]">
+          {/* Symptom self-id block — mobile only (desktop: shown below hero in its own section) */}
+          <div className="lg:hidden mt-7 max-w-[600px]">
             <SymptomChecklist formId="hero-form" />
           </div>
 
@@ -201,9 +201,9 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
 
           <div
             className="mt-5"
-            style={{ color: "rgba(245,240,235,0.65)", fontFamily: "Inter, sans-serif", fontSize: 14 }}
+            style={{ color: "rgba(245,240,235,0.45)", fontFamily: "Inter, sans-serif", fontSize: 12 }}
           >
-            Medically reviewed by licensed Virginia providers. Individual results vary.
+            Treatment requires a clinical evaluation and is only provided when medically appropriate. Individual results vary.
           </div>
         </div>
 

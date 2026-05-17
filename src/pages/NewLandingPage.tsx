@@ -4,6 +4,7 @@ import { TRTHeader } from "@/components/landing/trt/TRTHeader";
 import { TRTHero } from "@/components/landing/trt/TRTHero";
 import { CredibilityBand } from "@/components/landing/trt/CredibilityBand";
 import { TRTManifesto } from "@/components/landing/trt/TRTManifesto";
+import { SymptomChecklist } from "@/components/landing/trt/SymptomChecklist";
 import { SectionReveal } from "@/components/landing/trt/SectionReveal";
 import { StickyMobileCTA } from "@/components/landing/trt/StickyMobileCTA";
 import { SEO } from "@/components/SEO";
@@ -44,6 +45,16 @@ const NewLandingPage = () => {
         {/* Above fold — eager */}
         <TRTHero />
         <SectionReveal><CredibilityBand /></SectionReveal>
+
+        {/* Symptom checklist — desktop only (mobile version shown in hero) */}
+        <SectionReveal>
+          <div className="hidden lg:block" style={{ background: "#0B1029", padding: "48px 24px" }}>
+            <div style={{ maxWidth: 900, margin: "0 auto" }}>
+              <SymptomChecklist formId="final-cta" />
+            </div>
+          </div>
+        </SectionReveal>
+
         <SectionReveal><TRTManifesto /></SectionReveal>
 
         {/* Below fold — lazy */}
