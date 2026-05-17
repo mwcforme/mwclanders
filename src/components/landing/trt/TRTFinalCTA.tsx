@@ -47,7 +47,6 @@ export const TRTFinalCTA = () => {
                 COPY.offer.cancelReschedule,
                 "If TRT isn't right for you, our providers will tell you. Treatment is only prescribed when clinically appropriate.",
               ].map((t) => (
-                {/* hardcoded-color-allow-next-line */}
                 <li key={t} className="flex items-start gap-3" style={{ color: "rgba(255,255,255,0.92)", fontFamily: "Inter, sans-serif" }}>
                   {/* hardcoded-color-allow-next-line */}
                   <Check className="h-5 w-5 flex-shrink-0 mt-0.5" strokeWidth={3} style={{ color: "#2ECC71" }} />
