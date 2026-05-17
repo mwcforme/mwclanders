@@ -253,19 +253,20 @@ export const TRTHeroForm = ({
           {errors.phone && <p role="alert" className="text-xs mt-1" style={{ color: ERROR_RED }}>{errors.phone}</p>}
         </div>
 
-        {/* Location — tap buttons instead of dropdown */}
+        {/* Location — pill tap buttons with checkmark on select */}
         <div ref={refs.location}>
           <p
             style={{
               fontSize: 13,
-              fontWeight: 600,
-              color: errors.location ? ERROR_RED : "rgba(245,240,235,0.70)",
+              fontWeight: 700,
+              color: errors.location ? ERROR_RED : "rgba(245,240,235,0.90)",
               fontFamily: "Inter, sans-serif",
               marginBottom: 8,
-              letterSpacing: "0.02em",
+              letterSpacing: "0.04em",
+              textTransform: "uppercase",
             }}
           >
-            Nearest location
+            {errors.location ? "⚠ Choose your location" : "Choose your location"}
           </p>
           <div style={{ display: "flex", gap: 8 }}>
             {LOCATION_OPTIONS.map((opt) => {
@@ -278,23 +279,35 @@ export const TRTHeroForm = ({
                   aria-pressed={isSelected}
                   style={{
                     flex: 1,
-                    height: 58,
-                    borderRadius: 10,
+                    height: 52,
+                    borderRadius: 999,
                     border: `2px solid ${
-                      isSelected ? ORANGE : errors.location ? ERROR_RED : "rgba(0,0,0,0.15)"
+                      isSelected ? ORANGE : errors.location ? ERROR_RED : "rgba(255,255,255,0.35)"
                     }`,
-                    background: isSelected ? ORANGE : "#FFFFFF",
-                    color: isSelected ? "#FFFFFF" : "#0B1029",
+                    background: isSelected ? ORANGE : "rgba(255,255,255,0.10)",
+                    color: "#FFFFFF",
                     fontFamily: "Inter, sans-serif",
                     fontSize: 13,
                     fontWeight: 700,
                     cursor: "pointer",
-                    transition: "border-color 0.15s, background 0.15s, color 0.15s",
+                    transition: "all 0.15s ease",
                     whiteSpace: "nowrap",
                     padding: "0 6px",
-                    boxShadow: isSelected ? "0 4px 14px rgba(232,103,10,0.40)" : "none",
+                    boxShadow: isSelected
+                      ? "0 4px 16px rgba(232,103,10,0.50)"
+                      : "inset 0 1px 0 rgba(255,255,255,0.15), 0 2px 4px rgba(0,0,0,0.25)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 5,
+                    letterSpacing: "0.01em",
                   }}
                 >
+                  {isSelected && (
+                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" style={{ flexShrink: 0 }}>
+                      <path d="M2 6.5L5.5 10L11 3.5" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  )}
                   {opt.label}
                 </button>
               );
