@@ -235,30 +235,25 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
           </div>
         </div>
 
-        {/* FULL-WIDTH ROW — editorial numbered columns */}
-        <div className="col-span-1 lg:col-span-2 grid grid-cols-2 lg:grid-cols-4 gap-px mt-8" style={{borderTop:"1px solid rgba(255,255,255,0.10)"}}>
+        {/* FULL-WIDTH ROW — dot + sentence, max readability */}
+        <div className="col-span-1 lg:col-span-2 grid grid-cols-1 lg:grid-cols-4 gap-4 mt-8 pt-6" style={{borderTop:"1px solid rgba(255,255,255,0.10)"}}>
           {[
-            {n:"01", head:"Energy gone", body:"Tired by noon regardless of sleep."},
-            {n:"02", head:"No gym gains", body:"Same work. Nothing to show for it."},
-            {n:"03", head:"Drive dropped", body:"You've noticed. So has she."},
-            {n:"04", head:"Normal labs", body:"But you definitely don't feel it."},
-          ].map(({n, head, body}) => (
+            "Tired by noon no matter how much you sleep.",
+            "Workouts stopped producing results.",
+            "Sex drive is down. You’ve noticed. So has she.",
+            "Labs say normal. You don’t feel it.",
+          ].map((text) => (
             <div
-              key={n}
+              key={text}
               style={{
-                padding: "20px 20px 16px",
-                // hardcoded-color-allow-next-line
-                borderRight: "1px solid rgba(255,255,255,0.08)",
                 display: "flex",
-                flexDirection: "column",
-                gap: 6,
+                alignItems: "flex-start",
+                gap: 12,
               }}
             >
-              <span style={{ fontFamily: "Oswald, sans-serif", fontSize: 28, fontWeight: 700, color: COLORS.orange, lineHeight: 1 }}>{n}</span>
+              <div style={{ width: 8, height: 8, borderRadius: "50%", background: COLORS.orange, flexShrink: 0, marginTop: 6 }} />
               {/* hardcoded-color-allow-next-line */}
-              <span style={{ fontFamily: "Oswald, sans-serif", fontSize: 16, fontWeight: 700, color: "rgba(245,240,235,0.95)", textTransform: "uppercase", letterSpacing: "0.04em", lineHeight: 1.1 }}>{head}</span>
-              {/* hardcoded-color-allow-next-line */}
-              <span style={{ fontFamily: "Inter, sans-serif", fontSize: 12, fontWeight: 400, color: "rgba(245,240,235,0.50)", lineHeight: 1.4 }}>{body}</span>
+              <span style={{ fontFamily: "Inter, sans-serif", fontSize: 16, fontWeight: 500, color: "rgba(245,240,235,0.88)", lineHeight: 1.45 }}>{text}</span>
             </div>
           ))}
         </div>
