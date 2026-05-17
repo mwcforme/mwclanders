@@ -1,13 +1,4 @@
-import { Minus } from "lucide-react";
 import { COPY } from "@/data/copy";
-
-const symptoms = [
-  "Running out of gas by mid-afternoon",
-  "Drive and motivation have gone quiet",
-  "Can't focus the way you used to",
-  "Gaining weight despite doing the same things",
-  "Labs come back 'normal' but you know something's off",
-];
 
 const steps = [
   {
@@ -69,35 +60,29 @@ export const TRTHowItWorks = () => {
       <div className="max-w-[1200px] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
         {/* Left: Symptoms (mobile shown second) */}
         <div className="order-2 md:order-1">
-          {eyebrow("Sound Familiar?")}
-          {heading("Common signs men ask us about")}
+          {eyebrow("Why Men Come To Us")}
+          {heading("The gap between your labs and how you feel")}
           <p
             className="mt-5 text-base leading-relaxed"
             style={{ color: "#4A4A4A", fontFamily: "Inter, sans-serif", maxWidth: 520 }}
           >
-            Most men who come in have already Googled their symptoms, gotten bloodwork, and been told everything looks fine. They know it isn't. That gap between how you feel and what your labs say is exactly what we look at.
+            Most men who walk in have already seen their GP. They got bloodwork. They were told everything looks fine. They know it isn't.
           </p>
-          <ul className="mt-8 space-y-5">
-            {symptoms.map((s) => (
-              <li key={s} className="flex items-start gap-3">
-                <span
-                  aria-hidden="true"
-                  className="flex-shrink-0 mt-1 inline-flex items-center justify-center"
-                  style={{
-                    width: 22,
-                    height: 22,
-                    borderRadius: 999,
-                    background: "#FFFFFF",
-                    color: "var(--brand-cta)",
-                    border: "1px solid var(--c-border-on-light)",
-                  }}
-                >
-                  <Minus className="h-3.5 w-3.5" strokeWidth={3} />
-                </span>
-                <span style={{ color: "#1A1A1A", fontFamily: "Inter, sans-serif", fontSize: 17, lineHeight: 1.5 }}>{s}</span>
-              </li>
-            ))}
-          </ul>
+          <p
+            className="mt-4 text-base leading-relaxed"
+            style={{ color: "#4A4A4A", fontFamily: "Inter, sans-serif", maxWidth: 520 }}
+          >
+            Standard bloodwork doesn't measure what we measure. A hormone panel reviewed by a physician who specializes in men's health tells a different story than a general metabolic panel flagged for abnormals.
+          </p>
+          <div
+            className="mt-8 rounded-xl p-6"
+            style={{ background: "#000033" }}
+          >
+            <div style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 44, color: "#E8670A", lineHeight: 1 }}>10,000+</div>
+            <div style={{ fontFamily: "Inter, sans-serif", fontSize: 15, color: "rgba(255,255,255,0.80)", marginTop: 8, lineHeight: 1.5 }}>
+              Virginia men treated since 2015. Most had been told their labs were normal.
+            </div>
+          </div>
         </div>
 
         {/* Right: How it works (mobile shown first) */}

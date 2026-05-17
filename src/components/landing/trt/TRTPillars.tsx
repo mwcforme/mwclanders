@@ -11,17 +11,17 @@ const pillars = [
   },
   {
     title: "ON-SITE LABS",
-    desc: "Full labs done in-center, with results back before you walk out.",
+    desc: "CLIA-certified lab in every center. No third-party lab visit, no waiting a week for results.",
     image: imgLobby,
   },
   {
     title: "BUILT FOR MEN",
-    desc: "TRT, ED, and weight loss is all we do. Not a side service at a general practice.",
+    desc: "TRT, ED, and weight loss is all we do. Dedicated focus means faster answers and better outcomes.",
     image: imgAthletic,
   },
   {
     title: "ONGOING MONITORING",
-    desc: "Regular check-ins, labs, and protocol adjustments. We don't write a script and disappear.",
+    desc: "Follow-up labs and protocol adjustments are built into your care, not sold as add-ons.",
     image: imgTeam,
   },
 ];
@@ -55,8 +55,8 @@ export const TRTPillars = () => (
           fontWeight: 700,
         }}
       >
-        EVERYTHING YOU NEED FOR TRT, ED,<br className="hidden sm:block" />
-        AND WEIGHT LOSS, UNDER ONE ROOF.
+        Physician-Led. Virginia-Local.
+        <br className="hidden sm:block" />Built for Men.
       </h2>
 
       {/* Desktop + tablet: grid */}

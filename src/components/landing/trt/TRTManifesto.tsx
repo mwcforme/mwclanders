@@ -18,14 +18,14 @@ export const TRTManifesto = () => {
             className="font-bold uppercase"
             style={{ fontFamily: "Oswald, sans-serif", fontSize: "clamp(28px, 4vw, 40px)", color: "#FFFFFF", fontWeight: 700, lineHeight: 1.1 }}
           >
-            This isn't about vanity.<br />It's about getting your edge back.
+            Your labs might be normal.<br />You still don't feel right.
           </h2>
 
           <p className="text-base mt-5 leading-[1.7]" style={{ color: "rgba(255,255,255,0.85)", fontFamily: "Inter, sans-serif", fontSize: 16 }}>
-            You know the version of yourself that handled things, stayed sharp, showed up. That guy didn't disappear. But somewhere along the way, the energy to access him did.
+            Most men wait two years before saying something out loud. They get bloodwork. Their GP says everything looks fine. They go home. Nothing changes.
           </p>
           <p className="text-base mt-4 leading-[1.7]" style={{ color: "rgba(255,255,255,0.85)", fontFamily: "Inter, sans-serif", fontSize: 16 }}>
-            We are men's health. Not a side service tacked onto a general practice. Not an app that mails you pills and calls it care. One physician, your numbers, a plan built around your life.
+            We specialize in men's health. One physician, your labs, and a conversation — not a telehealth chat, not a coordinator reading from a script. If treatment is right for you, you leave with a plan the same day.
           </p>
 
           <figure
@@ -47,7 +47,7 @@ export const TRTManifesto = () => {
               <span className="flex items-center gap-2">
                 <span>Mark B., 52, Richmond</span>
               </span>
-              <span className="block mt-1" style={{ fontSize: 11, color: "rgba(255,255,255,0.40)", fontStyle: "normal" }}>Individual results vary.</span>
+              <span className="block mt-1" style={{ fontSize: 11, color: "rgba(255,255,255,0.40)", fontStyle: "normal" }}>Verified patient. Individual results vary.</span>
             </figcaption>
           </figure>
 

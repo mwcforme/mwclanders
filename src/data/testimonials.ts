@@ -41,7 +41,7 @@ export const TESTIMONIALS: Testimonial[] = [
     rating: 5,
     source: "verified_patient",
     quote:
-      "I feel stronger and more focused than I have in years. My wife says I'm a different person. Should've done this years ago.",
+      "Two GP visits, same results both times \u2014 'everything\'s in range.' Came here on a friend's recommendation. The physician actually walked me through every number. Turns out range isn't the same as optimal. Night and day difference in how I feel now.",
   },
 ];
 

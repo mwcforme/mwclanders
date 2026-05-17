@@ -16,10 +16,10 @@ export const TRTFinalCTA = () => {
               fontWeight: 700,
             }}
           >
-            READY TO BOOK YOUR FIRST VISIT?
+            Meet Your Virginia Physician.
           </h2>
           <p className="text-base mt-2" style={{ color: "rgba(255,255,255,0.85)", fontFamily: "Inter, sans-serif", fontSize: 16 }}>
-            {COPY.offer.finalSubhead}
+            Same-day labs. Results reviewed in the same visit. No-cost for new members.
           </p>
         </div>
 
@@ -30,7 +30,7 @@ export const TRTFinalCTA = () => {
               className="text-base md:text-lg leading-relaxed"
               style={{ color: "rgba(255,255,255,0.85)", fontFamily: "Inter, sans-serif" }}
             >
-              This isn't about vanity. It's about getting back to being the man you've always been: sharp, confident, and performing at your level. Individual results vary.
+              Your first visit is 60 minutes. Labs drawn on-site. A physician who reviews every number with you before you leave, and a care plan if treatment is right for you. Individual results vary.
             </p>
 
             <ul className="mt-6 space-y-3">

@@ -7,10 +7,10 @@ import { trackCro } from "@/hooks/useAnalytics";
 import { COPY } from "@/data/copy";
 
 const trustChecks = [
-  "No-cost consult, no insurance needed",
-  "Same-day labs drawn on-site",
-  "Your actual doctor, not a PA or telehealth chat",
-  "Treatment can start same day, if appropriate",
+  "Licensed Virginia physicians — not telehealth, not a PA",
+  "Labs drawn and reviewed in the same 60-minute visit",
+  "3 Virginia locations, same-day availability",
+  "Treatment starts the same day, when clinically appropriate",
 ];
 
 const COLORS = {

@@ -31,12 +31,8 @@ export const TRT_FAQS: FaqItem[] = [
     a: "A diagnosis of low testosterone requires lab work and a clinical evaluation. At your first visit, we'll run a comprehensive hormone panel and review your symptoms. Treatment is only prescribed when clinically appropriate.",
   },
   {
-    q: "What should I expect at my first visit?",
-    a: "Plan for about 60 minutes. You'll have your labs drawn on-site, meet face-to-face with a licensed provider to review your symptoms and history, and leave with a personalized care plan. If treatment is clinically appropriate, it can often begin the same day.",
-  },
-  {
-    q: "What is included in my first visit?",
-    a: "A comprehensive hormone lab panel drawn on-site, a face-to-face visit with a licensed Virginia physician, and a personalized care plan based on your results. All at no cost. You decide whether to move forward with treatment.",
+    q: "What should I expect at my first visit, and what's included?",
+    a: "Plan for 60 minutes. Your labs are drawn on-site \u2014 a full hormone panel, not a standard GP metabolic panel. Your Virginia physician then reviews every result with you in the same visit, explains what they mean in plain language, and if treatment is appropriate, you leave with a protocol that day. No-cost for new members. No obligation to proceed.",
   },
   {
     q: "How soon do patients typically notice changes?",
