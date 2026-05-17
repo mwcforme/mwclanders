@@ -30,17 +30,21 @@ export default function AdminLogin() {
   const signInWithGoogle = async () => {
     setBusy(true);
     setError(null);
-    const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: `${window.location.origin}/admin/overview`,
-      queryParams: { prompt: "select_account" },
-    });
-    if (result.error) {
+    try {
+      const result = await lovable.auth.signInWithOAuth("google", {
+        redirect_uri: `${window.location.origin}/admin/overview`,
+        queryParams: { prompt: "select_account" },
+      });
+      if (result.error) {
+        setBusy(false);
+        setError(`Auth error: ${result.error.message ?? "Sign in failed. Check Supabase Google OAuth config."}`);
+        return;
+      }
+      if (result.redirected) return;
+    } catch (err) {
       setBusy(false);
-      setError(result.error.message ?? "Sign in failed.");
-      return;
+      setError(`Unexpected error: ${err instanceof Error ? err.message : String(err)}`);
     }
-    if (result.redirected) return; // browser will redirect
-    // Tokens received in-place; auth listener will route us.
   };
 
   return (
