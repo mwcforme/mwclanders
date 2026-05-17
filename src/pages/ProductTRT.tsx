@@ -126,203 +126,165 @@ const ProductTRT = () => {
         {/* ── 1. HERO ──────────────────────────────────────────────────────── */}
         <section
           id="hero"
-          style={{
-            background: "#ffffff",
-            paddingTop: 88,
-            paddingBottom: 64,
-          }}
+          style={{ background: "#ffffff", paddingTop: 88, paddingBottom: 64 }}
         >
-          <div
-            style={{
-              maxWidth: 1200,
-              margin: "0 auto",
-              padding: "0 24px",
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-              gap: 48,
-              alignItems: "center",
-            }}
+          <div style={{
+            maxWidth: 1140,
+            margin: "0 auto",
+            padding: "0 24px",
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: 56,
+            alignItems: "start",
+          }}
+          className="grid-cols-1 lg:grid-cols-2"
           >
-            {/* Left */}
-            <div>
-              {/* Provider avatar */}
-              <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 24 }}>
-                <div
-                  style={{
-                    width: 120,
-                    height: 120,
-                    borderRadius: "50%",
-                    border: "3px solid var(--brand-cta)",
-                    overflow: "hidden",
-                    flexShrink: 0,
-                    background: "#f0f0f0",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <img
-                    src="/src/assets/lp/provider-headshot.webp"
-                    alt="Men's Wellness Centers provider"
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                    onError={(e) => {
-                      const el = e.currentTarget as HTMLImageElement;
-                      el.style.display = "none";
-                      const parent = el.parentElement;
-                      if (parent) {
-                        parent.innerHTML = `<span style="font-size:48px">👨‍⚕️</span>`;
-                      }
-                    }}
-                  />
+            {/* LEFT — large product/service image */}
+            <div style={{
+              borderRadius: 16,
+              overflow: "hidden",
+              background: "#f0f4ff",
+              minHeight: 480,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              position: "relative",
+            }}>
+              <img
+                src="/src/assets/lp/onsite-labs-centrifuge.webp"
+                alt="Men's Wellness Centers on-site lab"
+                style={{ width: "100%", height: "100%", objectFit: "cover", minHeight: 480 }}
+                onError={(e) => {
+                  const el = e.currentTarget as HTMLImageElement;
+                  el.style.display = "none";
+                  const parent = el.parentElement;
+                  if (parent) {
+                    parent.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:48px"><svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#E8670A" stroke-width="1.5"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg><p style="font-family:Oswald,sans-serif;font-size:20px;color:#0B1029;font-weight:700;text-align:center">On-Site Labs<br/>Same-Day Results</p></div>`;
+                  }
+                }}
+              />
+            </div>
+
+            {/* RIGHT — headline + order summary card */}
+            <div style={{ paddingTop: 8 }}>
+              {/* Headline — matches MangoRx 2-line with orange second line */}
+              <h1 style={{
+                fontFamily: "Oswald, sans-serif",
+                fontSize: "clamp(36px, 5vw, 60px)",
+                fontWeight: 700,
+                lineHeight: 1.05,
+                letterSpacing: "-0.01em",
+                marginBottom: 28,
+              }}>
+                <span style={{ color: "var(--brand-navy)", display: "block" }}>Be the Man</span>
+                <span style={{ color: "var(--brand-cta)", display: "block" }}>You Were Built to Be</span>
+              </h1>
+
+              {/* Order Summary card — MangoRx pattern */}
+              <div style={{
+                border: "1px solid #e8e8e8",
+                borderRadius: 12,
+                overflow: "hidden",
+                marginBottom: 24,
+              }}>
+                <div style={{
+                  padding: "14px 20px",
+                  borderBottom: "1px solid #e8e8e8",
+                  background: "#fafafa",
+                }}>
+                  <span style={{
+                    fontFamily: "Oswald, sans-serif",
+                    fontWeight: 700,
+                    fontSize: 15,
+                    color: "var(--brand-navy)",
+                    letterSpacing: "0.04em",
+                  }}>
+                    What's Included
+                  </span>
                 </div>
-                <div>
-                  <p
+
+                {[
+                  {
+                    icon: "🧪",
+                    title: "Comprehensive Lab Panel",
+                    sub: "Full hormone panel drawn on-site",
+                    note: "Typically $100–$300",
+                    value: "Included",
+                  },
+                  {
+                    icon: "👨‍⚕️",
+                    title: "Provider Consultation",
+                    sub: "Private 1-on-1 with a licensed Virginia provider",
+                    note: "Typically $150–$300",
+                    value: "Included",
+                  },
+                  {
+                    icon: "📋",
+                    title: "Personalized Treatment Plan",
+                    sub: "Results reviewed same-day · Custom protocol",
+                    note: "If clinically appropriate",
+                    value: "Included",
+                  },
+                ].map(({ icon, title, sub, note, value }) => (
+                  <div
+                    key={title}
                     style={{
-                      fontSize: 11,
-                      fontWeight: 700,
-                      letterSpacing: "0.14em",
-                      textTransform: "uppercase",
-                      color: "var(--brand-cta)",
-                      marginBottom: 4,
+                      display: "flex",
+                      alignItems: "flex-start",
+                      gap: 14,
+                      padding: "16px 20px",
+                      borderBottom: "1px solid #f0f0f0",
                     }}
                   >
-                    Testosterone Protocol by:
-                  </p>
-                  <p
-                    style={{
-                      fontSize: 18,
-                      fontWeight: 700,
-                      color: "var(--brand-navy)",
-                      fontFamily: "Oswald, sans-serif",
-                      lineHeight: 1.2,
-                    }}
-                  >
-                    Men's Wellness Centers
-                  </p>
+                    <div style={{
+                      width: 36, height: 36, borderRadius: 8,
+                      background: "rgba(232,103,10,0.08)",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      fontSize: 18, flexShrink: 0,
+                    }}>
+                      {icon}
+                    </div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <p style={{ fontWeight: 700, fontSize: 14, color: "#111", margin: 0 }}>{title}</p>
+                      <p style={{ fontSize: 12, color: "#555", margin: "2px 0 0" }}>{sub}</p>
+                      <p style={{ fontSize: 11, color: "#999", margin: "1px 0 0" }}>{note}</p>
+                    </div>
+                    <span style={{ fontWeight: 700, fontSize: 13, color: "#16a34a", flexShrink: 0 }}>{value}</span>
+                  </div>
+                ))}
+
+                {/* Total row */}
+                <div style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  padding: "16px 20px",
+                  background: "#fafafa",
+                }}>
+                  <span style={{ fontWeight: 700, fontSize: 15, color: "#111" }}>Total</span>
+                  <span style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 22, color: "var(--brand-cta)" }}>
+                    No-cost consultation
+                  </span>
                 </div>
               </div>
 
-              <h1
-                style={{
-                  fontFamily: "Oswald, sans-serif",
-                  fontSize: "clamp(32px, 5vw, 56px)",
-                  fontWeight: 700,
-                  color: "var(--brand-navy)",
-                  lineHeight: 1.1,
-                  marginBottom: 16,
-                  letterSpacing: "-0.01em",
-                }}
-              >
-                Be the Man You Were Built to Be
-              </h1>
-
-              <p
-                style={{
-                  fontSize: 17,
-                  color: "#444",
-                  lineHeight: 1.6,
-                  marginBottom: 32,
-                }}
-              >
-                Virginia's physician-led men's health practice since 2015. In-person visits, on-site labs, and personalized testosterone protocols — all in a single appointment.
-              </p>
+              {/* CTA */}
+              <OrangeCTA onClick={goBook} style={{ width: "100%", textAlign: "center", borderRadius: 999, fontSize: 18, height: 60 }}>
+                Get Started Now
+              </OrangeCTA>
 
               {/* Trust badges */}
-              <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 16, marginTop: 16, flexWrap: "wrap" }}>
                 <a
                   href="https://www.legitscript.com/websites/?checker_keywords=menswellnesscenters.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Verify LegitScript Certification"
                 >
-                  <img
-                    src="/images/badges/legitscript-color.png"
-                    alt="LegitScript Certified"
-                    style={{ height: 56, width: "auto" }}
-                    loading="lazy"
-                  />
+                  <img src="/images/badges/legitscript-color.png" alt="LegitScript Certified" style={{ height: 48, width: "auto" }} loading="lazy" />
                 </a>
-                <img
-                  src="/images/badges/hipaa-color.webp"
-                  alt="HIPAA Compliant"
-                  style={{ height: 48, width: "auto" }}
-                  loading="lazy"
-                />
+                <img src="/images/badges/hipaa-color.webp" alt="HIPAA Compliant" style={{ height: 40, width: "auto" }} loading="lazy" />
               </div>
-            </div>
-
-            {/* Right */}
-            <div
-              style={{
-                background: "#f8f8f8",
-                borderRadius: 16,
-                padding: "32px 28px",
-                border: "1px solid #e8e8e8",
-              }}
-            >
-              <p
-                style={{
-                  fontSize: 12,
-                  fontWeight: 700,
-                  letterSpacing: "0.14em",
-                  textTransform: "uppercase",
-                  color: "var(--brand-cta)",
-                  marginBottom: 16,
-                }}
-              >
-                What you get
-              </p>
-              <ul style={{ listStyle: "none", padding: 0, margin: "0 0 24px" }}>
-                {[
-                  "Same-day lab results & provider review",
-                  "Clinician-prescribed personalized protocol",
-                  "In-person visit at Virginia locations",
-                  "Ongoing monitoring with regular labs",
-                  "No insurance needed",
-                ].map((item) => (
-                  <li
-                    key={item}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 12,
-                      marginBottom: 14,
-                      fontSize: 15,
-                      color: "#222",
-                    }}
-                  >
-                    <CheckIcon />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-
-              <div
-                style={{
-                  background: "#fff",
-                  borderRadius: 10,
-                  padding: "14px 20px",
-                  border: "2px solid var(--brand-cta)",
-                  marginBottom: 20,
-                  textAlign: "center",
-                }}
-              >
-                <span
-                  style={{
-                    fontSize: 22,
-                    fontWeight: 800,
-                    color: "var(--brand-cta)",
-                    fontFamily: "Oswald, sans-serif",
-                    letterSpacing: "0.02em",
-                  }}
-                >
-                  {COPY.badge.noCostConsult}
-                </span>
-              </div>
-
-              <OrangeCTA onClick={goBook} style={{ width: "100%", textAlign: "center" }}>
-                {COPY.cta.bookConsult}
-              </OrangeCTA>
             </div>
           </div>
         </section>
