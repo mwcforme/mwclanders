@@ -1,7 +1,6 @@
 import { Phone, MessageSquareText, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import BookLayout from "@/components/book/BookLayout";
-import { useBookingStore } from "@/domain/booking/bookingStore";
 
 const PHONE_DISPLAY = "(866) 344-4955";
 const PHONE_TEL = "tel:8663444955";
@@ -40,8 +39,6 @@ const isTeamAvailable = (): boolean => {
  *   - Two contact methods so the user picks whichever they're comfortable with
  */
 const BookLetsTalk = () => {
-  const identity = useBookingStore((s) => s.identity);
-
   const trackCallClick = () => {
     const dl = (window as unknown as { dataLayer?: unknown[] }).dataLayer;
     if (typeof window !== "undefined" && dl) {
