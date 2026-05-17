@@ -384,11 +384,7 @@ const BookSchedule = () => {
                 onNextAvailable={handleNextAvailable}
                 onBooked={(slotIso) => {
                   setAppointmentTime(slotIso);
-                  setBookedSlot(slotIso);
-                  // Scroll to inline email capture
-                  setTimeout(() => {
-                    inlineEmailRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-                  }, 150);
+                  navigate("/book/confirmed", { state: { appointmentTime: slotIso } });
                 }}
               />
             </BookingErrorBoundary>
@@ -424,32 +420,7 @@ const BookSchedule = () => {
           )}
         </section>
 
-        {/* ── Inline email reveal (shown after slot booked) ──────────────── */}
-        {bookedSlot && !emailCaptured && (
-          <div ref={inlineEmailRef} className="mx-auto w-full" style={{ maxWidth: 720 }}>
-            <InlineEmailCapture
-              recap={emailRecap}
-              contactId={identity?.ghlContactId}
-              onComplete={handleEmailComplete}
-            />
-          </div>
-        )}
 
-        {/* ── Booked + email captured — transition state ────────────────── */}
-        {bookedSlot && emailCaptured && (
-          <div className="mx-auto w-full text-center" style={{ maxWidth: 720 }}>
-            <div style={{
-              background: "rgba(16,185,129,0.10)",
-              border: "1px solid rgba(16,185,129,0.30)",
-              borderRadius: 10, padding: "14px 16px",
-              display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
-              fontFamily: "Inter, sans-serif", fontSize: 14, color: "#10B981",
-            }}>
-              <Check size={16} strokeWidth={2.5} />
-              Booking confirmed. Taking you to your summary…
-            </div>
-          </div>
-        )}
 
         {/* ── Help line ──────────────────────────────────────────────────── */}
         <div className="hidden md:block mx-auto text-center" style={{ maxWidth: 720, color: "var(--c-text-on-dark)", opacity: 0.85, fontSize: 13, fontFamily: "Inter, sans-serif" }}>

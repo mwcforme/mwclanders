@@ -1,8 +1,7 @@
 /**
- * Trust / certification band — responsive flex row.
- * Mobile: badges wrap, dividers hidden. Desktop: full row with dividers.
- * Order: LegitScript → CLIA → HIPAA
- * Images: WebP with PNG fallback via <picture> for maximum compression.
+ * Trust / certification band — compact white strip.
+ * LegitScript → CLIA → HIPAA on white background.
+ * Badges render with their original dark artwork on white — correct display.
  */
 export const TRTMarquee = () => (
   <section
@@ -16,10 +15,10 @@ export const TRTMarquee = () => (
     <div
       className="flex flex-row flex-wrap items-center justify-center"
       style={{
-        maxWidth: 960,
+        maxWidth: 800,
         margin: "0 auto",
-        padding: "32px 24px",
-        gap: "20px 36px",
+        padding: "20px 24px",
+        gap: "16px 48px",
       }}
     >
       <picture>
@@ -27,40 +26,35 @@ export const TRTMarquee = () => (
         <img
           src="/images/badges/legitscript.png"
           alt="LegitScript Certified"
-          className="h-14 md:h-20 w-auto"
-          style={{ maxWidth: 160, objectFit: "contain",  }}
+          style={{ height: 52, width: "auto", objectFit: "contain" }}
           loading="lazy"
           decoding="async"
           width="160"
-          height="80"
+          height="52"
         />
       </picture>
-
       <picture>
         <source srcSet="/images/badges/clia.webp" type="image/webp" />
         <img
           src="/images/badges/clia.png"
           alt="CLIA Certified Laboratory"
-          className="h-14 md:h-20 w-auto"
-          style={{ maxWidth: 160, objectFit: "contain",  }}
+          style={{ height: 52, width: "auto", objectFit: "contain" }}
           loading="lazy"
           decoding="async"
           width="160"
-          height="80"
+          height="52"
         />
       </picture>
-
       <picture>
         <source srcSet="/images/badges/hipaa.webp" type="image/webp" />
         <img
           src="/images/badges/hipaa.png"
           alt="HIPAA Compliant"
-          className="h-14 md:h-20 w-auto"
-          style={{ maxWidth: 160, objectFit: "contain",  }}
+          style={{ height: 52, width: "auto", objectFit: "contain" }}
           loading="lazy"
           decoding="async"
           width="160"
-          height="80"
+          height="52"
         />
       </picture>
     </div>
