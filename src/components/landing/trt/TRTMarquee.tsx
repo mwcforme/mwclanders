@@ -31,7 +31,7 @@ export const TRTMarquee = () => (
           src="/images/badges/legitscript.png"
           alt="LegitScript Certified"
           className="h-14 md:h-20 w-auto"
-          style={{ maxWidth: 160, objectFit: "contain" }}
+          style={{ maxWidth: 160, objectFit: "contain", mixBlendMode: "screen" }}
           loading="lazy"
           decoding="async"
           width="160"
@@ -49,7 +49,7 @@ export const TRTMarquee = () => (
           src="/images/badges/clia.png"
           alt="CLIA Certified Laboratory"
           className="h-14 md:h-20 w-auto"
-          style={{ maxWidth: 160, objectFit: "contain" }}
+          style={{ maxWidth: 160, objectFit: "contain", mixBlendMode: "screen" }}
           loading="lazy"
           decoding="async"
           width="160"
@@ -66,7 +66,7 @@ export const TRTMarquee = () => (
           src="/images/badges/hipaa.png"
           alt="HIPAA Compliant"
           className="h-14 md:h-20 w-auto"
-          style={{ maxWidth: 160, objectFit: "contain" }}
+          style={{ maxWidth: 160, objectFit: "contain", mixBlendMode: "screen" }}
           loading="lazy"
           decoding="async"
           width="160"
