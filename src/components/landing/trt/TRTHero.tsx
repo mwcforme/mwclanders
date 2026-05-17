@@ -1,6 +1,5 @@
 import { Check, Star } from "lucide-react";
 import { TRTHeroForm } from "./TRTHeroForm";
-import { DifferentiatorPills } from "./DifferentiatorPills";
 import { SymptomChecklist } from "./SymptomChecklist";
 import { GBP_REVIEWS_URL } from "@/data/testimonials";
 import { trackCro } from "@/hooks/useAnalytics";
@@ -154,11 +153,6 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
               from 200+ verified Google reviews
             </span>
           </a>
-
-          {/* Differentiator pills — 4 moat claims below H1 */}
-          <div className="mt-5 max-w-[600px]">
-            <DifferentiatorPills />
-          </div>
 
           <ul className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 max-w-[600px]">
             {trustChecks.map((t) => (
