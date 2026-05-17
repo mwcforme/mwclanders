@@ -14,7 +14,7 @@
 export const COPY = {
   cta: {
     /** Primary booking CTA. Header, hero submit, locations, sticky bar, final CTA. */
-    bookConsult: "Get My Labs Checked",
+    bookConsult: "Meet with a Real Provider",
     /** Results section CTA. */
     startConsult: "Book My Visit",
     /** Inline link variant inside FAQ answers. */

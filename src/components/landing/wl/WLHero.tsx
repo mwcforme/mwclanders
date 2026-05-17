@@ -143,9 +143,9 @@ export const WLHero = () => {
         <div id="hero-form" className="w-full flex lg:justify-end">
           <TRTHeroForm
             service="wl"
-            heading="See If I Qualify"
-            subheading="Same or next day. Takes about a minute."
-            ctaLabel="See If I Qualify"
+            heading="Diets don't fail you. The wrong diagnosis does."
+            subheading="Physician-supervised weight loss that treats the whole man. Same-day availability."
+            ctaLabel="Meet with a Real Provider"
           />
         </div>
       </div>

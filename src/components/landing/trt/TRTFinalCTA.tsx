@@ -78,9 +78,9 @@ export const TRTFinalCTA = () => {
           <div className="order-1 md:order-2 flex lg:justify-center">
             <div className="w-full lg:max-w-[440px]">
               <TRTHeroForm
-                heading={COPY.cta.bookConsult}
-                subheading="Same or next day. Takes about a minute."
-                ctaLabel={COPY.cta.bookConsult}
+                heading="Your labs might be 'normal.' The man's symptoms say otherwise."
+                subheading="We treat the man's symptoms, not just the numbers. Same-day availability."
+                ctaLabel="Meet with a Real Provider"
               />
             </div>
           </div>

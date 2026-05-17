@@ -143,8 +143,9 @@ export const EDHero = () => {
         <div id="hero-form" className="w-full flex lg:justify-end">
           <TRTHeroForm
             service="ed"
-            heading="Book My Discreet Visit"
-            subheading="Same or next day. Private, in-person visit."
+            heading="This isn't something your GP is trained for."
+            subheading="Physician-led ED care. Private, in-person. Same or next day."
+            ctaLabel="Meet with a Real Provider"
             ctaLabel="Book My Discreet Visit"
           />
         </div>
