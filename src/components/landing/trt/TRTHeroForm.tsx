@@ -37,9 +37,9 @@ const VALID_LOCATIONS = ["richmond", "virginia-beach", "newport-news"] as const;
 type LocationKey = typeof VALID_LOCATIONS[number];
 
 const LOCATION_OPTIONS: { key: LocationKey; label: string; hint: string }[] = [
-  { key: "richmond", label: "Richmond", hint: "Midlothian Turnpike · Short Pump area" },
-  { key: "virginia-beach", label: "Virginia Beach", hint: "Hilltop · Town Center · Chesapeake" },
-  { key: "newport-news", label: "Newport News", hint: "Oyster Point · Williamsburg area" },
+  { key: "richmond", label: "Richmond", hint: "Serving Richmond & surrounding areas" },
+  { key: "virginia-beach", label: "Virginia Beach", hint: "Serving Hampton Roads & Chesapeake" },
+  { key: "newport-news", label: "Newport News", hint: "Serving the Peninsula & Williamsburg" },
 ];
 
 function getLocationFromUrl(): LocationKey | "" {
