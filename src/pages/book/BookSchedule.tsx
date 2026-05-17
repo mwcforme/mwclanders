@@ -14,6 +14,8 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Clock, MapPin, AlertCircle, Check } from "lucide-react";
 import BookLayout from "@/components/book/BookLayout";
 import GHLDayView from "@/components/book/GHLDayView";
+import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
+import { contactUpdater } from "@/services/contactUpdater";
 import { useBookingStore } from "@/domain/booking/bookingStore";
 import { CENTER_CALENDARS, type LocationKey } from "@/lib/ghlCalendars";
 import { LOCATIONS } from "@/data/locations";
@@ -56,17 +58,7 @@ const InlineEmailCapture = ({ recap, contactId, onComplete }: InlineEmailProps) 
 
     // Fire-and-forget GHL update
     if (contactId) {
-      try {
-        const { supabase } = await import("@/integrations/supabase/client");
-        supabase.functions.invoke("ghl-proxy", {
-          body: {
-            path: `/contacts/${contactId}`,
-            method: "PUT",
-            body: { email: trimmed },
-            __env: import.meta.env.VITE_APP_ENV ?? "stage",
-          },
-        }).catch(() => { /* non-blocking */ });
-      } catch { /* never block UX */ }
+      contactUpdater.updateContact(contactId, { email: trimmed }).catch(() => { /* non-blocking */ });
     }
 
     onComplete(trimmed);
@@ -378,25 +370,27 @@ const BookSchedule = () => {
         {/* ── Calendar ───────────────────────────────────────────────────── */}
         <section className="mx-auto" aria-label="Pick a date and time" style={{ maxWidth: 720 }}>
           {location && location in CENTER_CALENDARS ? (
-            <GHLDayView
-              location={location as LocationKey}
-              firstName={firstName}
-              lastName={lastName}
-              email={identity?.email}
-              phone={identity?.phone}
-              source={source || "mwc-book-funnel"}
-              urgencyTier={urgencyTier}
-              customFields={customFields}
-              onNextAvailable={handleNextAvailable}
-              onBooked={(slotIso) => {
-                setAppointmentTime(slotIso);
-                setBookedSlot(slotIso);
-                // Scroll to inline email capture
-                setTimeout(() => {
-                  inlineEmailRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-                }, 150);
-              }}
-            />
+            <BookingErrorBoundary>
+              <GHLDayView
+                location={location as LocationKey}
+                firstName={firstName}
+                lastName={lastName}
+                email={identity?.email}
+                phone={identity?.phone}
+                source={source || "mwc-book-funnel"}
+                urgencyTier={urgencyTier}
+                customFields={customFields}
+                onNextAvailable={handleNextAvailable}
+                onBooked={(slotIso) => {
+                  setAppointmentTime(slotIso);
+                  setBookedSlot(slotIso);
+                  // Scroll to inline email capture
+                  setTimeout(() => {
+                    inlineEmailRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+                  }, 150);
+                }}
+              />
+            </BookingErrorBoundary>
           ) : (
             /* No location set — show center picker inline */
             <div style={{ background: "#161B3A", border: "1px solid #2B3247", borderRadius: 12, padding: 20, fontFamily: "Inter, sans-serif" }}>

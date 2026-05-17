@@ -1,4 +1,6 @@
 import { useEffect, useState, useRef } from "react";
+import { contactUpdater } from "@/services/contactUpdater";
+import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
 import { MapPin, ExternalLink, Clock } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import BookLayout from "@/components/book/BookLayout";
@@ -55,23 +57,13 @@ const PostBookingCapture = ({ contactId, onComplete }: { contactId?: string; onC
 
     // Fire-and-forget GHL update
     if (contactId) {
-      try {
-        const { supabase } = await import("@/integrations/supabase/client");
-        supabase.functions.invoke("ghl-proxy", {
-          body: {
-            path: `/contacts/${contactId}`,
-            method: "PUT",
-            body: {
-              email: emailTrimmed,
-              customFields: {
-                ...(attribution ? { mwc_attribution_source: attribution } : {}),
-                mwc_commitment_given: "true",
-              },
-            },
-            __env: import.meta.env.VITE_APP_ENV ?? "stage",
-          },
-        }).catch(() => { /* non-blocking */ });
-      } catch { /* never block UX */ }
+      contactUpdater.updateContact(contactId, {
+        email: emailTrimmed,
+        customFields: {
+          ...(attribution ? { mwc_attribution_source: attribution } : {}),
+          mwc_commitment_given: "true",
+        },
+      }).catch(() => { /* non-blocking */ });
     }
 
     setSubmitted(true);
@@ -280,6 +272,16 @@ const BookConfirmed = () => {
             locationCity={center.city}
             locationAddress={`${center.address}, ${center.cityStateZip}`}
           />
+
+          {/* Post-booking capture — email + attribution + commitment */}
+          {!captureComplete && (
+            <BookingErrorBoundary>
+              <PostBookingCapture
+                contactId={identity?.ghlContactId}
+                onComplete={() => setCaptureComplete(true)}
+              />
+            </BookingErrorBoundary>
+          )}
 
           {/* What you'll walk away with */}
           <div style={{

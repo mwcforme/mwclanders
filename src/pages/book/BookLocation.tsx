@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft, MapPin } from "lucide-react";
 import BookLayout from "@/components/book/BookLayout";
 import { useBookingStore } from "@/domain/booking/bookingStore";
+import { contactUpdater } from "@/services/contactUpdater";
 import type { LocationKey } from "@/lib/ghlCalendars";
 
 const ORANGE = "#E8670A";
@@ -59,6 +60,11 @@ const BookLocation = () => {
     setSelected(key);
     setAdvancing(true);
     setLocation(key);
+
+    // Fire-and-forget: update GHL contact with location tag
+    if (identity?.ghlContactId) {
+      contactUpdater.addTag(identity.ghlContactId, `location-${key}`).catch(() => { /* non-blocking */ });
+    }
 
     // Brief visual confirmation then advance
     if (advanceTimerRef.current !== null) clearTimeout(advanceTimerRef.current);
