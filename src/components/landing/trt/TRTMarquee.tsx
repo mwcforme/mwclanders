@@ -31,17 +31,13 @@ export const TRTMarquee = () => (
           src="/images/badges/legitscript.png"
           alt="LegitScript Certified"
           className="h-14 md:h-20 w-auto"
-          style={{ maxWidth: 160, objectFit: "contain", mixBlendMode: "screen" }}
+          style={{ maxWidth: 160, objectFit: "contain" }}
           loading="lazy"
           decoding="async"
           width="160"
           height="80"
         />
       </picture>
-
-      {/* hardcoded-color-allow-next-line */}
-      {/* hardcoded-color-allow-next-line */}
-      <div aria-hidden="true" className="hidden sm:block" style={{ width: 1, height: 52, background: "rgba(255,255,255,0.20)", flexShrink: 0 }} />
 
       <picture>
         <source srcSet="/images/badges/clia.webp" type="image/webp" />
@@ -49,7 +45,7 @@ export const TRTMarquee = () => (
           src="/images/badges/clia.png"
           alt="CLIA Certified Laboratory"
           className="h-14 md:h-20 w-auto"
-          style={{ maxWidth: 160, objectFit: "contain", mixBlendMode: "screen" }}
+          style={{ maxWidth: 160, objectFit: "contain" }}
           loading="lazy"
           decoding="async"
           width="160"
@@ -57,16 +53,13 @@ export const TRTMarquee = () => (
         />
       </picture>
 
-      {/* hardcoded-color-allow-next-line */}
-      <div aria-hidden="true" className="hidden sm:block" style={{ width: 1, height: 52, background: "rgba(255,255,255,0.20)", flexShrink: 0 }} />
-
       <picture>
         <source srcSet="/images/badges/hipaa.webp" type="image/webp" />
         <img
           src="/images/badges/hipaa.png"
           alt="HIPAA Compliant"
           className="h-14 md:h-20 w-auto"
-          style={{ maxWidth: 160, objectFit: "contain", mixBlendMode: "screen" }}
+          style={{ maxWidth: 160, objectFit: "contain" }}
           loading="lazy"
           decoding="async"
           width="160"
