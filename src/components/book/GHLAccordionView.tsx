@@ -6,7 +6,6 @@ import { addDaysInTimeZone, dateFromYmdInTimeZone, isSundayInTimeZone, ymdInTime
 const getSupabase = () => import("@/integrations/supabase/client").then(m => m.supabase);
 import { useConfirmAppointment } from "@/domain/booking/useConfirmAppointment";
 
-// banned-wording-allow-next-line — GHL API table/endpoint name
 const fetchCachedSlots = async (
   calendarId: string,
   start: Date,

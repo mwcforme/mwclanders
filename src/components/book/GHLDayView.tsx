@@ -34,7 +34,6 @@ const getSupabase = () => import("@/integrations/supabase/client").then(m => m.s
 
 // ─── Slot fetching ────────────────────────────────────────────────────────────
 
-// banned-wording-allow-next-line — GHL API table/endpoint name
 const fetchCachedSlots = async (
   calendarId: string,
   start: Date,

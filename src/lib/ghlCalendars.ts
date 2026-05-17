@@ -37,12 +37,10 @@ interface FreeSlotsResponse {
   [date: string]: { slots: string[] } | unknown;
 }
 
-// banned-wording-allow-next-line — GHL API endpoint terminology
 /** Fetch free appointment slots for a center between two ISO dates. */
 export async function getFreeSlots(location: LocationKey, startDate: Date, endDate: Date) {
   const cal = CENTER_CALENDARS[location];
   const res = await ghl<FreeSlotsResponse>({
-    // banned-wording-allow-next-line — GHL API endpoint path
     path: `/calendars/${cal.calendarId}/free-slots`,
     method: "GET",
     injectLocationId: false, // calendar endpoint scopes by calendarId

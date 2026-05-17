@@ -432,7 +432,6 @@ function Section7Offer({ ctaHref, ctaLabel, disqualified }: { ctaHref: string; c
 
         <ul className="mt-6 space-y-3">
           {[
-            // banned-wording-allow-next-line - medical terminology (unbound vs. bound testosterone)
             { title: "Comprehensive panel", body: "12+ biomarkers including total and free testosterone." },
             { title: "Provider visit", body: "Face to face with a licensed Virginia clinician." },
             { title: "Protocol dialed in to you", body: "Built around your labs, symptoms, and goals. Not a generic script." },
