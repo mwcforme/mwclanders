@@ -1,5 +1,6 @@
 
 
+import { useState, useEffect } from "react";
 import { Check, Star } from "lucide-react";
 import { TRTHeroForm } from "./TRTHeroForm";
 import { SymptomChecklist } from "./SymptomChecklist";
@@ -8,6 +9,32 @@ import { trackCro } from "@/hooks/useAnalytics";
 import { COPY } from "@/data/copy";
 
 
+
+// Rotating services for home route only
+const ROTATING_SERVICES = ["TESTOSTERONE", "ED THERAPY", "WEIGHT LOSS", "MEN'S HEALTH"];
+
+// Renders all words stacked — only active word visible via opacity.
+// Container width locked to longest word. Zero layout shift.
+const RotatingService = () => {
+  const [index, setIndex] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setIndex((i) => (i + 1) % ROTATING_SERVICES.length), 2800);
+    return () => clearInterval(t);
+  }, []);
+  return (
+    <span style={{ display: "inline-block", position: "relative", whiteSpace: "nowrap" }}>
+      <span style={{ visibility: "hidden", whiteSpace: "nowrap" }}>TESTOSTERONE</span>
+      {ROTATING_SERVICES.map((word, i) => (
+        <span key={word} aria-hidden={i !== index} style={{
+          position: "absolute", left: 0, top: 0, whiteSpace: "nowrap",
+          opacity: i === index ? 1 : 0,
+          transition: "opacity 300ms ease",
+          willChange: "opacity",
+        }}>{word}</span>
+      ))}
+    </span>
+  );
+};
 
 const trustChecks = [
   "Licensed Virginia providers",
@@ -45,11 +72,10 @@ interface TRTHeroProps {
 }
 
 export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
-  const h = headline ?? {
-    line1: "VIRGINIA'S CHOICE",
-    line2: "FOR MEN'S HEALTH",
-    line2Color: COLORS.orange,
-  };
+  // headline prop = static (TRT/ED/WL dedicated LPs)
+  // no prop = home route with rotation
+  const isStatic = !!headline;
+  const h = headline ?? { line1: "VIRGINIA'S CHOICE", line2: "FOR MEN'S HEALTH", line2Color: COLORS.orange };
   const scrollToForm = () => {
     document.getElementById("hero-form")?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
@@ -135,9 +161,9 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
 
             }}
           >
-            <span style={{ display: "block" }}>VIRGINIA&rsquo;S CHOICE</span>
-            <span style={{ display: "block", color: COLORS.orange }}>
-              {h.line2}
+            <span style={{ display: "block", whiteSpace: "nowrap" }}>VIRGINIA&rsquo;S CHOICE</span>
+            <span style={{ display: "block", color: COLORS.orange, whiteSpace: "nowrap" }}>
+              {isStatic ? h.line2 : <>FOR <RotatingService /></>}
             </span>
           </h1>
 
