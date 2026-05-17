@@ -67,7 +67,7 @@ const BookLocation = () => {
       contactUpdater.addTag(identity.ghlContactId, `location-${key}`).catch(() => { /* non-blocking */ });
     }
 
-    // Track conversion event (PII-free — only the location key, not contact info)
+    // Track conversion event (no PII — only the location key, not contact info)
     trackFunnelEvent("location_selected", { location: key });
 
     // Brief visual confirmation then advance
