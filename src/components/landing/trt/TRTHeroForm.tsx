@@ -11,7 +11,7 @@
  */
 
 import { useState, useRef, useEffect } from "react";
-import { Lock, Loader2, MapPin, Check, Phone, User, AlertCircle } from "lucide-react";
+import { Lock, Loader2, MapPin, Check, Phone, User, AlertCircle, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useLeadSubmitController } from "@/domain/leads/useLeadSubmitController";
 import { heroLeadSchema, type HeroLeadInput } from "@/domain/leads/leadFormSchema";
@@ -506,7 +506,7 @@ export const TRTHeroForm = ({
         >
           {isSubmitting
             ? <><Loader2 size={16} className="animate-spin" /> Booking…</>
-            : <>{ctaLabel} →</>
+            : <>{ctaLabel} <ArrowRight size={16} strokeWidth={2.5} /></>
           }
         </button>
 

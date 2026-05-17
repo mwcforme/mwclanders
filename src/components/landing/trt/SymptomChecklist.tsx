@@ -10,7 +10,7 @@
  * NOT a quiz. Does not collect answers. Does not navigate.
  */
 
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, ChevronDown } from "lucide-react";
 
 const SYMPTOMS = [
   "Energy drops by 2pm, even with sleep",
@@ -111,8 +111,10 @@ export const SymptomChecklist = ({ formId = "hero-form" }: SymptomChecklistProps
       <a
         href={`#${formId}`}
         style={{
-          display: "block",
-          textAlign: "center",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 6,
           fontFamily: "Oswald, sans-serif",
           fontWeight: 700,
           fontSize: 13,
@@ -126,7 +128,8 @@ export const SymptomChecklist = ({ formId = "hero-form" }: SymptomChecklistProps
         onMouseEnter={(e) => (e.currentTarget.style.color = "#F5F3F0")}
         onMouseLeave={(e) => (e.currentTarget.style.color = "#E8670A")}
       >
-        ↓ Book My Physician Assessment
+          <ChevronDown size={14} strokeWidth={2.5} style={{ flexShrink: 0 }} />
+        Book My Physician Assessment
       </a>
     </div>
   );
