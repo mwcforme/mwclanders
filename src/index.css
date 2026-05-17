@@ -13,9 +13,9 @@
 
     --text-black: #000000;
     --text-dark-grey: #605E5D;
-    --text-mid-grey: #999999;
+    --text-mid-grey: #767676;    /* was #999999 (2.85:1 FAIL) → 4.54:1 AA ✓ */
     --text-white: #FFFFFF;
-    --text-light-grey: #B0B0B0;
+    --text-light-grey: #767676;   /* was #B0B0B0 (2.17:1 FAIL) → 4.54:1 AA ✓ */
 
     --accent-orange: #E8670A;
     --border-light: #D4D3D1;
@@ -47,7 +47,8 @@
     /* Text on light surfaces */
     --c-text-on-light: #000033;        /* 17:1 on white */
     --c-text-on-light-muted: #424857;  /* 9.5:1 on white */
-    --c-placeholder-light: #5A6072;    /* 6.0:1 on white */
+    --c-placeholder-light: #5A6072;    /* 6.0:1 on white — on dark surfaces */
+    --c-placeholder-on-white: #636B80; /* was #7A8294 (3.85:1 FAIL) → 5.32:1 AA ✓ */
 
     /* Text on dark surfaces */
     --c-text-on-dark: #FFFFFF;

@@ -157,7 +157,7 @@ const PostBookingCapture = ({ contactId, onComplete }: { contactId?: string; onC
           <select
             value={attribution}
             onChange={(e) => setAttribution(e.target.value)}
-            style={{ ...inp, color: attribution ? "#0B1029" : "#9CA3AF", appearance: "none", WebkitAppearance: "none" }}
+            style={{ ...inp, color: attribution ? "#0B1029" : "#636B80", appearance: "none", WebkitAppearance: "none" }} /* #636B80 = 5.32:1 on white PASS */
           >
             <option value="">How did you hear about us? (optional)</option>
             {ATTRIBUTION_OPTIONS.map((o) => <option key={o} value={o}>{o}</option>)}

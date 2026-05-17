@@ -153,15 +153,15 @@ export const ServiceFinalCTA = ({
 
               <form onSubmit={handleSubmit} className="space-y-4" noValidate>
                 <div>
-                  <input ref={refs.name} type="text" placeholder="Name" value={name} onChange={(e) => { setName(e.target.value); clearError("name"); }} onFocus={handleFocus} onBlur={handleBlur("name")} style={inputStyle("name")} className="placeholder:text-[#999999]" autoComplete="name" aria-invalid={!!errors.name} />
+                  <input ref={refs.name} type="text" placeholder="Name" value={name} onChange={(e) => { setName(e.target.value); clearError("name"); }} onFocus={handleFocus} onBlur={handleBlur("name")} style={inputStyle("name")} className="placeholder:text-[#636B80]" autoComplete="name" aria-invalid={!!errors.name} />
                   {errors.name && <p role="alert" className="text-xs mt-1 text-left" style={{ color: ERROR_RED }}>{errors.name}</p>}
                 </div>
                 <div>
-                  <input ref={refs.phone} type="tel" placeholder="Phone Number" value={phone} onChange={(e) => { setPhone(e.target.value); clearError("phone"); }} onFocus={handleFocus} onBlur={handleBlur("phone")} style={inputStyle("phone")} className="placeholder:text-[#999999]" autoComplete="tel" aria-invalid={!!errors.phone} />
+                  <input ref={refs.phone} type="tel" placeholder="Phone Number" value={phone} onChange={(e) => { setPhone(e.target.value); clearError("phone"); }} onFocus={handleFocus} onBlur={handleBlur("phone")} style={inputStyle("phone")} className="placeholder:text-[#636B80]" autoComplete="tel" aria-invalid={!!errors.phone} />
                   {errors.phone && <p role="alert" className="text-xs mt-1 text-left" style={{ color: ERROR_RED }}>{errors.phone}</p>}
                 </div>
                 <div>
-                  <input ref={refs.email} type="email" placeholder="Email" value={email} onChange={(e) => { setEmail(e.target.value); clearError("email"); }} onFocus={handleFocus} onBlur={handleBlur("email")} style={inputStyle("email")} className="placeholder:text-[#999999]" autoComplete="email" aria-invalid={!!errors.email} />
+                  <input ref={refs.email} type="email" placeholder="Email" value={email} onChange={(e) => { setEmail(e.target.value); clearError("email"); }} onFocus={handleFocus} onBlur={handleBlur("email")} style={inputStyle("email")} className="placeholder:text-[#636B80]" autoComplete="email" aria-invalid={!!errors.email} />
                   {errors.email && <p role="alert" className="text-xs mt-1 text-left" style={{ color: ERROR_RED }}>{errors.email}</p>}
                 </div>
                 <div>
@@ -174,9 +174,9 @@ export const ServiceFinalCTA = ({
                     aria-invalid={!!errors.location}
                     style={{
                       ...inputStyle("location"),
-                      color: location ? "#000033" : "#999999",
+                      color: location ? "#000033" : "#636B80",
                       appearance: "none",
-                      backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23999999' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")`,
+                      backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23636B80' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")`,
                       backgroundRepeat: "no-repeat",
                       backgroundPosition: "right 12px center",
                       paddingRight: 40,
@@ -229,7 +229,7 @@ export const ServiceFinalCTA = ({
                 </button>
               </form>
 
-              <p className="text-center text-xs mt-4" style={{ color: "#999999", fontFamily: "Inter, sans-serif" }}>
+              <p className="text-center text-xs mt-4" style={{ color: "#636B80", fontFamily: "Inter, sans-serif" }}>
                 HIPAA Compliant · No Spam · Book entirely online
               </p>
               <p className="text-center text-sm mt-3">
