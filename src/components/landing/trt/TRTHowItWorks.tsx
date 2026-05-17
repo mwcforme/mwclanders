@@ -60,39 +60,9 @@ export const TRTHowItWorks = () => {
 
   return (
     <section id="how-it-works" className="py-10 md:py-20" style={{ background: "var(--brand-cream)", scrollMarginTop: 64 }} aria-label="Symptoms and how it works">
-      <div className="max-w-[1200px] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
-        {/* Left: Symptoms (mobile shown second) */}
-        <div className="order-2 md:order-1">
-          {eyebrow("Why Men Come To Us")}
-          {heading("The gap between your labs and how you feel")}
-          <p
-            className="mt-5 text-base leading-relaxed"
-            // hardcoded-color-allow-next-line
-            style={{ color: "#4A4A4A", fontFamily: "Inter, sans-serif", maxWidth: 520 }}
-          >
-            Most men who walk in have already seen their GP. They got bloodwork. They were told everything looks fine. They know it isn't.
-          </p>
-          <p
-            className="mt-4 text-base leading-relaxed"
-            // hardcoded-color-allow-next-line
-            style={{ color: "#4A4A4A", fontFamily: "Inter, sans-serif", maxWidth: 520 }}
-          >
-            Standard bloodwork doesn't measure what we measure. A hormone panel reviewed by a licensed men's health provider tells a different story than a general metabolic panel flagged for abnormals.
-          </p>
-          <div
-            className="mt-8 rounded-xl p-6"
-            style={{ background: "var(--brand-navy)" }}
-          >
-            <div style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 44, color: "var(--brand-cta)", lineHeight: 1 }}>10,000+</div>
-            {/* hardcoded-color-allow-next-line */}
-            <div style={{ fontFamily: "Inter, sans-serif", fontSize: 15, color: "rgba(255,255,255,0.80)", marginTop: 8, lineHeight: 1.5 }}>
-              Virginia men treated since 2015. Most had been told their labs were normal.
-            </div>
-          </div>
-        </div>
-
-        {/* Right: How it works (mobile shown first) */}
-        <div className="order-1 md:order-2">
+      {/* How It Works — full width, left column removed */}
+      <div className="max-w-[720px] mx-auto px-6">
+        <div>
           {eyebrow("The Fix")}
           {heading("Here's how it works in one visit")}
 

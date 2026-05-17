@@ -9,7 +9,6 @@ import { COPY } from "@/data/copy";
 const trustChecks = [
   "Licensed Virginia providers",
   "Labs drawn and reviewed in the same 60-minute visit",
-  "3 Virginia locations, same-day availability",
   "Treatment starts the same day, when clinically appropriate",
 ];
 
@@ -218,7 +217,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
             </span>
           </a>
 
-          <ul className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 max-w-[600px]">
+          <ul className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-3 w-full">
             {trustChecks.map((t) => (
               <li
                 key={t}

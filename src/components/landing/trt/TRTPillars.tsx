@@ -1,7 +1,7 @@
 import imgDoctor from "@/assets/lp/provider-headshot.webp";
 import imgLobby from "@/assets/lp/onsite-labs-centrifuge.webp";
-import imgAthletic from "@/assets/lp/man-athletic-smiling.webp";
 import imgTeam from "@/assets/lp/mwc-team.webp";
+import { Target } from "lucide-react";
 
 const pillars = [
   {
@@ -17,7 +17,7 @@ const pillars = [
   {
     title: "BUILT FOR MEN",
     desc: "TRT, ED, and weight loss is all we do. Dedicated focus means faster answers and better outcomes.",
-    image: imgAthletic,
+    image: null,
   },
   {
     title: "ONGOING MONITORING",
@@ -79,14 +79,20 @@ export const TRTPillars = () => (
             onMouseLeave={cardLeave}
           >
             <div className="flex justify-center mt-6">
-              <img
-                src={p.image}
-                alt={p.title}
-                className="w-[120px] h-[120px] rounded-full object-cover"
-                style={{ border: "3px solid var(--c-border-on-dark)" }}
-                loading="lazy"
-                decoding="async"
-              />
+              {p.image ? (
+                <img
+                  src={p.image}
+                  alt={p.title}
+                  className="w-[120px] h-[120px] rounded-full object-cover"
+                  style={{ border: "3px solid var(--c-border-on-dark)" }}
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <div className="w-[120px] h-[120px] rounded-full flex items-center justify-center" style={{ border: "3px solid var(--c-border-on-dark)", background: "rgba(232,103,10,0.08)" }}>
+                  <Target size={48} strokeWidth={1.5} style={{ color: "var(--brand-cta)" }} />
+                </div>
+              )}
             </div>
             <h3
               className="font-bold text-base uppercase mt-4 tracking-wide px-3"
@@ -128,14 +134,20 @@ export const TRTPillars = () => (
             }}
           >
             <div className="flex justify-center mt-5">
-              <img
-                src={p.image}
-                alt={p.title}
-                className="w-[96px] h-[96px] rounded-full object-cover"
-                style={{ border: "3px solid var(--c-border-on-dark)" }}
-                loading="lazy"
-                decoding="async"
-              />
+              {p.image ? (
+                <img
+                  src={p.image}
+                  alt={p.title}
+                  className="w-[96px] h-[96px] rounded-full object-cover"
+                  style={{ border: "3px solid var(--c-border-on-dark)" }}
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <div className="w-[96px] h-[96px] rounded-full flex items-center justify-center" style={{ border: "3px solid var(--c-border-on-dark)", background: "rgba(232,103,10,0.08)" }}>
+                  <Target size={40} strokeWidth={1.5} style={{ color: "var(--brand-cta)" }} />
+                </div>
+              )}
             </div>
             <h3
               className="font-bold text-sm uppercase mt-3 tracking-wide px-3"

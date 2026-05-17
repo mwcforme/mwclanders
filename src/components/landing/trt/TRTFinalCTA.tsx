@@ -19,7 +19,7 @@ export const TRTFinalCTA = () => {
               fontWeight: 700,
             }}
           >
-            Meet Your Virginia Provider.
+            What You Get On Day One.
           </h2>
           {/* hardcoded-color-allow-next-line */}
           <p className="text-base mt-2" style={{ color: "rgba(255,255,255,0.85)", fontFamily: "Inter, sans-serif", fontSize: 16 }}>

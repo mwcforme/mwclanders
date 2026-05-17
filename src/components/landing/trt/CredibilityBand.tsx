@@ -112,16 +112,12 @@ export const CredibilityBand = () => {
           }
 
           return (
-            <button
+            <div
               key={s.slug}
-              type="button"
-              data-cro={s.slug}
-              onClick={handleClick(s)}
-              className="hover:opacity-80 transition-opacity cursor-pointer bg-transparent border-none"
               style={dividerStyle}
             >
               {inner}
-            </button>
+            </div>
           );
         })}
       </div>
