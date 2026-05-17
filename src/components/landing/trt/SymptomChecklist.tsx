@@ -13,12 +13,12 @@
 import { CheckCircle, ChevronDown } from "lucide-react";
 
 const SYMPTOMS = [
-  "Energy drops by 2pm, even with sleep",
-  "Workouts aren't producing results anymore",
-  "Drive and recovery aren't what they were",
-  "Brain fog or short attention span",
-  "Weight gain that won't move",
-  "Bloodwork your doctor called \"normal\"",
+  "Energy drops by 2pm no matter how much you sleep",
+  "Workouts stopped producing results",
+  "Sex drive is down. You've noticed. So has she.",
+  "You can't focus the way you used to",
+  "Gaining weight doing the same things that used to work",
+  "Your doctor says your bloodwork looks fine",
 ] as const;
 
 interface SymptomChecklistProps {
@@ -42,12 +42,12 @@ export const SymptomChecklist = ({ formId = "hero-form" }: SymptomChecklistProps
           fontSize: 18,
           letterSpacing: "0.02em",
           textTransform: "uppercase",
-          color: "#F5F3F0",
+          color: "#E8670A",
           marginBottom: 16,
           lineHeight: 1.15,
         }}
       >
-        Does this sound like you?
+        Men come to us when this sounds familiar
       </h2>
 
       <ul
@@ -100,11 +100,11 @@ export const SymptomChecklist = ({ formId = "hero-form" }: SymptomChecklistProps
           fontFamily: "Inter, sans-serif",
         }}
       >
-        If two or more sound familiar, your{" "}
+        If any of these sound like you, your{" "}
         <strong style={{ color: "#F5F3F0", fontWeight: 600 }}>
           60-Minute Physician Assessment
         </strong>{" "}
-        is no-cost.
+        is a no-cost consultation.
       </p>
 
       {/* Anchor CTA */}
