@@ -19,7 +19,7 @@
 import { useEffect, useRef } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 // supabase loaded lazily inside exchangeToken — not needed at module parse time
-import { useBookingStore } from "@/domain/booking/bookingStore";
+import { useBookingStore, isKnownService } from "@/domain/booking/bookingStore";
 import { PHONE } from "@/lib/constants";
 
 const BookEntry = () => {
@@ -58,7 +58,7 @@ const BookEntry = () => {
           phone: identity.phone,
           ghlContactId: identity.contact_id,
         },
-        service: identity.service ?? undefined,
+        service: isKnownService(identity.service) ? identity.service : undefined,
         location: identity.location ?? undefined,
         source: identity.source ?? "wordpress-intake",
       });

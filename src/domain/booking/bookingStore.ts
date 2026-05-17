@@ -14,13 +14,12 @@ import { persist, createJSONStorage } from "zustand/middleware";
 export type Symptom = "energy" | "sexual" | "weight" | "other";
 export type Duration = "lt6mo" | "6to12mo" | "1to2yr" | "gt2yr";
 export type UrgencyTier = "early" | "building" | "overdue" | "long_overdue";
-/**
- * TODO Phase 2: narrow to `"trt" | "ed" | "wl"` and add a runtime guard in
- * BookEntry.tsx where the token payload arrives as `string | null`. The trailing
- * `| string` makes the union collapse to `string` in TS, defeating exhaustive
- * checks in `lpFor`. Safe to change once BookEntry validates the service value.
- */
-export type Service = "trt" | "ed" | "wl" | string;
+export type Service = "trt" | "ed" | "wl";
+
+/** Runtime guard — narrows an arbitrary string to the known Service union. */
+export function isKnownService(s: string | null | undefined): s is Service {
+  return s === "trt" || s === "ed" || s === "wl";
+}
 
 export interface BookingIdentity {
   firstName: string;
