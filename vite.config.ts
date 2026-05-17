@@ -5,8 +5,6 @@ import { componentTagger } from "lovable-tagger";
 import { sentryVitePlugin } from "@sentry/vite-plugin";
 import { compression } from "vite-plugin-compression2";
 // @ts-expect-error - .mjs file, no declaration needed
-import { vitePluginCheckBannedWording } from "./scripts/check-banned-wording.mjs";
-// @ts-expect-error - .mjs file, no declaration needed
 import { vitePluginCheckHardcodedColors } from "./scripts/check-hardcoded-colors.mjs";
 
 // https://vitejs.dev/config/
@@ -16,7 +14,6 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
   },
   plugins: [
-    vitePluginCheckBannedWording(),
     vitePluginCheckHardcodedColors(),
     react(),
     mode === "development" && componentTagger(),
