@@ -133,7 +133,6 @@ export default function ProductTRTSchedule() {
                       }}>
                         {sel && <div style={{ width: 10, height: 10, borderRadius: "50%", background: "var(--brand-cta)" }} />}
                       </div>
-                      <MapPin size={16} strokeWidth={2} style={{ color: sel ? "var(--brand-cta)" : "var(--c-placeholder-light)", flexShrink: 0 }} />
                       <div>
                         <div style={{ fontWeight: 700, fontSize: 15, color: "var(--brand-navy)" }}>{label}</div>
                         <div style={{ fontSize: 12, color: "var(--c-placeholder-light)", marginTop: 2 }}>{address}</div>

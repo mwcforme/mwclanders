@@ -57,7 +57,8 @@ const AdminLogin    = lazy(() => import("./pages/admin/AdminLogin"));
 const AdminOverview = lazy(() => import("./pages/admin/AdminOverview"));
 const AdminLeads    = lazy(() => import("./pages/admin/AdminLeads"));
 const AdminEvents   = lazy(() => import("./pages/admin/AdminEvents"));
-const AdminSync     = lazy(() => import("./pages/admin/AdminSync"));
+const AdminSync      = lazy(() => import("./pages/admin/AdminSync"));
+const AdminAnalytics = lazy(() => import("./pages/admin/AdminAnalytics"));
 const RequireAdmin = lazy(() =>
   import("./components/admin/RequireAdmin").then((m) => ({ default: m.RequireAdmin }))
 );
@@ -212,7 +213,8 @@ const App = () => (
                 <Route path="/admin/overview" element={<RequireAdmin><AdminOverview /></RequireAdmin>} />
                 <Route path="/admin/leads"    element={<RequireAdmin><AdminLeads /></RequireAdmin>} />
                 <Route path="/admin/events"   element={<RequireAdmin><AdminEvents /></RequireAdmin>} />
-                <Route path="/admin/sync"     element={<RequireAdmin><AdminSync /></RequireAdmin>} />
+                <Route path="/admin/sync"      element={<RequireAdmin><AdminSync /></RequireAdmin>} />
+                <Route path="/admin/analytics" element={<RequireAdmin><AdminAnalytics /></RequireAdmin>} />
 
                 <Route path="*" element={<NotFound />} />
               </Routes>

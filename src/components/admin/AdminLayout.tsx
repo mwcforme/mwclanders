@@ -7,6 +7,7 @@ import {
   Activity,
   RefreshCw,
   LogOut,
+  BarChart3,
 } from "lucide-react";
 import { EnvSwitcher } from "./EnvSwitcher";
 
@@ -15,6 +16,7 @@ const NAV = [
   { to: "/admin/leads", label: "Leads", icon: Users },
   { to: "/admin/events", label: "Events", icon: Activity },
   { to: "/admin/sync", label: "Sync", icon: RefreshCw },
+  { to: "/admin/analytics", label: "Analytics", icon: BarChart3 },
 ];
 
 interface Props {
