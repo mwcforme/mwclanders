@@ -267,7 +267,7 @@ const DayStrip = ({
           </div>
         )}
         {loadError && (
-          {/* hardcoded-color-allow-next-line */}
+          // hardcoded-color-allow-next-line
           <div style={{ marginTop: 10, fontSize: 13, color: "#B91C1C" }}>{loadError}</div>
         )}
       </div>
