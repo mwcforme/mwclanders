@@ -572,8 +572,9 @@ export default function Affordability() {
             gap: 48,
             position: "relative",
             zIndex: 1,
+            alignItems: "start",
           }}
-          className="md:grid-cols-[1fr_auto]"
+          className="md:grid-cols-[1fr_440px]"
         >
           {/* LEFT */}
           <div style={{ maxWidth: 620 }}>
@@ -672,8 +673,15 @@ export default function Affordability() {
             </div>
           </div>
 
-          {/* RIGHT — lead form */}
-          <div style={{ display: "flex", justifyContent: "center" }} id="hero-form">
+          {/* RIGHT — lead form: sticky so it stays above fold on desktop */}
+          <div
+            id="hero-form"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+            className="md:sticky md:top-[104px]"
+          >
             <HeroForm />
           </div>
         </div>
