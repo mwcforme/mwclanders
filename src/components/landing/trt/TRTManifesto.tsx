@@ -8,21 +8,9 @@ export const TRTManifesto = () => {
       <div className="max-w-[1200px] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-center">
         {/* Left: copy (mobile second) */}
         <div className="order-2 md:order-1">
-          <div
-            className="uppercase mb-4 inline-flex"
-            style={{
-              color: "var(--brand-cta)",
-              fontFamily: "Inter, sans-serif",
-              fontSize: 11, fontWeight: 700, letterSpacing: "0.12em",
-              // hardcoded-color-allow-next-line
-              background: "rgba(232,103,10,0.10)",
-              // hardcoded-color-allow-next-line
-              border: "1px solid rgba(232,103,10,0.25)",
-              borderRadius: 999, padding: "4px 12px",
-            }}
-          >
+          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--brand-cta)", borderLeft: "3px solid var(--brand-cta)", paddingLeft: 10, lineHeight: 1, marginBottom: 12 }}>
             Why Men Choose Us
-          </div>
+          </p>
           <h2
             className="font-bold uppercase"
             style={{ fontFamily: "Oswald, sans-serif", fontSize: "clamp(28px, 4vw, 40px)", color: "var(--c-text-on-dark)", fontWeight: 700, lineHeight: 1.1 }}

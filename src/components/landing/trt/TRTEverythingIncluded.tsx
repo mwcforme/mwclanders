@@ -96,21 +96,7 @@ export const TRTEverythingIncluded = () => (
                   lineHeight: 1.5,
                 }}
               >
-                <span
-                  style={{
-                    width: 22,
-                    height: 22,
-                    borderRadius: "50%",
-                    background: "var(--c-success-on-dark)",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexShrink: 0,
-                    marginTop: 1,
-                  }}
-                >
-                  <Check size={12} strokeWidth={3} color="#0B1029" />
-                </span>
+                <Check size={16} strokeWidth={2.5} style={{ color: "var(--brand-cta)", flexShrink: 0, marginTop: 2 }} />
                 {item}
               </li>
             ))}
@@ -153,22 +139,7 @@ export const TRTEverythingIncluded = () => (
                   lineHeight: 1.5,
                 }}
               >
-                <span
-                  style={{
-                    width: 22,
-                    height: 22,
-                    borderRadius: "50%",
-                    background: "rgba(255,107,122,0.15)",
-                    border: "1px solid rgba(255,107,122,0.30)",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexShrink: 0,
-                    marginTop: 1,
-                  }}
-                >
-                  <X size={12} strokeWidth={3} color="rgba(255,107,122,0.90)" />
-                </span>
+                <span style={{ color: "rgba(255,255,255,0.30)", fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 16, flexShrink: 0, lineHeight: 1, marginTop: 2 }}>—</span>
                 {item}
               </li>
             ))}

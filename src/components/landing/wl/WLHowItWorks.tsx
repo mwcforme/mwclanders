@@ -31,18 +31,9 @@ export const WLHowItWorks = () => {
   const scrollToForm = () => document.getElementById("final-cta")?.scrollIntoView({ behavior: "smooth" });
 
   const eyebrow = (text: string) => (
-    <div className="uppercase mb-4 inline-flex" style={{
-      color: "var(--brand-cta)",
-      fontFamily: "Inter, sans-serif",
-      fontSize: 11, fontWeight: 700, letterSpacing: "0.12em",
-      // hardcoded-color-allow-next-line
-      background: "rgba(232,103,10,0.10)",
-      // hardcoded-color-allow-next-line
-      border: "1px solid rgba(232,103,10,0.25)",
-      borderRadius: 999, padding: "4px 12px",
-    }}>
+    <p style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: "var(--brand-cta)", borderLeft: "3px solid var(--brand-cta)", paddingLeft: 10, lineHeight: 1, marginBottom: 12 }}>
       {text}
-    </div>
+    </p>
   );
 
   const heading = (text: string) => (

@@ -89,45 +89,32 @@ export const OrangeBullet = ({
   </li>
 );
 
-/** Section eyebrow label — plain or pill variant. */
+/**
+ * Section eyebrow label.
+ * Agency treatment: left border line, no pill, no background tint.
+ * pill prop retained for API compatibility but both variants now use the same clean style.
+ */
 export const Eyebrow = ({
   children,
   pill = false,
 }: {
   children: React.ReactNode;
   pill?: boolean;
-}) =>
-  pill ? (
-    <span
-      style={{
-        display: "inline-block",
-        background: "rgba(232,103,10,0.18)",
-        border: "1px solid rgba(232,103,10,0.40)",
-        borderRadius: 999,
-        padding: "5px 16px",
-        fontFamily: "Oswald, sans-serif",
-        fontSize: 12,
-        fontWeight: 700,
-        letterSpacing: "0.18em",
-        textTransform: "uppercase" as const,
-        color: "#E8670A",
-        marginBottom: 16,
-      }}
-    >
-      {children}
-    </span>
-  ) : (
-    <p
-      style={{
-        fontFamily: "Oswald, sans-serif",
-        fontSize: 12,
-        fontWeight: 700,
-        letterSpacing: "0.18em",
-        textTransform: "uppercase" as const,
-        color: "var(--brand-cta)",
-        marginBottom: 12,
-      }}
-    >
-      {children}
-    </p>
-  );
+}) => (
+  <p
+    style={{
+      fontFamily: "Inter, sans-serif",
+      fontSize: 11,
+      fontWeight: 700,
+      letterSpacing: "0.14em",
+      textTransform: "uppercase" as const,
+      color: "var(--brand-cta)",
+      borderLeft: "3px solid var(--brand-cta)",
+      paddingLeft: 10,
+      lineHeight: 1,
+      marginBottom: pill ? 16 : 12,
+    }}
+  >
+    {children}
+  </p>
+);

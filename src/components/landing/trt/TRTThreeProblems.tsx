@@ -65,26 +65,9 @@ export const TRTThreeProblems = ({ onCta }: TRTThreeProblemsProps = {}) => {
       <div className="max-w-[1200px] mx-auto px-6 py-16 md:py-24">
         {/* Section heading */}
         <div className="text-center mb-12 md:mb-16">
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 8,
-              fontFamily: "Inter, sans-serif",
-              fontSize: 11,
-              fontWeight: 700,
-              letterSpacing: "0.12em",
-              textTransform: "uppercase" as const,
-              color: "var(--brand-cta)",
-              background: "rgba(232,103,10,0.08)",
-              border: "1px solid rgba(232,103,10,0.20)",
-              borderRadius: 999,
-              padding: "5px 14px",
-              marginBottom: 16,
-            }}
-          >
+          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--brand-cta)", marginBottom: 14 }}>
             OUR SERVICES
-          </div>
+          </p>
           <h2
             style={{
               fontFamily: "Oswald, sans-serif",
