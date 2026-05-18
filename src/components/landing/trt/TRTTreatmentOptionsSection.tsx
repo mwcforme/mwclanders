@@ -1,6 +1,6 @@
 /**
  * Treatment options section for the ProductTRT page.
- * Two cards: Testosterone Therapy (dark) and ED Treatment (white).
+ * Two cards: Testosterone Therapy (dark) and ED Therapy (white).
  */
 import { OrangeBullet, OrangeCTA } from "./TRTProductHelpers";
 
@@ -108,7 +108,7 @@ export const TRTTreatmentOptionsSection = ({ onSchedule }: TRTTreatmentOptionsSe
           </OrangeCTA>
         </div>
 
-        {/* Card 2: ED Treatment — white */}
+        {/* Card 2: ED Therapy — white */}
         <div
           className="treatment-card"
           style={{
@@ -128,7 +128,7 @@ export const TRTTreatmentOptionsSection = ({ onSchedule }: TRTTreatmentOptionsSe
               marginBottom: 24,
             }}
           >
-            ED Treatment
+            ED Therapy
           </h3>
           <ul style={{ listStyle: "none", padding: 0, margin: "0 0 32px" }}>
             {ED_BULLETS.map((item) => (

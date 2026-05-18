@@ -74,7 +74,7 @@ export const EDHowItWorks = () => {
 
         <div className="order-1 md:order-2">
           {eyebrow("The Fix")}
-          {heading("How ED treatment works here")}
+          {heading("How ED therapy works here")}
           <div className="mt-8 flex flex-col gap-6">
             {steps.map((s, i) => {
               const isFinal = i === steps.length - 1;

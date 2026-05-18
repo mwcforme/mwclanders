@@ -29,7 +29,7 @@ const SERVICES = [
     href: "/ed",
     img: "/images/couple-wellness.webp",
     imgFallback: "/images/couple-wellness.jpg",
-    imgAlt: "Couple enjoying quality time after ED treatment",
+    imgAlt: "Couple enjoying quality time after men's health care",
   },
   {
     id: "wl",

@@ -50,7 +50,7 @@ export const CONDITION_OPTIONS = [
 
 /** Checkbox options for additional services interest (Step 16). */
 export const SERVICE_OPTIONS = [
-  "ED treatment", "Medical weight loss", "Both", "Just TRT",
+  "ED therapy", "Medical weight loss", "Both", "Just TRT",
 ] as const;
 
 /** Total number of steps in the intake questionnaire. */
