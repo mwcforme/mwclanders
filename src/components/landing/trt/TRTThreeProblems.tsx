@@ -38,9 +38,9 @@ const SERVICES = [
     body: "Diet and exercise aren't the full story for most men. GLP-1 therapy, lab-guided protocols, and a provider who monitors your progress make the difference.",
     cta: COPY.cta.bookConsult,
     href: "/wl",
-    img: "/images/mwc-team.webp",
-    imgFallback: "/images/mwc-team.webp",
-    imgAlt: "Men's wellness team supporting medical weight loss",
+    img: "/images/man-gym-confident.webp",
+    imgFallback: "/images/man-gym-confident.webp",
+    imgAlt: "Man with improved physique after medical weight loss program",
   },
 ];
 
