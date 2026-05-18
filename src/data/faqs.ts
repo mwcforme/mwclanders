@@ -28,7 +28,7 @@ export const TRT_FAQS: FaqItem[] = [
   },
   {
     q: "How do I know if testosterone treatment is right for me?",
-    a: "A diagnosis of low testosterone requires lab work and a clinical evaluation. At your first visit, we'll run a comprehensive hormone panel and review your symptoms. Treatment is only prescribed when clinically appropriate.",
+    a: "A diagnosis of low testosterone requires lab work and a clinical evaluation. At your first visit, we run a full hormone lab panel and review your symptoms. Treatment is only prescribed when clinically appropriate.",
   },
   {
     q: "What should I expect at my first visit, and what's included?",

@@ -731,7 +731,7 @@ const IncludedCard = () => (
       </span>
     </div>
     {([
-      { icon: <FlaskConical size={16} strokeWidth={1.75} color="var(--brand-cta)" />, title: "Comprehensive Lab Panel" },
+      { icon: <FlaskConical size={16} strokeWidth={1.75} color="var(--brand-cta)" />, title: "Full Hormone Lab Panel" },
       { icon: <Stethoscope  size={16} strokeWidth={1.75} color="var(--brand-cta)" />, title: "Provider Consultation" },
       { icon: <ClipboardList size={16} strokeWidth={1.75} color="var(--brand-cta)" />, title: "Personalized Treatment Plan" },
     ] as const).map(({ icon, title }) => (
