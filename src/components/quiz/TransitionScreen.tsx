@@ -76,8 +76,7 @@ export function TransitionScreen({
       </h1>
 
       {subtext ? (
-        {/* hardcoded-color-allow-next-line */}
-        <p className="mt-4 text-center text-sm md:text-base" style={{ color: "rgba(245,240,235,0.78)" }}>
+          <p className="mt-4 text-center text-sm md:text-base" style={{ color: "rgba(245,240,235,0.78)" }}>
           {subtext}
         </p>
       ) : null}

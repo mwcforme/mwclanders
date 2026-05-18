@@ -91,7 +91,6 @@ export const TRTPillars = () => (
                   decoding="async"
                 />
               ) : (
-                {/* hardcoded-color-allow-next-line */}
                 <div className="w-[120px] h-[120px] rounded-full flex items-center justify-center" style={{ border: "3px solid var(--c-border-on-dark)", background: "rgba(232,103,10,0.08)" }}>
                   <Target size={48} strokeWidth={1.5} style={{ color: "var(--brand-cta)" }} />
                 </div>
@@ -149,7 +148,6 @@ export const TRTPillars = () => (
                   decoding="async"
                 />
               ) : (
-                {/* hardcoded-color-allow-next-line */}
                 <div className="w-[96px] h-[96px] rounded-full flex items-center justify-center" style={{ border: "3px solid var(--c-border-on-dark)", background: "rgba(232,103,10,0.08)" }}>
                   <Target size={40} strokeWidth={1.5} style={{ color: "var(--brand-cta)" }} />
                 </div>

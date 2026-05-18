@@ -76,7 +76,6 @@ export function SymptomRow({ label, value, disabled, showError, autoFocus, onCha
         </div>
       </div>
       {showError ? (
-        {/* hardcoded-color-allow-next-line */}
         <p className="mt-2 text-xs font-semibold" style={{ color: "#F97316" }}>
           Please select an option.
         </p>
