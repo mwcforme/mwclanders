@@ -641,7 +641,7 @@ const CROHeader = () => (
 
 // ─── Rotating service words (home page treatment) ────────────────────────
 
-const ROTATING_SERVICES = ["TESTOSTERONE", "ED THERAPY", "WEIGHT LOSS", "MEN\u2019S HEALTH"];
+const ROTATING_SERVICES = ["TESTOSTERONE", "ED THERAPY", "WEIGHT LOSS", "MEN’S HEALTH"];
 
 const RotatingService = () => {
   const [index, setIndex] = useState(0);
