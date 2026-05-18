@@ -11,8 +11,7 @@
  */
 
 import { useState, useRef, useEffect } from "react";
-import { Loader2, MapPin, Check, Phone, User, AlertCircle, ArrowRight, Star } from "lucide-react";
-import { GBP_REVIEWS_URL } from "@/data/testimonials";
+import { Loader2, MapPin, Check, Phone, User, AlertCircle, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
 import { useLeadSubmitController } from "@/domain/leads/useLeadSubmitController";
