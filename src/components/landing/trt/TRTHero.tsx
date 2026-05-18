@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { Star } from "lucide-react";
+import { Star, ChevronRight } from "lucide-react";
 import { GBP_REVIEWS_URL } from "@/data/testimonials";
 import { TRTHeroForm } from "./TRTHeroForm";
 
@@ -175,8 +175,8 @@ You've been told your labs are normal. You don't feel normal. At Men's Wellness 
               "Labs are fine. You\u2019re not.",
               "Forty-two years old and sleeping like you're eighty.",
             ].map((text) => (
-              <div key={text} style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                <div style={{ width: 8, height: 8, borderRadius: "50%", background: COLORS.orange, flexShrink: 0 }} />
+              <div key={text} style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <ChevronRight size={16} strokeWidth={1.75} aria-hidden style={{ color: COLORS.orange, flexShrink: 0 }} />
                 {/* hardcoded-color-allow-next-line */}
                 <span style={{ fontFamily: "Inter, sans-serif", fontSize: 16, fontWeight: 500, color: "rgba(245,240,235,0.88)", lineHeight: 1.4 }}>{text}</span>
               </div>
