@@ -20,6 +20,7 @@ import NewLandingPage from "./pages/NewLandingPage";
 const NewWeightLoss   = lazy(() => import("./pages/NewWeightLoss"));
 const NewED           = lazy(() => import("./pages/NewED"));
 const TRTLandingPage  = lazy(() => import("./pages/TRTLandingPage"));
+const Affordability   = lazy(() => import("./pages/Affordability"));
 const ProductTRT         = lazy(() => import("./pages/ProductTRT"));
 const ProductTRTSchedule = lazy(() => import("./pages/ProductTRTSchedule"));
 
@@ -175,6 +176,7 @@ const App = () => (
                 <Route path="/product/trt/success" element={<TRTSuccess />} />
                 <Route path="/wl" element={<NewWeightLoss />} />
                 <Route path="/ed" element={<NewED />} />
+                <Route path="/pricing" element={<Affordability />} />
                 <Route path="/new" element={<Navigate to="/" replace />} />
                 <Route path="/new-wl" element={<Navigate to="/wl" replace />} />
                 <Route path="/new-ed" element={<Navigate to="/ed" replace />} />
