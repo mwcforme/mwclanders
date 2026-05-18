@@ -5,7 +5,7 @@ import { componentTagger } from "lovable-tagger";
 import { sentryVitePlugin } from "@sentry/vite-plugin";
 import { compression } from "vite-plugin-compression2";
 // @ts-expect-error - .mjs file, no declaration needed
-import { vitePluginCheckHardcodedColors } from "./scripts/check-hardcoded-colors.mjs";
+// vitePluginCheckHardcodedColors removed — caused JSX text-node leaks when comments were injected into components
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
   },
   plugins: [
-    vitePluginCheckHardcodedColors(),
+    // vitePluginCheckHardcodedColors() — disabled, was leaking comments as visible JSX text nodes
     react(),
     mode === "development" && componentTagger(),
     // Brotli + gzip pre-compressed assets — Hostinger/Netlify/Vercel serve .br first
