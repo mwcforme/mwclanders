@@ -281,7 +281,7 @@ const ProductTRT = () => {
               >
                 <span style={{ color: "#111", display: "block" }}>Be the Man</span>
                 <span style={{ color: "var(--brand-cta)", display: "block" }}>
-                  You Were Built to Be
+                  You Used to Be
                 </span>
               </h1>
 
