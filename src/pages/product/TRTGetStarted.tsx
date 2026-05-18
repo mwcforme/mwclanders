@@ -5,8 +5,8 @@
 
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Check, AlertCircle, Loader2, ArrowRight, Lock } from "lucide-react";
-import { TRTHeader } from "@/components/landing/trt/TRTHeader";
+import { Check, AlertCircle, Loader2, ArrowRight, Lock, Phone } from "lucide-react";
+import { PHONE } from "@/lib/constants";
 import { TRTFooter } from "@/components/landing/trt/TRTFooter";
 import { SEO } from "@/components/SEO";
 import { useBookingStore } from "@/domain/booking/bookingStore";
@@ -221,7 +221,29 @@ export default function TRTGetStarted() {
         title="Get Started with TRT | Men's Wellness Centers"
         description="Begin your no-cost testosterone consultation with a Virginia-licensed provider."
       />
-      <TRTHeader minimal />
+      {/* CRO Header - logo + phone only */}
+      <header style={{
+        position: "fixed", top: 0, left: 0, right: 0, zIndex: 50, height: 64,
+        background: "var(--brand-navy-deep)",
+        borderBottom: "1px solid rgba(255,255,255,0.08)",
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        padding: "0 24px", fontFamily: "Inter, sans-serif",
+      }}>
+        <a href="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
+          <img
+            src="/logos/Text_Logo_white.webp"
+            onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/logos/Text_Logo_white.png"; }}
+            alt="Men's Wellness Centers" style={{ height: 32, width: "auto" }} width={160} height={32}
+          />
+        </a>
+        <a href={PHONE.tel} style={{
+          display: "flex", alignItems: "center", gap: 8, textDecoration: "none",
+          color: "var(--c-text-on-dark)", fontWeight: 600, fontSize: 15,
+        }}>
+          <Phone size={16} strokeWidth={1.75} style={{ color: "var(--brand-cta)" }} />
+          {PHONE.display}
+        </a>
+      </header>
 
       <main style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "80px 16px 48px" }}>
         <div style={{
@@ -232,6 +254,44 @@ export default function TRTGetStarted() {
           boxShadow: "0 8px 40px rgba(11,16,41,0.10)",
           overflow: "hidden",
         }}>
+
+          {/* Step indicator */}
+          <div style={{ padding: "16px 28px 0", textAlign: "center", borderBottom: "1px solid #F0F2F5" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 0, marginBottom: 10 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <div style={{
+                  width: 24, height: 24, borderRadius: "50%", background: "var(--brand-cta)",
+                  display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+                }}>
+                  <span style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 12, color: "#fff" }}>1</span>
+                </div>
+                <span style={{ fontSize: 12, fontWeight: 600, color: "var(--brand-navy)", fontFamily: "Inter, sans-serif" }}>Contact Info</span>
+              </div>
+              <div style={{ width: 28, height: 2, background: "#E5E7EB", margin: "0 8px", flexShrink: 0 }} />
+              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <div style={{
+                  width: 24, height: 24, borderRadius: "50%", background: "#E5E7EB",
+                  display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+                }}>
+                  <span style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 12, color: "#9CA3AF" }}>2</span>
+                </div>
+                <span style={{ fontSize: 12, fontWeight: 500, color: "var(--c-text-on-light-muted)", fontFamily: "Inter, sans-serif" }}>Medical History</span>
+              </div>
+              <div style={{ width: 28, height: 2, background: "#E5E7EB", margin: "0 8px", flexShrink: 0 }} />
+              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <div style={{
+                  width: 24, height: 24, borderRadius: "50%", background: "#E5E7EB",
+                  display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+                }}>
+                  <span style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 12, color: "#9CA3AF" }}>3</span>
+                </div>
+                <span style={{ fontSize: 12, fontWeight: 500, color: "var(--c-text-on-light-muted)", fontFamily: "Inter, sans-serif" }}>Done</span>
+              </div>
+            </div>
+            <div style={{ height: 4, background: "#E5E7EB", borderRadius: 999, overflow: "hidden", margin: "0 -28px" }}>
+              <div style={{ height: 4, background: "var(--brand-cta)", borderRadius: 999, width: "33%" }} />
+            </div>
+          </div>
 
           {/* Provider image */}
           <div style={{ position: "relative", height: 200, overflow: "hidden" }}>
@@ -275,16 +335,7 @@ export default function TRTGetStarted() {
             </span>
           </div>
 
-          {/* Step indicator */}
-          <div style={{ padding: "16px 28px 0", textAlign: "center" }}>
-            <span style={{
-              // hardcoded-color-allow-next-line
-              fontSize: 12, fontWeight: 600, color: "var(--c-placeholder-light)",
-              fontFamily: "Inter, sans-serif", letterSpacing: "0.05em",
-            }}>
-              STEP 1 OF 3
-            </span>
-          </div>
+
 
           {/* Form */}
           <form onSubmit={handleSubmit} noValidate style={{ padding: "20px 28px 32px" }}>
@@ -394,7 +445,7 @@ export default function TRTGetStarted() {
               >
                 {submitting
                   ? <><Loader2 size={18} className="animate-spin" /> Processing...</>
-                  : <>Continue <ArrowRight size={18} strokeWidth={2.5} /></>
+                  : <>Continue to Your Protocol <ArrowRight size={18} strokeWidth={2.5} /></>
                 }
               </button>
 

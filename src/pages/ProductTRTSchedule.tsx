@@ -11,8 +11,8 @@
 
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { MapPin, ArrowRight, Clock } from "lucide-react";
-import { TRTHeader } from "@/components/landing/trt/TRTHeader";
+import { MapPin, ArrowRight, Clock, Phone } from "lucide-react";
+import { PHONE } from "@/lib/constants";
 import { TRTFooter } from "@/components/landing/trt/TRTFooter";
 import { SEO } from "@/components/SEO";
 import { useBookingStore } from "@/domain/booking/bookingStore";
@@ -69,10 +69,81 @@ export default function ProductTRTSchedule() {
         title="Schedule Your Consultation | Men's Wellness Centers"
         description="Book your no-cost testosterone consultation at a Virginia Men's Wellness Centers location."
       />
-      <TRTHeader />
 
-      <main style={{ flex: 1, padding: "80px 16px 48px" }}>
+      {/* CRO Header - logo + phone only */}
+      <header style={{
+        position: "fixed", top: 0, left: 0, right: 0, zIndex: 50, height: 64,
+        background: "var(--brand-navy-deep)",
+        borderBottom: "1px solid rgba(255,255,255,0.08)",
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        padding: "0 24px", fontFamily: "Inter, sans-serif",
+      }}>
+        <a href="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
+          <img
+            src="/logos/Text_Logo_white.webp"
+            onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/logos/Text_Logo_white.png"; }}
+            alt="Men's Wellness Centers" style={{ height: 32, width: "auto" }} width={160} height={32}
+          />
+        </a>
+        <a href={PHONE.tel} style={{
+          display: "flex", alignItems: "center", gap: 8, textDecoration: "none",
+          color: "var(--c-text-on-dark)", fontWeight: 600, fontSize: 15,
+        }}>
+          <Phone size={16} strokeWidth={1.75} style={{ color: "var(--brand-cta)" }} />
+          {PHONE.display}
+        </a>
+      </header>
+
+      <main style={{ flex: 1, padding: "80px 16px 48px", paddingTop: 96 }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
+
+          {/* Step progress indicator */}
+          <div style={{ marginBottom: 32 }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 0, marginBottom: 12 }}>
+              {/* Step 1 */}
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <div style={{
+                  width: 32, height: 32, borderRadius: "50%", flexShrink: 0,
+                  background: step === "location" ? "var(--brand-cta)" : "var(--brand-cta)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  boxShadow: step === "location" ? "0 2px 12px rgba(232,103,10,0.45)" : "none",
+                }}>
+                  <span style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 14, color: "#fff" }}>1</span>
+                </div>
+                <span style={{
+                  fontSize: 13, fontWeight: step === "location" ? 700 : 500,
+                  color: step === "location" ? "var(--brand-navy)" : "var(--c-text-on-light-muted)",
+                  fontFamily: "Inter, sans-serif",
+                }}>Choose Location</span>
+              </div>
+              {/* Connector */}
+              <div style={{ width: 40, height: 2, background: step === "calendar" ? "var(--brand-cta)" : "#D0D5DD", margin: "0 12px", flexShrink: 0 }} />
+              {/* Step 2 */}
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <div style={{
+                  width: 32, height: 32, borderRadius: "50%", flexShrink: 0,
+                  background: step === "calendar" ? "var(--brand-cta)" : "#E5E7EB",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  boxShadow: step === "calendar" ? "0 2px 12px rgba(232,103,10,0.45)" : "none",
+                }}>
+                  <span style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 14, color: step === "calendar" ? "#fff" : "#9CA3AF" }}>2</span>
+                </div>
+                <span style={{
+                  fontSize: 13, fontWeight: step === "calendar" ? 700 : 500,
+                  color: step === "calendar" ? "var(--brand-navy)" : "var(--c-text-on-light-muted)",
+                  fontFamily: "Inter, sans-serif",
+                }}>Choose Time</span>
+              </div>
+            </div>
+            {/* Progress bar */}
+            <div style={{ height: 4, background: "#E5E7EB", borderRadius: 999, overflow: "hidden", maxWidth: 280, margin: "0 auto" }}>
+              <div style={{
+                height: 4, background: "var(--brand-cta)", borderRadius: 999,
+                width: step === "location" ? "50%" : "100%",
+                transition: "width 400ms ease",
+              }} />
+            </div>
+          </div>
 
           {/* ── STEP 1: Location ─────────────────────────────────────────── */}
           {step === "location" && (
@@ -157,7 +228,7 @@ export default function ProductTRTSchedule() {
                 // hardcoded-color-allow-next-line
                 boxShadow: "0 4px 20px rgba(232,103,10,0.35)",
               }}>
-                See Available Times <ArrowRight size={18} strokeWidth={2.5} />
+                Select &amp; Choose Time <ArrowRight size={18} strokeWidth={2.5} />
               </button>
 
               <p style={{ textAlign: "center", fontSize: 12, color: "var(--c-placeholder-light)", marginTop: 14 }}>
