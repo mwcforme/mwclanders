@@ -692,7 +692,7 @@ const CROHeroSection = () => {
         background: "radial-gradient(ellipse 100% 80% at 50% 50%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.55) 100%)",
       }} />
 
-      <div className="relative z-10 w-full max-w-[1280px] mx-auto px-5 sm:px-6 pt-24 pb-12 lg:pt-32 lg:pb-24 grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-8 lg:gap-16 items-stretch">
+      <div className="relative z-10 w-full max-w-[1280px] mx-auto px-5 sm:px-6 pt-24 pb-12 lg:pt-28 lg:pb-20 grid grid-cols-1 lg:grid-cols-[1fr_460px] gap-8 lg:gap-12 items-start">
         {/* LEFT */}
         <div className="flex flex-col">
           <h1
@@ -715,8 +715,47 @@ const CROHeroSection = () => {
             Sit down with a licensed Virginia provider. Labs drawn on-site and reviewed in the same visit. No-cost consultation. Virginia&rsquo;s men&rsquo;s health practice since 2015.
           </p>
 
+          {/* Hero image — clinic credibility between subtext and symptoms */}
+          <div
+            className="mt-6 rounded-xl overflow-hidden"
+            style={{
+              aspectRatio: "16/7",
+              position: "relative",
+              flexShrink: 0,
+            }}
+          >
+            <img
+              src="/images/clinic-lab-draw.webp"
+              alt="Licensed provider reviewing lab results with a patient at Men's Wellness Centers Virginia"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                objectPosition: "center 30%",
+                display: "block",
+              }}
+              width={720}
+              height={315}
+              loading="eager"
+              decoding="async"
+            />
+            {/* Orange overlay shimmer at bottom for text legibility */}
+            <div
+              aria-hidden
+              style={{
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: "40%",
+                background: "linear-gradient(to top, rgba(11,16,41,0.65) 0%, transparent 100%)",
+                pointerEvents: "none",
+              }}
+            />
+          </div>
+
           {/* Symptoms list */}
-          <div className="mt-auto pt-8 flex flex-col gap-3">
+          <div className="mt-6 flex flex-col gap-3">
             {SYMPTOMS.map((text) => (
               <div key={text} style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 <ChevronRight
@@ -767,9 +806,9 @@ const CROHeroSection = () => {
           </button>
         </div>
 
-        {/* RIGHT — CRO form */}
-        <div id="hero-form" className="w-full flex lg:justify-end">
-          <div className="w-full lg:max-w-[440px]">
+        {/* RIGHT — CRO form: sticky above fold on desktop */}
+        <div id="hero-form" className="w-full flex lg:justify-end md:sticky md:top-[72px]">
+          <div className="w-full">
             <CROHeroForm />
           </div>
         </div>
