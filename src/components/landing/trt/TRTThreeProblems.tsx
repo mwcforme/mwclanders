@@ -78,7 +78,7 @@ export const TRTThreeProblems = ({ onCta, headlineOverride }: TRTThreeProblemsPr
               lineHeight: 1.1,
             }}
           >
-            {headlineOverride ? (
+            {headlineOverride?.line1 ? (
               <>
                 {headlineOverride.line1}
                 {headlineOverride.line2 && (
