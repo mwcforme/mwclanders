@@ -69,7 +69,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "Is financing available?",
-    a: "Healthcare financing is available through third-party lenders, subject to credit approval. Ask at your consultation.",
+    a: "Healthcare financing is available through third-party lenders. Many members pay as little as $179/month on a 36-month term, subject to credit approval, creditworthiness, and lender terms. Actual rate and payment depend on loan amount and term selected. APR varies by lender. Not all applicants will qualify. Ask at your consultation.",
   },
   {
     q: "Can I cancel my membership?",
@@ -507,7 +507,7 @@ export default function Affordability() {
             margin: 0,
           }}
         >
-          No-cost, no-pressure pricing review at your consultation.
+          Financing available — as little as $179/month. No-cost pricing review at your consultation.
         </p>
         <button
           type="button"
@@ -712,7 +712,8 @@ export default function Affordability() {
           >
             MWC does not publish prices online because hormone optimization is a
             clinical decision. Your provider walks every number with you at the
-            consultation.
+            consultation. Financing is available — many members pay as little as
+            $179/month, subject to credit approval and term selected.
           </p>
 
           <div
@@ -1069,18 +1070,32 @@ export default function Affordability() {
               gap: 16,
             }}
           >
-            <p
-              style={{
-                fontSize: 15,
-                color: "var(--brand-navy-deep)",
-                lineHeight: 1.5,
-                margin: 0,
-                maxWidth: 560,
-              }}
-            >
-              Healthcare financing available through third-party lenders, subject to credit
-              approval.
-            </p>
+            <div style={{ maxWidth: 560 }}>
+              <p
+                style={{
+                  fontSize: 16,
+                  fontWeight: 700,
+                  color: "var(--brand-navy-deep)",
+                  fontFamily: "Oswald, sans-serif",
+                  marginBottom: 4,
+                  marginTop: 0,
+                }}
+              >
+                As little as $179/month with financing.
+              </p>
+              <p
+                style={{
+                  fontSize: 13,
+                  color: "var(--c-text-on-light-muted)",
+                  lineHeight: 1.5,
+                  margin: 0,
+                }}
+              >
+                Healthcare financing available through third-party lenders, subject to credit approval and lender terms.
+                Monthly payment example based on a 36-month term; actual rate and payment depend on creditworthiness,
+                loan amount, and term selected. APR varies by lender. Not all applicants will qualify.
+              </p>
+            </div>
             <button
               type="button"
               onClick={() => navigate("/book/location")}
@@ -1251,6 +1266,34 @@ export default function Affordability() {
       </section>
 
       {/* ── 9. FOOTER ────────────────────────────────────────────────────── */}
+      {/* ── LEGAL DISCLOSURE ─────────────────────────────────────────────── */}
+      <div
+        style={{
+          background: "#F0EDE8",
+          borderTop: "1px solid #D9D4CE",
+          padding: "20px 24px",
+        }}
+      >
+        <p
+          style={{
+            maxWidth: 900,
+            margin: "0 auto",
+            fontSize: 11,
+            lineHeight: 1.6,
+            color: "#6B7280",
+          }}
+        >
+          Treatment requires a clinical evaluation and is provided only when medically appropriate. Individual results vary.
+          Treatment is provided by licensed providers at Men's Wellness Centers. Membership pricing is reviewed in person
+          at your no-cost 60-minute consultation. Financing is available through third-party lenders and is subject to
+          credit approval. The $179/month example is based on a representative 36-month financing term and does not
+          represent the cost of any specific membership. Actual monthly payment depends on creditworthiness, loan
+          amount, APR, and term selected. APR varies by lender. Not all applicants will qualify. This advertisement
+          does not constitute a credit offer. Men's Wellness Centers is not a lender. LegitScript certified.
+          &copy; {new Date().getFullYear()} Men's Wellness Centers. All rights reserved.
+        </p>
+      </div>
+
       <TRTFooter />
 
       {/* ── 10. STICKY MOBILE CTA BAR ────────────────────────────────────── */}
