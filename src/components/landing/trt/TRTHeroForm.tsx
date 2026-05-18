@@ -279,21 +279,19 @@ export const TRTHeroForm = ({
     >
 
 
-      {/* Stars above form — trust at decision point */}
-      <a
-        href={GBP_REVIEWS_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{ display: "inline-flex", alignItems: "center", gap: 8, textDecoration: "none", marginBottom: 16 }}
-      >
-        <span style={{ display: "flex", gap: 2 }}>
-          {[...Array(5)].map((_, i) => (
-            <Star key={i} size={14} fill="#C9A961" stroke="#C9A961" />
-          ))}
-        </span>
-        {/* hardcoded-color-allow-next-line */}
-        <span style={{ fontSize: 13, fontWeight: 600, color: "rgba(245,240,235,0.80)", fontFamily: "Inter, sans-serif" }}>4.9 · 200+ Google reviews</span>
-      </a>
+      {/* Heading */}
+      <h2 style={{
+        fontFamily: "Oswald, sans-serif",
+        fontWeight: 700,
+        fontSize: 22,
+        lineHeight: 1.2,
+        color: "var(--brand-cream)",
+        textTransform: "uppercase",
+        letterSpacing: "0.02em",
+        marginBottom: 8,
+      }}>
+        Reserve Your 60-Minute In-Person Visit.
+      </h2>
 
       <form onSubmit={handleSubmit} noValidate style={{ display: "flex", flexDirection: "column", gap: 12 }}>
 

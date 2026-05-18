@@ -149,6 +149,23 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
             Sit down with a licensed Virginia provider. Labs drawn on-site and reviewed in the same visit. No-cost consultation. Virginia's men's health practice since 2015.
           </p>
 
+          {/* Google reviews */}
+          <a
+            href={GBP_REVIEWS_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4"
+            style={{ display: "inline-flex", alignItems: "center", gap: 8, textDecoration: "none" }}
+          >
+            <span style={{ display: "flex", gap: 2 }}>
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} size={14} fill="#C9A961" stroke="#C9A961" />
+              ))}
+            </span>
+            {/* hardcoded-color-allow-next-line */}
+            <span style={{ fontSize: 13, fontWeight: 600, color: "rgba(245,240,235,0.80)", fontFamily: "Inter, sans-serif" }}>4.9 · 200+ Google reviews</span>
+          </a>
+
           {/* Symptom statements — pushed to bottom with auto top margin */}
           <div className="mt-auto pt-8 flex flex-col gap-4">
             {[
