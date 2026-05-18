@@ -146,7 +146,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
               lineHeight: 1.6,
             }}
           >
-You've been told your labs are normal. You don't feel normal. At Men's Wellness Centers, a licensed provider reviews your bloodwork and talks to you — same visit, same day. No referrals. No waiting rooms. No script.
+You've been told your labs are normal. You don't feel normal. At Men's Wellness Centers, a licensed provider reviews your bloodwork and talks to you. Same visit. Same day. No referrals. No waiting rooms. No script.
           </p>
 
           {/* Google reviews */}

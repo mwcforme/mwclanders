@@ -603,7 +603,7 @@ export default function Affordability() {
                 maxWidth: 540,
               }}
             >
-              No published price lists because no two plans are the same. Your provider walks every number with you at your no-cost visit — in writing, before you decide anything.
+              No published price lists because no two plans are the same. Your provider walks every number with you at your no-cost visit. In writing. Before you decide anything.
             </p>
 
             {/* CTAs */}

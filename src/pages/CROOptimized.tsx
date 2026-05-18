@@ -719,7 +719,7 @@ const CROHeroSection = () => {
 
           {/* hardcoded-color-allow-next-line */}
           <p className="mt-6 w-full" style={{ color: "rgba(245,240,235,0.88)", fontFamily: "Inter, sans-serif", fontSize: 19, lineHeight: 1.6 }}>
-            Your provider draws labs on-site and reads them with you — same visit, same day. No referrals. No waiting. No surprises.
+            Your provider draws labs on-site and reads them with you. Same visit. Same day. No referrals. No waiting. No surprises.
           </p>
 
           {/* Hero image — clinic credibility between subtext and symptoms */}
