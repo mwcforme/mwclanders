@@ -346,7 +346,7 @@ export const TRTHeroForm = ({
             color: errors.location ? ERR_RED : "rgba(245,240,235,0.65)",
             marginBottom: 8,
           }}>
-            Nearest location
+            Location
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
             {LOCATIONS.map(({ key, label }) => {
