@@ -12,6 +12,7 @@
 // Lazy-loaded to keep Supabase out of the critical-path bundle.
 // Only needed when retrying queued bookings (background, not page load).
 const getSupabase = () => import("@/integrations/supabase/client").then(m => m.supabase);
+import { APP_ENV } from "@/lib/env";
 
 const QUEUE_KEY = "mwc_booking_queue_v1";
 const MAX_RETRIES = 5;
@@ -78,7 +79,7 @@ async function attemptBooking(b: QueuedBooking): Promise<boolean> {
           ignoreDateRange: false,
           toNotify: true,
         },
-        __env: "prod",
+        __env: APP_ENV,
       },
     });
 

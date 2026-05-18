@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { downloadCsv } from "@/lib/admin/csv";
+import { APP_ENV } from "@/lib/env";
 import { Loader2, Download, RefreshCw, AlertCircle, CheckCircle2 } from "lucide-react";
 
 interface Lead {
@@ -39,7 +40,7 @@ async function resyncLead(lead: Lead): Promise<{ ok: boolean; error?: string; co
     phone: lead.phone ?? undefined,
     location: lead.location ?? undefined,
     source: lead.source ?? "admin-resync",
-    __env: "prod",
+    __env: APP_ENV,
   };
 
   // Call ghl-proxy /contacts/upsert directly
