@@ -3,9 +3,6 @@
  * Centralised here so form components and validation logic share one source.
  */
 
-/** All possible answer value types for a single intake question. */
-export type Answer = string | string[] | number | undefined;
-
 /** Complete answer set for the 17-step TRT medical intake. */
 export interface IntakeAnswers {
   age?: number;

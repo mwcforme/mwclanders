@@ -2,6 +2,7 @@
  * "Recognize the Signs" section for the ProductTRT page.
  * Dark navy background with symptom grid, stat callout, and schedule CTA.
  */
+import { memo } from "react";
 import { Zap, Heart, Smile, Moon, Dumbbell, Scale, ArrowRight } from "lucide-react";
 import { Eyebrow, OrangeCTA } from "./TRTProductHelpers";
 
@@ -24,7 +25,7 @@ const SIGN_TILES: SignTile[] = [
 ];
 
 /** Grid of low-T symptom tiles with stat callout and CTA. */
-export const TRTSignsSection = ({ onSchedule }: TRTSignsSectionProps) => (
+export const TRTSignsSection = memo(({ onSchedule }: TRTSignsSectionProps) => (
   <section
     style={{
       background: "var(--brand-navy)",
@@ -154,4 +155,5 @@ export const TRTSignsSection = ({ onSchedule }: TRTSignsSectionProps) => (
       </div>
     </div>
   </section>
-);
+));
+TRTSignsSection.displayName = "TRTSignsSection";

@@ -2,6 +2,7 @@
  * Benefits section for the ProductTRT page.
  * Shows an image alongside a benefits checklist on a dark gradient background.
  */
+import { memo } from "react";
 import { Check } from "lucide-react";
 import { Eyebrow } from "./TRTProductHelpers";
 
@@ -16,7 +17,7 @@ const BENEFITS = [
 ] as const;
 
 /** Dark-background benefits section with image + checklist layout. */
-export const TRTBenefitsSection = () => (
+export const TRTBenefitsSection = memo(() => (
   <section
     style={{
       background:
@@ -160,6 +161,7 @@ export const TRTBenefitsSection = () => (
       </div>
     </div>
   </section>
-);
+));
+TRTBenefitsSection.displayName = "TRTBenefitsSection";
 
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Check, FlaskConical, Stethoscope, ClipboardList,
@@ -345,7 +345,7 @@ const TRTQuiz = ({ onNavigateSchedule }: { onNavigateSchedule: () => void }) => 
 
 const ProductTRT = () => {
   const navigate = useNavigate();
-  const goSchedule = () => navigate("/product/trt/schedule");
+  const goSchedule = useCallback(() => navigate("/product/trt/schedule"), [navigate]);
 
 
   return (
