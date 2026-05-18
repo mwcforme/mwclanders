@@ -1193,7 +1193,7 @@ const ProductTRT = () => {
           }}
         >
           <div style={{ maxWidth: 1100, margin: "0 auto", textAlign: "center" }}>
-            <Eyebrow color="var(--brand-cta)">RECOGNIZE THE SIGNS</Eyebrow>
+            <Eyebrow>RECOGNIZE THE SIGNS</Eyebrow>
             <h2
               style={{
                 fontFamily: "Oswald, sans-serif",
