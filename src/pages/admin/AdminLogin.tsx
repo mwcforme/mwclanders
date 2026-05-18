@@ -16,7 +16,7 @@ export default function AdminLogin() {
   const [bypassPw, setBypassPw] = useState("");
   const [showBypass, setShowBypass] = useState(false);
 
-  // Check bypass session flag or real Supabase session.
+  // Check bypass flag or real session.
   useEffect(() => {
     if (sessionStorage.getItem(TEMP_BYPASS_KEY) === "ok") {
       nav("/admin/overview", { replace: true });
@@ -29,37 +29,34 @@ export default function AdminLogin() {
     });
   }, [nav]);
 
+  // Show forbidden message when redirected back from RequireAdmin.
+  useEffect(() => {
+    if (params.get("error") === "forbidden") {
+      setError("This account is not on the admin allowlist.");
+    }
+  }, [params]);
+
   const handleBypassLogin = () => {
     if (bypassPw === TEMP_PASSWORD) {
       sessionStorage.setItem(TEMP_BYPASS_KEY, "ok");
       nav("/admin/overview", { replace: true });
     } else {
-      setError("Incorrect password.");
+      setError("Incorrect access code.");
     }
   };
 
-  // Show forbidden message when redirected back from RequireAdmin.
-  useEffect(() => {
-    if (params.get("error") === "forbidden") {
-      setError("This Google account is not on the admin allowlist.");
-    }
-  }, [params]);
-
-  const signInWithGoogle = async () => {
+  const signInWithLovable = async () => {
     setBusy(true);
     setError(null);
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          redirectTo: `${window.location.origin}/admin/overview`,
-          queryParams: { prompt: "select_account" },
-        },
+      const result = await lovable.auth.signInWithOAuth("lovable", {
+        redirect_uri: `${window.location.origin}/admin/overview`,
       });
-      if (error) {
+      if (result.error) {
         setBusy(false);
-        setError(`Auth error: ${error.message ?? "Sign in failed. Check Supabase Google OAuth config."}`);
+        setError(`Sign in failed: ${result.error.message ?? "Unknown error"}`);
       }
+      // If redirected, browser handles it — no further action needed
     } catch (err) {
       setBusy(false);
       setError(`Unexpected error: ${err instanceof Error ? err.message : String(err)}`);
@@ -68,83 +65,86 @@ export default function AdminLogin() {
 
   return (
     <div
-      className="flex min-h-screen items-center justify-center bg-[#0B1029] px-4 text-white"
-      style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#0B1029" }}
+      style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#0B1029", padding: "16px" }}
     >
-      <div className="w-full max-w-sm rounded-2xl border border-white/10 bg-[#070B1F] p-8 shadow-2xl" style={{ width: "100%", maxWidth: 400 }}>
-        <div className="mb-6 text-center">
-          <div
-            className="text-2xl font-bold tracking-wide"
-            style={{ fontFamily: "Oswald, Inter, sans-serif" }}
-          >
+      <div style={{ width: "100%", maxWidth: 400, background: "#070B1F", borderRadius: 16, border: "1px solid rgba(255,255,255,0.10)", padding: "32px 28px", boxShadow: "0 24px 64px rgba(0,0,0,0.50)" }}>
+
+        {/* Header */}
+        <div style={{ textAlign: "center", marginBottom: 24 }}>
+          <div style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 24, color: "#FFFFFF", letterSpacing: "0.08em", marginBottom: 4 }}>
             MWC ADMIN
           </div>
-          <p className="mt-1 text-sm text-white/60">Internal operations console</p>
+          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", fontFamily: "Inter, sans-serif" }}>
+            Internal operations console
+          </p>
         </div>
 
+        {/* Error */}
         {error && (
-          <div className="mb-4 rounded-md border border-red-500/40 bg-red-500/10 px-3 py-2 text-sm text-red-200">
+          <div style={{ marginBottom: 16, borderRadius: 8, border: "1px solid rgba(220,38,38,0.40)", background: "rgba(220,38,38,0.10)", padding: "10px 14px", fontSize: 13, color: "#FCA5A5", fontFamily: "Inter, sans-serif" }}>
             {error}
           </div>
         )}
 
+        {/* Lovable Sign In button */}
         <button
           type="button"
-          onClick={signInWithGoogle}
+          onClick={signInWithLovable}
           disabled={busy}
-          className="flex h-12 w-full items-center justify-center gap-3 rounded-md bg-white px-4 text-sm font-semibold text-[#0B1029] transition-opacity hover:opacity-90 disabled:cursor-wait disabled:opacity-60"
+          style={{
+            width: "100%", height: 48, borderRadius: 10,
+            background: busy ? "rgba(255,255,255,0.70)" : "#FFFFFF",
+            color: "#0B1029", border: "none",
+            fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 15,
+            cursor: busy ? "wait" : "pointer",
+            display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
+            transition: "opacity 150ms ease",
+            opacity: busy ? 0.7 : 1,
+          }}
         >
           {busy ? (
-            <Loader2 size={16} className="animate-spin" />
+            <Loader2 size={16} style={{ animation: "spin 0.7s linear infinite" }} />
           ) : (
-            <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden>
-              <path
-                fill="#4285F4"
-                d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"
-              />
-              <path
-                fill="#34A853"
-                d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"
-              />
-              <path
-                fill="#FBBC05"
-                d="M3.964 10.707A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.707V4.961H.957A8.997 8.997 0 0 0 0 9c0 1.452.348 2.827.957 4.04l3.007-2.333z"
-              />
-              <path
-                fill="#EA4335"
-                d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961l3.007 2.332C4.672 5.166 6.656 3.58 9 3.58z"
-              />
+            /* Lovable logo mark */
+            <svg width="20" height="20" viewBox="0 0 32 32" fill="none" aria-hidden>
+              <rect width="32" height="32" rx="8" fill="#0B1029" />
+              <path d="M16 6 L26 14 L16 22 L6 14 Z" fill="#E8670A" />
             </svg>
           )}
-          Sign in with Google
+          {busy ? "Signing in…" : "Sign in with Lovable"}
         </button>
 
-        {/* Shared password bypass — temporary while OAuth is being configured */}
-        <div className="mt-5">
+        {/* Shared password bypass */}
+        <div style={{ marginTop: 20 }}>
           {!showBypass ? (
             <button
               type="button"
               onClick={() => setShowBypass(true)}
-              className="w-full text-xs text-white/30 hover:text-white/50 transition-colors py-2"
+              style={{ width: "100%", background: "none", border: "none", color: "rgba(255,255,255,0.30)", fontSize: 12, cursor: "pointer", fontFamily: "Inter, sans-serif", padding: "8px 0", transition: "color 150ms" }}
             >
               Use shared access code
             </button>
           ) : (
-            <div className="flex gap-2">
+            <div style={{ display: "flex", gap: 8 }}>
               <input
                 type="password"
                 placeholder="Access code"
                 value={bypassPw}
                 onChange={(e) => setBypassPw(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleBypassLogin()}
-                className="flex-1 h-10 rounded-md border border-white/10 bg-white/05 px-3 text-sm text-white placeholder:text-white/30 outline-none focus:border-orange-500/60"
-                style={{ background: "rgba(255,255,255,0.05)" }}
                 autoFocus
+                style={{
+                  flex: 1, height: 40, borderRadius: 8,
+                  border: "1px solid rgba(255,255,255,0.15)",
+                  background: "rgba(255,255,255,0.05)", color: "#FFFFFF",
+                  fontSize: 14, fontFamily: "Inter, sans-serif", padding: "0 12px",
+                  outline: "none",
+                }}
               />
               <button
                 type="button"
                 onClick={handleBypassLogin}
-                className="h-10 px-4 rounded-md bg-orange-600 text-white text-sm font-semibold hover:bg-orange-500 transition-colors"
+                style={{ height: 40, padding: "0 16px", borderRadius: 8, background: "var(--brand-cta)", color: "#FFF", border: "none", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "Inter, sans-serif" }}
               >
                 Go
               </button>
@@ -152,10 +152,12 @@ export default function AdminLogin() {
           )}
         </div>
 
-        <p className="mt-3 text-center text-xs text-white/30">
-          Access restricted to authorized staff.
+        <p style={{ textAlign: "center", marginTop: 16, fontSize: 11, color: "rgba(255,255,255,0.25)", fontFamily: "Inter, sans-serif" }}>
+          Access restricted to authorized staff only.
         </p>
       </div>
+
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
     </div>
   );
 }
