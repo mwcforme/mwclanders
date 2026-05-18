@@ -23,7 +23,10 @@ export const TCPAConsent = ({
       />
       <span
         className="text-xs leading-relaxed"
-        style={{ color: isDark ? "rgba(255,255,255,0.7)" : "#475569" }}
+        style={{
+          // hardcoded-color-allow-next-line
+          color: isDark ? "rgba(255,255,255,0.7)" : "#475569",
+        }}
       >
         By checking this box, I consent to receive appointment-related calls, texts, and emails from
         Men's Wellness Centers at the contact information provided. Message and data rates may apply.

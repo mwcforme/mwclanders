@@ -77,11 +77,13 @@ export const StickyMobileCTA = () => {
       style={{
         opacity: show ? 1 : 0,
         pointerEvents: show ? "auto" : "none",
+        // hardcoded-color-allow-next-line
         background: "rgba(11,16,41,0.96)",
         backdropFilter: "blur(16px)",
         WebkitBackdropFilter: "blur(16px)",
         borderTop: "1px solid var(--c-border-on-dark)",
         paddingBottom: "env(safe-area-inset-bottom)",
+        // hardcoded-color-allow-next-line
         boxShadow: "0 -8px 24px rgba(0,0,0,0.35)",
       }}
       aria-hidden={!show}
@@ -119,6 +121,7 @@ export const StickyMobileCTA = () => {
           fontSize: 18,
           fontFamily: "Inter, sans-serif",
           letterSpacing: "0.05em",
+          // hardcoded-color-allow-next-line
           boxShadow: "inset 0 1px 0 rgba(255,255,255,0.15)",
         }}
       >

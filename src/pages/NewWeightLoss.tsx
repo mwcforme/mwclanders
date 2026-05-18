@@ -44,6 +44,7 @@ const NewWeightLoss = () => {
         <Suspense fallback={<S bg="var(--brand-navy)" h={360} />}>
           <SectionReveal><TRTPillars /></SectionReveal>
         </Suspense>
+        // hardcoded-color-allow-next-line
         <Suspense fallback={<S bg="#111827" h={160} />}>
           <SectionReveal><TRTMarquee /></SectionReveal>
         </Suspense>

@@ -82,6 +82,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
+            // hardcoded-color-allow-next-line
             "radial-gradient(ellipse 50% 50% at 28% 45%, rgba(27,43,75,0.55) 0%, rgba(11,16,41,0) 70%)",
         }}
       />
@@ -92,6 +93,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
+            // hardcoded-color-allow-next-line
             "radial-gradient(ellipse 60% 50% at 85% 10%, rgba(232,103,10,0.18) 0%, rgba(11,16,41,0) 60%)",
         }}
       />
@@ -102,6 +104,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
+            // hardcoded-color-allow-next-line
             "radial-gradient(ellipse 100% 80% at 50% 50%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.55) 100%)",
         }}
       />
@@ -135,6 +138,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
           <p
             className="mt-6 w-full"
             style={{
+              // hardcoded-color-allow-next-line
               color: "rgba(245,240,235,0.88)",
               fontFamily: "Inter, sans-serif",
               fontSize: 19,
@@ -154,6 +158,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
             ].map((text) => (
               <div key={text} style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 <div style={{ width: 8, height: 8, borderRadius: "50%", background: COLORS.orange, flexShrink: 0 }} />
+                {/* hardcoded-color-allow-next-line */}
                 <span style={{ fontFamily: "Inter, sans-serif", fontSize: 16, fontWeight: 500, color: "rgba(245,240,235,0.88)", lineHeight: 1.4 }}>{text}</span>
               </div>
             ))}

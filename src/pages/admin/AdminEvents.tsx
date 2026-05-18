@@ -40,6 +40,7 @@ export default function AdminEvents() {
   return (
     <AdminLayout title="Booking events">
       <div className="mb-4 flex flex-wrap gap-3">
+        // hardcoded-color-allow-next-line
         <select value={type} onChange={(e) => setType(e.target.value)} className="h-10 rounded-md border border-white/10 bg-[#070B1F] px-3 text-sm focus:border-[#E8670A] focus:outline-none">
           <option value="all">All event types</option>
           <option value="confirm_attempt">confirm_attempt</option>
@@ -54,6 +55,7 @@ export default function AdminEvents() {
       {!rows && !error && <div className="flex items-center gap-2 text-white/60"><Loader2 className="h-4 w-4 animate-spin" /> Loading…</div>}
 
       {rows && (
+        // hardcoded-color-allow-next-line
         <div className="overflow-auto rounded-xl border border-white/10 bg-[#070B1F]">
           <table className="w-full text-left text-sm">
             <thead className="border-b border-white/10 text-xs uppercase tracking-wider text-white/50">

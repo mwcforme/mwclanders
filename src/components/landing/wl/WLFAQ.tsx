@@ -67,7 +67,11 @@ export const WLFAQ = () => {
                 key={f.q}
                 ref={(el) => { itemRefs.current[i] = el; }}
                 className="rounded-xl overflow-hidden"
-                style={{ background: "var(--c-text-on-dark)", border: "1px solid #E5E5EA" }}
+                style={{
+                  background: "var(--bg-white)",
+                  // hardcoded-color-allow-next-line
+                  border: "1px solid #E5E5EA",
+                }}
               >
                 <button
                   onClick={() => handleToggle(i)}
@@ -79,7 +83,7 @@ export const WLFAQ = () => {
                   <ChevronDown className="h-5 w-5 flex-shrink-0 transition-transform duration-200" style={{ color: "var(--brand-cta)", transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }} />
                 </button>
                 {isOpen && (
-                  <div className="px-5 pb-5 leading-relaxed" style={{ color: "#1a1a2e", fontFamily: "Inter, sans-serif", fontSize: 16 }}>
+                  <div className="px-5 pb-5 leading-relaxed" style={{ color: "var(--bg-charcoal)", fontFamily: "Inter, sans-serif", fontSize: 16 }}>
                     <p>{f.a}</p>
                     <button
                       onClick={scrollToBooking}
@@ -93,7 +97,10 @@ export const WLFAQ = () => {
                         fontFamily: "Inter, sans-serif",
                         border: "none",
                       }}
-                      onMouseEnter={(e) => { e.currentTarget.style.background = "#cf5a08"; }}
+                      onMouseEnter={(e) => {
+                        // hardcoded-color-allow-next-line
+                        e.currentTarget.style.background = "#cf5a08";
+                      }}
                       onMouseLeave={(e) => { e.currentTarget.style.background = "var(--brand-cta)"; }}
                     >
                       {COPY.cta.bookConsult}

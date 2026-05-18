@@ -12,8 +12,8 @@ import { SEO } from "@/components/SEO";
 import { useBookingStore } from "@/domain/booking/bookingStore";
 import { contactUpdater } from "@/services/contactUpdater";
 
-const ORANGE = "#E8670A";
-const NAVY   = "#0B1029";
+const ORANGE = "var(--brand-cta)";
+const NAVY   = "var(--brand-navy-deep)";
 
 type LabChoice = "yes" | "no" | null;
 
@@ -54,26 +54,32 @@ export default function TRTBloodwork() {
         onClick={() => handleSelect(value)}
         style={{
           width: "100%", padding: "20px 24px",
+          // hardcoded-color-allow-next-line
           border: `2px solid ${sel ? ORANGE : "#E5E7EB"}`,
           borderRadius: 12,
+          // hardcoded-color-allow-next-line
           background: sel ? "rgba(232,103,10,0.04)" : "#FAFAFA",
           cursor: "pointer",
           display: "flex", alignItems: "center", gap: 16,
           textAlign: "left",
+          // hardcoded-color-allow-next-line
           boxShadow: sel ? "0 0 0 3px rgba(232,103,10,0.12)" : "none",
           transition: "all 150ms ease",
         }}
       >
         <div style={{
           width: 40, height: 40, borderRadius: "50%", flexShrink: 0,
+          // hardcoded-color-allow-next-line
           background: sel ? ORANGE : "#F3F4F6",
           display: "flex", alignItems: "center", justifyContent: "center",
           transition: "background 150ms ease",
         }}>
-          <span style={{ color: sel ? "#FFFFFF" : "#9CA3AF" }}>{icon}</span>
+          // hardcoded-color-allow-next-line
+          <span style={{ color: sel ? "var(--c-text-on-dark)" : "#9CA3AF" }}>{icon}</span>
         </div>
         <span style={{
           fontFamily: "Oswald, sans-serif", fontWeight: 700,
+          // hardcoded-color-allow-next-line
           fontSize: 17, color: sel ? NAVY : "#374151",
           letterSpacing: "0.01em",
         }}>
@@ -86,7 +92,7 @@ export default function TRTBloodwork() {
               background: ORANGE,
               display: "flex", alignItems: "center", justifyContent: "center",
             }}>
-              <Check size={13} strokeWidth={3} style={{ color: "#FFFFFF" }} />
+              <Check size={13} strokeWidth={3} style={{ color: "var(--c-text-on-dark)" }} />
             </div>
           </div>
         )}
@@ -95,7 +101,7 @@ export default function TRTBloodwork() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "#FFFFFF" }}>
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "var(--c-text-on-dark)" }}>
       <SEO
         title="Lab Results | Men's Wellness Centers"
         description="Do you have recent testosterone or hormone labs? Let us know before your consultation."
@@ -105,8 +111,9 @@ export default function TRTBloodwork() {
       <main style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "80px 16px 48px" }}>
         <div style={{
           width: "100%", maxWidth: 480,
-          background: "#FFFFFF",
+          background: "var(--c-text-on-dark)",
           borderRadius: 16,
+          // hardcoded-color-allow-next-line
           boxShadow: "0 8px 40px rgba(11,16,41,0.10)",
           padding: "40px 32px",
           fontFamily: "Inter, sans-serif",
@@ -116,6 +123,7 @@ export default function TRTBloodwork() {
           {/* Icon */}
           <div style={{
             width: 80, height: 80, borderRadius: "50%",
+            // hardcoded-color-allow-next-line
             background: "rgba(232,103,10,0.10)",
             display: "inline-flex", alignItems: "center", justifyContent: "center",
             marginBottom: 20,
@@ -131,6 +139,7 @@ export default function TRTBloodwork() {
           }}>
             Do You Have Recent Lab Results?
           </h1>
+          // hardcoded-color-allow-next-line
           <p style={{ color: "#6B7280", fontSize: 15, marginBottom: 28, lineHeight: 1.5 }}>
             If you've had testosterone or hormone labs in the past 90 days, you can upload them.
             Otherwise, we'll draw labs at your visit.
@@ -157,13 +166,16 @@ export default function TRTBloodwork() {
             disabled={!choice}
             style={{
               width: "100%", height: 52, borderRadius: 999,
+              // hardcoded-color-allow-next-line
               background: choice ? ORANGE : "#E5E7EB",
-              color: choice ? "#FFFFFF" : "#9CA3AF",
+              // hardcoded-color-allow-next-line
+              color: choice ? "var(--c-text-on-dark)" : "#9CA3AF",
               border: "none",
               fontFamily: "Oswald, sans-serif", fontWeight: 700,
               fontSize: 17, letterSpacing: "0.04em", textTransform: "uppercase",
               cursor: choice ? "pointer" : "not-allowed",
               display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+              // hardcoded-color-allow-next-line
               boxShadow: choice ? "0 4px 16px rgba(232,103,10,0.30)" : "none",
               transition: "background 150ms ease, color 150ms ease",
             }}

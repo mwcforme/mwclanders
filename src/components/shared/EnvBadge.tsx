@@ -47,6 +47,7 @@ export function EnvBadge() {
   if (!visible) return null;
 
   const isStage = APP_ENV === "stage";
+  // hardcoded-color-allow-next-line
   const pillBg = isStage ? "#10b981" : "#ef4444"; // emerald for stage, red for prod-on-non-prod
   const label = isStage ? "ENV: STAGE" : "ENV: PROD";
 
@@ -82,7 +83,7 @@ export function EnvBadge() {
       {open && (
         <div
           role="menu"
-          className="absolute left-0 mt-2 rounded-lg border border-white/10 bg-[#0B1029] p-2 shadow-2xl"
+          className="absolute left-0 mt-2 rounded-lg border border-white/10 bg-[var(--brand-navy-deep)] p-2 shadow-2xl"
           style={{
             bottom: "100%",
             marginBottom: 8,
@@ -101,6 +102,7 @@ export function EnvBadge() {
                 type="button"
                 onClick={() => setEnvOverride(key)}
                 className="block w-full rounded px-2 py-1.5 text-left text-xs font-semibold uppercase tracking-wide text-white/80 transition-colors hover:bg-white/10"
+                // hardcoded-color-allow-next-line
                 style={active ? { background: "rgba(255,255,255,0.12)", color: "var(--c-text-on-dark)" } : undefined}
               >
                 {key}

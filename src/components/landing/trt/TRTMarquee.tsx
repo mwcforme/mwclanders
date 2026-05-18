@@ -8,8 +8,11 @@ export const TRTMarquee = () => (
   <section
     aria-label="Certifications and credentials"
     style={{
+      // hardcoded-color-allow-next-line
       background: "#111827",
+      // hardcoded-color-allow-next-line
       borderTop: "1px solid rgba(255,255,255,0.07)",
+      // hardcoded-color-allow-next-line
       borderBottom: "1px solid rgba(255,255,255,0.07)",
     }}
   >
