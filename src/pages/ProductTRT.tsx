@@ -955,7 +955,7 @@ const ProductTRT = () => {
             <p
               style={{
                 fontSize: 16,
-                color: "rgba(255,255,255,0.45)",
+                color: "rgba(255,255,255,0.55)",
                 marginBottom: 40,
                 lineHeight: 1.6,
               }}

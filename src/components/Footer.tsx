@@ -116,7 +116,7 @@ export const Footer = () => (
             <div key={loc.name} className="mb-3 md:mb-4">
               <FooterLink to={loc.to}>{loc.name}</FooterLink>
               {/* hardcoded-color-allow-next-line */}
-              <a href={`tel:${loc.tel}`} className="block text-[11px] -mt-1 hover:text-white/60 transition-colors cursor-pointer" style={{ color: "rgba(255,255,255,0.45)", textDecoration: "none" }}>{loc.phone}</a>
+              <a href={`tel:${loc.tel}`} className="block text-[11px] -mt-1 hover:text-white/60 transition-colors cursor-pointer" style={{ color: "rgba(255,255,255,0.55)", textDecoration: "none" }}>{loc.phone}</a>
             </div>
           ))}
           <FooterLink to="/locations">View All Locations &rarr;</FooterLink>
@@ -171,7 +171,7 @@ export const Footer = () => (
     <div className="border-t border-white/[0.06]">
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-5 flex flex-col md:flex-row justify-between items-center gap-2">
         {/* hardcoded-color-allow-next-line */}
-        <p className="text-[12px] md:text-[13px]" style={{ color: "rgba(255,255,255,0.45)" }}>
+        <p className="text-[12px] md:text-[13px]" style={{ color: "rgba(255,255,255,0.55)" }}>
           © 2026 Men's Wellness Centers. All rights reserved.
         </p>
         <div className="flex flex-wrap items-center justify-center gap-1 text-[12px] md:text-[13px]">

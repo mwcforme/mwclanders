@@ -74,7 +74,7 @@ export default function TRTBloodwork() {
           display: "flex", alignItems: "center", justifyContent: "center",
           transition: "background 150ms ease",
         }}>
-          <span style={{ color: sel ? "var(--c-text-on-dark)" : "#9CA3AF" }}>{icon}</span>
+          <span style={{ color: sel ? "var(--c-text-on-dark)" : "#6B7280" }}>{icon}</span>
         </div>
         <span style={{
           fontFamily: "Oswald, sans-serif", fontWeight: 700,

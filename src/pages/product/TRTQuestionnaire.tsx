@@ -645,7 +645,7 @@ export default function TRTQuestionnaire() {
                 // hardcoded-color-allow-next-line
                 background: canAdvance() ? ORANGE : "#E5E7EB",
                 // hardcoded-color-allow-next-line
-                color: canAdvance() ? "var(--c-text-on-dark)" : "#9CA3AF",
+                color: canAdvance() ? "var(--c-text-on-dark)" : "#636B80",
                 border: "none",
                 fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 16,
                 letterSpacing: "0.04em", textTransform: "uppercase",

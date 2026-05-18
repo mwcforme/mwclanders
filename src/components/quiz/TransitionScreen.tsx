@@ -117,7 +117,7 @@ export function TransitionScreen({
                 className="flex items-center gap-3 text-sm transition-opacity"
                 style={{
                   // hardcoded-color-allow-next-line
-                  color: done ? "var(--brand-cream)" : "rgba(245,240,235,0.45)",
+                  color: done ? "var(--brand-cream)" : "rgba(245,240,235,0.50)", /* was 0.45=4.06:1 FAIL → 0.50=4.80:1 PASS */
                   opacity: done ? 1 : 0.7,
                 }}
               >

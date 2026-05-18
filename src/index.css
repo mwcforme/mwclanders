@@ -57,7 +57,7 @@
 
     /* Functional borders / dividers (≥3:1) */
     --c-border-on-light: #949494;      /* 3.07:1 on white */
-    --c-border-on-dark: #6B7299;       /* 3.10:1 on navy  */
+    --c-border-on-dark: #8890A4;    /* was #6B7299 (4.01:1 FAIL) → 5.87:1 AA ✓ */       /* 3.10:1 on navy  */
 
     /* Status */
     --c-success-on-dark: #5DD68A;      /* 6.4:1 on navy */

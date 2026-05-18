@@ -384,7 +384,7 @@ const LpDirectory = () => {
             </table>
           </div>
 
-          <div className="text-center text-xs pt-8" style={{ color: "rgba(245,240,235,0.45)" }}>
+          <div className="text-center text-xs pt-8" style={{ color: "rgba(245,240,235,0.50)" }}> {/* was 0.45=4.06:1 FAIL → 0.50=4.80:1 PASS */}
             <Link to="/" className="inline-flex items-center gap-1" style={{ color: COLORS.orange }}><ChevronLeft size={14} /> Back to live site</Link>
           </div>
         </div>

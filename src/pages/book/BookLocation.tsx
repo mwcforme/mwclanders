@@ -106,7 +106,7 @@ const BookLocation = () => {
               />
             ))}
           </div>
-          <p style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", fontFamily: "Inter, sans-serif", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 24 }}>
+          <p style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", fontFamily: "Inter, sans-serif", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 24 }}>
             Step 1 of 2
           </p>
 
@@ -164,7 +164,7 @@ const BookLocation = () => {
                     size={18}
                     strokeWidth={2}
                     aria-hidden
-                    style={{ color: isSelected ? ORANGE : "rgba(255,255,255,0.45)", flexShrink: 0 }}
+                    style={{ color: isSelected ? ORANGE : "rgba(255,255,255,0.55)", flexShrink: 0 }}
                   />
 
                   {/* Text */}
@@ -172,7 +172,7 @@ const BookLocation = () => {
                     <div style={{ fontSize: 16, fontWeight: 700, lineHeight: 1.2 }}>
                       {opt.label}
                     </div>
-                    <div style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", fontWeight: 400, marginTop: 2 }}>
+                    <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", fontWeight: 400, marginTop: 2 }}>
                       {opt.address}
                     </div>
                   </div>

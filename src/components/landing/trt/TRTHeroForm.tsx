@@ -122,7 +122,7 @@ const FloatInput = ({
             position: "absolute", left: 14, top: "50%",
             transform: "translateY(-50%)",
             // hardcoded-color-allow-next-line
-            color: error ? ERR_RED : focused ? ORANGE : "rgba(11,16,41,0.35)",
+            color: error ? ERR_RED : focused ? ORANGE : "rgba(11,16,41,0.58)", /* was 0.35=2.29:1 FAIL → 0.58=4.61:1 PASS */
             transition: "color 150ms ease",
             pointerEvents: "none",
             display: "flex",
@@ -468,7 +468,7 @@ export const TRTHeroForm = ({
             </div>
             <span
               id="hf-tcpa-text"
-              style={{ fontSize: 11, color: "rgba(245,240,235,0.45)", lineHeight: 1.4 }}
+              style={{ fontSize: 11, color: "rgba(245,240,235,0.50)", lineHeight: 1.4 }} /* was 0.45=4.06:1 FAIL → 0.50=4.80:1 PASS */
             >
               I agree to receive SMS/calls & texts from Men&rsquo;s Wellness Centers. Msg & data rates may apply. Reply STOP to opt out.{" "}
               Not a condition of service. HIPAA Compliant.{" "}
