@@ -12,10 +12,10 @@ import { z } from "zod";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Loader2, MapPin, Check, Phone, User, AlertCircle, ArrowRight,
-  Star, Mail, ChevronRight,
+  Star, ChevronRight,
 } from "lucide-react";
 
-import { heroLeadSchema, emailField, type HeroLeadInput } from "@/domain/leads/leadFormSchema";
+import { heroLeadSchema, type HeroLeadInput } from "@/domain/leads/leadFormSchema";
 import { useLeadSubmitController } from "@/domain/leads/useLeadSubmitController";
 import { enterBookingFunnel } from "@/domain/booking/bookingEntry";
 import { capturePartialLead, markSessionSubmitted } from "@/lib/partialCapture";
@@ -54,7 +54,8 @@ const TRTFAQ = lazy(() =>
 
 // ─── Schema ───────────────────────────────────────────────────────────────────
 
-const croHeroLeadSchema = heroLeadSchema.extend({ email: emailField });
+// Email field removed per hard constraint — no email fields in any lead form
+const croHeroLeadSchema = heroLeadSchema;
 type CROHeroLeadInput = z.infer<typeof croHeroLeadSchema>;
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -219,7 +220,6 @@ const CROHeroForm = ({
 }: CROHeroFormProps = {}) => {
   const [name,     setName]     = useState("");
   const [phone,    setPhone]    = useState("");
-  const [email,    setEmail]    = useState("");
   const [location, setLocation] = useState<LocationKey | "">(() => getLocationFromUrl());
   const [tcpa,     setTcpa]     = useState(false);
   const [hovered,  setHovered]  = useState<LocationKey | null>(null);
@@ -228,7 +228,6 @@ const CROHeroForm = ({
 
   const nameRef     = useRef<HTMLInputElement>(null);
   const phoneRef    = useRef<HTMLInputElement>(null);
-  const emailRef    = useRef<HTMLInputElement>(null);
   const locationRef = useRef<HTMLDivElement>(null);
   const tcpaRef     = useRef<HTMLDivElement>(null);
 
@@ -240,7 +239,6 @@ const CROHeroForm = ({
       return {
         firstName: first || "Guest",
         lastName: rest.join(" ") || undefined,
-        email: v.email,
         phone: v.phone,
       };
     },
@@ -252,7 +250,6 @@ const CROHeroForm = ({
         identity: {
           firstName: first || "Guest",
           lastName: rest.join(" ") || undefined,
-          email: v.email,
           phone: v.phone,
           ghlContactId: result.contactId,
         },
@@ -271,11 +268,10 @@ const CROHeroForm = ({
     const mapped: Record<string, string> = {};
     for (const k of Object.keys(fe)) mapped[k] = fe[k];
     setErrors(mapped);
-    const order = ["name", "phone", "email", "location", "tcpa"];
+    const order = ["name", "phone", "location", "tcpa"];
     const first = order.find((k) => mapped[k]);
     if (first === "name")     nameRef.current?.focus();
     if (first === "phone")    phoneRef.current?.focus();
-    if (first === "email")    emailRef.current?.focus();
     if (first === "location") locationRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
     if (first === "tcpa")     tcpaRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
   }, [controller.fieldErrors]);
@@ -285,7 +281,7 @@ const CROHeroForm = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    void controller.submit({ name, phone, email, location: location as LocationKey, tcpa });
+    void controller.submit({ name, phone, location: location as LocationKey, tcpa });
   };
 
   return (
@@ -377,24 +373,8 @@ const CROHeroForm = ({
             icon={<Phone size={16} strokeWidth={1.75} />}
             onChange={(v) => { setPhone(formatPhone(v)); clearErr("phone"); }}
             onBlur={() => {
-              void capturePartialLead({ phone, name, email: email || undefined, location: location || undefined, source: `${source}-blur` });
+              void capturePartialLead({ phone, name, location: location || undefined, source: `${source}-blur` });
             }}
-          />
-
-          {/* Email */}
-          <FloatInput
-            id={`${formId}-email`}
-            label="Email"
-            type="email"
-            inputMode="email"
-            autoComplete="email"
-            placeholder="john@email.com"
-            value={email}
-            inputRef={emailRef}
-            error={errors.email}
-            ariaInvalid={!!errors.email}
-            icon={<Mail size={16} strokeWidth={1.75} />}
-            onChange={(v) => { setEmail(v); clearErr("email"); }}
           />
 
           {/* Location */}
