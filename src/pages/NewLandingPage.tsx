@@ -4,6 +4,8 @@ import { TRTHeader } from "@/components/landing/trt/TRTHeader";
 import { TRTHero } from "@/components/landing/trt/TRTHero";
 import { CredibilityBand } from "@/components/landing/trt/CredibilityBand";
 import { TRTManifesto } from "@/components/landing/trt/TRTManifesto";
+import { TRTThreeProblems } from "@/components/landing/trt/TRTThreeProblems";
+import { TRTEverythingIncluded } from "@/components/landing/trt/TRTEverythingIncluded";
 import { SectionReveal } from "@/components/landing/trt/SectionReveal";
 import { StickyMobileCTA } from "@/components/landing/trt/StickyMobileCTA";
 import { SEO } from "@/components/SEO";
@@ -45,12 +47,19 @@ const NewLandingPage = () => {
         <TRTHero />
         <SectionReveal><CredibilityBand /></SectionReveal>
 
+        {/* Three Problems. One Clinic. — service cards with lifestyle imagery */}
+        <TRTThreeProblems />
+
         <SectionReveal><TRTManifesto /></SectionReveal>
 
         {/* Below fold — lazy */}
         <Suspense fallback={<SectionSkeleton bg="var(--brand-cream)" height={480} />}>
           <SectionReveal><TRTHowItWorks /></SectionReveal>
         </Suspense>
+
+        {/* Everything's Included. No Surprises. — pricing clarity */}
+        <TRTEverythingIncluded />
+
         <Suspense fallback={<SectionSkeleton bg="var(--brand-cream)" height={400} />}>
           <SectionReveal><TRTResults /></SectionReveal>
         </Suspense>

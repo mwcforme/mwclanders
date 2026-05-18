@@ -4,16 +4,16 @@
 
 | Metric | Baseline | Final |
 |--------|----------|-------|
-| TypeScript errors | 0 | — |
-| Tests passing | 42 / 42 | — |
-| Test files | 3 | — |
-| Bundle size (dist/assets/) | 2.9 MB | — |
-| JS chunks | 66 | — |
-| Total LOC (src/) | 22015 | — |
-| `any` type occurrences | 0 (clean) | — |
-| Console.log in prod code | 8 | — |
-| Components > 200 LOC | 13 | — |
-| Largest file | ProductTRT.tsx (1754 lines) | — |
+| TypeScript errors | 0 | 0 |
+| Tests passing | 42 / 42 | 58 / 58 (+16) |
+| Test files | 3 | 4 (+1) |
+| Bundle size (dist/assets/) | 2.9 MB | 2.9 MB |
+| JS chunks | 66 | 66 |
+| Total LOC (src/) | 22015 | 22246 (+231 net, new files added) |
+| `any` type occurrences | 0 (clean) | 0 (clean) |
+| Console.log in prod code | 8 (all appropriate) | 8 (all appropriate) |
+| Components > 200 LOC | 13 | 8 (-5) |
+| Largest file | ProductTRT.tsx (1754 lines) | ProductTRT.tsx (883 lines, -50%) |
 
 ## Large Files (>200 LOC)
 1. src/pages/ProductTRT.tsx — 1754 lines
