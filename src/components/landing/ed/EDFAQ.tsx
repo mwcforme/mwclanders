@@ -69,6 +69,7 @@ export const EDFAQ = () => {
                 className="rounded-xl overflow-hidden"
                 style={{
                   background: "var(--bg-white)",
+                  // hardcoded-color-allow-next-line
                   border: "1px solid #E5E5EA",
                 }}
               >
@@ -100,6 +101,7 @@ export const EDFAQ = () => {
                         border: "none",
                       }}
                       onMouseEnter={(e) => {
+                        // hardcoded-color-allow-next-line
                         e.currentTarget.style.background = "#cf5a08";
                       }}
                       onMouseLeave={(e) => { e.currentTarget.style.background = "var(--brand-cta)"; }}

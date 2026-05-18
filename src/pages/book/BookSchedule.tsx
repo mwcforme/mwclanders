@@ -304,21 +304,22 @@ const BookSchedule = () => {
             style={{ maxWidth: 720 }}
           >
             <div style={{
-              background: "#161B3A",
-              border: "1px solid #2B3247",
+              background: "#FFFFFF",
+              border: "1px solid #E5E7EB",
               borderRadius: 10,
               padding: "12px 16px",
               display: "flex",
               alignItems: "center",
               gap: 10,
               fontFamily: "Inter, sans-serif",
+              boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
             }}>
               <MapPin size={15} strokeWidth={2} style={{ color: "var(--brand-cta)", flexShrink: 0 }} />
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: 13, fontWeight: 600, color: "var(--brand-cream)", lineHeight: 1.3 }}>
+                <div style={{ fontSize: 13, fontWeight: 700, color: "#0B1029", lineHeight: 1.3 }}>
                   {locationData.name.replace("Men's Wellness Centers, ", "")}
                 </div>
-                <div style={{ fontSize: 12, color: "rgba(255,255,255,0.60)", marginTop: 2, lineHeight: 1.3 }}>
+                <div style={{ fontSize: 12, color: "#6B7280", marginTop: 2, lineHeight: 1.3 }}>
                   {locationData.address} &middot; {locationData.cityStateZip}
                 </div>
               </div>

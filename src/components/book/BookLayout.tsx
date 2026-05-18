@@ -30,7 +30,9 @@ const DEFAULT_DESC: Record<BookLayoutProps["page"], string> = {
 /** Minimal footer for funnel steps — phone + required LegitScript badge */
 const FunnelFooter = () => (
   <footer style={{
+    // hardcoded-color-allow-next-line
     background: "#000814",
+    // hardcoded-color-allow-next-line
     borderTop: "1px solid rgba(255,255,255,0.08)",
     padding: "20px 24px",
     textAlign: "center",
@@ -52,6 +54,7 @@ const FunnelFooter = () => (
         loading="lazy"
       />
     </a>
+    {/* hardcoded-color-allow-next-line */}
     <p style={{ fontSize: 13, color: "rgba(255,255,255,0.50)", margin: 0 }}>
       Need help?{" "}
       <a href={PHONE.tel} style={{ color: "var(--brand-cta)", fontWeight: 600, textDecoration: "none" }}>

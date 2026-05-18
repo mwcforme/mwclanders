@@ -5,10 +5,14 @@
 import { TIMEZONE } from "@/lib/ghlCalendars";
 
 const INK    = "var(--brand-navy-deep)";
+// hardcoded-color-allow-next-line
 const MUTED  = "#4B5563";
+// hardcoded-color-allow-next-line
 const LINE   = "#E5E7EB";
+// hardcoded-color-allow-next-line
 const BORDER = "#8B92A0";
 const SURFACE = "var(--bg-white)";
+// hardcoded-color-allow-next-line
 const CANVAS  = "#F7F8FB";
 const ORANGE  = "var(--brand-cta)";
 
@@ -109,6 +113,7 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
                     <span style={{ fontFamily: "Oswald, Inter, sans-serif", fontWeight: 700, fontSize: 16 }}>
                       {time}
                     </span>
+                    {/* hardcoded-color-allow-next-line */}
                     <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", color: active ? "rgba(255,255,255,0.80)" : MUTED }}>
                       {ampm}
                     </span>

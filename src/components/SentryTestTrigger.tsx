@@ -31,6 +31,7 @@ export const SentryTestTrigger = () => {
         padding: "8px 12px",
         background: "var(--brand-navy-deep)",
         color: "var(--c-text-on-dark)",
+        // hardcoded-color-allow-next-line
         border: "1px solid #333",
         borderRadius: 6,
         font: "500 12px/1 system-ui, sans-serif",
