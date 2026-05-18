@@ -639,6 +639,31 @@ const CROHeader = () => (
   </header>
 );
 
+// ─── Rotating service words (home page treatment) ────────────────────────
+
+const ROTATING_SERVICES = ["TESTOSTERONE", "ED THERAPY", "WEIGHT LOSS", "MEN\u2019S HEALTH"];
+
+const RotatingService = () => {
+  const [index, setIndex] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setIndex((i) => (i + 1) % ROTATING_SERVICES.length), 2800);
+    return () => clearInterval(t);
+  }, []);
+  return (
+    <span style={{ display: "inline-block", position: "relative", whiteSpace: "nowrap" }}>
+      <span aria-hidden="true" style={{ visibility: "hidden", whiteSpace: "nowrap" }}>TESTOSTERONE</span>
+      {ROTATING_SERVICES.map((word, i) => (
+        <span key={word} aria-hidden={i !== index} style={{
+          position: "absolute", left: 0, top: 0, whiteSpace: "nowrap",
+          opacity: i === index ? 1 : 0,
+          transition: "opacity 300ms ease",
+          willChange: "opacity",
+        }}>{word}</span>
+      ))}
+    </span>
+  );
+};
+
 // ─── CROHeroSection ───────────────────────────────────────────────────────────
 
 const SYMPTOMS = [
@@ -707,7 +732,9 @@ const CROHeroSection = () => {
             }}
           >
             <span style={{ display: "block", whiteSpace: "nowrap" }}>VIRGINIA&rsquo;S CHOICE</span>
-            <span style={{ display: "block", color: "var(--brand-cta)", whiteSpace: "nowrap" }}>FOR MEN&rsquo;S HEALTH</span>
+            <span style={{ display: "block", color: "var(--brand-cta)" }}>
+              FOR <RotatingService />
+            </span>
           </h1>
 
           {/* hardcoded-color-allow-next-line */}
@@ -1184,9 +1211,9 @@ const CROOptimized = () => (
         <SectionReveal><TRTPillars /></SectionReveal>
       </Suspense>
 
-      {/* 10. TRTMarquee */}
+      {/* 10. TRTMarquee — no SectionReveal, always visible */}
       <Suspense fallback={<SectionSkeleton bg="#111827" height={160} />}>
-        <SectionReveal><TRTMarquee /></SectionReveal>
+        <TRTMarquee />
       </Suspense>
 
       {/* 11. TRTLocations */}
