@@ -22,6 +22,12 @@ export function RequireAdmin({ children }: Props) {
   const [state, setState] = useState<"loading" | "ok">("loading");
 
   useEffect(() => {
+    // Temporary shared-password bypass
+    if (sessionStorage.getItem("mwc_admin_bypass_v1") === "ok") {
+      setState("ok");
+      return;
+    }
+
     const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
       if (!session) {
         nav("/admin", { replace: true });

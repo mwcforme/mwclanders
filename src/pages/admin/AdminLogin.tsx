@@ -5,20 +5,38 @@ import { supabase } from "@/integrations/supabase/client";
 import { isAdminEmail } from "@/lib/admin/allowlist";
 import { Loader2 } from "lucide-react";
 
+const TEMP_BYPASS_KEY = "mwc_admin_bypass_v1";
+const TEMP_PASSWORD = "1Menshealth";
+
 export default function AdminLogin() {
   const nav = useNavigate();
   const [params] = useSearchParams();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [bypassPw, setBypassPw] = useState("");
+  const [showBypass, setShowBypass] = useState(false);
 
-  // If already signed in as an admin, skip the login screen.
+  // Check bypass session flag or real Supabase session.
   useEffect(() => {
+    if (sessionStorage.getItem(TEMP_BYPASS_KEY) === "ok") {
+      nav("/admin/overview", { replace: true });
+      return;
+    }
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session && isAdminEmail(session.user.email)) {
         nav("/admin/overview", { replace: true });
       }
     });
   }, [nav]);
+
+  const handleBypassLogin = () => {
+    if (bypassPw === TEMP_PASSWORD) {
+      sessionStorage.setItem(TEMP_BYPASS_KEY, "ok");
+      nav("/admin/overview", { replace: true });
+    } else {
+      setError("Incorrect password.");
+    }
+  };
 
   // Show forbidden message when redirected back from RequireAdmin.
   useEffect(() => {
@@ -101,7 +119,40 @@ export default function AdminLogin() {
           Sign in with Google
         </button>
 
-        <p className="mt-4 text-center text-xs text-white/40">
+        {/* Shared password bypass — temporary while OAuth is being configured */}
+        <div className="mt-5">
+          {!showBypass ? (
+            <button
+              type="button"
+              onClick={() => setShowBypass(true)}
+              className="w-full text-xs text-white/30 hover:text-white/50 transition-colors py-2"
+            >
+              Use shared access code
+            </button>
+          ) : (
+            <div className="flex gap-2">
+              <input
+                type="password"
+                placeholder="Access code"
+                value={bypassPw}
+                onChange={(e) => setBypassPw(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleBypassLogin()}
+                className="flex-1 h-10 rounded-md border border-white/10 bg-white/05 px-3 text-sm text-white placeholder:text-white/30 outline-none focus:border-orange-500/60"
+                style={{ background: "rgba(255,255,255,0.05)" }}
+                autoFocus
+              />
+              <button
+                type="button"
+                onClick={handleBypassLogin}
+                className="h-10 px-4 rounded-md bg-orange-600 text-white text-sm font-semibold hover:bg-orange-500 transition-colors"
+              >
+                Go
+              </button>
+            </div>
+          )}
+        </div>
+
+        <p className="mt-3 text-center text-xs text-white/30">
           Access restricted to authorized staff.
         </p>
       </div>
