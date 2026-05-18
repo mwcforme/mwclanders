@@ -238,7 +238,7 @@ const ProductTRT = () => {
               }}
             >
               <img
-                src="/images/trt-vial.svg"
+                src="/images/trt-vial.png"
                 alt="Men's Wellness Centers Testosterone Protocol"
                 className="hero-vial-float"
                 style={{ width: "100%", height: "100%", objectFit: "contain", minHeight: 480, padding: "32px" }}
