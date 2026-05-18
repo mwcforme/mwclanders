@@ -67,6 +67,11 @@ const GLOBAL_STYLES = `
     background: #f0f2f8 !important;
   }
 
+  /* Quiz answer grid — single-col on very small screens */
+  @media (max-width: 520px) {
+    .quiz-grid { grid-template-columns: 1fr !important; }
+  }
+
   /* Step connecting line — shown only on desktop */
   .steps-wrapper { position: relative; }
   .steps-connector {
@@ -220,6 +225,246 @@ const Eyebrow = ({
       {children}
     </p>
   );
+
+/* ─── TRT Quiz ─────────────────────────────────────────────────────────────── */
+
+const QUIZ_QUESTIONS: { q: string; options: string[] }[] = [
+  {
+    q: "Have you noticed a drop in your energy levels?",
+    options: ["Yes, significantly", "Somewhat", "Only occasionally", "No, not really"],
+  },
+  {
+    q: "Have you experienced changes in muscle mass or strength?",
+    options: ["Noticeable loss", "Some decline", "Hard to tell", "No changes"],
+  },
+  {
+    q: "How would you describe your current libido?",
+    options: ["Much lower than before", "Slightly decreased", "About the same", "No changes"],
+  },
+  {
+    q: "How is your sleep quality?",
+    options: [
+      "Poor - I struggle most nights",
+      "Fair - some good, some bad",
+      "Good - occasional issues",
+      "Great - no problems",
+    ],
+  },
+  {
+    q: "How often do you experience brain fog or difficulty concentrating?",
+    options: ["Daily", "A few times a week", "Occasionally", "Rarely or never"],
+  },
+];
+
+const TRTQuiz = ({ onNavigateSchedule }: { onNavigateSchedule: () => void }) => {
+  const [current, setCurrent] = useState<number>(0);
+  const [selected, setSelected] = useState<number | null>(null);
+  const [advancing, setAdvancing] = useState(false);
+
+  const total = QUIZ_QUESTIONS.length;
+  const isDone = current >= total;
+  const progress = isDone ? 100 : (current / total) * 100;
+
+  const handleAnswer = (idx: number) => {
+    if (advancing) return;
+    setSelected(idx);
+    setAdvancing(true);
+    setTimeout(() => {
+      setCurrent((c) => {
+        const next = c + 1;
+        return next;
+      });
+      setSelected(null);
+      setAdvancing(false);
+    }, 300);
+  };
+
+  const scrollToFaq = () => {
+    document.getElementById("faq")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  return (
+    <section style={{ background: "#FDF6F0", padding: "64px 24px" }}>
+      <div style={{ maxWidth: 720, margin: "0 auto" }}>
+        {/* Progress bar track */}
+        <div
+          style={{
+            height: 6,
+            background: "#E8D5C4",
+            borderRadius: 999,
+            width: 200,
+            margin: "0 auto 32px",
+            overflow: "hidden",
+          }}
+        >
+          <div
+            style={{
+              height: 6,
+              background: "#E8670A",
+              borderRadius: 999,
+              width: `${progress}%`,
+              transition: "width 300ms ease",
+            }}
+          />
+        </div>
+
+        {!isDone ? (
+          <>
+            {/* Question */}
+            <h2
+              style={{
+                fontFamily: "Inter, sans-serif",
+                fontWeight: 700,
+                fontSize: "clamp(22px, 3.5vw, 36px)",
+                color: "#1a1a2e",
+                textAlign: "center",
+                maxWidth: 600,
+                margin: "0 auto 32px",
+                lineHeight: 1.25,
+              }}
+            >
+              {QUIZ_QUESTIONS[current].q}
+            </h2>
+
+            {/* 2×2 answer grid */}
+            <div
+              className="quiz-grid"
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(2, 1fr)",
+                gap: 14,
+              }}
+            >
+              {QUIZ_QUESTIONS[current].options.map((opt, i) => {
+                const isSelected = selected === i;
+                return (
+                  <button
+                    key={opt}
+                    type="button"
+                    onClick={() => handleAnswer(i)}
+                    style={{
+                      background: isSelected ? "rgba(232,103,10,0.04)" : "#FFFFFF",
+                      border: `1.5px solid ${isSelected ? "#E8670A" : "#E8E8E8"}`,
+                      borderRadius: 16,
+                      padding: "20px 16px",
+                      textAlign: "center",
+                      fontSize: 15,
+                      fontWeight: 500,
+                      color: "#1a1a2e",
+                      cursor: advancing ? "default" : "pointer",
+                      minHeight: 64,
+                      fontFamily: "Inter, sans-serif",
+                      transition: "border-color 150ms ease, background 150ms ease",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      lineHeight: 1.4,
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isSelected && !advancing) {
+                        (e.currentTarget as HTMLButtonElement).style.borderColor = "#E8670A";
+                        (e.currentTarget as HTMLButtonElement).style.background = "rgba(232,103,10,0.04)";
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isSelected) {
+                        (e.currentTarget as HTMLButtonElement).style.borderColor = "#E8E8E8";
+                        (e.currentTarget as HTMLButtonElement).style.background = "#FFFFFF";
+                      }
+                    }}
+                  >
+                    {opt}
+                  </button>
+                );
+              })}
+            </div>
+          </>
+        ) : (
+          /* Completion screen */
+          <div style={{ textAlign: "center" }}>
+            {/* Orange divider line */}
+            <div
+              style={{
+                width: 80,
+                height: 2,
+                background: "#E8670A",
+                borderRadius: 999,
+                margin: "0 auto 32px",
+              }}
+            />
+            <h2
+              style={{
+                fontFamily: "Inter, sans-serif",
+                fontWeight: 700,
+                fontSize: "clamp(24px, 4vw, 38px)",
+                color: "#1a1a2e",
+                marginBottom: 20,
+              }}
+            >
+              We&apos;ve Got You Covered
+            </h2>
+            <p
+              style={{
+                fontSize: 16,
+                color: "#555",
+                lineHeight: 1.7,
+                maxWidth: 560,
+                margin: "0 auto 36px",
+              }}
+            >
+              Take the first step to your best self. Our licensed Virginia providers
+              will walk you through testosterone therapy, its benefits, address your
+              concerns, and provide you with a detailed treatment plan personalized
+              to you.
+            </p>
+            {/* Primary CTA */}
+            <button
+              type="button"
+              onClick={onNavigateSchedule}
+              style={{
+                background: "linear-gradient(135deg, #E8670A 0%, #F07820 100%)",
+                color: "#fff",
+                border: "none",
+                borderRadius: 999,
+                padding: "16px 28px",
+                fontSize: 16,
+                fontWeight: 700,
+                fontFamily: "Inter, sans-serif",
+                cursor: "pointer",
+                width: "100%",
+                maxWidth: 500,
+                display: "block",
+                margin: "0 auto 16px",
+                boxShadow: "0 6px 28px rgba(232,103,10,0.45)",
+                letterSpacing: "0.02em",
+              }}
+            >
+              I&apos;d Love To Get Started
+            </button>
+            {/* Secondary link */}
+            <button
+              type="button"
+              onClick={scrollToFaq}
+              style={{
+                background: "none",
+                border: "none",
+                color: "#1a1a2e",
+                fontSize: 14,
+                fontWeight: 500,
+                fontFamily: "Inter, sans-serif",
+                cursor: "pointer",
+                textDecoration: "underline",
+                padding: 0,
+              }}
+            >
+              I&apos;m Still Thinking About It
+            </button>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+};
 
 /* ─── FAQ data ──────────────────────────────────────────────────────────────── */
 
@@ -768,6 +1013,9 @@ const ProductTRT = () => {
             </p>
           </div>
         </section>
+
+        {/* ── 3.5 MINI QUIZ ────────────────────────────────────────────────── */}
+        <TRTQuiz onNavigateSchedule={goSchedule} />
 
         {/* ── 4. 3-STEP PROCESS ────────────────────────────────────────────── */}
         <section style={{ background: "#fff", padding: "80px 24px" }}>
@@ -1324,7 +1572,7 @@ const ProductTRT = () => {
         </section>
 
         {/* ── 8. FAQ ───────────────────────────────────────────────────────── */}
-        <section style={{ background: "#F4F6FA", padding: "80px 24px" }}>
+        <section id="faq" style={{ background: "#F4F6FA", padding: "80px 24px" }}>
           <div style={{ maxWidth: 820, margin: "0 auto" }}>
             <h2
               style={{
