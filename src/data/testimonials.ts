@@ -1,50 +1,98 @@
 /**
- * Landing-page testimonials.
- * Mixed-rating set (5★ + one 4★ with honest caveat) tests better
- * for perceived authenticity than a wall of pure 5.0s.
+ * Real verified Google reviews — sourced from Trustindex widget on menswellnesscenters.com.
+ * Profile photos loaded from Google's CDN (lh3.googleusercontent.com).
+ * All reviews are 5-star, verified by Trustindex as original Google reviews.
+ * Last updated: May 2026
+ *
+ * Selection criteria: specific outcomes mentioned, named providers, recent (within 7 days),
+ * differentiate from chain clinics, no generic filler phrases.
  */
 
-export type TestimonialSource = "google" | "verified_patient";
+export type TestimonialSource = "google";
 
 export interface Testimonial {
   name: string;
   city: string;
   monthYear: string;
-  rating: 4 | 5;
+  rating: 5;
   quote: string;
   source: TestimonialSource;
+  /** Google profile photo URL from lh3.googleusercontent.com — public CDN, reliable */
+  photoUrl?: string;
+  /** Platform where review was posted */
+  platform: "Google";
+  /** Relative time label from Trustindex */
+  relativeTime: string;
 }
 
 export const TESTIMONIALS: Testimonial[] = [
   {
-    name: "Mark B.",
-    city: "Richmond, VA",
-    monthYear: "Mar 2026",
+    name: "Jeremiah N.",
+    city: "Virginia",
+    monthYear: "May 2026",
     rating: 5,
-    source: "verified_patient",
+    source: "google",
+    platform: "Google",
+    relativeTime: "1 day ago",
+    photoUrl:
+      "https://lh3.googleusercontent.com/a/ACg8ocIXWOuLtodaCLb6b8qKM4ASsrTHe0vBT8VsjVBaKKhg60qo7g=w80-h80-c-rp-mo-br100",
     quote:
-      "Six months on TRT and the difference is night and day. Energy is up, mood is stable, and I'm sleeping through the night for the first time in years.",
+      "10/10. I was able to make a same-day appointment online. Reception was friendly and made for a comfortable setting. I was promptly called back at the prescribed time and had my vitals and blood work taken. Dr. Papariello listened to my concerns, addressed the underlying issues, and discussed options before we came to a very acceptable conclusion. Take back your health — don't suffer in silence.",
   },
   {
-    name: "David K.",
-    city: "Norfolk, VA",
-    monthYear: "Oct 2025",
+    name: "Clarke M.",
+    city: "Virginia",
+    monthYear: "May 2026",
     rating: 5,
-    source: "verified_patient",
+    source: "google",
+    platform: "Google",
+    relativeTime: "5 days ago",
+    photoUrl:
+      "https://lh3.googleusercontent.com/a/ACg8ocJ7abOwzDd2NUVrtPpWct5U-fTyx139sPIyjlw1uh3LVItVUg=w80-h80-c-rp-mo-br100",
     quote:
-      "I was hesitant about hormone therapy but the doctor laid everything out honestly. No pressure, just facts. Three months in and I wish I'd started sooner.",
+      "Have been going for about 6 months now and feel way better — energy throughout the day, better workouts, better sleep. Meredith is very knowledgeable and helpful.",
   },
   {
-    name: "Steve P.",
-    city: "Chesapeake, VA",
-    monthYear: "Nov 2025",
+    name: "Bobby M.",
+    city: "Virginia",
+    monthYear: "May 2026",
     rating: 5,
-    source: "verified_patient",
+    source: "google",
+    platform: "Google",
+    relativeTime: "2 days ago",
+    photoUrl:
+      "https://lh3.googleusercontent.com/a/ACg8ocL8NOWXCAi7d1Jbw0uqehn2zNTvhA8v0cOEBabJtM5r8s9ddA=w80-h80-c-rp-mo-br100",
     quote:
-      "Two GP visits, same results both times. 'Everything\'s in range.' Came here on a friend's recommendation. The provider actually walked me through every number. Turns out range isn't the same as the right level. Night and day difference in how I feel now.",
+      "Excellent service and I'm always greeted by name, which makes me feel like it's a personal visit — not a doctor's office.",
+  },
+  {
+    name: "Floyd K.",
+    city: "Virginia",
+    monthYear: "May 2026",
+    rating: 5,
+    source: "google",
+    platform: "Google",
+    relativeTime: "5 days ago",
+    photoUrl:
+      "https://lh3.googleusercontent.com/a-/ALV-UjVZ-7BAy_Lq-9Z_IVb5EDn1xh2YRPgN4nF2jYgTY4mKFlUYW8hJ4Q=w80-h80-c-rp-mo-br100",
+    quote:
+      "There is a fantastic consistency that always works. Mel welcomes me and Charlene has my visit done before I knew I was even there. Truly, everybody here is a pleasure to deal with.",
+  },
+  {
+    name: "Jared C.",
+    city: "Virginia",
+    monthYear: "May 2026",
+    rating: 5,
+    source: "google",
+    platform: "Google",
+    relativeTime: "3 days ago",
+    photoUrl:
+      "https://lh3.googleusercontent.com/a-/ALV-UjUDZ-kjhld5Ar0gs7jvWzWDMlbYFwPLjyI8EyTLSxNy8rAiLqY-=w80-h80-c-rp-mo-br100",
+    quote:
+      "Very streamlined. People that actually listen and care about getting you healthy. They focus on symptoms, not just numbers, and getting you to a point where you feel your best. Ryan was easy to talk to and I'm excited to start.",
   },
 ];
 
-/** Public Google Business Profile reviews URL — verify before launch. */
+/** Google Business Profile — link to leave a review or read all 191 reviews */
 export const GBP_REVIEWS_URL =
   "https://www.google.com/maps/search/?api=1&query=Men%27s+Wellness+Centers+Glen+Allen+VA";
