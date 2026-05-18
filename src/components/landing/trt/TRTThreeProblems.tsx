@@ -46,6 +46,7 @@ const SERVICES = [
 
 interface TRTThreeProblemsProps {
   onCta?: () => void;
+  headlineOverride?: { line1: string; line2?: string };
 }
 
 export const TRTThreeProblems = ({ onCta }: TRTThreeProblemsProps = {}) => {
@@ -77,9 +78,20 @@ export const TRTThreeProblems = ({ onCta }: TRTThreeProblemsProps = {}) => {
               lineHeight: 1.1,
             }}
           >
-            THREE PROBLEMS.
-            <br />
-            <span style={{ color: "var(--brand-cta)" }}>ONE CLINIC.</span>
+            {headlineOverride ? (
+              <>
+                {headlineOverride.line1}
+                {headlineOverride.line2 && (
+                  <><br /><span style={{ color: "var(--brand-cta)" }}>{headlineOverride.line2}</span></>
+                )}
+              </>
+            ) : (
+              <>
+                THREE PROBLEMS.
+                <br />
+                <span style={{ color: "var(--brand-cta)" }}>ONE CLINIC.</span>
+              </>
+            )}
           </h2>
           <p
             className="mt-4 max-w-[560px] mx-auto"

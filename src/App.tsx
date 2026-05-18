@@ -16,6 +16,9 @@ import { BookingRouteGuard } from "./domain/booking/bookingRouteGuard";
 import NewLandingPage from "./pages/NewLandingPage";
 
 // ─── LAZY: everything else splits into separate chunks automatically ────────
+// CRO-optimized LP — paid media, no nav
+const CROOptimized    = lazy(() => import("./pages/CROOptimized"));
+
 // WL + ED — secondary LPs, load on route match
 const NewWeightLoss   = lazy(() => import("./pages/NewWeightLoss"));
 const NewED           = lazy(() => import("./pages/NewED"));
@@ -162,6 +165,9 @@ const App = () => (
               <Routes>
                 {/* ── Primary TRT LP — eager, zero delay ── */}
                 <Route path="/" element={<NewLandingPage />} />
+
+                {/* ── CRO LP ── */}
+                <Route path="/cro-op" element={<CROOptimized />} />
 
                 {/* ── Secondary LPs ── */}
                 <Route path="/trt" element={<TRTLandingPage />} />

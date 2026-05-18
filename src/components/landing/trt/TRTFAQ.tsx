@@ -1,9 +1,14 @@
 import { useState, useRef } from "react";
 import { ChevronDown } from "lucide-react";
-import { TRT_FAQS } from "@/data/faqs";
+import { TRT_FAQS, type FaqItem } from "@/data/faqs";
 import { COPY } from "@/data/copy";
 
-export const TRTFAQ = () => {
+interface TRTFAQProps {
+  extraFaqs?: FaqItem[];
+}
+
+export const TRTFAQ = ({ extraFaqs }: TRTFAQProps = {}) => {
+  const faqs = extraFaqs ? [...TRT_FAQS, ...extraFaqs] : TRT_FAQS;
   const [open, setOpen] = useState<number | null>(0);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -37,7 +42,7 @@ export const TRTFAQ = () => {
         </h2>
 
         <div className="mt-10 space-y-3">
-          {TRT_FAQS.map((f, i) => {
+          {faqs.map((f, i) => {
             const isOpen = open === i;
             const panelId = `faq-panel-${i}`;
             return (
