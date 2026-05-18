@@ -139,7 +139,7 @@ const DayStrip = ({
       {/* ── Day pills ────────────────────────────────────────────────────── */}
       <div className="px-5 md:px-7 py-5" style={{ position: "relative" }}>
         {loading && (
-          {/* hardcoded-color-allow-next-line */}
+          // hardcoded-color-allow-next-line
           <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(255,255,255,0.7)", zIndex: 1 }}>
             <Loader2 size={22} className="animate-spin" color={INK} />
           </div>
