@@ -4,7 +4,6 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 import { sentryVitePlugin } from "@sentry/vite-plugin";
 import { compression } from "vite-plugin-compression2";
-// @ts-expect-error - .mjs file, no declaration needed
 // vitePluginCheckHardcodedColors removed — caused JSX text-node leaks when comments were injected into components
 
 // https://vitejs.dev/config/
