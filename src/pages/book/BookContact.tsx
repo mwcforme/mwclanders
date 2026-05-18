@@ -127,9 +127,7 @@ const BookContact = () => {
     width: "100%",
     height: 54,
     borderRadius: 10,
-    // hardcoded-color-allow-next-line
     border: `2px solid #3A4258`,
-    // hardcoded-color-allow-next-line
     background: "rgba(255,255,255,0.06)",
     color: "var(--c-text-on-dark)",
     fontSize: 17,
@@ -150,12 +148,10 @@ const BookContact = () => {
               <div
                 key={i}
                 className="flex-1"
-                // hardcoded-color-allow-next-line
                 style={{ height: 3, borderRadius: 2, background: i === 0 ? ORANGE : "rgba(255,255,255,0.15)" }}
               />
             ))}
           </div>
-          // hardcoded-color-allow-next-line
           <p style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", fontFamily: "Inter, sans-serif", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 24 }}>
             Step 1 of 3
           </p>
@@ -164,7 +160,6 @@ const BookContact = () => {
           <h1 style={{ fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: "clamp(22px, 4vw, 30px)", color: "var(--c-text-on-dark)", marginBottom: 8, lineHeight: 1.2 }}>
             Let's get you set up.
           </h1>
-          // hardcoded-color-allow-next-line
           <p style={{ fontFamily: "Inter, sans-serif", fontSize: 15, color: "rgba(255,255,255,0.60)", marginBottom: 32, lineHeight: 1.5 }}>
             We'll text you a reminder before your visit.
           </p>
@@ -174,7 +169,6 @@ const BookContact = () => {
             <div>
               <label
                 htmlFor="firstName"
-                // hardcoded-color-allow-next-line
                 style={{ display: "block", fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,0.80)", fontFamily: "Inter, sans-serif", marginBottom: 6, letterSpacing: "0.03em" }}
               >
                 First Name
@@ -187,9 +181,7 @@ const BookContact = () => {
                 value={firstName}
                 onChange={(e) => { setFirstName(e.target.value); clearError("firstName"); }}
                 onFocus={(e) => (e.currentTarget.style.borderColor = ORANGE)}
-                // hardcoded-color-allow-next-line
                 onBlur={(e) => (e.currentTarget.style.borderColor = errors.firstName ? ERROR_RED : "#3A4258")}
-                // hardcoded-color-allow-next-line
                 style={{ ...inp, borderColor: errors.firstName ? ERROR_RED : "#3A4258" }}
                 aria-invalid={!!errors.firstName}
                 aria-describedby={errors.firstName ? "firstName-error" : undefined}
@@ -203,7 +195,6 @@ const BookContact = () => {
             <div>
               <label
                 htmlFor="phone"
-                // hardcoded-color-allow-next-line
                 style={{ display: "block", fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,0.80)", fontFamily: "Inter, sans-serif", marginBottom: 6, letterSpacing: "0.03em" }}
               >
                 Phone Number
@@ -218,9 +209,7 @@ const BookContact = () => {
                 value={phone}
                 onChange={(e) => { setPhone(formatPhone(e.target.value)); clearError("phone"); }}
                 onFocus={(e) => (e.currentTarget.style.borderColor = ORANGE)}
-                // hardcoded-color-allow-next-line
                 onBlur={(e) => (e.currentTarget.style.borderColor = errors.phone ? ERROR_RED : "#3A4258")}
-                // hardcoded-color-allow-next-line
                 style={{ ...inp, borderColor: errors.phone ? ERROR_RED : "#3A4258" }}
                 aria-invalid={!!errors.phone}
                 aria-describedby={errors.phone ? "phone-error" : undefined}
@@ -240,7 +229,6 @@ const BookContact = () => {
                 onChange={(e) => { setSmsConsent(e.target.checked); clearError("smsConsent"); }}
                 style={{ marginTop: 3, accentColor: ORANGE, width: 18, height: 18, flexShrink: 0 }}
               />
-              // hardcoded-color-allow-next-line
               <span style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: "rgba(255,255,255,0.55)", lineHeight: 1.5 }}>
                 I agree to receive appointment reminders and health updates via text. Message &amp; data rates may apply. Reply STOP to opt out.
               </span>
@@ -277,10 +265,8 @@ const BookContact = () => {
             </button>
           </form>
 
-          // hardcoded-color-allow-next-line
           <p style={{ textAlign: "center", marginTop: 20, fontFamily: "Inter, sans-serif", fontSize: 13, color: "rgba(255,255,255,0.35)" }}>
             Need help?{" "}
-            // hardcoded-color-allow-next-line
             <a href={PHONE.tel} style={{ color: "rgba(255,255,255,0.55)", textDecoration: "underline" }}>
               {PHONE.display}
             </a>

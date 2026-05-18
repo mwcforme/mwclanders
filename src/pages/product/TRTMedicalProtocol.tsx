@@ -117,7 +117,6 @@ export default function TRTMedicalProtocol() {
           }}>
             Your Consultation is Being Prepared
           </h1>
-          // hardcoded-color-allow-next-line
           <p style={{ textAlign: "center", color: "#6B7280", fontSize: 15, marginBottom: 28 }}>
             One of our Virginia providers is reviewing your request.
           </p>
@@ -130,7 +129,6 @@ export default function TRTMedicalProtocol() {
             textAlign: "center",
             marginBottom: 28,
           }}>
-            // hardcoded-color-allow-next-line
             <p style={{ color: "rgba(255,255,255,0.55)", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8 }}>
               Reservation expires in
             </p>
@@ -177,7 +175,6 @@ export default function TRTMedicalProtocol() {
               <p style={{ fontWeight: 700, color: NAVY, fontSize: 15, marginBottom: 3 }}>
                 Dr. Douglas Christianson, NMD
               </p>
-              // hardcoded-color-allow-next-line
               <p style={{ color: "#6B7280", fontSize: 13 }}>
                 Licensed Virginia Provider · Men's Health Specialist
               </p>
@@ -267,7 +264,6 @@ export default function TRTMedicalProtocol() {
             Complete Medical Intake <ArrowRight size={18} strokeWidth={2.5} />
           </button>
 
-          // hardcoded-color-allow-next-line
           <p style={{ textAlign: "center", fontSize: 12, color: "#9CA3AF", marginTop: 14 }}>
             No obligation. Cancel anytime.
           </p>

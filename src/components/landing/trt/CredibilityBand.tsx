@@ -27,7 +27,6 @@ export const CredibilityBand = () => {
   };
 
   return (
-    // hardcoded-color-allow-next-line
     <section style={{ background: "#0A1628" }}>
       {/*
         2-col grid on mobile (2×2), 4-col on md+.

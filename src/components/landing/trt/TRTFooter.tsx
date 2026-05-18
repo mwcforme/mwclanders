@@ -19,7 +19,6 @@ export const TRTFooter = () => {
   );
 
   const li = (content: React.ReactNode) => (
-    // hardcoded-color-allow-next-line
     <li style={{ marginBottom: 14, fontSize: 14, color: "rgba(255,255,255,0.75)" }}>
       {content}
     </li>
@@ -175,7 +174,6 @@ export const TRTFooter = () => {
             "Men's Wellness Centers provides care through in-center visits at its Virginia locations and telehealth consultations. Medical services are provided following an individualized evaluation and are rendered by licensed medical professionals exercising independent clinical judgment. All ED care and men's health services at Men's Wellness Centers are provided by licensed medical professionals exercising independent clinical judgment following individualized patient evaluations. Care protocols are selected based on each patient's health profile, lab results, and medical history. Men's Wellness Centers makes no representations, guarantees, or warranties regarding outcomes, effectiveness, or suitability of any ED care for any individual. Individual results and responses vary.",
             "Testimonials and reviews on this website reflect individual experiences only and are not intended to represent typical outcomes. Testimonials are not intended to make medical claims or to suggest that any service provided by Men's Wellness Centers diagnoses, treats, cures, mitigates, or prevents any disease or medical condition.",
           ].map((text, i) => (
-            // hardcoded-color-allow-next-line
             <p key={i} style={{ fontSize: 12, lineHeight: 1.65, color: "rgba(255,255,255,0.50)", margin: 0, overflowWrap: "break-word", wordBreak: "break-word", maxWidth: "100%" }}>
               {text}
             </p>

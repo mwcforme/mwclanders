@@ -128,16 +128,13 @@ const InlineEmailCapture = ({ recap, contactId, onComplete }: InlineEmailProps) 
             transition: "border-color 150ms ease",
           }}
           onFocus={(e) => (e.currentTarget.style.borderColor = "var(--brand-cta)")}
-          // hardcoded-color-allow-next-line
           onBlur={(e) => (e.currentTarget.style.borderColor = error ? "#FF6B7A" : "#2B3247")}
         />
         {error && (
-          // hardcoded-color-allow-next-line
           <p style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 12, color: "#FF6B7A", marginTop: 5, fontFamily: "Inter, sans-serif" }}>
             <AlertCircle size={12} strokeWidth={2} /> {error}
           </p>
         )}
-        // hardcoded-color-allow-next-line
         <p style={{ fontSize: 13, color: "rgba(245,243,240,0.65)", lineHeight: 1.5, marginTop: 10, fontFamily: "Inter, sans-serif" }}>
           A licensed Virginia provider is reserving this hour for you. We'll text and email your confirmation.
         </p>
@@ -175,7 +172,6 @@ const NoAvailFallback = ({ onChangeCenter }: { onChangeCenter: () => void }) => 
     <p style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 13, letterSpacing: "0.5px", color: "var(--brand-cream)", textTransform: "uppercase", marginBottom: 8 }}>
       No times for this day
     </p>
-    // hardcoded-color-allow-next-line
     <p style={{ fontSize: 13, color: "#767676", marginBottom: 12 }}>
       Try a different date or another Men's Wellness Centers location.
     </p>
@@ -333,11 +329,9 @@ const BookSchedule = () => {
             }}>
               <MapPin size={15} strokeWidth={2} style={{ color: "var(--brand-cta)", flexShrink: 0 }} />
               <div style={{ flex: 1, minWidth: 0 }}>
-                // hardcoded-color-allow-next-line
                 <div style={{ fontSize: 13, fontWeight: 700, color: "#0B1029", lineHeight: 1.3 }}>
                   {locationData.name.replace("Men's Wellness Centers, ", "")}
                 </div>
-                // hardcoded-color-allow-next-line
                 <div style={{ fontSize: 12, color: "#6B7280", marginTop: 2, lineHeight: 1.3 }}>
                   {locationData.address} &middot; {locationData.cityStateZip}
                 </div>
@@ -368,7 +362,6 @@ const BookSchedule = () => {
           }}>
             {heading}
           </h1>
-          // hardcoded-color-allow-next-line
           <p style={{ fontFamily: "Inter, sans-serif", fontSize: 15, color: "rgba(255,255,255,0.70)", margin: 0 }}>
             {locationData ? locationData.name.replace("Men's Wellness Centers, ", "") : ""} · Licensed provider, same-day labs
           </p>
@@ -379,7 +372,6 @@ const BookSchedule = () => {
           <div className="mx-auto w-full text-center" style={{ maxWidth: 720 }}>
             <div
               className="inline-flex items-center gap-2.5 rounded-full px-4 py-2"
-              // hardcoded-color-allow-next-line
               style={{ background: "rgba(232,103,10,0.12)", border: "1px solid rgba(232,103,10,0.30)" }}
             >
               <Clock size={14} style={{ color: "var(--brand-cta)", flexShrink: 0 }} />
@@ -412,9 +404,7 @@ const BookSchedule = () => {
             </BookingErrorBoundary>
           ) : (
             /* No location set — show center picker inline */
-            // hardcoded-color-allow-next-line
             <div style={{ background: "#161B3A", border: "1px solid #2B3247", borderRadius: 12, padding: 20, fontFamily: "Inter, sans-serif" }}>
-              // hardcoded-color-allow-next-line
               <div style={{ fontSize: 13, color: "rgba(255,255,255,0.55)", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: 700, marginBottom: 12 }}>
                 Choose your center
               </div>

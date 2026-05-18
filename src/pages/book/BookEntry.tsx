@@ -93,11 +93,9 @@ const BookEntry = () => {
         }}
       />
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-      // hardcoded-color-allow-next-line
       <p style={{ color: "rgba(255,255,255,0.60)", fontSize: 14 }}>
         Setting up your visit…
       </p>
-      // hardcoded-color-allow-next-line
       <p style={{ color: "rgba(255,255,255,0.35)", fontSize: 12 }}>
         Having trouble?{" "}
         <a href={PHONE.tel} style={{ color: "var(--brand-cta)", textDecoration: "none" }}>

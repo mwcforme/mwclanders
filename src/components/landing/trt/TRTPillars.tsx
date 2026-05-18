@@ -104,7 +104,6 @@ export const TRTPillars = () => (
             </h3>
             <p
               className="text-sm px-5 pb-6 mt-2 leading-relaxed"
-              // hardcoded-color-allow-next-line
               style={{ color: "rgba(255,255,255,0.85)", fontFamily: "Inter, sans-serif" }}
             >
               {p.desc}
@@ -161,7 +160,6 @@ export const TRTPillars = () => (
             </h3>
             <p
               className="text-xs px-4 pb-5 mt-1.5 leading-relaxed"
-              // hardcoded-color-allow-next-line
               style={{ color: "rgba(255,255,255,0.85)", fontFamily: "Inter, sans-serif" }}
             >
               {p.desc}

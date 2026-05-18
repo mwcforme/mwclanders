@@ -7,7 +7,6 @@ const fireConfetti = async () => {
   confetti({
     particleCount: 120, spread: 80, startVelocity: 44, gravity: 1.0, decay: 0.91,
     ticks: 220, origin: { x: 0.5, y: 0.15 },
-    // hardcoded-color-allow-next-line
     colors: ["var(--brand-cta)", "#F97316", "#FCD9B4", "var(--c-text-on-dark)", "var(--brand-navy-deep)"],
     disableForReducedMotion: true, scalar: 1.0,
   });
@@ -130,7 +129,6 @@ const BookedCelebrationCard = ({ firstName, apptTime, apptIso, locationCity, loc
             <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
               <path
                 d="M5 12.5L10 17.5L19 7.5"
-                // hardcoded-color-allow-next-line
                 stroke="#22C55E"
                 strokeWidth="2.5"
                 strokeLinecap="round"

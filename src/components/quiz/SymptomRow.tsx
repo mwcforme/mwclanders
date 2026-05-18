@@ -43,7 +43,6 @@ export function SymptomRow({ label, value, disabled, showError, autoFocus, onCha
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-6">
         <span
           className="text-[15px] md:text-base font-medium"
-          // hardcoded-color-allow-next-line
           style={{ color: "rgba(245,240,235,0.95)" }}
         >
           {label}

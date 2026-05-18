@@ -92,7 +92,6 @@ const SurveyCard = ({
                 <div
                   key={i}
                   className="flex-1 relative overflow-hidden"
-                  // hardcoded-color-allow-next-line
                   style={{ height: 8, borderRadius: 4, background: "#E5E7EB" }}
                 >
                   <div

@@ -61,7 +61,6 @@ export function StepSafety({ selected, onChange, onSubmit }: StepSafetyProps) {
         </span>
         <span
           className="text-[15px] md:text-base font-medium leading-snug"
-          // hardcoded-color-allow-next-line
           style={{ color: "rgba(245,240,235,0.95)" }}
         >
           {label}

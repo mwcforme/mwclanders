@@ -85,7 +85,6 @@ export default function TRTIdentityVerification() {
           }}>
             Verify Your Identity
           </h1>
-          // hardcoded-color-allow-next-line
           <p style={{ color: "#6B7280", fontSize: 15, marginBottom: 28, lineHeight: 1.5 }}>
             Uploading your ID helps your provider prepare for your visit. This step is optional.
           </p>
@@ -116,7 +115,6 @@ export default function TRTIdentityVerification() {
               style={{ display: "none" }}
               aria-label="Upload ID document"
             />
-            // hardcoded-color-allow-next-line
             <div style={{ marginBottom: 12, color: dragOver ? ORANGE : "#9CA3AF" }}>
               <Upload size={40} strokeWidth={1.5} />
             </div>
@@ -127,7 +125,6 @@ export default function TRTIdentityVerification() {
                 <p style={{ fontWeight: 700, color: NAVY, fontSize: 15, marginBottom: 4 }}>
                   Drag &amp; drop your ID here
                 </p>
-                // hardcoded-color-allow-next-line
                 <p style={{ color: "#9CA3AF", fontSize: 13 }}>or click to browse</p>
               </>
             )}

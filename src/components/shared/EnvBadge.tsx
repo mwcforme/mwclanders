@@ -102,7 +102,6 @@ export function EnvBadge() {
                 type="button"
                 onClick={() => setEnvOverride(key)}
                 className="block w-full rounded px-2 py-1.5 text-left text-xs font-semibold uppercase tracking-wide text-white/80 transition-colors hover:bg-white/10"
-                // hardcoded-color-allow-next-line
                 style={active ? { background: "rgba(255,255,255,0.12)", color: "var(--c-text-on-dark)" } : undefined}
               >
                 {key}

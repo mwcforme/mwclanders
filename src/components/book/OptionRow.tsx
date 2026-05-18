@@ -42,7 +42,6 @@ const OptionRow = ({ icon: Icon, label, selected, onClick }: OptionRowProps) => 
   >
     <span
       aria-hidden="true"
-      // hardcoded-color-allow-next-line
       className="flex items-center justify-center flex-shrink-0 w-11 h-11 md:w-12 md:h-12 transition-colors group-hover:bg-[#FFEDDD]"
       style={{
         borderRadius: 10,

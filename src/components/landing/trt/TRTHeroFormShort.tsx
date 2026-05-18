@@ -113,7 +113,6 @@ export const TRTHeroFormShort = ({
     width: "100%",
     height: 52,
     background: "var(--bg-white)",
-    // hardcoded-color-allow-next-line
     border: `1px solid ${errors[field] ? ERROR_RED : focused === field ? "var(--brand-accent)" : "rgba(0,0,0,0.15)"}`,
     borderRadius: 8,
     padding: "0 16px",

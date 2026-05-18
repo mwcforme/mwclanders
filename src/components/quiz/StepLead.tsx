@@ -88,9 +88,7 @@ export function StepLead({
   const inputBase = (field: string): React.CSSProperties => ({
     width: "100%",
     height: 52,
-    // hardcoded-color-allow-next-line
     background: "rgba(11,16,41,0.55)",
-    // hardcoded-color-allow-next-line
     border: `1.5px solid ${focused === field ? "var(--brand-cta)" : "rgba(245,240,235,0.32)"}`,
     borderRadius: 10,
     padding: "0 16px",
@@ -152,7 +150,6 @@ export function StepLead({
         </h1>
         <p
           className="mt-4 text-base md:text-lg max-w-[600px]"
-          // hardcoded-color-allow-next-line
           style={{ color: "rgba(245,240,235,0.85)" }}
         >
           Enter my details to confirm eligibility and view my results securely.{" "}
@@ -227,7 +224,6 @@ export function StepLead({
           <ChevronDown
             size={18}
             className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2"
-            // hardcoded-color-allow-next-line
             style={{ color: "rgba(245,240,235,0.75)" }}
           />
           {errors.state ? (
@@ -237,7 +233,6 @@ export function StepLead({
 
         <label
           className="flex items-start gap-3 text-xs md:text-sm leading-relaxed select-none pt-2"
-          // hardcoded-color-allow-next-line
           style={{ color: "rgba(245,240,235,0.85)" }}
         >
           <input

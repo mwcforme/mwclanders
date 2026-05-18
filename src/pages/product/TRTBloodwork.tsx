@@ -74,7 +74,6 @@ export default function TRTBloodwork() {
           display: "flex", alignItems: "center", justifyContent: "center",
           transition: "background 150ms ease",
         }}>
-          // hardcoded-color-allow-next-line
           <span style={{ color: sel ? "var(--c-text-on-dark)" : "#9CA3AF" }}>{icon}</span>
         </div>
         <span style={{
@@ -139,7 +138,6 @@ export default function TRTBloodwork() {
           }}>
             Do You Have Recent Lab Results?
           </h1>
-          // hardcoded-color-allow-next-line
           <p style={{ color: "#6B7280", fontSize: 15, marginBottom: 28, lineHeight: 1.5 }}>
             If you've had testosterone or hormone labs in the past 90 days, you can upload them.
             Otherwise, we'll draw labs at your visit.

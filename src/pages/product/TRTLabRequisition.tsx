@@ -54,7 +54,6 @@ export default function TRTLabRequisition() {
           }}>
             Lab Requisition Ready
           </h1>
-          // hardcoded-color-allow-next-line
           <p style={{ color: "#6B7280", fontSize: 15, marginBottom: 24, lineHeight: 1.5 }}>
             Your provider has prepared a lab requisition. Visit any LabCorp or Quest Diagnostics
             location near you.
@@ -71,10 +70,8 @@ export default function TRTLabRequisition() {
             marginBottom: 24,
             textAlign: "left",
           }}>
-            // hardcoded-color-allow-next-line
             <p style={{ fontSize: 13, color: "#92400E", fontWeight: 600, lineHeight: 1.6 }}>
               Your requisition includes:{" "}
-              // hardcoded-color-allow-next-line
               <span style={{ fontWeight: 400, color: "#78350F" }}>
                 Testosterone Total &amp; Free, LH, FSH, PSA, CBC, CMP
               </span>

@@ -98,7 +98,6 @@ export const WLFAQ = () => {
                         border: "none",
                       }}
                       onMouseEnter={(e) => {
-                        // hardcoded-color-allow-next-line
                         e.currentTarget.style.background = "#cf5a08";
                       }}
                       onMouseLeave={(e) => { e.currentTarget.style.background = "var(--brand-cta)"; }}

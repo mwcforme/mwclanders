@@ -57,7 +57,6 @@ const NewLandingPage = () => {
         <Suspense fallback={<SectionSkeleton bg="var(--brand-navy)" height={360} />}>
           <SectionReveal><TRTPillars /></SectionReveal>
         </Suspense>
-        // hardcoded-color-allow-next-line
         <Suspense fallback={<SectionSkeleton bg="#111827" height={160} />}>
           <SectionReveal><TRTMarquee /></SectionReveal>
         </Suspense>

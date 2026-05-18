@@ -135,7 +135,6 @@ const BookSymptom = () => {
                 resize: "vertical",
               }}
               onFocus={(e) => (e.currentTarget.style.borderColor = "var(--brand-cta)")}
-              // hardcoded-color-allow-next-line
               onBlur={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
             />
             <button

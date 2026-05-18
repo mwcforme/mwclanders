@@ -270,7 +270,6 @@ export default function TRTGetStarted() {
             }}>
               <Check size={12} strokeWidth={3} style={{ color: "var(--c-text-on-dark)" }} />
             </div>
-            // hardcoded-color-allow-next-line
             <span style={{ fontSize: 14, color: "#15803D", fontFamily: "Inter, sans-serif" }}>
               <strong>Promo Applied:</strong> Free Testosterone Test
             </span>
@@ -362,7 +361,6 @@ export default function TRTGetStarted() {
                   >
                     {fields.tcpa && <Check size={13} strokeWidth={3} style={{ color: "var(--c-text-on-dark)" }} />}
                   </div>
-                  // hardcoded-color-allow-next-line
                   <span style={{ fontSize: 11, color: "#6B7280", lineHeight: 1.5, fontFamily: "Inter, sans-serif" }}>
                     I agree to receive SMS/calls from Men&rsquo;s Wellness Centers. Msg &amp; data rates may apply. Reply STOP to opt out.
                     Not a condition of service. HIPAA Compliant.{" "}
@@ -405,9 +403,7 @@ export default function TRTGetStarted() {
                 display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
                 padding: "10px 0 2px",
               }}>
-                // hardcoded-color-allow-next-line
                 <Lock size={13} strokeWidth={2} style={{ color: "#6B7280", flexShrink: 0 }} />
-                // hardcoded-color-allow-next-line
                 <span style={{ fontSize: 12, color: "#6B7280", fontFamily: "Inter, sans-serif" }}>
                   Your information is encrypted and HIPAA protected
                 </span>
@@ -415,7 +411,6 @@ export default function TRTGetStarted() {
               </div>
 
               {/* Legal line */}
-              // hardcoded-color-allow-next-line
               <p style={{ fontSize: 11, color: "#9CA3AF", textAlign: "center", lineHeight: 1.5, fontFamily: "Inter, sans-serif" }}>
                 By clicking Continue, you agree to our{" "}
                 <a href="/terms-of-service" style={{ color: NAVY, textDecoration: "underline" }}>Terms &amp; Conditions</a>

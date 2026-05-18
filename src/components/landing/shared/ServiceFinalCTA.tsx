@@ -80,18 +80,15 @@ export const ServiceFinalCTA = ({
 
   const inputStyle = (field: string): React.CSSProperties => ({
     width: "100%", height: 52, background: "var(--brand-cream)",
-    // hardcoded-color-allow-next-line
     border: `2px solid ${errors[field] ? ERROR_RED : "#C8C6C1"}`,
     borderRadius: 8, padding: "0 16px", fontSize: 16, color: "var(--brand-navy)", outline: "none",
     fontFamily: "Inter, sans-serif", transition: "border-color 200ms ease, box-shadow 200ms ease",
   });
   const handleFocus = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => {
     e.currentTarget.style.borderColor = "var(--brand-cta)";
-    // hardcoded-color-allow-next-line
     e.currentTarget.style.boxShadow = "0 0 0 3px rgba(232,103,10,0.15)";
   };
   const handleBlur = (field: string) => (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => {
-    // hardcoded-color-allow-next-line
     e.currentTarget.style.borderColor = errors[field] ? ERROR_RED : "#C8C6C1";
     e.currentTarget.style.boxShadow = "none";
   };
@@ -109,7 +106,6 @@ export const ServiceFinalCTA = ({
           </p>
           <div className="flex items-center justify-center gap-2 mt-4">
             {Array.from({ length: 5 }).map((_, i) => {
-              // hardcoded-color-allow-next-line
               return <span key={i} style={{ color: "#D4A017", fontSize: "20px" }}>★</span>;
             })}
             {/* hardcoded-color-allow-next-line */}
@@ -239,7 +235,6 @@ export const ServiceFinalCTA = ({
                   className="w-full rounded-lg font-bold cursor-pointer transition-colors duration-200"
                   style={{ height: 56, minHeight: 56, background: "var(--brand-cta)", color: "var(--c-text-on-dark)", fontSize: 15, border: "none", letterSpacing: "0.07em", fontFamily: "Inter, sans-serif", marginTop: 8, whiteSpace: "nowrap" }}
                   onMouseEnter={(e) => {
-                    // hardcoded-color-allow-next-line
                     e.currentTarget.style.background = "#CF5B09";
                   }}
                   onMouseLeave={(e) => { e.currentTarget.style.background = "var(--brand-cta)"; }}

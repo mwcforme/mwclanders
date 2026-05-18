@@ -63,7 +63,6 @@ export default function ProductTRTSchedule() {
   };
 
   return (
-    // hardcoded-color-allow-next-line
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "#F4F6FA" }}>
       <SEO
         title="Schedule Your Consultation | Men's Wellness Centers"
@@ -99,7 +98,6 @@ export default function ProductTRTSchedule() {
                 }}>
                   Choose Your Location
                 </h1>
-                // hardcoded-color-allow-next-line
                 <p style={{ fontSize: 15, color: "#666" }}>
                   Select the Men's Wellness Centers nearest to you.
                 </p>
@@ -135,11 +133,9 @@ export default function ProductTRTSchedule() {
                       }}>
                         {sel && <div style={{ width: 10, height: 10, borderRadius: "50%", background: "var(--brand-cta)" }} />}
                       </div>
-                      // hardcoded-color-allow-next-line
                       <MapPin size={16} strokeWidth={2} style={{ color: sel ? "var(--brand-cta)" : "#8898AA", flexShrink: 0 }} />
                       <div>
                         <div style={{ fontWeight: 700, fontSize: 15, color: "var(--brand-navy)" }}>{label}</div>
-                        // hardcoded-color-allow-next-line
                         <div style={{ fontSize: 12, color: "#8898AA", marginTop: 2 }}>{address}</div>
                       </div>
                     </label>
@@ -148,7 +144,6 @@ export default function ProductTRTSchedule() {
               </div>
 
               {locationError && (
-                // hardcoded-color-allow-next-line
                 <p style={{ color: "var(--c-error-on-light)", fontSize: 13, marginBottom: 12, textAlign: "center" }}>{locationError}</p>
               )}
 
@@ -165,7 +160,6 @@ export default function ProductTRTSchedule() {
                 See Available Times <ArrowRight size={18} strokeWidth={2.5} />
               </button>
 
-              // hardcoded-color-allow-next-line
               <p style={{ textAlign: "center", fontSize: 12, color: "#9AA0AC", marginTop: 14 }}>
                 No-cost consultation · Same-day labs · Virginia locations
               </p>
@@ -174,10 +168,8 @@ export default function ProductTRTSchedule() {
 
           {/* ── STEP 2: Calendar ──────────────────────────────────────────── */}
           {step === "calendar" && selected && (
-            // hardcoded-color-allow-next-line
             <div style={{ background: "var(--c-text-on-dark)", borderRadius: 16, overflow: "hidden", boxShadow: "0 8px 40px rgba(11,16,41,0.10)" }}>
               {/* Header */}
-              // hardcoded-color-allow-next-line
               <div style={{ padding: "28px 32px 20px", borderBottom: "1px solid #F0F2F5" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
                   <button type="button" onClick={() => setStep("location")} style={{
@@ -196,7 +188,6 @@ export default function ProductTRTSchedule() {
                 }}>
                   Your 60-Minute Assessment
                 </h2>
-                // hardcoded-color-allow-next-line
                 <p style={{ fontSize: 14, color: "#8898AA" }}>
                   {LOCATIONS.find(l => l.key === selected)?.label} · Licensed provider, same-day labs
                 </p>

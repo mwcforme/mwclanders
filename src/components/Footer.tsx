@@ -79,7 +79,6 @@ export const Footer = () => (
                   }}
                   onMouseEnter={(e) => { e.currentTarget.style.color = "var(--c-text-on-dark)"; }}
                   onMouseLeave={(e) => {
-                    // hardcoded-color-allow-next-line
                     e.currentTarget.style.color = "rgba(255,255,255,0.55)";
                   }}
                 >
@@ -179,7 +178,6 @@ export const Footer = () => (
           {legalLinks.map((link, i) => (
             <span key={link.label}>
               {i > 0 && (
-                // hardcoded-color-allow-next-line
                 <span style={{ color: "rgba(255,255,255,0.25)", margin: "0 4px" }}>·</span>
               )}
               <Link

@@ -154,7 +154,6 @@ function CheckGroup({
             }}>
               {sel && (
                 <svg viewBox="0 0 12 9" width={12} fill="none">
-                  // hardcoded-color-allow-next-line
                   <polyline points="1,5 4,8 11,1" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               )}
@@ -179,7 +178,6 @@ function SliderInput({
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 12 }}>
-        // hardcoded-color-allow-next-line
         <span style={{ fontSize: 13, color: "#6B7280" }}>1 — Poor</span>
         <span style={{
           fontFamily: "Oswald, sans-serif", fontWeight: 700,
@@ -187,7 +185,6 @@ function SliderInput({
         }}>
           {value}
         </span>
-        // hardcoded-color-allow-next-line
         <span style={{ fontSize: 13, color: "#6B7280" }}>10 — Excellent</span>
       </div>
       <input
@@ -358,7 +355,6 @@ export default function TRTQuestionnaire() {
               style={numInputStyle}
               aria-label="Weight in pounds"
             />
-            // hardcoded-color-allow-next-line
             <p style={{ color: "#9CA3AF", fontSize: 13, marginTop: 8 }}>lbs</p>
           </>
         );
@@ -556,7 +552,6 @@ export default function TRTQuestionnaire() {
     marginBottom: 8,
   };
   const subStyle: React.CSSProperties = {
-    // hardcoded-color-allow-next-line
     fontSize: 13, color: "#9CA3AF", marginBottom: 16,
   };
   const labelStyle: React.CSSProperties = {
@@ -564,7 +559,6 @@ export default function TRTQuestionnaire() {
     color: NAVY, marginBottom: 8, fontFamily: "Inter, sans-serif",
   };
   const numInputStyle: React.CSSProperties = {
-    // hardcoded-color-allow-next-line
     width: "100%", height: 56, border: `1.5px solid #D0D5DD`,
     borderRadius: 8, padding: "0 16px", fontSize: 20,
     color: NAVY, fontFamily: "Oswald, sans-serif", fontWeight: 600,
@@ -572,7 +566,6 @@ export default function TRTQuestionnaire() {
     boxSizing: "border-box",
   };
   const textareaStyle: React.CSSProperties = {
-    // hardcoded-color-allow-next-line
     width: "100%", border: `1.5px solid #D0D5DD`,
     borderRadius: 8, padding: "12px 16px", fontSize: 16,
     color: NAVY, fontFamily: "Inter, sans-serif",
@@ -597,12 +590,10 @@ export default function TRTQuestionnaire() {
               <span style={{ fontSize: 13, fontWeight: 600, color: NAVY, fontFamily: "Inter, sans-serif" }}>
                 Question {step} of {TOTAL}
               </span>
-              // hardcoded-color-allow-next-line
               <span style={{ fontSize: 13, color: "#9CA3AF" }}>
                 {Math.round(pct)}% complete
               </span>
             </div>
-            // hardcoded-color-allow-next-line
             <div style={{ height: 6, background: "#F3F4F6", borderRadius: 3, overflow: "hidden" }}>
               <div style={{
                 height: "100%", width: `${pct}%`,

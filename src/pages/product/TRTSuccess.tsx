@@ -85,7 +85,6 @@ export default function TRTSuccess() {
       confetti({
         particleCount: 120,
         spread: 80,
-        // hardcoded-color-allow-next-line
         colors: ["var(--brand-cta)", "#F97316", "#FCD9B4", "var(--c-text-on-dark)"],
       });
     }).catch(() => {});
@@ -133,7 +132,6 @@ export default function TRTSuccess() {
               aria-hidden="true"
               style={{ display: "inline-block" }}
             >
-              // hardcoded-color-allow-next-line
               <circle cx={48} cy={48} r={44} stroke="#16A34A" strokeWidth={4} fill="rgba(22,163,74,0.10)" />
               <style>{`
                 @keyframes drawCheck {
@@ -149,7 +147,6 @@ export default function TRTSuccess() {
               <polyline
                 className="check-path"
                 points="28,50 42,64 68,34"
-                // hardcoded-color-allow-next-line
                 stroke="#16A34A"
                 strokeWidth={5}
                 strokeLinecap="round"
@@ -167,7 +164,6 @@ export default function TRTSuccess() {
           }}>
             You're All Set!
           </h1>
-          // hardcoded-color-allow-next-line
           <p style={{ color: "rgba(255,255,255,0.60)", fontSize: 16, marginBottom: 36, lineHeight: 1.5 }}>
             We've received everything we need. Your provider will be in touch shortly to confirm your appointment.
           </p>
@@ -188,14 +184,11 @@ export default function TRTSuccess() {
 
             <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 20 }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                // hardcoded-color-allow-next-line
                 <span style={{ fontSize: 14, color: "#6B7280", fontFamily: "Inter, sans-serif" }}>Location</span>
                 <span style={{ fontSize: 14, fontWeight: 600, color: NAVY, fontFamily: "Inter, sans-serif" }}>{locationLabel}</span>
               </div>
-              // hardcoded-color-allow-next-line
               <div style={{ height: 1, background: "#F3F4F6" }} />
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
-                // hardcoded-color-allow-next-line
                 <span style={{ fontSize: 14, color: "#6B7280", fontFamily: "Inter, sans-serif", flexShrink: 0 }}>Appointment</span>
                 <span style={{ fontSize: 14, fontWeight: 600, color: NAVY, fontFamily: "Inter, sans-serif", textAlign: "right" }}>{apptLabel}</span>
               </div>
@@ -258,7 +251,6 @@ export default function TRTSuccess() {
                     {i + 1}
                   </span>
                 </div>
-                // hardcoded-color-allow-next-line
                 <span style={{ fontSize: 15, color: "rgba(255,255,255,0.80)", fontFamily: "Inter, sans-serif" }}>
                   {step}
                 </span>

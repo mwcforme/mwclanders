@@ -150,7 +150,6 @@ const ConfirmDialog = ({
                 aria-valuemin={0}
                 aria-valuemax={redirect.totalMs}
                 aria-valuenow={redirect.totalMs - redirect.remainingMs}
-                // hardcoded-color-allow-next-line
                 style={{ marginTop: 8, height: 4, background: "#FECACA", borderRadius: 999, overflow: "hidden" }}
               >
                 <div style={{

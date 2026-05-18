@@ -43,7 +43,6 @@ const OrangeCTA = ({
     }}
     onMouseEnter={(e) => {
       (e.currentTarget as HTMLButtonElement).style.background =
-        // hardcoded-color-allow-next-line
         "var(--brand-cta-hover, #c85a08)";
     }}
     onMouseLeave={(e) => {
@@ -81,7 +80,6 @@ const CheckBullet = ({ children }: { children: React.ReactNode }) => (
         marginTop: 1,
       }}
     >
-      // hardcoded-color-allow-next-line
       <Check size={13} strokeWidth={3} color="#fff" aria-hidden />
     </span>
     {children}
@@ -171,7 +169,6 @@ const ProductTRT = () => {
           100% { background-position: 200% center; }
         }
         .announcement-shimmer {
-          // hardcoded-color-allow-next-line
           background: linear-gradient(90deg, #0B1029 0%, #0B1029 35%, #1a2448 50%, #0B1029 65%, #0B1029 100%);
           background-size: 200% auto;
           animation: shimmerLR 3s linear infinite;
@@ -212,7 +209,6 @@ const ProductTRT = () => {
         {/* ── 1. HERO ──────────────────────────────────────────────────────── */}
         <section
           id="hero"
-          // hardcoded-color-allow-next-line
           style={{ background: "var(--c-text-on-dark)", paddingTop: 64, paddingBottom: 64 }}
         >
           <div
@@ -283,7 +279,6 @@ const ProductTRT = () => {
                   marginBottom: 28,
                 }}
               >
-                // hardcoded-color-allow-next-line
                 <span style={{ color: "#111", display: "block" }}>Be the Man</span>
                 <span style={{ color: "var(--brand-cta)", display: "block" }}>
                   You Were Built to Be
@@ -329,7 +324,6 @@ const ProductTRT = () => {
                       <FlaskConical
                         size={18}
                         strokeWidth={1.75}
-                        // hardcoded-color-allow-next-line
                         color="#fff"
                       />
                     ),
@@ -343,7 +337,6 @@ const ProductTRT = () => {
                       <Stethoscope
                         size={18}
                         strokeWidth={1.75}
-                        // hardcoded-color-allow-next-line
                         color="#fff"
                       />
                     ),
@@ -357,7 +350,6 @@ const ProductTRT = () => {
                       <ClipboardList
                         size={18}
                         strokeWidth={1.75}
-                        // hardcoded-color-allow-next-line
                         color="#fff"
                       />
                     ),
@@ -437,7 +429,6 @@ const ProductTRT = () => {
                         gap: 4,
                       }}
                     >
-                      // hardcoded-color-allow-next-line
                       <Check size={13} strokeWidth={3} color="#16a34a" aria-hidden />
                       {value}
                     </span>
@@ -455,7 +446,6 @@ const ProductTRT = () => {
                     background: "#f8f8f8",
                   }}
                 >
-                  // hardcoded-color-allow-next-line
                   <span style={{ fontWeight: 700, fontSize: 15, color: "#111" }}>
                     Total
                   </span>
@@ -517,7 +507,6 @@ const ProductTRT = () => {
                   loading="lazy"
                 />
                 <span
-                  // hardcoded-color-allow-next-line
                   style={{ fontSize: 12, color: "#888", fontWeight: 600 }}
                 >
                   HIPAA Compliant
@@ -538,7 +527,6 @@ const ProductTRT = () => {
         </section>
 
         {/* ── 2. MEDIA STRIP ───────────────────────────────────────────────── */}
-        // hardcoded-color-allow-next-line
         <section style={{ background: "#f4f4f4", padding: "20px 24px" }}>
           <div
             style={{
@@ -593,7 +581,6 @@ const ProductTRT = () => {
         </section>
 
         {/* ── 3. SYMPTOM HOOK ──────────────────────────────────────────────── */}
-        // hardcoded-color-allow-next-line
         <section style={{ background: "var(--c-text-on-dark)", padding: "72px 24px" }}>
           <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
             <Eyebrow>SOUND FAMILIAR?</Eyebrow>
@@ -671,7 +658,6 @@ const ProductTRT = () => {
                       color="var(--brand-cta)"
                     />
                   </span>
-                  // hardcoded-color-allow-next-line
                   <span style={{ fontSize: 15, color: "#333", fontWeight: 500 }}>
                     {symptom}
                   </span>
@@ -679,7 +665,6 @@ const ProductTRT = () => {
               ))}
             </div>
 
-            // hardcoded-color-allow-next-line
             <hr style={{ border: "none", borderTop: "1px solid #ebebeb", marginBottom: 24 }} />
             <p
               style={{
@@ -696,7 +681,6 @@ const ProductTRT = () => {
         </section>
 
         {/* ── 4. 3-STEP PROCESS ────────────────────────────────────────────── */}
-        // hardcoded-color-allow-next-line
         <section style={{ background: "#f4f4f4", padding: "72px 24px" }}>
           <div style={{ maxWidth: 1200, margin: "0 auto" }}>
             <div style={{ textAlign: "center", marginBottom: 48 }}>
@@ -780,7 +764,6 @@ const ProductTRT = () => {
                   >
                     {step.title}
                   </h3>
-                  // hardcoded-color-allow-next-line
                   <p style={{ fontSize: 15, color: "#555", lineHeight: 1.6, margin: 0 }}>
                     {step.desc}
                   </p>
@@ -797,7 +780,6 @@ const ProductTRT = () => {
         </section>
 
         {/* ── 5. TREATMENT OPTIONS ─────────────────────────────────────────── */}
-        // hardcoded-color-allow-next-line
         <section style={{ background: "var(--c-text-on-dark)", padding: "72px 24px" }}>
           <div style={{ maxWidth: 1200, margin: "0 auto" }}>
             <div style={{ textAlign: "center", marginBottom: 48 }}>
@@ -812,7 +794,6 @@ const ProductTRT = () => {
               >
                 Your Treatment, Personalized
               </h2>
-              // hardcoded-color-allow-next-line
               <p style={{ fontSize: 16, color: "#666", maxWidth: 560, margin: "0 auto" }}>
                 Our providers prescribe based on your labs and symptoms — not a
                 one-size protocol.
@@ -932,7 +913,6 @@ const ProductTRT = () => {
         </section>
 
         {/* ── 6. BENEFITS ──────────────────────────────────────────────────── */}
-        // hardcoded-color-allow-next-line
         <section style={{ background: "var(--c-text-on-dark)", padding: "72px 24px", borderTop: "1px solid #f0f0f0" }}>
           <div
             style={{
@@ -972,7 +952,6 @@ const ProductTRT = () => {
                   const parent = el.parentElement;
                   if (parent) {
                     parent.style.background =
-                      // hardcoded-color-allow-next-line
                       "linear-gradient(135deg, #d0dae8 0%, #b0c0d4 100%)";
                   }
                 }}
@@ -1151,7 +1130,6 @@ const ProductTRT = () => {
         </section>
 
         {/* ── 8. FAQ ───────────────────────────────────────────────────────── */}
-        // hardcoded-color-allow-next-line
         <section style={{ background: "var(--c-text-on-dark)", padding: "72px 24px" }}>
           <div style={{ maxWidth: 800, margin: "0 auto" }}>
             <h2

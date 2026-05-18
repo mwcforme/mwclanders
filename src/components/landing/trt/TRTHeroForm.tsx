@@ -289,7 +289,6 @@ export const TRTHeroForm = ({
       >
         <span style={{ display: "flex", gap: 2 }}>
           {[...Array(5)].map((_, i) => (
-            // hardcoded-color-allow-next-line
             <Star key={i} size={14} fill="#C9A961" stroke="#C9A961" />
           ))}
         </span>
@@ -469,7 +468,6 @@ export const TRTHeroForm = ({
             </div>
             <span
               id="hf-tcpa-text"
-              // hardcoded-color-allow-next-line
               style={{ fontSize: 11, color: "rgba(245,240,235,0.45)", lineHeight: 1.4 }}
             >
               I agree to receive SMS/calls & texts from Men&rsquo;s Wellness Centers. Msg & data rates may apply. Reply STOP to opt out.{" "}
@@ -512,7 +510,6 @@ export const TRTHeroForm = ({
             gap: 8,
           }}
           onMouseEnter={(e) => { if (!isSubmitting) {
-            // hardcoded-color-allow-next-line
             e.currentTarget.style.background = "#CF5C09"; e.currentTarget.style.transform = "translateY(-1px)"; } }}
           onMouseLeave={(e) => { e.currentTarget.style.background = ORANGE; e.currentTarget.style.transform = "translateY(0)"; }}
         >

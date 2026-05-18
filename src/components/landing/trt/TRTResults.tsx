@@ -59,7 +59,6 @@ export const TRTResults = () => {
                     <Star key={i} className="h-4 w-4" fill="var(--brand-cta)" stroke="var(--brand-cta)" />
                   ))}
                   {t.rating < 5 && [...Array(5 - t.rating)].map((_, i) => (
-                    // hardcoded-color-allow-next-line
                     <Star key={i} className="h-4 w-4" fill="none" stroke="#D1D5DB" />
                   ))}
                 </div>

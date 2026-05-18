@@ -82,9 +82,7 @@ const EmailCapture = ({ contactId, onComplete }: { contactId?: string; onComplet
   };
 
   return (
-    // hardcoded-color-allow-next-line
     <div style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)", borderRadius: 12, padding: "20px 20px" }}>
-      // hardcoded-color-allow-next-line
       <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 600, color: "rgba(245,243,240,0.80)", marginBottom: 4 }}>
         Want a copy of your confirmation?
       </p>
@@ -92,15 +90,12 @@ const EmailCapture = ({ contactId, onComplete }: { contactId?: string; onComplet
         <input
           type="email" placeholder="your@email.com" value={email} autoComplete="email" inputMode="email"
           onChange={(e) => { setEmail(e.target.value); setError(""); }}
-          // hardcoded-color-allow-next-line
           style={{ flex: 1, height: 44, borderRadius: 8, border: `1.5px solid ${error ? "#FF6B7A" : "rgba(255,255,255,0.15)"}`, background: "rgba(255,255,255,0.07)", color: "var(--brand-cream)", fontSize: 15, fontFamily: "Inter, sans-serif", padding: "0 14px", outline: "none" }}
         />
-        // hardcoded-color-allow-next-line
         <button type="submit" disabled={loading} style={{ height: 44, padding: "0 18px", background: "var(--brand-cta)", color: "#FFF", border: "none", borderRadius: 8, fontFamily: "Inter, sans-serif", fontSize: 13, fontWeight: 700, cursor: loading ? "not-allowed" : "pointer", display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
           <Send size={14} strokeWidth={2} /> Send
         </button>
       </form>
-      // hardcoded-color-allow-next-line
       {error && <p style={{ color: "#FF6B7A", fontSize: 12, marginTop: 4, fontFamily: "Inter, sans-serif" }}>{error}</p>}
     </div>
   );
@@ -153,14 +148,12 @@ export default function BookConfirmed() {
   return (
     <BookLayout page="confirmed" variant="confirmation" title="You're booked | Men's Wellness Centers">
       {/* ── 1. HERO — Full-width dark, appointment ticket ──────────────── */}
-      // hardcoded-color-allow-next-line
       <div style={{ background: "linear-gradient(180deg, #0B1029 0%, #0D1535 100%)", padding: "48px 20px 56px" }}>
         <div style={{ maxWidth: 640, margin: "0 auto", fontFamily: "Inter, sans-serif" }}>
 
           {/* Animated check + headline */}
           <div style={{ textAlign: "center", marginBottom: 36 }}>
             {/* Check circle */}
-            // hardcoded-color-allow-next-line
             <div style={{ width: 80, height: 80, borderRadius: "50%", background: "rgba(22,163,74,0.15)", border: "2px solid rgba(22,163,74,0.40)", display: "inline-flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
               <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
                 <path d="M5 12.5L10 17.5L19 7.5" stroke="var(--c-success-on-dark)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
@@ -171,7 +164,6 @@ export default function BookConfirmed() {
             <h1 style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: "clamp(28px, 5vw, 44px)", color: "var(--brand-cream)", lineHeight: 1.1, marginBottom: 8 }}>
               {firstName ? `This is your moment, ${firstName}.` : "This is your moment."}
             </h1>
-            // hardcoded-color-allow-next-line
             <p style={{ fontSize: 16, color: "rgba(245,243,240,0.65)", lineHeight: 1.5 }}>
               Your provider has reserved this hour for your labs, exam, and consultation.
             </p>
@@ -179,15 +171,12 @@ export default function BookConfirmed() {
 
           {/* Appointment ticket */}
           {apptDate && (
-            // hardcoded-color-allow-next-line
             <div style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 16, overflow: "hidden", marginBottom: 24 }}>
               <div style={{ display: "flex" }}>
                 {/* Date badge */}
                 <div style={{ background: "var(--brand-cta)", padding: "24px 20px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minWidth: 88, flexShrink: 0 }}>
-                  // hardcoded-color-allow-next-line
                   <span style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 11, color: "rgba(255,255,255,0.80)", letterSpacing: "0.12em" }}>{apptDate.month}</span>
                   <span style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 48, color: "var(--c-text-on-dark)", lineHeight: 1 }}>{apptDate.day}</span>
-                  // hardcoded-color-allow-next-line
                   <span style={{ fontFamily: "Oswald, sans-serif", fontWeight: 600, fontSize: 11, color: "rgba(255,255,255,0.80)", letterSpacing: "0.10em" }}>{apptDate.weekday.slice(0, 3).toUpperCase()}</span>
                 </div>
                 {/* Details */}
@@ -198,11 +187,9 @@ export default function BookConfirmed() {
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                     <MapPin size={15} strokeWidth={2} style={{ color: "var(--brand-cta)", flexShrink: 0 }} />
-                    // hardcoded-color-allow-next-line
                     <span style={{ fontSize: 13, color: "rgba(245,243,240,0.70)" }}>{center.city} · In-person · 60 min</span>
                   </div>
                   <div style={{ display: "flex", gap: 8, marginTop: 4, flexWrap: "wrap" }}>
-                    // hardcoded-color-allow-next-line
                     {[["No-cost visit", "#16a34a"], ["Provider reserved", "var(--brand-cta)"], ["Bring photo ID", "#6B7280"]].map(([label, color]) => (
                       <span key={label} style={{ display: "inline-flex", alignItems: "center", gap: 4, fontSize: 11, fontWeight: 700, color, letterSpacing: "0.06em", textTransform: "uppercase" }}>
                         <span style={{ width: 6, height: 6, borderRadius: "50%", background: color as string, flexShrink: 0 }} />{label}
@@ -218,12 +205,10 @@ export default function BookConfirmed() {
           {calLinks && (
             <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 8 }}>
               <a href={calLinks.google} target="_blank" rel="noopener noreferrer"
-                // hardcoded-color-allow-next-line
                 style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, height: 52, background: "var(--brand-cta)", color: "#FFF", borderRadius: 10, textDecoration: "none", fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 15, boxShadow: "0 4px 16px rgba(232,103,10,0.35)" }}>
                 <Calendar size={18} strokeWidth={2} /> Add to Google Calendar
               </a>
               <a href={calLinks.ics} download="mwc-appointment.ics"
-                // hardcoded-color-allow-next-line
                 style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, height: 52, background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.15)", color: "var(--brand-cream)", borderRadius: 10, textDecoration: "none", fontFamily: "Inter, sans-serif", fontWeight: 600, fontSize: 15 }}>
                 <Calendar size={18} strokeWidth={2} /> Apple / Outlook (.ics)
               </a>
@@ -233,14 +218,11 @@ export default function BookConfirmed() {
       </div>
 
       {/* ── Light bg sections ──────────────────────────────────────────────── */}
-      // hardcoded-color-allow-next-line
       <div style={{ background: "#F4F6FA", padding: "0 20px 48px" }}>
         <div style={{ maxWidth: 640, margin: "0 auto", display: "flex", flexDirection: "column", gap: 20, paddingTop: 24, fontFamily: "Inter, sans-serif" }}>
 
           {/* ── 3. Outcome cards */}
-          // hardcoded-color-allow-next-line
           <div style={{ background: "var(--c-text-on-dark)", borderRadius: 16, overflow: "hidden", border: "1px solid #E5E7EB", boxShadow: "0 2px 16px rgba(0,0,0,0.06)" }}>
-            // hardcoded-color-allow-next-line
             <div style={{ padding: "20px 24px 0", borderBottom: "1px solid #F3F4F6" }}>
               <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "var(--brand-cta)", marginBottom: 6 }}>What you'll walk away with</p>
             </div>
@@ -249,20 +231,16 @@ export default function BookConfirmed() {
               { icon: <Stethoscope size={18} strokeWidth={1.75} style={{ color: "var(--brand-cta)" }} />, text: "A clear answer on whether treatment fits your situation" },
               { icon: <ClipboardList size={18} strokeWidth={1.75} style={{ color: "var(--brand-cta)" }} />, text: "A personalized protocol you can start the same day, when medically appropriate" },
             ].map(({ icon, text }) => (
-              // hardcoded-color-allow-next-line
               <div key={text} style={{ display: "flex", alignItems: "flex-start", gap: 14, padding: "16px 24px", borderBottom: "1px solid #F3F4F6" }}>
-                // hardcoded-color-allow-next-line
                 <div style={{ width: 36, height: 36, borderRadius: 8, background: "rgba(232,103,10,0.08)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                   {icon}
                 </div>
-                // hardcoded-color-allow-next-line
                 <span style={{ fontSize: 15, color: "#111", lineHeight: 1.5, paddingTop: 8 }}>{text}</span>
               </div>
             ))}
           </div>
 
           {/* ── 4. Video */}
-          // hardcoded-color-allow-next-line
           <div style={{ background: "var(--c-text-on-dark)", borderRadius: 16, overflow: "hidden", border: "1px solid #E5E7EB", boxShadow: "0 2px 16px rgba(0,0,0,0.06)" }}>
             <div style={{ position: "relative", width: "100%", paddingBottom: "52%", background: "#000" }}>
               <video ref={videoRef} src={EXPECT_VIDEO_SRC} poster="/images/video-poster.webp" muted loop={false} playsInline controls preload="none"
@@ -271,15 +249,12 @@ export default function BookConfirmed() {
             <div style={{ padding: "18px 22px 22px" }}>
               <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--brand-cta)", marginBottom: 6 }}>2-min watch · Before you arrive</p>
               <h3 style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 22, color: "var(--brand-navy-deep)", marginBottom: 6 }}>Here's exactly what happens when you walk in.</h3>
-              // hardcoded-color-allow-next-line
               <p style={{ fontSize: 14, color: "#5B6478", lineHeight: 1.5 }}>No waiting room anxiety. Labs, a quick exam, and a real conversation with your provider.</p>
             </div>
           </div>
 
           {/* ── 5. Prep steps */}
-          // hardcoded-color-allow-next-line
           <div style={{ background: "var(--c-text-on-dark)", borderRadius: 16, padding: "22px 24px", border: "1px solid #E5E7EB", boxShadow: "0 2px 16px rgba(0,0,0,0.06)" }}>
-            // hardcoded-color-allow-next-line
             <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "#6B7280", marginBottom: 16 }}>Before you arrive</p>
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
               {[
@@ -288,9 +263,7 @@ export default function BookConfirmed() {
                 { n: "3", text: "Plan for 60 minutes from check-in to leaving with your results." },
               ].map(({ n, text }) => (
                 <div key={n} style={{ display: "flex", alignItems: "flex-start", gap: 14 }}>
-                  // hardcoded-color-allow-next-line
                   <div style={{ width: 28, height: 28, borderRadius: "50%", background: "var(--brand-cta)", color: "#FFF", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 13, flexShrink: 0, marginTop: 1 }}>{n}</div>
-                  // hardcoded-color-allow-next-line
                   <p style={{ fontSize: 14, color: "#374151", lineHeight: 1.55, margin: 0, paddingTop: 4 }}>{text}</p>
                 </div>
               ))}
@@ -298,11 +271,9 @@ export default function BookConfirmed() {
           </div>
 
           {/* ── 6. Location tile */}
-          // hardcoded-color-allow-next-line
           <div style={{ background: "var(--c-text-on-dark)", borderRadius: 16, overflow: "hidden", border: "1px solid #E5E7EB", boxShadow: "0 2px 16px rgba(0,0,0,0.06)" }}>
             <div style={{ padding: "22px 24px 18px" }}>
               <h3 style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 22, color: "var(--brand-navy-deep)", textTransform: "uppercase", marginBottom: 4 }}>{center.city}</h3>
-              // hardcoded-color-allow-next-line
               <p style={{ fontSize: 13, color: "#5B6478", marginBottom: 14 }}>{center.name}</p>
               <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 16 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -317,20 +288,17 @@ export default function BookConfirmed() {
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <Clock size={15} strokeWidth={2.5} style={{ color: "var(--brand-cta)", flexShrink: 0 }} />
-                  // hardcoded-color-allow-next-line
                   <span style={{ fontSize: 13, color: "#374151" }}>{center.hours}</span>
                 </div>
               </div>
             </div>
             {/* Map */}
-            // hardcoded-color-allow-next-line
             <div ref={mapRef} style={{ position: "relative", height: 260, borderTop: "1px solid #F3F4F6" }}>
               {mapVisible && (
                 <iframe title={`Map to ${center.name}`} src={mapsEmbedUrl} loading="lazy" referrerPolicy="no-referrer-when-downgrade"
                   style={{ border: 0, width: "100%", height: "100%", display: "block" }} allowFullScreen />
               )}
               <a href={mapsSearchUrl} target="_blank" rel="noopener noreferrer"
-                // hardcoded-color-allow-next-line
                 style={{ position: "absolute", top: 12, left: 12, background: "#FFF", color: "var(--brand-navy-deep)", padding: "8px 14px", borderRadius: 8, fontWeight: 600, fontSize: 13, textDecoration: "none", boxShadow: "0 4px 12px rgba(0,0,0,0.18)", display: "inline-flex", alignItems: "center", gap: 6 }}>
                 Open in Maps <ExternalLink size={13} strokeWidth={2.5} />
               </a>
@@ -346,19 +314,15 @@ export default function BookConfirmed() {
 
           {/* ── 8. Reschedule */}
           <div style={{ textAlign: "center", display: "flex", flexDirection: "column", gap: 8 }}>
-            // hardcoded-color-allow-next-line
             <p style={{ color: "#6B7280", fontSize: 13 }}>Need to reschedule? Just give us a heads up.</p>
             <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 10 }}>
-              // hardcoded-color-allow-next-line
               <a href={center.phoneHref} style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "#F3F4F6", border: "1px solid #E5E7EB", color: "#374151", fontWeight: 600, fontSize: 13, padding: "10px 18px", borderRadius: 8, textDecoration: "none", minHeight: 44 }}>
                 Call or text {center.phone}
               </a>
-              // hardcoded-color-allow-next-line
               <a href="/book/location" style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "rgba(232,103,10,0.08)", border: "1px solid rgba(232,103,10,0.25)", color: "var(--brand-cta)", fontWeight: 600, fontSize: 13, padding: "10px 18px", borderRadius: 8, textDecoration: "none", minHeight: 44 }}>
                 Book a different time
               </a>
             </div>
-            // hardcoded-color-allow-next-line
             <p style={{ color: "#9AA0AC", fontSize: 11, marginTop: 4 }}>Please cancel or reschedule at least 24 hours in advance.</p>
           </div>
 
