@@ -64,7 +64,7 @@ export function CheckGroup({
   values,
   onChange,
 }: {
-  options: string[];
+  options: readonly string[];
   values: string[];
   onChange: (v: string[]) => void;
 }) {

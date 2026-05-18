@@ -347,7 +347,7 @@ export default function TRTQuestionnaire() {
           <div style={{ marginBottom: 24 }}>
             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
               <span style={{ fontSize: 13, fontWeight: 600, color: NAVY, fontFamily: "Inter, sans-serif" }}>
-                Question {step} of {TOTAL}
+                Question {step} of {INTAKE_TOTAL_STEPS}
               </span>
               <span style={{ fontSize: 13, color: "var(--c-placeholder-light)" }}>
                 {Math.round(pct)}% complete

@@ -450,9 +450,8 @@ const FaqItem = ({ q, a, index }: { q: string; a: string; index: number }) => {
         <div
           style={{
             paddingBottom: 20,
-            paddingLeft: 0,
-            borderLeft: "3px solid var(--brand-cta)",
             paddingLeft: 16,
+            borderLeft: "3px solid var(--brand-cta)",
             marginBottom: 4,
           }}
         >
