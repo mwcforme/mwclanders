@@ -246,7 +246,13 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
 
   const handleFinalConfirm = async () => {
     if (!selectedSlot) return;
-    // Return value not used here — navigation is driven by onBooked callback.
+    // If no phone, we're in the product funnel (contact captured later).
+    // Fire onBooked immediately with the selected slot — skip GHL API.
+    if (!phone) {
+      onBooked?.(selectedSlot);
+      return;
+    }
+    // Normal booking flow — confirm in GHL first.
     await confirmCtl.confirm({
       slotIso: selectedSlot, location, firstName, lastName, email, phone, source, customFields,
     });

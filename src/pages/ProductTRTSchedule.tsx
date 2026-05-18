@@ -59,7 +59,8 @@ export default function ProductTRTSchedule() {
 
   const handleBooked = (slotIso: string) => {
     setApptTime(slotIso);
-    navigate("/product/trt/medical-protocol");
+    // Store selected slot for use in get-started form, then collect contact info
+    navigate("/product/trt/get-started");
   };
 
   return (
