@@ -15,10 +15,6 @@ const GLOBAL_STYLES = `
     0%   { background-position: -200% center; }
     100% { background-position:  200% center; }
   }
-  @keyframes floatVial {
-    0%, 100% { transform: translateY(0); }
-    50%       { transform: translateY(-10px); }
-  }
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(16px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -38,10 +34,6 @@ const GLOBAL_STYLES = `
     animation: shimmerLR 3.5s linear infinite;
   }
 
-  /* Hero vial float */
-  .vial-float {
-    animation: floatVial 3.5s ease-in-out infinite;
-  }
 
   /* Media pill hover */
   .media-pill {
@@ -379,7 +371,6 @@ const ProductTRT = () => {
               <img
                 src="/images/trt-vial.png"
                 alt="Men's Wellness Centers Testosterone Protocol"
-                className="vial-float"
                 style={{
                   width: "100%",
                   height: "100%",
@@ -1202,7 +1193,7 @@ const ProductTRT = () => {
           }}
         >
           <div style={{ maxWidth: 1100, margin: "0 auto", textAlign: "center" }}>
-            <Eyebrow color="var(--brand-cta)">RECOGNIZE THE SIGNS</Eyebrow>
+            <Eyebrow>RECOGNIZE THE SIGNS</Eyebrow>
             <h2
               style={{
                 fontFamily: "Oswald, sans-serif",
