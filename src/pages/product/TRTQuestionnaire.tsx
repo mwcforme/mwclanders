@@ -11,276 +11,35 @@ import { TRTFooter } from "@/components/landing/trt/TRTFooter";
 import { SEO } from "@/components/SEO";
 import { useBookingStore } from "@/domain/booking/bookingStore";
 import { contactUpdater } from "@/services/contactUpdater";
+import {
+  RadioGroup, CheckGroup, SliderInput, SelectInput,
+} from "@/components/product/IntakeFormHelpers";
+import {
+  type IntakeAnswers,
+  INTAKE_DEFAULTS, INTAKE_TOTAL_STEPS,
+  SYMPTOM_OPTIONS, CONDITION_OPTIONS, SERVICE_OPTIONS,
+  isStepValid,
+} from "@/domain/intake/intakeTypes";
 
-const ORANGE  = "var(--brand-cta)";
-const NAVY    = "var(--brand-navy-deep)";
-const TOTAL   = 17;
-
-type Answer = string | string[] | number | undefined;
-
-interface IntakeAnswers {
-  age?: number;
-  heightFt?: number;
-  heightIn?: number;
-  weight?: number;
-  symptoms?: string[];
-  symptomDuration?: string;
-  testedBefore?: string;
-  onMedications?: string;
-  medicationList?: string;
-  conditions?: string[];
-  treatedBefore?: string;
-  currentlyOnTRT?: string;
-  smoke?: string;
-  activityLevel?: string;
-  energyRating?: number;
-  sexHealthRating?: number;
-  hasPCP?: string;
-  additionalServices?: string[];
-  providerNotes?: string;
-}
-
-const SYMPTOM_OPTIONS = [
-  "Low energy", "Decreased libido", "Mood changes", "Poor sleep",
-  "Reduced muscle mass", "Weight gain", "Brain fog", "Other",
-];
-const CONDITION_OPTIONS = [
-  "Sleep apnea", "Prostate issues", "Heart disease", "Liver disease", "None of the above",
-];
-const SERVICE_OPTIONS = [
-  "ED treatment", "Medical weight loss", "Both", "Just TRT",
-];
-
-function RadioGroup({
-  name,
-  options,
-  value,
-  onChange,
-}: {
-  name: string;
-  options: string[];
-  value: string;
-  onChange: (v: string) => void;
-}) {
-  return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-      {options.map((opt) => {
-        const sel = value === opt;
-        return (
-          <label
-            key={opt}
-            style={{
-              display: "flex", alignItems: "center", gap: 12,
-              padding: "14px 16px", borderRadius: 10, cursor: "pointer",
-              // hardcoded-color-allow-next-line
-              border: `1.5px solid ${sel ? ORANGE : "#E5E7EB"}`,
-              // hardcoded-color-allow-next-line
-              borderLeft: sel ? `4px solid ${ORANGE}` : `1.5px solid #E5E7EB`,
-              // hardcoded-color-allow-next-line
-              background: sel ? "rgba(232,103,10,0.07)" : "#FAFAFA",
-              transition: "all 150ms ease", userSelect: "none",
-            }}
-          >
-            <input
-              type="radio"
-              name={name}
-              value={opt}
-              checked={sel}
-              onChange={() => onChange(opt)}
-              style={{ position: "absolute", opacity: 0, width: 0, height: 0, pointerEvents: "none" }}
-            />
-            <div style={{
-              width: 20, height: 20, borderRadius: "50%", flexShrink: 0,
-              // hardcoded-color-allow-next-line
-              border: `2px solid ${sel ? ORANGE : "#D0D5DD"}`,
-              display: "flex", alignItems: "center", justifyContent: "center",
-            }}>
-              {sel && <div style={{ width: 10, height: 10, borderRadius: "50%", background: ORANGE }} />}
-            </div>
-            <span style={{ fontSize: 15, color: NAVY, fontWeight: sel ? 600 : 400 }}>{opt}</span>
-          </label>
-        );
-      })}
-    </div>
-  );
-}
-
-function CheckGroup({
-  options,
-  values,
-  onChange,
-}: {
-  options: string[];
-  values: string[];
-  onChange: (v: string[]) => void;
-}) {
-  const toggle = (opt: string) => {
-    if (values.includes(opt)) onChange(values.filter((x) => x !== opt));
-    else onChange([...values, opt]);
-  };
-
-  return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-      {options.map((opt) => {
-        const sel = values.includes(opt);
-        return (
-          <label
-            key={opt}
-            style={{
-              display: "flex", alignItems: "center", gap: 12,
-              padding: "14px 16px", borderRadius: 10, cursor: "pointer",
-              // hardcoded-color-allow-next-line
-              border: `1.5px solid ${sel ? ORANGE : "#E5E7EB"}`,
-              // hardcoded-color-allow-next-line
-              borderLeft: sel ? `4px solid ${ORANGE}` : `1.5px solid #E5E7EB`,
-              // hardcoded-color-allow-next-line
-              background: sel ? "rgba(232,103,10,0.07)" : "#FAFAFA",
-              transition: "all 150ms ease", userSelect: "none",
-            }}
-          >
-            <input
-              type="checkbox"
-              checked={sel}
-              onChange={() => toggle(opt)}
-              style={{ position: "absolute", opacity: 0, width: 0, height: 0, pointerEvents: "none" }}
-            />
-            <div style={{
-              width: 20, height: 20, borderRadius: 4, flexShrink: 0,
-              // hardcoded-color-allow-next-line
-              border: `2px solid ${sel ? ORANGE : "#D0D5DD"}`,
-              background: sel ? ORANGE : "transparent",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              transition: "background 150ms ease, border-color 150ms ease",
-            }}>
-              {sel && (
-                <svg viewBox="0 0 12 9" width={12} fill="none">
-                  <polyline points="1,5 4,8 11,1" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              )}
-            </div>
-            <span style={{ fontSize: 15, color: NAVY, fontWeight: sel ? 600 : 400 }}>{opt}</span>
-          </label>
-        );
-      })}
-    </div>
-  );
-}
-
-function SliderInput({
-  value,
-  onChange,
-  label,
-}: {
-  value: number;
-  onChange: (v: number) => void;
-  label: string;
-}) {
-  return (
-    <div>
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 12 }}>
-        <span style={{ fontSize: 13, color: "var(--c-text-on-light-muted)" }}>1 — Poor</span>
-        <span style={{
-          fontFamily: "Oswald, sans-serif", fontWeight: 700,
-          fontSize: 28, color: ORANGE,
-        }}>
-          {value}
-        </span>
-        <span style={{ fontSize: 13, color: "var(--c-text-on-light-muted)" }}>10 — Excellent</span>
-      </div>
-      <input
-        type="range"
-        min={1}
-        max={10}
-        value={value}
-        onChange={(e) => onChange(Number(e.target.value))}
-        aria-label={label}
-        style={{
-          width: "100%",
-          accentColor: ORANGE,
-          height: 8,
-          cursor: "pointer",
-        }}
-      />
-      <p style={{ textAlign: "center", marginTop: 8, fontSize: 14, color: NAVY, fontWeight: 600 }}>
-        {label}: {value}/10
-      </p>
-    </div>
-  );
-}
-
-function SelectInput({
-  value,
-  onChange,
-  options,
-  placeholder,
-}: {
-  value: string;
-  onChange: (v: string) => void;
-  options: string[];
-  placeholder?: string;
-}) {
-  return (
-    <select
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      style={{
-        // hardcoded-color-allow-next-line
-        width: "100%", height: 56, border: `1.5px solid #D0D5DD`,
-        borderRadius: 8, padding: "0 16px", fontSize: 16,
-        // hardcoded-color-allow-next-line
-        color: value ? NAVY : "var(--c-placeholder-light)",
-        fontFamily: "Inter, sans-serif",
-        background: "var(--bg-white)", outline: "none", cursor: "pointer",
-        appearance: "none",
-      }}
-    >
-      {placeholder && <option value="">{placeholder}</option>}
-      {options.map((o) => <option key={o} value={o}>{o}</option>)}
-    </select>
-  );
-}
+const ORANGE = "var(--brand-cta)";
+const NAVY   = "var(--brand-navy-deep)";
 
 export default function TRTQuestionnaire() {
   const navigate   = useNavigate();
   const identity   = useBookingStore((s) => s.identity);
   const [step, setStep] = useState(1);
-  const [answers, setAnswers] = useState<IntakeAnswers>({
-    symptoms: [], conditions: [], additionalServices: [],
-    energyRating: 5, sexHealthRating: 5,
-    heightFt: 5, heightIn: 6,
-  });
+  const [answers, setAnswers] = useState<IntakeAnswers>(INTAKE_DEFAULTS);
 
-  const pct = (step / TOTAL) * 100;
+  const pct = (step / INTAKE_TOTAL_STEPS) * 100;
 
   const set = <K extends keyof IntakeAnswers>(k: K, v: IntakeAnswers[K]) => {
     setAnswers((p) => ({ ...p, [k]: v }));
   };
 
-  const canAdvance = (): boolean => {
-    switch (step) {
-      case 1: return (answers.age ?? 0) >= 18 && (answers.age ?? 0) <= 99;
-      case 2: return true;
-      case 3: return (answers.weight ?? 0) >= 80 && (answers.weight ?? 0) <= 500;
-      case 4: return (answers.symptoms?.length ?? 0) > 0;
-      case 5: return !!answers.symptomDuration;
-      case 6: return !!answers.testedBefore;
-      case 7: return !!answers.onMedications;
-      case 8: return (answers.conditions?.length ?? 0) > 0;
-      case 9: return !!answers.treatedBefore;
-      case 10: return !!answers.currentlyOnTRT;
-      case 11: return !!answers.smoke;
-      case 12: return !!answers.activityLevel;
-      case 13: return true;
-      case 14: return true;
-      case 15: return !!answers.hasPCP;
-      case 16: return (answers.additionalServices?.length ?? 0) > 0;
-      case 17: return true;
-      default: return false;
-    }
-  };
+  const canAdvance = () => isStepValid(step, answers);
 
   const handleNext = () => {
-    if (step < TOTAL) setStep((s) => s + 1);
+    if (step < INTAKE_TOTAL_STEPS) setStep((s) => s + 1);
     else handleSubmit();
   };
 
@@ -656,7 +415,7 @@ export default function TRTQuestionnaire() {
                 boxShadow: canAdvance() ? "0 4px 16px rgba(232,103,10,0.30)" : "none",
               }}
             >
-              {step === TOTAL ? "Submit" : "Next"} <ArrowRight size={16} strokeWidth={2.5} />
+              {step === INTAKE_TOTAL_STEPS ? "Submit" : "Next"} <ArrowRight size={16} strokeWidth={2.5} />
             </button>
           </div>
         </div>
