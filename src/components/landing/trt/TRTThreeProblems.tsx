@@ -49,7 +49,7 @@ interface TRTThreeProblemsProps {
   headlineOverride?: { line1: string; line2?: string };
 }
 
-export const TRTThreeProblems = ({ onCta }: TRTThreeProblemsProps = {}) => {
+export const TRTThreeProblems = ({ onCta, headlineOverride }: TRTThreeProblemsProps = {}) => {
   const handleCta = (href: string) => {
     if (onCta) { onCta(); return; }
     window.location.href = href;
