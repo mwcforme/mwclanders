@@ -16,7 +16,7 @@ export default function TRTLabRequisition() {
   const navigate = useNavigate();
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "var(--c-text-on-dark)" }}>
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "var(--bg-white)" }}>
       <SEO
         title="Lab Requisition Ready | Men's Wellness Centers"
         description="Your TRT lab requisition is ready. Visit any LabCorp or Quest Diagnostics location near you."
@@ -26,7 +26,7 @@ export default function TRTLabRequisition() {
       <main style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "80px 16px 48px" }}>
         <div style={{
           width: "100%", maxWidth: 480,
-          background: "var(--c-text-on-dark)",
+          background: "var(--bg-white)",
           borderRadius: 16,
           // hardcoded-color-allow-next-line
           boxShadow: "0 8px 40px rgba(11,16,41,0.10)",
@@ -54,7 +54,7 @@ export default function TRTLabRequisition() {
           }}>
             Lab Requisition Ready
           </h1>
-          <p style={{ color: "#6B7280", fontSize: 15, marginBottom: 24, lineHeight: 1.5 }}>
+          <p style={{ color: "var(--c-text-on-light-muted)", fontSize: 15, marginBottom: 24, lineHeight: 1.5 }}>
             Your provider has prepared a lab requisition. Visit any LabCorp or Quest Diagnostics
             location near you.
           </p>
@@ -87,7 +87,7 @@ export default function TRTLabRequisition() {
               style={{
                 width: "100%", height: 52, borderRadius: 999,
                 // hardcoded-color-allow-next-line
-                background: "#E5E7EB", color: "#9CA3AF", border: "none",
+                background: "#E5E7EB", color: "var(--c-placeholder-light)", border: "none",
                 fontFamily: "Oswald, sans-serif", fontWeight: 700,
                 fontSize: 16, letterSpacing: "0.04em", textTransform: "uppercase",
                 cursor: "not-allowed",
@@ -124,7 +124,7 @@ export default function TRTLabRequisition() {
             style={{
               background: "none", border: "none",
               // hardcoded-color-allow-next-line
-              color: "#9CA3AF", fontSize: 14, cursor: "pointer",
+              color: "var(--c-placeholder-light)", fontSize: 14, cursor: "pointer",
               fontFamily: "Inter, sans-serif",
               textDecoration: "underline",
               padding: "8px 0",

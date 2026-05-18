@@ -48,7 +48,7 @@ export default function TRTMedicalProtocol() {
   }, []);
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "var(--c-text-on-dark)" }}>
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "var(--bg-white)" }}>
       <SEO
         title="Consultation Being Prepared | Men's Wellness Centers"
         description="Your Virginia TRT provider is reviewing your request. Complete your medical intake to proceed."
@@ -58,7 +58,7 @@ export default function TRTMedicalProtocol() {
       <main style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "80px 16px 48px" }}>
         <div style={{
           width: "100%", maxWidth: 540,
-          background: "var(--c-text-on-dark)",
+          background: "var(--bg-white)",
           borderRadius: 16,
           // hardcoded-color-allow-next-line
           boxShadow: "0 8px 40px rgba(11,16,41,0.10)",
@@ -117,7 +117,7 @@ export default function TRTMedicalProtocol() {
           }}>
             Your Consultation is Being Prepared
           </h1>
-          <p style={{ textAlign: "center", color: "#6B7280", fontSize: 15, marginBottom: 28 }}>
+          <p style={{ textAlign: "center", color: "var(--c-text-on-light-muted)", fontSize: 15, marginBottom: 28 }}>
             One of our Virginia providers is reviewing your request.
           </p>
 
@@ -175,7 +175,7 @@ export default function TRTMedicalProtocol() {
               <p style={{ fontWeight: 700, color: NAVY, fontSize: 15, marginBottom: 3 }}>
                 Dr. Douglas Christianson, NMD
               </p>
-              <p style={{ color: "#6B7280", fontSize: 13 }}>
+              <p style={{ color: "var(--c-text-on-light-muted)", fontSize: 13 }}>
                 Licensed Virginia Provider · Men's Health Specialist
               </p>
             </div>
@@ -264,7 +264,7 @@ export default function TRTMedicalProtocol() {
             Complete Medical Intake <ArrowRight size={18} strokeWidth={2.5} />
           </button>
 
-          <p style={{ textAlign: "center", fontSize: 12, color: "#9CA3AF", marginTop: 14 }}>
+          <p style={{ textAlign: "center", fontSize: 12, color: "var(--c-placeholder-light)", marginTop: 14 }}>
             No obligation. Cancel anytime.
           </p>
         </div>

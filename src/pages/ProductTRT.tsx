@@ -160,7 +160,7 @@ const OrangeBullet = ({
       gap: 12,
       marginBottom: 14,
       fontSize: 15,
-      color: light ? "rgba(255,255,255,0.88)" : "#333",
+      color: light ? "rgba(255,255,255,0.88)" : "var(--c-text-on-light)",
       lineHeight: 1.55,
     }}
   >
@@ -316,7 +316,7 @@ const TRTQuiz = ({ onNavigateSchedule }: { onNavigateSchedule: () => void }) => 
                 fontFamily: "Inter, sans-serif",
                 fontWeight: 700,
                 fontSize: "clamp(22px, 3.5vw, 36px)",
-                color: "#1a1a2e",
+                color: "var(--c-text-on-light)",
                 textAlign: "center",
                 maxWidth: 600,
                 margin: "0 auto 32px",
@@ -343,14 +343,14 @@ const TRTQuiz = ({ onNavigateSchedule }: { onNavigateSchedule: () => void }) => 
                     type="button"
                     onClick={() => handleAnswer(i)}
                     style={{
-                      background: isSelected ? "rgba(232,103,10,0.04)" : "#FFFFFF",
+                      background: isSelected ? "rgba(232,103,10,0.04)" : "var(--bg-white)",
                       border: `1.5px solid ${isSelected ? "#E8670A" : "#E8E8E8"}`,
                       borderRadius: 16,
                       padding: "20px 16px",
                       textAlign: "center",
                       fontSize: 15,
                       fontWeight: 500,
-                      color: "#1a1a2e",
+                      color: "var(--c-text-on-light)",
                       cursor: advancing ? "default" : "pointer",
                       minHeight: 64,
                       fontFamily: "Inter, sans-serif",
@@ -369,7 +369,7 @@ const TRTQuiz = ({ onNavigateSchedule }: { onNavigateSchedule: () => void }) => 
                     onMouseLeave={(e) => {
                       if (!isSelected) {
                         (e.currentTarget as HTMLButtonElement).style.borderColor = "#E8E8E8";
-                        (e.currentTarget as HTMLButtonElement).style.background = "#FFFFFF";
+                        (e.currentTarget as HTMLButtonElement).style.background = "var(--bg-white)";
                       }
                     }}
                   >
@@ -397,25 +397,22 @@ const TRTQuiz = ({ onNavigateSchedule }: { onNavigateSchedule: () => void }) => 
                 fontFamily: "Inter, sans-serif",
                 fontWeight: 700,
                 fontSize: "clamp(24px, 4vw, 38px)",
-                color: "#1a1a2e",
+                color: "var(--c-text-on-light)",
                 marginBottom: 20,
               }}
             >
-              We&apos;ve Got You Covered
+              You&apos;re In Good Hands.
             </h2>
             <p
               style={{
                 fontSize: 16,
-                color: "#555",
+                color: "var(--c-text-on-light-muted)",
                 lineHeight: 1.7,
                 maxWidth: 560,
                 margin: "0 auto 36px",
               }}
             >
-              Take the first step to your best self. Our licensed Virginia providers
-              will walk you through testosterone therapy, its benefits, address your
-              concerns, and provide you with a detailed treatment plan personalized
-              to you.
+              Our licensed Virginia providers will review your symptoms, run labs, and build a treatment plan based on your results. Individual results vary.
             </p>
             {/* Primary CTA */}
             <button
@@ -439,7 +436,7 @@ const TRTQuiz = ({ onNavigateSchedule }: { onNavigateSchedule: () => void }) => 
                 letterSpacing: "0.02em",
               }}
             >
-              I&apos;d Love To Get Started
+              Get Started Now
             </button>
             {/* Secondary link */}
             <button
@@ -457,7 +454,7 @@ const TRTQuiz = ({ onNavigateSchedule }: { onNavigateSchedule: () => void }) => 
                 padding: 0,
               }}
             >
-              I&apos;m Still Thinking About It
+              Not sure yet →
             </button>
           </div>
         )}
@@ -533,7 +530,7 @@ const ProductTRT = () => {
             fontSize: 12,
             fontWeight: 400,
             letterSpacing: "0.06em",
-            color: "#f5f0e8",
+            color: "var(--brand-cream)",
             margin: 0,
             display: "flex",
             alignItems: "center",
@@ -637,7 +634,7 @@ const ProductTRT = () => {
                   fontWeight: 700,
                   letterSpacing: "0.08em",
                   borderRadius: 999,
-                  padding: "7px 18px",
+                  padding: "8px 18px",
                   boxShadow: "0 4px 16px rgba(232,103,10,0.45)",
                 }}
               >
@@ -784,14 +781,14 @@ const ProductTRT = () => {
                       style={{
                         fontWeight: 700,
                         fontSize: 13,
-                        color: "#4ade80",
+                        color: "var(--c-success-on-dark)",
                         flexShrink: 0,
                         display: "flex",
                         alignItems: "center",
                         gap: 4,
                       }}
                     >
-                      <Check size={13} strokeWidth={3} color="#4ade80" aria-hidden />
+                      <Check size={13} strokeWidth={3} color="var(--c-success-on-dark)" aria-hidden />
                       {value}
                     </span>
                   </div>
@@ -916,11 +913,11 @@ const ProductTRT = () => {
                     background: "#fff",
                     border: "1px solid #dde3ef",
                     borderRadius: 999,
-                    padding: "7px 18px",
+                    padding: "8px 18px",
                     fontSize: 11,
                     fontWeight: 800,
                     letterSpacing: "0.12em",
-                    color: "#3a4463",
+                    color: "var(--c-text-on-light)",
                     textTransform: "uppercase" as const,
                     boxShadow: "0 2px 8px rgba(0,0,0,0.07)",
                   }}
@@ -1111,7 +1108,7 @@ const ProductTRT = () => {
                     <p
                       style={{
                         fontSize: 15,
-                        color: "#555",
+                        color: "var(--c-text-on-light-muted)",
                         lineHeight: 1.6,
                         margin: "0 0 auto",
                       }}
@@ -1158,7 +1155,7 @@ const ProductTRT = () => {
               >
                 Your Treatment, Personalized
               </h2>
-              <p style={{ fontSize: 16, color: "#666", maxWidth: 540, margin: "0 auto" }}>
+              <p style={{ fontSize: 16, color: "var(--c-text-on-light-muted)", maxWidth: 540, margin: "0 auto" }}>
                 Our providers prescribe based on your labs and symptoms — not a
                 one-size protocol.
               </p>
@@ -1655,7 +1652,7 @@ const ProductTRT = () => {
                           padding: "0 28px 22px 44px",
                           background: "#f5f7ff",
                           fontSize: 15,
-                          color: "#444",
+                          color: "var(--c-text-on-light-muted)",
                           lineHeight: 1.75,
                           borderLeft: "3px solid #E8670A",
                           marginLeft: 28,
@@ -1720,7 +1717,7 @@ const ProductTRT = () => {
                 letterSpacing: "-0.01em",
               }}
             >
-              Start Your Health Journey Today
+              Start Your Assessment Today
             </h2>
             <p
               style={{

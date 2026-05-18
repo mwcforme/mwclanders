@@ -178,14 +178,14 @@ function SliderInput({
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 12 }}>
-        <span style={{ fontSize: 13, color: "#6B7280" }}>1 — Poor</span>
+        <span style={{ fontSize: 13, color: "var(--c-text-on-light-muted)" }}>1 — Poor</span>
         <span style={{
           fontFamily: "Oswald, sans-serif", fontWeight: 700,
           fontSize: 28, color: ORANGE,
         }}>
           {value}
         </span>
-        <span style={{ fontSize: 13, color: "#6B7280" }}>10 — Excellent</span>
+        <span style={{ fontSize: 13, color: "var(--c-text-on-light-muted)" }}>10 — Excellent</span>
       </div>
       <input
         type="range"
@@ -228,9 +228,9 @@ function SelectInput({
         width: "100%", height: 56, border: `1.5px solid #D0D5DD`,
         borderRadius: 8, padding: "0 16px", fontSize: 16,
         // hardcoded-color-allow-next-line
-        color: value ? NAVY : "#9CA3AF",
+        color: value ? NAVY : "var(--c-placeholder-light)",
         fontFamily: "Inter, sans-serif",
-        background: "var(--c-text-on-dark)", outline: "none", cursor: "pointer",
+        background: "var(--bg-white)", outline: "none", cursor: "pointer",
         appearance: "none",
       }}
     >
@@ -355,7 +355,7 @@ export default function TRTQuestionnaire() {
               style={numInputStyle}
               aria-label="Weight in pounds"
             />
-            <p style={{ color: "#9CA3AF", fontSize: 13, marginTop: 8 }}>lbs</p>
+            <p style={{ color: "var(--c-placeholder-light)", fontSize: 13, marginTop: 8 }}>lbs</p>
           </>
         );
       case 4:
@@ -552,7 +552,7 @@ export default function TRTQuestionnaire() {
     marginBottom: 8,
   };
   const subStyle: React.CSSProperties = {
-    fontSize: 13, color: "#9CA3AF", marginBottom: 16,
+    fontSize: 13, color: "var(--c-placeholder-light)", marginBottom: 16,
   };
   const labelStyle: React.CSSProperties = {
     display: "block", fontSize: 13, fontWeight: 600,
@@ -562,19 +562,19 @@ export default function TRTQuestionnaire() {
     width: "100%", height: 56, border: `1.5px solid #D0D5DD`,
     borderRadius: 8, padding: "0 16px", fontSize: 20,
     color: NAVY, fontFamily: "Oswald, sans-serif", fontWeight: 600,
-    background: "var(--c-text-on-dark)", outline: "none",
+    background: "var(--bg-white)", outline: "none",
     boxSizing: "border-box",
   };
   const textareaStyle: React.CSSProperties = {
     width: "100%", border: `1.5px solid #D0D5DD`,
     borderRadius: 8, padding: "12px 16px", fontSize: 16,
     color: NAVY, fontFamily: "Inter, sans-serif",
-    background: "var(--c-text-on-dark)", outline: "none", resize: "vertical",
+    background: "var(--bg-white)", outline: "none", resize: "vertical",
     boxSizing: "border-box",
   };
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "var(--c-text-on-dark)" }}>
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "var(--bg-white)" }}>
       <SEO
         title="Medical Intake | Men's Wellness Centers"
         description="Complete your 17-step medical intake for your testosterone consultation."
@@ -590,7 +590,7 @@ export default function TRTQuestionnaire() {
               <span style={{ fontSize: 13, fontWeight: 600, color: NAVY, fontFamily: "Inter, sans-serif" }}>
                 Question {step} of {TOTAL}
               </span>
-              <span style={{ fontSize: 13, color: "#9CA3AF" }}>
+              <span style={{ fontSize: 13, color: "var(--c-placeholder-light)" }}>
                 {Math.round(pct)}% complete
               </span>
             </div>
@@ -606,7 +606,7 @@ export default function TRTQuestionnaire() {
 
           {/* Question card */}
           <div style={{
-            background: "var(--c-text-on-dark)",
+            background: "var(--bg-white)",
             borderRadius: 16,
             // hardcoded-color-allow-next-line
             boxShadow: "0 8px 40px rgba(11,16,41,0.10)",

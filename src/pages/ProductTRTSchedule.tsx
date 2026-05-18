@@ -77,7 +77,7 @@ export default function ProductTRTSchedule() {
           {step === "location" && (
             <div style={{
               // hardcoded-color-allow-next-line
-              background: "var(--c-text-on-dark)", borderRadius: 16, padding: "40px 36px",
+              background: "var(--bg-white)", borderRadius: 16, padding: "40px 36px",
               // hardcoded-color-allow-next-line
               boxShadow: "0 8px 40px rgba(11,16,41,0.10)",
             }}>
@@ -98,7 +98,7 @@ export default function ProductTRTSchedule() {
                 }}>
                   Choose Your Location
                 </h1>
-                <p style={{ fontSize: 15, color: "#666" }}>
+                <p style={{ fontSize: 15, color: "var(--c-text-on-light-muted)" }}>
                   Select the Men's Wellness Centers nearest to you.
                 </p>
                 <div style={{ width: 48, height: 3, background: "var(--brand-cta)", margin: "14px auto 0", borderRadius: 2 }} />
@@ -133,10 +133,10 @@ export default function ProductTRTSchedule() {
                       }}>
                         {sel && <div style={{ width: 10, height: 10, borderRadius: "50%", background: "var(--brand-cta)" }} />}
                       </div>
-                      <MapPin size={16} strokeWidth={2} style={{ color: sel ? "var(--brand-cta)" : "#8898AA", flexShrink: 0 }} />
+                      <MapPin size={16} strokeWidth={2} style={{ color: sel ? "var(--brand-cta)" : "var(--c-placeholder-light)", flexShrink: 0 }} />
                       <div>
                         <div style={{ fontWeight: 700, fontSize: 15, color: "var(--brand-navy)" }}>{label}</div>
-                        <div style={{ fontSize: 12, color: "#8898AA", marginTop: 2 }}>{address}</div>
+                        <div style={{ fontSize: 12, color: "var(--c-placeholder-light)", marginTop: 2 }}>{address}</div>
                       </div>
                     </label>
                   );
@@ -160,7 +160,7 @@ export default function ProductTRTSchedule() {
                 See Available Times <ArrowRight size={18} strokeWidth={2.5} />
               </button>
 
-              <p style={{ textAlign: "center", fontSize: 12, color: "#9AA0AC", marginTop: 14 }}>
+              <p style={{ textAlign: "center", fontSize: 12, color: "var(--c-placeholder-light)", marginTop: 14 }}>
                 No-cost consultation · Same-day labs · Virginia locations
               </p>
             </div>
@@ -168,13 +168,13 @@ export default function ProductTRTSchedule() {
 
           {/* ── STEP 2: Calendar ──────────────────────────────────────────── */}
           {step === "calendar" && selected && (
-            <div style={{ background: "var(--c-text-on-dark)", borderRadius: 16, overflow: "hidden", boxShadow: "0 8px 40px rgba(11,16,41,0.10)" }}>
+            <div style={{ background: "var(--bg-white)", borderRadius: 16, overflow: "hidden", boxShadow: "0 8px 40px rgba(11,16,41,0.10)" }}>
               {/* Header */}
               <div style={{ padding: "28px 32px 20px", borderBottom: "1px solid #F0F2F5" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
                   <button type="button" onClick={() => setStep("location")} style={{
                     // hardcoded-color-allow-next-line
-                    background: "none", border: "none", color: "#8898AA",
+                    background: "none", border: "none", color: "var(--c-placeholder-light)",
                     fontSize: 13, cursor: "pointer", fontFamily: "Inter, sans-serif",
                     padding: 0, display: "flex", alignItems: "center", gap: 4,
                   }}>
@@ -188,7 +188,7 @@ export default function ProductTRTSchedule() {
                 }}>
                   Your 60-Minute Assessment
                 </h2>
-                <p style={{ fontSize: 14, color: "#8898AA" }}>
+                <p style={{ fontSize: 14, color: "var(--c-placeholder-light)" }}>
                   {LOCATIONS.find(l => l.key === selected)?.label} · Licensed provider, same-day labs
                 </p>
                 {nextAvailLabel && (

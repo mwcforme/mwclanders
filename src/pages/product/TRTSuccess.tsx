@@ -170,12 +170,12 @@ export default function TRTSuccess() {
 
           {/* Appointment summary card */}
           <div style={{
-            background: "var(--c-text-on-dark)", borderRadius: 14, padding: "24px 24px",
+            background: "var(--bg-white)", borderRadius: 14, padding: "24px 24px",
             marginBottom: 32, textAlign: "left",
           }}>
             <p style={{
               // hardcoded-color-allow-next-line
-              fontSize: 11, fontWeight: 700, color: "#9CA3AF",
+              fontSize: 11, fontWeight: 700, color: "var(--c-placeholder-light)",
               letterSpacing: "0.1em", textTransform: "uppercase",
               marginBottom: 12, fontFamily: "Inter, sans-serif",
             }}>
@@ -184,12 +184,12 @@ export default function TRTSuccess() {
 
             <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 20 }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <span style={{ fontSize: 14, color: "#6B7280", fontFamily: "Inter, sans-serif" }}>Location</span>
+                <span style={{ fontSize: 14, color: "var(--c-text-on-light-muted)", fontFamily: "Inter, sans-serif" }}>Location</span>
                 <span style={{ fontSize: 14, fontWeight: 600, color: NAVY, fontFamily: "Inter, sans-serif" }}>{locationLabel}</span>
               </div>
               <div style={{ height: 1, background: "#F3F4F6" }} />
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
-                <span style={{ fontSize: 14, color: "#6B7280", fontFamily: "Inter, sans-serif", flexShrink: 0 }}>Appointment</span>
+                <span style={{ fontSize: 14, color: "var(--c-text-on-light-muted)", fontFamily: "Inter, sans-serif", flexShrink: 0 }}>Appointment</span>
                 <span style={{ fontSize: 14, fontWeight: 600, color: NAVY, fontFamily: "Inter, sans-serif", textAlign: "right" }}>{apptLabel}</span>
               </div>
             </div>

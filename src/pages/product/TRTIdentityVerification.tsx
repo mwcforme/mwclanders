@@ -47,7 +47,7 @@ export default function TRTIdentityVerification() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "var(--c-text-on-dark)" }}>
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "var(--bg-white)" }}>
       <SEO
         title="Verify Your Identity | Men's Wellness Centers"
         description="Optional ID upload to help your provider prepare for your testosterone consultation."
@@ -57,7 +57,7 @@ export default function TRTIdentityVerification() {
       <main style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "80px 16px 48px" }}>
         <div style={{
           width: "100%", maxWidth: 480,
-          background: "var(--c-text-on-dark)",
+          background: "var(--bg-white)",
           borderRadius: 16,
           // hardcoded-color-allow-next-line
           boxShadow: "0 8px 40px rgba(11,16,41,0.10)",
@@ -85,7 +85,7 @@ export default function TRTIdentityVerification() {
           }}>
             Verify Your Identity
           </h1>
-          <p style={{ color: "#6B7280", fontSize: 15, marginBottom: 28, lineHeight: 1.5 }}>
+          <p style={{ color: "var(--c-text-on-light-muted)", fontSize: 15, marginBottom: 28, lineHeight: 1.5 }}>
             Uploading your ID helps your provider prepare for your visit. This step is optional.
           </p>
 
@@ -115,7 +115,7 @@ export default function TRTIdentityVerification() {
               style={{ display: "none" }}
               aria-label="Upload ID document"
             />
-            <div style={{ marginBottom: 12, color: dragOver ? ORANGE : "#9CA3AF" }}>
+            <div style={{ marginBottom: 12, color: dragOver ? ORANGE : "var(--c-placeholder-light)" }}>
               <Upload size={40} strokeWidth={1.5} />
             </div>
             {file ? (
@@ -125,7 +125,7 @@ export default function TRTIdentityVerification() {
                 <p style={{ fontWeight: 700, color: NAVY, fontSize: 15, marginBottom: 4 }}>
                   Drag &amp; drop your ID here
                 </p>
-                <p style={{ color: "#9CA3AF", fontSize: 13 }}>or click to browse</p>
+                <p style={{ color: "var(--c-placeholder-light)", fontSize: 13 }}>or click to browse</p>
               </>
             )}
           </div>
@@ -156,7 +156,7 @@ export default function TRTIdentityVerification() {
             style={{
               background: "none", border: "none",
               // hardcoded-color-allow-next-line
-              color: "#9CA3AF", fontSize: 14, cursor: "pointer",
+              color: "var(--c-placeholder-light)", fontSize: 14, cursor: "pointer",
               fontFamily: "Inter, sans-serif",
               textDecoration: "underline",
               padding: "8px 0",

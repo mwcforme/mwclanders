@@ -100,7 +100,7 @@ function SimpleInput({
             color: NAVY,
             outline: "none",
             fontFamily: "Inter, sans-serif",
-            background: "var(--c-text-on-dark)",
+            background: "var(--bg-white)",
             transition: "border-color 150ms ease",
             WebkitAppearance: "none",
             boxSizing: "border-box",
@@ -216,7 +216,7 @@ export default function TRTGetStarted() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "var(--c-text-on-dark)" }}>
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "var(--bg-white)" }}>
       <SEO
         title="Get Started with TRT | Men's Wellness Centers"
         description="Begin your no-cost testosterone consultation with a Virginia-licensed provider."
@@ -226,7 +226,7 @@ export default function TRTGetStarted() {
       <main style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "80px 16px 48px" }}>
         <div style={{
           width: "100%", maxWidth: 480,
-          background: "var(--c-text-on-dark)",
+          background: "var(--bg-white)",
           borderRadius: 16,
           // hardcoded-color-allow-next-line
           boxShadow: "0 8px 40px rgba(11,16,41,0.10)",
@@ -271,7 +271,7 @@ export default function TRTGetStarted() {
               <Check size={12} strokeWidth={3} style={{ color: "var(--c-text-on-dark)" }} />
             </div>
             <span style={{ fontSize: 14, color: "#15803D", fontFamily: "Inter, sans-serif" }}>
-              <strong>Promo Applied:</strong> Free Testosterone Test
+              <strong>Promo Applied:</strong> No-Cost Testosterone Test
             </span>
           </div>
 
@@ -279,7 +279,7 @@ export default function TRTGetStarted() {
           <div style={{ padding: "16px 28px 0", textAlign: "center" }}>
             <span style={{
               // hardcoded-color-allow-next-line
-              fontSize: 12, fontWeight: 600, color: "#9CA3AF",
+              fontSize: 12, fontWeight: 600, color: "var(--c-placeholder-light)",
               fontFamily: "Inter, sans-serif", letterSpacing: "0.05em",
             }}>
               STEP 1 OF 3
@@ -361,7 +361,7 @@ export default function TRTGetStarted() {
                   >
                     {fields.tcpa && <Check size={13} strokeWidth={3} style={{ color: "var(--c-text-on-dark)" }} />}
                   </div>
-                  <span style={{ fontSize: 11, color: "#6B7280", lineHeight: 1.5, fontFamily: "Inter, sans-serif" }}>
+                  <span style={{ fontSize: 11, color: "var(--c-text-on-light-muted)", lineHeight: 1.5, fontFamily: "Inter, sans-serif" }}>
                     I agree to receive SMS/calls from Men&rsquo;s Wellness Centers. Msg &amp; data rates may apply. Reply STOP to opt out.
                     Not a condition of service. HIPAA Compliant.{" "}
                     <a href="/privacy-policy" style={{ color: ORANGE, textDecoration: "none" }}>Privacy Policy</a>
@@ -403,15 +403,15 @@ export default function TRTGetStarted() {
                 display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
                 padding: "10px 0 2px",
               }}>
-                <Lock size={13} strokeWidth={2} style={{ color: "#6B7280", flexShrink: 0 }} />
-                <span style={{ fontSize: 12, color: "#6B7280", fontFamily: "Inter, sans-serif" }}>
+                <Lock size={13} strokeWidth={2} style={{ color: "var(--c-text-on-light-muted)", flexShrink: 0 }} />
+                <span style={{ fontSize: 12, color: "var(--c-text-on-light-muted)", fontFamily: "Inter, sans-serif" }}>
                   Your information is encrypted and HIPAA protected
                 </span>
               </div>
               </div>
 
               {/* Legal line */}
-              <p style={{ fontSize: 11, color: "#9CA3AF", textAlign: "center", lineHeight: 1.5, fontFamily: "Inter, sans-serif" }}>
+              <p style={{ fontSize: 11, color: "var(--c-placeholder-light)", textAlign: "center", lineHeight: 1.5, fontFamily: "Inter, sans-serif" }}>
                 By clicking Continue, you agree to our{" "}
                 <a href="/terms-of-service" style={{ color: NAVY, textDecoration: "underline" }}>Terms &amp; Conditions</a>
                 {" "}&amp;{" "}

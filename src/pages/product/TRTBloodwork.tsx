@@ -79,7 +79,7 @@ export default function TRTBloodwork() {
         <span style={{
           fontFamily: "Oswald, sans-serif", fontWeight: 700,
           // hardcoded-color-allow-next-line
-          fontSize: 17, color: sel ? NAVY : "#374151",
+          fontSize: 17, color: sel ? NAVY : "var(--c-text-on-light)",
           letterSpacing: "0.01em",
         }}>
           {title}
@@ -100,7 +100,7 @@ export default function TRTBloodwork() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "var(--c-text-on-dark)" }}>
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "var(--bg-white)" }}>
       <SEO
         title="Lab Results | Men's Wellness Centers"
         description="Do you have recent testosterone or hormone labs? Let us know before your consultation."
@@ -110,7 +110,7 @@ export default function TRTBloodwork() {
       <main style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "80px 16px 48px" }}>
         <div style={{
           width: "100%", maxWidth: 480,
-          background: "var(--c-text-on-dark)",
+          background: "var(--bg-white)",
           borderRadius: 16,
           // hardcoded-color-allow-next-line
           boxShadow: "0 8px 40px rgba(11,16,41,0.10)",
@@ -138,7 +138,7 @@ export default function TRTBloodwork() {
           }}>
             Do You Have Recent Lab Results?
           </h1>
-          <p style={{ color: "#6B7280", fontSize: 15, marginBottom: 28, lineHeight: 1.5 }}>
+          <p style={{ color: "var(--c-text-on-light-muted)", fontSize: 15, marginBottom: 28, lineHeight: 1.5 }}>
             If you've had testosterone or hormone labs in the past 90 days, you can upload them.
             Otherwise, we'll draw labs at your visit.
           </p>
@@ -167,7 +167,7 @@ export default function TRTBloodwork() {
               // hardcoded-color-allow-next-line
               background: choice ? ORANGE : "#E5E7EB",
               // hardcoded-color-allow-next-line
-              color: choice ? "var(--c-text-on-dark)" : "#9CA3AF",
+              color: choice ? "var(--c-text-on-dark)" : "var(--c-placeholder-light)",
               border: "none",
               fontFamily: "Oswald, sans-serif", fontWeight: 700,
               fontSize: 17, letterSpacing: "0.04em", textTransform: "uppercase",
