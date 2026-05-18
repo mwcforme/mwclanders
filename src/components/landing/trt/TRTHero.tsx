@@ -146,7 +146,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
               lineHeight: 1.6,
             }}
           >
-            Sit down with a licensed Virginia provider. Labs drawn on-site and reviewed in the same visit. No-cost consultation. Virginia's men's health practice since 2015.
+You've been told your labs are normal. You don't feel normal. At Men's Wellness Centers, a licensed provider reviews your bloodwork and talks to you — same visit, same day. No referrals. No waiting rooms. No script.
           </p>
 
           {/* Google reviews */}
@@ -170,9 +170,10 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
           <div className="mt-auto pt-8 flex flex-col gap-4">
             {[
               "Tired by noon. Coffee stopped working.",
-              "Same gym effort. Nothing to show.",
+              "Six months of training. Your body doesn't look like it.",
               "Sex drive is down. She\u2019s noticed too.",
               "Labs are fine. You\u2019re not.",
+              "Forty-two years old and sleeping like you're eighty.",
             ].map((text) => (
               <div key={text} style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 <div style={{ width: 8, height: 8, borderRadius: "50%", background: COLORS.orange, flexShrink: 0 }} />

@@ -14,7 +14,7 @@ const stats: Stat[] = [
   { value: "10,000+", label: "Men Treated\nSince 2015", slug: "credibility_band_count", scrollTo: "results" },
   { value: "3", label: "Virginia\nCenters", slug: "credibility_band_locations", scrollTo: "locations" },
   { value: "4.9★", label: "Google Rating\n200+ Reviews", slug: "credibility_band_reviews", href: GBP_REVIEWS_URL },
-  { value: COPY.badge.offerValue, label: COPY.badge.offerLabel, slug: "credibility_band_offer", scrollTo: "hero" },
+  { value: "Same-Day", label: "Results\nOn Your First Visit", slug: "credibility_band_offer", scrollTo: "hero" },
 ];
 
 export const CredibilityBand = () => {

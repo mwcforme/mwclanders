@@ -297,7 +297,7 @@ const BookSchedule = () => {
           {/* Single progress bar: step 1 complete (full orange), step 2 in progress */}
           <div className="flex gap-1 mt-2" role="progressbar" aria-label="Step 2 of 2" aria-valuemin={0} aria-valuemax={2} aria-valuenow={2}>
             <div className="flex-1" style={{ height: 3, borderRadius: 2, background: "var(--brand-cta)" }} />
-            <div className="flex-1" style={{ height: 3, borderRadius: 2, background: "var(--brand-cta)" }} />
+            <div className="flex-1" style={{ height: 3, borderRadius: 2, background: "rgba(232,103,10,0.40)" }} />
           </div>
           <div className="hidden md:block text-center mt-3" style={{
             fontSize: 12, color: "var(--c-text-on-dark)", letterSpacing: "0.08em",

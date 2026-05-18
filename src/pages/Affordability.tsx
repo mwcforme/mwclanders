@@ -57,7 +57,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "What's included in the monthly membership?",
-    a: "Physician oversight, in-center lab draws, FDA-approved medications when clinically appropriate, member portal access, and quarterly check-ins. No hidden fees.",
+    a: "Licensed provider oversight, in-center lab draws, FDA-approved medications when clinically appropriate, member portal access, and quarterly check-ins. No hidden fees.",
   },
   {
     q: "Is the consultation really at no cost?",
@@ -603,9 +603,7 @@ export default function Affordability() {
                 maxWidth: 540,
               }}
             >
-              Physician-led care in Virginia. Locally owned. LegitScript certified. Walk
-              through every number with a provider at your no-cost 60-minute in-person
-              consultation. No surprises, no upsells.
+              No published price lists because no two plans are the same. Your provider walks every number with you at your no-cost visit — in writing, before you decide anything.
             </p>
 
             {/* CTAs */}
@@ -803,7 +801,7 @@ export default function Affordability() {
             }}
           >
             {[
-              "Physician oversight",
+              "Licensed provider oversight",
               "In-center labs",
               "FDA-approved medications when clinically appropriate",
               "Member portal & messaging",

@@ -101,15 +101,59 @@
     --chart-4: 30 3% 82%;
     --chart-5: 44 7% 92%;
 
-    --font-display: 'Oswald', sans-serif;
-    --font-sans: 'Inter', system-ui, sans-serif;
+    --font-display: 'Oswald', sans-serif;   /* Display headings, hero H1, section titles */
+    --font-body: 'Inter', system-ui, sans-serif; /* Body text, labels, UI copy */
+    --font-sans: 'Inter', system-ui, sans-serif; /* Tailwind alias — keep in sync with --font-body */
 
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    /* ----------------------------------------------------------------
+       Border radius scale — use these, not hardcoded px values.
+       sm = inputs/tags, md = cards, lg = sections/modals, xl = hero panels
+    ---------------------------------------------------------------- */
+    --radius-sm: 6px;   /* Input fields, small tags */
+    --radius-md: 10px;  /* Cards, form wrappers */
+    --radius-lg: 16px;  /* Section panels, modals */
+    --radius-xl: 24px;  /* Hero panels, large feature cards */
+
+    /* ----------------------------------------------------------------
+       Shadow scale — layered (ambient + directional) for premium depth.
+       Never use a single flat shadow.
+    ---------------------------------------------------------------- */
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.06), 0 1px 1px rgba(0,0,0,0.04);
+    --shadow:    0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.05);
+    --shadow-lg: 0 10px 15px rgba(0,0,0,0.08), 0 4px 6px rgba(0,0,0,0.05);
+    --shadow-xl: 0 20px 25px rgba(0,0,0,0.10), 0 8px 10px rgba(0,0,0,0.06);
+    --shadow-2xl: 0 25px 50px rgba(0,0,0,0.15), 0 12px 20px rgba(0,0,0,0.08);
+
+    /* ----------------------------------------------------------------
+       Transition scale — use consistently across all interactive elements.
+       fast = hover highlights, base = card/button states, slow = page entrances
+    ---------------------------------------------------------------- */
+    --transition-fast: 120ms ease;  /* Hover color changes, icon tints */
+    --transition-base: 200ms ease;  /* Button hover lift, card selection */
+    --transition-slow: 350ms ease;  /* Section reveal, modal fade */
+
+    /* ----------------------------------------------------------------
+       Spacing scale — 8px grid. --space-N = N * 8px.
+       Use these in inline styles and utility classes.
+    ---------------------------------------------------------------- */
+    --space-1:   8px;   /* xs gap, icon padding */
+    --space-2:   16px;  /* sm gap, tight card padding */
+    --space-3:   24px;  /* md gap, standard card padding */
+    --space-4:   32px;  /* lg gap */
+    --space-5:   40px;  /* xl gap */
+    --space-6:   48px;  /* section internal padding */
+    --space-7:   56px;  /* button height, form field height */
+    --space-8:   64px;  /* header height, large gap */
+    --space-9:   80px;  /* section vertical padding sm */
+    --space-10:  96px;  /* section vertical padding md */
+    --space-11: 112px;  /* section vertical padding lg */
+    --space-12: 128px;  /* hero padding */
+    --space-13: 144px;
+    --space-14: 160px;
+    --space-15: 176px;
+    --space-16: 192px;
+
     --spacing: 0.25rem;
   }
 

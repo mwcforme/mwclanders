@@ -6,7 +6,7 @@
  * Sections ordered for maximum conversion from paid media visitors.
  */
 
-import { useCallback } from "react";
+import { useCallback, useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Phone, Check, X, Minus, FlaskConical, Stethoscope, ClipboardList,
@@ -23,7 +23,6 @@ import { AffordabilityBlock }        from "@/components/landing/shared/Affordabi
 import { OrangeCTA, Eyebrow }        from "@/components/landing/trt/TRTProductHelpers";
 import { SEO }                       from "@/components/SEO";
 import { PHONE }                     from "@/lib/constants";
-import { useState }                  from "react";
 
 /* ─── CSS keyframe animations ────────────────────────────────────────────── */
 const GLOBAL_STYLES = `
@@ -35,6 +34,10 @@ const GLOBAL_STYLES = `
     from { opacity: 0; transform: translateY(16px); }
     to   { opacity: 1; transform: translateY(0); }
   }
+  @keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-18px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
 
   .ann-shimmer {
     background: linear-gradient(
@@ -44,6 +47,45 @@ const GLOBAL_STYLES = `
     background-size: 200% auto;
     animation: shimmerLR 3.5s linear infinite;
   }
+
+  /* Timeline step entrance animation */
+  .tl-step {
+    opacity: 0;
+    transform: translateX(-18px);
+    transition: none;
+  }
+  .tl-step.tl-visible {
+    animation: slideInLeft 400ms ease forwards;
+  }
+  .tl-step.tl-visible:nth-child(1) { animation-delay:   0ms; }
+  .tl-step.tl-visible:nth-child(2) { animation-delay: 100ms; }
+  .tl-step.tl-visible:nth-child(3) { animation-delay: 200ms; }
+  .tl-step.tl-visible:nth-child(4) { animation-delay: 300ms; }
+
+  /* Comparison table row hover */
+  .compare-row {
+    transition: transform var(--transition-fast, 120ms ease), box-shadow var(--transition-fast, 120ms ease);
+  }
+  .compare-row:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Quiz answer ripple on click */
+  .quiz-answer {
+    transition: border-color 150ms, background 150ms, transform 150ms;
+  }
+  .quiz-answer:active {
+    transform: scale(0.97);
+  }
+  .quiz-answer.quiz-selected {
+    transform: scale(1.00);
+  }
+
+  /* Stats count-up ready */
+  .stat-value { will-change: contents; }
 
   /* Quiz answer grid — single-col on very small screens */
   @media (max-width: 520px) {
@@ -248,6 +290,7 @@ const ComparisonTable = () => (
             {COMPARE_ROWS.map((row, i) => (
               <tr
                 key={row.label}
+                className="compare-row"
                 style={{ background: i % 2 === 0 ? "#fff" : "#F9FAFB" }}
               >
                 <td style={{
@@ -406,6 +449,7 @@ const CandidateQuiz = ({ onNavigateSchedule }: { onNavigateSchedule: () => void 
                     key={opt}
                     type="button"
                     onClick={() => handleAnswer(i)}
+                    className={`quiz-answer${isSel ? " quiz-selected" : ""}`}
                     style={{
                       background: isSel ? "rgba(232,103,10,0.06)" : "#fff",
                       border: `1.5px solid ${isSel ? "var(--brand-cta)" : "#E2E4EC"}`,
@@ -418,7 +462,6 @@ const CandidateQuiz = ({ onNavigateSchedule }: { onNavigateSchedule: () => void 
                       cursor: advancing ? "default" : "pointer",
                       minHeight: 60,
                       fontFamily: "Inter, sans-serif",
-                      transition: "border-color 150ms, background 150ms",
                       lineHeight: 1.4,
                     }}
                     onMouseEnter={(e) => {
@@ -490,31 +533,46 @@ const CandidateQuiz = ({ onNavigateSchedule }: { onNavigateSchedule: () => void 
 const TIMELINE_STEPS = [
   {
     num: 1,
-    title: "Book Your Visit",
+    title: "Book in Under 5 Minutes",
     time: "5 min online",
     desc: "Choose your location and time. No waiting rooms.",
   },
   {
     num: 2,
-    title: "Labs Drawn On-Site",
+    title: "Full Labs Drawn Here",
     time: "20 min",
-    desc: "Full hormone panel drawn at your appointment.",
+    desc: "Not at a separate lab. Everything done at your appointment.",
   },
   {
     num: 3,
-    title: "Results Reviewed",
+    title: "Your Provider Reads Every Number With You",
     time: "Same visit",
-    desc: "Your provider walks through every number with you.",
+    desc: "In plain English. No waiting for a portal. No guessing.",
   },
   {
     num: 4,
-    title: "Leave With Your Plan",
+    title: "Walk Out With a Written Plan",
     time: "Same day",
-    desc: "Personalized protocol if treatment is right for you.",
+    desc: "Or know exactly why not. Either way, you leave with answers.",
   },
 ];
 
-const VisualTimeline = ({ onSchedule }: { onSchedule: () => void }) => (
+const VisualTimeline = ({ onSchedule }: { onSchedule: () => void }) => {
+  const gridRef = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = gridRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); obs.disconnect(); } },
+      { threshold: 0.15 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  return (
   <section style={{ background: "linear-gradient(135deg, #0B1029 0%, #111B3A 100%)", padding: "80px 24px" }}>
     <div style={{ maxWidth: 1100, margin: "0 auto" }}>
       <div style={{ textAlign: "center", marginBottom: 48 }}>
@@ -538,11 +596,12 @@ const VisualTimeline = ({ onSchedule }: { onSchedule: () => void }) => (
 
       {/* Steps */}
       <div
+        ref={gridRef}
         className="timeline-grid"
         style={{ display: "flex", gap: 0, position: "relative", alignItems: "flex-start" }}
       >
         {TIMELINE_STEPS.map((step, i) => (
-          <div key={step.num} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", position: "relative" }}>
+          <div key={step.num} className={`tl-step${visible ? " tl-visible" : ""}`} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", position: "relative" }}>
             {/* Connector line between circles */}
             {i < TIMELINE_STEPS.length - 1 && (
               <div
@@ -627,7 +686,8 @@ const VisualTimeline = ({ onSchedule }: { onSchedule: () => void }) => (
       </div>
     </div>
   </section>
-);
+  );
+};
 
 /* ─── Trust badges strip ─────────────────────────────────────────────────── */
 const TrustBadgesInline = () => (
@@ -658,50 +718,92 @@ const TrustBadgesInline = () => (
 );
 
 /* ─── Stat strip ─────────────────────────────────────────────────────────── */
-const StatStrip = () => (
-  <div style={{
-    background: "rgba(232,103,10,0.10)",
-    borderTop: "1px solid rgba(232,103,10,0.20)",
-    padding: "20px 24px",
-  }}>
-    <div style={{
-      maxWidth: 900,
-      margin: "0 auto",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      gap: 0,
-      flexWrap: "wrap",
+const StatStrip = () => {
+  const stripRef = useRef<HTMLDivElement>(null);
+  const [statCounts, setStatCounts] = useState([0, 0, 0]);
+  const stripStarted = useRef(false);
+
+  useEffect(() => {
+    const el = stripRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !stripStarted.current) {
+          stripStarted.current = true;
+          obs.disconnect();
+          const duration = 1200;
+          const start = performance.now();
+          const animate = (now: number) => {
+            const elapsed = Math.min((now - start) / duration, 1);
+            const ease = 1 - Math.pow(1 - elapsed, 3);
+            setStatCounts([
+              Math.round(10000 * ease),
+              Math.round(3 * ease),
+              0,
+            ]);
+            if (elapsed < 1) requestAnimationFrame(animate);
+          };
+          requestAnimationFrame(animate);
+        }
+      },
+      { threshold: 0.3 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  const STAT_DISPLAY = [
+    { isNum: true,  suffix: "+", label: "Men Treated" },
+    { isNum: true,  suffix: "",  label: "Virginia Locations" },
+    { isNum: false, display: "Same Day", label: "Lab Results" },
+  ];
+
+  return (
+    <div ref={stripRef} style={{
+      background: "rgba(232,103,10,0.10)",
+      borderTop: "1px solid rgba(232,103,10,0.20)",
+      padding: "20px 24px",
     }}>
-      {[
-        { stat: "10,000+", label: "Men Treated" },
-        { stat: "3",       label: "Virginia Locations" },
-        { stat: "Same Day",label: "Lab Results" },
-      ].map((item, i) => (
-        <div key={item.stat} style={{ display: "flex", alignItems: "center" }}>
-          <div style={{ textAlign: "center", padding: "8px 32px" }}>
-            <div style={{
-              fontFamily: "Oswald, sans-serif",
-              fontWeight: 700,
-              fontSize: "clamp(22px, 3vw, 30px)",
-              color: "var(--brand-cta)",
-              lineHeight: 1,
-              marginBottom: 4,
-            }}>
-              {item.stat}
+      <div style={{
+        maxWidth: 900,
+        margin: "0 auto",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 0,
+        flexWrap: "wrap",
+      }}>
+        {STAT_DISPLAY.map((item, i) => (
+          <div key={item.label} style={{ display: "flex", alignItems: "center" }}>
+            <div style={{ textAlign: "center", padding: "8px 32px" }}>
+              <div
+                className="stat-value"
+                style={{
+                  fontFamily: "Oswald, sans-serif",
+                  fontWeight: 700,
+                  fontSize: "clamp(22px, 3vw, 30px)",
+                  color: "var(--brand-cta)",
+                  lineHeight: 1,
+                  marginBottom: 4,
+                }}
+              >
+                {item.isNum
+                  ? `${statCounts[i].toLocaleString()}${item.suffix}`
+                  : item.display}
+              </div>
+              <div style={{ fontSize: 12, fontWeight: 600, color: "rgba(255,255,255,0.60)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
+                {item.label}
+              </div>
             </div>
-            <div style={{ fontSize: 12, fontWeight: 600, color: "rgba(255,255,255,0.60)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
-              {item.label}
-            </div>
+            {i < 2 && (
+              <div style={{ width: 1, height: 40, background: "rgba(255,255,255,0.12)", flexShrink: 0 }} />
+            )}
           </div>
-          {i < 2 && (
-            <div style={{ width: 1, height: 40, background: "rgba(255,255,255,0.12)", flexShrink: 0 }} />
-          )}
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 /* ─── What's Included card (tightened) ──────────────────────────────────── */
 const IncludedCard = () => (

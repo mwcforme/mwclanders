@@ -212,7 +212,7 @@ interface CROHeroFormProps {
 const CROHeroForm = ({
   service    = "trt",
   heading    = "Claim Your No-Cost Consultation",
-  subheading = "Includes labs, evaluation & same-day results.",
+  subheading = "Labs drawn on-site. Results reviewed same visit. Leave with a plan.",
   ctaLabel   = "Claim My No-Cost Visit Today",
   formId     = "cro-hf",
   source     = "cro-op-hero",
@@ -579,7 +579,7 @@ const CROHeroForm = ({
           {/* Testimonial micro-quote below submit */}
           {/* hardcoded-color-allow-next-line */}
           <p style={{ fontSize: 11, color: "rgba(245,240,235,0.45)", textAlign: "center", lineHeight: 1.5, marginTop: 2 }}>
-            &ldquo;First visit changed everything.&rdquo; &mdash; Mark T., 52, Richmond &middot; Verified patient
+            &ldquo;I've been to two GPs who told me my levels were fine. After one visit here I had answers and a plan. Game-changer for me.&rdquo; &mdash; R.T., Richmond &middot; Verified patient
           </p>
         </form>
       </div>
@@ -668,7 +668,7 @@ const RotatingService = () => {
 
 const SYMPTOMS = [
   "Tired by noon. Coffee stopped working.",
-  "Same gym effort. Nothing to show.",
+  "Six months of training. Your body doesn't look like it.",
   "Sex drive is down. She\u2019s noticed too.",
   "Labs are fine. You\u2019re not.",
   "Brain fog. Can\u2019t find the word.",
@@ -739,7 +739,7 @@ const CROHeroSection = () => {
 
           {/* hardcoded-color-allow-next-line */}
           <p className="mt-6 w-full" style={{ color: "rgba(245,240,235,0.88)", fontFamily: "Inter, sans-serif", fontSize: 19, lineHeight: 1.6 }}>
-            Sit down with a licensed Virginia provider. Labs drawn on-site and reviewed in the same visit. No-cost consultation. Virginia&rsquo;s men&rsquo;s health practice since 2015.
+            Your provider draws labs on-site and reads them with you — same visit, same day. No referrals. No waiting. No surprises.
           </p>
 
           {/* Hero image — clinic credibility between subtext and symptoms */}
@@ -829,7 +829,7 @@ const CROHeroSection = () => {
               e.currentTarget.style.borderColor = "rgba(232,103,10,0.55)";
             }}
           >
-            I recognize this <ArrowRight size={15} strokeWidth={2.5} />
+            Yes, this is me. Show me the fix. <ArrowRight size={15} strokeWidth={2.5} />
           </button>
         </div>
 
@@ -970,7 +970,7 @@ const CROClosingFormSection = () => (
         formId="cro-cf"
         source="cro-op-closing"
         heading="Claim Your No-Cost Consultation"
-        subheading="Includes labs, evaluation & same-day results."
+        subheading="Labs drawn on-site. Results reviewed same visit. Leave with a plan."
       />
     </div>
   </section>
