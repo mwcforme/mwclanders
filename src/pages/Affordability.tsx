@@ -73,7 +73,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "Can I cancel my membership?",
-    a: "Monthly memberships can be cancelled after the first month. Multi-month terms have different cancellation terms reviewed at the consultation.",
+    a: "Monthly memberships can be cancelled after the first month. 12-, 24-, 30-, and 36-month terms have specific cancellation terms that are reviewed in full at your consultation before you commit to anything.",
   },
   {
     q: "Are there military or first responder discounts?",
@@ -888,7 +888,7 @@ export default function Affordability() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+              gridTemplateColumns: "repeat(2, 1fr)",
               gap: 20,
               marginBottom: 36,
             }}
@@ -915,7 +915,7 @@ export default function Affordability() {
                   paddingLeft: 8,
                 }}
               >
-                Most Flexible
+                Flexible
               </span>
               <h3 style={{ fontFamily: "Oswald, sans-serif", fontWeight: 600, fontSize: 22, color: "var(--brand-navy-deep)", marginBottom: 12 }}>
                 Monthly Membership
@@ -925,7 +925,7 @@ export default function Affordability() {
               </p>
             </div>
 
-            {/* 6-Month FEATURED */}
+            {/* 12-Month FEATURED */}
             <div
               style={{
                 border: "2px solid var(--brand-cta)",
@@ -952,14 +952,77 @@ export default function Affordability() {
                 Most Popular
               </span>
               <h3 style={{ fontFamily: "Oswald, sans-serif", fontWeight: 600, fontSize: 22, color: "var(--c-text-on-dark)", marginBottom: 12 }}>
-                6-Month Membership
+                12-Month Membership
               </h3>
               <p style={{ fontSize: 15, color: "rgba(245,240,235,0.75)", lineHeight: 1.6 }}>
                 Reduced rate. Full lab cycle included. Quarterly check-in.
               </p>
             </div>
 
-            {/* 12-Month */}
+            {/* 24-Month */}
+            <div
+              style={{
+                border: "1px solid #E5E7EB",
+                borderRadius: 12,
+                padding: 28,
+                background: "var(--bg-white)",
+              }}
+            >
+              <span
+                style={{
+                  display: "inline-block",
+                  fontSize: 11,
+                  fontWeight: 700,
+                  letterSpacing: "0.10em",
+                  textTransform: "uppercase",
+                  color: "var(--c-text-on-light-muted)",
+                  marginBottom: 12,
+                  borderLeft: "3px solid var(--c-border-on-light)",
+                  paddingLeft: 8,
+                }}
+              >
+                Enhanced Value
+              </span>
+              <h3 style={{ fontFamily: "Oswald, sans-serif", fontWeight: 600, fontSize: 22, color: "var(--brand-navy-deep)", marginBottom: 12 }}>
+                24-Month Membership
+              </h3>
+              <p style={{ fontSize: 15, color: "var(--c-text-on-light-muted)", lineHeight: 1.6 }}>
+                Two full lab cycles. Lower effective monthly rate. Priority scheduling.
+              </p>
+            </div>
+            {/* 30-Month */}
+            <div
+              style={{
+                border: "1px solid #E5E7EB",
+                borderRadius: 12,
+                padding: 28,
+                background: "var(--bg-white)",
+              }}
+            >
+              <span
+                style={{
+                  display: "inline-block",
+                  fontSize: 11,
+                  fontWeight: 700,
+                  letterSpacing: "0.10em",
+                  textTransform: "uppercase",
+                  color: "var(--c-text-on-light-muted)",
+                  marginBottom: 12,
+                  borderLeft: "3px solid var(--c-border-on-light)",
+                  paddingLeft: 8,
+                }}
+              >
+                Superior Value
+              </span>
+              <h3 style={{ fontFamily: "Oswald, sans-serif", fontWeight: 600, fontSize: 22, color: "var(--brand-navy-deep)", marginBottom: 12 }}>
+                30-Month Membership
+              </h3>
+              <p style={{ fontSize: 15, color: "var(--c-text-on-light-muted)", lineHeight: 1.6 }}>
+                Extended term for committed members. Two and a half lab cycles. Priority scheduling.
+              </p>
+            </div>
+
+            {/* 36-Month */}
             <div
               style={{
                 border: "1px solid #E5E7EB",
@@ -984,10 +1047,10 @@ export default function Affordability() {
                 Best Value
               </span>
               <h3 style={{ fontFamily: "Oswald, sans-serif", fontWeight: 600, fontSize: 22, color: "var(--brand-navy-deep)", marginBottom: 12 }}>
-                12-Month Membership
+                36-Month Membership
               </h3>
               <p style={{ fontSize: 15, color: "var(--c-text-on-light-muted)", lineHeight: 1.6 }}>
-                Lowest effective monthly rate. Two lab cycles. Priority scheduling.
+                Lowest effective monthly rate. Three full lab cycles. Priority scheduling and member benefits.
               </p>
             </div>
           </div>
