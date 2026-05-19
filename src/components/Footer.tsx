@@ -110,8 +110,8 @@ export const Footer = () => (
           <FooterHeading>Locations</FooterHeading>
           {[
             { name: "Richmond, VA", phone: "(804) 346-4636", to: "/locations/richmond-va", tel: "8043464636" },
-            { name: "Newport News, VA", phone: "(757) 806-6263", to: "/locations/newport-news-va", tel: "7578066263" },
-            { name: "Virginia Beach, VA", phone: "(757) 806-6263", to: "/locations/virginia-beach-va", tel: "7578066263" },
+            { name: "Newport News, VA", phone: "(757) 612-4425", to: "/locations/newport-news-va", tel: "7576124425" },
+            { name: "Virginia Beach, VA", phone: "(757) 612-4425", to: "/locations/virginia-beach-va", tel: "7576124425" },
           ].map((loc) => (
             <div key={loc.name} className="mb-3 md:mb-4">
               <FooterLink to={loc.to}>{loc.name}</FooterLink>
