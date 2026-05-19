@@ -253,7 +253,7 @@ export default function Affordability() {
                   marginBottom: 8,
                 }}
               >
-                No-Cost First Visit
+                First Visit, No Charge
               </div>
               <p
                 style={{
@@ -265,7 +265,7 @@ export default function Affordability() {
                   margin: 0,
                 }}
               >
-                60-min consult. Labs drawn and reviewed same visit. Full pricing walkthrough included.
+                60-minute visit. Labs drawn and results reviewed the same day. Your provider goes through pricing in writing before you decide.
               </p>
             </div>
 
@@ -303,7 +303,7 @@ export default function Affordability() {
                   marginBottom: 8,
                 }}
               >
-                Membership from
+                Starting Monthly Rate
               </div>
               <p
                 style={{
@@ -349,7 +349,7 @@ export default function Affordability() {
               marginBottom: 0,
             }}
           >
-            No commitment. No pressure. Pricing reviewed in writing before you decide.
+            Pricing reviewed in writing at your visit. No commitment required.
           </p>
         </div>
       </section>
@@ -527,14 +527,14 @@ export default function Affordability() {
               },
               {
                 term: "24-Month",
-                badge: "Enhanced Value",
-                desc: "Lower effective rate. Two full lab cycles.",
+                badge: "Lower Rate",
+                desc: "Lower monthly rate than 12-month. Two full lab cycles.",
                 featured: false,
               },
               {
                 term: "30-Month",
-                badge: "Superior Value",
-                desc: "Extended commitment. Meaningful rate savings.",
+                badge: "Even Lower Rate",
+                desc: "Lower monthly rate than 24-month. Good fit if you plan to stay on protocol.",
                 featured: false,
               },
               {
@@ -682,7 +682,7 @@ export default function Affordability() {
               },
               {
                 quote:
-                  "The staff is warm, professional, and made me feel completely comfortable. The process was straightforward and the pricing was explained clearly before I committed to anything.",
+                  "Everyone was professional and straightforward. They went through the pricing before I had to decide anything. No pressure.",
                 attr: "Google Reviewer",
                 since: "Verified Google Review",
               },
@@ -837,8 +837,7 @@ export default function Affordability() {
               margin: "0 auto 32px",
             }}
           >
-            No-cost. No commitment. Your provider walks every number with you
-            in writing before you decide.
+            Your provider walks every number with you in writing at your visit. You decide what to do with that information.
           </p>
 
           <button
