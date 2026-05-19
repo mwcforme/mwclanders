@@ -16,9 +16,9 @@ const SERVICES = [
     body: "Most men over 40 have it. Most are never told. A licensed Virginia provider reviews your labs on-site and builds a protocol specific to your numbers — not a generic template.",
     cta: COPY.cta.bookConsult,
     href: "/book/location",
-    img: "/images/clinic-lab-draw.webp",
-    imgFallback: "/images/clinic-lab-draw.jpg",
-    imgAlt: "MWC provider drawing labs on-site at a Virginia clinic",
+    img: "/src/assets/lp/provider-lab-processing.jpg",
+    imgFallback: "/src/assets/lp/provider-lab-processing.jpg",
+    imgAlt: "MWC provider processing labs on-site at a Virginia clinic",
   },
   {
     id: "ed",
@@ -27,9 +27,9 @@ const SERVICES = [
     body: "ED is vascular. It responds to proper diagnosis and treatment — not a pill subscription. In-person evaluation, FDA-approved options, and a plan that actually works.",
     cta: COPY.cta.bookConsult,
     href: "/ed",
-    img: "/images/couple-wellness.webp",
-    imgFallback: "/images/couple-wellness.jpg",
-    imgAlt: "Couple enjoying quality time after men's health care",
+    img: "/src/assets/lp/patient-bp-exam-room.jpg",
+    imgFallback: "/src/assets/lp/patient-bp-exam-room.jpg",
+    imgAlt: "MWC provider conducting blood pressure evaluation with male patient",
   },
   {
     id: "wl",
@@ -38,9 +38,9 @@ const SERVICES = [
     body: "Diet and exercise aren't the full story for most men. GLP-1 therapy, lab-guided protocols, and a provider who monitors your progress make the difference.",
     cta: COPY.cta.bookConsult,
     href: "/wl",
-    img: "/images/man-gym-confident.webp",
-    imgFallback: "/images/man-gym-confident.webp",
-    imgAlt: "Man with improved physique after medical weight loss program",
+    img: "/src/assets/lp/provider-consultation-2.jpg",
+    imgFallback: "/src/assets/lp/provider-consultation-2.jpg",
+    imgAlt: "MWC provider reviewing weight loss protocol with patient",
   },
 ];
 

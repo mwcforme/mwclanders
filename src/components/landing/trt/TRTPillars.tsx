@@ -1,6 +1,7 @@
 import imgDoctor from "@/assets/lp/provider-vitals-stethoscope.jpg";
 import imgLobby from "@/assets/lp/provider-lab-processing.jpg";
 import imgTeam from "@/assets/lp/front-desk-welcome-1.jpg";
+import imgManager from "@/assets/lp/provider-manager-welcome.jpg";
 import { Target } from "lucide-react";
 
 const pillars = [
@@ -17,7 +18,7 @@ const pillars = [
   {
     title: "BUILT FOR MEN",
     desc: "TRT, ED, and weight loss is all we do. Dedicated focus means faster answers and better outcomes.",
-    image: null,
+    image: imgManager,
   },
   {
     title: "ONGOING MONITORING",
