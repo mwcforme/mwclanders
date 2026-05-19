@@ -19,6 +19,7 @@ const SERVICES = [
     img: "/src/assets/lp/provider-lab-processing.jpg",
     imgFallback: "/src/assets/lp/provider-lab-processing.jpg",
     imgAlt: "MWC provider processing labs on-site at a Virginia clinic",
+    imgPosition: "center 35%",
   },
   {
     id: "ed",
@@ -30,6 +31,7 @@ const SERVICES = [
     img: "/src/assets/lp/patient-bp-exam-room.jpg",
     imgFallback: "/src/assets/lp/patient-bp-exam-room.jpg",
     imgAlt: "MWC provider conducting blood pressure evaluation with male patient",
+    imgPosition: "center 25%",
   },
   {
     id: "wl",
@@ -41,6 +43,7 @@ const SERVICES = [
     img: "/src/assets/lp/provider-consultation-2.jpg",
     imgFallback: "/src/assets/lp/provider-consultation-2.jpg",
     imgAlt: "MWC provider reviewing weight loss protocol with patient",
+    imgPosition: "center 15%",
   },
 ];
 
@@ -125,7 +128,7 @@ export const TRTThreeProblems = ({ onCta, headlineOverride }: TRTThreeProblemsPr
                   <img
                     src={s.imgFallback}
                     alt={s.imgAlt}
-                    style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }}
+                    style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: s.imgPosition ?? "center center" }}
                     loading="lazy"
                     decoding="async"
                   />

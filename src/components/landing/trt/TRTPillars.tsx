@@ -9,21 +9,25 @@ const pillars = [
     title: "LICENSED PROVIDERS",
     desc: "Licensed Virginia providers and nurse practitioners. A real provider, every visit.",
     image: imgDoctor,
+    imgPosition: "center 20%",
   },
   {
     title: "ON-SITE LABS",
     desc: "CLIA-certified lab in every center. No third-party lab visit, no waiting a week for results.",
     image: imgLobby,
+    imgPosition: "center 25%",
   },
   {
     title: "BUILT FOR MEN",
     desc: "TRT, ED, and weight loss is all we do. Dedicated focus means faster answers and better outcomes.",
     image: imgManager,
+    imgPosition: "center 15%",
   },
   {
     title: "ONGOING MONITORING",
     desc: "Follow-up labs and protocol adjustments are built into your care, not sold as add-ons.",
     image: imgTeam,
+    imgPosition: "center 20%",
   },
 ];
 
@@ -85,7 +89,7 @@ export const TRTPillars = () => (
                   src={p.image}
                   alt={p.title}
                   className="w-[120px] h-[120px] rounded-full object-cover"
-                  style={{ border: "3px solid var(--c-border-on-dark)" }}
+                  style={{ border: "3px solid var(--c-border-on-dark)", objectPosition: p.imgPosition ?? "center center" }}
                   width={120}
                   height={120}
                   loading="lazy"
@@ -141,7 +145,7 @@ export const TRTPillars = () => (
                   src={p.image}
                   alt={p.title}
                   className="w-[96px] h-[96px] rounded-full object-cover"
-                  style={{ border: "3px solid var(--c-border-on-dark)" }}
+                  style={{ border: "3px solid var(--c-border-on-dark)", objectPosition: p.imgPosition ?? "center center" }}
                   width={96}
                   height={96}
                   loading="lazy"
