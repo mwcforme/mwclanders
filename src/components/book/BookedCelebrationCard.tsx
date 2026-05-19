@@ -147,7 +147,7 @@ const BookedCelebrationCard = ({ firstName, apptTime, apptIso, locationCity, loc
             <p style={{
               fontSize: 11, fontWeight: 700, letterSpacing: "0.14em",
               // hardcoded-color-allow-next-line
-              textTransform: "uppercase", color: "#16A34A", marginBottom: 6,
+              textTransform: "uppercase", color: "#15803D", marginBottom: 6,
             }}>
               Appointment Confirmed
             </p>
@@ -164,7 +164,7 @@ const BookedCelebrationCard = ({ firstName, apptTime, apptIso, locationCity, loc
               {first ? `This is your moment, ${first}.` : "This is your moment."}
             </h1>
             {/* hardcoded-color-allow-next-line */}
-            <p style={{ fontSize: 15, color: "#6B7280", fontWeight: 400, lineHeight: 1.5 }}>
+            <p style={{ fontSize: 15, color: "#4B5563", fontWeight: 400, lineHeight: 1.5 }}>
               Your provider has reserved this hour for your labs, exam, and consultation. No waiting rooms. No rushed visits. Just real answers.
             </p>
           </div>
