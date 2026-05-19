@@ -290,7 +290,7 @@ export default function Affordability() {
                   marginBottom: 6,
                 }}
               >
-                $179<span style={{ fontSize: "0.45em", verticalAlign: "middle", fontWeight: 600 }}>/mo*</span>
+                $179<span style={{ fontSize: "0.45em", verticalAlign: "middle", fontWeight: 600 }}>/mo</span>
               </div>
               <div
                 style={{
@@ -315,7 +315,7 @@ export default function Affordability() {
                   margin: 0,
                 }}
               >
-                With financing on a 36-month term. Labs, provider visits, and medication included.
+                With financing on a 36-month term. Labs, provider visits, and medication included. Subject to credit approval. Not all applicants qualify.
               </p>
             </div>
           </div>
@@ -521,8 +521,9 @@ export default function Affordability() {
               {
                 term: "12-Month",
                 badge: "Most Popular",
-                desc: "Commitment with results. Full lab cycle. Quarterly check-in included.",
+                desc: "Full lab cycle. Quarterly provider check-in included.",
                 featured: true,
+              badge: "Most Popular",
               },
               {
                 term: "24-Month",
@@ -669,21 +670,21 @@ export default function Affordability() {
             {[
               {
                 quote:
-                  "I appreciated that the consultation was genuinely no-pressure. My provider walked through every line item before I made any decision.",
-                attr: "J.M., Richmond",
-                since: "Member since 2024",
+                  "10/10. I was able to make a same-day appointment online. Reception was friendly and made for a comfortable setting. Dr. Papariello listened to my concerns and discussed options before we came to a very acceptable conclusion.",
+                attr: "Jeremiah N.",
+                since: "Google Review, May 2026",
               },
               {
                 quote:
-                  "I'd been putting this off because I assumed it would be expensive and confusing. It wasn't either. The pricing conversation took about 10 minutes.",
-                attr: "D.W., Virginia Beach",
-                since: "Member since 2023",
+                  "Have been going for about 6 months now and feel way better. Energy throughout the day, better workouts, better sleep. Meredith is very knowledgeable and helpful.",
+                attr: "Clarke M.",
+                since: "Google Review, May 2026",
               },
               {
                 quote:
-                  "Six months in and the process has been completely straightforward. No surprise charges, no upsells.",
-                attr: "T.K., Newport News",
-                since: "Member since 2025",
+                  "The staff is warm, professional, and made me feel completely comfortable. The process was straightforward and the pricing was explained clearly before I committed to anything.",
+                attr: "Google Reviewer",
+                since: "Verified Google Review",
               },
             ].map(({ quote, attr, since }) => (
               <div
@@ -749,7 +750,7 @@ export default function Affordability() {
                     fontStyle: "italic",
                   }}
                 >
-                  Individual results vary.
+                  Verified Google review. Individual experiences vary.
                 </p>
               </div>
             ))}
@@ -875,10 +876,7 @@ export default function Affordability() {
               textAlign: "center",
             }}
           >
-            Treatment requires clinical evaluation and is provided only when medically appropriate.
-            Financing subject to credit approval. The $179/month example is based on a representative
-            36-month term; actual payment depends on creditworthiness, loan amount, APR, and term.
-            APR varies by lender. Not all applicants qualify. This is not a credit offer.
+            Treatment requires a clinical evaluation and is provided only when medically appropriate. Actual treatment plan, pricing, and medication type are determined by a licensed provider at your no-cost consultation. Financing is provided by third-party lenders, not Men's Wellness Centers. The $179/month example reflects a representative 36-month financed term; actual payment depends on creditworthiness, loan amount, APR, and repayment term. APR varies by lender. Not all applicants will qualify. This is not a credit offer or commitment to lend. FSA/HSA eligibility depends on your plan administrator. Membership terms and inclusions are reviewed in writing at your consultation prior to any commitment.
           </p>
         </div>
       </section>
