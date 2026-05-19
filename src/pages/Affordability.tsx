@@ -170,99 +170,200 @@ export default function Affordability() {
       {/* ── HEADER ───────────────────────────────────────────────────────────── */}
       <TRTHeader minimal />
 
-      {/* ── SECTION 1: HERO (dark navy, full-width manifesto pattern) ────────── */}
+      {/* ── SECTION 1: HERO — offer-led redesign ─────────────────────────────── */}
       <section
         id="hero"
         style={{
           background: "var(--brand-navy-deep)",
-          paddingTop: "calc(64px + 80px)",
-          paddingBottom: 80,
+          paddingTop: "calc(64px + 64px)",
+          paddingBottom: 64,
         }}
       >
         <div className="max-w-[1100px] mx-auto px-6">
-          <p style={eyebrow}>Transparent Pricing</p>
+          <p style={eyebrow}>Membership Pricing</p>
 
           <h1
             className="font-bold uppercase"
             style={{
               fontFamily: "Oswald, sans-serif",
-              fontSize: "clamp(32px, 4vw, 52px)",
+              fontSize: "clamp(36px, 5vw, 60px)",
               color: "var(--brand-cream)",
               fontWeight: 700,
-              lineHeight: 1.1,
+              lineHeight: 1.05,
               marginTop: 0,
-              marginBottom: 20,
+              marginBottom: 24,
             }}
           >
-            WHAT DOES IT COST?
+            START FOR <span style={{ color: "var(--brand-cta)" }}>$0.</span>
+            <br />
+            GET YOUR NUMBERS TODAY.
           </h1>
 
           <p
-            className="leading-[1.7]"
             style={{
               fontFamily: "Inter, sans-serif",
-              fontSize: 17,
+              fontSize: 18,
               color: "var(--c-text-on-dark-muted)",
-              maxWidth: 600,
+              maxWidth: 560,
               marginTop: 0,
-              marginBottom: 32,
+              marginBottom: 40,
+              lineHeight: 1.65,
             }}
           >
-            We don't publish prices online. Your plan is built around your labs,
-            your hormone levels, and what your provider recommends. At your
-            no-cost 60-minute visit, your provider walks every number with you
-            in writing. Before you decide anything.
+            Your first visit is no-cost. Labs drawn on-site. Provider reviews your
+            results and your full membership pricing in writing before you decide anything.
           </p>
+
+          {/* ── Offer card ─────────────────────────────────────────────────── */}
+          <div
+            className="flex flex-col sm:flex-row gap-4 mb-8"
+            style={{ maxWidth: 680 }}
+          >
+            {/* Card 1: Free visit */}
+            <div
+              className="flex-1 rounded-xl p-6"
+              style={{
+                // hardcoded-color-allow-next-line
+                background: "rgba(255,255,255,0.07)",
+                // hardcoded-color-allow-next-line
+                border: "1px solid rgba(255,255,255,0.14)",
+                borderTop: "3px solid var(--brand-cta)",
+              }}
+            >
+              <div
+                style={{
+                  fontFamily: "Oswald, sans-serif",
+                  fontSize: "clamp(36px, 5vw, 52px)",
+                  fontWeight: 700,
+                  color: "var(--brand-cta)",
+                  lineHeight: 1,
+                  marginBottom: 6,
+                }}
+              >
+                $0
+              </div>
+              <div
+                style={{
+                  fontFamily: "Oswald, sans-serif",
+                  fontSize: 16,
+                  fontWeight: 600,
+                  color: "var(--brand-cream)",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.04em",
+                  marginBottom: 8,
+                }}
+              >
+                No-Cost First Visit
+              </div>
+              <p
+                style={{
+                  fontFamily: "Inter, sans-serif",
+                  fontSize: 14,
+                  // hardcoded-color-allow-next-line
+                  color: "rgba(255,255,255,0.65)",
+                  lineHeight: 1.55,
+                  margin: 0,
+                }}
+              >
+                60-min consult. Labs drawn and reviewed same visit. Full pricing walkthrough included.
+              </p>
+            </div>
+
+            {/* Card 2: Financing anchor */}
+            <div
+              className="flex-1 rounded-xl p-6"
+              style={{
+                // hardcoded-color-allow-next-line
+                background: "rgba(255,255,255,0.07)",
+                // hardcoded-color-allow-next-line
+                border: "1px solid rgba(255,255,255,0.14)",
+                borderTop: "3px solid var(--brand-cta)",
+              }}
+            >
+              <div
+                style={{
+                  fontFamily: "Oswald, sans-serif",
+                  fontSize: "clamp(36px, 5vw, 52px)",
+                  fontWeight: 700,
+                  color: "var(--brand-cta)",
+                  lineHeight: 1,
+                  marginBottom: 6,
+                }}
+              >
+                $179<span style={{ fontSize: "0.45em", verticalAlign: "middle", fontWeight: 600 }}>/mo*</span>
+              </div>
+              <div
+                style={{
+                  fontFamily: "Oswald, sans-serif",
+                  fontSize: 16,
+                  fontWeight: 600,
+                  color: "var(--brand-cream)",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.04em",
+                  marginBottom: 8,
+                }}
+              >
+                Membership from
+              </div>
+              <p
+                style={{
+                  fontFamily: "Inter, sans-serif",
+                  fontSize: 14,
+                  // hardcoded-color-allow-next-line
+                  color: "rgba(255,255,255,0.65)",
+                  lineHeight: 1.55,
+                  margin: 0,
+                }}
+              >
+                With financing on a 36-month term. Labs, provider visits, and medication included.
+              </p>
+            </div>
+          </div>
 
           <button
             type="button"
             onClick={() => navigate("/book/location")}
-            className="mt-2 w-full sm:w-auto inline-flex items-center justify-center rounded-lg px-8 font-bold cursor-pointer border-none"
+            className="w-full sm:w-auto inline-flex items-center justify-center rounded-lg px-10 font-bold cursor-pointer border-none"
             style={{
               height: 56,
               minHeight: 56,
               background: "var(--brand-cta)",
               color: "var(--c-text-on-dark)",
-              fontSize: "clamp(15px, 3.5vw, 19px)",
+              fontSize: "clamp(15px, 3.5vw, 18px)",
               letterSpacing: "0.06em",
               fontFamily: "Inter, sans-serif",
               whiteSpace: "nowrap",
             }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = "var(--brand-cta-hover)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "var(--brand-cta)";
-            }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "var(--brand-cta-hover)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "var(--brand-cta)"; }}
           >
             Book My No-Cost Visit
           </button>
 
           <p
-            className="mt-3"
             style={{
               fontFamily: "Inter, sans-serif",
-              fontSize: 13,
+              fontSize: 12,
               color: "var(--c-text-on-dark-muted)",
+              marginTop: 10,
               marginBottom: 0,
             }}
           >
-            No commitment. No pressure.
+            No commitment. No pressure. Pricing reviewed in writing before you decide.
           </p>
         </div>
       </section>
 
-      {/* ── SECTION 2: STAT STRIP (CredibilityBand pattern, custom stats) ────── */}
+      {/* ── SECTION 2: TRUST STRIP ────────────────────────────────────────────── */}
       <section style={{ background: "var(--brand-navy-deep)", borderTop: "1px solid var(--c-border-on-dark)" }}>
         <div
           className="max-w-[1200px] mx-auto grid grid-cols-2 md:grid-cols-4 text-center"
-          style={{ paddingTop: 0, paddingBottom: 0 }}
         >
           {[
             { value: "No-Cost", label: "First Visit" },
             { value: "Labs Included", label: "Drawn On-Site" },
             { value: "Same-Day", label: "Results In-Visit" },
-            { value: "$179/mo*", label: "From, With Financing" },
+            { value: "FSA / HSA", label: "Cards Accepted" },
           ].map((stat) => (
             <div
               key={stat.value}
@@ -273,7 +374,7 @@ export default function Affordability() {
                 style={{
                   fontFamily: "Oswald, sans-serif",
                   color: "var(--c-text-on-dark)",
-                  fontSize: "clamp(22px, 3.5vw, 36px)",
+                  fontSize: "clamp(18px, 3vw, 30px)",
                   lineHeight: 1,
                   letterSpacing: "-0.01em",
                 }}
