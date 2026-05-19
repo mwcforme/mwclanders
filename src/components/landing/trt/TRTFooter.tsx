@@ -94,9 +94,9 @@ export const TRTFooter = () => {
               {/* hardcoded-color-allow-next-line */}
               {li(<span>Richmond: <a href="tel:8043464636" style={{ color: "rgba(255,255,255,0.75)", textDecoration: "none" }}>804-346-4636</a></span>)}
               {/* hardcoded-color-allow-next-line */}
-              {li(<span>Newport News: <a href={PHONE.tel} style={{ color: "rgba(255,255,255,0.75)", textDecoration: "none" }}>757-612-4425</a></span>)}
+              {li(<span>Newport News: <a href={PHONE.tel} style={{ color: "rgba(255,255,255,0.75)", textDecoration: "none" }}>757-612-4428</a></span>)}
               {/* hardcoded-color-allow-next-line */}
-              {li(<span>Virginia Beach: <a href={PHONE.tel} style={{ color: "rgba(255,255,255,0.75)", textDecoration: "none" }}>757-612-4425</a></span>)}
+              {li(<span>Virginia Beach: <a href={PHONE.tel} style={{ color: "rgba(255,255,255,0.75)", textDecoration: "none" }}>757-612-4428</a></span>)}
               {/* hardcoded-color-allow-next-line */}
               {li(<a href="mailto:info@menswellnesscenters.com" style={{ color: "rgba(255,255,255,0.75)", textDecoration: "none" }}>info@menswellnesscenters.com</a>)}
             </ul>
