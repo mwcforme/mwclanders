@@ -123,7 +123,7 @@ const PAIRS = [
 
   // ── Sticky mobile bar (bg rgba(11,16,41,0.96)) ────────────────────────
   { name: "Sticky bar Call text on navy", fg: "#F5F0EB", bg: "#0B1029", size: "small-bold" },
-  { name: "Sticky bar Book text on orange", fg: "#FFFFFF", bg: "#E8670A", size: "normal-bold" },
+  { name: "Sticky bar Book text on orange", fg: "#FFFFFF", bg: "#BF5608", size: "normal-bold" },
 
   // ── Footer (bg #000033) ───────────────────────────────────────────────
   { name: "Footer col labels on #000033", fg: "#FFFFFF", bg: "#000033", size: "small-bold" },
