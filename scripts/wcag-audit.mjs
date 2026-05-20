@@ -55,7 +55,7 @@ const PAIRS = [
   { name: "Form heading on glass card (~0B1633)", fg: "#F5F0EB", bg: "#131B3A", size: "large" },
   { name: "Form subheading on glass card", fg: "rgba(245,240,235,0.70)", bg: "#131B3A", size: "small" },
   { name: "Form input text on white", fg: "#0B1029", bg: "#FFFFFF", size: "normal" },
-  { name: "Form placeholder on white", fg: "rgba(11,16,41,0.45)", bg: "#FFFFFF", size: "normal" },
+  { name: "Form placeholder on white", fg: "rgba(11,16,41,0.60)", bg: "#FFFFFF", size: "normal" },
   { name: "HIPAA line on glass card", fg: "rgba(245,240,235,0.60)", bg: "#131B3A", size: "small" },
   { name: "TCPA text on glass card", fg: "rgba(245,240,235,0.65)", bg: "#131B3A", size: "small" },
 
@@ -119,11 +119,11 @@ const PAIRS = [
 
   // ── Header (bg rgba(11,16,41,0.95) ≈ #0B1029) ────────────────────────
   { name: "Header phone on nav bg", fg: "#FFFFFF", bg: "#0C1130", size: "normal" },
-  { name: "Header CTA orange bg / white text", fg: "#FFFFFF", bg: "#E8670A", size: "small-bold" },
+  { name: "Header CTA orange bg / white text", fg: "#FFFFFF", bg: "#BF5608", size: "small-bold" },
 
   // ── Sticky mobile bar (bg rgba(11,16,41,0.96)) ────────────────────────
   { name: "Sticky bar Call text on navy", fg: "#F5F0EB", bg: "#0B1029", size: "small-bold" },
-  { name: "Sticky bar Book text on orange", fg: "#FFFFFF", bg: "#E8670A", size: "normal-bold" },
+  { name: "Sticky bar Book text on orange", fg: "#FFFFFF", bg: "#BF5608", size: "normal-bold" },
 
   // ── Footer (bg #000033) ───────────────────────────────────────────────
   { name: "Footer col labels on #000033", fg: "#FFFFFF", bg: "#000033", size: "small-bold" },
@@ -141,7 +141,7 @@ const PAIRS = [
   { name: "OptionRow label on white", fg: "#0B1029", bg: "#FFFFFF", size: "normal-bold" },
   { name: "OptionRow label on selected cream", fg: "#0B1029", bg: "#FFF7F0", size: "normal-bold" },
   { name: "OptionRow chevron on white", fg: "#6B7280", bg: "#FFFFFF", size: "ui" },
-  { name: "OptionRow icon on white chip", fg: "#E8670A", bg: "#FFF1E3", size: "ui" },
+  { name: "OptionRow icon on chip bg", fg: "#0B1029", bg: "#FFE4CC", size: "ui" },
 
   // ── BookLetsTalk ──────────────────────────────────────────────────────
   { name: "LetsTalk H1 on #000814", fg: "#FFFFFF", bg: "#000814", size: "large" },
@@ -149,14 +149,14 @@ const PAIRS = [
   { name: "LetsTalk 'team available' badge text on orange-tinted bg", fg: "#FFB07A", bg: "#1A1008", size: "small" },
   { name: "LetsTalk card title on white", fg: "#0B1029", bg: "#FFFFFF", size: "normal-bold" },
   { name: "LetsTalk card subtitle on white", fg: "#5A6478", bg: "#FFFFFF", size: "small" },
-  { name: "LetsTalk SMS reply note on white", fg: "#9CA3AF", bg: "#FFFFFF", size: "small" },
+  { name: "LetsTalk SMS reply note on white", fg: "#424857", bg: "#FFFFFF", size: "small" },
   { name: "LetsTalk back link on #000814", fg: "rgba(255,255,255,0.55)", bg: "#000814", size: "small" },
 
   // ── BookSymptom ───────────────────────────────────────────────────────
   { name: "BookSymptom other panel title on #FFF7F0", fg: "#0B1029", bg: "#FFF7F0", size: "normal-bold" },
   { name: "BookSymptom other panel label on #FFF7F0", fg: "#3A4258", bg: "#FFF7F0", size: "small" },
   { name: "BookSymptom textarea on white", fg: "#0B1029", bg: "#FFFFFF", size: "normal" },
-  { name: "BookSymptom disabled btn text on #D1D5DB", fg: "#6B7280", bg: "#D1D5DB", size: "normal-bold" },
+  { name: "BookSymptom disabled btn text on #E5E7EB", fg: "#000033", bg: "#E5E7EB", size: "normal-bold" },
 
   // ── TRTQuizApproved ───────────────────────────────────────────────────
   { name: "QuizApproved muted text on white", fg: "#475569", bg: "#FFFFFF", size: "small" },
