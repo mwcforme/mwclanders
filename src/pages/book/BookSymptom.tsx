@@ -145,10 +145,8 @@ const BookSymptom = () => {
                 marginTop: 12,
                 width: "100%",
                 minHeight: 52,
-                // hardcoded-color-allow-next-line
-                background: otherNote.trim().length < 3 ? "#D1D5DB" : "var(--brand-cta)",
-                // hardcoded-color-allow-next-line
-                color: otherNote.trim().length < 3 ? "#374151" : "var(--c-text-on-dark)",
+                background: otherNote.trim().length < 3 ? "var(--c-btn-disabled-bg)" : "var(--brand-cta)",
+                color: otherNote.trim().length < 3 ? "var(--c-btn-disabled-fg)" : "var(--c-text-on-dark)",
                 border: 0,
                 borderRadius: 10,
                 fontSize: 17,
