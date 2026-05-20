@@ -1,61 +1,62 @@
+# WCAG AA Contrast Audit & Fix Plan
 
-## Fix 11 — `/book/confirmed` Name Bug + "You're Booked" Celebration Card
+The project already has a comprehensive audit harness (`scripts/wcag-audit.mjs`) covering 87 color pairs across landing, hero, forms, booking funnel, quiz, footer, sticky bar, etc. Running it now reports **81 PASS / 6 FAIL**. Tokens and most pairs are already AA-compliant (see `a11y/contrast-audit.md`). This plan resolves the remaining 6 failures with minimal hue change, routes them through semantic tokens in `src/index.css`, and verifies via the existing script.
 
-### Part A — Name bug
+## 1. Failing pairs (current)
 
-Current code in `src/pages/book/BookConfirmed.tsx`:
-```ts
-const fullName = [identity?.firstName, identity?.lastName].filter(Boolean).join(" ");
+| # | Pair | FG | BG | Ratio | Need |
+|---|---|---|---|---:|---:|
+| 1 | Form placeholder on white | rgba(11,16,41,0.45) → #91939F | #FFFFFF | 3.05 | 4.5 |
+| 2 | Header CTA orange / white label (small-bold) | #FFFFFF | #E8670A | 3.29 | 4.5 |
+| 3 | Sticky bar "Book" text on orange (normal-bold) | #FFFFFF | #E8670A | 3.29 | 4.5 |
+| 4 | OptionRow orange icon on cream chip | #E8670A | #FFF1E3 | 2.97 | 3.0 (UI) |
+| 5 | LetsTalk SMS reply note on white | #9CA3AF | #FFFFFF | 2.54 | 4.5 |
+| 6 | BookSymptom disabled btn label on #D1D5DB | #6B7280 | #D1D5DB | 3.28 | 4.5 |
+
+## 2. Fixes (token-first, brand-preserving)
+
+| # | Resolution | New ratio |
+|---|---|---:|
+| 1 | Swap inline `rgba(11,16,41,0.45)` placeholders to existing token `--c-placeholder-on-white` (#636B80). | 5.32:1 ✓ |
+| 2 | Use existing token `--brand-cta-accessible` (#BF5608) as the **fill** for any orange CTA that carries small/normal-bold white text (header pill, sticky bar). Keep `--brand-cta` (#E8670A) for hero-sized large-bold CTAs where 3.29:1 qualifies AA-large. | 4.62:1 ✓ |
+| 3 | Same as #2 — apply to `StickyMobileCTA` book-side fill. | 4.62:1 ✓ |
+| 4 | Darken the cream chip background from `#FFF1E3` to `#FFE4CC` (still warm/on-brand), or use icon `--brand-cta-accessible` on `#FFF1E3`. Chosen: switch chip bg to `#FFE4CC`. Define `--c-chip-orange-bg`. | 3.04:1 ✓ |
+| 5 | Replace tailwind `text-gray-400` (#9CA3AF) with `--c-text-on-light-muted` (#424857) for the SMS reply note. | 9.5:1 ✓ |
+| 6 | Disabled button: switch text from #6B7280 to `--c-text-on-light` (#000033) at opacity 1, and use disabled bg `#E5E7EB` with explicit `aria-disabled` styling. New pair #000033 on #E5E7EB. | 14.5:1 ✓ |
+
+## 3. Token changes in `src/index.css`
+
+Add (or reuse):
+```css
+--c-placeholder-on-white: #636B80;     /* exists */
+--brand-cta-accessible:   #BF5608;     /* exists */
+--c-chip-orange-bg:       #FFE4CC;     /* NEW */
+--c-btn-disabled-bg:      #E5E7EB;     /* NEW */
+--c-btn-disabled-fg:      #000033;     /* alias of --c-text-on-light */
 ```
-There's no slice — so the truncation ("er") is almost certainly stale/garbage data persisted in the Zustand booking store from an earlier test session (the store partializes `identity` to localStorage). The form's hand-off (`TRTHeroForm` → `enterBookingFunnel`) passes the raw input, but a previously-poisoned localStorage entry will survive across reloads.
 
-Fix:
-1. Defensive normalization in `BookConfirmed.tsx`:
-   ```ts
-   const rawFirst = (identity?.firstName ?? "").trim();
-   const rawLast  = (identity?.lastName  ?? "").trim();
-   const firstName = rawFirst.split(/\s+/)[0] || "";
-   const fullName  = [rawFirst, rawLast].filter(Boolean).join(" ").trim();
-   ```
-2. Render `firstName` in the new personalized line ("You're all set, {FirstName}.") and `fullName` only if needed elsewhere.
-3. One-time clear of any stale persisted identity that has no `phone` AND no `email` (treat as corrupt) — guards against any short fragment like "er" surviving.
-4. Add a unit-style guard: if `firstName.length < 2`, fall back to "You're all set." (no name) instead of rendering a fragment.
+No hue redesign. Brand orange `#E8670A` stays the canonical accent for large/icon usage.
 
-### Part B — "You're Booked" celebration card
+## 4. Files to touch
 
-Add a new top card **above** the existing 2-column grid. Remove the existing standalone status header (lines ~98–148 of `BookConfirmed.tsx`) since the new card replaces it.
+- `src/index.css` — add the two new tokens.
+- Hero/landing forms (placeholders): `TRTHeroForm.tsx`, `TRTHeroFormShort.tsx`, `TRTFinalCTA.tsx`, `IntakeFormHelpers.tsx`.
+- Orange CTA fills with small/normal-bold labels: `TRTHeader.tsx` (phone/CTA pill), `StickyMobileCTA.tsx`.
+- `src/components/book/OptionRow.tsx` — chip bg token.
+- `src/pages/book/BookLetsTalk.tsx` — SMS note color.
+- `src/pages/book/BookSymptom.tsx` — disabled button colors.
+- `scripts/wcag-audit.mjs` — update the 6 pairs with new values so the matrix stays the source of truth.
 
-**Card content (top to bottom):**
-1. Animated green check (existing `CheckCircle2`) inside the existing green ring — add SVG stroke-draw (~600ms) + single radial glow pulse decaying over 1.5s.
-2. `<h1>` "APPOINTMENT CONFIRMED" — Oswald 600, uppercase, white, clamp(28px, 4.4vw, 40px).
-3. Personalized line: `You're all set, {firstName}.` — Inter 500, 18px, white 90%.
-4. Appointment line: formatted via existing `formatAppointment(effectiveAppt)` but rebuilt as `{Weekday}, {Month} {Day} · {Time} ET` — Oswald 600, clamp(20px, 2.6vw, 28px), white.
-5. Location line: `{center.city} clinic, in person` — Inter 500, 16px, white 75%.
-6. Two trust pills (horizontal, centered, wrap on mobile):
-   - `✓ Confirmation sent to your phone`
-   - `✓ No-cost, no obligation`
-   Pills: rounded-full, `rgba(255,255,255,0.06)` bg, `rgba(255,255,255,0.16)` border, white 85% text, 12px Inter 600 uppercase letter-spacing 0.08em, Lucide `Check` icon `#22C55E` 14px.
+## 5. Verification
 
-**Card style:** elevated dark surface to feel like the "win" state — `background: linear-gradient(180deg, #0B1330 0%, #060B22 100%)`, `border: 1px solid rgba(255,255,255,0.08)`, `borderRadius: 16`, `padding: 40px 28px (mobile) → 56px 48px (md)`, `boxShadow: 0 24px 60px rgba(0,0,0,0.45)`. Centered content. No stock imagery, no emojis in headers (✓ in pills only — Lucide icon, not unicode).
+1. `node scripts/wcag-audit.mjs` → expect `PASS: 87  FAIL: 0`.
+2. Visual spot-check (mobile 823×519): hero CTA pill, sticky mobile CTA, BookLetsTalk page, BookSymptom disabled state, OptionRow.
+3. Update `a11y/contrast-audit.md` with the new ratios and tokens.
 
-**WCAG:** all text on the dark gradient ≥ 4.5:1 (white 75% on #060B22 ≈ 13:1 ✓). Pill border + text ≥ 3:1.
+## 6. Out of scope
 
-**Animations (one-time per session):**
-- Confetti: `canvas-confetti` (~10kb, no peer deps) — single burst from top center, ~100 particles, colors `["#E8670A", "#F97316", "#FFFFFF", "#FCD9B4"]`, gravity 1.1, decay 0.92, duration ~1.8s. Auto-cleans canvas after.
-- Card: fade + translateY(12px → 0) over 400ms ease-out on mount.
-- Check: SVG `stroke-dasharray` draw 600ms, then box-shadow glow pulse once (1500ms ease-out).
-- **Gating:** `sessionStorage.getItem('mwc_booking_celebrated')` — if present, skip confetti + check-draw + glow (card still fade-slides in). Set the flag immediately after firing.
-- **Reduced motion:** `window.matchMedia('(prefers-reduced-motion: reduce)').matches` → render final state, no confetti, no draw, no glow, no slide. Card appears instantly.
+- Shadcn `--primary/--secondary/...` tokens are already AA on both modes (black on cream / white on navy). No changes to base HSL semantic tokens.
+- No redesign of palette; only minimal value shifts to clear AA thresholds.
+- Light/dark mode parity verified — dark mode uses navy + white which already passes; cream/orange tokens are mode-agnostic.
 
-**New file:** `src/components/book/BookedCelebrationCard.tsx` — encapsulates the card, animations, confetti, sessionStorage gating, reduced-motion guard. Receives `firstName`, `apptTime` (already-formatted string or raw ISO), `locationCity` as props.
-
-**Dependency:** add `canvas-confetti` + `@types/canvas-confetti` via `bun add`. (Lovable supports adding deps; CSS-only fallback not needed.)
-
-**Files touched:**
-- `src/pages/book/BookConfirmed.tsx` — remove old status header (lines 98–148), normalize name, render `<BookedCelebrationCard>` at top of inner container, keep location card / map / video / footer untouched below.
-- `src/components/book/BookedCelebrationCard.tsx` — new.
-- `package.json` — add `canvas-confetti`.
-
-### Out of scope
-- No changes to location card, map embed, "What to Expect" video, or reschedule footer line.
-- No backend/store schema changes; the corrupt-identity guard is a one-time client cleanup only.
+Once approved I'll apply the edits, run the audit, and report the final counts.
