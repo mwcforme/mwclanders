@@ -141,7 +141,7 @@ const PAIRS = [
   { name: "OptionRow label on white", fg: "#0B1029", bg: "#FFFFFF", size: "normal-bold" },
   { name: "OptionRow label on selected cream", fg: "#0B1029", bg: "#FFF7F0", size: "normal-bold" },
   { name: "OptionRow chevron on white", fg: "#6B7280", bg: "#FFFFFF", size: "ui" },
-  { name: "OptionRow icon on white chip", fg: "#E8670A", bg: "#FFE4CC", size: "ui" },
+  { name: "OptionRow icon on chip bg", fg: "#0B1029", bg: "#FFE4CC", size: "ui" },
 
   // ── BookLetsTalk ──────────────────────────────────────────────────────
   { name: "LetsTalk H1 on #000814", fg: "#FFFFFF", bg: "#000814", size: "large" },
