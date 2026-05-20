@@ -149,7 +149,7 @@ const PAIRS = [
   { name: "LetsTalk 'team available' badge text on orange-tinted bg", fg: "#FFB07A", bg: "#1A1008", size: "small" },
   { name: "LetsTalk card title on white", fg: "#0B1029", bg: "#FFFFFF", size: "normal-bold" },
   { name: "LetsTalk card subtitle on white", fg: "#5A6478", bg: "#FFFFFF", size: "small" },
-  { name: "LetsTalk SMS reply note on white", fg: "#9CA3AF", bg: "#FFFFFF", size: "small" },
+  { name: "LetsTalk SMS reply note on white", fg: "#424857", bg: "#FFFFFF", size: "small" },
   { name: "LetsTalk back link on #000814", fg: "rgba(255,255,255,0.55)", bg: "#000814", size: "small" },
 
   // ── BookSymptom ───────────────────────────────────────────────────────
