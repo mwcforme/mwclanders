@@ -45,9 +45,7 @@ const OptionRow = ({ icon: Icon, label, selected, onClick }: OptionRowProps) => 
       className="flex items-center justify-center flex-shrink-0 w-11 h-11 md:w-12 md:h-12 transition-colors group-hover:bg-[#FFEDDD]"
       style={{
         borderRadius: 10,
-        background: selected ? "var(--brand-cta)" :
-        // hardcoded-color-allow-next-line
-        "#FFF1E3",
+        background: selected ? "var(--brand-cta)" : "var(--c-chip-orange-bg)",
       }}
     >
       <Icon
