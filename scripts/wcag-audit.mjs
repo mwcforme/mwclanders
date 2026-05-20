@@ -55,7 +55,7 @@ const PAIRS = [
   { name: "Form heading on glass card (~0B1633)", fg: "#F5F0EB", bg: "#131B3A", size: "large" },
   { name: "Form subheading on glass card", fg: "rgba(245,240,235,0.70)", bg: "#131B3A", size: "small" },
   { name: "Form input text on white", fg: "#0B1029", bg: "#FFFFFF", size: "normal" },
-  { name: "Form placeholder on white", fg: "rgba(11,16,41,0.45)", bg: "#FFFFFF", size: "normal" },
+  { name: "Form placeholder on white", fg: "rgba(11,16,41,0.60)", bg: "#FFFFFF", size: "normal" },
   { name: "HIPAA line on glass card", fg: "rgba(245,240,235,0.60)", bg: "#131B3A", size: "small" },
   { name: "TCPA text on glass card", fg: "rgba(245,240,235,0.65)", bg: "#131B3A", size: "small" },
 
