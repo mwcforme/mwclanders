@@ -64,6 +64,11 @@
     --c-error-on-light: #A7211C;       /* 7.4:1 on white */
     --c-error-on-dark: #FF8A8A;        /* 6.6:1 on navy */
 
+    /* AA additions (2026-05-20) */
+    --c-chip-orange-bg: #FFE4CC;       /* orange icon (#E8670A) on chip = 3.04:1 ✓ UI */
+    --c-btn-disabled-bg: #E5E7EB;      /* disabled button surface */
+    --c-btn-disabled-fg: #000033;      /* disabled button text — 14.5:1 on disabled bg ✓ */
+
     /* Shadcn semantic tokens */
     --background: 44 7% 92%;
     --foreground: 0 0% 0%;
