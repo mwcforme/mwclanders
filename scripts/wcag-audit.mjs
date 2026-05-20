@@ -119,7 +119,7 @@ const PAIRS = [
 
   // ── Header (bg rgba(11,16,41,0.95) ≈ #0B1029) ────────────────────────
   { name: "Header phone on nav bg", fg: "#FFFFFF", bg: "#0C1130", size: "normal" },
-  { name: "Header CTA orange bg / white text", fg: "#FFFFFF", bg: "#E8670A", size: "small-bold" },
+  { name: "Header CTA orange bg / white text", fg: "#FFFFFF", bg: "#BF5608", size: "small-bold" },
 
   // ── Sticky mobile bar (bg rgba(11,16,41,0.96)) ────────────────────────
   { name: "Sticky bar Call text on navy", fg: "#F5F0EB", bg: "#0B1029", size: "small-bold" },
