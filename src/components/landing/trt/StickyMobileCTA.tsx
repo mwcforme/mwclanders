@@ -116,7 +116,7 @@ export const StickyMobileCTA = () => {
         className="flex-1 flex items-center justify-center font-bold uppercase cursor-pointer border-none"
         style={{
           height: 72,
-          background: "var(--brand-cta)",
+          background: "var(--brand-cta-accessible)",
           color: "var(--c-text-on-dark)",
           fontSize: 18,
           fontFamily: "Inter, sans-serif",
