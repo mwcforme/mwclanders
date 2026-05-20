@@ -156,7 +156,7 @@ const PAIRS = [
   { name: "BookSymptom other panel title on #FFF7F0", fg: "#0B1029", bg: "#FFF7F0", size: "normal-bold" },
   { name: "BookSymptom other panel label on #FFF7F0", fg: "#3A4258", bg: "#FFF7F0", size: "small" },
   { name: "BookSymptom textarea on white", fg: "#0B1029", bg: "#FFFFFF", size: "normal" },
-  { name: "BookSymptom disabled btn text on #D1D5DB", fg: "#6B7280", bg: "#D1D5DB", size: "normal-bold" },
+  { name: "BookSymptom disabled btn text on #E5E7EB", fg: "#000033", bg: "#E5E7EB", size: "normal-bold" },
 
   // ── TRTQuizApproved ───────────────────────────────────────────────────
   { name: "QuizApproved muted text on white", fg: "#475569", bg: "#FFFFFF", size: "small" },
