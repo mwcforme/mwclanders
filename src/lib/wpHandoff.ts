@@ -25,7 +25,7 @@
 
 // ── Config ───────────────────────────────────────────────────────────────────
 
-const TTL_SECONDS     = 259_200; // 72 hours
+const TTL_SECONDS     = 600; // 10 minutes
 const CLOCK_SKEW_SEC  = 60;  // tolerate 60s of server/client clock drift
 const TS_PATTERN      = /^\d{10}$/;
 const SIG_PATTERN     = /^[0-9a-f]{64}$/;
