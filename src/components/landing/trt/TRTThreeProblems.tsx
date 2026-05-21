@@ -117,12 +117,37 @@ export const TRTThreeProblems = ({ onCta, headlineOverride }: TRTThreeProblemsPr
               className="flex flex-col rounded-2xl overflow-hidden"
               style={{
                 background: "#FFFFFF",
-                border: "1px solid rgba(11,16,41,0.08)",
+                border: "1px solid rgba(11,16,41,0.10)",
                 boxShadow: "0 4px 24px rgba(11,16,41,0.06), 0 1px 4px rgba(11,16,41,0.04)",
               }}
             >
+              {/* Service title header — above image */}
+              <div
+                style={{
+                  padding: "14px 20px 12px",
+                  borderBottom: "1px solid rgba(11,16,41,0.08)",
+                  background: "#FFFFFF",
+                }}
+              >
+                <p
+                  style={{
+                    fontFamily: "Oswald, sans-serif",
+                    fontWeight: 700,
+                    fontSize: 15,
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase" as const,
+                    color: "var(--brand-navy)",
+                    lineHeight: 1.2,
+                    margin: 0,
+                  }}
+                >
+                  <span style={{ color: "var(--brand-cta)", marginRight: 6 }}>—</span>
+                  {s.eyebrow}
+                </p>
+              </div>
+
               {/* Image */}
-              <div style={{ height: 220, overflow: "hidden", position: "relative" }}>
+              <div style={{ height: 220, overflow: "hidden" }}>
                 <picture>
                   <source srcSet={s.img} type="image/webp" />
                   <img
@@ -133,26 +158,6 @@ export const TRTThreeProblems = ({ onCta, headlineOverride }: TRTThreeProblemsPr
                     decoding="async"
                   />
                 </picture>
-                {/* Service eyebrow */}
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 16,
-                    left: 16,
-                    background: "rgba(11,16,41,0.85)",
-                    backdropFilter: "blur(8px)",
-                    borderRadius: 6,
-                    padding: "4px 10px",
-                    fontFamily: "Oswald, sans-serif",
-                    fontWeight: 600,
-                    fontSize: 10,
-                    letterSpacing: "0.10em",
-                    color: "var(--brand-cta)",
-                    textTransform: "uppercase" as const,
-                  }}
-                >
-                  {s.eyebrow}
-                </div>
               </div>
 
               {/* Content */}
