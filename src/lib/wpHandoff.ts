@@ -1,5 +1,5 @@
 /**
- * wpHandoff.ts — WordPress → Lovable handoff token verification
+ * wpHandoff.ts — WordPress → Lovable handoff token verification + partial lead capture
  *
  * Verifies an HMAC-SHA256 signed token produced by WordPress and
  * returns the verified payload so BookEntry can seed the booking store.
@@ -130,6 +130,34 @@ async function verifyHmac(params: HandoffParams, secret: string): Promise<boolea
   );
 
   return crypto.subtle.verify("HMAC", key, sigBytes, enc.encode(payload));
+}
+
+// ── Partial lead capture ─────────────────────────────────────────────────────
+
+/**
+ * Fire-and-forget: upsert a partial GHL contact immediately when a WP handoff
+ * is verified. This captures the lead even if the user abandons before booking.
+ *
+ * Tagged source:wp-form + status:partial so coordinators can run follow-up
+ * sequences on drop-offs. BookContact's upsertContact call later updates the
+ * same contact (GHL deduplicates on phone number).
+ *
+ * Non-blocking — never throws to caller.
+ */
+export function pushWpPartialLead(payload: WpHandoffPayload): void {
+  import("@/lib/ghlCalendars").then(({ upsertContact }) =>
+    upsertContact({
+      firstName: payload.firstName,
+      phone:     `+1${payload.phone.replace(/\D/g, "")}`,
+      ...(payload.email    ? { email: payload.email }       : {}),
+      source: "wordpress-form",
+      tags:   ["source:wp-form", "status:partial"],
+      ...(payload.service  ? { customFields: { mwc_funnel_service: payload.service } } : {}),
+    })
+  ).catch((err) => {
+    // Non-blocking — log in dev, silent in prod
+    if (import.meta.env.DEV) console.warn("[wpHandoff] partial lead push failed", err);
+  });
 }
 
 // ── Public API ───────────────────────────────────────────────────────────────

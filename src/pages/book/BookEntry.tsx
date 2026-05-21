@@ -13,7 +13,7 @@
 import { useEffect, useRef } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useBookingStore, isKnownService } from "@/domain/booking/bookingStore";
-import { verifyWpHandoff }                 from "@/lib/wpHandoff";
+import { verifyWpHandoff, pushWpPartialLead } from "@/lib/wpHandoff";
 import { PHONE }                           from "@/lib/constants";
 
 export default function BookEntry() {
@@ -52,8 +52,11 @@ export default function BookEntry() {
       }
 
       const { payload } = result;
-      const store = useBookingStore.getState();
 
+      // Push partial lead to GHL immediately — captures drop-offs before booking
+      pushWpPartialLead(payload);
+
+      const store = useBookingStore.getState();
       store.reset();
       store.patch({
         identity: {
