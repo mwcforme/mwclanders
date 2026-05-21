@@ -14,7 +14,7 @@ import { PHONE } from "@/lib/constants";
 
 const ERROR_RED = "var(--c-error-on-light)";
 const ORANGE = "var(--brand-cta)";
-const NAVY = "var(--brand-navy-deep)";
+const _NAVY = "var(--brand-navy-deep)";
 
 function formatPhone(raw: string): string {
   const digits = raw.replace(/\D/g, "").slice(0, 10);

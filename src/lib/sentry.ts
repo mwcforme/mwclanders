@@ -65,7 +65,6 @@ if (dsn) {
     },
   });
 } else if (import.meta.env.DEV) {
-  // eslint-disable-next-line no-console
   console.info("[sentry] VITE_SENTRY_DSN not set; Sentry disabled.");
 }
 

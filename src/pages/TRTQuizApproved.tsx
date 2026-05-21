@@ -6,7 +6,7 @@ import {
   AlertTriangle, ArrowUpRight,
 } from "lucide-react";
 import { useQuizState, topCategories } from "@/lib/quizState";
-import { CATEGORIES, FAQ_ITEMS, RESULTS_TESTIMONIALS } from "@/data/quizContent";
+import { FAQ_ITEMS, RESULTS_TESTIMONIALS } from "@/data/quizContent";
 
 const PHONE_DISPLAY = "(866) 344-4955";
 const PHONE_HREF = "tel:+18663444955";

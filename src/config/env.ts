@@ -14,7 +14,6 @@ const EnvSchema = z.object({
 const parsed = EnvSchema.safeParse(import.meta.env);
 
 if (!parsed.success) {
-  // eslint-disable-next-line no-console
   console.error("[env] Invalid environment configuration:", parsed.error.flatten());
   throw new Error("Invalid environment configuration. See console for details.");
 }

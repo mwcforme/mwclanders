@@ -5,7 +5,7 @@
  * Explicit no-cost/included items to address price anxiety before it happens.
  * Dark navy background — breaks up the cream/white sections visually.
  */
-import { Check, X } from "lucide-react";
+import { Check } from "lucide-react";
 
 const INCLUDED = [
   "Labs drawn and reviewed on-site",

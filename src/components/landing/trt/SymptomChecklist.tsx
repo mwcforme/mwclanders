@@ -24,7 +24,7 @@ interface SymptomChecklistProps {
   formId?: string;
 }
 
-export const SymptomChecklist = ({ formId = "hero-form" }: SymptomChecklistProps) => {
+export const SymptomChecklist = ({ formId: _formId = "hero-form" }: SymptomChecklistProps) => {
   return (
     <div
       style={{

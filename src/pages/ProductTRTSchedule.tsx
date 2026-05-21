@@ -17,7 +17,7 @@ import { TRTFooter } from "@/components/landing/trt/TRTFooter";
 import { SEO } from "@/components/SEO";
 import { useBookingStore } from "@/domain/booking/bookingStore";
 import GHLDayView from "@/components/book/GHLDayView";
-import { CENTER_CALENDARS, type LocationKey } from "@/lib/ghlCalendars";
+import { type LocationKey } from "@/lib/ghlCalendars";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
 
 const LOCATIONS: { key: LocationKey; label: string; address: string }[] = [

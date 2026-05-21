@@ -14,7 +14,7 @@
 import { useEffect, useState, useRef } from "react";
 import { contactUpdater } from "@/services/contactUpdater";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
-import { MapPin, ExternalLink, Clock, Send, Check, Calendar, ClipboardList, FlaskConical, Stethoscope } from "lucide-react";
+import { MapPin, ExternalLink, Clock, Send, Calendar, ClipboardList, FlaskConical, Stethoscope } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import BookLayout from "@/components/book/BookLayout";
 import { useBookingStore } from "@/domain/booking/bookingStore";
@@ -185,6 +185,7 @@ export default function BookConfirmed() {
     if (identity && !identity.phone && !identity.email) patchAction({ identity: undefined });
     const t = setTimeout(() => setCheckDrawn(true), 200);
     return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally runs once on mount
   }, []);
 
   const mapRef = useRef<HTMLDivElement>(null);

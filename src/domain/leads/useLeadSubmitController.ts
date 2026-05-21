@@ -10,7 +10,7 @@
  *  6. Hard 6s timeout as last resort — button can never hang permanently
  */
 import { useCallback, useRef, useState } from "react";
-import { toast } from "sonner";
+
 import type { ZodSchema } from "zod";
 import { useServices } from "@/app/providers/ServicesProvider";
 import { getAttribution, attributionTags } from "@/lib/attribution";
@@ -36,6 +36,7 @@ export interface LeadSubmitOptions<TInput> {
   persistToBookingState?: boolean; // reserved
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- TInput preserved for type-inference at call sites
 export interface LeadSubmitController<TInput> {
   status: LeadSubmitStatus;
   error: string | null;

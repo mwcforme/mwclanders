@@ -3,7 +3,7 @@ import { TRTHeroForm } from "@/components/landing/trt/TRTHeroForm";
 import { COPY } from "@/data/copy";
 
 /** Trust chip text - must match design.regression.test.ts assertions. */
-const TRUST_LINE = "HIPAA Compliant · No Spam, Ever";
+const _TRUST_LINE = "HIPAA Compliant · No Spam, Ever";
 
 export const TRTFinalCTA = () => {
   return (

@@ -1,9 +1,7 @@
 import { Phone, MessageSquareText, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import BookLayout from "@/components/book/BookLayout";
-import { useBookingStore } from "@/domain/booking/bookingStore";
 import { PHONE } from "@/lib/constants";
-const getSupabase = () => import("@/integrations/supabase/client").then(m => m.supabase);
 
 const PHONE_DISPLAY = PHONE.display;
 const PHONE_TEL = PHONE.tel;

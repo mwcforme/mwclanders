@@ -15,7 +15,7 @@ import {
   Star, ChevronRight,
 } from "lucide-react";
 
-import { heroLeadSchema, type HeroLeadInput } from "@/domain/leads/leadFormSchema";
+import { heroLeadSchema } from "@/domain/leads/leadFormSchema";
 import { useLeadSubmitController } from "@/domain/leads/useLeadSubmitController";
 import { enterBookingFunnel } from "@/domain/booking/bookingEntry";
 import { capturePartialLead, markSessionSubmitted } from "@/lib/partialCapture";
@@ -25,7 +25,7 @@ import { PHONE } from "@/lib/constants";
 import { type FaqItem } from "@/data/faqs";
 
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
-import { TRTHero }              from "@/components/landing/trt/TRTHero";
+import { TRTHero as _TRTHero }              from "@/components/landing/trt/TRTHero";
 import { TRTManifesto }         from "@/components/landing/trt/TRTManifesto";
 import { TRTThreeProblems }     from "@/components/landing/trt/TRTThreeProblems";
 import { TRTEverythingIncluded } from "@/components/landing/trt/TRTEverythingIncluded";

@@ -188,7 +188,7 @@ export function useConfirmAppointment(opts?: {
         });
         onBookedRef.current?.(input.slotIso);
         return true;
-      } catch (bookErr) {
+      } catch (_bookErr) {
         clearTimeout(confirmTimeout);
         try {
           // PHI contract: only non-PII fields stored on failure.

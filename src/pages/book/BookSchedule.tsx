@@ -11,12 +11,10 @@
 
 import { useState, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, ArrowRight, Clock, MapPin, AlertCircle, Check } from "lucide-react";
+import { ArrowLeft, Clock, MapPin } from "lucide-react";
 import BookLayout from "@/components/book/BookLayout";
-import { COPY } from "@/data/copy";
 import GHLDayView from "@/components/book/GHLDayView";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
-import { contactUpdater } from "@/services/contactUpdater";
 import { useBookingStore } from "@/domain/booking/bookingStore";
 import { CENTER_CALENDARS, type LocationKey } from "@/lib/ghlCalendars";
 import { LOCATIONS } from "@/data/locations";
@@ -36,127 +34,6 @@ const LOCATION_LABEL: Record<string, string> = {
   "newport-news": "Newport News Center",
 };
 
-// ─── Inline email capture ────────────────────────────────────────────────────
-
-interface InlineEmailProps {
-  recap: string;
-  contactId?: string;
-  onComplete: (email: string) => void;
-}
-
-const InlineEmailCapture = ({ recap, contactId, onComplete }: InlineEmailProps) => {
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const trimmed = email.trim();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
-      setError("Please enter a valid email address.");
-      return;
-    }
-    setError("");
-
-    // Fire-and-forget GHL update
-    if (contactId) {
-      contactUpdater.updateContact(contactId, { email: trimmed }).catch(() => { /* non-blocking */ });
-    }
-
-    onComplete(trimmed);
-  };
-
-  return (
-    <div
-      style={{
-        // hardcoded-color-allow-next-line
-        background: "#161B3A",
-        // hardcoded-color-allow-next-line
-        border: "2px solid #E8670A",
-        borderRadius: 12,
-        padding: "24px 20px",
-        animation: "ieReveal 220ms ease-out",
-      }}
-    >
-      <style>{`
-        @keyframes ieReveal {
-          from { opacity: 0; transform: translateY(8px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
-
-      {/* Eyebrow */}
-      <p style={{
-        fontFamily: "Oswald, sans-serif", fontWeight: 600, fontSize: 10,
-        letterSpacing: "1.5px", color: "var(--brand-cta)", textTransform: "uppercase", marginBottom: 6,
-      }}>
-        Your Appointment
-      </p>
-
-      {/* Recap line */}
-      <p style={{
-        color: "var(--brand-cream)", fontSize: 13, fontWeight: 500, marginBottom: 14,
-        // hardcoded-color-allow-next-line
-        paddingBottom: 12, borderBottom: "1px solid #2B3247",
-        fontFamily: "Inter, sans-serif",
-      }}>
-        {recap}
-      </p>
-
-      <form onSubmit={handleSubmit} noValidate>
-        <label htmlFor="inline-email" style={{
-          display: "block", fontSize: 13, fontWeight: 600,
-          // hardcoded-color-allow-next-line
-          color: "rgba(245,243,240,0.80)", fontFamily: "Inter, sans-serif", marginBottom: 6,
-        }}>
-          Where should we send your confirmation?
-        </label>
-        <input
-          id="inline-email"
-          type="email"
-          inputMode="email"
-          autoComplete="email"
-          placeholder="you@email.com"
-          value={email}
-          onChange={(e) => { setEmail(e.target.value); setError(""); }}
-          style={{
-            width: "100%", height: 50, borderRadius: 8,
-            // hardcoded-color-allow-next-line
-            border: `2px solid ${error ? "#FF6B7A" : "#2B3247"}`,
-            background: "var(--brand-navy-deep)", color: "var(--brand-cream)",
-            fontSize: 16, fontFamily: "Inter, sans-serif",
-            padding: "0 14px", outline: "none",
-            transition: "border-color 150ms ease",
-          }}
-          onFocus={(e) => (e.currentTarget.style.borderColor = "var(--brand-cta)")}
-          onBlur={(e) => (e.currentTarget.style.borderColor = error ? "#FF6B7A" : "#2B3247")}
-        />
-        {error && (
-          <p style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 12, color: "#FF6B7A", marginTop: 5, fontFamily: "Inter, sans-serif" }}>
-            <AlertCircle size={12} strokeWidth={2} /> {error}
-          </p>
-        )}
-        <p style={{ fontSize: 13, color: "rgba(245,243,240,0.65)", lineHeight: 1.5, marginTop: 10, fontFamily: "Inter, sans-serif" }}>
-          A licensed Virginia provider is reserving this hour for you. We'll text and email your confirmation.
-        </p>
-        <button
-          type="submit"
-          style={{
-            marginTop: 14, width: "100%", height: 52,
-            background: "var(--brand-cta)", color: "var(--c-text-on-dark)", border: "none",
-            borderRadius: 8, fontSize: 15, fontWeight: 700,
-            letterSpacing: "0.06em", textTransform: "uppercase",
-            fontFamily: "Oswald, sans-serif",
-            cursor: "pointer",
-            // hardcoded-color-allow-next-line
-            boxShadow: "0 4px 16px rgba(232,103,10,0.40)",
-          }}
-        >
-          <span className="inline-flex items-center gap-2">{COPY.cta.bookConsult} <ArrowRight size={18} strokeWidth={2.5} /></span>
-        </button>
-      </form>
-    </div>
-  );
-};
 
 // ─── No-availability fallback ─────────────────────────────────────────────────
 
@@ -242,8 +119,8 @@ const BookSchedule = () => {
   };
 
   const [nextAvailable, setNextAvailable] = useState<string | null>(null);
-  const [bookedSlot, setBookedSlot] = useState<string | null>(null);
-  const [emailCaptured, setEmailCaptured] = useState(false);
+  const [_bookedSlot, _setBookedSlot] = useState<string | null>(null);
+  const [_emailCaptured, _setEmailCaptured] = useState(false);
   const handleNextAvailable = useCallback((iso: string | null) => setNextAvailable(iso), []);
 
   const nextAvailableLabel = nextAvailable ? (() => {
@@ -253,26 +130,26 @@ const BookSchedule = () => {
     return `${day} at ${time}`;
   })() : null;
 
-  const bookedSlotLabel = bookedSlot ? (() => {
-    const d = new Date(bookedSlot);
+  const bookedSlotLabel = _bookedSlot ? (() => {
+    const d = new Date(_bookedSlot);
     const day = d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", timeZone: "America/New_York" });
     const time = d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true, timeZone: "America/New_York" });
     return `${day} · ${time}`;
   })() : null;
 
-  const emailRecap = bookedSlotLabel
+  const _emailRecap = bookedSlotLabel
     ? `${bookedSlotLabel} · ${LOCATION_LABEL[location ?? ""] ?? "MWC"} · 60-min Physician Assessment`
     : "";
 
-  const handleEmailComplete = (email: string) => {
+  const _handleEmailComplete = (email: string) => {
     if (identity) setIdentity({ ...identity, email });
-    setEmailCaptured(true);
-    if (bookedSlot) {
-      navigate("/book/confirmed", { state: { appointmentTime: bookedSlot } });
+    _setEmailCaptured(true);
+    if (_bookedSlot) {
+      navigate("/book/confirmed", { state: { appointmentTime: _bookedSlot } });
     }
   };
 
-  const inlineEmailRef = useRef<HTMLDivElement>(null);
+  const _inlineEmailRef = useRef<HTMLDivElement>(null);
 
   return (
     <BookLayout page="schedule" title="Book Your Physician Assessment | Men's Wellness Centers">

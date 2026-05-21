@@ -90,7 +90,7 @@ const FloatInput = ({
   error, icon, inputRef, placeholder, ariaInvalid,
 }: FloatInputProps) => {
   const [focused, setFocused] = useState(false);
-  const lifted = focused || value.length > 0;
+  const _lifted = focused || value.length > 0;
 
   return (
     <div style={{ position: "relative" }}>
@@ -185,8 +185,8 @@ const FloatInput = ({
 
 export const TRTHeroForm = ({
   service    = "trt",
-  heading    = "Get Your Assessment",
-  subheading = "No-cost. Same-day availability.",
+  heading: _heading    = "Get Your Assessment",
+  subheading: _subheading = "No-cost. Same-day availability.",
   ctaLabel   = COPY.cta.bookConsult,
 }: TRTHeroFormProps = {}) => {
   const [name,     setName]     = useState("");

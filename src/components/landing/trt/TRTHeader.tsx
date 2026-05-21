@@ -6,7 +6,7 @@ import { COPY } from "@/data/copy";
 
 export const TRTHeader = ({ minimal = false }: { minimal?: boolean } = {}) => {
   const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [_menuOpen, _setMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 100);

@@ -1,6 +1,6 @@
 import { trackCro } from "@/hooks/useAnalytics";
 import { GBP_REVIEWS_URL } from "@/data/testimonials";
-import { COPY } from "@/data/copy";
+
 
 interface Stat {
   value: string;
@@ -71,10 +71,10 @@ export const CredibilityBand = () => {
 
           // Mobile 2×2: right border on items 0,2; bottom border on items 0,1
           // Desktop 1×4: right border on items 0,1,2
-          const col = i % 2; // 0 or 1
-          const row = Math.floor(i / 2); // 0 or 1
+          const _col = i % 2; // 0 or 1
+          const _row = Math.floor(i / 2); // 0 or 1
           const dividerStyle: React.CSSProperties = {};
-          const wrapStyle: React.CSSProperties = {};
+          const _wrapStyle: React.CSSProperties = {};
 
           if (s.href) {
             return (

@@ -131,7 +131,8 @@ const LibidoChart = () => {
   );
 };
 
-const MoodStats = ({ bullets }: { bullets: any[] }) => (
+interface MoodBullet { highlight: string; text: string }
+const MoodStats = ({ bullets }: { bullets: MoodBullet[] }) => (
   <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
     {bullets.map((b, i) => (
       <div key={i} style={{
@@ -148,7 +149,8 @@ const MoodStats = ({ bullets }: { bullets: any[] }) => (
   </div>
 );
 
-const FatCards = ({ bullets }: { bullets: any[] }) => (
+interface FatBullet { label: string; text: string }
+const FatCards = ({ bullets }: { bullets: FatBullet[] }) => (
   <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
     {bullets.map((b, i) => (
       <div key={i} style={{
@@ -162,7 +164,7 @@ const FatCards = ({ bullets }: { bullets: any[] }) => (
   </div>
 );
 
-const DefaultBullets = ({ bullets }: { bullets: any[] }) => (
+const DefaultBullets = ({ bullets }: { bullets: string[] }) => (
   <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
     {bullets.map((b, i) => (
       <div key={i} style={{
@@ -249,11 +251,11 @@ export const TRTEduSymptomSlider = () => {
           {s.visual === "libido" && <LibidoChart />}
 
           {s.visual === "mood"
-            ? <MoodStats bullets={s.bullets as any[]} />
+            ? <MoodStats bullets={s.bullets as MoodBullet[]} />
             : s.visual === "fat"
-            ? <FatCards bullets={s.bullets as any[]} />
+            ? <FatCards bullets={s.bullets as FatBullet[]} />
             : s.visual !== "libido"
-            ? <DefaultBullets bullets={s.bullets as any[]} />
+            ? <DefaultBullets bullets={s.bullets as string[]} />
             : null}
 
           {s.visual === "libido" && (

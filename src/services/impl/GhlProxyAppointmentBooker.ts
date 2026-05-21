@@ -43,7 +43,7 @@ export class GhlProxyAppointmentBooker implements IAppointmentBooker {
     const raw = await getFreeSlots(location, range.start, range.end);
     if (!raw || typeof raw !== "object") return {};
     const out: Record<string, string[]> = {};
-    for (const [key, value] of Object.entries(raw)) {
+    for (const [_key, value] of Object.entries(raw)) {
       if (value && typeof value === "object" && "slots" in (value as object)) {
         const slots = (value as { slots: string[] }).slots;
         if (Array.isArray(slots)) {

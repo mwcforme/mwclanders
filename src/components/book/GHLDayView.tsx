@@ -10,7 +10,6 @@ import {
   addDaysInTimeZone,
   dateFromYmdInTimeZone,
   isSundayInTimeZone,
-  timeZoneOffsetMinutes,
   ymdInTimeZone,
 } from "@/lib/etDate";
 import { useConfirmAppointment } from "@/domain/booking/useConfirmAppointment";
@@ -22,7 +21,7 @@ import TimeGrid from "./TimeGrid";
 // Brand tokens (confirm bar only — child components manage their own)
 const INK    = "var(--brand-navy-deep)";
 // hardcoded-color-allow-next-line
-const MUTED  = "#4B5563";
+const _MUTED  = "#4B5563";
 // hardcoded-color-allow-next-line
 const LINE   = "#E5E7EB";
 const SURFACE = "var(--bg-white)";
@@ -94,7 +93,7 @@ const dropPastSlots = (day: Date, slots: string[]): string[] => {
   });
 };
 
-const fmtTimeParts = (iso: string): { time: string; ampm: string } => {
+const _fmtTimeParts = (iso: string): { time: string; ampm: string } => {
   const s = new Date(iso).toLocaleTimeString("en-US", {
     hour: "numeric", minute: "2-digit", hour12: true, timeZone: TIMEZONE,
   });
@@ -122,7 +121,7 @@ interface Props {
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgencyTier, customFields, onBooked, onNextAvailable }: Props) => {
+const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgencyTier: _urgencyTier, customFields, onBooked, onNextAvailable }: Props) => {
   const today = useMemo(() => dateFromEtYmd(todayET()), []);
   const [weekStart, setWeekStart]     = useState<Date>(() => dateFromEtYmd(todayET()));
   const [slotsByDay, setSlotsByDay]   = useState<Record<string, string[]>>({});
@@ -131,7 +130,7 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
   // modalOpen removed — no confirmation dialog
-  const [refreshNonce, setRefreshNonce] = useState(0);
+  const [refreshNonce, _setRefreshNonce] = useState(0);
 
   const confirmCtl = useConfirmAppointment({
     onBooked: (slot) => {
@@ -139,8 +138,8 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
       onBooked?.(slot);
     },
   });
-  const submitting  = confirmCtl.isSubmitting;
-  const submitError = confirmCtl.error;
+  const _submitting  = confirmCtl.isSubmitting;
+  const _submitError = confirmCtl.error;
 
   const lastUpdatedRef = useRef<Date | null>(null);
   const confirmBtnRef  = useRef<HTMLButtonElement | null>(null);
@@ -242,7 +241,7 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
   const times      = selectedDay ? slotsByDay[selectedDay] || [] : [];
   const canConfirm = Boolean(selectedSlot);
   const prevDisabled = weekStart <= today;
-  const fullName   = [firstName, lastName].filter(Boolean).join(" ").trim();
+  const _fullName   = [firstName, lastName].filter(Boolean).join(" ").trim();
 
   const handleFinalConfirm = async () => {
     if (!selectedSlot) return;

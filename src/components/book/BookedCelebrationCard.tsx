@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Calendar, Check, MapPin, Clock } from "lucide-react";
+import { Calendar, MapPin, Clock } from "lucide-react";
 
 // Lazy-load confetti so it doesn't block the confirmation card render
 const fireConfetti = async () => {
