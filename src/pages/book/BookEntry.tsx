@@ -1,25 +1,27 @@
 /**
- * /book/entry?t=<token>
+ * /book/entry
  *
- * Token-exchange handoff page for WordPress → booking funnel.
+ * WordPress → Lovable booking funnel handoff.
  *
  * Flow:
- *  1. WordPress Gravity Form submits to lead-intake edge function
- *  2. Edge function creates GHL contact + issues a 15-min signed token
- *  3. WP redirects user to /book/entry?t=<token>
- *  4. This page exchanges the token for identity, seeds the booking store,
- *     then redirects to /book/symptom — no PHI ever in the URL beyond this point
+ *  1. WordPress Fluent Form submits → redirects to /book/entry with signed URL params
+ *  2. This page verifies the HMAC-SHA256 signature client-side (Web Crypto, no network call)
+ *  3. On valid sig: seeds booking store, strips params from URL, redirects to /book/symptom
+ *  4. On invalid/expired: redirects back to LP root
+ *
+ * URL shape from WP:
+ *   /book/entry?fn=John&ph=7574441234&loc=virginia-beach&svc=trt&em=j@x.com&ts=1716299400&sig=abc123
  *
  * Security:
- *  - Token is single-use (consumed on exchange)
- *  - 15-minute TTL
- *  - Exchange happens server-side via Supabase edge function
- *  - No identity written to URL, history, or analytics
+ *  - Signature verified via HMAC-SHA256 (shared secret in VITE_WP_HANDOFF_SECRET)
+ *  - Tokens expire after 10 minutes (configurable in wpHandoff.ts)
+ *  - PHI stripped from URL immediately after parse (window.history.replaceState)
+ *  - PHI stored in sessionStorage only via bookingStore (never cookies/URL/analytics)
  */
 import { useEffect, useRef } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-// supabase loaded lazily inside exchangeToken — not needed at module parse time
 import { useBookingStore, isKnownService } from "@/domain/booking/bookingStore";
+import { parseWpHandoff } from "@/lib/wpHandoff";
 import { PHONE } from "@/lib/constants";
 
 const BookEntry = () => {
@@ -31,36 +33,35 @@ const BookEntry = () => {
     if (didRun.current) return;
     didRun.current = true;
 
-    const token = params.get("t");
-    if (!token) {
+    // Must have at minimum fn + ph + ts + sig
+    if (!params.get("fn") || !params.get("ph")) {
       navigate("/", { replace: true });
       return;
     }
 
-    // Strip the token from the URL immediately (PHI hygiene)
+    // Strip all handoff params from URL immediately — PHI hygiene
     window.history.replaceState(null, "", "/book/entry");
 
-    exchangeToken(token).then((identity) => {
+    parseWpHandoff(params).then((identity) => {
       if (!identity) {
-        // Token invalid/expired — send back to LP
+        // Invalid or expired token
+        console.warn("[book-entry] handoff verification failed — redirecting to LP");
         navigate("/", { replace: true });
         return;
       }
 
-      // Seed booking store exactly like enterBookingFunnel
+      // Seed booking store
       const store = useBookingStore.getState();
       store.reset();
       store.patch({
         identity: {
-          firstName: identity.first_name,
-          lastName: identity.last_name ?? undefined,
-          email: identity.email ?? "",
+          firstName: identity.firstName,
           phone: identity.phone,
-          ghlContactId: identity.contact_id,
+          email: identity.email ?? "",
         },
-        service: isKnownService(identity.service) ? identity.service : undefined,
+        service:  isKnownService(identity.service) ? identity.service : undefined,
         location: identity.location ?? undefined,
-        source: identity.source ?? "wordpress-intake",
+        source:   "wordpress-handoff",
       });
 
       navigate("/book/symptom", { replace: true });
@@ -105,35 +106,5 @@ const BookEntry = () => {
     </div>
   );
 };
-
-// ── Token exchange via Supabase edge function ──────────────────────────────
-
-interface TokenPayload {
-  first_name: string;
-  last_name?: string | null;
-  email?: string | null;
-  phone: string;
-  contact_id: string;
-  location?: string | null;
-  service?: string | null;
-  source?: string | null;
-}
-
-async function exchangeToken(token: string): Promise<TokenPayload | null> {
-  try {
-    const supabase = await import("@/integrations/supabase/client").then(m => m.supabase);
-    const { data, error } = await supabase.functions.invoke("wp-token-exchange", {
-      body: { token },
-    });
-    if (error || !data?.ok) {
-      console.warn("[book-entry] token exchange failed", error ?? data);
-      return null;
-    }
-    return data.identity as TokenPayload;
-  } catch (e) {
-    console.error("[book-entry] exchange error", e);
-    return null;
-  }
-}
 
 export default BookEntry;
