@@ -1,72 +1,77 @@
 /**
- * /book/entry
+ * BookEntry — /book/entry
  *
- * WordPress → Lovable booking funnel handoff.
+ * Receives a signed WordPress → Lovable handoff token, verifies it,
+ * seeds the booking store, then routes into the funnel.
  *
- * Flow:
- *  1. WordPress Fluent Form submits → redirects to /book/entry with signed URL params
- *  2. This page verifies the HMAC-SHA256 signature client-side (Web Crypto, no network call)
- *  3. On valid sig: seeds booking store, strips params from URL, redirects to /book/symptom
- *  4. On invalid/expired: redirects back to LP root
+ * Guarantee: URL params are stripped from history before any async work
+ * begins. PHI never survives in the URL, browser history, or referrer header.
  *
- * URL shape from WP:
- *   /book/entry?fn=John&ph=7574441234&loc=virginia-beach&svc=trt&em=j@x.com&ts=1716299400&sig=abc123
- *
- * Security:
- *  - Signature verified via HMAC-SHA256 (shared secret in VITE_WP_HANDOFF_SECRET)
- *  - Tokens expire after 10 minutes (configurable in wpHandoff.ts)
- *  - PHI stripped from URL immediately after parse (window.history.replaceState)
- *  - PHI stored in sessionStorage only via bookingStore (never cookies/URL/analytics)
+ * Happy path:  /book/entry?fn=…&ph=…&ts=…&sig=… → /book/symptom
+ * Failure path: anything invalid → /  (LP root, silent — no error exposed to user)
  */
 import { useEffect, useRef } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useBookingStore, isKnownService } from "@/domain/booking/bookingStore";
-import { parseWpHandoff } from "@/lib/wpHandoff";
-import { PHONE } from "@/lib/constants";
+import { verifyWpHandoff }                 from "@/lib/wpHandoff";
+import { PHONE }                           from "@/lib/constants";
 
-const BookEntry = () => {
-  const [params] = useSearchParams();
-  const navigate = useNavigate();
-  const didRun = useRef(false);
+export default function BookEntry() {
+  const [searchParams] = useSearchParams();
+  const navigate       = useNavigate();
+  // Strict-mode / double-mount guard
+  const processed = useRef(false);
 
   useEffect(() => {
-    if (didRun.current) return;
-    didRun.current = true;
+    if (processed.current) return;
+    processed.current = true;
 
-    // Must have at minimum fn + ph + ts + sig
-    if (!params.get("fn") || !params.get("ph")) {
+    // Snapshot params synchronously — before any async gap.
+    // URLSearchParams is mutable and tied to the live URL; capture now.
+    const snapshot = new URLSearchParams(searchParams.toString());
+
+    // Fast-fail: if the two required params aren't even present, skip crypto.
+    if (!snapshot.get("fn") || !snapshot.get("ph")) {
       navigate("/", { replace: true });
       return;
     }
 
-    // Strip all handoff params from URL immediately — PHI hygiene
-    window.history.replaceState(null, "", "/book/entry");
+    // Strip PHI from URL and browser history immediately — before await.
+    // Any async gap after this point has no URL-based PHI to leak.
+    window.history.replaceState({}, "", "/book/entry");
 
-    parseWpHandoff(params).then((identity) => {
-      if (!identity) {
-        // Invalid or expired token
-        console.warn("[book-entry] handoff verification failed — redirecting to LP");
+    verifyWpHandoff(snapshot).then((result) => {
+      if (!result.ok) {
+        // Log reason in dev, stay silent in prod — never expose internals.
+        if (import.meta.env.DEV) {
+          console.warn("[BookEntry] handoff rejected:", result.reason);
+        }
         navigate("/", { replace: true });
         return;
       }
 
-      // Seed booking store
+      const { payload } = result;
       const store = useBookingStore.getState();
+
       store.reset();
       store.patch({
         identity: {
-          firstName: identity.firstName,
-          phone: identity.phone,
-          email: identity.email ?? "",
+          firstName: payload.firstName,
+          phone:     payload.phone,
+          email:     payload.email ?? "",
         },
-        service:  isKnownService(identity.service) ? identity.service : undefined,
-        location: identity.location ?? undefined,
+        service:  isKnownService(payload.service) ? payload.service : undefined,
+        location: payload.location,
         source:   "wordpress-handoff",
       });
 
       navigate("/book/symptom", { replace: true });
+    }).catch(() => {
+      // verifyWpHandoff is internally guarded, but defend the effect regardless.
+      navigate("/", { replace: true });
     });
-  }, [navigate, params]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // intentionally empty — we want this to fire exactly once on mount
 
   return (
     <div
@@ -81,7 +86,6 @@ const BookEntry = () => {
         gap: 16,
       }}
     >
-      {/* Spinner */}
       <div
         style={{
           width: 40,
@@ -105,6 +109,4 @@ const BookEntry = () => {
       </p>
     </div>
   );
-};
-
-export default BookEntry;
+}

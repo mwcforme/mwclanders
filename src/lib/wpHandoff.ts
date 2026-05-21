@@ -1,30 +1,34 @@
 /**
- * wpHandoff.ts
+ * wpHandoff.ts — WordPress → Lovable handoff token verification
  *
- * Client-side receiver for WordPress → Lovable booking handoff.
+ * Verifies an HMAC-SHA256 signed token produced by WordPress and
+ * returns the verified payload so BookEntry can seed the booking store.
  *
- * SOLID principles applied:
- *  - Single Responsibility: this module only verifies + parses handoff tokens
- *  - Open/Closed: token TTL and payload shape are configurable constants
- *  - Interface Segregation: WpHandoffPayload exposes only what callers need
- *  - Dependency Inversion: crypto.subtle is the only external dependency
+ * Encoding contract (both sides must match exactly):
+ *   payload = base64url( utf8bytes(firstName) )
+ *           + "|"
+ *           + base64url( utf8bytes(phone) )
+ *           + "|"
+ *           + unixTimestampSeconds
  *
- * Security contract:
- *  - ONLY fn (first name) + ph (phone) are signed — minimal attack surface
- *  - Optional fields (loc, svc, em) are passed but NOT included in the signature
- *    Rationale: worst case someone tampers loc/svc = wrong clinic pre-selected,
- *    not a security breach. Signing only required fields keeps PHP/JS in sync.
- *  - Token expires after TOKEN_TTL_SECONDS
- *  - PHI never written to cookies, URL history, or analytics
+ * base64url here means: standard base64 of the UTF-8 byte sequence,
+ * with + → -, / → _, trailing = stripped.
  *
- * Payload signed (must match PHP exactly):
- *   base64url(fn) + "|" + base64url(ph) + "|" + ts
+ * Using TextEncoder (not btoa) guarantees correct UTF-8 byte encoding
+ * for ALL input including accented chars, unicode names, etc.
+ * PHP's base64_encode() operates on raw bytes — identical result.
  *
- * Both sides base64url-encode each field before joining.
- * This eliminates ALL special character / encoding mismatch issues.
+ * Only firstName + phone are signed. Optional fields (location, service,
+ * email) ride in the URL unsigned — worst-case tamper is a wrong clinic
+ * pre-selection, not a data breach.
  */
 
-const TOKEN_TTL_SECONDS = 600; // 10 minutes
+// ── Config ───────────────────────────────────────────────────────────────────
+
+const TTL_SECONDS     = 600; // 10 min — enough for any redirect chain
+const CLOCK_SKEW_SEC  = 60;  // tolerate 60s of server/client clock drift
+const TS_PATTERN      = /^\d{10}$/;
+const SIG_PATTERN     = /^[0-9a-f]{64}$/;
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -36,154 +40,150 @@ export interface WpHandoffPayload {
   readonly email?:    string;
 }
 
-interface RawParams {
-  fn:  string;
-  ph:  string;
-  loc: string | null;
-  svc: string | null;
-  em:  string | null;
-  ts:  string;
-  sig: string;
+/** Internal — shape after param extraction, before verification */
+interface HandoffParams {
+  readonly fn:  string;
+  readonly ph:  string;
+  readonly ts:  string;
+  readonly sig: string;
+  readonly loc: string | null;
+  readonly svc: string | null;
+  readonly em:  string | null;
 }
 
-// ── Helpers ──────────────────────────────────────────────────────────────────
+type VerificationResult =
+  | { ok: true;  payload: WpHandoffPayload }
+  | { ok: false; reason: string };
 
-/** base64url-encode a UTF-8 string — handles all unicode / special chars */
-function b64url(str: string): string {
-  return btoa(
-    encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (_, hex) =>
-      String.fromCharCode(parseInt(hex, 16))
-    )
-  )
+// ── Encoding ─────────────────────────────────────────────────────────────────
+
+/**
+ * base64url-encode a string using its UTF-8 byte representation.
+ *
+ * Uses TextEncoder so multibyte characters (accented, unicode, etc.)
+ * encode identically to PHP's base64_encode() on the same UTF-8 bytes.
+ *
+ * btoa() is intentionally NOT used here — it chokes on code points > 255.
+ */
+function b64url(value: string): string {
+  const bytes  = new TextEncoder().encode(value);
+  const binary = Array.from(bytes, (b) => String.fromCharCode(b)).join("");
+  return btoa(binary)
     .replace(/\+/g, "-")
     .replace(/\//g, "_")
     .replace(/=+$/, "");
 }
 
-/** Hex string → Uint8Array */
-function hexToBytes(hex: string): Uint8Array {
-  if (hex.length % 2 !== 0) return new Uint8Array(0);
-  const bytes = new Uint8Array(hex.length / 2);
-  for (let i = 0; i < bytes.length; i++) {
-    bytes[i] = parseInt(hex.slice(i * 2, i * 2 + 2), 16);
-  }
-  return bytes;
-}
+// ── Param extraction ─────────────────────────────────────────────────────────
 
-/** Read the shared secret from Vite env — never falls back to a default */
-function getSecret(): string {
-  return (import.meta.env.VITE_WP_HANDOFF_SECRET as string | undefined) ?? "";
-}
+function extractParams(search: URLSearchParams): HandoffParams | null {
+  const fn  = search.get("fn")?.trim()  ?? "";
+  const ph  = search.get("ph")?.trim()  ?? "";
+  const ts  = search.get("ts")?.trim()  ?? "";
+  const sig = search.get("sig")?.trim() ?? "";
 
-// ── Validation ───────────────────────────────────────────────────────────────
-
-function extractParams(searchParams: URLSearchParams): RawParams | null {
-  const fn  = searchParams.get("fn")?.trim()  ?? "";
-  const ph  = searchParams.get("ph")?.trim()  ?? "";
-  const ts  = searchParams.get("ts")?.trim()  ?? "";
-  const sig = searchParams.get("sig")?.trim() ?? "";
-
+  // Required fields present
   if (!fn || !ph || !ts || !sig) return null;
 
-  // ts must be a unix timestamp (10 digits, all numeric)
-  if (!/^\d{10}$/.test(ts)) return null;
-
-  // sig must be a 64-char lowercase hex string (SHA-256 output)
-  if (!/^[0-9a-f]{64}$/.test(sig)) return null;
+  // Structural validation before touching crypto
+  if (!TS_PATTERN.test(ts))   return null; // must be 10-digit unix timestamp
+  if (!SIG_PATTERN.test(sig)) return null; // must be 64-char lowercase hex
 
   return {
-    fn,
-    ph,
-    loc: searchParams.get("loc"),
-    svc: searchParams.get("svc"),
-    em:  searchParams.get("em"),
-    ts,
-    sig,
+    fn, ph, ts, sig,
+    loc: search.get("loc"),
+    svc: search.get("svc"),
+    em:  search.get("em"),
   };
 }
 
-function checkTimestamp(ts: string): boolean {
-  const tsNum  = parseInt(ts, 10);
-  const nowSec = Math.floor(Date.now() / 1000);
+// ── Timestamp check ──────────────────────────────────────────────────────────
 
-  if (nowSec - tsNum > TOKEN_TTL_SECONDS) {
-    console.warn("[wpHandoff] token expired", { ageSeconds: nowSec - tsNum });
-    return false;
-  }
-  // Reject tokens from the future (60s clock skew tolerance)
-  if (tsNum - nowSec > 60) {
-    console.warn("[wpHandoff] token timestamp is in the future");
-    return false;
-  }
+function isTimestampValid(ts: string): boolean {
+  const issued = parseInt(ts, 10);
+  const now    = Math.floor(Date.now() / 1000);
+
+  if (now - issued > TTL_SECONDS)   return false; // expired
+  if (issued - now > CLOCK_SKEW_SEC) return false; // too far in the future
   return true;
 }
 
-// ── Signature verification ───────────────────────────────────────────────────
+// ── HMAC verification ────────────────────────────────────────────────────────
 
-async function verifySignature(raw: RawParams): Promise<boolean> {
-  const secret = getSecret();
+async function verifyHmac(params: HandoffParams, secret: string): Promise<boolean> {
+  const payload = `${b64url(params.fn)}|${b64url(params.ph)}|${params.ts}`;
 
-  if (!secret) {
-    if (import.meta.env.DEV) {
-      console.warn("[wpHandoff] VITE_WP_HANDOFF_SECRET not set — skipping verification in DEV");
-      return true;
-    }
-    console.error("[wpHandoff] VITE_WP_HANDOFF_SECRET not configured in production");
-    return false;
-  }
+  const enc = new TextEncoder();
 
-  // Payload: base64url(fn) | base64url(ph) | ts
-  // Matches PHP: base64url_encode($fn) . '|' . base64url_encode($ph) . '|' . $ts
-  const payload = `${b64url(raw.fn)}|${b64url(raw.ph)}|${raw.ts}`;
+  const key = await crypto.subtle.importKey(
+    "raw",
+    enc.encode(secret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,       // not extractable
+    ["verify"],
+  );
 
-  try {
-    const encoder = new TextEncoder();
-    const key = await crypto.subtle.importKey(
-      "raw",
-      encoder.encode(secret),
-      { name: "HMAC", hash: "SHA-256" },
-      false,
-      ["verify"]
-    );
+  // Convert 64-char hex sig → Uint8Array
+  const sigBytes = Uint8Array.from(
+    { length: params.sig.length / 2 },
+    (_, i) => parseInt(params.sig.slice(i * 2, i * 2 + 2), 16),
+  );
 
-    return await crypto.subtle.verify(
-      "HMAC",
-      key,
-      hexToBytes(raw.sig),
-      encoder.encode(payload)
-    );
-  } catch (err) {
-    console.error("[wpHandoff] crypto.subtle.verify threw", err);
-    return false;
-  }
+  return crypto.subtle.verify("HMAC", key, sigBytes, enc.encode(payload));
 }
 
 // ── Public API ───────────────────────────────────────────────────────────────
 
 /**
- * Parse and verify a WP handoff from the current URL search params.
+ * Verify and parse a WP handoff from URL search params.
  *
- * Returns a verified WpHandoffPayload, or null if params are
- * missing / malformed / signature invalid / token expired.
+ * Designed to be called exactly once, immediately after the component mounts,
+ * with params captured before any async gap.
  *
- * Call once on mount in BookEntry. Never call twice (idempotent but wasteful).
+ * Returns a VerificationResult — caller decides how to handle failure reason.
  */
-export async function parseWpHandoff(
-  searchParams: URLSearchParams
-): Promise<WpHandoffPayload | null> {
-  const raw = extractParams(searchParams);
-  if (!raw) return null;
+export async function verifyWpHandoff(
+  search: URLSearchParams,
+): Promise<VerificationResult> {
+  const params = extractParams(search);
+  if (!params) {
+    return { ok: false, reason: "missing_or_malformed_params" };
+  }
 
-  if (!checkTimestamp(raw.ts)) return null;
+  if (!isTimestampValid(params.ts)) {
+    return { ok: false, reason: "token_expired_or_future" };
+  }
 
-  const valid = await verifySignature(raw);
-  if (!valid) return null;
+  const secret = (import.meta.env.VITE_WP_HANDOFF_SECRET as string | undefined) ?? "";
+
+  if (!secret) {
+    if (import.meta.env.DEV) {
+      console.warn("[wpHandoff] no secret — trusting params in DEV");
+    } else {
+      return { ok: false, reason: "secret_not_configured" };
+    }
+  }
+
+  let valid = false;
+  try {
+    valid = secret ? await verifyHmac(params, secret) : true; // DEV bypass
+  } catch (err) {
+    console.error("[wpHandoff] crypto error", err);
+    return { ok: false, reason: "crypto_error" };
+  }
+
+  if (!valid) {
+    return { ok: false, reason: "invalid_signature" };
+  }
 
   return {
-    firstName: raw.fn,
-    phone:     raw.ph,
-    location:  raw.loc ?? undefined,
-    service:   raw.svc ?? undefined,
-    email:     raw.em  ?? undefined,
+    ok: true,
+    payload: {
+      firstName: params.fn,
+      phone:     params.ph,
+      location:  params.loc ?? undefined,
+      service:   params.svc ?? undefined,
+      email:     params.em  ?? undefined,
+    },
   };
 }
