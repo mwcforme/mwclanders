@@ -21,6 +21,12 @@ import { useBookingStore, isKnownService } from "@/domain/booking/bookingStore";
 import { verifyWpHandoff, pushWpPartialLead } from "@/lib/wpHandoff";
 import { PHONE }                           from "@/lib/constants";
 
+declare global {
+  interface Window {
+    __MWC_BOOK_ENTRY_SEARCH__?: string;
+  }
+}
+
 interface DebugInfo {
   reason: string;
   params: Record<string, string | null>;
@@ -42,9 +48,15 @@ export default function BookEntry() {
     if (processed.current) return;
     processed.current = true;
 
-    // Snapshot params synchronously — before any async gap.
-    const snapshot = new URLSearchParams(searchParams.toString());
+    // Snapshot params synchronously — before any async gap. index.html strips
+    // PHI from the visible URL before analytics loads, so /book/entry receives
+    // the preserved in-memory search string here.
+    const preservedSearch = typeof window !== "undefined" ? window.__MWC_BOOK_ENTRY_SEARCH__ : "";
+    const snapshot = new URLSearchParams(preservedSearch || searchParams.toString());
     const debugMode = snapshot.get("debug") === "1";
+    if (typeof window !== "undefined") {
+      delete window.__MWC_BOOK_ENTRY_SEARCH__;
+    }
 
     const buildDebug = (reason: string): DebugInfo => {
       const tsRaw = snapshot.get("ts");
