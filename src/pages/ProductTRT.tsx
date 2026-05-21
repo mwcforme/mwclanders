@@ -19,7 +19,7 @@ import { TRTBenefitsSection }        from "@/components/landing/trt/TRTBenefitsS
 import { TRTSignsSection }           from "@/components/landing/trt/TRTSignsSection";
 import { TRTTreatmentOptionsSection }from "@/components/landing/trt/TRTTreatmentOptionsSection";
 import { TRTProductFAQ }             from "@/components/landing/trt/TRTProductFAQ";
-import { AffordabilityBlock }        from "@/components/landing/shared/AffordabilityBlock";
+import { TRTPricing }                from "@/components/landing/trt/TRTPricing";
 import { OrangeCTA, Eyebrow }        from "@/components/landing/trt/TRTProductHelpers";
 import { SEO }                       from "@/components/SEO";
 import { PHONE }                     from "@/lib/constants";
@@ -1031,8 +1031,8 @@ const ProductTRT = () => {
         {/* 9. SIGNS */}
         <TRTSignsSection onSchedule={goSchedule} />
 
-        {/* 10. AFFORDABILITY */}
-        <AffordabilityBlock />
+        {/* 10. PRICING */}
+        <TRTPricing />
 
         {/* 11. FAQ */}
         <div id="faq">
