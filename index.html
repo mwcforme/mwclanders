@@ -32,11 +32,16 @@
       PHI guard: strip query string + hash from any /book/* URL BEFORE
       GTM/GA4 load, so document.location.href (read by GA4 Enhanced
       Measurement events like scroll/click) never carries PII/PHI.
+      For /book/entry only, preserve the original search string in memory so
+      React can verify/debug the handoff after the visible URL is sanitized.
       Must run synchronously before the GTM snippet below.
     -->
     <script>
       (function () {
         try {
+          if (location.pathname === '/book/entry' && location.search) {
+            window.__MWC_BOOK_ENTRY_SEARCH__ = location.search;
+          }
           if (location.pathname.indexOf('/book/') === 0 && (location.search || location.hash)) {
             history.replaceState(null, '', location.pathname);
           }
