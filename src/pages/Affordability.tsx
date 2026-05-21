@@ -523,7 +523,6 @@ export default function Affordability() {
                 badge: "Most Popular",
                 desc: "Full lab cycle. Quarterly provider check-in included.",
                 featured: true,
-              badge: "Most Popular",
               },
               {
                 term: "24-Month",
