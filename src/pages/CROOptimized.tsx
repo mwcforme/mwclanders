@@ -251,6 +251,7 @@ const CROHeroForm = ({
           firstName: first || "Guest",
           lastName: rest.join(" ") || undefined,
           phone: v.phone,
+          email: (v as { email?: string }).email ?? "",
           ghlContactId: result.contactId,
         },
         service,
