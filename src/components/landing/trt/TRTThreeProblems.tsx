@@ -6,7 +6,7 @@
  * Cream/warm off-white background to break up the dark sections.
  */
 import { COPY } from "@/data/copy";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, FlaskConical, Zap, Scale } from "lucide-react";
 
 const SERVICES = [
   {
@@ -16,22 +16,16 @@ const SERVICES = [
     body: "Most men over 40 have it. Most are never told. A licensed Virginia provider reviews your labs on-site and builds a protocol specific to your numbers — not a generic template.",
     cta: COPY.cta.bookConsult,
     href: "/book/location",
-    img: "/assets/lp/provider-lab-processing.jpg",
-    imgFallback: "/assets/lp/provider-lab-processing.jpg",
-    imgAlt: "MWC provider processing labs on-site at a Virginia clinic",
-    imgPosition: "center 35%",
+    Icon: FlaskConical,
   },
   {
     id: "ed",
     eyebrow: "ED TREATMENT",
     headline: "A medical issue with medical solutions.",
-    body: "ED is vascular. It responds to proper diagnosis and treatment — not a pill subscription. In-person evaluation, FDA-approved options, and a plan that actually works.",
+    body: "ED is vascular. It responds to proper diagnosis and treatment. In-person evaluation, FDA-approved options, and a plan that actually works.",
     cta: COPY.cta.bookConsult,
     href: "/ed",
-    img: "/assets/lp/patient-bp-exam-room.jpg",
-    imgFallback: "/assets/lp/patient-bp-exam-room.jpg",
-    imgAlt: "MWC provider conducting blood pressure evaluation with male patient",
-    imgPosition: "center 25%",
+    Icon: Zap,
   },
   {
     id: "wl",
@@ -40,10 +34,7 @@ const SERVICES = [
     body: "Diet and exercise aren't the full story for most men. GLP-1 therapy, lab-guided protocols, and a provider who monitors your progress make the difference.",
     cta: COPY.cta.bookConsult,
     href: "/wl",
-    img: "/assets/lp/provider-consultation-2.jpg",
-    imgFallback: "/assets/lp/provider-consultation-2.jpg",
-    imgAlt: "MWC provider reviewing weight loss protocol with patient",
-    imgPosition: "center 15%",
+    Icon: Scale,
   },
 ];
 
@@ -141,23 +132,35 @@ export const TRTThreeProblems = ({ onCta, headlineOverride }: TRTThreeProblemsPr
                     margin: 0,
                   }}
                 >
-                  <span style={{ color: "var(--brand-cta)", marginRight: 6 }}>—</span>
                   {s.eyebrow}
                 </p>
               </div>
 
-              {/* Image */}
-              <div style={{ height: 220, overflow: "hidden" }}>
-                <picture>
-                  <source srcSet={s.img} type="image/webp" />
-                  <img
-                    src={s.imgFallback}
-                    alt={s.imgAlt}
-                    style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: s.imgPosition ?? "center center" }}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </picture>
+              {/* Icon panel */}
+              <div
+                style={{
+                  height: 200,
+                  background: "var(--brand-navy)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  position: "relative",
+                  overflow: "hidden",
+                }}
+              >
+                {/* Subtle radial glow behind icon */}
+                <div style={{
+                  position: "absolute",
+                  width: 220,
+                  height: 220,
+                  borderRadius: "50%",
+                  background: "radial-gradient(circle, rgba(232,103,10,0.18) 0%, transparent 70%)",
+                }} />
+                <s.Icon
+                  size={80}
+                  strokeWidth={1.25}
+                  style={{ color: "var(--brand-cta)", position: "relative" }}
+                />
               </div>
 
               {/* Content */}
