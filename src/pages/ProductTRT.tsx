@@ -1031,8 +1031,8 @@ const ProductTRT = () => {
         {/* 9. SIGNS */}
         <TRTSignsSection onSchedule={goSchedule} />
 
-        {/* 10. AFFORDABILITY */}
-        <AffordabilityBlock />
+        {/* 10. PRICING */}
+        <TRTPricing />
 
         {/* 11. FAQ */}
         <div id="faq">
