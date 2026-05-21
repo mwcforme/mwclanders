@@ -23,6 +23,7 @@ const CROOptimized    = lazy(() => import("./pages/CROOptimized"));
 const NewWeightLoss   = lazy(() => import("./pages/NewWeightLoss"));
 const NewED           = lazy(() => import("./pages/NewED"));
 const TRTLandingPage  = lazy(() => import("./pages/TRTLandingPage"));
+const TRTEducation    = lazy(() => import("./pages/TRTEducation"));
 const Affordability   = lazy(() => import("./pages/Affordability"));
 const ProductTRT         = lazy(() => import("./pages/ProductTRT"));
 const ProductTRTSchedule = lazy(() => import("./pages/ProductTRTSchedule"));
@@ -171,6 +172,7 @@ const App = () => (
 
                 {/* ── Secondary LPs ── */}
                 <Route path="/trt" element={<TRTLandingPage />} />
+                <Route path="/trt-education" element={<TRTEducation />} />
                 <Route path="/product/trt" element={<ProductTRT />} />
                 <Route path="/product/trt/schedule" element={<ProductTRTSchedule />} />
                 <Route path="/product/trt/get-started" element={<TRTGetStarted />} />
