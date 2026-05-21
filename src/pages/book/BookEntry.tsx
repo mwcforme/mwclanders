@@ -44,7 +44,8 @@ export default function BookEntry() {
       if (!result.ok) {
         // Log reason in dev, stay silent in prod — never expose internals.
         if (import.meta.env.DEV) {
-          console.warn("[BookEntry] handoff rejected:", result.reason);
+          const reason = "reason" in result ? result.reason : "unknown";
+          console.warn("[BookEntry] handoff rejected:", reason);
         }
         navigate("/", { replace: true });
         return;
