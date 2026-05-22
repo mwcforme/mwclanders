@@ -1,16 +1,10 @@
 // ghl-sync — fetches free slots for all centers (prod + stage) and upserts into the cache.
 // Triggered hourly by pg_cron, or manually via POST. Manual triggers return 202 immediately
 // and run the actual sync as a background task so the admin UI never times out.
-import { createClient } from "npm:@supabase/supabase-js@2";
+import { corsHeaders, jsonResponse } from "../_shared/cors.ts";
+import { GHL_API_BASE, GHL_API_VERSION } from "../_shared/ghlEnv.ts";
+import { createAdminClient } from "../_shared/supabaseAdmin.ts";
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, content-type, apikey",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-};
-
-const API_BASE = "https://services.leadconnectorhq.com";
-const API_VERSION = "2021-07-28";
 const TIMEZONE = "America/New_York";
 
 interface Env {
@@ -49,20 +43,14 @@ interface FreeSlotsResponse {
   traceId?: string;
 }
 
-const json = (status: number, data: unknown) =>
-  new Response(JSON.stringify(data), {
-    status,
-    headers: { ...corsHeaders, "Content-Type": "application/json" },
-  });
-
 async function fetchSlots(calendarId: string, apiKey: string) {
   const start = Date.now();
   const end = start + WINDOW_DAYS * 24 * 60 * 60 * 1000;
-  const url = `${API_BASE}/calendars/${calendarId}/free-slots?startDate=${start}&endDate=${end}&timezone=${encodeURIComponent(TIMEZONE)}`;
+  const url = `${GHL_API_BASE}/calendars/${calendarId}/free-slots?startDate=${start}&endDate=${end}&timezone=${encodeURIComponent(TIMEZONE)}`;
   const r = await fetch(url, {
     headers: {
       Authorization: `Bearer ${apiKey}`,
-      Version: API_VERSION,
+      Version: GHL_API_VERSION,
       Accept: "application/json",
     },
   });
@@ -81,8 +69,7 @@ function flatten(resp: FreeSlotsResponse): string[] {
   return out;
 }
 
-// deno-lint-ignore no-explicit-any
-async function runSync(supabase: any, runId: string) {
+async function runSync(supabase: ReturnType<typeof createAdminClient>, runId: string) {
   const envs = loadEnvs();
   const summary: Record<string, unknown> = {};
   let total = 0;
@@ -160,26 +147,26 @@ async function runSync(supabase: any, runId: string) {
 }
 
 // EdgeRuntime is provided by Supabase Edge Runtime for background tasks.
-// deno-lint-ignore no-explicit-any
-const edgeRuntime: { waitUntil?: (p: Promise<unknown>) => void } | undefined = (globalThis as any).EdgeRuntime;
+const edgeRuntime = (globalThis as Record<string, unknown>).EdgeRuntime as
+  | { waitUntil?: (p: Promise<unknown>) => void }
+  | undefined;
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
 
-  const supabaseUrl = Deno.env.get("SUPABASE_URL");
-  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-  if (!supabaseUrl || !serviceKey) {
-    return json(500, { error: "Missing Supabase environment" });
+  let supabase: ReturnType<typeof createAdminClient>;
+  try {
+    supabase = createAdminClient();
+  } catch (e) {
+    return jsonResponse(500, { error: (e as Error).message });
   }
-
-  const supabase = createClient(supabaseUrl, serviceKey);
 
   const { data: run, error: runErr } = await supabase
     .from("ghl_sync_runs")
     .insert({ status: "running" })
     .select("id")
     .single();
-  if (runErr || !run) return json(500, { error: `run insert: ${runErr?.message}` });
+  if (runErr || !run) return jsonResponse(500, { error: `run insert: ${runErr?.message}` });
 
   const task = runSync(supabase, run.id);
   if (edgeRuntime?.waitUntil) {
@@ -189,5 +176,5 @@ Deno.serve(async (req) => {
     task.catch(() => {});
   }
 
-  return json(202, { ok: true, run_id: run.id, status: "running" });
+  return jsonResponse(202, { ok: true, run_id: run.id, status: "running" });
 });
