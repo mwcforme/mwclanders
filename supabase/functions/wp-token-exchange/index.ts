@@ -7,22 +7,11 @@
  *
  * Called client-side from /book/entry?t=<token>
  */
-import { createClient } from "npm:@supabase/supabase-js@2";
-
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-};
-
-const json = (status: number, data: unknown) =>
-  new Response(JSON.stringify(data), {
-    status,
-    headers: { ...corsHeaders, "Content-Type": "application/json" },
-  });
+import { corsHeaders, jsonResponse as json, corsResponse } from "../_shared/cors.ts";
+import { createAdminClient } from "../_shared/supabaseAdmin.ts";
 
 Deno.serve(async (req) => {
-  if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
+  if (req.method === "OPTIONS") return corsResponse();
   if (req.method !== "POST") return json(405, { ok: false, error: "method not allowed" });
 
   let body: { token?: string };
@@ -35,11 +24,7 @@ Deno.serve(async (req) => {
   const token = (body.token ?? "").trim();
   if (!token || token.length < 16) return json(400, { ok: false, error: "token required" });
 
-  const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-  const serviceRole = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-  const db = createClient(supabaseUrl, serviceRole, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
+  const db = createAdminClient();
 
   // Fetch + validate token in one query
   const { data: row, error } = await db

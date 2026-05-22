@@ -11,13 +11,8 @@
 // Result: a single booking_event_log row of event_type='sync_validation' with
 // meta = full report and error = first failure summary (or null when ok).
 
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
-
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-};
+import { corsHeaders, jsonResponse, corsResponse } from "../_shared/cors.ts";
+import { createAdminClient } from "../_shared/supabaseAdmin.ts";
 
 // Mirror of src/lib/ghlCalendars.ts + supabase/functions/ghl-sync/index.ts.
 // Keep the three lists in lockstep.
@@ -61,20 +56,14 @@ interface ValidationReport {
 }
 
 Deno.serve(async (req) => {
-  if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
+  if (req.method === "OPTIONS") return corsResponse();
 
-  const supabaseUrl = Deno.env.get("SUPABASE_URL");
-  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-  if (!supabaseUrl || !serviceKey) {
-    return new Response(JSON.stringify({ error: "missing supabase env" }), {
-      status: 500,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+  let supabase: ReturnType<typeof createAdminClient>;
+  try {
+    supabase = createAdminClient();
+  } catch {
+    return jsonResponse(500, { error: "missing supabase env" });
   }
-
-  const supabase = createClient(supabaseUrl, serviceKey, {
-    auth: { persistSession: false },
-  });
 
   const now = new Date();
   const freshCutoff = new Date(now.getTime() - FRESH_WINDOW_MIN * 60_000);
@@ -175,8 +164,5 @@ Deno.serve(async (req) => {
     meta: report as unknown as Record<string, unknown>,
   });
 
-  return new Response(JSON.stringify(report), {
-    status: report.ok ? 200 : 422,
-    headers: { ...corsHeaders, "Content-Type": "application/json" },
-  });
+  return jsonResponse(report.ok ? 200 : 422, report);
 });

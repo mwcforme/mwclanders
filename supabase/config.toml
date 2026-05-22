@@ -14,3 +14,9 @@ verify_jwt = false
 
 [functions.ghl-sync-validate]
 verify_jwt = false
+
+[functions.wp-token-exchange]
+verify_jwt = false
+
+[functions.lead-notify]
+verify_jwt = false
