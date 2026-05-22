@@ -39,7 +39,7 @@ export const TRTEduScienceSection = () => (
           background: "rgba(255,255,255,0.06)",
           borderRadius: 16,
           overflow: "hidden",
-          border: "1px solid rgba(255,255,255,0.07)",
+          border: "1px solid rgba(255,255,255,0.35)",
         }}
       >
         {STATS.map((s, i) => (

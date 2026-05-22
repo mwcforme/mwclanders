@@ -44,7 +44,7 @@ export function StepSafety({ selected, onChange, onSubmit }: StepSafetyProps) {
           // hardcoded-color-allow-next-line
           background: checked ? "rgba(232,103,10,0.10)" : "rgba(255,255,255,0.06)",
           // hardcoded-color-allow-next-line
-          border: `1.5px solid ${checked ? "var(--brand-cta)" : "rgba(255,255,255,0.18)"}`,
+          border: `1.5px solid ${checked ? "var(--brand-cta)" : "rgba(255,255,255,0.35)"}`,
           WebkitTapHighlightColor: "transparent",
         }}
       >

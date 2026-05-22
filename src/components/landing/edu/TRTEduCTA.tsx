@@ -82,7 +82,7 @@ export const TRTEduCTA = () => (
               alignItems: "center",
               gap: 10,
               background: "rgba(255,255,255,0.05)",
-              border: "1px solid rgba(255,255,255,0.12)",
+              border: "1px solid rgba(255,255,255,0.35)",
               borderRadius: 10,
               padding: "14px 20px",
               textDecoration: "none",

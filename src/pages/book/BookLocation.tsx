@@ -134,7 +134,7 @@ const BookLocation = () => {
                     padding: "20px 20px",
                     borderRadius: 12,
                     // hardcoded-color-allow-next-line
-                    border: `2px solid ${isSelected ? ORANGE : "rgba(255,255,255,0.12)"}`,
+                    border: `2px solid ${isSelected ? ORANGE : "rgba(255,255,255,0.35)"}`,
                     background: isSelected
                       // hardcoded-color-allow-next-line
                       ? "rgba(232,103,10,0.12)"
@@ -157,7 +157,7 @@ const BookLocation = () => {
                   }}
                   onMouseLeave={(e) => {
                     if (!isSelected)
-                      e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)";
+                      e.currentTarget.style.borderColor = "rgba(255,255,255,0.35)";
                   }}
                 >
                   {/* Pin icon — always Lucide MapPin */}

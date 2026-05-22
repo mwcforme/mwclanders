@@ -34,7 +34,7 @@ export function SymptomRow({ label, value, disabled, showError, autoFocus, onCha
         // hardcoded-color-allow-next-line
         background: disabled ? "rgba(255,255,255,0.03)" : "rgba(255,255,255,0.07)",
         // hardcoded-color-allow-next-line
-        border: `1px solid ${showError ? "#F97316" : disabled ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.16)"}`,
+        border: `1px solid ${showError ? "#F97316" : disabled ? "rgba(255,255,255,0.35)" : "rgba(255,255,255,0.35)"}`,
         opacity: disabled ? 0.4 : 1,
         pointerEvents: disabled ? "none" : "auto",
       }}
@@ -64,7 +64,7 @@ export function SymptomRow({ label, value, disabled, showError, autoFocus, onCha
                   // hardcoded-color-allow-next-line
                   color: active ? "var(--c-text-on-dark)" : "rgba(245,240,235,0.92)",
                   // hardcoded-color-allow-next-line
-                  border: `1.5px solid ${active ? "var(--brand-cta)" : "rgba(255,255,255,0.22)"}`,
+                  border: `1.5px solid ${active ? "var(--brand-cta)" : "rgba(255,255,255,0.35)"}`,
                   WebkitTapHighlightColor: "transparent",
                 }}
               >

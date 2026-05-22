@@ -137,7 +137,7 @@ const MoodStats = ({ bullets }: { bullets: MoodBullet[] }) => (
     {bullets.map((b, i) => (
       <div key={i} style={{
         display: "flex", alignItems: "center", gap: 14,
-        background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)",
+        background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.35)",
         borderRadius: 10, padding: "14px 16px",
       }}>
         <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 32, color: "#E8670A", lineHeight: 1, flexShrink: 0, width: 52 }}>
@@ -154,7 +154,7 @@ const FatCards = ({ bullets }: { bullets: FatBullet[] }) => (
   <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
     {bullets.map((b, i) => (
       <div key={i} style={{
-        background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)",
+        background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.35)",
         borderRadius: 10, padding: "14px 16px",
       }}>
         <div style={{ color: "#FFFFFF", fontWeight: 700, fontSize: 14, marginBottom: 4 }}>{b.label}</div>
@@ -169,7 +169,7 @@ const DefaultBullets = ({ bullets }: { bullets: string[] }) => (
     {bullets.map((b, i) => (
       <div key={i} style={{
         display: "flex", alignItems: "flex-start", gap: 12,
-        background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)",
+        background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.35)",
         borderRadius: 10, padding: "14px 16px",
       }}>
         <ChevronRight size={18} color="#E8670A" style={{ flexShrink: 0, marginTop: 2 }} />
@@ -207,7 +207,7 @@ export const TRTEduSymptomSlider = () => {
               onClick={() => { setActive(i); trackCro(`edu_symptom_tab_${i}`); }}
               style={{
                 padding: "8px 18px", borderRadius: 100,
-                border: i === active ? "1px solid #E8670A" : "1px solid rgba(255,255,255,0.15)",
+                border: i === active ? "1px solid #E8670A" : "1px solid rgba(255,255,255,0.35)",
                 background: i === active ? "rgba(232,103,10,0.18)" : "transparent",
                 color: i === active ? "#E8670A" : "rgba(255,255,255,0.55)",
                 fontSize: 14, fontWeight: 600, cursor: "pointer", transition: "all 0.2s",
@@ -224,7 +224,7 @@ export const TRTEduSymptomSlider = () => {
         <div
           key={active}
           style={{
-            background: "rgba(255,255,255,0.04)", border: "1px solid rgba(232,103,10,0.25)",
+            background: "rgba(255,255,255,0.04)", border: "1px solid rgba(232,103,10,0.70)",
             borderRadius: 16, padding: "clamp(28px, 5vw, 48px)",
             maxWidth: 720, margin: "0 auto",
           }}

@@ -241,7 +241,7 @@ export default function TRTSuccess() {
                   // hardcoded-color-allow-next-line
                   background: "rgba(255,255,255,0.10)",
                   // hardcoded-color-allow-next-line
-                  border: `1.5px solid rgba(255,255,255,0.20)`,
+                  border: `1.5px solid rgba(255,255,255,0.35)`,
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}>
                   <span style={{

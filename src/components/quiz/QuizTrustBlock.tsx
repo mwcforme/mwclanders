@@ -17,7 +17,7 @@ export const QuizTrustBlock = memo(function QuizTrustBlock() {
           // hardcoded-color-allow-next-line
           background: "rgba(255,255,255,0.05)",
           // hardcoded-color-allow-next-line
-          border: "1px solid rgba(255,255,255,0.14)",
+          border: "1px solid rgba(255,255,255,0.35)",
         }}
       >
         <div className="flex items-center gap-2 mb-2">

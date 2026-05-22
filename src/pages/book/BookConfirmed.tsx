@@ -118,7 +118,7 @@ export default function BookConfirmed() {
 
           {/* Appointment ticket */}
           {apptDate && (
-            <div style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 16, overflow: "hidden", marginBottom: 28 }}>
+            <div style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.35)", borderRadius: 16, overflow: "hidden", marginBottom: 28 }}>
               <div style={{ display: "flex" }}>
                 <div style={{ background: "var(--brand-cta)", padding: "24px 20px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minWidth: 88, flexShrink: 0 }}>
                   <span style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 11, color: "rgba(255,255,255,0.80)", letterSpacing: "0.12em" }}>{apptDate.month}</span>
@@ -154,7 +154,7 @@ export default function BookConfirmed() {
                 <Calendar size={18} strokeWidth={2} /> Add to Google Calendar
               </a>
               <a href={calLinks.ics} download="mwc-appointment.ics"
-                style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, height: 52, background: "rgba(255,255,255,0.10)", border: "1px solid rgba(255,255,255,0.25)", color: "var(--brand-cream)", borderRadius: 10, textDecoration: "none", fontFamily: "Inter, sans-serif", fontWeight: 600, fontSize: 15 }}>
+                style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, height: 52, background: "rgba(255,255,255,0.10)", border: "1px solid rgba(255,255,255,0.35)", color: "var(--brand-cream)", borderRadius: 10, textDecoration: "none", fontFamily: "Inter, sans-serif", fontWeight: 600, fontSize: 15 }}>
                 <Calendar size={18} strokeWidth={2} /> Apple / Outlook (.ics)
               </a>
             </div>

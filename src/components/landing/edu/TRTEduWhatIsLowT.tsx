@@ -52,7 +52,7 @@ export const TRTEduWhatIsLowT = () => (
               gap: 24,
               alignItems: "flex-start",
               background: "rgba(255,255,255,0.03)",
-              border: "1px solid rgba(255,255,255,0.07)",
+              border: "1px solid rgba(255,255,255,0.35)",
               borderRadius: 12,
               padding: "24px 28px",
             }}

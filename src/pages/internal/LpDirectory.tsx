@@ -83,7 +83,7 @@ const LpDirectory = () => {
 
           {/* Booking funnel */}
           <SectionTitle>Booking funnel routes</SectionTitle>
-          <div className="rounded-xl overflow-hidden mb-12" style={{ border: "1px solid rgba(255,255,255,0.10)" }}>
+          <div className="rounded-xl overflow-hidden mb-12" style={{ border: "1px solid rgba(255,255,255,0.35)" }}>
             <table className="w-full text-sm">
               <thead>
                 <tr style={{ background: "rgba(255,255,255,0.04)" }}>
@@ -111,7 +111,7 @@ const LpDirectory = () => {
 
           {/* Compliance */}
           <SectionTitle>Compliance pages</SectionTitle>
-          <div className="rounded-xl overflow-hidden mb-12" style={{ border: "1px solid rgba(255,255,255,0.10)" }}>
+          <div className="rounded-xl overflow-hidden mb-12" style={{ border: "1px solid rgba(255,255,255,0.35)" }}>
             <table className="w-full text-sm">
               <thead>
                 <tr style={{ background: "rgba(255,255,255,0.04)" }}>
@@ -154,7 +154,7 @@ const LpDirectory = () => {
             Hidden fields auto-populated from URL params on first visit and persisted to a 90-day first-party cookie.
             Try: <span className="font-mono">/?utm_source=meta&utm_campaign=test&gclid=ABC123&first_name=John</span>
           </p>
-          <div className="rounded-xl overflow-hidden mb-12" style={{ border: "1px solid rgba(255,255,255,0.10)" }}>
+          <div className="rounded-xl overflow-hidden mb-12" style={{ border: "1px solid rgba(255,255,255,0.35)" }}>
             <table className="w-full text-sm">
               <thead>
                 <tr style={{ background: "rgba(255,255,255,0.04)" }}>

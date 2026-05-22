@@ -39,7 +39,7 @@ export function HealthChecks({ checks }: Props) {
             // hardcoded-color-allow-next-line
             background: "rgba(255,255,255,0.04)",
             // hardcoded-color-allow-next-line
-            border: "1px solid rgba(255,255,255,0.10)",
+            border: "1px solid rgba(255,255,255,0.35)",
           }}
         >
           <div>

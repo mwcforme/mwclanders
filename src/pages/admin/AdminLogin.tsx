@@ -135,7 +135,7 @@ export default function AdminLogin() {
                 autoFocus
                 style={{
                   flex: 1, height: 40, borderRadius: 8,
-                  border: "1px solid rgba(255,255,255,0.15)",
+                  border: "1px solid rgba(255,255,255,0.35)",
                   background: "rgba(255,255,255,0.05)", color: "#FFFFFF",
                   fontSize: 14, fontFamily: "Inter, sans-serif", padding: "0 12px",
                   outline: "none",

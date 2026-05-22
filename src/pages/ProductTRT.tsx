@@ -811,7 +811,7 @@ const IncludedCard = () => (
     background: "rgba(255,255,255,0.06)",
     backdropFilter: "blur(20px)",
     WebkitBackdropFilter: "blur(20px)",
-    border: "1px solid rgba(255,255,255,0.12)",
+    border: "1px solid rgba(255,255,255,0.35)",
     borderRadius: 16,
     overflow: "hidden",
     marginBottom: 24,
