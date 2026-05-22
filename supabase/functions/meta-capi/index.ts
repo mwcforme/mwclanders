@@ -1,7 +1,7 @@
 // Meta Conversions API + GA4 Measurement Protocol mirror.
 // Public endpoint (no JWT). Validates input, hashes PII, dedupes via event_id.
 import { z } from "npm:zod@3.23.8";
-import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
+import { corsHeaders, jsonResponse } from "../_shared/cors.ts";
 
 const PIXEL_ID = Deno.env.get("META_PIXEL_ID");
 const CAPI_TOKEN = Deno.env.get("META_CAPI_TOKEN");
@@ -146,28 +146,19 @@ async function sendGA4(parsed: z.infer<typeof EventSchema>) {
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
   if (req.method !== "POST") {
-    return new Response(JSON.stringify({ error: "method_not_allowed" }), {
-      status: 405,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+    return jsonResponse(405, { error: "method_not_allowed" });
   }
 
   let json: unknown;
   try {
     json = await req.json();
   } catch {
-    return new Response(JSON.stringify({ error: "invalid_json" }), {
-      status: 400,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+    return jsonResponse(400, { error: "invalid_json" });
   }
 
   const parsed = EventSchema.safeParse(json);
   if (!parsed.success) {
-    return new Response(
-      JSON.stringify({ error: "validation_failed", details: parsed.error.flatten() }),
-      { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-    );
+    return jsonResponse(400, { error: "validation_failed", details: parsed.error.flatten() });
   }
 
   // Auto-fill ip/ua server-side (more reliable than client guess).
@@ -188,8 +179,5 @@ Deno.serve(async (req) => {
     results.ga4_error = e instanceof Error ? e.message : String(e);
   }
 
-  return new Response(JSON.stringify({ ok: true, event_id: data.event_id, results }), {
-    status: 200,
-    headers: { ...corsHeaders, "Content-Type": "application/json" },
-  });
+  return jsonResponse(200, { ok: true, event_id: data.event_id, results });
 });
