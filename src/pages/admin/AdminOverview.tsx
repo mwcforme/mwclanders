@@ -3,6 +3,7 @@ import { AdminLayout } from "@/components/admin/AdminLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { APP_ENV } from "@/lib/env";
 import { AlertCircle, Calendar, RefreshCw, TrendingUp, Users } from "lucide-react";
+import { AdminError } from "@/components/admin/AdminFeedback";
 import { StatCard } from "@/components/admin/StatCard";
 import { ToolsGrid } from "@/components/admin/ToolsGrid";
 import { RecentLeadsTable, type RecentLead } from "@/components/admin/RecentLeadsTable";
@@ -141,9 +142,7 @@ export default function AdminOverview() {
         </div>
       </div>
 
-      {statsError && (
-        <div className="mb-4 rounded-md border border-red-500/40 bg-red-500/10 px-3 py-2 text-sm text-red-200">{statsError}</div>
-      )}
+      {statsError && <AdminError message={statsError} />}
 
       {isProd && (
         <div className="mb-6 flex items-center gap-2 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">

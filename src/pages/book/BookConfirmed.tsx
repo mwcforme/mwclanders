@@ -1,84 +1,16 @@
 /**
  * /book/confirmed — Post-booking confirmation page.
- *
- * Visual hierarchy (CRO-optimised rebuild):
- * 1. HERO — full-width dark navy, large animated check, appointment as a ticket
- * 2. Calendar add buttons — immediate, prominent
- * 3. Outcome cards — 3 results they'll walk away with
- * 4. Video — 2-min watch, above prep
- * 5. Prep steps — 3 numbered cards, not bullets
- * 6. Location tile — professional, with map
- * 7. Email capture — small optional "want a copy?"
- * 8. Reschedule — footer
+ * CRO-optimised: check → ticket → calendar → outcomes → video → prep → location → email → reschedule
  */
 import { useEffect, useState, useRef } from "react";
-import { contactUpdater } from "@/services/contactUpdater";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
-import { MapPin, ExternalLink, Clock, Send, Calendar, ClipboardList, FlaskConical, Stethoscope } from "lucide-react";
+import { MapPin, ExternalLink, Clock, Calendar, ClipboardList, FlaskConical, Stethoscope } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import BookLayout from "@/components/book/BookLayout";
 import { useBookingStore } from "@/domain/booking/bookingStore";
 import { LOCATIONS, getMapsSearchUrl, type Location } from "@/data/locations";
-
-// ─── Constants ────────────────────────────────────────────────────────────────
-
-// --- Celebration CSS + Burst component ---
-
-const CELEBRATION_STYLES = `
-  @keyframes starBurst {
-    0%   { opacity: 1; transform: scale(0) translate(0, 0) rotate(0deg); }
-    60%  { opacity: 0.9; }
-    100% { opacity: 0; transform: scale(1) translate(var(--tx), var(--ty)) rotate(var(--rot)); }
-  }
-  .star-burst-particle {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    border-radius: 2px;
-    animation: starBurst 900ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    pointer-events: none;
-  }
-`;
-
-const BURST_COLORS = [
-  "#E8670A", "#C9A961", "#ffffff", "rgba(232,103,10,0.7)", "#F5F0EB",
-];
-
-const CelebrationBurst = ({ active }: { active: boolean }) => {
-  if (!active) return null;
-  const particles = Array.from({ length: 20 }, (_, idx) => {
-    const angle = (idx / 20) * 360;
-    const dist = 45 + (idx % 3) * 18;
-    const tx = `${(Math.cos((angle * Math.PI) / 180) * dist).toFixed(1)}px`;
-    const ty = `${(Math.sin((angle * Math.PI) / 180) * dist).toFixed(1)}px`;
-    const rot = `${idx * 18}deg`;
-    const color = BURST_COLORS[idx % BURST_COLORS.length];
-    const delay = `${idx * 25}ms`;
-    return { tx, ty, rot, color, delay, idx };
-  });
-
-  return (
-    <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", pointerEvents: "none", zIndex: 10 }}>
-      <style>{CELEBRATION_STYLES}</style>
-      {particles.map((p) => (
-        <div
-          key={p.idx}
-          className="star-burst-particle"
-          style={{
-            background: p.color,
-            // @ts-expect-error CSS custom props
-            "--tx": p.tx,
-            "--ty": p.ty,
-            "--rot": p.rot,
-            animationDelay: p.delay,
-            top: 0,
-            left: 0,
-          }}
-        />
-      ))}
-    </div>
-  );
-};
+import { CelebrationBurst } from "@/components/book/CelebrationBurst";
+import { EmailCapture } from "@/components/book/EmailCapture";
 
 const EXPECT_VIDEO_SRC = "/videos/what-to-expect.mp4";
 
@@ -90,74 +22,30 @@ const SLUG_MAP: Record<string, string> = {
 
 const DEFAULT_CENTER = LOCATIONS[1];
 
-const formatDate = (raw?: string) => {
+function formatDate(raw?: string) {
   if (!raw) return null;
   const d = new Date(raw);
   if (Number.isNaN(d.getTime())) return null;
+  const tz = "America/New_York";
   return {
-    weekday: new Intl.DateTimeFormat("en-US", { weekday: "long", timeZone: "America/New_York" }).format(d),
-    month: new Intl.DateTimeFormat("en-US", { month: "short", timeZone: "America/New_York" }).format(d).toUpperCase(),
-    day: new Intl.DateTimeFormat("en-US", { day: "numeric", timeZone: "America/New_York" }).format(d),
-    time: new Intl.DateTimeFormat("en-US", { hour: "numeric", minute: "2-digit", hour12: true, timeZone: "America/New_York" }).format(d),
+    weekday: new Intl.DateTimeFormat("en-US", { weekday: "long", timeZone: tz }).format(d),
+    month: new Intl.DateTimeFormat("en-US", { month: "short", timeZone: tz }).format(d).toUpperCase(),
+    day: new Intl.DateTimeFormat("en-US", { day: "numeric", timeZone: tz }).format(d),
+    time: new Intl.DateTimeFormat("en-US", { hour: "numeric", minute: "2-digit", hour12: true, timeZone: tz }).format(d),
     iso: raw,
   };
-};
+}
 
-const buildCalendarLinks = (iso: string, location: string, address: string) => {
+function buildCalendarLinks(iso: string, location: string, address: string) {
   const start = new Date(iso);
   const end = new Date(start.getTime() + 60 * 60 * 1000);
   const fmt = (d: Date) => d.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
   const title = "Men's Wellness Centers Appointment";
   const desc = "Your no-cost testosterone consultation. Bring photo ID.";
   const google = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${fmt(start)}/${fmt(end)}&location=${encodeURIComponent(address)}&details=${encodeURIComponent(desc)}`;
-  const ics = [
-    "BEGIN:VCALENDAR", "VERSION:2.0", "BEGIN:VEVENT",
-    `DTSTART:${fmt(start)}`, `DTEND:${fmt(end)}`,
-    `SUMMARY:${title}`, `LOCATION:${address}`, `DESCRIPTION:${desc}`,
-    "END:VEVENT", "END:VCALENDAR",
-  ].join("\r\n");
+  const ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "BEGIN:VEVENT", `DTSTART:${fmt(start)}`, `DTEND:${fmt(end)}`, `SUMMARY:${title}`, `LOCATION:${address}`, `DESCRIPTION:${desc}`, "END:VEVENT", "END:VCALENDAR"].join("\r\n");
   return { google, ics: `data:text/calendar;charset=utf-8,${encodeURIComponent(ics)}` };
-};
-
-// ─── Email capture ────────────────────────────────────────────────────────────
-
-const EmailCapture = ({ contactId, onComplete }: { contactId?: string; onComplete: () => void }) => {
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const setIdentity = useBookingStore((s) => s.setIdentity);
-  const identity = useBookingStore((s) => s.identity);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const trimmed = email.trim();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) { setError("Valid email required"); return; }
-    setError(""); setLoading(true);
-    if (identity) setIdentity({ ...identity, email: trimmed });
-    if (contactId) contactUpdater.updateContact(contactId, { email: trimmed }).catch(() => {});
-    setLoading(false);
-    onComplete();
-  };
-
-  return (
-    <div style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)", borderRadius: 12, padding: "20px 20px" }}>
-      <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 600, color: "rgba(245,243,240,0.80)", marginBottom: 4 }}>
-        Want a copy of your confirmation?
-      </p>
-      <form onSubmit={handleSubmit} noValidate style={{ display: "flex", gap: 8 }}>
-        <input
-          type="email" placeholder="your@email.com" value={email} autoComplete="email" inputMode="email"
-          onChange={(e) => { setEmail(e.target.value); setError(""); }}
-          style={{ flex: 1, height: 44, borderRadius: 8, border: `1.5px solid ${error ? "#FF6B7A" : "rgba(255,255,255,0.15)"}`, background: "rgba(255,255,255,0.07)", color: "var(--brand-cream)", fontSize: 15, fontFamily: "Inter, sans-serif", padding: "0 14px", outline: "none" }}
-        />
-        <button type="submit" disabled={loading} style={{ height: 44, padding: "0 18px", background: "var(--brand-cta)", color: "#FFF", border: "none", borderRadius: 8, fontFamily: "Inter, sans-serif", fontSize: 13, fontWeight: 700, cursor: loading ? "not-allowed" : "pointer", display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
-          <Send size={14} strokeWidth={2} /> Send
-        </button>
-      </form>
-      {error && <p style={{ color: "#FF6B7A", fontSize: 12, marginTop: 4, fontFamily: "Inter, sans-serif" }}>{error}</p>}
-    </div>
-  );
-};
+}
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
@@ -185,7 +73,7 @@ export default function BookConfirmed() {
     if (identity && !identity.phone && !identity.email) patchAction({ identity: undefined });
     const t = setTimeout(() => setCheckDrawn(true), 200);
     return () => clearTimeout(t);
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally runs once on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const mapRef = useRef<HTMLDivElement>(null);
@@ -206,13 +94,10 @@ export default function BookConfirmed() {
 
   return (
     <BookLayout page="confirmed" variant="confirmation" title="You're booked | Men's Wellness Centers">
-      {/* ── 1. HERO — Full-width dark, appointment ticket ──────────────── */}
+      {/* 1. HERO */}
       <div style={{ background: "linear-gradient(180deg, #0B1029 0%, #0D1535 100%)", padding: "48px 20px 56px" }}>
         <div style={{ maxWidth: 640, margin: "0 auto", fontFamily: "Inter, sans-serif" }}>
-
-          {/* Animated check + headline */}
           <div style={{ textAlign: "center", marginBottom: 36 }}>
-            {/* Check circle + celebration burst */}
             <div style={{ position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
               <div style={{ width: 80, height: 80, borderRadius: "50%", background: "rgba(22,163,74,0.15)", border: "2px solid rgba(22,163,74,0.40)", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
@@ -235,13 +120,11 @@ export default function BookConfirmed() {
           {apptDate && (
             <div style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 16, overflow: "hidden", marginBottom: 24 }}>
               <div style={{ display: "flex" }}>
-                {/* Date badge */}
                 <div style={{ background: "var(--brand-cta)", padding: "24px 20px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minWidth: 88, flexShrink: 0 }}>
                   <span style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 11, color: "rgba(255,255,255,0.80)", letterSpacing: "0.12em" }}>{apptDate.month}</span>
                   <span style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 48, color: "var(--c-text-on-dark)", lineHeight: 1 }}>{apptDate.day}</span>
                   <span style={{ fontFamily: "Oswald, sans-serif", fontWeight: 600, fontSize: 11, color: "rgba(255,255,255,0.80)", letterSpacing: "0.10em" }}>{apptDate.weekday.slice(0, 3).toUpperCase()}</span>
                 </div>
-                {/* Details */}
                 <div style={{ padding: "20px 20px", display: "flex", flexDirection: "column", justifyContent: "center", gap: 8 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                     <Clock size={15} strokeWidth={2} style={{ color: "var(--brand-cta)", flexShrink: 0 }} />
@@ -263,7 +146,7 @@ export default function BookConfirmed() {
             </div>
           )}
 
-          {/* ── 2. Calendar buttons */}
+          {/* 2. Calendar buttons */}
           {calLinks && (
             <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 8 }}>
               <a href={calLinks.google} target="_blank" rel="noopener noreferrer"
@@ -279,11 +162,11 @@ export default function BookConfirmed() {
         </div>
       </div>
 
-      {/* ── Light bg sections ──────────────────────────────────────────────── */}
+      {/* Light bg sections */}
       <div style={{ background: "#F4F6FA", padding: "0 20px 48px" }}>
         <div style={{ maxWidth: 640, margin: "0 auto", display: "flex", flexDirection: "column", gap: 20, paddingTop: 24, fontFamily: "Inter, sans-serif" }}>
 
-          {/* ── 3. Outcome cards */}
+          {/* 3. Outcome cards */}
           <div style={{ background: "var(--c-text-on-dark)", borderRadius: 16, overflow: "hidden", border: "1px solid #E5E7EB", boxShadow: "0 2px 16px rgba(0,0,0,0.06)" }}>
             <div style={{ padding: "20px 24px 0", borderBottom: "1px solid #F3F4F6" }}>
               <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "var(--brand-cta)", marginBottom: 6 }}>What you'll walk away with</p>
@@ -294,15 +177,13 @@ export default function BookConfirmed() {
               { icon: <ClipboardList size={18} strokeWidth={1.75} style={{ color: "var(--brand-cta)" }} />, text: "A personalized protocol you can start the same day, when medically appropriate" },
             ].map(({ icon, text }) => (
               <div key={text} style={{ display: "flex", alignItems: "flex-start", gap: 14, padding: "16px 24px", borderBottom: "1px solid #F3F4F6" }}>
-                <div style={{ width: 36, height: 36, borderRadius: 8, background: "rgba(232,103,10,0.08)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                  {icon}
-                </div>
+                <div style={{ width: 36, height: 36, borderRadius: 8, background: "rgba(232,103,10,0.08)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{icon}</div>
                 <span style={{ fontSize: 15, color: "#111", lineHeight: 1.5, paddingTop: 8 }}>{text}</span>
               </div>
             ))}
           </div>
 
-          {/* ── 4. Video */}
+          {/* 4. Video */}
           <div style={{ background: "var(--c-text-on-dark)", borderRadius: 16, overflow: "hidden", border: "1px solid #E5E7EB", boxShadow: "0 2px 16px rgba(0,0,0,0.06)" }}>
             <div style={{ position: "relative", width: "100%", paddingBottom: "52%", background: "#000" }}>
               <video ref={videoRef} src={EXPECT_VIDEO_SRC} poster="/images/video-poster.webp" muted loop={false} playsInline controls preload="none"
@@ -315,7 +196,7 @@ export default function BookConfirmed() {
             </div>
           </div>
 
-          {/* ── 5. Prep steps */}
+          {/* 5. Prep steps */}
           <div style={{ background: "var(--c-text-on-dark)", borderRadius: 16, padding: "22px 24px", border: "1px solid #E5E7EB", boxShadow: "0 2px 16px rgba(0,0,0,0.06)" }}>
             <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "#6B7280", marginBottom: 16 }}>Before you arrive</p>
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
@@ -332,7 +213,7 @@ export default function BookConfirmed() {
             </div>
           </div>
 
-          {/* ── 6. Location tile */}
+          {/* 6. Location tile */}
           <div style={{ background: "var(--c-text-on-dark)", borderRadius: 16, overflow: "hidden", border: "1px solid #E5E7EB", boxShadow: "0 2px 16px rgba(0,0,0,0.06)" }}>
             <div style={{ padding: "22px 24px 18px" }}>
               <h3 style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 22, color: "var(--brand-navy-deep)", textTransform: "uppercase", marginBottom: 4 }}>{center.city}</h3>
@@ -354,7 +235,6 @@ export default function BookConfirmed() {
                 </div>
               </div>
             </div>
-            {/* Map */}
             <div ref={mapRef} style={{ position: "relative", height: 260, borderTop: "1px solid #F3F4F6" }}>
               {mapVisible && (
                 <iframe title={`Map to ${center.name}`} src={mapsEmbedUrl} loading="lazy" referrerPolicy="no-referrer-when-downgrade"
@@ -367,14 +247,14 @@ export default function BookConfirmed() {
             </div>
           </div>
 
-          {/* ── 7. Email capture */}
+          {/* 7. Email capture */}
           {!emailCaptured && (
             <BookingErrorBoundary>
               <EmailCapture contactId={identity?.ghlContactId} onComplete={() => setEmailCaptured(true)} />
             </BookingErrorBoundary>
           )}
 
-          {/* ── 8. Reschedule */}
+          {/* 8. Reschedule */}
           <div style={{ textAlign: "center", display: "flex", flexDirection: "column", gap: 8 }}>
             <p style={{ color: "#6B7280", fontSize: 13 }}>Need to reschedule? Just give us a heads up.</p>
             <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 10 }}>
@@ -387,7 +267,6 @@ export default function BookConfirmed() {
             </div>
             <p style={{ color: "#9AA0AC", fontSize: 11, marginTop: 4 }}>Please cancel or reschedule at least 24 hours in advance.</p>
           </div>
-
         </div>
       </div>
     </BookLayout>
