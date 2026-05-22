@@ -4,7 +4,7 @@
  */
 import { type ReactNode } from "react";
 import { render, type RenderOptions } from "@testing-library/react";
-import { MemoryRouter, type MemoryRouterProps } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
