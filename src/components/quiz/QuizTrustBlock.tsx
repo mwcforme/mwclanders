@@ -1,6 +1,7 @@
+import { memo } from "react";
 import { Lock, Star } from "lucide-react";
 
-export function QuizTrustBlock() {
+export const QuizTrustBlock = memo(function QuizTrustBlock() {
   return (
     <>
       {/* Encryption badge */}
@@ -39,4 +40,4 @@ export function QuizTrustBlock() {
       </div>
     </>
   );
-}
+});

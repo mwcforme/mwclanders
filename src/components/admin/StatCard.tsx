@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Loader2 } from "lucide-react";
 
 interface StatCardProps {
@@ -9,7 +10,7 @@ interface StatCardProps {
   loading?: boolean;
 }
 
-export function StatCard({ label, value, sub, icon: Icon, accentClass, loading }: StatCardProps) {
+export const StatCard = memo(function StatCard({ label, value, sub, icon: Icon, accentClass, loading }: StatCardProps) {
   return (
     <div className="rounded-xl border border-white/8 bg-[#070B1F] p-6">
       <div className="flex items-center justify-between">
@@ -31,4 +32,4 @@ export function StatCard({ label, value, sub, icon: Icon, accentClass, loading }
       {sub && <div className="mt-2 text-xs text-white/55">{sub}</div>}
     </div>
   );
-}
+});

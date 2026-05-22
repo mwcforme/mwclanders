@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { AlertTriangle, BarChart3, Users, Database, Code2, ShieldCheck } from "lucide-react";
 
 const TOOLS = [
@@ -59,7 +60,7 @@ function ToolCard({ name, desc, url, Icon }: Tool) {
   );
 }
 
-export function ToolsGrid() {
+export const ToolsGrid = memo(function ToolsGrid() {
   return (
     <div className="mb-2">
       <h3 className="mb-3 text-sm font-semibold uppercase tracking-widest text-white/50">External Tools</h3>
@@ -70,4 +71,4 @@ export function ToolsGrid() {
       </div>
     </div>
   );
-}
+});
