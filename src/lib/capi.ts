@@ -33,7 +33,7 @@ export interface CapiCustomData {
   lp_slug?: string;
 }
 
-export function makeEventId() {
+function makeEventId() {
   return crypto.randomUUID();
 }
 

@@ -8,9 +8,9 @@ import { CATEGORIES, ALL_SYMPTOM_IDS, type CategoryId } from "@/data/quizContent
 
 export type QuizAnswer = 0 | 1 | 2 | 3;
 export type Tier = "None" | "Mild" | "Moderate" | "Severe";
-export type StepKey = 1 | 2 | 3 | "processing" | "finalizing" | "approved";
+type StepKey = 1 | 2 | 3 | "processing" | "finalizing" | "approved";
 
-export interface QuizState {
+interface QuizState {
   symptoms: Record<string, QuizAnswer | null>;
   safetyConditions: string[];
   fullName: string;

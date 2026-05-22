@@ -12,7 +12,7 @@
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-export interface ContactFields {
+interface ContactFields {
   email?: string;
   customFields?: Record<string, string>;
   [key: string]: unknown;

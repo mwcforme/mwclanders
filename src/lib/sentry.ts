@@ -68,4 +68,4 @@ if (dsn) {
   console.info("[sentry] VITE_SENTRY_DSN not set; Sentry disabled.");
 }
 
-export { Sentry };
+

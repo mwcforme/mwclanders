@@ -55,7 +55,7 @@ export const shortHeroLeadSchema = z.object({
   tcpa: tcpaField,
 });
 
-export type ShortHeroLeadInput = z.infer<typeof shortHeroLeadSchema>;
+
 
 /** Booking-confirm schema: TCPA already collected upstream; fields optional. */
 export const confirmLeadSchema = z.object({
@@ -64,4 +64,4 @@ export const confirmLeadSchema = z.object({
   email: emailField.optional(),
 });
 
-export type ConfirmLeadInput = z.infer<typeof confirmLeadSchema>;
+

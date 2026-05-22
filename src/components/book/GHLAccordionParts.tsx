@@ -12,7 +12,7 @@ interface SlotButtonProps {
   onSelect: (iso: string) => void;
 }
 
-export const SlotButton = memo(function SlotButton({ iso, selected, onSelect }: SlotButtonProps) {
+const SlotButton = memo(function SlotButton({ iso, selected, onSelect }: SlotButtonProps) {
   const { time, ampm } = fmtTimeParts(iso);
   return (
     <button

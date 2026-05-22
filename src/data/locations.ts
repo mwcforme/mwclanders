@@ -97,45 +97,7 @@ export const LOCATIONS: Location[] = [
   },
 ];
 
-const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-/**
- * Pure-function "Open now" status for a given location.
- * Uses local clock (matches Virginia ET in 99% of visits; close-enough for badge).
- * Saturday is treated as a regular open day per business rules.
- */
-export function getOpenStatus(loc: Location, now: Date = new Date()):
-  | { open: true; closesAt: string }
-  | { open: false; nextOpenLabel: string } {
-  const day = now.getDay();
-  const hours = now.getHours();
-  const opensH = parseInt(loc.weeklyOpens.slice(0, 2), 10);
-  const closesH = parseInt(loc.weeklyCloses.slice(0, 2), 10);
-
-  const isSaturday = day === 6;
-  const effectiveClose = isSaturday
-    ? parseInt((loc as Location & { weeklyClosesSat?: string }).weeklyClosesSat?.slice(0, 2) ?? "16", 10)
-    : closesH;
-
-  if (loc.openDays.includes(day) && hours >= opensH && hours < effectiveClose) {
-    const closesLabel = isSaturday ? "4:00 PM" : "6:00 PM";
-    return { open: true, closesAt: closesLabel };
-  }
-
-  // Find next open day
-  for (let i = 1; i <= 7; i++) {
-    const next = (day + i) % 7;
-    if (loc.openDays.includes(next)) {
-      const label = i === 1 ? `tomorrow` : DAY_NAMES[next];
-      return { open: false, nextOpenLabel: `Opens ${label} at 8:00 AM` };
-    }
-  }
-  return { open: false, nextOpenLabel: "Opens at 8:00 AM" };
-}
-
-export function getMapsDirectionsUrl(loc: Location): string {
-  return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(loc.fullAddress)}`;
-}
 
 export function getMapsSearchUrl(loc: Location): string {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc.mapsQuery)}`;

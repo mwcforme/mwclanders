@@ -11,7 +11,7 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
-export type Symptom = "energy" | "sexual" | "weight" | "other";
+type Symptom = "energy" | "sexual" | "weight" | "other";
 export type Duration = "lt6mo" | "6to12mo" | "1to2yr" | "gt2yr";
 export type UrgencyTier = "early" | "building" | "overdue" | "long_overdue";
 export type Service = "trt" | "ed" | "wl";

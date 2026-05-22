@@ -24,7 +24,7 @@ export const ATTRIBUTION_KEYS = [
   "fbclid",
 ] as const;
 
-export type AttributionKey = typeof ATTRIBUTION_KEYS[number];
+type AttributionKey = typeof ATTRIBUTION_KEYS[number];
 export type Attribution = Partial<Record<AttributionKey, string>>;
 
 const MAX_VAL_LEN = 200;

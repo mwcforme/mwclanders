@@ -16,8 +16,5 @@ export const BRAND = {
   email: "info@menswellnesscenters.com",
 } as const;
 
-export const GBP_REVIEWS_URL =
-  "https://www.google.com/maps/place/Men%27s+Wellness+Centers/@36.8577,-76.1369,15z/data=!4m8!3m7!1s0x0:0x0!8m2!3d36.8577!4d-76.1369!9m1!1b1";
-
 /** Google Analytics 4 measurement ID. */
 export const GA4_ID = "G-286547777";
