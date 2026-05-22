@@ -2,21 +2,10 @@
 // Forms, generic JSON, partner sites). Persists every submission to
 // `lead_captures` first, then forwards to GHL CRM. Zero-data-loss guarantee.
 
-import { createClient } from "npm:@supabase/supabase-js@2";
 import { mapToCanonical, splitName, type CanonicalLead } from "./mapping.ts";
-
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type, x-intake-token",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-};
-
-const json = (status: number, data: unknown) =>
-  new Response(JSON.stringify(data), {
-    status,
-    headers: { ...corsHeaders, "Content-Type": "application/json" },
-  });
+import { corsHeaders, jsonResponse, corsResponse } from "../_shared/cors.ts";
+import { detectEnv, tryGetGhlCreds, GHL_API_BASE, GHL_API_VERSION } from "../_shared/ghlEnv.ts";
+import { createAdminClient } from "../_shared/supabaseAdmin.ts";
 
 // ---- Rate limit (best-effort, in-memory; per-instance) ----
 const RL_WINDOW_MS = 60_000;
@@ -32,39 +21,6 @@ function rateLimit(ip: string): boolean {
   if (cur.count >= RL_MAX) return false;
   cur.count++;
   return true;
-}
-
-// ---- GHL config (mirrors ghl-proxy) ----
-const GHL_API_BASE = "https://services.leadconnectorhq.com";
-const GHL_API_VERSION = "2021-07-28";
-const PROD_LOCATION_ID = "Ghstz8eIsHWLeXek47dk";
-
-type AppEnv = "prod" | "stage";
-const PROD_HOSTS = new Set<string>([
-  "book.menswellnesscenters.com",
-  "menswellnesscenters.com",
-  "www.menswellnesscenters.com",
-]);
-function detectEnv(req: Request, hint?: unknown): AppEnv {
-  if (hint === "prod" || hint === "stage") return hint;
-  const origin = req.headers.get("origin") || req.headers.get("referer") || "";
-  try {
-    const host = new URL(origin).hostname.toLowerCase();
-    if (PROD_HOSTS.has(host)) return "prod";
-  } catch { /* ignore */ }
-  return "stage";
-}
-function envCreds(env: AppEnv) {
-  if (env === "stage") {
-    return {
-      apiKey: Deno.env.get("GHL_API_KEY_STAGE"),
-      locationId: Deno.env.get("GHL_LOCATION_ID_STAGE") ?? "",
-    };
-  }
-  return {
-    apiKey: Deno.env.get("GHL_API_KEY"),
-    locationId: Deno.env.get("GHL_LOCATION_ID") ?? PROD_LOCATION_ID,
-  };
 }
 
 async function parseBody(req: Request): Promise<Record<string, unknown>> {
@@ -146,25 +102,25 @@ async function forwardToGhl(c: CanonicalLead, accessToken: string, locationId: s
 }
 
 Deno.serve(async (req) => {
-  if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
-  if (req.method !== "POST") return json(405, { ok: false, error: "method not allowed" });
+  if (req.method === "OPTIONS") return corsResponse();
+  if (req.method !== "POST") return jsonResponse(405, { ok: false, error: "method not allowed" });
 
   // Optional shared-secret check
   const expectedToken = Deno.env.get("LEAD_INTAKE_TOKEN");
   if (expectedToken) {
     const got = req.headers.get("x-intake-token") ?? "";
-    if (got !== expectedToken) return json(401, { ok: false, error: "unauthorized" });
+    if (got !== expectedToken) return jsonResponse(401, { ok: false, error: "unauthorized" });
   }
 
   // Rate limit by client IP
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown";
-  if (!rateLimit(ip)) return json(429, { ok: false, error: "rate limit exceeded" });
+  if (!rateLimit(ip)) return jsonResponse(429, { ok: false, error: "rate limit exceeded" });
 
   let raw: Record<string, unknown>;
   try {
     raw = await parseBody(req);
   } catch (e) {
-    return json(400, { ok: false, error: `bad body: ${(e as Error).message}` });
+    return jsonResponse(400, { ok: false, error: `bad body: ${(e as Error).message}` });
   }
 
   const referer = req.headers.get("referer") ?? undefined;
@@ -172,18 +128,14 @@ Deno.serve(async (req) => {
 
   // Honeypot — silently accept and drop
   if (canonical.honeypot && canonical.honeypot.length > 0) {
-    return json(200, { ok: true, dropped: "honeypot" });
+    return jsonResponse(200, { ok: true, dropped: "honeypot" });
   }
 
   const v = validate(canonical);
-  if (!v.ok) return json(400, { ok: false, error: v.error });
+  if (!v.ok) return jsonResponse(400, { ok: false, error: v.error });
 
   // ---- Persist FIRST (zero data loss) ----
-  const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-  const serviceRole = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-  const supabase = createClient(supabaseUrl, serviceRole, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
+  const supabase = createAdminClient();
 
   const tags: string[] = [];
   if (canonical.form_source_label) tags.push(`form:${canonical.form_source_label}`);
@@ -221,20 +173,21 @@ Deno.serve(async (req) => {
 
   if (insertErr || !inserted) {
     console.error("[lead-intake] db insert failed", insertErr);
-    return json(500, { ok: false, error: "failed to persist lead" });
+    return jsonResponse(500, { ok: false, error: "failed to persist lead" });
   }
   const captureId = inserted.id as string;
 
   // ---- Forward to GHL (env-aware) ----
   const appEnv = detectEnv(req, (raw as Record<string, unknown>).__env);
-  const { apiKey: ghlToken, locationId: ghlLocationId } = envCreds(appEnv);
-  if (!ghlToken || !ghlLocationId) {
+  const creds = tryGetGhlCreds(appEnv);
+  if (!creds) {
     await supabase
       .from("lead_captures")
       .update({ crm_status: "failed", crm_error: `GHL ${appEnv} credentials not configured` })
       .eq("id", captureId);
-    return json(502, { ok: false, capture_id: captureId, error: "CRM not configured" });
+    return jsonResponse(502, { ok: false, capture_id: captureId, error: "CRM not configured" });
   }
+  const { apiKey: ghlToken, locationId: ghlLocationId } = creds;
 
   try {
     const { contactId } = await forwardToGhl(canonical, ghlToken, ghlLocationId);
@@ -272,7 +225,7 @@ Deno.serve(async (req) => {
       console.warn("[lead-intake] token insert failed", tokenErr);
     }
 
-    return json(200, {
+    return jsonResponse(200, {
       ok: true,
       capture_id: captureId,
       crm_contact_id: contactId,
@@ -285,6 +238,6 @@ Deno.serve(async (req) => {
       .from("lead_captures")
       .update({ crm_status: "failed", crm_error: msg.slice(0, 500) })
       .eq("id", captureId);
-    return json(502, { ok: false, capture_id: captureId, error: msg });
+    return jsonResponse(502, { ok: false, capture_id: captureId, error: msg });
   }
 });
