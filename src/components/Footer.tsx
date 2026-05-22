@@ -29,7 +29,7 @@ const socials = [
 
 const certBadges = [
   { image: "/images/badges/clia.webp", label: "CLIA Certified" },
-  { image: "/images/badges/legitscript.png", label: "LegitScript Certified" },
+  { image: "/images/badges/legitscript.webp", label: "LegitScript Certified" },
   { image: "/images/badges/hipaa.webp", label: "HIPAA Compliant" },
 ];
 

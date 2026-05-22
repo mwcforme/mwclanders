@@ -45,7 +45,7 @@ export const TRTMarquee = () => (
         style={{ display: "inline-block" }}
       >
         <img
-          src="/images/badges/legitscript-color.png"
+          src="/images/badges/legitscript-color.webp"
           alt="LegitScript Certified Healthcare Website"
           style={{ height: 72, width: "auto", objectFit: "contain" }}
           loading="lazy"

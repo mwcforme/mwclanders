@@ -46,7 +46,7 @@ const FunnelFooter = () => (
       style={{ display: "inline-block", marginBottom: 12 }}
     >
       <img
-        src="/images/badges/legitscript.png"
+        src="/images/badges/legitscript.webp"
         alt="LegitScript Certified"
         width={120}
         height={40}

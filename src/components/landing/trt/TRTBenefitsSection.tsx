@@ -64,7 +64,7 @@ export const TRTBenefitsSection = memo(() => (
         }}
       >
         <img
-          src="/assets/lp/patient-bp-exam-wide.jpg"
+          src="/assets/lp/patient-bp-exam-wide.webp"
           alt="Athletic man smiling, energetic"
           style={{
             width: "100%",

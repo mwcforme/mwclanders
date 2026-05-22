@@ -136,7 +136,7 @@ export const TRTFooter = () => {
             style={{ display: "inline-block" }}
           >
             <img
-              src="/images/badges/legitscript-color.png"
+              src="/images/badges/legitscript-color.webp"
               alt="LegitScript Certified Healthcare Website"
               style={{ height: 80, width: "auto" }}
               width={110}

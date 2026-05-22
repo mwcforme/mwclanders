@@ -699,7 +699,7 @@ const TrustBadgesInline = () => (
       aria-label="Verify LegitScript Certification"
     >
       <img
-        src="/images/badges/legitscript-color.png"
+        src="/images/badges/legitscript-color.webp"
         alt="LegitScript Certified"
         style={{ height: 40, width: "auto", opacity: 0.85 }}
         loading="lazy"
