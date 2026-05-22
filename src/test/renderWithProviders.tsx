@@ -7,6 +7,7 @@ import { render, type RenderOptions } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ServicesProvider } from "@/app/providers/ServicesProvider";
 
 /** Minimal no-retry query client for tests */
 function makeQueryClient() {
@@ -25,7 +26,9 @@ export function createWrapper(initialEntries: string[] = ["/"]): React.FC<{ chil
       <HelmetProvider>
         <QueryClientProvider client={qc}>
           <MemoryRouter initialEntries={initialEntries}>
-            {children}
+            <ServicesProvider>
+              {children}
+            </ServicesProvider>
           </MemoryRouter>
         </QueryClientProvider>
       </HelmetProvider>
