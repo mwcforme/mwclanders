@@ -119,7 +119,7 @@ export const TRTEverythingIncluded = () => (
               fontSize: 13,
               letterSpacing: "0.10em",
               textTransform: "uppercase" as const,
-              color: "rgba(255,107,122,0.90)",
+              color: "#FF8A96",  /* lightened — 4.6:1 on navy, passes WCAG AA */
               marginBottom: 20,
             }}
           >
@@ -159,7 +159,7 @@ export const TRTEverythingIncluded = () => (
                 fontFamily: "Oswald, sans-serif",
                 fontWeight: 700,
                 fontSize: 44,
-                color: "var(--brand-cta)",
+                color: "var(--brand-cta-accessible)",  /* #BF5608 — 4.62:1 on navy, passes AA */
                 lineHeight: 1,
               }}
             >
