@@ -92,7 +92,7 @@ export function EnvChangeHistory() {
 }
 
 function EnvPill({ env }: { env: string | null }) {
-  if (!env) return <span className="text-white/40">—</span>;
+  if (!env) return <span className="text-white/50">—</span>;
   const tone =
     env === "stage"
       ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/30"

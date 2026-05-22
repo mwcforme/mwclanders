@@ -89,7 +89,7 @@ export function EnvSwitcher() {
       {confirmation && (
         <div className="text-right">
           <div className="text-xs font-medium text-emerald-400">{confirmation.message}</div>
-          <div className="text-[10px] text-white/40">{confirmation.time}</div>
+          <div className="text-[10px] text-white/50">{confirmation.time}</div>
         </div>
       )}
     </div>

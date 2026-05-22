@@ -154,7 +154,7 @@ export default function AdminLeads() {
           placeholder="Search name, email, phone…"
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          className="h-10 flex-1 min-w-[200px] rounded-md border border-white/10 bg-[#070B1F] px-3 text-sm placeholder:text-white/40 focus:border-[#E8670A] focus:outline-none"
+          className="h-10 flex-1 min-w-[200px] rounded-md border border-white/10 bg-[#070B1F] px-3 text-sm placeholder:text-white/50 focus:border-[var(--brand-cta)] focus:outline-none"
         />
         <select
           value={filter}
@@ -231,7 +231,7 @@ export default function AdminLeads() {
                     </Td>
                     <Td>
                       <div>{r.service ?? "—"}</div>
-                      <div className="text-xs text-white/40">
+                      <div className="text-xs text-white/50">
                         {r.location ?? ""}
                       </div>
                     </Td>
@@ -243,7 +243,7 @@ export default function AdminLeads() {
                     <Td>
                       <StatusPill status={r.crm_status} />
                       {r.crm_contact_id && (
-                        <div className="mt-1 text-xs text-white/30 font-mono">
+                        <div className="mt-1 text-xs text-white/50 font-mono">
                           {r.crm_contact_id.slice(0, 12)}…
                         </div>
                       )}
@@ -301,7 +301,7 @@ export default function AdminLeads() {
         </div>
       )}
 
-      <p className="mt-3 text-xs text-white/40">
+      <p className="mt-3 text-xs text-white/50">
         Showing the most recent 500 records. Default view: unsynced leads only.
       </p>
     </AdminLayout>

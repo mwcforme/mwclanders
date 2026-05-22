@@ -43,7 +43,7 @@ export const CROFooter = () => {
           display: "flex", flexDirection: "column", gap: 12,
         }}>
           {DISCLAIMERS.map((text, i) => (
-            <p key={i} style={{ fontSize: 11, lineHeight: 1.65, color: "rgba(255,255,255,0.45)", margin: 0, overflowWrap: "break-word" }}>{text}</p>
+            <p key={i} style={{ fontSize: 11, lineHeight: 1.65, color: "rgba(255,255,255,0.50)", margin: 0, overflowWrap: "break-word" }}>{text}</p>
           ))}
         </div>
         <div style={{
@@ -53,18 +53,18 @@ export const CROFooter = () => {
           display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center",
           gap: "6px 14px", fontSize: 11, fontWeight: 700, letterSpacing: "0.09em",
           // hardcoded-color-allow-next-line
-          textTransform: "uppercase", color: "rgba(255,255,255,0.45)",
+          textTransform: "uppercase", color: "rgba(255,255,255,0.50)",
         }}>
           <span>&copy; {year} Men&rsquo;s Wellness Centers</span>
           <span>|</span>
           {/* hardcoded-color-allow-next-line */}
-          <Link to="/prescribing-policy" style={{ color: "rgba(255,255,255,0.45)", textDecoration: "none" }}>Safety Policy</Link>
+          <Link to="/prescribing-policy" style={{ color: "rgba(255,255,255,0.50)", textDecoration: "none" }}>Safety Policy</Link>
           <span>|</span>
           {/* hardcoded-color-allow-next-line */}
-          <Link to="/terms-of-service" style={{ color: "rgba(255,255,255,0.45)", textDecoration: "none" }}>Terms</Link>
+          <Link to="/terms-of-service" style={{ color: "rgba(255,255,255,0.50)", textDecoration: "none" }}>Terms</Link>
           <span>|</span>
           {/* hardcoded-color-allow-next-line */}
-          <Link to="/privacy-policy" style={{ color: "rgba(255,255,255,0.45)", textDecoration: "none" }}>Privacy Policy</Link>
+          <Link to="/privacy-policy" style={{ color: "rgba(255,255,255,0.50)", textDecoration: "none" }}>Privacy Policy</Link>
         </div>
       </div>
     </footer>

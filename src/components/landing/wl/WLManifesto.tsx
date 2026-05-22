@@ -36,7 +36,7 @@ export const WLManifesto = () => (
           <figcaption className="mt-3 text-sm" style={{ color: "rgba(255,255,255,0.65)", fontFamily: "Inter, sans-serif" }}>
             David K., 54, Norfolk
             {/* hardcoded-color-allow-next-line */}
-            <span className="block mt-1" style={{ fontSize: 11, color: "rgba(255,255,255,0.40)", fontStyle: "normal" }}>Results not typical. Individual results vary.</span>
+            <span className="block mt-1" style={{ fontSize: 11, color: "rgba(255,255,255,0.50)", fontStyle: "normal" }}>Results not typical. Individual results vary.</span>
           </figcaption>
         </figure>
 

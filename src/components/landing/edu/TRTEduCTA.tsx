@@ -61,7 +61,7 @@ export const TRTEduCTA = () => (
       </a>
 
       {/* Location pills */}
-      <p style={{ color: "rgba(255,255,255,0.40)", fontSize: 13, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 20 }}>
+      <p style={{ color: "rgba(255,255,255,0.50)", fontSize: 13, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 20 }}>
         Or call your nearest location
       </p>
       <div
@@ -102,7 +102,7 @@ export const TRTEduCTA = () => (
       </div>
 
       {/* Trust note */}
-      <p style={{ color: "rgba(255,255,255,0.30)", fontSize: 13, marginTop: 36, lineHeight: 1.6 }}>
+      <p style={{ color: "rgba(255,255,255,0.50)", fontSize: 13, marginTop: 36, lineHeight: 1.6 }}>
         LegitScript Certified · Provider-supervised · No subscription required · In-person Virginia clinics
       </p>
     </div>

@@ -110,7 +110,7 @@ export default function AdminEvents() {
           </table>
         </div>
       )}
-      <p className="mt-3 text-xs text-white/40">
+      <p className="mt-3 text-xs text-white/50">
         Showing the most recent 500 events.
       </p>
     </AdminLayout>

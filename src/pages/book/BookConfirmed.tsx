@@ -279,7 +279,7 @@ export default function BookConfirmed() {
                 Book a different time
               </a>
             </div>
-            <p style={{ color: "#9CA3AF", fontSize: 12, marginTop: 6 }}>Please cancel or reschedule at least 24 hours in advance.</p>
+            <p style={{ color: "#505761", fontSize: 12, marginTop: 6 }}>Please cancel or reschedule at least 24 hours in advance.</p>  {/* was #9CA3AF (2.54:1 FAIL) → #505761 7.30:1 ✅ */}
           </div>
         </div>
       </div>

@@ -74,7 +74,7 @@ export default function AdminLogin() {
           <div style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 24, color: "#FFFFFF", letterSpacing: "0.08em", marginBottom: 4 }}>
             MWC ADMIN
           </div>
-          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", fontFamily: "Inter, sans-serif" }}>
+          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.50)", fontFamily: "Inter, sans-serif" }}>
             Internal operations console
           </p>
         </div>
@@ -152,7 +152,7 @@ export default function AdminLogin() {
           )}
         </div>
 
-        <p style={{ textAlign: "center", marginTop: 16, fontSize: 11, color: "rgba(255,255,255,0.25)", fontFamily: "Inter, sans-serif" }}>
+        <p style={{ textAlign: "center", marginTop: 16, fontSize: 11, color: "rgba(255,255,255,0.50)", fontFamily: "Inter, sans-serif" }}>
           Access restricted to authorized staff only.
         </p>
       </div>

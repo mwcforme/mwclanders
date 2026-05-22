@@ -45,7 +45,7 @@ export function EmailCapture({ contactId, onComplete }: Props) {
           onChange={(e) => { setEmail(e.target.value); setError(""); }}
           style={{
             flex: 1, height: 44, borderRadius: 8,
-            border: `1.5px solid ${error ? "#EF4444" : "#D1D5DB"}`,
+            border: `1.5px solid ${error ? "var(--c-error-on-light)" : "#D1D5DB"}`,
             background: "#F9FAFB", color: "#111827",
             fontSize: 15, fontFamily: "Inter, sans-serif", padding: "0 14px", outline: "none",
           }}
@@ -63,7 +63,7 @@ export function EmailCapture({ contactId, onComplete }: Props) {
           <Send size={14} strokeWidth={2} /> Send
         </button>
       </form>
-      {error && <p style={{ color: "#FF6B7A", fontSize: 12, marginTop: 4, fontFamily: "Inter, sans-serif" }}>{error}</p>}
+      {error && <p style={{ color: "var(--c-error-on-light)", fontSize: 12, marginTop: 4, fontFamily: "Inter, sans-serif" }}>{error}</p>}
     </div>
   );
 }

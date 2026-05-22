@@ -38,7 +38,7 @@ export function AdminEmpty({
 }) {
   return (
     <tr>
-      <td colSpan={colSpan} className="px-4 py-8 text-center text-white/40">
+      <td colSpan={colSpan} className="px-4 py-8 text-center text-white/50">
         {message}
       </td>
     </tr>

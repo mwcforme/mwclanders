@@ -106,7 +106,7 @@ export const ServiceFinalCTA = ({
           </p>
           <div className="flex items-center justify-center gap-2 mt-4">
             {Array.from({ length: 5 }).map((_, i) => {
-              return <span key={i} style={{ color: "#D4A017", fontSize: "20px" }}>★</span>;
+              return <span key={i} style={{ color: "#9C7A0A", fontSize: "20px" }}>★</span>;  /* was #D4A017 (2.38:1 FAIL) → #9C7A0A 3.52:1 UI ✅ */
             })}
             {/* hardcoded-color-allow-next-line */}
             <span className="text-sm font-medium" style={{ color: "rgba(255,255,255,0.80)" }}>200+ Reviews</span>

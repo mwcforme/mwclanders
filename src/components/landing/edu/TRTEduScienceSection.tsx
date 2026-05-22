@@ -72,7 +72,7 @@ export const TRTEduScienceSection = () => (
       <p
         style={{
           textAlign: "center",
-          color: "rgba(255,255,255,0.35)",
+          color: "rgba(255,255,255,0.50)",
           fontSize: 12,
           marginTop: 20,
         }}

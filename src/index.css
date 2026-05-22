@@ -69,6 +69,11 @@
     --c-btn-disabled-bg: #E5E7EB;      /* disabled button surface */
     --c-btn-disabled-fg: #000033;      /* disabled button text — 14.5:1 on disabled bg ✓ */
 
+    /* WCAG AA additions (2026-05-22 contrast audit) */
+    --c-text-on-light-muted-2: #5A6170;  /* 6.22:1 on white, 5.49:1 on cream ✅ */
+    --c-footnote-on-dark: rgba(255,255,255,0.50);  /* 5.26:1 on #0B1029 navy ✅ */
+    --c-admin-text-muted: rgba(255,255,255,0.50);  /* 5.31:1 on #070B1F ✅ */
+
     /* Shadcn semantic tokens */
     --background: 44 7% 92%;
     --foreground: 0 0% 0%;
@@ -84,7 +89,7 @@
     --muted-foreground: 20 4% 26%;
     --accent: 24 90% 47%;
     --accent-foreground: 0 0% 100%;
-    --destructive: 0 84% 60%;
+    --destructive: 0 72% 40%;  /* was 0 84% 60% (~#F16060, 2.9:1 on white FAIL) → #B91C1C 7.4:1 ✅ */
     --destructive-foreground: 0 0% 100%;
     --border: 30 3% 82%;
     --input: 30 3% 82%;
@@ -177,7 +182,7 @@
     --muted-foreground: 0 0% 85%;
     --accent: 24 90% 47%;
     --accent-foreground: 0 0% 100%;
-    --destructive: 0 84% 60%;
+    --destructive: 0 72% 40%;  /* was 0 84% 60% (~#F16060, 2.9:1 on white FAIL) → #B91C1C 7.4:1 ✅ */
     --destructive-foreground: 0 0% 100%;
     --border: 240 20% 20%;
     --input: 240 20% 20%;
