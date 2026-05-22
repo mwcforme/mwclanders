@@ -31,9 +31,9 @@ export function EmailCapture({ contactId, onComplete }: Props) {
   };
 
   return (
-    <div style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)", borderRadius: 12, padding: "20px 20px" }}>
-      <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 600, color: "rgba(245,243,240,0.80)", marginBottom: 4 }}>
-        Want a copy of your confirmation?
+    <div>
+      <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "#374151", marginBottom: 10 }}>
+        We'll send your appointment details and a reminder.
       </p>
       <form onSubmit={handleSubmit} noValidate style={{ display: "flex", gap: 8 }}>
         <input
@@ -45,8 +45,8 @@ export function EmailCapture({ contactId, onComplete }: Props) {
           onChange={(e) => { setEmail(e.target.value); setError(""); }}
           style={{
             flex: 1, height: 44, borderRadius: 8,
-            border: `1.5px solid ${error ? "#FF6B7A" : "rgba(255,255,255,0.15)"}`,
-            background: "rgba(255,255,255,0.07)", color: "var(--brand-cream)",
+            border: `1.5px solid ${error ? "#EF4444" : "#D1D5DB"}`,
+            background: "#F9FAFB", color: "#111827",
             fontSize: 15, fontFamily: "Inter, sans-serif", padding: "0 14px", outline: "none",
           }}
         />
