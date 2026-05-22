@@ -4,7 +4,7 @@ import { AdminError, AdminLoading, AdminEmpty } from "@/components/admin/AdminFe
 import { Th, Td, StatusPill } from "@/components/admin/AdminTable";
 import { supabase } from "@/integrations/supabase/client";
 import { downloadCsv } from "@/lib/admin/csv";
-import { APP_ENV } from "@/lib/env";
+import { resyncLead } from "@/services/impl/LeadResyncer";
 import { Loader2, Download, RefreshCw, AlertCircle, CheckCircle2 } from "lucide-react";
 
 interface Lead {
@@ -22,47 +22,6 @@ interface Lead {
   page_url: string | null;
   tags: string[] | null;
   attribution: Record<string, unknown> | null;
-}
-
-// Re-sync a single lead to GHL via the lead-intake edge function
-async function resyncLead(
-  lead: Lead
-): Promise<{ ok: boolean; error?: string; contactId?: string }> {
-  const [firstName, ...rest] = (lead.name ?? "Guest").trim().split(/\s+/);
-  const body = {
-    firstName: firstName || "Guest",
-    lastName: rest.join(" ") || undefined,
-    email: lead.email ?? undefined,
-    phone: lead.phone ?? undefined,
-    location: lead.location ?? undefined,
-    source: lead.source ?? "admin-resync",
-    __env: APP_ENV,
-  };
-
-  // Call ghl-proxy /contacts/upsert directly
-  const { data, error } = await supabase.functions.invoke("ghl-proxy", {
-    body: { path: "/contacts/upsert", method: "POST", body },
-  });
-
-  if (error || !data?.ok) {
-    const msg = data?.data?.message || error?.message || "GHL upsert failed";
-    await supabase
-      .from("lead_captures")
-      .update({ crm_status: "failed", crm_error: msg })
-      .eq("id", lead.id);
-    return { ok: false, error: msg };
-  }
-
-  const contactId = data?.data?.contact?.id ?? data?.data?.id;
-  await supabase
-    .from("lead_captures")
-    .update({
-      crm_status: "synced",
-      crm_contact_id: contactId ?? null,
-      crm_error: null,
-    })
-    .eq("id", lead.id);
-  return { ok: true, contactId };
 }
 
 export default function AdminLeads() {
