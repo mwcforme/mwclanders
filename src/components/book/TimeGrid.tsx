@@ -12,8 +12,6 @@ const LINE   = "#E5E7EB";
 // hardcoded-color-allow-next-line
 const BORDER = "#8B92A0";
 const SURFACE = "var(--bg-white)";
-// hardcoded-color-allow-next-line
-const CANVAS  = "#F7F8FB";
 const ORANGE  = "var(--brand-cta)";
 
 const fmtTimeParts = (iso: string): { time: string; ampm: string; hour: number } => {
@@ -43,7 +41,7 @@ export interface TimeGridProps {
 const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: TimeGridProps) => {
   if (!selectedDay) {
     return (
-      <div className="px-5 md:px-7 pb-6" style={{ borderTop: `1px solid ${LINE}`, paddingTop: 16, background: CANVAS }}>
+      <div className="px-5 md:px-7 pb-6" style={{ borderTop: `1px solid ${LINE}`, paddingTop: 16, background: SURFACE }}>
         <div style={{ color: MUTED, fontSize: 14, fontStyle: "italic", padding: "20px 4px" }}>
           {loading ? "Loading availability…" : "Pick a date above to see available times."}
         </div>
@@ -53,7 +51,7 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
 
   if (times.length === 0) {
     return (
-      <div className="px-5 md:px-7 pb-6" style={{ borderTop: `1px solid ${LINE}`, paddingTop: 16, background: CANVAS }}>
+      <div className="px-5 md:px-7 pb-6" style={{ borderTop: `1px solid ${LINE}`, paddingTop: 16, background: SURFACE }}>
         <div style={{ color: MUTED, fontSize: 14, fontStyle: "italic", padding: "20px 4px" }}>
           No times available on this day between 8 AM and 5 PM.
         </div>
@@ -71,7 +69,7 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
   }
 
   return (
-    <div className="px-5 md:px-7 pb-6" style={{ borderTop: `1px solid ${LINE}`, paddingTop: 16, background: CANVAS }}>
+    <div className="px-5 md:px-7 pb-6" style={{ borderTop: `1px solid ${LINE}`, paddingTop: 16, background: SURFACE }}>
       {(["morning", "afternoon", "evening"] as const).map((period) => {
         const slots = groups[period];
         if (!slots.length) return null;
@@ -81,8 +79,7 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
             <p style={{
               fontSize: 12, fontWeight: 700, letterSpacing: "0.08em",
               textTransform: "uppercase", color: MUTED,
-              marginBottom: 10, paddingBottom: 6,
-              borderBottom: `1px solid ${LINE}`,
+              marginBottom: 12, paddingBottom: 0,
             }}>
               {GROUP_LABELS[period]}
             </p>

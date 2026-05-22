@@ -197,8 +197,8 @@ const DayStrip = ({
                       e.currentTarget.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
                     }}
                     style={{
-                      flex: "0 0 84px",
-                      minWidth: 84,
+                      flex: "0 0 76px",
+                      minWidth: 76,
                       scrollSnapAlign: "start",
                       // hardcoded-color-allow-next-line
                       background: selected ? ORANGE : (isSunday || !available) ? "#F4F5F8" : SURFACE,
@@ -219,7 +219,7 @@ const DayStrip = ({
                     }}
                   >
                     <div style={{
-                      fontSize: 11, fontWeight: 800, letterSpacing: "0.08em",
+                      fontSize: 12, fontWeight: 800, letterSpacing: "0.08em",
                       color: selected ? "var(--c-text-on-dark)"
                         : (isSunday || !available) ? MUTED
                         : (isToday || isTomorrow) ? ORANGE
@@ -232,7 +232,7 @@ const DayStrip = ({
                       {fmtMonthDay(d)}
                     </div>
                     <div style={{
-                      fontSize: 10, fontWeight: 700,
+                      fontSize: 12, fontWeight: 700,
                       color: selected ? "var(--c-text-on-dark)"
                         : (isSunday || !available) ? MUTED
                         : scarce ? ORANGE
