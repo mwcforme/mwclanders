@@ -8,7 +8,7 @@ import { eyebrow } from "@/data/affordabilityContent";
 const OfferCard = ({ price, priceSuffix, title, body }: { price: string; priceSuffix?: string; title: string; body: string }) => (
   <div className="flex-1 rounded-xl p-6" style={{
     // hardcoded-color-allow-next-line
-    background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.14)",
+    background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.35)",
     borderTop: "3px solid var(--brand-cta)",
   }}>
     <div style={{ fontFamily: "Oswald, sans-serif", fontSize: "clamp(36px, 5vw, 52px)", fontWeight: 700, color: "var(--brand-cta)", lineHeight: 1, marginBottom: 6 }}>

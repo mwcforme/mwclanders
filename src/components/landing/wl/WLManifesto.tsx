@@ -23,9 +23,9 @@ export const WLManifesto = () => (
 
         <figure className="mt-7 rounded-xl p-5" style={{
           // hardcoded-color-allow-next-line
-          background: "rgba(255,255,255,0.05)",
+          background: "rgba(255,255,255,0.07)",
           // hardcoded-color-allow-next-line
-          border: "1px solid rgba(255,255,255,0.10)",
+          border: "1px solid rgba(255,255,255,0.35)",
         }}>
           <Quote className="h-5 w-5 mb-2" style={{ color: "var(--brand-cta)" }} />
           {/* hardcoded-color-allow-next-line */}

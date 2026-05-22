@@ -37,7 +37,7 @@ export const TRTManifesto = ({ ctaScrollTarget = "final-cta" }: TRTManifestoProp
               // hardcoded-color-allow-next-line
               background: "rgba(255,255,255,0.07)",
               // hardcoded-color-allow-next-line
-              border: "1px solid rgba(255,255,255,0.16)",
+              border: "1px solid rgba(255,255,255,0.35)",
               // hardcoded-color-allow-next-line
               boxShadow: "inset 0 1px 0 rgba(255,255,255,0.10)",
             }}

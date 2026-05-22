@@ -78,7 +78,7 @@ export const TRTSignsSection = memo(({ onSchedule }: TRTSignsSectionProps) => (
                 "linear-gradient(145deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.04) 100%)",
               borderRadius: 14,
               padding: "30px 16px 24px",
-              border: "1px solid rgba(255,255,255,0.10)",
+              border: "1px solid rgba(255,255,255,0.35)",
               textAlign: "center",
             }}
           >

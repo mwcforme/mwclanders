@@ -45,7 +45,7 @@ class BookingErrorBoundary extends React.Component<Props, State> {
           borderRadius: 12,
           padding: "28px 24px",
           // hardcoded-color-allow-next-line
-          border: "1px solid rgba(255,255,255,0.10)",
+          border: "1px solid rgba(255,255,255,0.35)",
           fontFamily: "Inter, sans-serif",
           textAlign: "center",
         }}

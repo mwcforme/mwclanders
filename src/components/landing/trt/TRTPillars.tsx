@@ -35,7 +35,7 @@ const cardStyle: React.CSSProperties = {
   // hardcoded-color-allow-next-line
   background: "rgba(255,255,255,0.07)",
   // hardcoded-color-allow-next-line
-  border: "1px solid rgba(255,255,255,0.14)",
+  border: "1px solid rgba(255,255,255,0.35)",
   // hardcoded-color-allow-next-line
   boxShadow: "inset 0 1px 0 rgba(255,255,255,0.08)",
 };
@@ -52,7 +52,7 @@ const cardLeave = (e: React.MouseEvent<HTMLDivElement>) => {
   // hardcoded-color-allow-next-line
   e.currentTarget.style.background = "rgba(255,255,255,0.07)";
   // hardcoded-color-allow-next-line
-  e.currentTarget.style.borderColor = "rgba(255,255,255,0.14)";
+  e.currentTarget.style.borderColor = "rgba(255,255,255,0.35)";
   // hardcoded-color-allow-next-line
   e.currentTarget.style.boxShadow = "inset 0 1px 0 rgba(255,255,255,0.08)";
 };

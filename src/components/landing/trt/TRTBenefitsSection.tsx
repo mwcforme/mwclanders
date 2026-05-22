@@ -120,7 +120,7 @@ export const TRTBenefitsSection = memo(() => (
               <div
                 style={{
                   background: "rgba(255,255,255,0.06)",
-                  border: "1px solid rgba(255,255,255,0.10)",
+                  border: "1px solid rgba(255,255,255,0.35)",
                   borderRadius: 10,
                   padding: "10px 16px",
                   display: "flex",

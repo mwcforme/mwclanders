@@ -63,8 +63,8 @@ export const TRTEverythingIncluded = () => (
         {/* Included */}
         <div
           style={{
-            background: "rgba(255,255,255,0.04)",
-            border: "1px solid rgba(255,255,255,0.10)",
+            background: "rgba(255,255,255,0.06)",
+            border: "1px solid rgba(255,255,255,0.35)",  /* 3.15:1 — passes WCAG 1.4.11 UI */
             borderRadius: 16,
             padding: "28px 28px",
           }}
@@ -106,8 +106,8 @@ export const TRTEverythingIncluded = () => (
         {/* Not included */}
         <div
           style={{
-            background: "rgba(255,255,255,0.02)",
-            border: "1px solid rgba(255,255,255,0.07)",
+            background: "rgba(255,255,255,0.06)",
+            border: "1px solid rgba(255,255,255,0.35)",  /* 3.15:1 — passes WCAG 1.4.11 UI */
             borderRadius: 16,
             padding: "28px 28px",
           }}
@@ -150,7 +150,7 @@ export const TRTEverythingIncluded = () => (
             style={{
               marginTop: 28,
               paddingTop: 24,
-              borderTop: "1px solid rgba(255,255,255,0.08)",
+              borderTop: "1px solid rgba(255,255,255,0.20)",
               textAlign: "center" as const,
             }}
           >

@@ -100,7 +100,7 @@ export const TRTHeroForm = ({
         // hardcoded-color-allow-next-line
         background: "rgba(255,255,255,0.07)", backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)",
         // hardcoded-color-allow-next-line
-        border: "1px solid rgba(255,255,255,0.11)", borderRadius: 16, padding: "32px 28px",
+        border: "1px solid rgba(255,255,255,0.35)", borderRadius: 16, padding: "32px 28px",
         // hardcoded-color-allow-next-line
         width: "100%", maxWidth: 416, boxShadow: "0 24px 64px rgba(0,0,0,0.50)", fontFamily: "Inter, sans-serif",
       }}>
