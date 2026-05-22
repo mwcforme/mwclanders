@@ -1,45 +1,6 @@
 // ghl-proxy v5 — env-aware (prod vs stage) + route allowlist + manual CORS
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-};
-
-const API_BASE = "https://services.leadconnectorhq.com";
-const PROD_LOCATION_ID = "Ghstz8eIsHWLeXek47dk";
-const API_VERSION = "2021-07-28";
-
-type AppEnv = "prod" | "stage";
-
-const PROD_HOSTS = new Set<string>([
-  "book.menswellnesscenters.com",
-  "menswellnesscenters.com",
-  "www.menswellnesscenters.com",
-]);
-
-function detectEnv(req: Request, hint?: unknown): AppEnv {
-  if (hint === "prod" || hint === "stage") return hint;
-  const origin = req.headers.get("origin") || req.headers.get("referer") || "";
-  try {
-    const host = new URL(origin).hostname.toLowerCase();
-    if (PROD_HOSTS.has(host)) return "prod";
-  } catch { /* ignore */ }
-  return "stage";
-}
-
-function envCreds(env: AppEnv): { apiKey: string | undefined; locationId: string } {
-  if (env === "stage") {
-    return {
-      apiKey: Deno.env.get("GHL_API_KEY_STAGE_1") ?? Deno.env.get("GHL_API_KEY_STAGE"),
-      locationId: Deno.env.get("GHL_LOCATION_ID_STAGE_1") ?? Deno.env.get("GHL_LOCATION_ID_STAGE") ?? "",
-    };
-  }
-  return {
-    apiKey: Deno.env.get("GHL_API_KEY"),
-    locationId: Deno.env.get("GHL_LOCATION_ID") ?? PROD_LOCATION_ID,
-  };
-}
+import { corsHeaders, jsonResponse, corsResponse } from "../_shared/cors.ts";
+import { detectEnv, tryGetGhlCreds, GHL_API_BASE, GHL_API_VERSION } from "../_shared/ghlEnv.ts";
 
 // Strict allowlist: only these (method, path-pattern) pairs are forwarded to GHL.
 // Anything else returns 403. This prevents the anon-callable proxy from being
@@ -67,14 +28,8 @@ interface ProxyRequest {
   injectLocationId?: boolean;
 }
 
-const json = (status: number, data: unknown) =>
-  new Response(JSON.stringify(data), {
-    status,
-    headers: { ...corsHeaders, "Content-Type": "application/json" },
-  });
-
 const proxyError = (status: number, error: string) =>
-  json(200, { ok: false, status, error, data: null });
+  jsonResponse(200, { ok: false, status, error, data: null });
 
 // Lightweight body-shape validators (avoids Zod dep). Keep additive: unknown
 // fields are dropped rather than rejected so GHL schema changes don't 500 us.
@@ -202,22 +157,23 @@ function validateBody(method: string, path: string, body: unknown): { ok: true; 
 }
 
 Deno.serve(async (req) => {
-  if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
+  if (req.method === "OPTIONS") return corsResponse();
 
-  let payload: ProxyRequest & { __env?: AppEnv };
+  let payload: ProxyRequest & { __env?: unknown };
   try {
     payload = await req.json();
   } catch {
-    return json(400, { error: "Invalid JSON body" });
+    return jsonResponse(400, { error: "Invalid JSON body" });
   }
 
   const env = detectEnv(req, payload.__env);
-  const { apiKey, locationId } = envCreds(env);
-  if (!apiKey) {
-    return json(500, { error: `GHL API key for ${env} is not configured` });
+  const creds = tryGetGhlCreds(env);
+  if (!creds) {
+    return jsonResponse(500, { error: `GHL API key for ${env} is not configured` });
   }
+  const { apiKey, locationId } = creds;
   if (!locationId) {
-    return json(500, { error: `GHL location id for ${env} is not configured` });
+    return jsonResponse(500, { error: `GHL location id for ${env} is not configured` });
   }
 
   const { path, method = "GET", query = {}, body } = payload;
@@ -240,7 +196,7 @@ Deno.serve(async (req) => {
   }
   if (method === "GET" && payload.injectLocationId !== false && !search.has("locationId")) search.set("locationId", locationId);
 
-  const url = `${API_BASE}${cleanPath}${search.toString() ? `?${search}` : ""}`;
+  const url = `${GHL_API_BASE}${cleanPath}${search.toString() ? `?${search}` : ""}`;
 
   let outBody: string | undefined;
   if (method !== "GET" && method !== "DELETE") {
@@ -253,7 +209,7 @@ Deno.serve(async (req) => {
       method,
       headers: {
         Authorization: `Bearer ${apiKey}`,
-        Version: API_VERSION,
+        Version: GHL_API_VERSION,
         Accept: "application/json",
         ...(outBody ? { "Content-Type": "application/json" } : {}),
       },
@@ -267,7 +223,7 @@ Deno.serve(async (req) => {
     }
     // Always return 200 so the supabase-js client surfaces the body to callers.
     // Real upstream status lives in the JSON payload.
-    return json(200, { ok: upstream.ok, status: upstream.status, data });
+    return jsonResponse(200, { ok: upstream.ok, status: upstream.status, data });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Unknown error";
     return proxyError(502, `GHL request failed: ${message}`);
