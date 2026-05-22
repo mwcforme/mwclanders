@@ -2,21 +2,21 @@
 
 ## Recorded: 2026-05-18 03:45 UTC (baseline)
 
-| Metric | Baseline | Session 1 | Session 2 (this run) |
-|--------|----------|-----------|----------------------|
-| TypeScript errors | 0 | 0 | 0 |
-| Tests passing | 42 / 42 | 58 / 58 | 356 / 356 |
-| Test files | 3 | 4 | 22 |
-| Bundle size (dist/assets/) | 2.9 MB | 2.9 MB | ~1.17 MB (JS only) |
-| JS chunks | 66 | 66 | 70 |
-| CSS size | — | — | 49 kB (gzip: 9.9 kB) |
-| Total LOC (src/) | 22015 | 22246 | ~23707 (includes new files) |
-| `any` type occurrences | 0 | 0 | 0 |
-| Console.log in prod code | 8 | 8 | 8 |
-| Components > 200 LOC | 13 | 8 | 4 |
-| Statement coverage | — | 11.24% | 14.25% |
-| Branch coverage | — | — | 61.86% |
-| Function coverage | — | — | 38.80% |
+| Metric | Baseline | Session 1 | Session 2 | Session 3 (this run) |
+|--------|----------|-----------|-----------|----------------------|
+| TypeScript errors | 0 | 0 | 0 | 0 |
+| Tests passing | 42 / 42 | 58 / 58 | 356 / 356 | 380 / 380 |
+| Test files | 3 | 4 | 22 | 24 |
+| Bundle size (dist/assets/) | 2.9 MB | 2.9 MB | ~1.17 MB | ~1.17 MB |
+| JS chunks | 66 | 66 | 70 | 70 |
+| CSS size | — | — | 49 kB (gzip: 9.9 kB) | 49 kB |
+| Total LOC (src/) | 22015 | 22246 | ~23707 | 22,846 (-861) |
+| `any` type occurrences | 0 | 0 | 0 | 0 |
+| Console.log in prod code | 8 | 8 | 8 | 8 |
+| Components > 200 LOC | 13 | 8 | 4 | ~2 |
+| Statement coverage | — | 11.24% | 14.25% | 15.55% |
+| Branch coverage | — | — | 61.86% | 59.0% |
+| Function coverage | — | — | 38.80% | 35.84% |
 
 ## Image sizes (public/ + src/assets/)
 
@@ -26,35 +26,56 @@
 | src/assets: 4.1 MB | src/assets: 1.9 MB | -2.2 MB |
 | **Total: 20.7 MB** | **Total: 6.0 MB** | **-14.7 MB (-71%)** |
 
-## Large Files (>200 LOC) — After Session 2
-1. src/pages/ProductTRT.tsx — ~883 lines (not touched this session)
+## Session 3 SOLID Refactor (2026-05-22)
+
+### Commits
+1. `ralph: remove duplicate default exports — SEO, SentryTestTrigger, TRTPricing`
+2. `ralph: remove unused exports — knip dead-export pass (-~30 LOC)`
+3. `ralph: split CROOptimized.tsx — extract 5 section components + header/footer/data (-900 LOC)`
+4. `ralph: split Affordability.tsx — extract pricing data + 7 section components (-600 LOC)`
+5. `ralph: split TRTHeroForm.tsx — extract LocationSelector + TCPADisclaimer + shared FloatInput (-280 LOC)`
+6. `ralph: split AdminAnalytics.tsx — extract 4 sub-components (-220 LOC)`
+7. `ralph: extract resyncLead to service layer — DIP compliance`
+8. `ralph: add LeadResyncer service tests + croContent tests — 24 tests`
+
+### Files created (new components)
+- `src/components/landing/cro/` — 12 files (CROHeroForm, CROHeroSection, CROSocialProof, CROFaq, CROHowItWorks, CROTestimonials, CROHeader, CROFooter, CRODesktopStickyBar, CROClosingFormSection, CROLocationSelector + moved FloatInput to shared)
+- `src/components/landing/shared/` — 9 files (FloatInput, PricingCard, AffordabilityHero, AffordabilityFaq, AffordabilityTrustStrip, AffordabilityHowPricing, AffordabilityMemberTerms, AffordabilityTestimonials, AffordabilityClosingCTA)
+- `src/components/landing/trt/` — 2 files (LocationSelector, TCPADisclaimer)
+- `src/components/admin/` — 5 files (AnalyticsToolCards, ConversionKPIs, LeadBreakdownBars, AnalyticsSetupGuide, analyticsTypes)
+- `src/data/` — 2 files (croContent.ts, affordabilityContent.ts)
+- `src/services/impl/LeadResyncer.ts`
+
+### Page LOC after refactor
+| Page | Before | After |
+|------|--------|-------|
+| CROOptimized.tsx | 1,225 | 77 |
+| Affordability.tsx | 889 | 35 |
+| TRTHeroForm.tsx | 530 | ~160 |
+| AdminAnalytics.tsx | 394 | 89 |
+
+## Large Files (>200 LOC) — After Session 3
+1. src/pages/ProductTRT.tsx — ~1,077 lines (next target)
 2. src/pages/TRTQuizApproved.tsx — ~591 lines
-3. src/pages/product/TRTQuestionnaire.tsx — ~427 lines
-4. src/components/landing/trt/TRTHeroForm.tsx — ~533 lines
+3. src/pages/product/TRTGetStarted.tsx — ~479 lines
+4. src/pages/product/TRTQuestionnaire.tsx — ~427 lines
 5. src/components/book/GHLDayView.tsx — 322 lines
-6. src/components/quiz/StepLead.tsx — 274 lines
-7. src/pages/book/BookConfirmed.tsx — 274 lines
+6. src/pages/book/BookSchedule.tsx — 329 lines
 
-## Session 2 Commits (2026-05-22)
-1. `ralph: image optimization — convert 24 images to webp, delete dev refs (-12.8MB)`
-2. `ralph: dead code removal — knip pass (-10 files, 4 npm pkgs)`
-3. `ralph: split AdminOverview.tsx — extract StatCard, ToolsGrid, RecentLeadsTable, SyncStatusPanel, EnvironmentPanel (-389 LOC)`
-4. `ralph: split GHLAccordionView.tsx — extract SlotButton, AccordionDay, AppointmentConfirmModal, helpers (-303 LOC)`
-5. `ralph: split BookConfirmed.tsx — extract CelebrationBurst, EmailCapture (-121 LOC)`
-6. `ralph: split BookLetsTalk, StepLead — extract ContactCard, QuizTrustBlock (-187 LOC)`
-7. `ralph: split LpDirectory.tsx — extract LpCards, HealthChecks (-205 LOC)`
-8. `ralph: React.lazy admin pages + React.memo static components (StatCard, ToolsGrid, QuizTrustBlock)`
-9. `ralph: add useLeadSubmitController tests (9 tests) + useConfirmAppointment tests (11 tests) (+2% coverage)`
+## Knip remaining issues (Session 3)
+- 18 unused files: all in `src/components/ui/**` or `supabase/functions/**` (protected — do not touch)
+- 1 unused dependency group: Radix UI primitives (used by shadcn/ui via ui/*)
+- 7 unused exports: all in `src/components/ui/**` (protected)
+- 11 unused exported types: mix of ui components and domain types for future use
 
-## Bundle — Largest chunks (after Session 2)
+## Bundle — Largest chunks (after Session 3)
 | Chunk | Size | Gzip |
 |-------|------|------|
 | vendor-supabase | 204 kB | 53 kB |
 | vendor-react | 157 kB | 52 kB |
-| index (main) | 134 kB | 42 kB |
+| index (main) | 136 kB | 43 kB |
 | vendor-ui | 129 kB | 40 kB |
 | vendor-forms | 53 kB | 12 kB |
 | ProductTRT | 39 kB | 10 kB |
-| CROOptimized | 27 kB | 9 kB |
 | vendor-sentry | 26 kB | 9 kB |
 | vendor-state | 25 kB | 8 kB |
