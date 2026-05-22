@@ -99,7 +99,7 @@ export default function BookConfirmed() {
         <div style={{ maxWidth: 640, margin: "0 auto", fontFamily: "Inter, sans-serif" }}>
           <div style={{ textAlign: "center", marginBottom: 36 }}>
             <div style={{ position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
-              <div style={{ width: 80, height: 80, borderRadius: "50%", background: "rgba(22,163,74,0.15)", border: "2px solid rgba(22,163,74,0.40)", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+              <div style={{ width: 80, height: 80, borderRadius: "50%", background: "rgba(22,163,74,0.20)", border: "2px solid rgba(22,163,74,0.60)", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
                   <path d="M5 12.5L10 17.5L19 7.5" stroke="var(--c-success-on-dark)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
                     style={{ strokeDasharray: 28, strokeDashoffset: checkDrawn ? 0 : 28, transition: "stroke-dashoffset 600ms ease-out" }} />
@@ -107,18 +107,18 @@ export default function BookConfirmed() {
               </div>
               <CelebrationBurst active={checkDrawn} />
             </div>
-            <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--c-success-on-dark)", marginBottom: 10 }}>Appointment Confirmed</p>
+            <p style={{ fontSize: 13, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "#4ADE80", marginBottom: 10 }}>Appointment Confirmed</p>
             <h1 style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: "clamp(28px, 5vw, 44px)", color: "var(--brand-cream)", lineHeight: 1.1, marginBottom: 8 }}>
               {firstName ? `This is your moment, ${firstName}.` : "This is your moment."}
             </h1>
-            <p style={{ fontSize: 16, color: "rgba(245,243,240,0.65)", lineHeight: 1.5 }}>
+            <p style={{ fontSize: 16, color: "rgba(245,243,240,0.80)", lineHeight: 1.5 }}>
               Your provider has reserved this hour for your labs, exam, and consultation.
             </p>
           </div>
 
           {/* Appointment ticket */}
           {apptDate && (
-            <div style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 16, overflow: "hidden", marginBottom: 24 }}>
+            <div style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 16, overflow: "hidden", marginBottom: 28 }}>
               <div style={{ display: "flex" }}>
                 <div style={{ background: "var(--brand-cta)", padding: "24px 20px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minWidth: 88, flexShrink: 0 }}>
                   <span style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 11, color: "rgba(255,255,255,0.80)", letterSpacing: "0.12em" }}>{apptDate.month}</span>
@@ -132,11 +132,11 @@ export default function BookConfirmed() {
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                     <MapPin size={15} strokeWidth={2} style={{ color: "var(--brand-cta)", flexShrink: 0 }} />
-                    <span style={{ fontSize: 13, color: "rgba(245,243,240,0.70)" }}>{center.city} · In-person · 60 min</span>
+                    <span style={{ fontSize: 14, color: "rgba(245,243,240,0.80)" }}>{center.city} · In-person · 60 min</span>
                   </div>
                   <div style={{ display: "flex", gap: 8, marginTop: 4, flexWrap: "wrap" }}>
-                    {[["No-cost visit", "#16a34a"], ["Provider reserved", "var(--brand-cta)"], ["Bring photo ID", "#6B7280"]].map(([label, color]) => (
-                      <span key={label} style={{ display: "inline-flex", alignItems: "center", gap: 4, fontSize: 11, fontWeight: 700, color, letterSpacing: "0.06em", textTransform: "uppercase" }}>
+                    {[["No-cost visit", "#16a34a"], ["Provider reserved", "var(--brand-cta)"], ["Bring photo ID", "rgba(245,243,240,0.55)"]].map(([label, color]) => (
+                      <span key={label} style={{ display: "inline-flex", alignItems: "center", gap: 4, fontSize: 12, fontWeight: 700, color, letterSpacing: "0.04em" }}>
                         <span style={{ width: 6, height: 6, borderRadius: "50%", background: color as string, flexShrink: 0 }} />{label}
                       </span>
                     ))}
@@ -154,7 +154,7 @@ export default function BookConfirmed() {
                 <Calendar size={18} strokeWidth={2} /> Add to Google Calendar
               </a>
               <a href={calLinks.ics} download="mwc-appointment.ics"
-                style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, height: 52, background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.15)", color: "var(--brand-cream)", borderRadius: 10, textDecoration: "none", fontFamily: "Inter, sans-serif", fontWeight: 600, fontSize: 15 }}>
+                style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, height: 52, background: "rgba(255,255,255,0.10)", border: "1px solid rgba(255,255,255,0.25)", color: "var(--brand-cream)", borderRadius: 10, textDecoration: "none", fontFamily: "Inter, sans-serif", fontWeight: 600, fontSize: 15 }}>
                 <Calendar size={18} strokeWidth={2} /> Apple / Outlook (.ics)
               </a>
             </div>
@@ -164,21 +164,21 @@ export default function BookConfirmed() {
 
       {/* Light bg sections */}
       <div style={{ background: "#F4F6FA", padding: "0 20px 48px" }}>
-        <div style={{ maxWidth: 640, margin: "0 auto", display: "flex", flexDirection: "column", gap: 20, paddingTop: 24, fontFamily: "Inter, sans-serif" }}>
+        <div style={{ maxWidth: 640, margin: "0 auto", display: "flex", flexDirection: "column", gap: 20, paddingTop: 28, fontFamily: "Inter, sans-serif" }}>
 
           {/* 3. Outcome cards */}
           <div style={{ background: "var(--c-text-on-dark)", borderRadius: 16, overflow: "hidden", border: "1px solid #E5E7EB", boxShadow: "0 2px 16px rgba(0,0,0,0.06)" }}>
-            <div style={{ padding: "20px 24px 0", borderBottom: "1px solid #F3F4F6" }}>
+            <div style={{ padding: "20px 24px 14px", borderBottom: "1px solid #F3F4F6" }}>
               <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "var(--brand-cta)", marginBottom: 6 }}>What you'll walk away with</p>
             </div>
             {[
               { icon: <FlaskConical size={18} strokeWidth={1.75} style={{ color: "var(--brand-cta)" }} />, text: "Your bloodwork results, explained in plain English" },
               { icon: <Stethoscope size={18} strokeWidth={1.75} style={{ color: "var(--brand-cta)" }} />, text: "A clear answer on whether treatment fits your situation" },
               { icon: <ClipboardList size={18} strokeWidth={1.75} style={{ color: "var(--brand-cta)" }} />, text: "A personalized protocol you can start the same day, when medically appropriate" },
-            ].map(({ icon, text }) => (
-              <div key={text} style={{ display: "flex", alignItems: "flex-start", gap: 14, padding: "16px 24px", borderBottom: "1px solid #F3F4F6" }}>
-                <div style={{ width: 36, height: 36, borderRadius: 8, background: "rgba(232,103,10,0.08)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{icon}</div>
-                <span style={{ fontSize: 15, color: "#111", lineHeight: 1.5, paddingTop: 8 }}>{text}</span>
+            ].map(({ icon, text }, idx, arr) => (
+              <div key={text} style={{ display: "flex", alignItems: "center", gap: 14, padding: "16px 24px", borderBottom: idx < arr.length - 1 ? "1px solid #F3F4F6" : "none" }}>
+                <div style={{ width: 40, height: 40, borderRadius: 10, background: "rgba(232,103,10,0.08)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{icon}</div>
+                <span style={{ fontSize: 15, color: "#111827", lineHeight: 1.5 }}>{text}</span>
               </div>
             ))}
           </div>
@@ -189,16 +189,16 @@ export default function BookConfirmed() {
               <video ref={videoRef} src={EXPECT_VIDEO_SRC} poster="/images/video-poster.webp" muted loop={false} playsInline controls preload="none"
                 style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", border: 0 }} />
             </div>
-            <div style={{ padding: "18px 22px 22px" }}>
-              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--brand-cta)", marginBottom: 6 }}>2-min watch · Before you arrive</p>
+            <div style={{ padding: "20px 24px 24px" }}>
+              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--brand-cta)", marginBottom: 8 }}>2-min watch · Before you arrive</p>
               <h3 style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 22, color: "var(--brand-navy-deep)", marginBottom: 6 }}>Here's exactly what happens when you walk in.</h3>
-              <p style={{ fontSize: 14, color: "#5B6478", lineHeight: 1.5 }}>No waiting room anxiety. Labs, a quick exam, and a real conversation with your provider.</p>
+              <p style={{ fontSize: 15, color: "#4B5563", lineHeight: 1.5 }}>No waiting room anxiety. Labs, a quick exam, and a real conversation with your provider.</p>
             </div>
           </div>
 
           {/* 5. Prep steps */}
           <div style={{ background: "var(--c-text-on-dark)", borderRadius: 16, padding: "22px 24px", border: "1px solid #E5E7EB", boxShadow: "0 2px 16px rgba(0,0,0,0.06)" }}>
-            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "#6B7280", marginBottom: 16 }}>Before you arrive</p>
+            <p style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.12em", textTransform: "uppercase", color: "#374151", marginBottom: 16 }}>Before you arrive</p>
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
               {[
                 { n: "1", text: "Bring photo ID and your insurance card if you have one — we don't bill insurance, but it helps your provider understand your history." },
@@ -207,7 +207,7 @@ export default function BookConfirmed() {
               ].map(({ n, text }) => (
                 <div key={n} style={{ display: "flex", alignItems: "flex-start", gap: 14 }}>
                   <div style={{ width: 28, height: 28, borderRadius: "50%", background: "var(--brand-cta)", color: "#FFF", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 13, flexShrink: 0, marginTop: 1 }}>{n}</div>
-                  <p style={{ fontSize: 14, color: "#374151", lineHeight: 1.55, margin: 0, paddingTop: 4 }}>{text}</p>
+                  <p style={{ fontSize: 15, color: "#1F2937", lineHeight: 1.6, margin: 0, paddingTop: 4 }}>{text}</p>
                 </div>
               ))}
             </div>
@@ -217,7 +217,6 @@ export default function BookConfirmed() {
           <div style={{ background: "var(--c-text-on-dark)", borderRadius: 16, overflow: "hidden", border: "1px solid #E5E7EB", boxShadow: "0 2px 16px rgba(0,0,0,0.06)" }}>
             <div style={{ padding: "22px 24px 18px" }}>
               <h3 style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 22, color: "var(--brand-navy-deep)", textTransform: "uppercase", marginBottom: 4 }}>{center.city}</h3>
-              <p style={{ fontSize: 13, color: "#5B6478", marginBottom: 14 }}>{center.name}</p>
               <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 16 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <MapPin size={15} strokeWidth={2.5} style={{ color: "var(--brand-cta)", flexShrink: 0 }} />
@@ -231,41 +230,56 @@ export default function BookConfirmed() {
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <Clock size={15} strokeWidth={2.5} style={{ color: "var(--brand-cta)", flexShrink: 0 }} />
-                  <span style={{ fontSize: 13, color: "#374151" }}>{center.hours}</span>
+                  <span style={{ fontSize: 14, color: "#1F2937" }}>{center.hours}</span>
                 </div>
               </div>
             </div>
-            <div ref={mapRef} style={{ position: "relative", height: 260, borderTop: "1px solid #F3F4F6" }}>
+            <div ref={mapRef} style={{ position: "relative", height: 220, borderTop: "1px solid #F3F4F6" }}>
               {mapVisible && (
                 <iframe title={`Map to ${center.name}`} src={mapsEmbedUrl} loading="lazy" referrerPolicy="no-referrer-when-downgrade"
                   style={{ border: 0, width: "100%", height: "100%", display: "block" }} allowFullScreen />
               )}
-              <a href={mapsSearchUrl} target="_blank" rel="noopener noreferrer"
-                style={{ position: "absolute", top: 12, left: 12, background: "#FFF", color: "var(--brand-navy-deep)", padding: "8px 14px", borderRadius: 8, fontWeight: 600, fontSize: 13, textDecoration: "none", boxShadow: "0 4px 12px rgba(0,0,0,0.18)", display: "inline-flex", alignItems: "center", gap: 6 }}>
-                Open in Maps <ExternalLink size={13} strokeWidth={2.5} />
-              </a>
             </div>
+            <a href={mapsSearchUrl} target="_blank" rel="noopener noreferrer"
+              style={{
+                display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+                padding: "14px 20px",
+                background: "var(--brand-navy-deep)",
+                color: "var(--brand-cream)",
+                fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 14,
+                textDecoration: "none",
+                borderTop: "1px solid #E5E7EB",
+              }}>
+              <MapPin size={15} strokeWidth={2} style={{ color: "var(--brand-cta)" }} />
+              Get Directions
+              <ExternalLink size={13} strokeWidth={2} style={{ marginLeft: 2 }} />
+            </a>
           </div>
 
           {/* 7. Email capture */}
           {!emailCaptured && (
-            <BookingErrorBoundary>
-              <EmailCapture contactId={identity?.ghlContactId} onComplete={() => setEmailCaptured(true)} />
-            </BookingErrorBoundary>
+            <div style={{ background: "var(--c-text-on-dark)", borderRadius: 16, padding: "22px 24px", border: "1px solid #E5E7EB", boxShadow: "0 2px 16px rgba(0,0,0,0.06)" }}>
+              <p style={{ fontFamily: "Inter, sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "#6B7280", marginBottom: 12 }}>
+                Get Your Confirmation
+              </p>
+              <BookingErrorBoundary>
+                <EmailCapture contactId={identity?.ghlContactId} onComplete={() => setEmailCaptured(true)} />
+              </BookingErrorBoundary>
+            </div>
           )}
 
           {/* 8. Reschedule */}
           <div style={{ textAlign: "center", display: "flex", flexDirection: "column", gap: 8 }}>
-            <p style={{ color: "#6B7280", fontSize: 13 }}>Need to reschedule? Just give us a heads up.</p>
+            <p style={{ color: "#374151", fontSize: 14, fontWeight: 500 }}>Need to reschedule? Just give us a heads up.</p>
             <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 10 }}>
-              <a href={center.phoneHref} style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "#F3F4F6", border: "1px solid #E5E7EB", color: "#374151", fontWeight: 600, fontSize: 13, padding: "10px 18px", borderRadius: 8, textDecoration: "none", minHeight: 44 }}>
+              <a href={center.phoneHref} style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "#FFFFFF", border: "1.5px solid #D1D5DB", color: "#111827", fontWeight: 700, fontSize: 13, padding: "10px 18px", borderRadius: 8, textDecoration: "none", minHeight: 44 }}>
                 Call or text {center.phone}
               </a>
-              <a href="/book/location" style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "rgba(232,103,10,0.08)", border: "1px solid rgba(232,103,10,0.25)", color: "var(--brand-cta)", fontWeight: 600, fontSize: 13, padding: "10px 18px", borderRadius: 8, textDecoration: "none", minHeight: 44 }}>
+              <a href="/book/location" style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "var(--brand-cta)", border: "none", color: "#FFFFFF", fontWeight: 600, fontSize: 13, padding: "10px 18px", borderRadius: 8, textDecoration: "none", minHeight: 44 }}>
                 Book a different time
               </a>
             </div>
-            <p style={{ color: "#9AA0AC", fontSize: 11, marginTop: 4 }}>Please cancel or reschedule at least 24 hours in advance.</p>
+            <p style={{ color: "#9CA3AF", fontSize: 12, marginTop: 6 }}>Please cancel or reschedule at least 24 hours in advance.</p>
           </div>
         </div>
       </div>
