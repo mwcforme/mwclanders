@@ -2,7 +2,7 @@
  * Tests for domain/leads/useLeadSubmitController.ts
  * State machine: idle → submitting → success/error → idle
  */
-import { describe, it, expect, beforeEach, vi, type Mock } from "vitest";
+import { describe, it, expect, vi, type Mock } from "vitest";
 import { renderHook, act } from "@testing-library/react";
 import { createElement } from "react";
 import { MemoryRouter } from "react-router-dom";
