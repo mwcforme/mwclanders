@@ -2,22 +2,22 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import {
-  LayoutDashboard,
-  Users,
   Activity,
-  RefreshCw,
-  LogOut,
   BarChart3,
+  LayoutDashboard,
+  LogOut,
+  RefreshCw,
+  Users,
 } from "lucide-react";
 import { EnvSwitcher } from "./EnvSwitcher";
 
 const NAV = [
-  { to: "/admin/overview", label: "Overview", icon: LayoutDashboard, end: true },
-  { to: "/admin/leads", label: "Leads", icon: Users },
-  { to: "/admin/events", label: "Events", icon: Activity },
-  { to: "/admin/sync", label: "Sync", icon: RefreshCw },
-  { to: "/admin/analytics", label: "Analytics", icon: BarChart3 },
-];
+  { to: "/admin/overview", label: "Overview",  icon: LayoutDashboard, end: true },
+  { to: "/admin/leads",    label: "Leads",      icon: Users },
+  { to: "/admin/events",   label: "Events",     icon: Activity },
+  { to: "/admin/sync",     label: "Sync",       icon: RefreshCw },
+  { to: "/admin/analytics",label: "Analytics",  icon: BarChart3 },
+] as const;
 
 interface Props {
   title: string;
@@ -28,15 +28,17 @@ interface Props {
  * Admin chrome. Persistent sidebar + topbar.
  * Deliberately does NOT use the marketing site's nav/footer.
  * Dark navy aesthetic so admins always know they're in the back-office.
+ * Print-safe: sidebar hides, backgrounds become white, text becomes black.
  */
 export function AdminLayout({ title, children }: Props) {
   const nav = useNavigate();
   const [email, setEmail] = useState<string>("");
 
   useEffect(() => {
-    supabase.auth.getSession()
-      .then(({ data: { session } }) => { setEmail(session?.user.email ?? ""); })
-      .catch(() => { /* best-effort: admin header email non-critical */ });
+    supabase.auth
+      .getSession()
+      .then(({ data: { session } }) => setEmail(session?.user.email ?? ""))
+      .catch(() => {});
   }, []);
 
   const signOut = async () => {
@@ -45,36 +47,38 @@ export function AdminLayout({ title, children }: Props) {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--brand-navy-deep)] text-white">
+    <div className="min-h-screen bg-[var(--brand-navy-deep)] text-white print:bg-white print:text-black">
       <div className="flex min-h-screen">
+        {/* Sidebar — hidden on print */}
         {/* hardcoded-color-allow-next-line */}
-        <aside className="hidden w-60 shrink-0 border-r border-white/10 bg-[#070B1F] md:flex md:flex-col">
+        <aside className="hidden w-60 shrink-0 border-r border-white/10 bg-[#070B1F] md:flex md:flex-col print:hidden">
           <div className="flex h-14 items-center border-b border-white/10 px-5">
-            <span className="font-bold tracking-wide" style={{ fontFamily: "Oswald, Inter, sans-serif" }}>
+            <span
+              className="font-bold tracking-wide"
+              style={{ fontFamily: "Oswald, Inter, sans-serif" }}
+            >
               MWC ADMIN
             </span>
           </div>
           <nav className="flex flex-1 flex-col gap-1 p-3">
-            {NAV.map((n) => {
-              const Icon = n.icon;
-              return (
-                <NavLink
-                  key={n.to}
-                  to={n.to}
-                  end={n.end}
-                  className={({ isActive }) =>
-                    `flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
-                      isActive
-                        ? "bg-[var(--brand-cta)] text-white"
-                        : "text-white/70 hover:bg-white/5 hover:text-white"
-                    }`
-                  }
-                >
-                  <Icon size={16} />
-                  {n.label}
-                </NavLink>
-              );
-            })}
+            {NAV.map(({ to, label, icon: Icon, end }) => (
+              <NavLink
+                key={to}
+                to={to}
+                end={end}
+                className={({ isActive }) =>
+                  [
+                    "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                    isActive
+                      ? "border-l-2 border-[var(--brand-cta)] bg-[var(--brand-cta)] pl-[10px] font-bold text-white"
+                      : "border-l-2 border-transparent text-white/70 hover:bg-white/5 hover:text-white",
+                  ].join(" ")
+                }
+              >
+                <Icon size={16} />
+                {label}
+              </NavLink>
+            ))}
           </nav>
           <div className="border-t border-white/10 p-3">
             <button
@@ -90,16 +94,21 @@ export function AdminLayout({ title, children }: Props) {
 
         <div className="flex min-w-0 flex-1 flex-col">
           {/* hardcoded-color-allow-next-line */}
-          <header className="flex h-14 items-center justify-between border-b border-white/10 bg-[#070B1F] px-5">
-            <h1 className="text-lg font-semibold tracking-wide" style={{ fontFamily: "Oswald, Inter, sans-serif" }}>
+          <header className="flex h-14 items-center justify-between border-b border-white/10 bg-[#070B1F] px-5 print:border-gray-300 print:bg-white print:text-black">
+            <h1
+              className="text-lg font-semibold tracking-wide print:text-black"
+              style={{ fontFamily: "Oswald, Inter, sans-serif" }}
+            >
               {title}
             </h1>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 print:hidden">
               <EnvSwitcher />
               <div className="text-xs text-white/60">{email}</div>
             </div>
           </header>
-          <main className="flex-1 overflow-auto p-5 md:p-7">{children}</main>
+          <main className="flex-1 overflow-auto p-5 md:p-7 print:p-4 print:text-black">
+            {children}
+          </main>
         </div>
       </div>
     </div>

@@ -48,7 +48,7 @@ export default defineConfig(({ mode }) => ({
           // Supabase — network heavy, separate chunk
           "vendor-supabase": ["@supabase/supabase-js"],
           // Form + validation
-          "vendor-forms": ["react-hook-form", "@hookform/resolvers", "zod"],
+          "vendor-forms": ["zod"],
           // UI primitives — loaded on most pages
           "vendor-ui": [
             "@radix-ui/react-dialog",
