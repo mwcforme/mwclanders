@@ -14,7 +14,7 @@ import { capturePartialLead, markSessionSubmitted } from "@/lib/partialCapture";
 import { trackFunnelEvent } from "@/hooks/useAnalytics";
 import { GBP_REVIEWS_URL } from "@/data/testimonials";
 import { formatPhone, getLocationFromUrl, type LocationKey } from "@/data/croContent";
-import { FloatInput } from "./FloatInput";
+import { FloatInput } from "@/components/landing/shared/FloatInput";
 import { CROLocationSelector } from "./CROLocationSelector";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
 

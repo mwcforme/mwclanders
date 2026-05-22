@@ -17,7 +17,12 @@ import path from "node:path";
 const read = (rel: string) =>
   readFileSync(path.resolve(__dirname, "../../", rel), "utf8");
 
-const HERO_FORM = read("src/components/landing/trt/TRTHeroForm.tsx");
+// Include extracted sub-components so compliance checks cover the full form surface.
+const HERO_FORM = [
+  read("src/components/landing/trt/TRTHeroForm.tsx"),
+  read("src/components/landing/trt/TCPADisclaimer.tsx"),
+  read("src/components/landing/shared/FloatInput.tsx"),
+].join("\n");
 const FINAL_CTA = read("src/components/landing/trt/TRTFinalCTA.tsx");
 const STEP_LEAD = read("src/components/quiz/StepLead.tsx");
 const QUIZ_APPROVED = read("src/pages/TRTQuizApproved.tsx");
