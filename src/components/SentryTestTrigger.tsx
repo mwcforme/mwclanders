@@ -45,4 +45,4 @@ export const SentryTestTrigger = () => {
   );
 };
 
-export default SentryTestTrigger;
+
