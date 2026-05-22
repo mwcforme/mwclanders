@@ -95,7 +95,7 @@ export function TransitionScreen({
           <div className="flex items-center justify-between mb-2 text-xs font-semibold tracking-wider">
             {/* hardcoded-color-allow-next-line */}
             <span style={{ color: "rgba(245,240,235,0.65)" }}>Progress</span>
-            <span style={{ color: "var(--brand-cta)" }} className="tabular-nums">{progress}%</span>
+            <span style={{ color: "var(--brand-cta-accessible)" }} className="tabular-nums">{progress}%</span>
           </div>
           {/* hardcoded-color-allow-next-line */}
           <div className="h-2 w-full rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.10)" }}>

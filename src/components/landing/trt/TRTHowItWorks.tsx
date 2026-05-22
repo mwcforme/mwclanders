@@ -24,7 +24,7 @@ export const TRTHowItWorks = () => {
   };
 
   const eyebrow = (text: string) => (
-    <p style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: "var(--brand-cta)", borderLeft: "3px solid var(--brand-cta)", paddingLeft: 10, lineHeight: 1, marginBottom: 12 }}>
+    <p style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: "var(--brand-cta-accessible)", borderLeft: "3px solid var(--brand-cta)", paddingLeft: 10, lineHeight: 1, marginBottom: 12 }}>
       {text}
     </p>
   );

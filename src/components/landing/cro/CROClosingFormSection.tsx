@@ -8,7 +8,7 @@ export const CROClosingFormSection = () => (
     <div className="max-w-[1200px] mx-auto px-6 py-16 md:py-24 flex flex-col items-center">
       <p style={{
         fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em",
-        textTransform: "uppercase", color: "var(--brand-cta)",
+        textTransform: "uppercase", color: "var(--brand-cta-accessible)",
         borderLeft: "3px solid var(--brand-cta)", paddingLeft: 10, lineHeight: 1, marginBottom: 16,
       }}>
         Ready to Start

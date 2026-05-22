@@ -135,7 +135,7 @@ export function StepLead({
       <header className="mb-8">
         <p
           className="text-xs uppercase tracking-[0.18em] mb-3 font-semibold"
-          style={{ color: "var(--brand-cta)" }}
+          style={{ color: "var(--brand-cta-accessible)" }}
         >
           Step 3 of 3 . Almost there
         </p>

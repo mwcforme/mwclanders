@@ -390,7 +390,7 @@ function Section7Offer({ ctaHref, ctaLabel, disqualified }: { ctaHref: string; c
         className="rounded-2xl p-6 md:p-8"
         style={{ background: "#000814", color: "var(--brand-cream)", border: "1px solid #1E293B" }}
       >
-        <p className="text-xs uppercase tracking-[0.18em] font-bold mb-2" style={{ color: "var(--brand-cta)" }}>
+        <p className="text-xs uppercase tracking-[0.18em] font-bold mb-2" style={{ color: "var(--brand-cta-accessible)" }}>
           Your invitation
         </p>
         <h2

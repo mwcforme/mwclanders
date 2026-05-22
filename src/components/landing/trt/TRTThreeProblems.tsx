@@ -60,7 +60,7 @@ export const TRTThreeProblems = ({ onCta, headlineOverride }: TRTThreeProblemsPr
       <div className="max-w-[1200px] mx-auto px-6 py-16 md:py-24">
         {/* Section heading */}
         <div className="text-center mb-12 md:mb-16">
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--brand-cta)", marginBottom: 14 }}>
+          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--brand-cta-accessible)", marginBottom: 14 }}>
             OUR SERVICES
           </p>
           <h2

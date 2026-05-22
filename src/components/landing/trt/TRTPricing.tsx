@@ -43,7 +43,7 @@ export const TRTPricing = ({ className }: TRTPricingProps) => {
             fontWeight: 700,
             letterSpacing: "0.12em",
             textTransform: "uppercase",
-            color: "var(--brand-cta)",
+            color: "var(--brand-cta-accessible)",
             marginBottom: 16,
           }}
         >

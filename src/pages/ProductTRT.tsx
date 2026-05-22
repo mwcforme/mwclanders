@@ -207,7 +207,7 @@ const ComparisonTable = () => (
   <section style={{ background: "#fff", padding: "80px 24px" }}>
     <div style={{ maxWidth: 1000, margin: "0 auto" }}>
       <div style={{ marginBottom: 12 }}>
-        <Eyebrow>WHY MEN CHOOSE MWC</Eyebrow>
+        <Eyebrow onLight>WHY MEN CHOOSE MWC</Eyebrow>
       </div>
       <h2
         style={{
@@ -389,7 +389,7 @@ const CandidateQuiz = ({ onNavigateSchedule }: { onNavigateSchedule: () => void 
       <div style={{ maxWidth: 720, margin: "0 auto" }}>
         <div style={{ textAlign: "center", marginBottom: 32 }}>
           <div style={{ marginBottom: 12 }}>
-            <Eyebrow>SEE IF YOU ARE A CANDIDATE</Eyebrow>
+            <Eyebrow onLight>SEE IF YOU ARE A CANDIDATE</Eyebrow>
           </div>
           <h2 style={{
             fontFamily: "Oswald, sans-serif",
@@ -667,7 +667,7 @@ const VisualTimeline = ({ onSchedule }: { onSchedule: () => void }) => {
                 marginBottom: 12,
               }}>
                 <Clock size={12} strokeWidth={2} style={{ color: "var(--brand-cta)" }} />
-                <span style={{ fontSize: 12, fontWeight: 700, color: "var(--brand-cta)", letterSpacing: "0.04em" }}>
+                <span style={{ fontSize: 12, fontWeight: 700, color: "var(--brand-cta-accessible)", letterSpacing: "0.04em" }}>
                   {step.time}
                 </span>
               </div>

@@ -97,9 +97,11 @@ export const OrangeBullet = ({
 export const Eyebrow = ({
   children,
   pill = false,
+  onLight = false,
 }: {
   children: React.ReactNode;
   pill?: boolean;
+  onLight?: boolean;
 }) => (
   <p
     style={{
@@ -108,7 +110,7 @@ export const Eyebrow = ({
       fontWeight: 700,
       letterSpacing: "0.14em",
       textTransform: "uppercase" as const,
-      color: "var(--brand-cta)",
+      color: onLight ? "var(--brand-cta)" : "var(--brand-cta-accessible)",
       borderLeft: "3px solid var(--brand-cta)",
       paddingLeft: 10,
       lineHeight: 1,
