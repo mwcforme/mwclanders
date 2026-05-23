@@ -136,6 +136,7 @@ export default function TRTQuiz() {
               fullName: state.fullName,
               email: state.email,
               phone: state.phone,
+              location: state.location ?? "",
               consent: state.consent,
             }}
             totalScore={totalScore}

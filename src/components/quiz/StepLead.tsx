@@ -1,21 +1,23 @@
 import { useState } from "react";
-import { Loader2 } from "lucide-react";
+import { Loader2, MapPin } from "lucide-react";
 import { QuizTrustBlock } from "./QuizTrustBlock";
 import { z } from "zod";
 import { useLeadSubmitController } from "@/domain/leads/useLeadSubmitController";
 import { nameField, phoneField } from "@/domain/leads/leadFormSchema";
 import { QuizShell } from "./QuizShell";
 import { PrimaryQuizButton } from "./PrimaryQuizButton";
+import { LocationSelector } from "@/components/landing/trt/LocationSelector";
+import type { LocationKey } from "@/data/croContent";
 
 interface StepLeadProps {
-  initial: { fullName: string; email: string; phone: string; consent: boolean };
+  initial: { fullName: string; email: string; phone: string; location: string; consent: boolean };
   totalScore: number;
   bracket: string;
   disqualified: boolean;
   tags: string[];
   /** Reserved for future GHL note support; currently unused. */
   noteBody?: string;
-  onCapture: (patch: { fullName: string; email: string; phone: string; consent: boolean }) => void;
+  onCapture: (patch: { fullName: string; email: string; phone: string; location: string; consent: boolean }) => void;
   onSubmitted: () => void;
 }
 
@@ -25,10 +27,13 @@ const optionalEmailField = z.union([
   z.string().trim().max(255).email("Enter a valid email or leave blank"),
 ]);
 
+const locationField = z.string().min(2, "Please select a location");
+
 const quizLeadSchema = z.object({
   name: nameField,
   email: optionalEmailField,
   phone: phoneField,
+  location: locationField,
   tcpa: z.literal(true, { errorMap: () => ({ message: "Consent required to continue" }) }),
 });
 
@@ -54,6 +59,7 @@ export function StepLead({
   const [name, setName] = useState(initial.fullName);
   const [email, setEmail] = useState(initial.email);
   const [phone, setPhone] = useState(initial.phone);
+  const [location, setLocation] = useState<LocationKey | "">(initial.location as LocationKey | "");
   const [tcpa, setTcpa] = useState(initial.consent);
   const [focused, setFocused] = useState<string | null>(null);
 
@@ -76,6 +82,7 @@ export function StepLead({
         fullName: v.name,
         email: v.email,
         phone: v.phone,
+        location: v.location,
         consent: true,
       });
       onSubmitted();
@@ -91,6 +98,7 @@ export function StepLead({
   const valid =
     name.trim().length >= 2 &&
     phone.replace(/\D/g, "").length === 10 &&
+    location !== "" &&
     tcpa;
 
   const inputBase = (field: string): React.CSSProperties => ({
@@ -109,7 +117,7 @@ export function StepLead({
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    void controller.submit({ name, email, phone, tcpa });
+    void controller.submit({ name, email, phone, location: location || "", tcpa });
   }
 
   // Progress 75 → 95 as required fields get filled.
@@ -175,6 +183,25 @@ export function StepLead({
           />
           {errors.name ? (
             <p className="mt-1 text-xs" style={{ color: "var(--c-error-on-dark)" }}>{errors.name}</p>
+          ) : null}
+        </div>
+
+        {/* Location */}
+        <div>
+          <p style={{
+            fontSize: 11, fontWeight: 700, letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            color: errors.location ? "var(--c-error-on-dark)" : "rgba(245,240,235,0.55)",
+            marginBottom: 8, fontFamily: "Inter, sans-serif",
+          }}>
+            Location <MapPin size={11} style={{ display: "inline", verticalAlign: "middle" }} />
+          </p>
+          <LocationSelector
+            value={location}
+            onChange={(loc) => setLocation(loc)}
+          />
+          {errors.location ? (
+            <p className="mt-1 text-xs" style={{ color: "var(--c-error-on-dark)" }}>{errors.location}</p>
           ) : null}
         </div>
 

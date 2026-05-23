@@ -26,6 +26,7 @@ interface QuizState {
   fullName: string;
   email: string;
   phone: string;
+  location: string;
   consent: boolean;
   /** Navigation */
   currentStep: StepKey;
@@ -86,6 +87,7 @@ export const initialQuizState = (): QuizState => ({
   fullName: "",
   email: "",
   phone: "",
+  location: "",
   consent: false,
   currentStep: 1,
   completed: false,
@@ -129,7 +131,7 @@ export interface UseQuizStateApi {
   state: QuizState;
   setSelectedTiles: (tiles: QuizTileId[]) => void;
   setHasContraindication: (v: boolean) => void;
-  setContact: (patch: Partial<Pick<QuizState, "fullName" | "email" | "phone" | "consent">>) => void;
+  setContact: (patch: Partial<Pick<QuizState, "fullName" | "email" | "phone" | "location" | "consent">>) => void;
   setStep: (step: StepKey) => void;
   markCompleted: (disqualified: boolean) => void;
   reset: () => void;

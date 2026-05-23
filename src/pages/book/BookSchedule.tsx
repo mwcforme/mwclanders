@@ -153,7 +153,7 @@ const BookSchedule = () => {
 
   return (
     <BookLayout page="schedule" title="Book Your Physician Assessment | Men's Wellness Centers">
-      <div className="px-4 md:px-6 py-2 md:py-8 space-y-4 md:space-y-6 pb-24">
+      <div className="px-4 md:px-6 py-1 md:py-6 space-y-3 md:space-y-5 pb-24">
 
         {/* ── Progress + back ─────────────────────────────────────────────── */}
         <div className="mx-auto w-full" style={{ maxWidth: 720 }}>
@@ -172,11 +172,11 @@ const BookSchedule = () => {
             <ArrowLeft size={16} /> Back
           </button>
           {/* Single progress bar: step 1 complete (full orange), step 2 in progress */}
-          <div className="flex gap-1 mt-3" role="progressbar" aria-label="Step 2 of 2" aria-valuemin={0} aria-valuemax={2} aria-valuenow={2}>
+          <div className="flex gap-1 mt-2" role="progressbar" aria-label="Step 2 of 2" aria-valuemin={0} aria-valuemax={2} aria-valuenow={2}>
             <div className="flex-1" style={{ height: 4, borderRadius: 2, background: "var(--brand-cta)" }} />
             <div className="flex-1" style={{ height: 4, borderRadius: 2, background: "rgba(232,103,10,0.40)" }} />
           </div>
-          <div className="hidden md:block text-center mt-3" style={{
+          <div className="hidden md:block text-center mt-2" style={{
             fontSize: 12, color: "var(--c-text-on-dark)", letterSpacing: "0.08em",
             fontWeight: 700, fontFamily: "Inter, sans-serif", textTransform: "uppercase",
           }}>
@@ -196,7 +196,7 @@ const BookSchedule = () => {
               // hardcoded-color-allow-next-line
               border: "1px solid #E5E7EB",
               borderRadius: 10,
-              padding: "12px 16px",
+              padding: "10px 14px",
               display: "flex",
               alignItems: "center",
               gap: 10,
@@ -235,14 +235,14 @@ const BookSchedule = () => {
         <section className="mx-auto" style={{ maxWidth: 720 }}>
           <h1 style={{
             fontFamily: "Oswald, sans-serif", fontWeight: 600,
-            fontSize: "clamp(22px, 3vw, 30px)", lineHeight: 1.1,
-            letterSpacing: "0.02em", marginBottom: 8, color: "var(--c-text-on-dark)",
+            fontSize: "clamp(20px, 3vw, 28px)", lineHeight: 1.1,
+            letterSpacing: "0.02em", marginBottom: 4, color: "var(--c-text-on-dark)",
             textTransform: "uppercase",
           }}>
             {heading}
           </h1>
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 15, color: "rgba(255,255,255,0.80)", margin: 0 }}>
-            {locationData ? locationData.name.replace("Men's Wellness Centers, ", "") : ""} · Licensed provider, same-day labs
+          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: "rgba(255,255,255,0.65)", margin: 0 }}>
+            Licensed Virginia provider · Same-day labs
           </p>
         </section>
 
