@@ -8,19 +8,19 @@ const STEPS = [
   {
     num: "02",
     title: "Provider Review & Diagnosis",
-    body: "Your MWC clinician reviews your labs in the context of your symptoms — not just a number on a chart. If TRT is right for you, they'll walk you through exactly what your protocol will look like.",
+    body: "Your MWC clinician reviews your labs in the context of your symptoms, not just a number on a chart. If TRT is right for you, they'll walk you through exactly what your protocol will look like.",
     badge: "No Guesswork",
   },
   {
     num: "03",
     title: "Personalized TRT Protocol",
-    body: "Most patients start with testosterone cypionate injections — the gold standard for bioavailable, controllable therapy. Dosing is dialed in based on your labs, symptoms, and goals. Adjustments happen as needed.",
+    body: "Most patients start with testosterone cypionate injections, the gold standard for bioavailable, controllable therapy. Dosing is dialed in based on your labs, symptoms, and goals. Adjustments happen as needed.",
     badge: "Your Protocol",
   },
   {
     num: "04",
     title: "Ongoing Monitoring & Optimization",
-    body: "TRT isn't set-and-forget. We monitor your levels, symptoms, and health markers every 3–6 months to keep you optimized — not just in range.",
+    body: "TRT isn't set-and-forget. We monitor your levels, symptoms, and health markers every 3-6 months to keep you optimized, not just in range.",
     badge: "Long-Term Support",
   },
 ];

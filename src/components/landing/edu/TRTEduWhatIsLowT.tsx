@@ -27,7 +27,7 @@ export const TRTEduWhatIsLowT = () => (
           {
             step: "01",
             title: "Production Slows With Age",
-            body: "After 30, most men lose about 1–2% of their testosterone per year. This isn't unusual — but when levels drop below the range your body needs to function well, symptoms emerge.",
+            body: "After 30, most men lose about 1-2% of their testosterone per year. This isn't unusual. But when levels drop below the range your body needs to function well, symptoms emerge.",
           },
           {
             step: "02",
@@ -37,12 +37,12 @@ export const TRTEduWhatIsLowT = () => (
           {
             step: "03",
             title: "Symptoms Feel Like 'Just Getting Older'",
-            body: "Most men — and many doctors — attribute these changes to stress, poor sleep, or aging. But when the underlying cause is hormonal, lifestyle adjustments alone won't fully fix it.",
+            body: "Most men, and many doctors, attribute these changes to stress, poor sleep, or aging. But when the underlying cause is hormonal, lifestyle adjustments alone won't fully fix it.",
           },
           {
             step: "04",
             title: "A Simple Blood Test Reveals the Truth",
-            body: "Total testosterone, free testosterone, SHBG, estradiol — a proper hormone panel takes 20 minutes and gives you real data. No guessing. No assuming. Just answers.",
+            body: "Total testosterone, free testosterone, SHBG, estradiol. A proper hormone panel takes 20 minutes and gives you real data. No guessing. No assuming. Just answers.",
           },
         ].map((item) => (
           <div

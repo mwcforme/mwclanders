@@ -14,7 +14,7 @@ const INCLUDED = [
   "Quarterly lab work & monitoring",
   "Unlimited provider messaging",
   "Dose adjustments at no extra cost",
-  "Cancel anytime — no long-term contract",
+  "Cancel anytime. No long-term contract.",
 ] as const;
 
 interface TRTPricingProps {

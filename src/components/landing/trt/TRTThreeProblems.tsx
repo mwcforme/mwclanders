@@ -13,7 +13,7 @@ const SERVICES = [
     id: "trt",
     eyebrow: "TESTOSTERONE THERAPY (TRT)",
     headline: "Low T is more common than you think.",
-    body: "Most men over 40 have it. Most are never told. A licensed Virginia provider reviews your labs on-site and builds a protocol specific to your numbers — not a generic template.",
+    body: "Most men over 40 have it. Most are never told. A licensed Virginia provider reviews your labs on-site and builds a protocol specific to your numbers. Not a generic template.",
     cta: COPY.cta.bookConsult,
     href: "/book/location",
     Icon: FlaskConical,
@@ -96,7 +96,7 @@ export const TRTThreeProblems = ({ onCta, headlineOverride }: TRTThreeProblemsPr
               lineHeight: 1.6,
             }}
           >
-            TRT, ED care, and medical weight loss under one roof. Virginia providers who specialize in men's health — not a side service.
+            TRT, ED care, and medical weight loss under one roof. Virginia providers who specialize in men's health. Not a side service.
           </p>
         </div>
 

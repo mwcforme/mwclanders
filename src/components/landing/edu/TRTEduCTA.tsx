@@ -19,7 +19,7 @@ export const TRTEduCTA = () => (
   >
     <div style={{ maxWidth: 680, margin: "0 auto" }}>
       <p style={{ color: "#E8670A", fontSize: 13, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 16 }}>
-        Men's Wellness Centers — Virginia
+        Men's Wellness Centers, Virginia
       </p>
       <h2
         style={{
@@ -34,7 +34,7 @@ export const TRTEduCTA = () => (
         <span style={{ color: "#E8670A" }}>WHERE YOU ACTUALLY STAND?</span>
       </h2>
       <p style={{ color: "rgba(255,255,255,0.60)", fontSize: 17, lineHeight: 1.65, marginBottom: 48 }}>
-        Stop guessing. A comprehensive hormone panel at Men's Wellness Centers gives you real data, reviewed by a real clinician, in one visit. Walk in — no referral needed.
+        Stop guessing. A comprehensive hormone panel at Men's Wellness Centers gives you real data, reviewed by a real clinician, in one visit. Walk in. No referral needed.
       </p>
 
       {/* Primary CTA */}

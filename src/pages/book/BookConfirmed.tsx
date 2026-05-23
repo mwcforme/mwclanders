@@ -193,7 +193,7 @@ export default function BookConfirmed() {
             <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.12em", textTransform: "uppercase", color: "#374151", marginBottom: 18 }}>Before you arrive</p>
             <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
               {[
-                { n: "1", text: "Bring photo ID and your insurance card if you have one — we don't bill insurance, but it helps your provider understand your history." },
+                { n: "1", text: "Bring photo ID and your insurance card if you have one. We don't bill insurance, but it helps your provider understand your history." },
                 { n: "2", text: "Drink water before labs. No need to fast unless your provider says so." },
                 { n: "3", text: "Plan for 60 minutes from check-in to leaving with your results." },
               ].map(({ n, text }) => (

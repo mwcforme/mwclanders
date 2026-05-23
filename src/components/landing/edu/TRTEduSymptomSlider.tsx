@@ -36,7 +36,7 @@ const SYMPTOMS = [
       { highlight: "22%", text: "of men with sub-optimal T developed & were diagnosed with depression." },
       { highlight: "7%", text: "Only 7% of men with optimal levels developed depression." },
     ],
-    stat: "Mood changes may be a hormone signal — not a personal failing.",
+    stat: "Mood changes may be a hormone signal. Not a personal failing.",
     visual: "mood",
   },
   {
@@ -45,7 +45,7 @@ const SYMPTOMS = [
     title: "Stubborn Accumulation of Visceral Fat",
     body: "Low testosterone can drive visceral fat buildup, raising the risk of metabolic strain and long-term harm.",
     bullets: [
-      { label: "Visceral Fat", text: "Deep belly fat around organs — linked to higher metabolic health risk." },
+      { label: "Visceral Fat", text: "Deep belly fat around organs, linked to higher metabolic health risk." },
       { label: "Subcutaneous Fat", text: "Fat stored beneath the skin, visible and easier to pinch around the waist." },
     ],
     stat: null,
@@ -58,7 +58,7 @@ const SYMPTOMS = [
     body: "Testosterone supports libido by activating androgen receptors in the brain.",
     bullets: [
       "Lower testosterone levels can make sex feel less frequent or less satisfying.",
-      "This is a biological signal — not a reflection of your relationship.",
+      "This is a biological signal. Not a reflection of your relationship.",
     ],
     stat: null,
     visual: "libido",
@@ -67,10 +67,10 @@ const SYMPTOMS = [
     icon: "🧠",
     label: "Brain Fog",
     title: "Brain Fog & Difficulty Concentrating",
-    body: "Testosterone receptors exist throughout the brain — including regions controlling memory and focus.",
+    body: "Testosterone receptors exist throughout the brain, including regions controlling memory and focus.",
     bullets: [
       "Forgetting words mid-sentence. Losing track of tasks. Feeling 'off.'",
-      "Many men attribute this to stress or aging — when the real cause is hormonal.",
+      "Many men attribute this to stress or aging. The real cause is often hormonal.",
     ],
     stat: null,
     visual: null,

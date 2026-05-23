@@ -13,7 +13,7 @@ interface FaqItem {
 const FAQ_ITEMS: FaqItem[] = [
   {
     q: "What is included in the no-cost consultation?",
-    a: "Your no-cost consultation includes a face-to-face visit with a licensed Virginia provider, a complete review of your symptoms and health history, and on-site lab work. You'll get your results and a personalized recommendation during the same visit — no waiting, no runaround.",
+    a: "Your no-cost consultation includes a face-to-face visit with a licensed Virginia provider, a complete review of your symptoms and health history, and on-site lab work. You'll get your results and a personalized recommendation during the same visit. No waiting, no runaround.",
   },
   {
     q: "What is testosterone replacement therapy (TRT)?",
@@ -21,7 +21,7 @@ const FAQ_ITEMS: FaqItem[] = [
   },
   {
     q: "Who is a good candidate for TRT?",
-    a: "TRT may be appropriate for men experiencing persistent fatigue, reduced sex drive, loss of muscle mass, mood changes, or poor sleep — especially when bloodwork confirms low testosterone. A licensed provider reviews your labs and symptoms before recommending any treatment.",
+    a: "TRT may be appropriate for men experiencing persistent fatigue, reduced sex drive, loss of muscle mass, mood changes, or poor sleep. Especially when bloodwork confirms low testosterone. A licensed provider reviews your labs and symptoms before recommending any treatment.",
   },
   {
     q: "Do I need a prescription for testosterone?",
