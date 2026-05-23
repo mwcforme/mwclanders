@@ -110,7 +110,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
         }}
       />
 
-      <div className="relative z-10 w-full max-w-[1280px] mx-auto px-5 sm:px-6 pt-24 pb-12 lg:pt-32 lg:pb-24 grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-8 lg:gap-12 items-stretch">
+      <div className="relative z-10 w-full max-w-[1280px] mx-auto px-5 sm:px-6 pt-24 pb-12 lg:pt-32 lg:pb-24 grid grid-cols-1 lg:grid-cols-[1fr_460px] gap-8 lg:gap-16 items-stretch">
         {/* LEFT */}
         <div className="flex flex-col">
           {/*
@@ -188,7 +188,7 @@ You've been told your labs are normal. You don't feel normal. At Men's Wellness 
 
         {/* RIGHT - form. No decoration. DO NOT add borders, accents, or wrappers around the form. */}
         <div id="hero-form" className="w-full flex lg:justify-end">
-          <div className="w-full lg:max-w-[440px]">
+          <div className="w-full">
             <TRTHeroForm />
           </div>
         </div>
