@@ -105,10 +105,11 @@ export const TRTHeroForm = ({
         width: "100%", maxWidth: 416, boxShadow: "0 24px 64px rgba(0,0,0,0.50)", fontFamily: "Inter, sans-serif",
       }}>
         <h2 style={{
-          fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 22, lineHeight: 1.2,
+          fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 20, lineHeight: 1.2,
           color: "var(--brand-cream)", textTransform: "uppercase", letterSpacing: "0.02em", marginBottom: 8,
+          whiteSpace: "nowrap",
         }}>
-          Reserve Your 60-Minute In-Person Visit.
+          Reserve Your Free 60-Minute Visit.
         </h2>
         <form onSubmit={handleSubmit} noValidate style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           <FloatInput id="hf-name" label="Name" type="text" autoComplete="given-name" placeholder="John"
