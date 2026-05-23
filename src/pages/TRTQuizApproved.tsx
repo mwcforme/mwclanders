@@ -252,15 +252,17 @@ function Section3Symptoms({ top }: { top: ReturnType<typeof topCategories> }) {
   );
 }
 
+const SECTION4_ITEMS = [
+  "Worsening fatigue and motivation",
+  "Erectile difficulty",
+  "Loss of muscle mass",
+  "Mood changes and brain fog",
+  "Higher risk for type 2 diabetes",
+  "Higher risk for cardiovascular issues",
+];
+
 function Section4WhyAct() {
-  const items = [
-    "Worsening fatigue and motivation",
-    "Erectile difficulty",
-    "Loss of muscle mass",
-    "Mood changes and brain fog",
-    "Higher risk for type 2 diabetes",
-    "Higher risk for cardiovascular issues",
-  ];
+  const items = SECTION4_ITEMS;
   return (
     <section className="mt-12">
       <h2
@@ -346,12 +348,14 @@ function Section5Outcome() {
   );
 }
 
+const SECTION6_STEPS = [
+  { n: "01", title: "Schedule my visit", body: "Book a same or next-day in-person evaluation at a Virginia Center.", icon: ClipboardCheck },
+  { n: "02", title: "In-person labs and physical", body: "Same-day blood panel and a face-to-face exam with a licensed provider.", icon: FlaskConical },
+  { n: "03", title: "Your protocol, dialed in", body: "If clinically appropriate, a TRT protocol built to your labs with ongoing monitoring.", icon: Stethoscope },
+];
+
 function Section6NextSteps() {
-  const steps = [
-    { n: "01", title: "Schedule my visit", body: "Book a same or next-day in-person evaluation at a Virginia Center.", icon: ClipboardCheck },
-    { n: "02", title: "In-person labs and physical", body: "Same-day blood panel and a face-to-face exam with a licensed provider.", icon: FlaskConical },
-    { n: "03", title: "Your protocol, dialed in", body: "If clinically appropriate, a TRT protocol built to your labs with ongoing monitoring.", icon: Stethoscope },
-  ];
+  const steps = SECTION6_STEPS;
   return (
     <section className="mt-12">
       <h2
@@ -472,12 +476,14 @@ function Section8Testimonials() {
   );
 }
 
+const SECTION9_COLS = [
+  { label: "2 to 8 weeks", body: ["More energy and better sleep", "Improved mood and focus", "Increased libido"] },
+  { label: "8 to 12 weeks", body: ["Stronger morning erections", "Sharper thinking and less brain fog", "Higher motivation and drive"] },
+  { label: "12 weeks +", body: ["Muscle and strength improvements", "Lower body fat and more definition", "Sustained libido and confidence"] },
+];
+
 function Section9WeekByWeek() {
-  const cols = [
-    { label: "2 to 8 weeks", body: ["More energy and better sleep", "Improved mood and focus", "Increased libido"] },
-    { label: "8 to 12 weeks", body: ["Stronger morning erections", "Sharper thinking and less brain fog", "Higher motivation and drive"] },
-    { label: "12 weeks +", body: ["Muscle and strength improvements", "Lower body fat and more definition", "Sustained libido and confidence"] },
-  ];
+  const cols = SECTION9_COLS;
   return (
     <section className="mt-12">
       <h2

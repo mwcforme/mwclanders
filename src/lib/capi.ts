@@ -93,7 +93,7 @@ export async function trackConversion(
     });
   } catch (err) {
     // Never block UX on tracking.
-    console.warn("[capi] failed", err);
+    console.error("[capi] failed", err);
   }
 
   return event_id;

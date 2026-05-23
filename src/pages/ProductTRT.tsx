@@ -701,15 +701,21 @@ const TrustBadgesInline = () => (
       <img
         src="/images/badges/legitscript-color.webp"
         alt="LegitScript Certified"
+        width={292}
+        height={316}
         style={{ height: 40, width: "auto", opacity: 0.85 }}
         loading="lazy"
+        decoding="async"
       />
     </a>
     <img
       src="/images/badges/hipaa-color.webp"
       alt="HIPAA Compliant"
+      width={510}
+      height={242}
       style={{ height: 32, width: "auto", opacity: 0.80 }}
       loading="lazy"
+      decoding="async"
     />
     <span style={{ fontSize: 11, color: "rgba(255,255,255,0.50)", fontWeight: 600, letterSpacing: "0.05em" }}>
       HIPAA Compliant
@@ -718,6 +724,12 @@ const TrustBadgesInline = () => (
 );
 
 /* ─── Stat strip ─────────────────────────────────────────────────────────── */
+const STAT_DISPLAY = [
+  { isNum: true,  suffix: "+", label: "Men Treated" },
+  { isNum: true,  suffix: "",  label: "Virginia Locations" },
+  { isNum: false, display: "Same Day", label: "Lab Results" },
+];
+
 const StatStrip = () => {
   const stripRef = useRef<HTMLDivElement>(null);
   const [statCounts, setStatCounts] = useState([0, 0, 0]);
@@ -751,12 +763,6 @@ const StatStrip = () => {
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
-
-  const STAT_DISPLAY = [
-    { isNum: true,  suffix: "+", label: "Men Treated" },
-    { isNum: true,  suffix: "",  label: "Virginia Locations" },
-    { isNum: false, display: "Same Day", label: "Lab Results" },
-  ];
 
   return (
     <div ref={stripRef} style={{

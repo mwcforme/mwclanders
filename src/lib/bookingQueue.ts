@@ -51,7 +51,7 @@ export function enqueueBooking(booking: Omit<QueuedBooking, "id" | "queuedAt" | 
   const q = readQueue();
   q.push({ ...booking, id, queuedAt: new Date().toISOString(), retries: 0 });
   writeQueue(q);
-  console.warn("[booking-queue] queued booking", id, booking.slotIso);
+  if (import.meta.env.DEV) console.warn("[booking-queue] queued booking", id, booking.slotIso);
   return id;
 }
 
@@ -107,7 +107,7 @@ async function attemptBooking(b: QueuedBooking): Promise<boolean> {
       meta: { queued: true, retries: b.retries, queuedAt: b.queuedAt } as never,
     })).catch(() => {});
 
-    console.info("[booking-queue] queued booking confirmed", b.id);
+    if (import.meta.env.DEV) console.info("[booking-queue] queued booking confirmed", b.id);
     return true;
   } catch (e) {
     const q = readQueue();
@@ -132,7 +132,7 @@ export async function flushBookingQueue(): Promise<void> {
   if (q.length === 0) return;
   isFlushing = true;
 
-  console.info("[booking-queue] flushing", q.length, "queued bookings");
+  if (import.meta.env.DEV) console.info("[booking-queue] flushing", q.length, "queued bookings");
 
   const supabase = await getSupabase();
   for (const booking of q) {

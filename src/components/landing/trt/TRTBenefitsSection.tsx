@@ -66,6 +66,8 @@ export const TRTBenefitsSection = memo(() => (
         <img
           src="/assets/lp/patient-bp-exam-wide.webp"
           alt="Athletic man smiling, energetic"
+          width={1066}
+          height={1600}
           style={{
             width: "100%",
             height: "100%",
@@ -74,6 +76,7 @@ export const TRTBenefitsSection = memo(() => (
             display: "block",
           }}
           loading="lazy"
+          decoding="async"
           onError={(e) => {
             const el = e.currentTarget as HTMLImageElement;
             el.style.display = "none";

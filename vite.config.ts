@@ -37,7 +37,7 @@ export default defineConfig(({ mode }) => ({
     // Drop console.log in production only
     esbuildOptions: {
       drop: [],  // keep warns/errors; use define instead
-      pure: ["console.log"],
+      pure: ["console.log", "console.warn", "console.info"],
       legalComments: "none",
     },
     rollupOptions: {
@@ -70,6 +70,10 @@ export default defineConfig(({ mode }) => ({
         },
       },
     },
+  },
+  // Pre-bundle critical deps to speed up cold starts in dev
+  optimizeDeps: {
+    include: ["react", "react-dom", "react-router-dom"],
   },
   resolve: {
     alias: {

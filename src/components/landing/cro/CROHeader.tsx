@@ -21,7 +21,10 @@ export const CROHeader = () => (
         onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/logos/Text_Logo_white.png"; }}
         alt="Men's Wellness Centers"
         style={{ height: 32, width: "auto" }}
-        width={160} height={32}
+        width={160}
+        height={32}
+        loading="eager"
+        decoding="async"
       />
     </a>
     <a href={PHONE.tel} style={{

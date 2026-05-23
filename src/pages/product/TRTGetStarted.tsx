@@ -298,7 +298,11 @@ export default function TRTGetStarted() {
             <img
               src="/src/assets/lp/provider-headshot.webp"
               alt="Men's Wellness Centers provider"
+              width={800}
+              height={1200}
               style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+              loading="lazy"
+              decoding="async"
             />
             {/* Overlay */}
             <div style={{
