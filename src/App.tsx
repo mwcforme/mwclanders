@@ -70,6 +70,7 @@ const RequireAdmin = lazy(() =>
 
 // Internal
 const LpDirectory = lazy(() => import("./pages/internal/LpDirectory"));
+const FormEmbed   = lazy(() => import("./pages/FormEmbed"));
 const NotFound    = lazy(() => import("./pages/NotFound"));
 
 // ─── Suspense fallback: dark screen matches brand, no layout shift ──────────
@@ -212,6 +213,7 @@ const App = () => (
 
                 {/* ── Legal ── */}
                 <Route path="/lp"                element={<LpDirectory />} />
+                <Route path="/form"              element={<FormEmbed />} />
                 <Route path="/privacy-policy"    element={<PrivacyPolicy />} />
                 <Route path="/terms-of-service"  element={<TermsOfService />} />
                 <Route path="/tcpa"              element={<TcpaDisclosure />} />
