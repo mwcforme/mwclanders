@@ -1,4 +1,4 @@
-import imgManifesto from "@/assets/lp/provider-lab-notes.webp";
+const imgManifesto = "/assets/lp/provider-lab-notes.webp";
 import { Quote } from "lucide-react";
 import { COPY } from "@/data/copy";
 

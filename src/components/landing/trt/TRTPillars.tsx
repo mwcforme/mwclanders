@@ -1,7 +1,7 @@
-import imgDoctor from "@/assets/lp/provider-vitals-stethoscope.webp";
-import imgLobby from "@/assets/lp/provider-lab-processing.webp";
-import imgTeam from "@/assets/lp/front-desk-welcome-1.webp";
-import imgManager from "@/assets/lp/provider-manager-welcome.webp";
+const imgDoctor = "/assets/lp/provider-vitals-stethoscope.webp";
+const imgLobby = "/assets/lp/provider-lab-processing.webp";
+const imgTeam = "/assets/lp/front-desk-welcome-1.webp";
+const imgManager = "/assets/lp/provider-manager-welcome.webp";
 import { Target } from "lucide-react";
 
 const pillars = [

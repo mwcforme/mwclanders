@@ -49,19 +49,17 @@ export default defineConfig(({ mode }) => ({
           "vendor-supabase": ["@supabase/supabase-js"],
           // Form + validation
           "vendor-forms": ["zod"],
-          // UI primitives — loaded on most pages
+          // Tiny utilities — always needed, very cheap (<5KB)
+          "vendor-utils": ["clsx", "tailwind-merge", "class-variance-authority"],
+          // Heavier UI primitives — only loaded when a route that needs them loads
+          // Unused Radix packages (react-label, react-separator, react-slot, react-toggle)
+          // are kept as dependencies but NOT listed here — Vite tree-shakes them
+          // into the specific chunks that import them, rather than preloading eagerly.
           "vendor-ui": [
             "@radix-ui/react-dialog",
-            "@radix-ui/react-label",
-            "@radix-ui/react-separator",
-            "@radix-ui/react-slot",
             "@radix-ui/react-toast",
-            "@radix-ui/react-toggle",
             "@radix-ui/react-tooltip",
             "lucide-react",
-            "clsx",
-            "tailwind-merge",
-            "class-variance-authority",
           ],
           // State + query
           "vendor-state": ["zustand", "@tanstack/react-query"],
