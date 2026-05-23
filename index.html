@@ -8,20 +8,16 @@
     <meta name="bingbot" content="noindex" />
     <title>Men's Wellness Centers — TRT, ED &amp; Weight Loss in Virginia</title>
     <meta name="theme-color" content="#0B1029" />
+    <!-- Max 2 preconnects (Lighthouse warns >4). Fonts + Supabase only. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://supabase.co" crossorigin />
-    <link rel="dns-prefetch" href="https://supabase.co" />
-    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-    <link rel="dns-prefetch" href="https://www.clarity.ms" />
-    <link rel="dns-prefetch" href="https://services.leadconnectorhq.com" />
-    <link rel="preconnect" href="https://stmyztkmioobdbxliktn.supabase.co" crossorigin />
-    <link rel="preconnect" href="https://stmyztkmioobdbxliktn.functions.supabase.co" crossorigin />
+    <!-- DNS prefetch for everything else — no TCP connection held open -->
+    <link rel="dns-prefetch" href="https://stmyztkmioobdbxliktn.supabase.co" />
     <link rel="dns-prefetch" href="https://stmyztkmioobdbxliktn.functions.supabase.co" />
     <link rel="dns-prefetch" href="https://services.leadconnectorhq.com" />
-    <!-- Google Maps iframe on /book/confirmed -->
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link rel="dns-prefetch" href="https://www.clarity.ms" />
     <link rel="dns-prefetch" href="https://maps.google.com" />
-    <link rel="dns-prefetch" href="https://www.google.com" />
     <!-- Fonts: preload critical weights, swap for zero FOIT -->
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" />
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
@@ -97,6 +93,14 @@
       // Stub dataLayer immediately so any early pushes are queued
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+
+      // Stub fbq so Meta Pixel GTM tags don't throw ReferenceError
+      // before fbevents.js loads. GTM overwrites this with the real implementation.
+      window.fbq = window.fbq || function(){
+        (window.fbq.q = window.fbq.q || []).push(arguments);
+      };
+      window.fbq.version = '2.0';
+      window._fbq = window._fbq || window.fbq;
 
       // Sensitive path config — set before GTM loads
       gtag('js', new Date());
