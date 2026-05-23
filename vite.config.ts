@@ -65,8 +65,6 @@ export default defineConfig(({ mode }) => ({
           ],
           // State + query
           "vendor-state": ["zustand", "@tanstack/react-query"],
-          // Sentry — error monitoring, async
-          "vendor-sentry": ["@sentry/react"],
         },
       },
     },

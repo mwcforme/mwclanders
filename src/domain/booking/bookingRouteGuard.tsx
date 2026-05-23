@@ -13,7 +13,6 @@
  */
 import { useEffect } from "react";
 import { Outlet, useLocation, Navigate } from "react-router-dom";
-import * as Sentry from "@sentry/react";
 import { useBookingStore } from "@/domain/booking/bookingStore";
 import { sanitizeAnalyticsForBookingRoute } from "@/lib/analyticsGuard";
 
@@ -43,16 +42,6 @@ export const BookingRouteGuard = () => {
   // potential redirect, so the unsanitized URL is never reported.
   useEffect(() => {
     sanitizeAnalyticsForBookingRoute(location.pathname);
-    try {
-      Sentry.getCurrentScope().setTag("booking_route", true);
-      // Replay integration may not be enabled in all envs — guard the call.
-      const replay = (Sentry as unknown as {
-        getReplay?: () => { stop?: () => void } | undefined;
-      }).getReplay?.();
-      replay?.stop?.();
-    } catch {
-      /* never let observability hardening break navigation */
-    }
   }, [location.pathname]);
 
   const path = location.pathname;

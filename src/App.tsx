@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import { PHONE } from "@/lib/constants";
-import * as Sentry from "@sentry/react";
+import { Component, type ReactNode } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -9,7 +9,6 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ServicesProvider } from "@/app/providers/ServicesProvider";
 import { MobileFooterBar } from "./components/shared/MobileFooterBar";
 import { EnvBadge } from "./components/shared/EnvBadge";
-import { SentryTestTrigger } from "./components/SentryTestTrigger";
 import { BookingRouteGuard } from "./domain/booking/bookingRouteGuard";
 
 // ─── EAGER: TRT landing page is the PPC entry point — zero delay ───────────
@@ -152,11 +151,22 @@ const ErrorFallback = ({ resetError }: { resetError: () => void }) => (
   </div>
 );
 
+// Lightweight React error boundary — replaces Sentry.ErrorBoundary
+class AppErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
+  state = { error: null };
+  static getDerivedStateFromError(e: Error) { return { error: e }; }
+  render() {
+    if (this.state.error) {
+      return (
+        <ErrorFallback resetError={() => this.setState({ error: null })} />
+      );
+    }
+    return this.props.children;
+  }
+}
+
 const App = () => (
-  <Sentry.ErrorBoundary
-    fallback={({ resetError }) => <ErrorFallback resetError={resetError} />}
-    showDialog={false}
-  >
+  <AppErrorBoundary>
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
@@ -233,12 +243,12 @@ const App = () => (
             </Suspense>
             <MobileFooterBar />
             <EnvBadge />
-            {import.meta.env.DEV && <SentryTestTrigger />}
+
           </ServicesProvider>
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
-  </Sentry.ErrorBoundary>
+  </AppErrorBoundary>
 );
 
 export default App;
