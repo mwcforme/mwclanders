@@ -60,15 +60,29 @@ export const TRTHeader = ({ minimal = false, hideCta = false }: { minimal?: bool
               type="button"
               data-cro="header_book_click"
               onClick={() => { trackCro("header_book_click"); scrollTo("hero-form"); }}
-              className="rounded-full px-5 py-2.5 text-xs font-bold cursor-pointer transition-colors duration-200"
               style={{
-                background: "var(--brand-cta-accessible)",
+                height: 44,
+                paddingLeft: 22,
+                paddingRight: 22,
+                background: "var(--brand-cta)",
                 color: "var(--c-text-on-dark)",
-                letterSpacing: "0.08em",
+                border: "none",
+                borderRadius: 8,
+                fontSize: 15,
+                fontWeight: 700,
+                letterSpacing: "0.06em",
                 fontFamily: "Inter, sans-serif",
+                cursor: "pointer",
+                // hardcoded-color-allow-next-line
+                boxShadow: "0 4px 16px rgba(232,103,10,0.40)",
+                transition: "background 180ms ease, transform 180ms ease",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 6,
+                whiteSpace: "nowrap",
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = "var(--brand-cta-hover)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = "var(--brand-cta-accessible)"; }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = "#CF5C09"; e.currentTarget.style.transform = "translateY(-1px)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = "var(--brand-cta)"; e.currentTarget.style.transform = "translateY(0)"; }}
             >
               {COPY.cta.bookConsult}
             </button>
