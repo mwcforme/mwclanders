@@ -1,0 +1,28 @@
+name: Lighthouse CI
+# Reference only — not yet active in CI/CD pipeline.
+# Wire up by uncommenting the `on:` trigger when ready.
+# on:
+#   push:
+#     branches: [main]
+on:
+  workflow_dispatch:
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm ci
+      - run: npm run build
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          urls: |
+            http://localhost:4173/
+            http://localhost:4173/book/location
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+          budgetPath: ./.github/lighthouse-budget.json

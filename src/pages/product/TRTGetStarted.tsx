@@ -296,7 +296,7 @@ export default function TRTGetStarted() {
           {/* Provider image */}
           <div style={{ position: "relative", height: 200, overflow: "hidden" }}>
             <img
-              src="/src/assets/lp/provider-headshot.webp"
+              src="/assets/lp/provider-headshot.webp"
               alt="Men's Wellness Centers provider"
               width={800}
               height={1200}
