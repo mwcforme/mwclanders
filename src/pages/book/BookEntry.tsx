@@ -1,85 +1,104 @@
 /**
- * BookEntry — /book/entry
+ * BookEntry — /book/entry?t=<token>
  *
- * Receives a signed WordPress → Lovable handoff token, verifies it,
- * seeds the booking store, then routes into the funnel.
+ * Receives a single-use opaque token issued by the Supabase lead-intake edge
+ * function, exchanges it for an identity payload via wp-token-exchange, seeds
+ * the booking store, then routes into the funnel.
  *
- * Guarantee: URL params are stripped from history before any async work
- * begins. PHI never survives in the URL, browser history, or referrer header.
+ * The token is an opaque 64-char hex string — no PHI ever touches the URL.
+ * The token itself is stripped from history before the async exchange begins.
  *
- * Debug mode: append &debug=1 to the URL. On failure, the page will NOT
- * redirect — it renders the rejection reason + token diagnostics on screen.
- * Debug mode also keeps the original URL intact (no history strip) so you
- * can copy/inspect it.
+ * Debug mode: append &debug=1 to preserve the URL and render diagnostics
+ * instead of redirecting. Safe to share — the token is single-use so it
+ * will already be spent by the time anyone inspects it.
  *
- * Happy path:  /book/entry?fn=…&ph=…&ts=…&sig=… → /book/symptom
- * Failure path: anything invalid → /  (silent — unless debug=1)
+ * Happy path:  /book/entry?t=<token> → /book/symptom
+ * Failure path: anything invalid → /  (silent unless debug=1)
  */
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useBookingStore, isKnownService } from "@/domain/booking/bookingStore";
-import { verifyWpHandoff, pushWpPartialLead } from "@/lib/wpHandoff";
-import { PHONE }                           from "@/lib/constants";
+import { PHONE }                            from "@/lib/constants";
+import { supabase }                         from "@/integrations/supabase/client";
 
-declare global {
-  interface Window {
-    __MWC_BOOK_ENTRY_SEARCH__?: string;
-  }
+// ── Types ─────────────────────────────────────────────────────────────────────
+
+interface TokenIdentity {
+  first_name: string;
+  last_name:  string | null;
+  email:      string | null;
+  phone:      string;
+  contact_id: string;
+  location:   string | null;
+  service:    string | null;
+  source:     string;
 }
 
 interface DebugInfo {
-  reason: string;
-  params: Record<string, string | null>;
-  nowUnix: number;
-  tokenUnix: number | null;
-  ageSeconds: number | null;
-  secretConfigured: boolean;
-  host: string;
+  reason:         string;
+  tokenPresent:   boolean;
+  tokenLength:    number | null;
+  host:           string;
+  identity?:      Partial<TokenIdentity>;
 }
+
+// ── Token exchange ────────────────────────────────────────────────────────────
+
+async function exchangeToken(token: string): Promise<
+  | { ok: true;  identity: TokenIdentity }
+  | { ok: false; reason: string }
+> {
+  let data: Record<string, unknown>;
+  let error: unknown;
+
+  try {
+    const result = await supabase.functions.invoke("wp-token-exchange", {
+      body: { token },
+    });
+    data  = (result.data  as Record<string, unknown>) ?? {};
+    error = result.error;
+  } catch (err) {
+    return { ok: false, reason: "network_error" };
+  }
+
+  if (error) {
+    // Supabase functions.invoke surfaces HTTP errors via result.error
+    const status = (error as { status?: number }).status;
+    if (status === 410) return { ok: false, reason: "token_expired_or_used" };
+    if (status === 404) return { ok: false, reason: "token_not_found" };
+    return { ok: false, reason: "exchange_error" };
+  }
+
+  if (!data?.ok || !data?.identity) {
+    return { ok: false, reason: "bad_response" };
+  }
+
+  return { ok: true, identity: data.identity as TokenIdentity };
+}
+
+// ── Component ─────────────────────────────────────────────────────────────────
 
 export default function BookEntry() {
   const [searchParams] = useSearchParams();
   const navigate       = useNavigate();
-  // Strict-mode / double-mount guard
-  const processed = useRef(false);
+  const processed      = useRef(false);
   const [debugInfo, setDebugInfo] = useState<DebugInfo | null>(null);
 
   useEffect(() => {
+    // Strict-mode / double-mount guard
     if (processed.current) return;
     processed.current = true;
 
-    // Snapshot params synchronously — before any async gap. index.html strips
-    // PHI from the visible URL before analytics loads, so /book/entry receives
-    // the preserved in-memory search string here.
-    const preservedSearch = typeof window !== "undefined" ? window.__MWC_BOOK_ENTRY_SEARCH__ : "";
-    const snapshot = new URLSearchParams(preservedSearch || searchParams.toString());
-    const debugMode = snapshot.get("debug") === "1";
-    if (typeof window !== "undefined") {
-      delete window.__MWC_BOOK_ENTRY_SEARCH__;
-    }
+    const token     = searchParams.get("t")?.trim() ?? "";
+    const debugMode = searchParams.get("debug") === "1";
 
-    const buildDebug = (reason: string): DebugInfo => {
-      const tsRaw = snapshot.get("ts");
-      const tokenUnix = tsRaw && /^\d{10}$/.test(tsRaw) ? parseInt(tsRaw, 10) : null;
-      const nowUnix = Math.floor(Date.now() / 1000);
-      return {
-        reason,
-        params: {
-          fn:    snapshot.get("fn"),
-          ph:    snapshot.get("ph"),
-          ts:    tsRaw,
-          sig:   snapshot.get("sig"),
-          loc:   snapshot.get("loc"),
-          svc:   snapshot.get("svc"),
-          em:    snapshot.get("em"),
-        },
-        nowUnix,
-        tokenUnix,
-        ageSeconds: tokenUnix !== null ? nowUnix - tokenUnix : null,
-        secretConfigured: Boolean(import.meta.env.VITE_WP_HANDOFF_SECRET),
-        host: typeof window !== "undefined" ? window.location.host : "",
-      };
-    };
+    const buildDebug = (reason: string, identity?: Partial<TokenIdentity>): DebugInfo => ({
+      reason,
+      tokenPresent: Boolean(token),
+      tokenLength:  token.length || null,
+      host:         typeof window !== "undefined" ? window.location.host : "",
+      identity,
+    });
 
     const fail = (reason: string) => {
       if (import.meta.env.DEV) console.warn("[BookEntry] handoff rejected:", reason);
@@ -90,100 +109,66 @@ export default function BookEntry() {
       navigate("/", { replace: true });
     };
 
-    // Fast-fail: if the two required params aren't even present, skip crypto.
-    if (!snapshot.get("fn") || !snapshot.get("ph")) {
-      fail("missing_fn_or_ph");
+    if (!token) {
+      fail("missing_token");
       return;
     }
 
-    // Strip PHI from URL and browser history immediately — before await.
-    // In debug mode, leave URL intact so it can be inspected/copied.
+    // Strip token from URL immediately — it's single-use, but no reason to
+    // leave it in history or referrer headers.
     if (!debugMode) {
       window.history.replaceState({}, "", "/book/entry");
     }
 
-    verifyWpHandoff(snapshot).then((result) => {
+    exchangeToken(token).then((result) => {
       if (!result.ok) {
-        fail("reason" in result ? result.reason : "unknown");
+        fail(result.reason);
         return;
       }
 
-      const { payload } = result;
-      pushWpPartialLead(payload);
+      const { identity } = result;
 
       const store = useBookingStore.getState();
       store.reset();
       store.patch({
         identity: {
-          firstName: payload.firstName,
-          phone:     payload.phone,
-          email:     payload.email ?? "",
+          firstName:    identity.first_name,
+          phone:        identity.phone,
+          email:        identity.email ?? "",
+          // Carry the GHL contact_id so the booking step links the appointment
+          // back to the existing contact instead of creating a duplicate.
+          ghlContactId: identity.contact_id,
         },
-        service:  isKnownService(payload.service) ? payload.service : undefined,
-        location: payload.location,
-        source:   "wordpress-handoff",
+        service:  isKnownService(identity.service) ? identity.service : undefined,
+        location: identity.location ?? undefined,
+        source:   identity.source ?? "wordpress-handoff",
       });
 
       if (debugMode) {
         setDebugInfo({
-          ...buildDebug("ok"),
-          reason: "ok — would route to /book/symptom",
+          ...buildDebug("ok — would route to /book/symptom", identity),
         });
         return;
       }
 
       navigate("/book/symptom", { replace: true });
     }).catch((err) => {
-      console.error("[BookEntry] verify threw", err);
-      fail("verify_threw");
+      console.error("[BookEntry] unexpected error", err);
+      fail("unexpected_error");
     });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (debugInfo) {
-    return (
-      <div
-        style={{
-          minHeight: "100vh",
-          background: "var(--brand-navy-deep)",
-          color: "rgba(255,255,255,0.92)",
-          fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
-          padding: 24,
-        }}
-      >
-        <div style={{ maxWidth: 880, margin: "0 auto" }}>
-          <h1 style={{ fontSize: 20, marginBottom: 16, fontFamily: "Inter, sans-serif" }}>
-            BookEntry handoff diagnostics
-          </h1>
-          <p style={{ marginBottom: 12 }}>
-            <strong>Reason:</strong>{" "}
-            <span style={{ color: debugInfo.reason.startsWith("ok") ? "#7CFFB2" : "#FF8A8A" }}>
-              {debugInfo.reason}
-            </span>
-          </p>
-          <ReasonHint reason={debugInfo.reason} info={debugInfo} />
-          <pre
-            style={{
-              background: "rgba(0,0,0,0.35)",
-              padding: 16,
-              borderRadius: 8,
-              fontSize: 12,
-              overflowX: "auto",
-              marginTop: 16,
-            }}
-          >
-{JSON.stringify(debugInfo, null, 2)}
-          </pre>
-          <div style={{ marginTop: 20, fontFamily: "Inter, sans-serif", fontSize: 13 }}>
-            <a href="/" style={{ color: "var(--brand-cta)" }}>← back home</a>
-            {"  ·  "}
-            <a href={PHONE.tel} style={{ color: "var(--brand-cta)" }}>{PHONE.display}</a>
-          </div>
-        </div>
-      </div>
-    );
+    return <DebugPanel info={debugInfo} />;
   }
 
+  return <LoadingScreen />;
+}
+
+// ── Sub-components ────────────────────────────────────────────────────────────
+
+function LoadingScreen() {
   return (
     <div
       style={{
@@ -222,21 +207,58 @@ export default function BookEntry() {
   );
 }
 
-function ReasonHint({ reason, info }: { reason: string; info: DebugInfo }) {
-  const hints: Record<string, string> = {
-    missing_fn_or_ph: "URL is missing required fn or ph param. Check WordPress filter output.",
-    missing_or_malformed_params: "One of fn/ph/ts/sig is missing or ts/sig has wrong format (ts must be 10-digit unix, sig must be 64-char lowercase hex).",
-    token_expired_or_future: `Token age = ${info.ageSeconds}s. TTL is 600s, max future skew 60s. WP server clock or stale link.`,
-    secret_not_configured: "VITE_WP_HANDOFF_SECRET is not set in this environment. Add it and republish.",
-    invalid_signature: "Secret mismatch OR payload format mismatch. PHP must sign exactly: base64url(fn) + '|' + base64url(ph) + '|' + ts using the same secret.",
-    crypto_error: "WebCrypto threw. Likely malformed sig bytes.",
-    verify_threw: "verifyWpHandoff rejected unexpectedly. See console.",
-  };
-  const hint = hints[reason];
-  if (!hint) return null;
+const REASON_HINTS: Record<string, string> = {
+  missing_token:        "No ?t= parameter in the URL. Check the redirect URL returned by lead-intake.",
+  token_not_found:      "Token doesn't exist in the database. May have been issued against a different environment.",
+  token_expired_or_used:"Token is either past its 15-minute TTL or was already consumed. Single-use tokens cannot be replayed.",
+  exchange_error:       "wp-token-exchange returned an unexpected error. Check Supabase function logs.",
+  network_error:        "Failed to reach the wp-token-exchange function. Check CORS config and Supabase project health.",
+  bad_response:         "wp-token-exchange returned 200 but the response shape was unexpected.",
+  unexpected_error:     "An unhandled exception occurred. Check the browser console.",
+};
+
+function DebugPanel({ info }: { info: DebugInfo }) {
+  const isOk = info.reason.startsWith("ok");
   return (
-    <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "rgba(255,255,255,0.75)", lineHeight: 1.5 }}>
-      {hint}
-    </p>
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "var(--brand-navy-deep)",
+        color: "rgba(255,255,255,0.92)",
+        fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
+        padding: 24,
+      }}
+    >
+      <div style={{ maxWidth: 880, margin: "0 auto" }}>
+        <h1 style={{ fontSize: 20, marginBottom: 16, fontFamily: "Inter, sans-serif" }}>
+          BookEntry diagnostics
+        </h1>
+        <p style={{ marginBottom: 8 }}>
+          <strong>Status: </strong>
+          <span style={{ color: isOk ? "#7CFFB2" : "#FF8A8A" }}>{info.reason}</span>
+        </p>
+        {REASON_HINTS[info.reason] && (
+          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "rgba(255,255,255,0.75)", lineHeight: 1.5, marginBottom: 16 }}>
+            {REASON_HINTS[info.reason]}
+          </p>
+        )}
+        <pre
+          style={{
+            background: "rgba(0,0,0,0.35)",
+            padding: 16,
+            borderRadius: 8,
+            fontSize: 12,
+            overflowX: "auto",
+          }}
+        >
+          {JSON.stringify(info, null, 2)}
+        </pre>
+        <div style={{ marginTop: 20, fontFamily: "Inter, sans-serif", fontSize: 13 }}>
+          <a href="/" style={{ color: "var(--brand-cta)" }}>← back home</a>
+          {"  ·  "}
+          <a href={PHONE.tel} style={{ color: "var(--brand-cta)" }}>{PHONE.display}</a>
+        </div>
+      </div>
+    </div>
   );
 }

@@ -1,210 +1,132 @@
 /**
- * Tests for lib/wpHandoff.ts — WordPress handoff token verification.
- * Uses SubtleCrypto (available in Node 18+/jsdom via Web Crypto API).
+ * Tests for lib/wpHandoff.ts — WordPress handoff helpers.
+ *
+ * The HMAC-signed URL param approach was replaced by Hammad's Gravity Forms →
+ * lead-intake → opaque token flow. This file tests the remaining helpers:
+ *   - pushWpPartialLead (fire-and-forget GHL upsert)
+ *   - WpHandoffPayload type shape
+ *
+ * Token exchange itself (wp-token-exchange edge function) is tested at the
+ * Supabase function level and in BookEntry integration tests.
  */
-import { describe, it, expect } from "vitest";
-import { verifyWpHandoff, type WpHandoffPayload } from "@/lib/wpHandoff";
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { pushWpPartialLead, type WpHandoffPayload } from "@/lib/wpHandoff";
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
+// ── pushWpPartialLead ─────────────────────────────────────────────────────────
 
-const SECRET = "test-secret-key";
-const FIRST_NAME = "John";
-const PHONE = "8001234567";
+const mockUpsertContact = vi.fn().mockResolvedValue(undefined);
 
-function b64url(value: string): string {
-  const bytes = new TextEncoder().encode(value);
-  const binary = Array.from(bytes, (b) => String.fromCharCode(b)).join("");
-  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
-}
+vi.mock("@/lib/ghlCalendars", () => ({
+  upsertContact: (...args: unknown[]) => mockUpsertContact(...args),
+}));
 
-async function signPayload(fn: string, ph: string, ts: number, secret = REAL_SECRET): Promise<string> {
-  const payload = `${b64url(fn)}|${b64url(ph)}|${ts}`;
-  const enc = new TextEncoder();
-  const key = await crypto.subtle.importKey(
-    "raw",
-    enc.encode(secret),
-    { name: "HMAC", hash: "SHA-256" },
-    false,
-    ["sign"],
-  );
-  const sigBuffer = await crypto.subtle.sign("HMAC", key, enc.encode(payload));
-  const sigBytes = new Uint8Array(sigBuffer);
-  return Array.from(sigBytes, (b) => b.toString(16).padStart(2, "0")).join("");
-}
+beforeEach(() => {
+  mockUpsertContact.mockClear();
+});
 
-function nowTs(): number {
-  return Math.floor(Date.now() / 1000);
-}
+describe("pushWpPartialLead", () => {
+  it("calls upsertContact with formatted phone and partial tags", async () => {
+    const payload: WpHandoffPayload = {
+      firstName: "John",
+      phone:     "8001234567",
+      email:     "john@example.com",
+    };
 
-async function buildValidParams(
-  override: Record<string, string> = {},
-  secret = REAL_SECRET,
-): Promise<URLSearchParams> {
-  const ts = nowTs();
-  // The URL params contain b64url-encoded values.
-  // verifyHmac computes: b64url(params.fn) | b64url(params.ph) | ts
-  // So we must sign the double-encoded form to match.
-  const encodedFn = b64url(FIRST_NAME);
-  const encodedPh = b64url(PHONE);
-  const sig = await signPayload(encodedFn, encodedPh, ts, secret);
-  const params = new URLSearchParams({
-    fn: encodedFn,
-    ph: encodedPh,
-    ts: String(ts),
-    sig,
-    ...override,
-  });
-  return params;
-}
+    pushWpPartialLead(payload);
 
-// Use the actual configured secret so tests work regardless of .env
-// vi.stubEnv does not reliably override import.meta.env for VITE_ vars in jsdom
-const REAL_SECRET = (import.meta.env.VITE_WP_HANDOFF_SECRET as string | undefined) ?? SECRET;
+    // Fire-and-forget — wait for the dynamic import microtask
+    await vi.waitFor(() => expect(mockUpsertContact).toHaveBeenCalledTimes(1));
 
-// ─── verifyWpHandoff ──────────────────────────────────────────────────────────
-
-describe("verifyWpHandoff — missing/malformed params", () => {
-  it("fails with empty params", async () => {
-    const r = await verifyWpHandoff(new URLSearchParams());
-    expect(r.ok).toBe(false);
-    if (!r.ok) expect(r.reason).toBe("missing_or_malformed_params");
+    const call = mockUpsertContact.mock.calls[0][0];
+    expect(call.firstName).toBe("John");
+    expect(call.phone).toBe("+18001234567");
+    expect(call.email).toBe("john@example.com");
+    expect(call.source).toBe("wordpress-form");
+    expect(call.tags).toContain("source:wp-form");
+    expect(call.tags).toContain("status:partial");
   });
 
-  it("fails when fn is missing", async () => {
-    const params = await buildValidParams();
-    params.delete("fn");
-    const r = await verifyWpHandoff(params);
-    expect(r.ok).toBe(false);
+  it("strips non-digit characters from phone before E.164 format", async () => {
+    const payload: WpHandoffPayload = {
+      firstName: "Jane",
+      phone:     "(800) 123-4567",
+    };
+
+    pushWpPartialLead(payload);
+    await vi.waitFor(() => expect(mockUpsertContact).toHaveBeenCalledTimes(1));
+
+    expect(mockUpsertContact.mock.calls[0][0].phone).toBe("+18001234567");
   });
 
-  it("fails when ph is missing", async () => {
-    const params = await buildValidParams();
-    params.delete("ph");
-    const r = await verifyWpHandoff(params);
-    expect(r.ok).toBe(false);
+  it("omits email when not provided", async () => {
+    const payload: WpHandoffPayload = {
+      firstName: "Bob",
+      phone:     "8009876543",
+    };
+
+    pushWpPartialLead(payload);
+    await vi.waitFor(() => expect(mockUpsertContact).toHaveBeenCalledTimes(1));
+
+    expect(mockUpsertContact.mock.calls[0][0].email).toBeUndefined();
   });
 
-  it("fails when ts has wrong format (not 10 digits)", async () => {
-    const params = await buildValidParams({ ts: "1234" });
-    // ts override also needs a new sig — this tests structural validation
-    const r = await verifyWpHandoff(params);
-    expect(r.ok).toBe(false);
-    if (!r.ok) expect(r.reason).toBe("missing_or_malformed_params");
+  it("includes service in customFields when provided", async () => {
+    const payload: WpHandoffPayload = {
+      firstName: "Sam",
+      phone:     "8005550001",
+      service:   "trt",
+    };
+
+    pushWpPartialLead(payload);
+    await vi.waitFor(() => expect(mockUpsertContact).toHaveBeenCalledTimes(1));
+
+    expect(mockUpsertContact.mock.calls[0][0].customFields?.mwc_funnel_service).toBe("trt");
   });
 
-  it("fails when sig has wrong format (not 64 hex chars)", async () => {
-    const params = await buildValidParams({ sig: "abc123" });
-    const r = await verifyWpHandoff(params);
-    expect(r.ok).toBe(false);
-    if (!r.ok) expect(r.reason).toBe("missing_or_malformed_params");
+  it("omits customFields when service is not provided", async () => {
+    const payload: WpHandoffPayload = {
+      firstName: "Alex",
+      phone:     "8005550002",
+    };
+
+    pushWpPartialLead(payload);
+    await vi.waitFor(() => expect(mockUpsertContact).toHaveBeenCalledTimes(1));
+
+    expect(mockUpsertContact.mock.calls[0][0].customFields).toBeUndefined();
+  });
+
+  it("does not throw if upsertContact rejects", async () => {
+    mockUpsertContact.mockRejectedValueOnce(new Error("GHL down"));
+
+    const payload: WpHandoffPayload = { firstName: "Test", phone: "8005550000" };
+    expect(() => pushWpPartialLead(payload)).not.toThrow();
+
+    // No unhandled rejection — the catch swallows it
+    await new Promise((r) => setTimeout(r, 20));
   });
 });
 
-describe("verifyWpHandoff — timestamp validation", () => {
-  it("fails with expired token (ts > 600s ago)", async () => {
-    const ts = nowTs() - 700; // 700s ago = expired
-    const sig = await signPayload(FIRST_NAME, PHONE, ts);
-    const params = new URLSearchParams({
-      fn: b64url(FIRST_NAME),
-      ph: b64url(PHONE),
-      ts: String(ts),
-      sig,
-    });
-    const r = await verifyWpHandoff(params);
-    expect(r.ok).toBe(false);
-    if (!r.ok) expect(r.reason).toBe("token_expired_or_future");
+// ── WpHandoffPayload type shape ───────────────────────────────────────────────
+
+describe("WpHandoffPayload", () => {
+  it("accepts a minimal payload with only firstName and phone", () => {
+    const p: WpHandoffPayload = { firstName: "Eric", phone: "4255551234" };
+    expect(p.firstName).toBe("Eric");
+    expect(p.phone).toBe("4255551234");
+    expect(p.email).toBeUndefined();
+    expect(p.location).toBeUndefined();
+    expect(p.service).toBeUndefined();
   });
 
-  it("fails with future token (ts > 60s in the future)", async () => {
-    const ts = nowTs() + 120; // 120s in the future
-    const sig = await signPayload(FIRST_NAME, PHONE, ts);
-    const params = new URLSearchParams({
-      fn: b64url(FIRST_NAME),
-      ph: b64url(PHONE),
-      ts: String(ts),
-      sig,
-    });
-    const r = await verifyWpHandoff(params);
-    expect(r.ok).toBe(false);
-    if (!r.ok) expect(r.reason).toBe("token_expired_or_future");
-  });
-});
-
-describe("verifyWpHandoff — signature validation", () => {
-  it("verifies a valid signed token", async () => {
-    const params = await buildValidParams();
-    const r = await verifyWpHandoff(params);
-    expect(r.ok).toBe(true);
-  });
-
-  it("returns non-empty firstName and phone in payload", async () => {
-    const params = await buildValidParams();
-    const r = await verifyWpHandoff(params);
-    if (r.ok) {
-      // payload.firstName = the fn URL param (b64url-encoded first name)
-      expect(r.payload.firstName.length).toBeGreaterThan(0);
-      expect(r.payload.phone.length).toBeGreaterThan(0);
-    }
-  });
-
-  it("fails with tampered signature", async () => {
-    const params = await buildValidParams();
-    const badSig = "a".repeat(64);
-    params.set("sig", badSig);
-    const r = await verifyWpHandoff(params);
-    expect(r.ok).toBe(false);
-    if (!r.ok) expect(r.reason).toBe("invalid_signature");
-  });
-
-  it("fails when fn is tampered", async () => {
-    const params = await buildValidParams();
-    params.set("fn", b64url("Hacker")); // valid b64url but wrong fn
-    const r = await verifyWpHandoff(params);
-    expect(r.ok).toBe(false);
-  });
-});
-
-describe("verifyWpHandoff — optional fields", () => {
-  it("includes location in payload when provided", async () => {
-    const params = await buildValidParams();
-    params.set("loc", "richmond");
-    const r = await verifyWpHandoff(params);
-    if (r.ok) expect((r.payload as WpHandoffPayload).location).toBe("richmond");
-  });
-
-  it("includes service in payload when provided", async () => {
-    const params = await buildValidParams();
-    params.set("svc", "trt");
-    const r = await verifyWpHandoff(params);
-    if (r.ok) expect((r.payload as WpHandoffPayload).service).toBe("trt");
-  });
-
-  it("leaves optional fields undefined when not provided", async () => {
-    const params = await buildValidParams();
-    const r = await verifyWpHandoff(params);
-    if (r.ok) {
-      expect(r.payload.location).toBeUndefined();
-      expect(r.payload.service).toBeUndefined();
-      expect(r.payload.email).toBeUndefined();
-    }
-  });
-});
-
-describe("verifyWpHandoff — no secret configured", () => {
-  it("handles missing secret gracefully (DEV bypass or error)", async () => {
-    // Build params with empty-string secret (no valid HMAC key)
-    const ts = nowTs();
-    const sig = "a".repeat(64); // invalid sig for any secret
-    const params = new URLSearchParams({
-      fn: b64url(FIRST_NAME),
-      ph: b64url(PHONE),
-      ts: String(ts),
-      sig,
-    });
-    const r = await verifyWpHandoff(params);
-    // With real secret configured, the bad sig should fail as invalid_signature
-    if (!r.ok) {
-      expect(["invalid_signature", "secret_not_configured", "crypto_error"]).toContain(r.reason);
-    }
+  it("accepts a full payload with all optional fields", () => {
+    const p: WpHandoffPayload = {
+      firstName: "Eric",
+      phone:     "4255551234",
+      email:     "eric@example.com",
+      location:  "richmond",
+      service:   "trt",
+    };
+    expect(p.location).toBe("richmond");
+    expect(p.service).toBe("trt");
   });
 });
