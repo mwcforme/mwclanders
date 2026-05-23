@@ -8,17 +8,20 @@
     <meta name="bingbot" content="noindex" />
     <title>Men's Wellness Centers — TRT, ED &amp; Weight Loss in Virginia</title>
     <meta name="theme-color" content="#0B1029" />
-    <!-- Max 2 preconnects (Lighthouse warns >4). Fonts + Supabase only. -->
+
+    <!-- Preconnect: fonts only (max 2 to avoid Lighthouse warning) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- DNS prefetch for everything else — no TCP connection held open -->
+    <!-- DNS prefetch for deferred third-party origins -->
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+    <link rel="dns-prefetch" href="https://www.clarity.ms" />
     <link rel="dns-prefetch" href="https://stmyztkmioobdbxliktn.supabase.co" />
     <link rel="dns-prefetch" href="https://stmyztkmioobdbxliktn.functions.supabase.co" />
     <link rel="dns-prefetch" href="https://services.leadconnectorhq.com" />
-    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-    <link rel="dns-prefetch" href="https://www.clarity.ms" />
     <link rel="dns-prefetch" href="https://maps.google.com" />
-    <!-- Fonts: preload critical weights, swap for zero FOIT -->
+
+    <!-- Fonts: async non-blocking load, swap for zero FOIT -->
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" />
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
     <noscript><link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" /></noscript>
@@ -26,11 +29,10 @@
 
     <!--
       PHI guard: strip query string + hash from any /book/* URL BEFORE
-      GTM/GA4 load, so document.location.href (read by GA4 Enhanced
-      Measurement events like scroll/click) never carries PII/PHI.
-      For /book/entry only, preserve the original search string in memory so
-      React can verify/debug the handoff after the visible URL is sanitized.
-      Must run synchronously before the GTM snippet below.
+      analytics load, so page_location never carries PII/PHI.
+      For /book/entry only, preserve search string in memory so React
+      can verify the WP handoff token after the URL is sanitized.
+      Runs synchronously — must stay in <head>.
     -->
     <script>
       (function () {
@@ -45,11 +47,64 @@
       })();
     </script>
 
-    <!-- Microsoft Clarity — deferred, env-gated (prod only) -->
+    <!--
+      Analytics: GA4 + Google Ads loaded directly (no GTM).
+      - dataLayer stub initialised synchronously → no lost events.
+      - gtag() config runs synchronously → no lost conversions.
+      - Actual GA4/Ads scripts load after window.load → zero TBT impact.
+      - Sensitive booking/quiz paths: ads_data_redaction + url_passthrough.
+
+      GA4:          G-286547777  (Men's Wellness Centers property)
+      Google Ads:   AW-954193072 (conversion tracking)
+    -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+
+      // Config runs synchronously — pushes to dataLayer queue,
+      // processed when the GA4 script loads after window.load.
+      gtag('js', new Date());
+      gtag('config', 'G-286547777', {
+        send_page_view: false,  // fired manually via sanitizeAnalyticsForBookingRoute
+        anonymize_ip: true,
+      });
+      gtag('config', 'AW-954193072');
+
+      // Healthcare compliance: redact ad data on sensitive paths
+      (function() {
+        var sensitivePaths = ['/book/', '/quiz', '/ed', '/wl'];
+        var path = window.location.pathname;
+        var isSensitive = sensitivePaths.some(function(p) {
+          return path === p || path.startsWith(p);
+        });
+        if (isSensitive) {
+          gtag('set', 'ads_data_redaction', true);
+          gtag('set', 'url_passthrough', true);
+        }
+      })();
+
+      // Load GA4 + Ads scripts after page is fully painted
+      function loadAnalytics() {
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-286547777';
+        document.head.appendChild(s);
+      }
+
+      if (document.readyState === 'complete') {
+        loadAnalytics();
+      } else {
+        window.addEventListener('load', function() {
+          setTimeout(loadAnalytics, 1);
+        });
+      }
+    </script>
+
+    <!-- Microsoft Clarity — deferred, prod-only, env-gated -->
     <script>
       (function () {
-        const PROD_HOSTS = ["book.menswellnesscenters.com", "menswellnesscenters.com", "www.menswellnesscenters.com"];
-        const STORAGE_KEY = "mwc_env_override";
+        var PROD_HOSTS = ["book.menswellnesscenters.com", "menswellnesscenters.com", "www.menswellnesscenters.com"];
+        var STORAGE_KEY = "mwc_env_override";
         function readOverride() {
           try {
             var q = new URL(location.href).searchParams.get("env");
@@ -65,11 +120,9 @@
         var clarityId = "%VITE_CLARITY_PROJECT_ID%";
         var hasRealId = clarityId && clarityId.indexOf("VITE_CLARITY_PROJECT_ID") === -1;
         if (env === "prod" && hasRealId) {
-          // Stub so early clarity() calls don't throw
           window.clarity = window.clarity || function(){(window.clarity.q=window.clarity.q||[]).push(arguments)};
           window.clarity("set", "maskAllInputs", true);
           window.clarity("set", "maskAllText", false);
-          // Load after page paint
           window.addEventListener('load', function() {
             setTimeout(function() {
               var t = document.createElement('script');
@@ -81,63 +134,8 @@
         }
       })();
     </script>
-    <!-- End Microsoft Clarity -->
-
-    <!--
-      GTM + GA4: deferred until after page load to avoid TBT penalty.
-      Queues dataLayer pushes synchronously so no events are lost.
-      Actual scripts load on 'load' event (or first interaction on slow connections).
-      This pattern is safe: GTM still fires all triggers, GA4 still captures page_view.
-    -->
-    <script>
-      // Stub dataLayer immediately so any early pushes are queued
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-
-      // Stub fbq so Meta Pixel GTM tags don't throw ReferenceError
-      // before fbevents.js loads. GTM overwrites this with the real implementation.
-      window.fbq = window.fbq || function(){
-        (window.fbq.q = window.fbq.q || []).push(arguments);
-      };
-      window.fbq.version = '2.0';
-      window._fbq = window._fbq || window.fbq;
-
-      // Sensitive path config — set before GTM loads
-      gtag('js', new Date());
-      gtag('config', 'G-286547777', { send_page_view: false, anonymize_ip: true });
-      (function() {
-        var sensitivePaths = ['/book/', '/quiz', '/ed', '/wl'];
-        var path = window.location.pathname;
-        var isSensitive = sensitivePaths.some(function(p) { return path === p || path.startsWith(p); });
-        if (isSensitive) {
-          gtag('set', 'ads_data_redaction', true);
-          gtag('set', 'url_passthrough', true);
-        }
-      })();
-
-      // Defer GTM + GA4 scripts until after page load
-      function loadGTM() {
-        // GTM (loads GA4 G-286547777 + Ads AW-954193072 + G-795WVN2QND)
-        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-5X9DB23T');
-      }
-
-      // Load after window.load so it never blocks FCP/LCP
-      if (document.readyState === 'complete') {
-        loadGTM();
-      } else {
-        window.addEventListener('load', function() {
-          // Small setTimeout ensures paint is committed before GTM work starts
-          setTimeout(loadGTM, 1);
-        });
-      }
-    </script>
 
   <meta name="description" content="Men's Wellness Centers. Virginia's physician-led men's health centers since 2015. Testosterone replacement therapy, ED treatment, and weight loss at our Richmond, Newport News, and Virginia Beach locations.">
-
 
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:type" content="website">
@@ -155,10 +153,6 @@
 </head>
 
   <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5X9DB23T"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
