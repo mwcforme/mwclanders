@@ -110,7 +110,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
         }}
       />
 
-      <div className="relative z-10 w-full max-w-[1280px] mx-auto px-5 sm:px-6 pt-24 pb-12 lg:pt-32 lg:pb-24 grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-8 lg:gap-16 items-stretch">
+      <div className="relative z-10 w-full max-w-[1280px] mx-auto px-5 sm:px-6 pt-24 pb-12 lg:pt-32 lg:pb-24 grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-8 lg:gap-12 items-stretch">
         {/* LEFT */}
         <div className="flex flex-col">
           {/*
