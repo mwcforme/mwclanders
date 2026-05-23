@@ -48,9 +48,9 @@ const FunnelFooter = () => (
       <img
         src="/images/badges/legitscript.webp"
         alt="LegitScript Certified"
-        width={120}
+        width={140}
         height={40}
-        style={{ height: 40, width: "auto", opacity: 0.8 }}
+        style={{ height: 40, width: "auto", opacity: 0.9 }}
         loading="lazy"
       />
     </a>
@@ -80,7 +80,7 @@ const BookLayout = ({ page, title, description, variant = "default", children }:
   return (
     <div className="min-h-screen flex flex-col" style={{ fontFamily: "Inter, sans-serif", background: "var(--brand-navy-deep)", overflowX: "hidden" }}>
       <SEO title={title} description={description || DEFAULT_DESC[page]} />
-      <TRTHeader minimal={variant === "confirmation"} />
+      <TRTHeader minimal={isConfirmation} hideCta={!isConfirmation} />
       <main className="flex-1 pt-16 animate-in fade-in duration-200">{children}</main>
       {isConfirmation ? (
         <Suspense fallback={null}>

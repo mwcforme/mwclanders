@@ -46,39 +46,38 @@ const NoAvailFallback = ({ onChangeCenter }: { onChangeCenter: () => void }) => 
     borderRadius: 10, padding: 16,
     fontFamily: "Inter, sans-serif",
   }}>
-    <p style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 13, letterSpacing: "0.5px", color: "var(--brand-cream)", textTransform: "uppercase", marginBottom: 8 }}>
+    <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 15, color: "var(--brand-cream)", marginBottom: 8 }}>
       No times for this day
     </p>
-    <p style={{ fontSize: 13, color: "#767676", marginBottom: 12 }}>
+    <p style={{ fontSize: 16, color: "rgba(245,243,240,0.85)", marginBottom: 16, fontWeight: 500, lineHeight: 1.6 }}>
       Try a different date or another Men's Wellness Centers location.
     </p>
-    <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+    <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
       <button
         type="button"
         onClick={onChangeCenter}
         style={{
           // hardcoded-color-allow-next-line
-          flex: 1, height: 44, background: "#161B3A", border: "1px solid #3A4360",
-          color: "var(--brand-cream)", borderRadius: 8, fontSize: 12, fontWeight: 700,
-          letterSpacing: "0.5px", textTransform: "uppercase",
-          fontFamily: "Oswald, sans-serif", cursor: "pointer", minWidth: 120,
+          flex: 1, minHeight: 56, background: "#161B3A", border: "1px solid #3A4360",
+          color: "var(--brand-cream)", borderRadius: 8, fontSize: 15, fontWeight: 700,
+          fontFamily: "Inter, sans-serif", cursor: "pointer", minWidth: 120,
+          padding: "12px 16px",
         }}
       >
-        Try Another Center
+        Try another center
       </button>
       <a
         href={PHONE.tel}
         style={{
           // hardcoded-color-allow-next-line
-          flex: 1, height: 44, background: "#161B3A", border: "1px solid #3A4360",
-          color: "var(--brand-cream)", borderRadius: 8, fontSize: 12, fontWeight: 700,
-          letterSpacing: "0.5px", textTransform: "uppercase",
-          fontFamily: "Oswald, sans-serif", cursor: "pointer", minWidth: 120,
+          flex: 1, minHeight: 56, background: "#161B3A", border: "1px solid #3A4360",
+          color: "var(--brand-cream)", borderRadius: 8, fontSize: 15, fontWeight: 700,
+          fontFamily: "Inter, sans-serif", cursor: "pointer", minWidth: 120,
           display: "flex", alignItems: "center", justifyContent: "center",
-          textDecoration: "none",
+          textDecoration: "none", padding: "12px 16px",
         }}
       >
-        Request a Callback
+        Request a callback
       </a>
     </div>
   </div>
@@ -159,28 +158,33 @@ const BookSchedule = () => {
         <div className="mx-auto w-full" style={{ maxWidth: 720 }}>
           <button
             type="button"
-            onClick={() => navigate("/book/location")}
+            onClick={() => navigate(-1)}
             className="inline-flex items-center gap-1"
             style={{
               background: "transparent", border: 0, color: "var(--c-text-on-dark)",
-              fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 600,
-              opacity: 0.85, cursor: "pointer", minHeight: 44, minWidth: 44,
+              fontFamily: "Inter, sans-serif", fontSize: 16, fontWeight: 600,
+              opacity: 0.85, cursor: "pointer", minHeight: 56, minWidth: 56,
               padding: "10px 12px", marginLeft: -12,
             }}
-            aria-label="Back to location picker"
+            aria-label="Back"
           >
-            <ArrowLeft size={16} /> Back
+            <ArrowLeft size={18} /> Back
           </button>
-          {/* Single progress bar: step 1 complete (full orange), step 2 in progress */}
-          <div className="flex gap-1 mt-2" role="progressbar" aria-label="Step 2 of 2" aria-valuemin={0} aria-valuemax={2} aria-valuenow={2}>
-            <div className="flex-1" style={{ height: 4, borderRadius: 2, background: "var(--brand-cta)" }} />
-            <div className="flex-1" style={{ height: 4, borderRadius: 2, background: "rgba(232,103,10,0.40)" }} />
-          </div>
-          <div className="hidden md:block text-center mt-2" style={{
-            fontSize: 12, color: "var(--c-text-on-dark)", letterSpacing: "0.08em",
-            fontWeight: 700, fontFamily: "Inter, sans-serif", textTransform: "uppercase",
-          }}>
-            Step 2 of 2 · Pick your time
+          {/* Progress indicator — single continuous track, 75% fill = almost done */}
+          <div style={{ marginTop: 12, display: "flex", alignItems: "center", gap: 10 }}>
+            <div style={{ flex: 1, height: 6, borderRadius: 999, background: "rgba(255,255,255,0.12)", overflow: "hidden" }}>
+              <div style={{ width: "75%", height: "100%", background: "var(--brand-cta)", borderRadius: 999, transition: "width 400ms ease" }} />
+            </div>
+            <span style={{
+              fontSize: 14,
+              fontWeight: 700,
+              color: "var(--brand-cta)",
+              fontFamily: "Inter, sans-serif",
+              whiteSpace: "nowrap",
+              letterSpacing: "0.04em",
+            }}>
+              Pick your time
+            </span>
           </div>
         </div>
 
@@ -197,19 +201,21 @@ const BookSchedule = () => {
               border: "1px solid #E5E7EB",
               borderRadius: 10,
               padding: "10px 14px",
+              minHeight: 48,
               display: "flex",
               alignItems: "center",
               gap: 10,
               fontFamily: "Inter, sans-serif",
               // hardcoded-color-allow-next-line
               boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
+              borderLeft: "3px solid var(--brand-cta)",
             }}>
               <MapPin size={15} strokeWidth={2} style={{ color: "var(--brand-cta)", flexShrink: 0 }} />
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: 14, fontWeight: 700, color: "#0B1029", lineHeight: 1.3 }}>
+                <div style={{ fontSize: 15, fontWeight: 700, color: "#0B1029", lineHeight: 1.3 }}>
                   {locationData.name.replace("Men's Wellness Centers, ", "")}
                 </div>
-                <div style={{ fontSize: 12, color: "#6B7280", marginTop: 2, lineHeight: 1.3 }}>
+                <div style={{ fontSize: 14, color: "#374151", marginTop: 2, lineHeight: 1.4, fontWeight: 500 }}>
                   {locationData.address} &middot; {locationData.cityStateZip}
                 </div>
               </div>
@@ -218,9 +224,9 @@ const BookSchedule = () => {
                 onClick={() => navigate("/book/location")}
                 style={{
                   background: "none", border: "none", color: "var(--brand-cta)",
-                  fontSize: 12, fontWeight: 600, cursor: "pointer",
+                  fontSize: 14, fontWeight: 700, cursor: "pointer",
                   fontFamily: "Inter, sans-serif", flexShrink: 0,
-                  minHeight: 44, padding: "8px 0",
+                  minHeight: 56, minWidth: 80, padding: "8px 4px",
                   textDecoration: "underline", textDecorationColor: "var(--brand-cta)",
                   textUnderlineOffset: "2px",
                 }}
@@ -235,27 +241,31 @@ const BookSchedule = () => {
         <section className="mx-auto" style={{ maxWidth: 720 }}>
           <h1 style={{
             fontFamily: "Oswald, sans-serif", fontWeight: 600,
-            fontSize: "clamp(20px, 3vw, 28px)", lineHeight: 1.1,
+            fontSize: "clamp(22px, 4vw, 32px)", lineHeight: 1.1,
             letterSpacing: "0.02em", marginBottom: 4, color: "var(--c-text-on-dark)",
             textTransform: "uppercase",
           }}>
             {heading}
           </h1>
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: "rgba(255,255,255,0.65)", margin: 0 }}>
+          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 16, color: "rgba(255,255,255,0.85)", margin: 0, fontWeight: 500, lineHeight: 1.6 }}>
             Licensed Virginia provider · Same-day labs
+          </p>
+          {/* Simple action instruction — removes guesswork for all users */}
+          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 16, color: "rgba(255,255,255,0.90)", marginTop: 10, fontWeight: 500, lineHeight: 1.6 }}>
+            Pick a day below, then select your time.
           </p>
         </section>
 
         {/* ── Next available banner ───────────────────────────────────────── */}
         {nextAvailableLabel && (
-          <div className="mx-auto w-full text-center" style={{ maxWidth: 720 }}>
+          <div className="mx-auto w-full" style={{ maxWidth: 720 }}>
             <div
               className="inline-flex items-center gap-2.5 rounded-full px-4 py-2"
               style={{ background: "rgba(232,103,10,0.18)", border: "1px solid rgba(232,103,10,0.40)" }}
             >
-              <Clock size={14} style={{ color: "var(--brand-cta)", flexShrink: 0 }} />
-              <span style={{ fontFamily: "Inter, sans-serif", fontSize: 13, fontWeight: 600, color: "var(--c-text-on-dark)" }}>
-                Next: {nextAvailableLabel}
+              <Clock size={18} style={{ color: "var(--brand-cta)", flexShrink: 0 }} />
+              <span style={{ fontFamily: "Inter, sans-serif", fontSize: 16, fontWeight: 700, color: "var(--c-text-on-dark)" }}>
+                Next available: {nextAvailableLabel} →
               </span>
             </div>
           </div>
@@ -317,7 +327,7 @@ const BookSchedule = () => {
 
 
         {/* ── Help line ──────────────────────────────────────────────────── */}
-        <div className="hidden md:block mx-auto text-center" style={{ maxWidth: 720, color: "var(--c-text-on-dark)", opacity: 0.85, fontSize: 13, fontFamily: "Inter, sans-serif" }}>
+        <div className="mx-auto text-center" style={{ maxWidth: 720, color: "var(--c-text-on-dark)", fontSize: 16, fontFamily: "Inter, sans-serif", fontWeight: 500 }}>
           Need help?{" "}
           <a href={PHONE.tel} style={{ color: "var(--c-text-on-dark)", textDecoration: "underline", fontWeight: 600 }}>
             Call {PHONE.display}

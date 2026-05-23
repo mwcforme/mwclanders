@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { trackCro } from "@/hooks/useAnalytics";
 import { COPY } from "@/data/copy";
 
-export const TRTHeader = ({ minimal = false }: { minimal?: boolean } = {}) => {
+export const TRTHeader = ({ minimal = false, hideCta = false }: { minimal?: boolean; hideCta?: boolean } = {}) => {
   const [scrolled, setScrolled] = useState(false);
   const [_menuOpen, _setMenuOpen] = useState(false);
 
@@ -43,7 +43,7 @@ export const TRTHeader = ({ minimal = false }: { minimal?: boolean } = {}) => {
           />
         </Link>
 
-        {/* Desktop right */}
+        {/* Desktop right — phone always shown; CTA hidden when hideCta=true (funnel pages) */}
         {!minimal && (
         <div className="hidden md:flex items-center gap-4">
           <a
@@ -55,22 +55,24 @@ export const TRTHeader = ({ minimal = false }: { minimal?: boolean } = {}) => {
           >
             866-344-4955
           </a>
-          <button
-            type="button"
-            data-cro="header_book_click"
-            onClick={() => { trackCro("header_book_click"); scrollTo("hero-form"); }}
-            className="rounded-full px-5 py-2.5 text-xs font-bold cursor-pointer transition-colors duration-200"
-            style={{
-              background: "var(--brand-cta-accessible)",
-              color: "var(--c-text-on-dark)",
-              letterSpacing: "0.08em",
-              fontFamily: "Inter, sans-serif",
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = "var(--brand-cta-hover)"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = "var(--brand-cta-accessible)"; }}
-          >
-            {COPY.cta.bookConsult}
-          </button>
+          {!hideCta && (
+            <button
+              type="button"
+              data-cro="header_book_click"
+              onClick={() => { trackCro("header_book_click"); scrollTo("hero-form"); }}
+              className="rounded-full px-5 py-2.5 text-xs font-bold cursor-pointer transition-colors duration-200"
+              style={{
+                background: "var(--brand-cta-accessible)",
+                color: "var(--c-text-on-dark)",
+                letterSpacing: "0.08em",
+                fontFamily: "Inter, sans-serif",
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = "var(--brand-cta-hover)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = "var(--brand-cta-accessible)"; }}
+            >
+              {COPY.cta.bookConsult}
+            </button>
+          )}
         </div>
         )}
 

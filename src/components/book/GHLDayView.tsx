@@ -289,27 +289,39 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
 
         {/* Confirm bar */}
         <div className="px-5 md:px-7 py-4" style={{ borderTop: `1px solid ${LINE}`, background: SURFACE }}>
+          {/* Selected slot recap — shown when a slot is chosen */}
+          {selectedSlot && (
+            <p style={{
+              fontSize: 15, color: "#374151", fontFamily: "Inter, sans-serif",
+              marginBottom: 10, textAlign: "center", fontWeight: 500, lineHeight: 1.4,
+            }}>
+              {new Date(selectedSlot).toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric", timeZone: TIMEZONE })}
+              {" · "}
+              {new Date(selectedSlot).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true, timeZone: TIMEZONE })}
+            </p>
+          )}
           <button
             ref={confirmBtnRef}
             type="button"
             onClick={() => canConfirm && handleFinalConfirm()}
             disabled={!canConfirm}
             style={{
-              width: "100%", minHeight: 56,
+              width: "100%", minHeight: 60,
               // hardcoded-color-allow-next-line
               background: canConfirm ? ORANGE : "#E5E7EB",
               // hardcoded-color-allow-next-line
               color: canConfirm ? "var(--c-text-on-dark)" : "#3D4350",
               border: 0, borderRadius: 12, fontSize: 16, fontWeight: 700,
-              letterSpacing: "0.06em", textTransform: "uppercase",
+              letterSpacing: canConfirm ? "0.06em" : "0.02em",
+              textTransform: canConfirm ? "uppercase" : "none",
               cursor: canConfirm ? "pointer" : "not-allowed",
               fontFamily: "Oswald, Inter, sans-serif",
               // hardcoded-color-allow-next-line
               boxShadow: canConfirm ? "0 10px 24px -10px rgba(232,103,10,0.55)" : "none",
-              transition: "transform 120ms ease, box-shadow 120ms ease",
+              transition: "all 150ms ease",
             }}
           >
-            {canConfirm ? "Continue" : "Tap a time above to continue"}
+            {canConfirm ? "Confirm My Appointment" : "Select a time to continue"}
           </button>
         </div>
       </div>

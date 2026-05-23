@@ -1,6 +1,7 @@
 /**
  * DayStrip — horizontal week-navigation + day-pill date picker.
  * Extracted from GHLDayView as part of P2-1 component split.
+ * Senior-mobile optimised: 80px wide pills, 56px nav targets, 16px body text.
  */
 import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
@@ -12,7 +13,7 @@ const INK       = "var(--brand-navy-deep)";
 // hardcoded-color-allow-next-line
 const INK_SOFT  = "#2C3346";
 // hardcoded-color-allow-next-line
-const MUTED     = "#4B5563";
+const MUTED     = "#374151";
 // hardcoded-color-allow-next-line
 const BORDER    = "#8B92A0";
 const SURFACE   = "var(--bg-white)";
@@ -99,6 +100,13 @@ const DayStrip = ({
     return () => window.removeEventListener("resize", update);
   }, [slotsByDay, weekStart, loading]);
 
+  // Check if any Sunday falls in the visible 7-day window (before Sunday filtering).
+  // Every 7-day range contains exactly one Sunday, but we check explicitly per spec.
+  const hasSundayInRange = Array.from({ length: 7 }).some((_, i) => {
+    const d = new Date(weekStart.getTime() + i * 24 * 60 * 60 * 1000);
+    return isSundayInTimeZone(d, TIMEZONE);
+  });
+
   return (
     <>
       {/* ── Week navigation ──────────────────────────────────────────────── */}
@@ -110,29 +118,37 @@ const DayStrip = ({
           aria-label="Previous week"
           style={{
             background: SURFACE, color: INK, border: `1px solid ${BORDER}`,
-            borderRadius: 999, padding: "10px 14px",
-            fontSize: 13, fontWeight: 600, minHeight: 44,
+            borderRadius: 999, padding: "10px 16px",
+            fontSize: 14, fontWeight: 600, minHeight: 56,
             display: "inline-flex", alignItems: "center", gap: 6,
             cursor: prevDisabled ? "not-allowed" : "pointer",
             opacity: prevDisabled ? 0.6 : 1,
           }}
         >
-          <ChevronLeft size={16} /> Prev
+          <ChevronLeft size={18} /> Prev
         </button>
-        <div style={{ flex: 1 }} />
+
+        {/* Week range label — centered between nav buttons */}
+        {days.length > 0 && (
+          <div style={{ fontSize: 14, color: MUTED, fontWeight: 600, fontFamily: "Inter, sans-serif", textAlign: "center", flex: 1 }}>
+            {fmtMonthDay(days[0])} – {fmtMonthDay(days[days.length - 1])}
+          </div>
+        )}
+        {days.length === 0 && <div style={{ flex: 1 }} />}
+
         <button
           type="button"
           onClick={onNextWeek}
           aria-label="Next week"
           style={{
             background: SURFACE, color: INK, border: `1px solid ${BORDER}`,
-            borderRadius: 999, padding: "10px 14px",
-            fontSize: 13, fontWeight: 600, minHeight: 44,
+            borderRadius: 999, padding: "10px 16px",
+            fontSize: 14, fontWeight: 600, minHeight: 56,
             display: "inline-flex", alignItems: "center", gap: 6,
             cursor: "pointer",
           }}
         >
-          Next <ChevronRight size={16} />
+          Next <ChevronRight size={18} />
         </button>
       </div>
 
@@ -144,7 +160,7 @@ const DayStrip = ({
           </div>
         )}
         {days.length === 0 ? (
-          <div style={{ color: MUTED, fontSize: 14, fontStyle: "italic", padding: "12px 4px" }}>
+          <div style={{ color: MUTED, fontSize: 16, fontWeight: 500, lineHeight: 1.6, padding: "12px 4px" }}>
             No remaining days this week. Tap Next.
           </div>
         ) : (
@@ -168,21 +184,21 @@ const DayStrip = ({
               }}
             >
               {days.map((d) => {
-                const key        = ymd(d);
+                const key         = ymd(d);
                 const actualCount = slotsByDay[key]?.length || 0;
-                const isSunday   = isSundayInTimeZone(d, TIMEZONE);
-                const isToday    = isTodayET(d);
-                // Hide today's tile if it has no availability
-                if (isToday && !loading && actualCount === 0) return null;
-                const available  = actualCount > 0 && !isSunday;
-                const selected   = selectedDay === key;
-                const isTomorrow = isTomorrowET(d);
-                const scarce     = available && actualCount <= 3;
-                const badgeText  = !loading
-                  ? isSunday    ? "Closed"
-                  : !available  ? "Full"
-                  : scarce      ? `Only ${actualCount} left`
-                  :               `${actualCount} slots`
+                const isSunday    = isSundayInTimeZone(d, TIMEZONE);
+                const isToday     = isTodayET(d);
+                // Today always renders — shows as "Full" if no slots, like other full days
+                const available   = actualCount > 0 && !isSunday;
+                const selected    = selectedDay === key;
+                const isTomorrow  = isTomorrowET(d);
+                const scarce      = available && actualCount <= 3;
+                const isFull      = !isSunday && !available;
+                const badgeText   = !loading
+                  ? isSunday   ? "Closed"
+                  : !available ? "Full"
+                  : scarce     ? `Only ${actualCount} left`
+                  :              `${actualCount} slots`
                   : "···";
 
                 return (
@@ -192,13 +208,15 @@ const DayStrip = ({
                     disabled={isSunday || !available}
                     aria-pressed={selected}
                     aria-label={`${fmtFullDay(d)} — ${isSunday ? "Closed on Sundays" : `${actualCount} times available`}`}
+                    title={isFull ? "No availability — tap another day" : undefined}
                     onClick={isSunday ? undefined : (e) => {
                       onDaySelect(key);
                       e.currentTarget.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
                     }}
                     style={{
-                      flex: "0 0 76px",
-                      minWidth: 76,
+                      flex: "0 0 80px",
+                      minWidth: 80,
+                      minHeight: 72,
                       scrollSnapAlign: "start",
                       // hardcoded-color-allow-next-line
                       background: selected ? ORANGE : (isSunday || !available) ? "#F4F5F8" : SURFACE,
@@ -218,6 +236,7 @@ const DayStrip = ({
                         : "0 1px 2px rgba(11,16,41,0.04)",
                     }}
                   >
+                    {/* Day-of-week label */}
                     <div style={{
                       fontSize: 12, fontWeight: 800, letterSpacing: "0.08em",
                       color: selected ? "var(--c-text-on-dark)"
@@ -228,9 +247,16 @@ const DayStrip = ({
                     }}>
                       {isToday ? "TODAY" : isTomorrow ? "TMRW" : fmtDayShort(d)}
                     </div>
-                    <div style={{ fontFamily: "Oswald, Inter, sans-serif", fontWeight: 700, fontSize: 20, letterSpacing: "0.01em", lineHeight: 1.1 }}>
+                    {/* Date — strikethrough on full/closed days so it's visually obvious */}
+                    <div style={{
+                      fontFamily: "Oswald, Inter, sans-serif", fontWeight: 700, fontSize: 20,
+                      letterSpacing: "0.01em", lineHeight: 1.1,
+                      textDecoration: (isSunday || isFull) ? "line-through" : "none",
+                      textDecorationColor: MUTED,
+                    }}>
                       {fmtMonthDay(d)}
                     </div>
+                    {/* Slot count / status badge */}
                     <div style={{
                       fontSize: 12, fontWeight: 700,
                       color: selected ? "var(--c-text-on-dark)"
@@ -265,8 +291,16 @@ const DayStrip = ({
             }} />
           </div>
         )}
+
+        {/* Sundays closed note — shown when a Sunday falls in the visible week range */}
+        {hasSundayInRange && (
+          <p style={{ fontSize: 14, color: MUTED, fontStyle: "italic", marginTop: 8, paddingLeft: 4 }}>
+            Sundays: closed
+          </p>
+        )}
+
         {loadError && (
-          <div style={{ marginTop: 10, fontSize: 13, color: "#B91C1C" }}>{loadError}</div>
+          <div style={{ marginTop: 10, fontSize: 14, color: "#B91C1C" }}>{loadError}</div>
         )}
       </div>
     </>
