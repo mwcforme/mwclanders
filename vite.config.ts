@@ -44,7 +44,9 @@ export default defineConfig(({ mode }) => ({
       output: {
         manualChunks: {
           // Core React — always needed
-          "vendor-react": ["react", "react-dom", "react-router-dom"],
+          // Split React core from Router — React core is tiny (7KB), Router adds weight
+          "vendor-react": ["react", "react-dom"],
+          "vendor-router": ["react-router-dom"],
           // Supabase — network heavy, separate chunk
           "vendor-supabase": ["@supabase/supabase-js"],
           // Form + validation

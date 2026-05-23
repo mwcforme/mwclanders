@@ -87,21 +87,25 @@
         }
       })();
 
-      // Load GA4 + Ads scripts after page is fully painted
+      // Load GA4 + Ads after first user interaction (click/scroll/keydown/touch)
+      // This completely removes analytics from TBT — they never fire during initial load.
+      // dataLayer queue captures all events and replays them when script loads.
+      var _analyticsLoaded = false;
       function loadAnalytics() {
+        if (_analyticsLoaded) return;
+        _analyticsLoaded = true;
         var s = document.createElement('script');
         s.async = true;
         s.src = 'https://www.googletagmanager.com/gtag/js?id=G-286547777';
         document.head.appendChild(s);
       }
 
-      if (document.readyState === 'complete') {
-        loadAnalytics();
-      } else {
-        window.addEventListener('load', function() {
-          setTimeout(loadAnalytics, 1);
-        });
-      }
+      // Fire on first interaction OR after 5s (whichever comes first)
+      // 5s fallback ensures analytics fires even for bounce visitors
+      ['click','scroll','keydown','touchstart','mousemove'].forEach(function(evt) {
+        document.addEventListener(evt, loadAnalytics, { once: true, passive: true, capture: true });
+      });
+      setTimeout(loadAnalytics, 5000);
     </script>
 
     <!-- Microsoft Clarity — deferred, prod-only, env-gated -->
