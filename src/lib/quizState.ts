@@ -1,85 +1,57 @@
 /**
- * Quiz state machine for /quiz. Persists to sessionStorage under `mwc_quiz_v1`.
- * Single source of truth for symptom answers, safety responses, contact info,
- * and computed scores used by /quiz/approved.
+ * Quiz state machine for /quiz. Persists to sessionStorage under `mwc_quiz_v2`.
+ * Simplified 3-step funnel: 8 symptom tiles → 1 yes/no → lead form → approved.
+ *
+ * Legacy exports (computeScores, topCategories, QuizAnswer, Tier) retained for
+ * backward compat with TRTQuizApproved and existing tests.
  */
 import { useCallback, useEffect, useState } from "react";
-import { CATEGORIES, ALL_SYMPTOM_IDS, type CategoryId } from "@/data/quizContent";
+import { CATEGORIES, type CategoryId, type QuizTileId } from "@/data/quizContent";
+
+// ─── Legacy types (kept for TRTQuizApproved + quizState.test.ts) ─────────────
 
 export type QuizAnswer = 0 | 1 | 2 | 3;
 export type Tier = "None" | "Mild" | "Moderate" | "Severe";
-type StepKey = 1 | 2 | 3 | "processing" | "finalizing" | "approved";
+
+export type StepKey = 1 | 2 | 3 | "processing" | "finalizing" | "approved" | "disqualified";
+
+// ─── State ────────────────────────────────────────────────────────────────────
 
 interface QuizState {
-  symptoms: Record<string, QuizAnswer | null>;
-  safetyConditions: string[];
+  /** Step 1: which symptom tiles were selected */
+  selectedTiles: QuizTileId[];
+  /** Step 2: yes/no cancer history disqualifier */
+  hasContraindication: boolean | null;
+  /** Lead fields */
   fullName: string;
   email: string;
   phone: string;
-  state: string;
   consent: boolean;
+  /** Navigation */
   currentStep: StepKey;
   completed: boolean;
   disqualified: boolean;
   startedAt: string;
   completedAt?: string;
+  /** Score (tile count * 3) — kept for TRTQuizApproved display */
   totalScore: number;
+  /** Category scores — kept for TRTQuizApproved Section3Symptoms (will be empty) */
   categoryScores: Record<CategoryId, { sum: number; tier: Tier }>;
 }
 
-const KEY = "mwc_quiz_v1";
+const KEY = "mwc_quiz_v2";
+
+// ─── Legacy helpers (retained for quizState.test.ts + TRTQuizApproved) ───────
 
 const tierForSum = (sum: number): Tier =>
   sum === 0 ? "None" : sum <= 2 ? "Mild" : sum <= 5 ? "Moderate" : "Severe";
-
-const emptySymptoms = (): Record<string, QuizAnswer | null> =>
-  Object.fromEntries(ALL_SYMPTOM_IDS.map((id) => [id, null]));
 
 const emptyCategoryScores = (): Record<CategoryId, { sum: number; tier: Tier }> =>
   Object.fromEntries(
     CATEGORIES.map((c) => [c.id, { sum: 0, tier: "None" as Tier }]),
   ) as Record<CategoryId, { sum: number; tier: Tier }>;
 
-export const initialQuizState = (): QuizState => ({
-  symptoms: emptySymptoms(),
-  safetyConditions: [],
-  fullName: "",
-  email: "",
-  phone: "",
-  state: "",
-  consent: false,
-  currentStep: 1,
-  completed: false,
-  disqualified: false,
-  startedAt: new Date().toISOString(),
-  totalScore: 0,
-  categoryScores: emptyCategoryScores(),
-});
-
-const read = (): QuizState => {
-  if (typeof window === "undefined") return initialQuizState();
-  try {
-    const raw = sessionStorage.getItem(KEY);
-    if (!raw) return initialQuizState();
-    const parsed = JSON.parse(raw) as Partial<QuizState>;
-    return { ...initialQuizState(), ...parsed };
-  } catch {
-    return initialQuizState();
-  }
-};
-
-const write = (s: QuizState) => {
-  if (typeof window === "undefined") return;
-  try { sessionStorage.setItem(KEY, JSON.stringify(s)); } catch { /* ignore */ }
-};
-
-export const getQuizState = (): QuizState => read();
-
-export const resetQuizState = () => {
-  if (typeof window === "undefined") return;
-  try { sessionStorage.removeItem(KEY); } catch { /* ignore */ }
-};
-
+/** Compute category and total scores from a per-symptom answers map (legacy). */
 export const computeScores = (symptoms: Record<string, QuizAnswer | null>) => {
   const categoryScores = emptyCategoryScores();
   let total = 0;
@@ -106,35 +78,78 @@ export const topCategories = (
     .sort((a, b) => b.sum - a.sum)
     .slice(0, limit);
 
+// ─── State helpers ────────────────────────────────────────────────────────────
+
+export const initialQuizState = (): QuizState => ({
+  selectedTiles: [],
+  hasContraindication: null,
+  fullName: "",
+  email: "",
+  phone: "",
+  consent: false,
+  currentStep: 1,
+  completed: false,
+  disqualified: false,
+  startedAt: new Date().toISOString(),
+  totalScore: 0,
+  categoryScores: emptyCategoryScores(),
+});
+
+const readState = (): QuizState => {
+  if (typeof window === "undefined") return initialQuizState();
+  try {
+    const raw = sessionStorage.getItem(KEY);
+    if (!raw) return initialQuizState();
+    const parsed = JSON.parse(raw) as Partial<QuizState>;
+    return { ...initialQuizState(), ...parsed };
+  } catch {
+    return initialQuizState();
+  }
+};
+
+const writeState = (s: QuizState) => {
+  if (typeof window === "undefined") return;
+  try { sessionStorage.setItem(KEY, JSON.stringify(s)); } catch { /* ignore */ }
+};
+
+export const getQuizState = (): QuizState => readState();
+
+export const resetQuizState = () => {
+  if (typeof window === "undefined") return;
+  try { sessionStorage.removeItem(KEY); } catch { /* ignore */ }
+};
+
+/** Derive totalScore from tile selections (tile count * 3, "none" excluded). */
+const scoreFromTiles = (tiles: QuizTileId[]): number =>
+  tiles.filter((t) => t !== "none").length * 3;
+
+// ─── Hook API ─────────────────────────────────────────────────────────────────
+
 export interface UseQuizStateApi {
   state: QuizState;
-  setSymptom: (id: string, value: QuizAnswer) => void;
-  setSafetyConditions: (ids: string[]) => void;
-  setContact: (patch: Partial<Pick<QuizState, "fullName"|"email"|"phone"|"state"|"consent">>) => void;
+  setSelectedTiles: (tiles: QuizTileId[]) => void;
+  setHasContraindication: (v: boolean) => void;
+  setContact: (patch: Partial<Pick<QuizState, "fullName" | "email" | "phone" | "consent">>) => void;
   setStep: (step: StepKey) => void;
   markCompleted: (disqualified: boolean) => void;
   reset: () => void;
 }
 
 export function useQuizState(): UseQuizStateApi {
-  const [state, setState] = useState<QuizState>(() => read());
+  const [state, setState] = useState<QuizState>(() => readState());
 
-  useEffect(() => { write(state); }, [state]);
+  useEffect(() => { writeState(state); }, [state]);
 
   const persist = useCallback((updater: (prev: QuizState) => QuizState) => {
-    setState((prev) => {
-      const next = updater(prev);
-      const scored = computeScores(next.symptoms);
-      return { ...next, totalScore: scored.totalScore, categoryScores: scored.categoryScores };
-    });
+    setState((prev) => updater(prev));
   }, []);
 
   return {
     state,
-    setSymptom: (id, value) =>
-      persist((p) => ({ ...p, symptoms: { ...p.symptoms, [id]: value } })),
-    setSafetyConditions: (ids) =>
-      persist((p) => ({ ...p, safetyConditions: ids })),
+    setSelectedTiles: (tiles) =>
+      persist((p) => ({ ...p, selectedTiles: tiles, totalScore: scoreFromTiles(tiles) })),
+    setHasContraindication: (v) =>
+      persist((p) => ({ ...p, hasContraindication: v })),
     setContact: (patch) =>
       persist((p) => ({ ...p, ...patch })),
     setStep: (step) => persist((p) => ({ ...p, currentStep: step })),

@@ -10,6 +10,7 @@ import { SymptomRow } from "@/components/quiz/SymptomRow";
 import { StepSafety } from "@/components/quiz/StepSafety";
 import { TransitionScreen } from "@/components/quiz/TransitionScreen";
 import { SAFETY_CONDITIONS, SAFETY_NONE_ID } from "@/data/quizContent";
+import { StepTiles } from "@/components/quiz/StepTiles";
 
 // ─── QuizShell ────────────────────────────────────────────────────────────────
 
@@ -162,72 +163,95 @@ describe("SymptomRow", () => {
   });
 });
 
-// ─── StepSafety ───────────────────────────────────────────────────────────────
+// ─── StepSafety (simplified yes/no disqualifier) ─────────────────────────────
 
 describe("StepSafety", () => {
-  it("renders safety conditions", () => {
-    render(
-      <StepSafety
-        selected={[]}
-        onChange={vi.fn()}
-        onSubmit={vi.fn()}
-      />,
-    );
-    // At least one safety condition should be rendered
+  // SAFETY_CONDITIONS / SAFETY_NONE_ID still exported from quizContent
+  it("quizContent still exports SAFETY_CONDITIONS", () => {
     expect(SAFETY_CONDITIONS.length).toBeGreaterThan(0);
-    // The first condition label should appear
-    expect(
-      screen.getByText(SAFETY_CONDITIONS[0].label)
-    ).toBeInTheDocument();
+    expect(SAFETY_NONE_ID).toBe("none");
   });
 
-  it("calls onChange when condition is selected", () => {
+  it("renders the prostate/breast cancer question", () => {
+    render(<StepSafety onAnswer={vi.fn()} />);
+    expect(screen.getByText(/prostate cancer/i)).toBeInTheDocument();
+  });
+
+  it("calls onAnswer(true) when Yes is clicked", () => {
+    const onAnswer = vi.fn();
+    render(<StepSafety onAnswer={onAnswer} />);
+    fireEvent.click(screen.getByRole("button", { name: /yes/i }));
+    expect(onAnswer).toHaveBeenCalledWith(true);
+  });
+
+  it("calls onAnswer(false) when No is clicked", () => {
+    const onAnswer = vi.fn();
+    render(<StepSafety onAnswer={onAnswer} />);
+    fireEvent.click(screen.getByRole("button", { name: /no/i }));
+    expect(onAnswer).toHaveBeenCalledWith(false);
+  });
+
+  it("renders without crashing when onAnswer is a no-op", () => {
+    expect(() => render(<StepSafety onAnswer={vi.fn()} />)).not.toThrow();
+  });
+});
+
+// ─── StepTiles ────────────────────────────────────────────────────────────────
+
+describe("StepTiles", () => {
+  it("renders 8 symptom tiles", () => {
+    render(
+      <StepTiles selectedTiles={[]} onChange={vi.fn()} onSubmit={vi.fn()} />,
+    );
+    // 8 tiles rendered as checkbox buttons
+    const tiles = screen.getAllByRole("checkbox");
+    expect(tiles).toHaveLength(8);
+  });
+
+  it("CTA button is disabled when nothing selected", () => {
+    render(
+      <StepTiles selectedTiles={[]} onChange={vi.fn()} onSubmit={vi.fn()} />,
+    );
+    const ctaBtn = screen.getByRole("button", { name: /see what my results mean/i });
+    expect(ctaBtn).toBeDisabled();
+  });
+
+  it("CTA button is enabled when a tile is selected", () => {
+    render(
+      <StepTiles selectedTiles={["fatigue"]} onChange={vi.fn()} onSubmit={vi.fn()} />,
+    );
+    const ctaBtn = screen.getByRole("button", { name: /see what my results mean/i });
+    expect(ctaBtn).not.toBeDisabled();
+  });
+
+  it("calls onChange when a tile is clicked", () => {
     const onChange = vi.fn();
     render(
-      <StepSafety selected={[]} onChange={onChange} onSubmit={vi.fn()} />,
+      <StepTiles selectedTiles={[]} onChange={onChange} onSubmit={vi.fn()} />,
     );
-    const firstCondition = SAFETY_CONDITIONS.find((c) => c.id !== SAFETY_NONE_ID);
-    if (firstCondition) {
-      fireEvent.click(screen.getByText(firstCondition.label));
-      expect(onChange).toHaveBeenCalled();
-    }
+    const tiles = screen.getAllByRole("checkbox");
+    fireEvent.click(tiles[0]);
+    expect(onChange).toHaveBeenCalled();
   });
 
-  it("selecting 'none' clears other selections", () => {
+  it("selecting 'none' tile produces exclusive selection", () => {
     const onChange = vi.fn();
-    const someCondition = SAFETY_CONDITIONS.find((c) => c.id !== SAFETY_NONE_ID);
     render(
-      <StepSafety
-        selected={someCondition ? [someCondition.id] : []}
-        onChange={onChange}
-        onSubmit={vi.fn()}
-      />,
+      <StepTiles selectedTiles={["fatigue"]} onChange={onChange} onSubmit={vi.fn()} />,
     );
-    // Click 'None of the below'
-    const noneCondition = SAFETY_CONDITIONS.find((c) => c.id === SAFETY_NONE_ID);
-    if (noneCondition) {
-      fireEvent.click(screen.getByText(noneCondition.label));
-      expect(onChange).toHaveBeenCalledWith([SAFETY_NONE_ID]);
-    }
+    // "None" tile is the last tile
+    const tiles = screen.getAllByRole("checkbox");
+    fireEvent.click(tiles[tiles.length - 1]); // "None of these apply"
+    expect(onChange).toHaveBeenCalledWith(["none"]);
   });
 
-  it("calls onSubmit when 'none' is already selected and submit clicked", () => {
+  it("calls onSubmit when CTA clicked with a selection", () => {
     const onSubmit = vi.fn();
     render(
-      <StepSafety
-        selected={[SAFETY_NONE_ID]}
-        onChange={vi.fn()}
-        onSubmit={onSubmit}
-      />,
+      <StepTiles selectedTiles={["sleep"]} onChange={vi.fn()} onSubmit={onSubmit} />,
     );
-    // Find the continue/submit button
-    const submitBtn = screen.getAllByRole("button").find(
-      (b) => b.textContent?.match(/continue|next|submit/i),
-    );
-    if (submitBtn) {
-      fireEvent.click(submitBtn);
-      expect(onSubmit).toHaveBeenCalled();
-    }
+    fireEvent.click(screen.getByRole("button", { name: /see what my results mean/i }));
+    expect(onSubmit).toHaveBeenCalledTimes(1);
   });
 });
 

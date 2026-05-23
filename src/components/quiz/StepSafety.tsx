@@ -1,84 +1,35 @@
-import { Check } from "lucide-react";
-import { SAFETY_CONDITIONS, SAFETY_NONE_ID } from "@/data/quizContent";
-import { PrimaryQuizButton } from "./PrimaryQuizButton";
+import { Phone } from "lucide-react";
 import { QuizShell } from "./QuizShell";
 
+const PHONE_DISPLAY = "(866) 344-4955";
+const PHONE_HREF = "tel:+18663444955";
+
 interface StepSafetyProps {
-  selected: string[];
-  onChange: (next: string[]) => void;
-  onSubmit: () => void;
+  /**
+   * Called when the user answers the disqualifier question.
+   * true  → history of prostate/breast cancer (disqualified)
+   * false → no contraindication (advance to lead form)
+   */
+  onAnswer: (hasContraindication: boolean) => void;
 }
 
 /**
- * Step 2 of /quiz. Multi-select tiles. "None of the below" is mutually
- * exclusive with the medical conditions. Progress maps 60–85%.
+ * Step 2 of simplified /quiz. Single yes/no cancer history disqualifier.
+ * Selecting Yes or No advances automatically — no separate Continue button.
+ * Progress: 40–75%.
  */
-export function StepSafety({ selected, onChange, onSubmit }: StepSafetyProps) {
-  const hasSelection = selected.length > 0;
-  const isNone = selected.length === 1 && selected[0] === SAFETY_NONE_ID;
-  // Smooth ramp: 60% on entry, +25% as user makes any selection.
-  const progress = 60 + (hasSelection ? 25 : 10);
-
-  function toggle(id: string) {
-    if (id === SAFETY_NONE_ID) {
-      // Selecting "none" clears everything else.
-      onChange(isNone ? [] : [SAFETY_NONE_ID]);
-      return;
-    }
-    // Selecting any condition clears "none".
-    const without = selected.filter((s) => s !== SAFETY_NONE_ID && s !== id);
-    if (selected.includes(id)) onChange(without);
-    else onChange([...without, id]);
-  }
-
-  function Tile({ id, label }: { id: string; label: string }) {
-    const checked = selected.includes(id);
-    return (
-      <button
-        type="button"
-        role="checkbox"
-        aria-checked={checked}
-        onClick={() => toggle(id)}
-        className="w-full text-left rounded-xl p-4 md:p-5 flex items-start gap-3 md:gap-4 transition-colors active:scale-[0.99]"
-        style={{
-          // hardcoded-color-allow-next-line
-          background: checked ? "rgba(232,103,10,0.10)" : "rgba(255,255,255,0.06)",
-          // hardcoded-color-allow-next-line
-          border: `1.5px solid ${checked ? "var(--brand-cta)" : "rgba(255,255,255,0.35)"}`,
-          WebkitTapHighlightColor: "transparent",
-        }}
-      >
-        <span
-          className="flex items-center justify-center shrink-0 w-6 h-6 rounded-md mt-0.5"
-          style={{
-            background: checked ? "var(--brand-cta)" : "transparent",
-            // hardcoded-color-allow-next-line
-            border: `1.5px solid ${checked ? "var(--brand-cta)" : "rgba(255,255,255,0.40)"}`,
-          }}
-          aria-hidden="true"
-        >
-          {checked ? <Check size={14} strokeWidth={3} color="var(--c-text-on-dark)" /> : null}
-        </span>
-        <span
-          className="text-[15px] md:text-base font-medium leading-snug"
-          style={{ color: "rgba(245,240,235,0.95)" }}
-        >
-          {label}
-        </span>
-      </button>
-    );
-  }
+export function StepSafety({ onAnswer }: StepSafetyProps) {
+  const progress = 60;
 
   return (
-    <QuizShell
-      progress={progress}
-      cta={
-        <PrimaryQuizButton disabled={!hasSelection} onClick={onSubmit}>
-          Next &rarr;
-        </PrimaryQuizButton>
-      }
-    >
-      <header className="mb-8 md:mb-10">
+    <QuizShell progress={progress}>
+      <header className="mb-10 md:mb-12">
+        <p
+          className="text-xs uppercase tracking-[0.18em] mb-3 font-semibold"
+          style={{ color: "var(--brand-cta-accessible)" }}
+        >
+          Step 2 of 3
+        </p>
         <h1
           className="font-bold uppercase leading-[1.05]"
           style={{
@@ -87,28 +38,84 @@ export function StepSafety({ selected, onChange, onSubmit }: StepSafetyProps) {
             letterSpacing: "0.01em",
           }}
         >
-          Quick safety check.{" "}
-          <span style={{ color: "var(--brand-cta)" }}>Do any of these apply to you?</span>
+          One quick{" "}
+          <span style={{ color: "var(--brand-cta)" }}>medical question.</span>
         </h1>
         {/* hardcoded-color-allow-next-line */}
-        <p className="mt-4 text-base md:text-lg max-w-[600px]" style={{ color: "rgba(245,240,235,0.85)" }}>
-          This helps your provider confirm whether TRT is safe and appropriate for you.
+        <p className="mt-4 text-base md:text-lg max-w-[560px]" style={{ color: "rgba(245,240,235,0.85)" }}>
+          This helps us match you with the right care.
         </p>
       </header>
 
-      <div className="space-y-3">
-        <Tile id={SAFETY_NONE_ID} label="None of the below" />
+      <div className="max-w-[560px]">
         {/* hardcoded-color-allow-next-line */}
-        <div className="my-4" style={{ height: 1, background: "rgba(255,255,255,0.12)" }} />
-        {SAFETY_CONDITIONS.map((opt) => (
-          <Tile key={opt.id} id={opt.id} label={opt.label} />
-        ))}
-      </div>
+        <p className="text-lg md:text-xl font-semibold leading-snug mb-8" style={{ color: "rgba(245,240,235,0.95)" }}>
+          Have you ever been diagnosed with prostate cancer or breast cancer?
+        </p>
 
-      {/* hardcoded-color-allow-next-line */}
-      <p className="mt-8 text-xs" style={{ color: "rgba(245,240,235,0.65)" }}>
-        Your answers are private. If anything here applies, you can still continue. A licensed Virginia provider will review your information in person before any prescription is written.
-      </p>
+        <div className="grid grid-cols-2 gap-4">
+          <button
+            type="button"
+            onClick={() => onAnswer(true)}
+            className="rounded-xl py-5 px-6 font-bold uppercase tracking-[0.06em] text-base transition-colors active:scale-[0.98]"
+            style={{
+              // hardcoded-color-allow-next-line
+              background: "rgba(255,255,255,0.06)",
+              // hardcoded-color-allow-next-line
+              border: "1.5px solid rgba(255,255,255,0.25)",
+              // hardcoded-color-allow-next-line
+              color: "rgba(245,240,235,0.92)",
+              WebkitTapHighlightColor: "transparent",
+            }}
+          >
+            Yes
+          </button>
+          <button
+            type="button"
+            onClick={() => onAnswer(false)}
+            className="rounded-xl py-5 px-6 font-bold uppercase tracking-[0.06em] text-base transition-colors active:scale-[0.98]"
+            style={{
+              background: "var(--brand-cta)",
+              border: "1.5px solid var(--brand-cta)",
+              color: "white",
+              // hardcoded-color-allow-next-line
+              boxShadow: "0 8px 24px rgba(232,103,10,0.35)",
+              WebkitTapHighlightColor: "transparent",
+            }}
+          >
+            No
+          </button>
+        </div>
+
+        {/* hardcoded-color-allow-next-line */}
+        <p className="mt-8 text-xs" style={{ color: "rgba(245,240,235,0.55)" }}>
+          Your answer is private. A licensed provider reviews all information before any treatment is prescribed.
+        </p>
+
+        {/* Phone link for users who want to speak with someone */}
+        <div
+          className="mt-6 rounded-xl p-4 flex items-center gap-3"
+          style={{
+            // hardcoded-color-allow-next-line
+            background: "rgba(255,255,255,0.04)",
+            // hardcoded-color-allow-next-line
+            border: "1px solid rgba(255,255,255,0.12)",
+          }}
+        >
+          <Phone size={16} style={{ color: "var(--brand-cta)", flexShrink: 0 }} aria-hidden="true" />
+          {/* hardcoded-color-allow-next-line */}
+          <p className="text-sm" style={{ color: "rgba(245,240,235,0.75)" }}>
+            Prefer to speak with someone first?{" "}
+            <a
+              href={PHONE_HREF}
+              className="font-semibold underline"
+              style={{ color: "var(--brand-cta-accessible)" }}
+            >
+              Call {PHONE_DISPLAY}
+            </a>
+          </p>
+        </div>
+      </div>
     </QuizShell>
   );
 }

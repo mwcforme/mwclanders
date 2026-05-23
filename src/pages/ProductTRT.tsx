@@ -399,7 +399,7 @@ const CandidateQuiz = ({ onNavigateSchedule }: { onNavigateSchedule: () => void 
             marginBottom: 8,
             lineHeight: 1.2,
           }}>
-            Answer 5 Quick Questions
+            Answer 3 Quick Questions
           </h2>
           <p style={{ fontSize: 15, color: "var(--c-text-on-light-muted)" }}>
             Takes 60 seconds. No login required.

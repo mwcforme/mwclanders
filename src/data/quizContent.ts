@@ -182,6 +182,21 @@ export const RESULTS_TESTIMONIALS = [
   { name: "Jose R.", date: "Feb 3, 2026", quote: "I've already recommended MWC to my friends and family and will continue to confidently." },
 ];
 
+// ─── Simplified quiz tiles (3-step CRO funnel) ─────────────────────────────
+
+export const QUIZ_TILES = [
+  { id: "fatigue",    label: "Low energy or fatigue",        emoji: "⚡" },
+  { id: "low_libido", label: "Low sex drive or ED",           emoji: "❤️" },
+  { id: "brain_fog",  label: "Brain fog or poor focus",      emoji: "🧠" },
+  { id: "mood",       label: "Mood swings or irritability",  emoji: "😤" },
+  { id: "body_comp",  label: "Weight gain or muscle loss",   emoji: "💪" },
+  { id: "sleep",      label: "Poor sleep quality",           emoji: "😴" },
+  { id: "motivation", label: "Reduced motivation or drive",  emoji: "🎯" },
+  { id: "none",       label: "None of these apply",          emoji: "✓"  },
+] as const;
+
+export type QuizTileId = typeof QUIZ_TILES[number]["id"];
+
 export const US_STATES: { code: string; name: string }[] = [
   ["AL","Alabama"],["AK","Alaska"],["AZ","Arizona"],["AR","Arkansas"],["CA","California"],
   ["CO","Colorado"],["CT","Connecticut"],["DE","Delaware"],["DC","District of Columbia"],

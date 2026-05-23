@@ -72,7 +72,7 @@ export function StepSymptoms({ symptoms, onChange, onSubmit }: StepSymptomsProps
             letterSpacing: "0.01em",
           }}
         >
-          Answer 5 questions.
+          Answer 3 quick questions.
           <br />
           <span style={{ color: "var(--brand-cta)" }}>
             Find out if low T is behind it.

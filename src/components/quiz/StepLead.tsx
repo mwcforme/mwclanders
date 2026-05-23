@@ -1,32 +1,34 @@
 import { useState } from "react";
-import { Loader2, ChevronDown } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { QuizTrustBlock } from "./QuizTrustBlock";
 import { z } from "zod";
 import { useLeadSubmitController } from "@/domain/leads/useLeadSubmitController";
-import { nameField, phoneField, emailField } from "@/domain/leads/leadFormSchema";
-import { US_STATES } from "@/data/quizContent";
+import { nameField, phoneField } from "@/domain/leads/leadFormSchema";
 import { QuizShell } from "./QuizShell";
 import { PrimaryQuizButton } from "./PrimaryQuizButton";
 
 interface StepLeadProps {
-  initial: { fullName: string; email: string; phone: string; state: string; consent: boolean };
+  initial: { fullName: string; email: string; phone: string; consent: boolean };
   totalScore: number;
   bracket: string;
   disqualified: boolean;
   tags: string[];
   /** Reserved for future GHL note support; currently unused. */
   noteBody?: string;
-  onCapture: (patch: { fullName: string; email: string; phone: string; state: string; consent: boolean }) => void;
+  onCapture: (patch: { fullName: string; email: string; phone: string; consent: boolean }) => void;
   onSubmitted: () => void;
 }
 
-const stateField = z.string().min(2, "Please select your state");
+/** Email is optional — allow empty string or a valid email address. */
+const optionalEmailField = z.union([
+  z.literal(""),
+  z.string().trim().max(255).email("Enter a valid email or leave blank"),
+]);
 
 const quizLeadSchema = z.object({
   name: nameField,
-  email: emailField,
+  email: optionalEmailField,
   phone: phoneField,
-  state: stateField,
   tcpa: z.literal(true, { errorMap: () => ({ message: "Consent required to continue" }) }),
 });
 
@@ -40,7 +42,10 @@ const formatPhone = (v: string) => {
 /**
  * Step 3 of /quiz. Captures contact info, fires the lead submission via the
  * shared controller (which handles GHL + Meta CAPI + GA4), then advances to
- * the Finalizing transition. Progress 85–100%.
+ * the Finalizing transition.
+ * - Email is optional (labelled as such).
+ * - State/dropdown removed.
+ * Progress: 75–95%.
  */
 export function StepLead({
   initial, totalScore, bracket, disqualified, tags,
@@ -49,7 +54,6 @@ export function StepLead({
   const [name, setName] = useState(initial.fullName);
   const [email, setEmail] = useState(initial.email);
   const [phone, setPhone] = useState(initial.phone);
-  const [stateCode, setStateCode] = useState(initial.state);
   const [tcpa, setTcpa] = useState(initial.consent);
   const [focused, setFocused] = useState<string | null>(null);
 
@@ -62,9 +66,9 @@ export function StepLead({
       return {
         firstName: first || "Guest",
         lastName: rest.join(" ") || undefined,
-        email: v.email,
+        email: v.email || undefined,
         phone: v.phone,
-        tags: [`quiz_state:${v.state}`],
+        tags: [],
       };
     },
     onSuccess: (_r, v) => {
@@ -72,7 +76,6 @@ export function StepLead({
         fullName: v.name,
         email: v.email,
         phone: v.phone,
-        state: v.state,
         consent: true,
       });
       onSubmitted();
@@ -83,8 +86,12 @@ export function StepLead({
 
   const errors = controller.fieldErrors;
   const submitting = controller.isSubmitting;
-  const valid = name.trim().length >= 2 && phone.replace(/\D/g, "").length === 10 &&
-    /\S+@\S+\.\S+/.test(email) && stateCode.length >= 2 && tcpa;
+
+  // Required: name + phone + consent. Email is optional.
+  const valid =
+    name.trim().length >= 2 &&
+    phone.replace(/\D/g, "").length === 10 &&
+    tcpa;
 
   const inputBase = (field: string): React.CSSProperties => ({
     width: "100%",
@@ -102,20 +109,12 @@ export function StepLead({
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    void controller.submit({
-      name,
-      email,
-      phone,
-      state: stateCode,
-      tcpa,
-    });
+    void controller.submit({ name, email, phone, tcpa });
   }
 
-  // Progress bumps 85 -> 99 as fields get filled.
-  const filled =
-    [name.length >= 2, /\S+@\S+\.\S+/.test(email), phone.replace(/\D/g, "").length === 10, !!stateCode]
-      .filter(Boolean).length;
-  const progress = 85 + filled * 3.5;
+  // Progress 75 → 95 as required fields get filled.
+  const filled = [name.length >= 2, phone.replace(/\D/g, "").length === 10].filter(Boolean).length;
+  const progress = 75 + filled * 10;
 
   return (
     <QuizShell
@@ -127,7 +126,7 @@ export function StepLead({
               <Loader2 size={18} className="animate-spin" /> Sending
             </span>
           ) : (
-            <>Show my results &rarr;</>
+            <>See My Results &rarr;</>
           )}
         </PrimaryQuizButton>
       }
@@ -147,21 +146,22 @@ export function StepLead({
             letterSpacing: "0.01em",
           }}
         >
-          Where should we send my results?
+          Get your results.
         </h1>
         <p
           className="mt-4 text-base md:text-lg max-w-[600px]"
           style={{ color: "rgba(245,240,235,0.85)" }}
         >
-          Enter my details to confirm eligibility and view my results securely.{" "}
+          Enter your details to confirm eligibility and view your personalized report.{" "}
           {/* hardcoded-color-allow-next-line */}
           <span style={{ color: "rgba(245,240,235,0.65)" }}>
-            Score: {totalScore} of 69 . Tier: {bracket}.
+            Score: {totalScore} . Tier: {bracket}.
           </span>
         </p>
       </header>
 
       <form id="quiz-lead-form" onSubmit={handleSubmit} className="space-y-4">
+        {/* Name */}
         <div>
           <input
             type="text"
@@ -177,22 +177,8 @@ export function StepLead({
             <p className="mt-1 text-xs" style={{ color: "var(--c-error-on-dark)" }}>{errors.name}</p>
           ) : null}
         </div>
-        <div>
-          <input
-            type="email"
-            inputMode="email"
-            placeholder="Email address"
-            autoComplete="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            onFocus={() => setFocused("email")}
-            onBlur={() => setFocused(null)}
-            style={inputBase("email")}
-          />
-          {errors.email ? (
-            <p className="mt-1 text-xs" style={{ color: "var(--c-error-on-dark)" }}>{errors.email}</p>
-          ) : null}
-        </div>
+
+        {/* Phone (required) */}
         <div>
           <input
             type="tel"
@@ -209,29 +195,35 @@ export function StepLead({
             <p className="mt-1 text-xs" style={{ color: "var(--c-error-on-dark)" }}>{errors.phone}</p>
           ) : null}
         </div>
-        <div className="relative">
-          <select
-            value={stateCode}
-            onChange={(e) => setStateCode(e.target.value)}
-            onFocus={() => setFocused("state")}
-            onBlur={() => setFocused(null)}
-            style={{ ...inputBase("state"), appearance: "none", paddingRight: 40 }}
-          >
-            <option value="" disabled>Select your state</option>
-            {US_STATES.map((s) => (
-              <option key={s.code} value={s.code}>{s.name}</option>
-            ))}
-          </select>
-          <ChevronDown
-            size={18}
-            className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2"
-            style={{ color: "rgba(245,240,235,0.75)" }}
-          />
-          {errors.state ? (
-            <p className="mt-1 text-xs" style={{ color: "var(--c-error-on-dark)" }}>{errors.state}</p>
+
+        {/* Email (optional) */}
+        <div>
+          <div className="relative">
+            <input
+              type="email"
+              inputMode="email"
+              placeholder="Email address"
+              autoComplete="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              onFocus={() => setFocused("email")}
+              onBlur={() => setFocused(null)}
+              style={inputBase("email")}
+            />
+            <span
+              className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[11px] font-medium tracking-wide uppercase"
+              // hardcoded-color-allow-next-line
+              style={{ color: "rgba(245,240,235,0.45)" }}
+            >
+              optional
+            </span>
+          </div>
+          {errors.email ? (
+            <p className="mt-1 text-xs" style={{ color: "var(--c-error-on-dark)" }}>{errors.email}</p>
           ) : null}
         </div>
 
+        {/* TCPA */}
         <label
           className="flex items-start gap-3 text-xs md:text-sm leading-relaxed select-none pt-2"
           style={{ color: "rgba(245,240,235,0.85)" }}
@@ -263,7 +255,7 @@ export function StepLead({
               color: "#FFB07A",
             }}
           >
-            Based on your safety check, your provider may need to clear you in person before TRT. We'll still review your results and reach out to discuss the right next step for you.
+            Based on your answers, we recommend speaking with your provider before starting TRT. We'll still review your results and reach out to discuss the right next step for you.
           </div>
         ) : null}
       </form>
