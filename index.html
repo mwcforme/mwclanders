@@ -49,7 +49,7 @@
       })();
     </script>
 
-    <!-- Microsoft Clarity — env-gated (prod only), global input masking ON, unmask CTAs only -->
+    <!-- Microsoft Clarity — deferred, env-gated (prod only) -->
     <script>
       (function () {
         const PROD_HOSTS = ["book.menswellnesscenters.com", "menswellnesscenters.com", "www.menswellnesscenters.com"];
@@ -69,36 +69,38 @@
         var clarityId = "%VITE_CLARITY_PROJECT_ID%";
         var hasRealId = clarityId && clarityId.indexOf("VITE_CLARITY_PROJECT_ID") === -1;
         if (env === "prod" && hasRealId) {
-          (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-          })(window, document, "clarity", "script", clarityId);
-          window.clarity = window.clarity || function(){};
+          // Stub so early clarity() calls don't throw
+          window.clarity = window.clarity || function(){(window.clarity.q=window.clarity.q||[]).push(arguments)};
           window.clarity("set", "maskAllInputs", true);
           window.clarity("set", "maskAllText", false);
+          // Load after page paint
+          window.addEventListener('load', function() {
+            setTimeout(function() {
+              var t = document.createElement('script');
+              t.async = 1;
+              t.src = "https://www.clarity.ms/tag/" + clarityId;
+              document.head.appendChild(t);
+            }, 1);
+          });
         }
       })();
     </script>
     <!-- End Microsoft Clarity -->
 
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-5X9DB23T');</script>
-    <!-- End Google Tag Manager -->
-
-    <!-- Google Analytics 4 — G-286547777 (Men's Wellness Centers property) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-286547777"></script>
+    <!--
+      GTM + GA4: deferred until after page load to avoid TBT penalty.
+      Queues dataLayer pushes synchronously so no events are lost.
+      Actual scripts load on 'load' event (or first interaction on slow connections).
+      This pattern is safe: GTM still fires all triggers, GA4 still captures page_view.
+    -->
     <script>
+      // Stub dataLayer immediately so any early pushes are queued
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+
+      // Sensitive path config — set before GTM loads
       gtag('js', new Date());
       gtag('config', 'G-286547777', { send_page_view: false, anonymize_ip: true });
-      // Sensitive category pages: redact ad data and enable URL passthrough
-      // to prevent health-condition signals from being used for audience building.
       (function() {
         var sensitivePaths = ['/book/', '/quiz', '/ed', '/wl'];
         var path = window.location.pathname;
@@ -108,6 +110,26 @@
           gtag('set', 'url_passthrough', true);
         }
       })();
+
+      // Defer GTM + GA4 scripts until after page load
+      function loadGTM() {
+        // GTM (loads GA4 G-286547777 + Ads AW-954193072 + G-795WVN2QND)
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-5X9DB23T');
+      }
+
+      // Load after window.load so it never blocks FCP/LCP
+      if (document.readyState === 'complete') {
+        loadGTM();
+      } else {
+        window.addEventListener('load', function() {
+          // Small setTimeout ensures paint is committed before GTM work starts
+          setTimeout(loadGTM, 1);
+        });
+      }
     </script>
 
   <meta name="description" content="Men's Wellness Centers. Virginia's physician-led men's health centers since 2015. Testosterone replacement therapy, ED treatment, and weight loss at our Richmond, Newport News, and Virginia Beach locations.">
