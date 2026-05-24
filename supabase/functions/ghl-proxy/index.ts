@@ -2,6 +2,12 @@
 import { corsHeaders, jsonResponse, corsResponse } from "../_shared/cors.ts";
 import { detectEnv, tryGetGhlCreds, GHL_API_BASE, GHL_API_VERSION } from "../_shared/ghlEnv.ts";
 
+const log = {
+  info:  (msg: string, data?: Record<string, unknown>) => console.log(JSON.stringify({ level: "info",  fn: "ghl-proxy", msg, ts: new Date().toISOString(), ...data })),
+  warn:  (msg: string, data?: Record<string, unknown>) => console.warn(JSON.stringify({ level: "warn",  fn: "ghl-proxy", msg, ts: new Date().toISOString(), ...data })),
+  error: (msg: string, data?: Record<string, unknown>) => console.error(JSON.stringify({ level: "error", fn: "ghl-proxy", msg, ts: new Date().toISOString(), ...data })),
+};
+
 // Strict allowlist: only these (method, path-pattern) pairs are forwarded to GHL.
 // Anything else returns 403. This prevents the anon-callable proxy from being
 // abused to enumerate contacts, delete appointments, etc.
@@ -219,7 +225,7 @@ Deno.serve(async (req) => {
     const text = await upstream.text();
     const data = text ? safeJson(text) : null;
     if (!upstream.ok) {
-      console.error(`[ghl-proxy] ${env} ${method} ${cleanPath} -> ${upstream.status} locId=${locationId}: ${text.slice(0, 800)}`);
+      log.error("upstream error", { env, method, path: cleanPath, status: upstream.status, location_id: locationId, body: text.slice(0, 800) });
     }
     // Always return 200 so the supabase-js client surfaces the body to callers.
     // Real upstream status lives in the JSON payload.

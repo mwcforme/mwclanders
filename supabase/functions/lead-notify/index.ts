@@ -4,6 +4,12 @@
 
 import { corsHeaders, jsonResponse as json, corsResponse } from "../_shared/cors.ts";
 
+const log = {
+  info:  (msg: string, data?: Record<string, unknown>) => console.log(JSON.stringify({ level: "info",  fn: "lead-notify", msg, ts: new Date().toISOString(), ...data })),
+  warn:  (msg: string, data?: Record<string, unknown>) => console.warn(JSON.stringify({ level: "warn",  fn: "lead-notify", msg, ts: new Date().toISOString(), ...data })),
+  error: (msg: string, data?: Record<string, unknown>) => console.error(JSON.stringify({ level: "error", fn: "lead-notify", msg, ts: new Date().toISOString(), ...data })),
+};
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return corsResponse();
 
@@ -73,7 +79,7 @@ Deno.serve(async (req) => {
 
   const resendKey = Deno.env.get("RESEND_API_KEY");
   if (!resendKey) {
-    console.warn("[lead-notify] RESEND_API_KEY not set — skipping email");
+    log.warn("RESEND_API_KEY not set — skipping email");
     return json(200, { ok: true, skipped: "no api key" });
   }
 
@@ -94,13 +100,13 @@ Deno.serve(async (req) => {
 
     const data = await res.json();
     if (!res.ok) {
-      console.error("[lead-notify] resend error", data);
+      log.error("resend API error", { status: res.status, body: JSON.stringify(data) });
       return json(502, { ok: false, error: data });
     }
-
+    log.info("email sent", { email_id: data.id, subject });
     return json(200, { ok: true, email_id: data.id });
   } catch (e) {
-    console.error("[lead-notify] fetch error", e);
+    log.error("fetch error", { error: (e as Error).message });
     return json(502, { ok: false, error: (e as Error).message });
   }
 });

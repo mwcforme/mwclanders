@@ -7,6 +7,47 @@ import { corsHeaders, jsonResponse, corsResponse } from "../_shared/cors.ts";
 import { detectEnv, tryGetGhlCreds, GHL_API_BASE, GHL_API_VERSION } from "../_shared/ghlEnv.ts";
 import { createAdminClient } from "../_shared/supabaseAdmin.ts";
 
+// ---- Structured logger ----
+const log = {
+  info:  (msg: string, data?: Record<string, unknown>) => console.log(JSON.stringify({ level: "info",  fn: "lead-intake", msg, ts: new Date().toISOString(), ...data })),
+  warn:  (msg: string, data?: Record<string, unknown>) => console.warn(JSON.stringify({ level: "warn",  fn: "lead-intake", msg, ts: new Date().toISOString(), ...data })),
+  error: (msg: string, data?: Record<string, unknown>) => console.error(JSON.stringify({ level: "error", fn: "lead-intake", msg, ts: new Date().toISOString(), ...data })),
+};
+
+// ---- Failure alert via Resend ----
+async function sendFailureAlert(opts: {
+  captureId: string;
+  name: string;
+  phone: string;
+  error: string;
+  env: string;
+}): Promise<void> {
+  const resendKey = Deno.env.get("RESEND_API_KEY");
+  if (!resendKey) return;
+  try {
+    await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${resendKey}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        from: "MWC Alerts <leads@book.menswellnesscenters.com>",
+        to: ["eobrien@menswellnesscenters.com"],
+        subject: `[MWC ALERT] GHL lead submission failed — ${opts.name || opts.phone}`,
+        html: `<div style="font-family:Arial,sans-serif;padding:24px;">
+          <h2 style="color:#dc2626;margin:0 0 16px">GHL Lead Submission Failed</h2>
+          <p><strong>Capture ID:</strong> ${opts.captureId}</p>
+          <p><strong>Name:</strong> ${opts.name || "—"}</p>
+          <p><strong>Phone:</strong> ${opts.phone || "—"}</p>
+          <p><strong>Environment:</strong> ${opts.env}</p>
+          <p><strong>Error:</strong> <code style="background:#f3f4f6;padding:4px 8px;border-radius:4px">${opts.error}</code></p>
+          <p style="margin-top:20px">The lead was saved to the database. <a href="https://book.menswellnesscenters.com/admin/leads" style="color:#e8670a">View in Admin</a> and manually create the GHL contact.</p>
+        </div>`,
+      }),
+    });
+  } catch (e) {
+    log.warn("failure alert email error", { error: (e as Error).message });
+  }
+}
+
 // ---- Rate limit (best-effort, in-memory; per-instance) ----
 const RL_WINDOW_MS = 60_000;
 const RL_MAX = 10;
@@ -172,7 +213,7 @@ Deno.serve(async (req) => {
     .single();
 
   if (insertErr || !inserted) {
-    console.error("[lead-intake] db insert failed", insertErr);
+    log.error("db insert failed", { error: insertErr?.message });
     return jsonResponse(500, { ok: false, error: "failed to persist lead" });
   }
   const captureId = inserted.id as string;
@@ -222,7 +263,7 @@ Deno.serve(async (req) => {
     if (!tokenErr && tokenRow?.token) {
       funnelUrl = `${funnelBase}/book/entry?t=${tokenRow.token}`;
     } else {
-      console.warn("[lead-intake] token insert failed", tokenErr);
+      log.warn("token insert failed", { error: tokenErr?.message });
     }
 
     return jsonResponse(200, {
@@ -233,11 +274,19 @@ Deno.serve(async (req) => {
     });
   } catch (e) {
     const msg = (e as Error).message ?? "GHL forward failed";
-    console.error("[lead-intake] ghl forward failed", msg);
+    log.error("ghl forward failed", { capture_id: captureId, error: msg, env: appEnv });
     await supabase
       .from("lead_captures")
       .update({ crm_status: "failed", crm_error: msg.slice(0, 500) })
       .eq("id", captureId);
+    // Fire immediate failure alert so lead is not silently lost
+    await sendFailureAlert({
+      captureId,
+      name: canonical.fullName,
+      phone: canonical.phone ?? "",
+      error: msg,
+      env: appEnv,
+    });
     return jsonResponse(502, { ok: false, capture_id: captureId, error: msg });
   }
 });
