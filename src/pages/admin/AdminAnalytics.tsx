@@ -5,7 +5,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { AdminLayout }  from "@/components/admin/AdminLayout";
 import { AdminError, AdminLoading } from "@/components/admin/AdminFeedback";
-import { supabase }     from "@/integrations/supabase/client";
+import { supabase }     from "@/integrations/supabase/legacy";
 
 import { AnalyticsToolCards }  from "@/components/admin/AnalyticsToolCards";
 import { AnalyticsSetupGuide } from "@/components/admin/AnalyticsSetupGuide";

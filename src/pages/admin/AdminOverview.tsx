@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AdminLayout } from "@/components/admin/AdminLayout";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/integrations/supabase/legacy";
 import { APP_ENV } from "@/lib/env";
 import { AlertCircle, Calendar, RefreshCw, TrendingUp, Users } from "lucide-react";
 import { AdminError } from "@/components/admin/AdminFeedback";

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { AdminError, AdminLoading, AdminEmpty } from "@/components/admin/AdminFeedback";
 import { Th, Td } from "@/components/admin/AdminTable";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/integrations/supabase/legacy";
 
 interface Evt {
   id: string;

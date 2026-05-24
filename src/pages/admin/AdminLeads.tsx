@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { AdminError, AdminLoading, AdminEmpty } from "@/components/admin/AdminFeedback";
 import { Th, Td, StatusPill } from "@/components/admin/AdminTable";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/integrations/supabase/legacy";
 import { downloadCsv } from "@/lib/admin/csv";
 import { resyncLead } from "@/services/impl/LeadResyncer";
 import { Loader2, Download, RefreshCw, AlertCircle, CheckCircle2 } from "lucide-react";
