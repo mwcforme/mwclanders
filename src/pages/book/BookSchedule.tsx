@@ -253,7 +253,7 @@ const BookSchedule = () => {
           {/* Trust line — highest-value compliance cue. Styled prominently, not as throwaway subtitle. */}
           {/* No orange here — orange is reserved for the Next available CTA card only. */}
           <p style={{ fontFamily: "Inter, sans-serif", fontSize: 15, color: "rgba(255,255,255,0.90)", margin: 0, fontWeight: 600, lineHeight: 1.5, letterSpacing: "0.01em" }}>
-            Licensed Virginia provider · Same-day labs · Most slots booked within 48 hrs
+            Licensed Virginia provider · Same-day labs
           </p>
         </section>
 
