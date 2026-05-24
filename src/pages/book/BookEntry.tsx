@@ -121,7 +121,7 @@ export default function BookEntry() {
     }
 
     exchangeToken(token).then((result) => {
-      if (!result.ok) {
+      if (result.ok === false) {
         fail(result.reason);
         return;
       }
