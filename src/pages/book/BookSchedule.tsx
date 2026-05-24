@@ -102,7 +102,8 @@ const BookSchedule = () => {
 
   const firstName = identity?.firstName || "";
   const lastName = identity?.lastName || "";
-  const heading = firstName ? `${firstName}, pick your time.` : "Your 60-Minute Assessment";
+  // PICK YOUR TIME — ≤4 words, Oswald uppercase. Personalised when firstName present.
+  const heading = firstName ? `${firstName}, PICK YOUR TIME.` : "PICK YOUR TIME.";
 
   // Resolve location data for compact bar
   const locationSlug = location ? SLUG_MAP[location] : null;
@@ -122,11 +123,12 @@ const BookSchedule = () => {
   const [_emailCaptured, _setEmailCaptured] = useState(false);
   const handleNextAvailable = useCallback((iso: string | null) => setNextAvailable(iso), []);
 
+  // Time-first label format: "Mon, May 25 · 11:00 AM" (no em-dash, no "at")
   const nextAvailableLabel = nextAvailable ? (() => {
     const d = new Date(nextAvailable);
-    const day = d.toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric", timeZone: "America/New_York" });
+    const day = d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", timeZone: "America/New_York" });
     const time = d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true, timeZone: "America/New_York" });
-    return `${day} at ${time}`;
+    return `${day} · ${time}`;
   })() : null;
 
   const bookedSlotLabel = _bookedSlot ? (() => {
@@ -237,60 +239,56 @@ const BookSchedule = () => {
           </div>
         )}
 
-        {/* ── Heading ────────────────────────────────────────────────────── */}
+        {/* ── Identity zone (heading + trust line only — 2 text nodes max) ──── */}
+        {/* DO NOT add instruction copy here — the day-picker grid is self-evident. */}
         <section className="mx-auto" style={{ maxWidth: 720 }}>
           <h1 style={{
-            fontFamily: "Oswald, sans-serif", fontWeight: 600,
+            fontFamily: "Oswald, sans-serif", fontWeight: 700,
             fontSize: "clamp(22px, 4vw, 32px)", lineHeight: 1.1,
-            letterSpacing: "0.02em", marginBottom: 4, color: "var(--c-text-on-dark)",
+            letterSpacing: "0.02em", marginBottom: 6, color: "var(--c-text-on-dark)",
             textTransform: "uppercase",
           }}>
             {heading}
           </h1>
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 16, color: "rgba(255,255,255,0.85)", margin: 0, fontWeight: 500, lineHeight: 1.6 }}>
-            Licensed Virginia provider · Same-day labs
-          </p>
-          {/* Simple action instruction — removes guesswork for all users */}
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 16, color: "rgba(255,255,255,0.90)", marginTop: 10, fontWeight: 500, lineHeight: 1.6 }}>
-            Pick a day below, then select your time.
-          </p>
-          {/* Urgency nudge — same-day slots genuinely go fast; honest and motivating */}
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "var(--brand-cta)", marginTop: 8, fontWeight: 600, lineHeight: 1.5 }}>
-            Most men book within 48 hours. Same-day slots go fast.
+          {/* Trust line — highest-value compliance cue. Styled prominently, not as throwaway subtitle. */}
+          {/* No orange here — orange is reserved for the Next available CTA card only. */}
+          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 15, color: "rgba(255,255,255,0.90)", margin: 0, fontWeight: 600, lineHeight: 1.5, letterSpacing: "0.01em" }}>
+            Licensed Virginia provider · Same-day labs · Most slots booked within 48 hrs
           </p>
         </section>
 
-        {/* ── Next available banner ───────────────────────────────────────── */}
+        {/* ── Next available CTA card ─────────────────────────────────────── */}
+        {/* Orange appears ONCE in this zone — here only. No orange text elsewhere above. */}
         {nextAvailableLabel && (
           <div className="mx-auto w-full" style={{ maxWidth: 720 }}>
-            {/* Full-width card — more visible than an inline pill on dark bg */}
             <button
               type="button"
+              aria-label={`Book next available slot: ${nextAvailableLabel}`}
               onClick={() => {
-                // Scroll to calendar and auto-select the next available day
                 document.querySelector<HTMLElement>('[aria-label="Pick a date and time"]')
                   ?.scrollIntoView({ behavior: "smooth", block: "start" });
               }}
               style={{
                 display: "flex", alignItems: "center", gap: 12, width: "100%",
                 background: "var(--brand-cta)", border: "none", borderRadius: 12,
-                padding: "14px 20px", cursor: "pointer",
+                padding: "12px 18px", cursor: "pointer",
                 // hardcoded-color-allow-next-line
                 boxShadow: "0 4px 20px rgba(232,103,10,0.40)",
                 textAlign: "left",
               }}
             >
-              <Clock size={20} style={{ color: "#fff", flexShrink: 0 }} />
-              <div style={{ flex: 1 }}>
-                <div style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "rgba(255,255,255,0.80)", marginBottom: 2 }}>
-                  Next available slot
-                </div>
-                <div style={{ fontFamily: "Oswald, sans-serif", fontSize: 18, fontWeight: 700, color: "#fff", lineHeight: 1.2 }}>
+              <Clock size={18} style={{ color: "#fff", flexShrink: 0 }} />
+              <div style={{ flex: 1, minWidth: 0 }}>
+                {/* Time-first label format per brief: "Mon, May 25 · 11:00 AM" */}
+                <div style={{ fontFamily: "Oswald, sans-serif", fontSize: 17, fontWeight: 700, color: "#fff", lineHeight: 1.2, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                   {nextAvailableLabel}
                 </div>
+                <div style={{ fontFamily: "Inter, sans-serif", fontSize: 12, fontWeight: 600, color: "rgba(255,255,255,0.82)", marginTop: 2, letterSpacing: "0.02em" }}>
+                  Next available slot · tap to book
+                </div>
               </div>
-              <span style={{ fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 700, color: "rgba(255,255,255,0.90)", whiteSpace: "nowrap" }}>
-                Tap to book →
+              <span style={{ fontFamily: "Inter, sans-serif", fontSize: 18, color: "rgba(255,255,255,0.90)", flexShrink: 0 }} aria-hidden="true">
+                →
               </span>
             </button>
           </div>

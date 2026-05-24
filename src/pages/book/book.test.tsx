@@ -111,6 +111,35 @@ describe("BookSchedule", () => {
     renderWithProviders(<BookSchedule />);
     expect(document.body.textContent?.length).toBeGreaterThan(20);
   });
+
+  it("shows personalized heading when firstName is set", async () => {
+    useBookingStore.getState().reset();
+    useBookingStore.getState().patch({
+      identity: { firstName: "Eric", lastName: "", phone: "5551234567", email: "" },
+    });
+    const BookSchedule = (await import("@/pages/book/BookSchedule")).default;
+    renderWithProviders(<BookSchedule />);
+    expect(document.body.textContent).toMatch(/ERIC.*PICK YOUR TIME/i);
+  });
+
+  it("shows fallback heading when firstName is falsy", async () => {
+    // Verify with undefined, empty string
+    for (const name of [undefined, ""] as const) {
+      useBookingStore.getState().reset();
+      if (name !== undefined) {
+        useBookingStore.getState().patch({
+          identity: { firstName: name, lastName: "", phone: "5551234567", email: "" },
+        });
+      }
+      const { default: BookSchedule } = await import("@/pages/book/BookSchedule");
+      renderWithProviders(<BookSchedule />);
+      // Fallback: no name prefix, just PICK YOUR TIME
+      const text = document.body.textContent ?? "";
+      expect(text).toMatch(/PICK YOUR TIME/i);
+      expect(text).not.toMatch(/undefined/i);
+      document.body.innerHTML = "";
+    }
+  });
 });
 
 // ─── BookEntry ────────────────────────────────────────────────────────────────
