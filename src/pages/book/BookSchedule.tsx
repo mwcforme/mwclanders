@@ -103,7 +103,7 @@ const BookSchedule = () => {
   const firstName = identity?.firstName || "";
   const lastName = identity?.lastName || "";
   // PICK YOUR TIME — ≤4 words, Oswald uppercase. Personalised when firstName present.
-  const heading = firstName ? `${firstName}, PICK YOUR TIME.` : "PICK YOUR TIME.";
+  const heading = firstName ? `${firstName}, PICK MY TIME.` : "PICK MY TIME.";
 
   // Resolve location data for compact bar
   const locationSlug = location ? SLUG_MAP[location] : null;
@@ -289,7 +289,7 @@ const BookSchedule = () => {
               </div>
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2, flexShrink: 0 }}>
                 <span style={{ fontFamily: "Inter, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "rgba(255,255,255,0.80)" }}>
-                  Book
+                  Pick mine
                 </span>
                 <ArrowRight size={18} strokeWidth={2.5} style={{ color: "#fff" }} aria-hidden="true" />
               </div>
