@@ -1,7 +1,7 @@
-const imgDoctor = "/assets/lp/provider-vitals-stethoscope.webp";
-const imgLobby = "/assets/lp/provider-lab-processing.webp";
-const imgTeam = "/assets/lp/front-desk-welcome-1.webp";
-const imgManager = "/assets/lp/provider-manager-welcome.webp";
+const imgDoctor  = "/assets/lp/patient-bp-exam-room.webp";
+const imgLabs    = "/assets/lp/onsite-labs-centrifuge.webp";
+const imgMen     = "/assets/lp/man-bloodwork-clinic.webp";
+const imgTeam    = "/assets/lp/mwc-team.webp";
 import { Target } from "lucide-react";
 
 const pillars = [
@@ -9,25 +9,25 @@ const pillars = [
     title: "LICENSED PROVIDERS",
     desc: "Licensed Virginia providers and nurse practitioners. A real provider, every visit.",
     image: imgDoctor,
-    imgPosition: "center 20%",
+    imgPosition: "center 30%",
   },
   {
     title: "ON-SITE LABS",
     desc: "CLIA-certified lab in every center. No third-party lab visit, no waiting a week for results.",
-    image: imgLobby,
-    imgPosition: "center 25%",
+    image: imgLabs,
+    imgPosition: "center 40%",
   },
   {
     title: "BUILT FOR MEN",
     desc: "TRT, ED, and weight loss is all we do. Dedicated focus means faster answers and better outcomes.",
-    image: imgManager,
-    imgPosition: "center 15%",
+    image: imgMen,
+    imgPosition: "center 30%",
   },
   {
     title: "ONGOING MONITORING",
     desc: "Follow-up labs and protocol adjustments are built into your care, not sold as add-ons.",
     image: imgTeam,
-    imgPosition: "center 20%",
+    imgPosition: "center 25%",
   },
 ];
 
