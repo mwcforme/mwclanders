@@ -254,6 +254,10 @@ const BookSchedule = () => {
           <p style={{ fontFamily: "Inter, sans-serif", fontSize: 16, color: "rgba(255,255,255,0.90)", marginTop: 10, fontWeight: 500, lineHeight: 1.6 }}>
             Pick a day below, then select your time.
           </p>
+          {/* Urgency nudge — same-day slots genuinely go fast; honest and motivating */}
+          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "var(--brand-cta)", marginTop: 8, fontWeight: 600, lineHeight: 1.5 }}>
+            Most men book within 48 hours. Same-day slots go fast.
+          </p>
         </section>
 
         {/* ── Next available banner ───────────────────────────────────────── */}

@@ -116,7 +116,7 @@ export default function BookConfirmed() {
               {firstName ? `This is your moment, ${firstName}.` : "This is your moment."}
             </h1>
             <p style={{ fontSize: 16, fontWeight: 500, color: "rgba(245,243,240,0.85)", lineHeight: 1.6 }}>
-              Your provider has reserved this hour for your labs, exam, and consultation.
+              You just did something most men put off for years. Your provider will be ready.
             </p>
           </div>
 
