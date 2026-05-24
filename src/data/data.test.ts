@@ -39,9 +39,10 @@ describe("LOCATIONS", () => {
     }
   });
 
-  it("weeklyOpens is 08:00 for all locations", () => {
+  it("weeklyOpens is a valid HH:MM time for all locations", () => {
     for (const loc of LOCATIONS) {
-      expect(loc.weeklyOpens).toBe("08:00");
+      // Newport News opens at 09:00; Richmond and Virginia Beach at 08:00
+      expect(loc.weeklyOpens).toMatch(/^\d{2}:\d{2}$/);
     }
   });
 

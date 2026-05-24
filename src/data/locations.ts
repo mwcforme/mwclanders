@@ -1,8 +1,12 @@
 /**
  * Single source of truth for all 3 Virginia center locations.
  * Phone strings: Newport News and Virginia Beach share (757) 612-4428.
- * Virginia Beach shares (757) 612-4428 until a dedicated tracking number is assigned.
- * Hours: Saturday is OPEN. Do not narrow Mon–Fri 8:00 AM – 6:00 PM · Sat 8:00 AM – 4:00 PM.
+ *
+ * Richmond & Virginia Beach:
+ *   Mon & Fri 8am–6pm · Tue/Wed/Thu 9am–5pm · Sat 8am–3pm
+ *
+ * Newport News:
+ *   Mon & Tue 9am–5pm · Wed closed · Thu & Fri 9am–5pm · Sat 8am–3pm
  */
 
 export interface Location {
@@ -16,13 +20,16 @@ export interface Location {
   phone: string;
   phoneHref: string;
   hours: string;
-  /** Schedule used by isOpenNow() and openingHoursSpecification JSON-LD */
-  weeklyOpens: "08:00";
-  /** Weekday close (Mon–Fri) */
-  weeklyCloses: "18:00";
-  /** Saturday close */
-  weeklyClosesSat: "16:00";
-  /** Days the center is open (Sun=0..Sat=6). Saturday MUST be in this array. */
+  /**
+   * Per-day schedule for isOpenNow() and JSON-LD openingHoursSpecification.
+   * Key = day abbreviation (Mo/Tu/We/Th/Fr/Sa), value = [opens, closes] in HH:MM.
+   * Days absent from this map are closed.
+   */
+  schedule: Record<string, [string, string]>;
+  /** @deprecated use schedule — kept for back-compat during migration */
+  weeklyOpens: string;
+  weeklyCloses: string;
+  weeklyClosesSat: string;
   openDays: number[];
   driveTime: string;
   parking: string;
@@ -44,10 +51,18 @@ export const LOCATIONS: Location[] = [
     fullAddress: "4050 Innslake Dr, Suite 360, Glen Allen, VA 23060",
     phone: "(804) 346-4636",
     phoneHref: "tel:8043464636",
-    hours: "Mon–Fri 8am–6pm · Sat 8am–4pm",
+    hours: "Mon & Fri 8am–6pm · Tue/Wed/Thu 9am–5pm · Sat 8am–3pm",
+    schedule: {
+      Mo: ["08:00", "18:00"],
+      Tu: ["09:00", "17:00"],
+      We: ["09:00", "17:00"],
+      Th: ["09:00", "17:00"],
+      Fr: ["08:00", "18:00"],
+      Sa: ["08:00", "15:00"],
+    },
     weeklyOpens: "08:00",
     weeklyCloses: "18:00",
-    weeklyClosesSat: "16:00",
+    weeklyClosesSat: "15:00",
     openDays: [1, 2, 3, 4, 5, 6],
     driveTime: "5 min from I-64",
     parking: "On-site parking, no charge",
@@ -64,11 +79,19 @@ export const LOCATIONS: Location[] = [
     fullAddress: "827 Diligence Drive, Suite 206, Newport News, VA 23606",
     phone: "(757) 612-4428",
     phoneHref: "tel:7576124428",
-    hours: "Mon–Fri 8am–6pm · Sat 8am–4pm",
-    weeklyOpens: "08:00",
-    weeklyCloses: "18:00",
-    weeklyClosesSat: "16:00",
-    openDays: [1, 2, 3, 4, 5, 6],
+    hours: "Mon & Tue 9am–5pm · Wed closed · Thu & Fri 9am–5pm · Sat 8am–3pm",
+    schedule: {
+      Mo: ["09:00", "17:00"],
+      Tu: ["09:00", "17:00"],
+      // Wednesday closed
+      Th: ["09:00", "17:00"],
+      Fr: ["09:00", "17:00"],
+      Sa: ["08:00", "15:00"],
+    },
+    weeklyOpens: "09:00",
+    weeklyCloses: "17:00",
+    weeklyClosesSat: "15:00",
+    openDays: [1, 2, 4, 5, 6],
     driveTime: "3 min from I-64, Exit 258A",
     parking: "On-site parking, no charge",
     mapsQuery: "Men's Wellness Centers, 827 Diligence Drive, Suite 206, Newport News, VA 23606",
@@ -85,10 +108,18 @@ export const LOCATIONS: Location[] = [
     // NOTE: Newport News and Virginia Beach share this number.
     phone: "(757) 612-4428",
     phoneHref: "tel:7576124428",
-    hours: "Mon–Fri 8am–6pm · Sat 8am–4pm",
+    hours: "Mon & Fri 8am–6pm · Tue/Wed/Thu 9am–5pm · Sat 8am–3pm",
+    schedule: {
+      Mo: ["08:00", "18:00"],
+      Tu: ["09:00", "17:00"],
+      We: ["09:00", "17:00"],
+      Th: ["09:00", "17:00"],
+      Fr: ["08:00", "18:00"],
+      Sa: ["08:00", "15:00"],
+    },
     weeklyOpens: "08:00",
     weeklyCloses: "18:00",
-    weeklyClosesSat: "16:00",
+    weeklyClosesSat: "15:00",
     openDays: [1, 2, 3, 4, 5, 6],
     driveTime: "5 min from I-264",
     parking: "On-site parking, no charge",
