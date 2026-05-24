@@ -1,4 +1,4 @@
-const imgDoctor  = "/assets/lp/patient-bp-exam-room.webp";
+const imgDoctor  = "/assets/lp/patient-bp-intake-portrait.webp";
 const imgLabs    = "/assets/lp/onsite-labs-centrifuge.webp";
 const imgMen     = "/assets/lp/man-bloodwork-clinic.webp";
 const imgTeam    = "/assets/lp/mwc-team.webp";
