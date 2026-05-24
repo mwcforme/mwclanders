@@ -119,7 +119,7 @@ describe("BookSchedule", () => {
     });
     const BookSchedule = (await import("@/pages/book/BookSchedule")).default;
     renderWithProviders(<BookSchedule />);
-    expect(document.body.textContent).toMatch(/ERIC.*PICK YOUR TIME/i);
+    expect(document.body.textContent).toMatch(/ERIC.*PICK MY TIME/i);
   });
 
   it("shows fallback heading when firstName is falsy", async () => {
@@ -133,9 +133,9 @@ describe("BookSchedule", () => {
       }
       const { default: BookSchedule } = await import("@/pages/book/BookSchedule");
       renderWithProviders(<BookSchedule />);
-      // Fallback: no name prefix, just PICK YOUR TIME
+      // Fallback: no name prefix, just PICK MY TIME
       const text = document.body.textContent ?? "";
-      expect(text).toMatch(/PICK YOUR TIME/i);
+      expect(text).toMatch(/PICK MY TIME/i);
       expect(text).not.toMatch(/undefined/i);
       document.body.innerHTML = "";
     }
