@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { AdminError, AdminLoading, AdminEmpty } from "@/components/admin/AdminFeedback";
 import { Th, Td, StatusPill } from "@/components/admin/AdminTable";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/integrations/supabase/legacy";
 import { APP_ENV } from "@/lib/env";
 import { Loader2, RefreshCw, Play, ShieldCheck } from "lucide-react";
 import { EnvChangeHistory } from "@/components/admin/EnvChangeHistory";

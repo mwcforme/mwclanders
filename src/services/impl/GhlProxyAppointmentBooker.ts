@@ -1,5 +1,5 @@
 import { bookAppointment, getFreeSlots, TIMEZONE, CENTER_CALENDARS } from "@/lib/ghlCalendars";
-const getSupabase = () => import("@/integrations/supabase/client").then(m => m.supabase);
+const getSupabase = () => import("@/integrations/supabase/legacy").then(m => m.supabase);
 import type {
   AppointmentInput,
   AppointmentResult,

@@ -2,7 +2,7 @@
  * LeadResyncer — isolates the GHL resync call from the UI layer.
  * AdminLeads imports this service; it does not call supabase directly.
  */
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/integrations/supabase/legacy";
 import { APP_ENV } from "@/lib/env";
 
 export interface ResyncResult {

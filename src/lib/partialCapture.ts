@@ -4,7 +4,7 @@
  * so zero form-fill data is lost.
  */
 // Lazy-loaded — keeps Supabase out of the hero form's critical-path bundle.
-const getSupabase = () => import("@/integrations/supabase/client").then(m => m.supabase);
+const getSupabase = () => import("@/integrations/supabase/legacy").then(m => m.supabase);
 import { getAttribution } from "@/lib/attribution";
 
 const FIRED_KEY = "mwc_partial_fired";

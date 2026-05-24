@@ -16,7 +16,7 @@ import { useServices } from "@/app/providers/ServicesProvider";
 import { getAttribution, attributionTags } from "@/lib/attribution";
 import { trackConversion } from "@/lib/capi";
 // Lazy-load Supabase — only needed on form submit, not on page load
-const getSupabase = () => import("@/integrations/supabase/client").then(m => m.supabase);
+const getSupabase = () => import("@/integrations/supabase/legacy").then(m => m.supabase);
 import { useBookingStore } from "@/domain/booking/bookingStore";
 import type { LeadInput, LeadResult } from "@/services/contracts/ILeadSubmitter";
 import type { Database } from "@/integrations/supabase/types";

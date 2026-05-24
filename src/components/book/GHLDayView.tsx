@@ -29,7 +29,7 @@ const ORANGE  = "var(--brand-cta)";
 
 // ─── Supabase lazy import ─────────────────────────────────────────────────────
 
-const getSupabase = () => import("@/integrations/supabase/client").then(m => m.supabase);
+const getSupabase = () => import("@/integrations/supabase/legacy").then(m => m.supabase);
 
 // ─── Slot fetching ────────────────────────────────────────────────────────────
 

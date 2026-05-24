@@ -7,7 +7,7 @@ import { AccordionDay } from "./GHLAccordionParts";
 import { AppointmentConfirmModal } from "./AppointmentConfirmModal";
 import { INK, LINE, SURFACE, ORANGE, ymd, todayET, dropPastSlots, fmtTimeParts } from "./ghlAccordionHelpers";
 
-const getSupabase = () => import("@/integrations/supabase/client").then(m => m.supabase);
+const getSupabase = () => import("@/integrations/supabase/legacy").then(m => m.supabase);
 
 async function fetchCachedSlots(calendarId: string, start: Date, end: Date): Promise<Record<string, string[]>> {
   const supabase = await getSupabase();
