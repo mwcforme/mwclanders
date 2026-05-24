@@ -35,7 +35,7 @@ const NewLandingPage = () => {
   return (
     <div className="min-h-screen flex flex-col" style={{ fontFamily: "Inter, sans-serif", overflowX: "hidden" }}>
       <SEO
-        title="TRT in Virginia | Men's Wellness Centers"
+        title="Men's Wellness Centers | Low Testosterone Therapy in Virginia"
         description="Provider-supervised testosterone replacement therapy at 3 Virginia locations. Testing and results reviewed in-visit. Walk in today."
       />
       <Helmet>
