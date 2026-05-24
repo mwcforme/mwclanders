@@ -12,8 +12,8 @@ const SERVICES = [
   {
     id: "trt",
     eyebrow: "TESTOSTERONE THERAPY (TRT)",
-    headline: "Low T is more common than you think.",
-    body: "Most men over 40 have it. Most are never told. A licensed Virginia provider reviews your labs on-site and builds a protocol specific to your numbers. Not a generic template.",
+    headline: "Your labs, reviewed by your provider.",
+    body: "A Virginia-licensed provider reviews your bloodwork on-site and builds a protocol around your numbers. Seen this week. No referrals. No template protocols.",
     cta: COPY.cta.bookConsult,
     href: "/book/location",
     Icon: FlaskConical,
@@ -21,8 +21,8 @@ const SERVICES = [
   {
     id: "ed",
     eyebrow: "ED TREATMENT",
-    headline: "A medical issue with medical solutions.",
-    body: "ED is vascular. It responds to proper diagnosis and treatment. In-person evaluation, FDA-approved options, and a plan that actually works.",
+    headline: "In-person diagnosis. Clinical answers.",
+    body: "ED has a vascular cause and a medical solution. An in-person evaluation with a Virginia-licensed provider, same-day, with FDA-approved options reviewed on site.",
     cta: COPY.cta.bookConsult,
     href: "/ed",
     Icon: Zap,
@@ -30,8 +30,8 @@ const SERVICES = [
   {
     id: "wl",
     eyebrow: "MEDICAL WEIGHT LOSS",
-    headline: "The same effort used to work.",
-    body: "Diet and exercise aren't the full story for most men. GLP-1 therapy, lab-guided protocols, and a provider who monitors your progress make the difference.",
+    headline: "Lab-guided protocol. Ongoing care.",
+    body: "GLP-1 therapy prescribed and monitored by a Virginia provider, not a call-center intake. Labs reviewed at every visit. One provider, one plan, adjusted as you progress.",
     cta: COPY.cta.bookConsult,
     href: "/wl",
     Icon: Scale,
@@ -61,7 +61,7 @@ export const TRTThreeProblems = ({ onCta, headlineOverride }: TRTThreeProblemsPr
         {/* Section heading */}
         <div className="text-center mb-12 md:mb-16">
           <p style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--brand-cta-accessible)", marginBottom: 14 }}>
-            OUR SERVICES
+            Integrated Care
           </p>
           <h2
             style={{
@@ -70,6 +70,7 @@ export const TRTThreeProblems = ({ onCta, headlineOverride }: TRTThreeProblemsPr
               fontSize: "clamp(26px, 3.5vw, 40px)",
               color: "var(--brand-navy)",
               lineHeight: 1.1,
+              textTransform: "uppercase",
             }}
           >
             {headlineOverride?.line1 ? (
@@ -81,9 +82,9 @@ export const TRTThreeProblems = ({ onCta, headlineOverride }: TRTThreeProblemsPr
               </>
             ) : (
               <>
-                THREE PROBLEMS.
+                ONE PROVIDER.
                 <br />
-                <span style={{ color: "var(--brand-cta)" }}>ONE CLINIC.</span>
+                <span style={{ color: "var(--brand-cta)" }}>THREE CONCERNS.</span>
               </>
             )}
           </h2>
@@ -96,7 +97,7 @@ export const TRTThreeProblems = ({ onCta, headlineOverride }: TRTThreeProblemsPr
               lineHeight: 1.6,
             }}
           >
-            TRT, ED care, and medical weight loss under one roof. Virginia providers who specialize in men's health. Not a side service.
+            TRT, ED care, and medical weight loss in one Virginia center. Your provider reviews your labs in person, same day. No referrals, no waiting rooms, no generic protocols.
           </p>
         </div>
 
