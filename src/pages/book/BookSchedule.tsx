@@ -11,7 +11,7 @@
 
 import { useState, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Clock, MapPin } from "lucide-react";
+import { ArrowLeft, ArrowRight, Clock, MapPin } from "lucide-react";
 import BookLayout from "@/components/book/BookLayout";
 import GHLDayView from "@/components/book/GHLDayView";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
@@ -287,9 +287,12 @@ const BookSchedule = () => {
                   Next available slot · tap to book
                 </div>
               </div>
-              <span style={{ fontFamily: "Inter, sans-serif", fontSize: 18, color: "rgba(255,255,255,0.90)", flexShrink: 0 }} aria-hidden="true">
-                →
-              </span>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2, flexShrink: 0 }}>
+                <span style={{ fontFamily: "Inter, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "rgba(255,255,255,0.80)" }}>
+                  Book
+                </span>
+                <ArrowRight size={18} strokeWidth={2.5} style={{ color: "#fff" }} aria-hidden="true" />
+              </div>
             </button>
           </div>
         )}
