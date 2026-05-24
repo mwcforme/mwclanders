@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { EnvSwitcher } from "./EnvSwitcher";
 
-const NAV = [
+const NAV: ReadonlyArray<{ to: string; label: string; icon: typeof LayoutDashboard; end?: boolean }> = [
   { to: "/admin/overview", label: "Overview",  icon: LayoutDashboard, end: true },
   { to: "/admin/leads",    label: "Leads",      icon: Users },
   { to: "/admin/events",   label: "Events",     icon: Activity },
