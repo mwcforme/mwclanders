@@ -19,9 +19,19 @@ import { trackConversion } from "@/lib/capi";
 const getSupabase = () => import("@/integrations/supabase/legacy").then(m => m.supabase);
 import { useBookingStore } from "@/domain/booking/bookingStore";
 import type { LeadInput, LeadResult } from "@/services/contracts/ILeadSubmitter";
-import type { Database } from "@/integrations/supabase/types";
 
-type LeadCaptureInsert = Database["public"]["Tables"]["lead_captures"]["Insert"];
+type LeadCaptureInsert = {
+  name: string | null;
+  phone: string | null;
+  email: string | null;
+  location: string | null;
+  service: string | null;
+  source: string | null;
+  page_url: string | null;
+  tags: string[] | null;
+  attribution: ReturnType<typeof getAttribution>;
+  crm_status: "pending";
+};
 
 export type LeadSubmitStatus = "idle" | "submitting" | "success" | "error";
 
@@ -171,7 +181,7 @@ export function useLeadSubmitController<TInput>(
       source: leadInput.source ?? null,
       page_url: typeof window !== "undefined" ? window.location.href : null,
       tags: leadInput.tags ?? null,
-      attribution: attr as Database["public"]["Tables"]["lead_captures"]["Insert"]["attribution"],
+      attribution: attr,
       crm_status: "pending",
     });
 
