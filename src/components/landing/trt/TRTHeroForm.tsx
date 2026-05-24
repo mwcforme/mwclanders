@@ -109,7 +109,7 @@ export const TRTHeroForm = ({
           color: "var(--brand-cream)", textTransform: "uppercase", letterSpacing: "0.02em", marginBottom: 8,
           whiteSpace: "nowrap",
         }}>
-          Reserve Your Free 60-Minute Visit.
+          Reserve Your 60-Minute Visit.
         </h2>
         <form onSubmit={handleSubmit} noValidate style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           <FloatInput id="hf-name" label="Name" type="text" autoComplete="given-name" placeholder="John"
