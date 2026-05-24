@@ -15,7 +15,7 @@ export const TRTHeader = ({ minimal = false, hideCta = false }: { minimal?: bool
   }, []);
 
   const scrollTo = (id: string) => {
-    setMenuOpen(false);
+    _setMenuOpen(false);
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
