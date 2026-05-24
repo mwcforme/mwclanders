@@ -52,7 +52,37 @@
     </script>
 
     <!--
-      Analytics: GA4 + Google Ads loaded directly (no GTM).
+      GTM: GTM-5X9DB23T
+      dataLayer stub initialised synchronously so no events are lost.
+      GTM script itself loads after first user interaction (same deferred
+      pattern as GA4 below) — zero TBT impact on Core Web Vitals.
+      PHI guard above runs before this block, so page_location is already
+      sanitised before GTM fires.
+    -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      (function () {
+        var GTM_ID = 'GTM-5X9DB23T';
+        var _gtmLoaded = false;
+        function loadGTM() {
+          if (_gtmLoaded) return;
+          _gtmLoaded = true;
+          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer',GTM_ID);
+        }
+        // Defer GTM until first interaction or 5s — mirrors GA4 load strategy
+        ['click','scroll','keydown','touchstart','mousemove'].forEach(function(evt) {
+          document.addEventListener(evt, loadGTM, { once: true, passive: true, capture: true });
+        });
+        setTimeout(loadGTM, 5000);
+      })();
+    </script>
+
+    <!--
+      Analytics: GA4 + Google Ads loaded directly (alongside GTM).
       - dataLayer stub initialised synchronously → no lost events.
       - gtag() config runs synchronously → no lost conversions.
       - Actual GA4/Ads scripts load after window.load → zero TBT impact.
@@ -60,6 +90,7 @@
 
       GA4:          G-286547777  (Men's Wellness Centers property)
       Google Ads:   AW-954193072 (conversion tracking)
+      GTM:          GTM-5X9DB23T
     -->
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -161,6 +192,9 @@
 </head>
 
   <body>
+    <!-- GTM noscript fallback — must be immediately after <body> -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5X9DB23T"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
