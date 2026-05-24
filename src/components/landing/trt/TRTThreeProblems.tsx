@@ -6,7 +6,7 @@
  * Cream/warm off-white background to break up the dark sections.
  */
 import { COPY } from "@/data/copy";
-import { ArrowRight, FlaskConical, Zap, Scale } from "lucide-react";
+import { ArrowRight, Droplet, HeartPulse, TrendingDown } from "lucide-react";
 
 const SERVICES = [
   {
@@ -16,7 +16,8 @@ const SERVICES = [
     body: "A Virginia-licensed provider reviews your bloodwork on-site and builds a protocol around your numbers. Seen this week. No referrals. No template protocols.",
     cta: COPY.cta.bookConsult,
     href: "/book/location",
-    Icon: FlaskConical,
+    Icon: Droplet,
+    iconAriaLabel: "Lab-guided testosterone protocol",
   },
   {
     id: "ed",
@@ -25,7 +26,8 @@ const SERVICES = [
     body: "ED has a vascular cause and a medical solution. An in-person evaluation with a Virginia-licensed provider, same-day, with FDA-approved options reviewed on site.",
     cta: COPY.cta.bookConsult,
     href: "/ed",
-    Icon: Zap,
+    Icon: HeartPulse,
+    iconAriaLabel: "Cardiovascular evaluation for ED",
   },
   {
     id: "wl",
@@ -34,7 +36,8 @@ const SERVICES = [
     body: "GLP-1 therapy prescribed and monitored by a Virginia provider, not a call-center intake. Labs reviewed at every visit. One provider, one plan, adjusted as you progress.",
     cta: COPY.cta.bookConsult,
     href: "/wl",
-    Icon: Scale,
+    Icon: TrendingDown,
+    iconAriaLabel: "Monitored weight-loss protocol",
   },
 ];
 
@@ -161,6 +164,8 @@ export const TRTThreeProblems = ({ onCta, headlineOverride }: TRTThreeProblemsPr
                   size={80}
                   strokeWidth={1.25}
                   style={{ color: "var(--brand-cta)", position: "relative" }}
+                  aria-label={s.iconAriaLabel}
+                  role="img"
                 />
               </div>
 
