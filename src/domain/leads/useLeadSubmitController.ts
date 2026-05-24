@@ -78,6 +78,10 @@ function syncToGhlAsync(
         external_id: result.contactId,
       },
       custom_data: {
+        // $100 = conservative estimated value of a submitted lead (accounts for funnel drop-off)
+        // Signals to Meta + Google Smart Bidding that this conversion has weight
+        value: 100,
+        currency: "USD",
         content_name: leadInput.source,
         lp_slug: typeof window !== "undefined" ? window.location.pathname : undefined,
       },

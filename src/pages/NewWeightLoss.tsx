@@ -7,6 +7,7 @@ import { SEO } from "@/components/SEO";
 import { useScrollDepth } from "@/hooks/useAnalytics";
 import { WLHero } from "@/components/landing/wl/WLHero";
 import { WLManifesto } from "@/components/landing/wl/WLManifesto";
+import { TRTEverythingIncluded } from "@/components/landing/trt/TRTEverythingIncluded";
 import { COPY } from "@/data/copy";
 
 const WLHowItWorks  = lazy(() => import("@/components/landing/wl/WLHowItWorks").then(m => ({ default: m.WLHowItWorks })));
@@ -34,6 +35,7 @@ const NewWeightLoss = () => {
       <main className="flex-1">
         <WLHero />
         <SectionReveal><CredibilityBand /></SectionReveal>
+        <TRTEverythingIncluded />
         <SectionReveal><WLManifesto /></SectionReveal>
         <Suspense fallback={<S bg="var(--brand-cream)" h={480} />}>
           <SectionReveal><WLHowItWorks /></SectionReveal>

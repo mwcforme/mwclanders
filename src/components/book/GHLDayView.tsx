@@ -135,6 +135,18 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
   const confirmCtl = useConfirmAppointment({
     onBooked: (slot) => {
       trackFunnelEvent("booking_completed", { location });
+      // Fire Schedule CAPI event with value — $500 = conservative estimated revenue
+      // per booked consult (accounts for no-shows). Signals booking quality to Meta + Google.
+      void import("@/lib/capi").then(({ trackConversion }) =>
+        trackConversion("Schedule", {
+          custom_data: {
+            value: 500,
+            currency: "USD",
+            content_name: "booked_consultation",
+            lp_slug: typeof window !== "undefined" ? window.location.pathname : undefined,
+          },
+        })
+      );
       onBooked?.(slot);
     },
   });

@@ -7,6 +7,7 @@ import { SEO } from "@/components/SEO";
 import { useScrollDepth } from "@/hooks/useAnalytics";
 import { EDHero } from "@/components/landing/ed/EDHero";
 import { EDManifesto } from "@/components/landing/ed/EDManifesto";
+import { TRTEverythingIncluded } from "@/components/landing/trt/TRTEverythingIncluded";
 import { COPY } from "@/data/copy";
 
 const EDHowItWorks  = lazy(() => import("@/components/landing/ed/EDHowItWorks").then(m => ({ default: m.EDHowItWorks })));
@@ -34,6 +35,7 @@ const NewED = () => {
       <main className="flex-1">
         <EDHero />
         <SectionReveal><CredibilityBand /></SectionReveal>
+        <TRTEverythingIncluded />
         <SectionReveal><EDManifesto /></SectionReveal>
         <Suspense fallback={<S bg="var(--brand-cream)" h={480} />}>
           <SectionReveal><EDHowItWorks /></SectionReveal>

@@ -59,12 +59,17 @@ export const StickyMobileCTA = () => {
 
   const scrollToForm = () => {
     trackCro("mobile_sticky_book_scroll");
-    const card = document.getElementById("hero-form");
-    if (!card) return;
-    card.scrollIntoView({ behavior: "smooth", block: "center" });
-    // Best-effort focus the existing first input — no DOM/prop changes.
+    // If user is in the lower half of the page, scroll to the bottom form (final-cta).
+    // If near the top, scroll to the hero form. Avoids disorienting upward scroll.
+    const heroBound = document.getElementById("hero-form")?.getBoundingClientRect();
+    const heroBelow = !heroBound || heroBound.top > window.innerHeight;
+    const target = heroBelow
+      ? document.getElementById("final-cta")
+      : document.getElementById("hero-form");
+    if (!target) return;
+    target.scrollIntoView({ behavior: "smooth", block: "center" });
     window.setTimeout(() => {
-      const first = card.querySelector<HTMLElement>("input, select, textarea");
+      const first = target.querySelector<HTMLElement>("input, select, textarea");
       first?.focus({ preventScroll: true });
     }, 600);
   };
