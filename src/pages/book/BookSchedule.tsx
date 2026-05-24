@@ -263,15 +263,36 @@ const BookSchedule = () => {
         {/* ── Next available banner ───────────────────────────────────────── */}
         {nextAvailableLabel && (
           <div className="mx-auto w-full" style={{ maxWidth: 720 }}>
-            <div
-              className="inline-flex items-center gap-2.5 rounded-full px-4 py-2"
-              style={{ background: "rgba(232,103,10,0.18)", border: "1px solid rgba(232,103,10,0.40)" }}
+            {/* Full-width card — more visible than an inline pill on dark bg */}
+            <button
+              type="button"
+              onClick={() => {
+                // Scroll to calendar and auto-select the next available day
+                document.querySelector<HTMLElement>('[aria-label="Pick a date and time"]')
+                  ?.scrollIntoView({ behavior: "smooth", block: "start" });
+              }}
+              style={{
+                display: "flex", alignItems: "center", gap: 12, width: "100%",
+                background: "var(--brand-cta)", border: "none", borderRadius: 12,
+                padding: "14px 20px", cursor: "pointer",
+                // hardcoded-color-allow-next-line
+                boxShadow: "0 4px 20px rgba(232,103,10,0.40)",
+                textAlign: "left",
+              }}
             >
-              <Clock size={18} style={{ color: "var(--brand-cta)", flexShrink: 0 }} />
-              <span style={{ fontFamily: "Inter, sans-serif", fontSize: 16, fontWeight: 700, color: "var(--c-text-on-dark)" }}>
-                Next available: {nextAvailableLabel} →
+              <Clock size={20} style={{ color: "#fff", flexShrink: 0 }} />
+              <div style={{ flex: 1 }}>
+                <div style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "rgba(255,255,255,0.80)", marginBottom: 2 }}>
+                  Next available slot
+                </div>
+                <div style={{ fontFamily: "Oswald, sans-serif", fontSize: 18, fontWeight: 700, color: "#fff", lineHeight: 1.2 }}>
+                  {nextAvailableLabel}
+                </div>
+              </div>
+              <span style={{ fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 700, color: "rgba(255,255,255,0.90)", whiteSpace: "nowrap" }}>
+                Tap to book →
               </span>
-            </div>
+            </button>
           </div>
         )}
 

@@ -117,20 +117,24 @@ const DayStrip = ({
           onClick={onPrevWeek}
           aria-label="Previous week"
           style={{
-            background: SURFACE, color: INK, border: `1px solid ${BORDER}`,
-            borderRadius: 999, padding: "10px 16px",
-            fontSize: 14, fontWeight: 600, minHeight: 56,
-            display: "inline-flex", alignItems: "center", gap: 6,
+            background: prevDisabled ? "#F4F5F8" : SURFACE,
+            color: prevDisabled ? MUTED : INK,
+            border: `1.5px solid ${prevDisabled ? "#E5E7EB" : BORDER}`,
+            borderRadius: 10, padding: "0 16px",
+            fontSize: 14, fontWeight: 700, minHeight: 44, minWidth: 80,
+            display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 4,
             cursor: prevDisabled ? "not-allowed" : "pointer",
-            opacity: prevDisabled ? 0.6 : 1,
+            opacity: prevDisabled ? 0.5 : 1,
+            // hardcoded-color-allow-next-line
+            boxShadow: prevDisabled ? "none" : "0 1px 3px rgba(11,16,41,0.08)",
           }}
         >
-          <ChevronLeft size={18} /> Prev
+          <ChevronLeft size={16} /> Prev
         </button>
 
         {/* Week range label — centered between nav buttons */}
         {days.length > 0 && (
-          <div style={{ fontSize: 14, color: MUTED, fontWeight: 600, fontFamily: "Inter, sans-serif", textAlign: "center", flex: 1 }}>
+          <div style={{ fontSize: 13, color: MUTED, fontWeight: 700, fontFamily: "Inter, sans-serif", textAlign: "center", flex: 1, letterSpacing: "0.03em" }}>
             {fmtMonthDay(days[0])} – {fmtMonthDay(days[days.length - 1])}
           </div>
         )}
@@ -141,14 +145,17 @@ const DayStrip = ({
           onClick={onNextWeek}
           aria-label="Next week"
           style={{
-            background: SURFACE, color: INK, border: `1px solid ${BORDER}`,
-            borderRadius: 999, padding: "10px 16px",
-            fontSize: 14, fontWeight: 600, minHeight: 56,
-            display: "inline-flex", alignItems: "center", gap: 6,
+            background: SURFACE, color: INK,
+            border: `1.5px solid ${BORDER}`,
+            borderRadius: 10, padding: "0 16px",
+            fontSize: 14, fontWeight: 700, minHeight: 44, minWidth: 80,
+            display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 4,
             cursor: "pointer",
+            // hardcoded-color-allow-next-line
+            boxShadow: "0 1px 3px rgba(11,16,41,0.08)",
           }}
         >
-          Next <ChevronRight size={18} />
+          Next <ChevronRight size={16} />
         </button>
       </div>
 
@@ -247,14 +254,15 @@ const DayStrip = ({
                     }}>
                       {isToday ? "TODAY" : isTomorrow ? "TMRW" : fmtDayShort(d)}
                     </div>
-                    {/* Date — strikethrough on full/closed days so it's visually obvious */}
+                    {/* Date number only — month shown in week header above, no redundancy */}
+                    {/* Strikethrough ONLY on Sundays (closed) — full days just show greyed, not struck */}
                     <div style={{
-                      fontFamily: "Oswald, Inter, sans-serif", fontWeight: 700, fontSize: 20,
+                      fontFamily: "Oswald, Inter, sans-serif", fontWeight: 700, fontSize: 22,
                       letterSpacing: "0.01em", lineHeight: 1.1,
-                      textDecoration: (isSunday || isFull) ? "line-through" : "none",
+                      textDecoration: isSunday ? "line-through" : "none",
                       textDecorationColor: MUTED,
                     }}>
-                      {fmtMonthDay(d)}
+                      {d.toLocaleDateString("en-US", { day: "numeric", timeZone: TIMEZONE })}
                     </div>
                     {/* Slot count / status badge */}
                     <div style={{
