@@ -80,8 +80,20 @@ export default function BookConfirmed() {
   // Map: always rendered directly — no IntersectionObserver lazy-load (eliminates blank map bug)
   const videoRef = useRef<HTMLVideoElement>(null);
   useEffect(() => {
-    const t = window.setTimeout(() => videoRef.current?.play().catch(() => {}), 1200);
-    return () => clearTimeout(t);
+    // Only autoplay when video is actually in view — prevents audio starting while user reads ticket above
+    const el = videoRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          el.play().catch(() => {});
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.5 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -263,15 +275,13 @@ export default function BookConfirmed() {
           {/* 8. Reschedule */}
           <div style={{ textAlign: "center", display: "flex", flexDirection: "column", gap: 10 }}>
             <p style={{ color: "#374151", fontSize: 16, fontWeight: 500 }}>Need to reschedule?</p>
-            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 10 }}>
-              <a href={center.phoneHref} style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "#FFFFFF", border: "1.5px solid #D1D5DB", color: "#111827", fontWeight: 700, fontSize: 18, padding: "12px 20px", borderRadius: 8, textDecoration: "none", minHeight: 56 }}>
-                {center.phone}
-              </a>
-              <a href="/book/schedule" style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "var(--brand-cta)", border: "none", color: "#FFFFFF", fontWeight: 700, fontSize: 16, padding: "12px 20px", borderRadius: 8, textDecoration: "none", minHeight: 56 }}>
-                Pick a Different Time
-              </a>
-            </div>
-            <p style={{ color: "#6B7280", fontSize: 13, marginTop: 4 }}>Please cancel or reschedule at least 24 hours in advance.</p>
+            <a href="/book/schedule" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6, background: "var(--brand-cta)", border: "none", color: "#FFFFFF", fontWeight: 700, fontSize: 16, padding: "12px 20px", borderRadius: 8, textDecoration: "none", minHeight: 56, width: "100%" }}>
+              Pick a Different Time
+            </a>
+            <p style={{ color: "#374151", fontSize: 15, fontWeight: 500, marginTop: 4 }}>
+              Or call us: <a href={center.phoneHref} style={{ color: "#111827", fontWeight: 700, textDecoration: "underline", textUnderlineOffset: 3 }}>{center.phone}</a>
+            </p>
+            <p style={{ color: "#6B7280", fontSize: 13 }}>Please cancel or reschedule at least 24 hours in advance.</p>
           </div>
         </div>
       </div>

@@ -37,7 +37,7 @@ const BookDuration = () => {
     setDuration(value, urgency);
     advanceTimer.current = window.setTimeout(() => {
       navigate("/book/schedule");
-    }, 600);
+    }, 300);
   };
 
   return (

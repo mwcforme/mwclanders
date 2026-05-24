@@ -47,7 +47,7 @@ const BookSymptom = () => {
     setSymptom(value as "energy" | "sexual" | "weight");
     advanceTimer.current = window.setTimeout(() => {
       navigate("/book/duration");
-    }, 900);
+    }, 300);
   };
 
   const handleOtherContinue = () => {

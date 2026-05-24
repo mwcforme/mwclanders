@@ -52,34 +52,34 @@ const NoAvailFallback = ({ onChangeCenter }: { onChangeCenter: () => void }) => 
     <p style={{ fontSize: 16, color: "rgba(245,243,240,0.85)", marginBottom: 16, fontWeight: 500, lineHeight: 1.6 }}>
       Try a different date or another Men's Wellness Centers location.
     </p>
-    <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-      <button
-        type="button"
-        onClick={onChangeCenter}
-        style={{
-          // hardcoded-color-allow-next-line
-          flex: 1, minHeight: 56, background: "#161B3A", border: "1px solid #3A4360",
-          color: "var(--brand-cream)", borderRadius: 8, fontSize: 15, fontWeight: 700,
-          fontFamily: "Inter, sans-serif", cursor: "pointer", minWidth: 120,
-          padding: "12px 16px",
-        }}
-      >
-        Try another center
-      </button>
+    {/* Primary: try another center. Secondary: call us — not equal weight */}
+    <button
+      type="button"
+      onClick={onChangeCenter}
+      style={{
+        display: "block", width: "100%", minHeight: 56,
+        background: "var(--brand-cta)", border: "none",
+        color: "#FFFFFF", borderRadius: 8, fontSize: 15, fontWeight: 700,
+        fontFamily: "Inter, sans-serif", cursor: "pointer",
+        padding: "12px 16px", marginBottom: 12,
+        // hardcoded-color-allow-next-line
+        boxShadow: "0 4px 16px rgba(232,103,10,0.35)",
+      }}
+    >
+      Try Another Center
+    </button>
+    <p style={{ textAlign: "center", margin: 0 }}>
       <a
         href={PHONE.tel}
         style={{
-          // hardcoded-color-allow-next-line
-          flex: 1, minHeight: 56, background: "#161B3A", border: "1px solid #3A4360",
-          color: "var(--brand-cream)", borderRadius: 8, fontSize: 15, fontWeight: 700,
-          fontFamily: "Inter, sans-serif", cursor: "pointer", minWidth: 120,
-          display: "flex", alignItems: "center", justifyContent: "center",
-          textDecoration: "none", padding: "12px 16px",
+          color: "rgba(245,243,240,0.70)", fontSize: 14, fontWeight: 600,
+          fontFamily: "Inter, sans-serif", textDecoration: "underline",
+          textUnderlineOffset: 3,
         }}
       >
-        Request a callback
+        Or call us: {PHONE.display}
       </a>
-    </div>
+    </p>
   </div>
 );
 
@@ -102,7 +102,7 @@ const BookSchedule = () => {
 
   const firstName = identity?.firstName || "";
   const lastName = identity?.lastName || "";
-  const heading = "Your 60-Minute Assessment";
+  const heading = firstName ? `${firstName}, pick your time.` : "Your 60-Minute Assessment";
 
   // Resolve location data for compact bar
   const locationSlug = location ? SLUG_MAP[location] : null;

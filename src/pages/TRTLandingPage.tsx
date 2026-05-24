@@ -8,6 +8,7 @@ import { TRTManifesto } from "@/components/landing/trt/TRTManifesto";
 import { TRTMarquee } from "@/components/landing/trt/TRTMarquee";
 import { TRTPillars } from "@/components/landing/trt/TRTPillars";
 import { TRTFinalCTA } from "@/components/landing/trt/TRTFinalCTA";
+import { TRTEverythingIncluded } from "@/components/landing/trt/TRTEverythingIncluded";
 import { TRTLocations } from "@/components/landing/trt/TRTLocations";
 import { TRTFAQ } from "@/components/landing/trt/TRTFAQ";
 import { TRTFooter } from "@/components/landing/trt/TRTFooter";
@@ -34,6 +35,7 @@ const TRTLandingPage = () => {
       <main className="flex-1">
         <TRTHero headline={{ line1: "VIRGINIA'S CHOICE", line2: "FOR LOW T THERAPY" }} />
         <SectionReveal><CredibilityBand /></SectionReveal>
+        <TRTEverythingIncluded />
         <SectionReveal><TRTManifesto /></SectionReveal>
         <SectionReveal><TRTHowItWorks /></SectionReveal>
         <SectionReveal><TRTResults /></SectionReveal>
