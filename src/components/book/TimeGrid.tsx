@@ -6,10 +6,10 @@
 import { TIMEZONE } from "@/lib/ghlCalendars";
 
 // hardcoded-color-allow-next-line
-const MUTED  = "rgba(255,255,255,0.45)";
+const MUTED  = "var(--c-text-on-light-muted)";
 // hardcoded-color-allow-next-line
-const LINE   = "rgba(255,255,255,0.10)";
-const SURFACE = "var(--brand-navy-deep)";
+const LINE   = "#E5E7EB";
+const SURFACE = "var(--bg-white)";
 const ORANGE  = "var(--brand-cta)";
 
 const fmtTimeParts = (iso: string): { time: string; ampm: string; hour: number } => {
@@ -81,9 +81,9 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
             {/* Period label — 14px, uppercase ok (≤3 words) */}
             <p style={{
               fontSize: 11, fontWeight: 700, letterSpacing: "0.10em",
-              textTransform: "uppercase", color: "rgba(255,255,255,0.50)",
+              textTransform: "uppercase", color: "var(--c-text-on-light-muted)",
               marginBottom: 12, paddingBottom: 0,
-              ...(isFirst ? {} : { borderTop: "1px solid rgba(255,255,255,0.12)", paddingTop: 16, marginTop: 8 }),
+              ...(isFirst ? {} : { borderTop: "1px solid #E5E7EB", paddingTop: 16, marginTop: 8 }),
             }}>
               {GROUP_LABELS[period]}
             </p>
@@ -99,12 +99,12 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
                     aria-pressed={active}
                     onClick={() => onSlotSelect(iso)}
                     style={{
-                      background: active ? ORANGE : "rgba(255,255,255,0.10)",
-                      border: active ? "2px solid var(--brand-cta)" : "1.5px solid rgba(255,255,255,0.28)",
+                              background: active ? ORANGE : "#F4F6FA",
+                      border: active ? "2px solid var(--brand-cta)" : "1.5px solid #D1D5DB",
                       borderRadius: 10,
                       padding: "0 16px",
                       display: "inline-flex", alignItems: "center", gap: 5,
-                      color: active ? "#fff" : "var(--brand-cream)",
+                      color: active ? "#fff" : "var(--brand-navy)",
                       cursor: "pointer",
                       transition: "all 120ms ease",
                       whiteSpace: "nowrap",
@@ -117,7 +117,7 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
                       {time}
                     </span>
                     {/* hardcoded-color-allow-next-line */}
-                    <span style={{ fontSize: 14, fontWeight: 700, letterSpacing: "0.06em", color: active ? "rgba(255,255,255,0.85)" : MUTED }}>
+                    <span style={{ fontSize: 14, fontWeight: 700, letterSpacing: "0.06em", color: active ? "rgba(255,255,255,0.85)" : "var(--c-text-on-light-muted)" }}>
                       {ampm}
                     </span>
                   </button>

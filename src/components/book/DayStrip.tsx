@@ -9,14 +9,14 @@ import { TIMEZONE } from "@/lib/ghlCalendars";
 import { isSundayInTimeZone } from "@/lib/etDate";
 
 // Brand tokens (duplicated from GHLDayView — intentional; each file is self-contained)
-const INK       = "var(--brand-cream)";
+const INK       = "var(--brand-navy-deep)";
 // hardcoded-color-allow-next-line
-const INK_SOFT  = "rgba(255,255,255,0.70)";
+const INK_SOFT  = "#374151";
 // hardcoded-color-allow-next-line
-const MUTED     = "rgba(255,255,255,0.45)";
+const MUTED     = "var(--c-text-on-light-muted)";
 // hardcoded-color-allow-next-line
-const BORDER    = "rgba(255,255,255,0.18)";
-const SURFACE   = "var(--brand-navy-deep)";
+const BORDER    = "#D1D5DB";
+const SURFACE   = "var(--bg-white)";
 const ORANGE    = "var(--brand-cta)";
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -214,8 +214,8 @@ const DayStrip = ({
                       minHeight: 72,
                       scrollSnapAlign: "start",
                       // hardcoded-color-allow-next-line
-                      background: selected ? ORANGE : (isSunday || !available) ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.07)",
-                      border: selected ? `2px solid ${ORANGE}` : (isSunday || !available) ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(255,255,255,0.22)",
+                      background: selected ? ORANGE : (isSunday || !available) ? "#F4F5F8" : SURFACE,
+                      border: selected ? `2px solid ${ORANGE}` : `1px solid ${BORDER}`,
                       borderRadius: 14,
                       padding: "10px 6px 12px",
                       color: selected ? "var(--c-text-on-dark)" : (isSunday || !available) ? MUTED : INK,
