@@ -13,7 +13,7 @@
  */
 
 import { createClient } from "npm:@supabase/supabase-js@2";
-import { corsHeaders, jsonResponse, corsResponse } from "../_shared/cors.ts";
+import { corsHeadersFor, jsonResponse, corsResponse } from "../_shared/cors.ts";
 import { sendEmail } from "../_shared/sendEmail.ts";
 
 const log = {
@@ -54,7 +54,7 @@ async function sendAlert(_key: string, subject: string, html: string): Promise<v
 }
 
 Deno.serve(async (req) => {
-  if (req.method === "OPTIONS") return corsResponse();
+  if (req.method === "OPTIONS") return corsResponse(req);
 
   const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
   const serviceKey  = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
@@ -116,8 +116,28 @@ Deno.serve(async (req) => {
     }
   }
 
+  // ── Check 3: ghl-sync watchdog — no successful run in last 70 minutes ───
+  const syncWatchdogThreshold = new Date(now.getTime() - 70 * 60 * 1000).toISOString();
+  const { data: recentSyncRun } = await sb
+    .from("ghl_sync_runs")
+    .select("id, finished_at, status")
+    .eq("status", "ok")
+    .gte("started_at", syncWatchdogThreshold)
+    .order("started_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (!recentSyncRun) {
+    const key = alertKey("sync_watchdog", "global");
+    if (shouldAlert(state, key)) {
+      state.last_alerted[key] = now.toISOString();
+      alerts.push(`🔴 <strong>ghl-sync watchdog alert</strong> — no successful sync run in the last 70 minutes. Calendar data may be stale or pg_cron may have stopped.`);
+      log.warn("sync watchdog triggered", { threshold: syncWatchdogThreshold });
+    }
+  }
+
   // ── Send alert email if needed ──────────────────────────────────────────
-  if (alerts.length > 0 && resendKey) {
+  if (alerts.length > 0) {
     const html = `
 <!DOCTYPE html><html><body style="font-family:Inter,Arial,sans-serif;background:#f9fafb;padding:24px;">
 <div style="max-width:560px;margin:0 auto;background:#fff;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden;">
