@@ -35,7 +35,7 @@ export function AppointmentConfirmModal({ open, onOpenChange, selectedSlot, full
             New Patient Consultation (60 min)
           </div>
           {selectedSlot && (
-            <div style={{ fontSize: 15, color: INK, marginBottom: 4 }}>
+            <div style={{ fontSize: 16, color: INK, marginBottom: 4 }}>
               {fmtFullDay(new Date(selectedSlot))} · {fmtTimeParts(selectedSlot).time} {fmtTimeParts(selectedSlot).ampm} ET
             </div>
           )}
@@ -68,7 +68,7 @@ export function AppointmentConfirmModal({ open, onOpenChange, selectedSlot, full
             disabled={submitting || !!confirmCtl.redirect}
             style={{
               width: "100%", minHeight: 52, background: ORANGE, color: "var(--c-text-on-dark)",
-              border: 0, borderRadius: 12, fontSize: 15, fontWeight: 700,
+              border: 0, borderRadius: 12, fontSize: 16, fontWeight: 700,
               letterSpacing: "0.06em", textTransform: "uppercase",
               cursor: submitting ? "wait" : "pointer", opacity: submitting ? 0.6 : 1,
               fontFamily: "Oswald, Inter, sans-serif",

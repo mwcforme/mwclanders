@@ -73,7 +73,7 @@ class BookingErrorBoundary extends React.Component<Props, State> {
             padding: "12px 28px",
             borderRadius: 8,
             fontWeight: 700,
-            fontSize: 15,
+            fontSize: 16,
             textDecoration: "none",
             letterSpacing: "0.04em",
             // hardcoded-color-allow-next-line

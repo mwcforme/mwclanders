@@ -157,7 +157,7 @@ const GHLAccordionView = ({ location, firstName, lastName, email, phone, source,
               background: canConfirm ? ORANGE : "#E5E7EB",
               // hardcoded-color-allow-next-line
               color: canConfirm ? "var(--c-text-on-dark)" : "#5B6271",
-              border: 0, borderRadius: 12, fontSize: 15, fontWeight: 700,
+              border: 0, borderRadius: 12, fontSize: 16, fontWeight: 700,
               letterSpacing: "0.06em", textTransform: "uppercase",
               cursor: canConfirm ? "pointer" : "not-allowed",
               fontFamily: "Oswald, Inter, sans-serif",
