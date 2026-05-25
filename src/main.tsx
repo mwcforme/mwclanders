@@ -1,7 +1,9 @@
 import { createRoot } from "react-dom/client";
+import { lazy, Suspense } from "react";
 // react-helmet-async removed — replaced by useSEO hook (direct DOM manipulation)
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/react";
+// Analytics deferred — they inject scripts via useEffect; no need to block initial render
+const Analytics    = lazy(() => import("@vercel/analytics/react").then(m => ({ default: m.Analytics })));
+const SpeedInsights = lazy(() => import("@vercel/speed-insights/react").then(m => ({ default: m.SpeedInsights })));
 import App from "./App.tsx";
 import "./index.css";
 import { initAttribution } from "./lib/attribution";
@@ -33,7 +35,7 @@ if (typeof window !== "undefined") {
 createRoot(document.getElementById("root")!).render(
   <>
     <App />
-    <Analytics />
-    <SpeedInsights />
+    <Suspense fallback={null}><Analytics /></Suspense>
+    <Suspense fallback={null}><SpeedInsights /></Suspense>
   </>
 );

@@ -136,7 +136,7 @@ export default function BookConfirmed() {
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                     <MapPin size={15} strokeWidth={2} style={{ color: "var(--brand-cta)", flexShrink: 0 }} />
-                    <span style={{ fontSize: 15, fontWeight: 500, color: "rgba(245,243,240,0.85)" }}>{center.city} · In-person · 60 min</span>
+                    <span style={{ fontSize: 16, fontWeight: 500, color: "rgba(245,243,240,0.85)" }}>{center.city} · In-person · 60 min</span>
                   </div>
                   <div style={{ display: "flex", gap: 8, marginTop: 4, flexWrap: "wrap" }}>
                     {/* WCAG AA: all badge colors meet 4.5:1 on navy bg */}
@@ -185,7 +185,7 @@ export default function BookConfirmed() {
             ].map(({ icon, text }, idx, arr) => (
               <div key={text} style={{ display: "flex", alignItems: "center", gap: 12, padding: "14px 20px", borderBottom: idx < arr.length - 1 ? "1px solid #F3F4F6" : "none" }}>
                 <div style={{ width: 36, height: 36, borderRadius: 8, background: "rgba(232,103,10,0.08)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{icon}</div>
-                <span style={{ fontSize: 15, fontWeight: 500, color: "#111827", lineHeight: 1.5 }}>{text}</span>
+                <span style={{ fontSize: 16, fontWeight: 500, color: "#111827", lineHeight: 1.5 }}>{text}</span>
               </div>
             ))}
           </div>
@@ -198,7 +198,7 @@ export default function BookConfirmed() {
                 style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", border: 0 }} />
             </div>
             <div style={{ padding: "16px 24px 20px" }}>
-              <h3 style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 20, color: "var(--brand-navy-deep)", marginBottom: 0 }}>What happens when you walk in. 2 min.</h3>
+              <h2 style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 20, color: "var(--brand-navy-deep)", marginBottom: 0 }}>What happens when you walk in. 2 min.</h2>
             </div>
           </div>
 
@@ -213,7 +213,7 @@ export default function BookConfirmed() {
               ].map(({ n, text }) => (
                 <div key={n} style={{ display: "flex", alignItems: "center", gap: 12 }}>
                   <div style={{ width: 28, height: 28, borderRadius: "50%", background: "var(--brand-cta)", color: "#FFF", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 13, flexShrink: 0 }}>{n}</div>
-                  <p style={{ fontSize: 15, fontWeight: 500, color: "#111827", lineHeight: 1.4, margin: 0 }}>{text}</p>
+                  <p style={{ fontSize: 16, fontWeight: 500, color: "#111827", lineHeight: 1.4, margin: 0 }}>{text}</p>
                 </div>
               ))}
             </div>
@@ -222,7 +222,7 @@ export default function BookConfirmed() {
           {/* 6. Location tile */}
           <div style={{ background: "#FFFFFF", borderRadius: 14, overflow: "hidden", border: "1px solid rgba(255,255,255,0.15)", boxShadow: "0 4px 24px rgba(0,0,0,0.25)" }}>
             <div style={{ padding: "22px 24px 18px" }}>
-              <h3 style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 22, color: "var(--brand-navy-deep)", textTransform: "uppercase", marginBottom: 4 }}>{center.city}</h3>
+              <h2 style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 22, color: "var(--brand-navy-deep)", textTransform: "uppercase", marginBottom: 4 }}>{center.city}</h2>
               <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 16 }}>
                 {/* Drive time row — Navigation icon replaces MapPin to avoid duplicate MapPin icons */}
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -231,13 +231,13 @@ export default function BookConfirmed() {
                 </div>
                 <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
                   <MapPin size={16} strokeWidth={2.5} style={{ color: "var(--brand-cta)", flexShrink: 0, marginTop: 2 }} />
-                  <a href={mapsSearchUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: 15, fontWeight: 600, color: "var(--brand-navy-deep)", textDecoration: "underline", textUnderlineOffset: 3, lineHeight: 1.5 }}>
+                  <a href={mapsSearchUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: 16, fontWeight: 600, color: "var(--brand-navy-deep)", textDecoration: "underline", textUnderlineOffset: 3, lineHeight: 1.5 }}>
                     {center.address}<br />{center.cityStateZip}
                   </a>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <Clock size={16} strokeWidth={2.5} style={{ color: "var(--brand-cta)", flexShrink: 0 }} />
-                  <span style={{ fontSize: 15, fontWeight: 500, color: "#111827" }}>{center.hours}</span>
+                  <span style={{ fontSize: 16, fontWeight: 500, color: "#111827" }}>{center.hours}</span>
                 </div>
               </div>
             </div>
@@ -270,7 +270,7 @@ export default function BookConfirmed() {
           {!emailCaptured && (
             <div style={{ background: "#FFFFFF", borderRadius: 14, padding: "18px 20px", border: "1px solid rgba(255,255,255,0.15)", boxShadow: "0 4px 24px rgba(0,0,0,0.25)" }}>
               {/* WCAG AA: #374151 on white = 9.7:1 — passes. Was #6B7280 = 3.0:1 — failed */}
-              <p style={{ fontFamily: "Inter, sans-serif", fontSize: 15, fontWeight: 700, color: "#111827", marginBottom: 4 }}>
+              <p style={{ fontFamily: "Inter, sans-serif", fontSize: 16, fontWeight: 700, color: "#111827", marginBottom: 4 }}>
                 Send my confirmation
               </p>
               <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "#374151", marginBottom: 12 }}>
