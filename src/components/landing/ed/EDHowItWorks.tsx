@@ -1,5 +1,6 @@
 import { X } from "lucide-react";
 import { COPY } from "@/data/copy";
+import { useScrollToForm } from "@/hooks/useScrollToForm";
 
 const symptoms = [
   "Performance is not what it used to be.",
@@ -28,7 +29,7 @@ const steps = [
 ];
 
 export const EDHowItWorks = () => {
-  const scrollToForm = () => document.getElementById("final-cta")?.scrollIntoView({ behavior: "smooth" });
+  const scrollToForm = useScrollToForm();
 
   const eyebrow = (text: string) => (
     <p style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: "var(--brand-cta-accessible)", borderLeft: "3px solid var(--brand-cta)", paddingLeft: 10, lineHeight: 1, marginBottom: 12 }}>

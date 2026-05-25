@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { ChevronDown } from "lucide-react";
 import { TRT_FAQS, type FaqItem } from "@/data/faqs";
 import { COPY } from "@/data/copy";
+import { useScrollToForm } from "@/hooks/useScrollToForm";
 
 interface TRTFAQProps {
   extraFaqs?: FaqItem[];
@@ -12,9 +13,7 @@ export const TRTFAQ = ({ extraFaqs }: TRTFAQProps = {}) => {
   const [open, setOpen] = useState<number | null>(0);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  const scrollToForm = () => {
-    document.getElementById("hero-form")?.scrollIntoView({ behavior: "smooth", block: "center" });
-  };
+  const scrollToForm = useScrollToForm();
 
   const handleToggle = (i: number) => {
     const isOpening = open !== i;

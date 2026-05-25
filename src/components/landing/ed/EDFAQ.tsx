@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { ChevronDown } from "lucide-react";
 import { COPY } from "@/data/copy";
+import { useScrollToForm } from "@/hooks/useScrollToForm";
 
 const faqs = [
   {
@@ -37,10 +38,7 @@ export const EDFAQ = () => {
   const [open, setOpen] = useState<number | null>(0);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  const scrollToBooking = () => {
-    const el = document.getElementById("booking") || document.getElementById("final-cta");
-    el?.scrollIntoView({ behavior: "smooth" });
-  };
+  const scrollToBooking = useScrollToForm();
 
   const handleToggle = (i: number) => {
     const isOpening = open !== i;
