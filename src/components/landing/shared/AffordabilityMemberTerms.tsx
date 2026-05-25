@@ -25,7 +25,7 @@ export const AffordabilityMemberTerms = () => {
         </div>
         <div className="mt-8 flex flex-wrap items-center justify-between gap-4"
           style={{ background: "var(--brand-cream)", borderRadius: "var(--radius-md)", padding: "20px 24px" }}>
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 15, color: "var(--c-text-on-light)", margin: 0, lineHeight: 1.5 }}>
+          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 16, color: "var(--c-text-on-light)", margin: 0, lineHeight: 1.5 }}>
             As little as <strong>$179/month</strong> with financing, subject to credit approval.
           </p>
           <button type="button" onClick={() => navigate("/book/location")}

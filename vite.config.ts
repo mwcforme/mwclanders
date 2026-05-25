@@ -36,7 +36,7 @@ export default defineConfig(({ mode }) => ({
     chunkSizeWarningLimit: 600,
     // Drop console.log in production only
     esbuildOptions: {
-      drop: [],  // keep warns/errors; use define instead
+      drop: ["debugger"],  // strip debugger statements; keep console.error for prod monitoring
       pure: ["console.log", "console.warn", "console.info"],
       legalComments: "none",
     },

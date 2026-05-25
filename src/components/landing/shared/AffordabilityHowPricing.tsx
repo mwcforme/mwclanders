@@ -29,7 +29,7 @@ export const AffordabilityHowPricing = () => (
               {title}
             </h3>
             <p style={{
-              fontFamily: "Inter, sans-serif", fontSize: 15,
+              fontFamily: "Inter, sans-serif", fontSize: 16,
               color: "var(--c-text-on-light-muted)", lineHeight: 1.6, margin: 0,
             }}>
               {body}

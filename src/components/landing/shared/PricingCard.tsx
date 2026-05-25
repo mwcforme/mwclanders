@@ -28,7 +28,7 @@ export const PricingCard = ({ term, badge, desc, featured }: MembershipTerm) => 
       {term}
     </h3>
     <p style={{
-      fontFamily: "Inter, sans-serif", fontSize: 15,
+      fontFamily: "Inter, sans-serif", fontSize: 16,
       color: featured ? "var(--c-text-on-dark-muted)" : "var(--c-text-on-light-muted)",
       lineHeight: 1.5, margin: 0,
     }}>

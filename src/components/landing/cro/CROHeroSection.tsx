@@ -86,7 +86,7 @@ export const CROHeroSection = () => {
               alignSelf: "flex-start", background: "transparent",
               // hardcoded-color-allow-next-line
               border: `1.5px solid rgba(232,103,10,0.55)`, borderRadius: 8, padding: "11px 20px",
-              color: "var(--brand-cta)", fontFamily: "Inter, sans-serif", fontSize: 15, fontWeight: 700,
+              color: "var(--brand-cta)", fontFamily: "Inter, sans-serif", fontSize: 16, fontWeight: 700,
               letterSpacing: "0.03em", transition: "border-color 150ms ease, background 150ms ease",
             }}
             onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(232,103,10,0.10)"; e.currentTarget.style.borderColor = "var(--brand-cta)"; }}
