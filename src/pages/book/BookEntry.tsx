@@ -89,24 +89,55 @@ export default function BookEntry() {
     if (processed.current) return;
     processed.current = true;
 
-    const token     = searchParams.get("t")?.trim() ?? "";
-    const debugMode = searchParams.get("debug") === "1";
+    // The <head> PHI guard in index.html strips the query string from every
+    // /book/* URL *before* React mounts and stashes the original search on
+    // window.__MWC_BOOK_ENTRY_SEARCH__. Prefer that, fall back to React's
+    // useSearchParams (covers dev / no-guard scenarios).
+    const preservedSearch =
+      typeof window !== "undefined"
+        ? (window as { __MWC_BOOK_ENTRY_SEARCH__?: string }).__MWC_BOOK_ENTRY_SEARCH__
+        : undefined;
+    const effectiveParams = preservedSearch
+      ? new URLSearchParams(preservedSearch)
+      : searchParams;
+
+    const token     = effectiveParams.get("t")?.trim() ?? "";
+    const debugMode = effectiveParams.get("debug") === "1";
+    const host      = typeof window !== "undefined" ? window.location.host : "";
+
+    // eslint-disable-next-line no-console
+    console.info("[BookEntry] handoff start", {
+      host,
+      debugMode,
+      tokenPresent:  Boolean(token),
+      tokenLength:   token.length || null,
+      sourceOfQuery: preservedSearch ? "head-guard" : "useSearchParams",
+    });
 
     const buildDebug = (reason: string, identity?: Partial<TokenIdentity>): DebugInfo => ({
       reason,
       tokenPresent: Boolean(token),
       tokenLength:  token.length || null,
-      host:         typeof window !== "undefined" ? window.location.host : "",
+      host,
       identity,
     });
 
     const fail = (reason: string) => {
-      if (import.meta.env.DEV) console.warn("[BookEntry] handoff rejected:", reason);
+      // eslint-disable-next-line no-console
+      console.error("[BookEntry] handoff rejected", {
+        reason,
+        debugMode,
+        tokenPresent: Boolean(token),
+        tokenLength:  token.length || null,
+        host,
+      });
       if (debugMode) {
         setDebugInfo(buildDebug(reason));
         return;
       }
-      navigate("/", { replace: true });
+      // Don't dump the user on the homepage — keep them in the funnel via
+      // the fallback lets-talk page, with the reason flagged for support.
+      navigate(`/book/lets-talk?handoff=${encodeURIComponent(reason)}`, { replace: true });
     };
 
     if (!token) {
@@ -114,9 +145,9 @@ export default function BookEntry() {
       return;
     }
 
-    // Strip token from URL immediately — it's single-use, but no reason to
-    // leave it in history or referrer headers.
-    if (!debugMode) {
+    // URL is already sanitized by the head guard in production. In dev with
+    // no guard, strip the token from history ourselves (unless debugging).
+    if (!debugMode && !preservedSearch && typeof window !== "undefined") {
       window.history.replaceState({}, "", "/book/entry");
     }
 
@@ -127,6 +158,18 @@ export default function BookEntry() {
       }
 
       const { identity } = result;
+
+      // eslint-disable-next-line no-console
+      console.info("[BookEntry] handoff ok", {
+        host,
+        hasFirstName: Boolean(identity.first_name),
+        hasPhone:     Boolean(identity.phone),
+        hasEmail:     Boolean(identity.email),
+        hasContactId: Boolean(identity.contact_id),
+        service:      identity.service ?? null,
+        location:     identity.location ?? null,
+        source:       identity.source ?? null,
+      });
 
       const store = useBookingStore.getState();
       store.reset();
@@ -153,6 +196,7 @@ export default function BookEntry() {
 
       navigate("/book/symptom", { replace: true });
     }).catch((err) => {
+      // eslint-disable-next-line no-console
       console.error("[BookEntry] unexpected error", err);
       fail("unexpected_error");
     });
