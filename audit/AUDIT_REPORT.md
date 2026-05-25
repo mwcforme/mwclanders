@@ -205,3 +205,86 @@ The MWC booking stack is well-structured with solid test coverage (461 tests, 10
 | Medium | 5 | 3 (consent, phone validation, tracing) |
 | Low | 3 | 2 (ghl-sync-validate cron, XFF) |
 | **Total** | **15** | **10** |
+
+---
+
+## Pass 2 Verification Report (2026-05-25 ~20:45 UTC)
+
+**Auditor:** SRE Agent (iter=2)
+
+### Fixes Verified from Pass 1
+
+| Finding | Pass 1 Fix | Pass 2 Verification | Result |
+|---------|-----------|---------------------|--------|
+| slot-monitor alerts broken | Removed `resendKey` guard | grep confirms `sendEmail` used directly | ✅ VERIFIED |
+| CI/CD pipeline missing | `.github/workflows/ci.yml` added | File present, pipeline structure confirmed | ✅ VERIFIED |
+| CORS wildcard `*` | Origin allowlist in `cors.ts` | `corsHeadersFor(req)` used in all browser-facing fns | ✅ VERIFIED |
+| No body size limit | 10KB content-length check | `curl` oversized payload → HTTP 413 | ✅ VERIFIED |
+| No consent validation | Added to `validate()` | `consent=false` POST → HTTP 400 | ✅ VERIFIED |
+| Phone format validation | Regex check added | Confirmed in source | ✅ VERIFIED |
+| x-request-id tracing | `crypto.randomUUID()` added | `request_id` in response body | ✅ VERIFIED |
+| XFF extraction (trust last) | Use last IP in chain | Code confirmed | ✅ VERIFIED |
+| Admin password hardcoded | Moved to `VITE_ADMIN_PASSWORD` env var | `import.meta.env.VITE_ADMIN_PASSWORD` confirmed; fallback `1Menshealth` still present | ⚠️ PARTIAL — SSO needed by 2026-06-01 |
+| ghl_sync_runs RLS | Migration written in pass 1 | **Migration was NOT pushed to live DB in pass 1** — pushed now; anon returns `[]` | ✅ FIXED in pass 2 |
+
+### New Findings and Fixes in Pass 2
+
+**[CRITICAL — FIXED] lead-intake BOOT_ERROR — duplicate `const { firstName }` causes Deno SyntaxError**
+
+- **Evidence:** `supabase/functions/lead-intake/index.ts` had `const { firstName, lastName } = splitName(...)` at line ~253 and `const { firstName } = splitName(...)` at line ~287 in the same `try` block scope. Deno's strict mode throws a SyntaxError at parse time; the function returned HTTP 503 `{"code":"BOOT_ERROR"}` on every request.
+- **Impact:** The live lead-intake endpoint was completely broken — all form submissions to the booking funnel returned 503. Zero leads captured during the outage window.
+- **Fix:** Removed duplicate `const { firstName }` declaration (line 287). Deployed as version 9.
+- **Verification:** `consent=false` → 400, `oversized` → 413, `valid lead` → 200. All confirmed.
+
+**[MEDIUM — FIXED] Missing CSP and Permissions-Policy headers**
+
+- **Fix:** Added to `vercel.json` catch-all source `/(.*)`; full CSP with script/style/font/connect allowlists and `Permissions-Policy` restricting camera, microphone, geolocation, payment.
+- **Verification:** Headers now present in vercel.json; will appear on next Vercel deploy.
+
+**[MEDIUM — FIXED] ghl_sync_runs RLS migration not applied to live DB**
+
+- **Root cause:** `supabase db push` was never run in pass 1; migrations existed locally but not remotely.
+- **Fix:** Ran `supabase db push --linked`; pushed `20260525010000_rls_hardening.sql` and `20260525010100_missing_indexes.sql`.
+- **Verification:** Anon query → `[]`; ghl_sync_runs data no longer exposed.
+
+**[NEW — ADDED] Phone-based persistent rate limit table**
+
+- **Migration:** `20260525004000_phone_rate_limit.sql` — `lead_rate_limit` table with deny-all RLS.
+- **Note:** Edge function does not yet USE this table (in-memory only). Wiring the function to use it is a future task.
+
+**[MEDIUM — VERIFIED] ghl_free_slots write protection**
+
+- **Verification:** Anon `POST /rest/v1/ghl_free_slots` → HTTP 401 "new row violates row-level security policy". Read-only access confirmed correct.
+
+### Open Items After Pass 2
+
+| # | Severity | Item | Target |
+|---|----------|------|--------|
+| 1 | **Critical** | Admin auth via VITE_ env var — still compiled into client bundle. Needs Supabase Auth or SSO. | 2026-06-01 |
+| 2 | High | `LEAD_INTAKE_TOKEN` still optional in code — function starts without it | Next sprint |
+| 3 | Medium | Phone rate limit table created but not wired into lead-intake function | Next sprint |
+| 4 | Low | vendor-supabase gzip 54 KB exceeds 80 KB target nominally | Low priority |
+
+### Pass 2 Live Endpoint Test Results
+
+| Test | Expected | Actual | Result |
+|------|----------|--------|--------|
+| oversized payload (>10KB) | HTTP 413 | HTTP 413 | ✅ |
+| consent=false | HTTP 400 | HTTP 400 | ✅ |
+| valid lead (consent=true) | HTTP 200 | HTTP 200 | ✅ |
+| anon read lead_captures | [] | [] | ✅ |
+| anon read wp_intake_tokens | [] | [] | ✅ |
+| anon read booking_event_log | [] | [] | ✅ |
+| anon read ghl_sync_runs | [] | [] | ✅ (was leaking in pass 1) |
+| anon read ghl_free_slots | rows | rows | ✅ (intentional) |
+| anon write ghl_free_slots | HTTP 401 | HTTP 401 | ✅ |
+
+### Pass 2 Build/Test Results
+
+| Metric | Value |
+|--------|-------|
+| Tests | 461 passed, 0 failed |
+| Lint | 0 warnings |
+| TypeScript | 0 errors |
+| Build | ✅ success |
+| Critical path gzip | 78.5 KB |

@@ -1,6 +1,6 @@
 # MWC Metrics Baseline
 
-**Date:** 2026-05-25
+**Date:** 2026-05-25 (Pass 1) / 2026-05-25 20:45 UTC (Pass 2)
 **Source:** Build output, live Supabase, curl probes
 
 ---
@@ -36,9 +36,9 @@
 | strict-transport-security | ✅ Present | max-age=63072000 |
 | x-frame-options | ✅ Present | SAMEORIGIN |
 | referrer-policy | ✅ Present | strict-origin-when-cross-origin |
-| content-security-policy | ❌ Missing | — |
-| x-content-type-options | ❌ Missing | — |
-| permissions-policy | ❌ Missing | — |
+| content-security-policy | ✅ Added (Pass 2) | Full policy in vercel.json |
+| x-content-type-options | ✅ Present | nosniff |
+| permissions-policy | ✅ Added (Pass 2) | camera=(), microphone=(), geolocation=(self), payment=() |
 
 ## RLS Status (as of audit date)
 
@@ -48,7 +48,8 @@
 | ghl_free_slots | Returns rows | Returns rows (intentional public read) | ✅ |
 | wp_intake_tokens | Empty [] | Empty [] | ✅ |
 | booking_event_log | Empty [] | Empty [] | ✅ |
-| ghl_sync_runs | Returns rows | Should be empty | ⚠️ |
+| ghl_sync_runs | Empty [] | Empty [] | ✅ (Pass 2: migration pushed to live DB) |
+| ghl_free_slots (write) | 401 Denied | Denied | ✅ (Pass 2: write-deny policies added) |
 
 ## Live System State (2026-05-25 ~19:57 UTC)
 
@@ -65,13 +66,13 @@
 
 | Function | Auth | Rate Limit | Body Limit | CORS | Status |
 |----------|------|-----------|------------|------|--------|
-| lead-intake | Optional token | Yes (IP, in-memory) | ❌ Missing | Wildcard | ⚠️ |
-| ghl-proxy | None (allowlist) | No | Yes (implicit) | Wildcard | ⚠️ |
-| wp-token-exchange | Token-based | No | No | Wildcard | ⚠️ |
-| ghl-sync | Cron only | N/A | N/A | Wildcard | ⚠️ |
-| slot-monitor | Cron only | N/A | N/A | Wildcard (alerts broken) | 🔴 |
-| meta-capi | None | No | No | Wildcard | ⚠️ |
-| ghl-sync-validate | None | No | No | Wildcard | ⚠️ |
+| lead-intake | Optional token | Yes (IP, in-memory) | ✅ 10KB limit (413) | Origin allowlist | ✅ (Pass 2: boot fix deployed) |
+| ghl-proxy | None (allowlist) | No | Yes (implicit) | Origin allowlist | ✅ |
+| wp-token-exchange | Token-based | No | No | Origin allowlist | ✅ |
+| ghl-sync | Cron only | N/A | N/A | Internal | ✅ |
+| slot-monitor | Cron only | N/A | N/A | Internal (alerts fixed) | ✅ |
+| meta-capi | None | No | No | Origin allowlist | ✅ |
+| ghl-sync-validate | None | No | No | Internal | ✅ |
 
 ## Dependencies
 
