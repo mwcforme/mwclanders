@@ -19,7 +19,6 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useBookingStore, isKnownService } from "@/domain/booking/bookingStore";
 import { PHONE }                            from "@/lib/constants";
-import { supabase }                         from "@/integrations/supabase/client";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -42,44 +41,41 @@ interface DebugInfo {
   identity?:      Partial<TokenIdentity>;
 }
 
+const TOKEN_EXCHANGE_URL =
+  "https://yvuwzaxnyxoejwzqfbdf.supabase.co/functions/v1/wp-token-exchange";
+
 // ── Token exchange ────────────────────────────────────────────────────────────
 
 async function exchangeToken(token: string): Promise<
   | { ok: true;  identity: TokenIdentity }
   | { ok: false; reason: string }
 > {
-  // Use supabase.functions.invoke (handles CORS/auth headers correctly).
-  // For non-2xx responses, supabase-js wraps them in FunctionsHttpError where
-  // the real status lives on error.context (the underlying Response object).
-  let data: Record<string, unknown> | null = null;
-  let error: unknown = null;
+  let resp: Response;
   try {
-    const result = await supabase.functions.invoke("wp-token-exchange", {
-      body: { token },
+    resp = await fetch(TOKEN_EXCHANGE_URL, {
+      method: "POST",
+      mode: "cors",
+      // text/plain avoids a browser preflight and this function only needs
+      // a JSON body; no auth headers are needed for an opaque single-use token.
+      headers: { "Content-Type": "text/plain;charset=UTF-8" },
+      body: JSON.stringify({ token }),
     });
-    data  = (result.data as Record<string, unknown> | null) ?? null;
-    error = result.error;
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error("[BookEntry] network error contacting wp-token-exchange", err);
     return { ok: false, reason: "network_error" };
   }
 
-  if (error) {
-    const ctx = (error as { context?: Response }).context;
-    const status = ctx?.status ?? (error as { status?: number }).status ?? 0;
-    let body: Record<string, unknown> = {};
-    if (ctx && typeof ctx.json === "function") {
-      try { body = await ctx.clone().json(); } catch { /* ignore */ }
-    }
+  const data = await resp.clone().json().catch(() => null) as Record<string, unknown> | null;
+
+  if (!resp.ok) {
     // eslint-disable-next-line no-console
-    console.error("[BookEntry] wp-token-exchange error", { status, body, error });
-    if (status === 410) return { ok: false, reason: "token_expired_or_used" };
-    if (status === 404) return { ok: false, reason: "token_not_found" };
-    if (status === 400) return { ok: false, reason: "bad_request" };
-    if (status === 401 || status === 403) return { ok: false, reason: "unauthorized" };
-    if (status === 0) return { ok: false, reason: "network_error" };
-    return { ok: false, reason: `exchange_error_${status}` };
+    console.error("[BookEntry] wp-token-exchange error", { status: resp.status, body: data });
+    if (resp.status === 410) return { ok: false, reason: "token_expired_or_used" };
+    if (resp.status === 404) return { ok: false, reason: "token_not_found" };
+    if (resp.status === 400) return { ok: false, reason: "bad_request" };
+    if (resp.status === 401 || resp.status === 403) return { ok: false, reason: "unauthorized" };
+    return { ok: false, reason: `exchange_error_${resp.status}` };
   }
 
   if (!data?.ok || !data?.identity) {
