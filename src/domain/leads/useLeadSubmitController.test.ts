@@ -6,7 +6,7 @@ import { describe, it, expect, vi, type Mock } from "vitest";
 import { renderHook, act } from "@testing-library/react";
 import { createElement } from "react";
 import { MemoryRouter } from "react-router-dom";
-import { z } from "zod";
+import { m } from "@/lib/miniSchema";
 import type { LeadInput, LeadResult, ILeadSubmitter } from "@/services/contracts/ILeadSubmitter";
 import type { IAppointmentBooker } from "@/services/contracts/IAppointmentBooker";
 import type { IAnalytics } from "@/services/contracts/IAnalytics";
@@ -33,13 +33,13 @@ vi.mock("@/lib/attribution", () => ({
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
-const simpleSchema = z.object({
-  name: z.string().min(1),
-  email: z.string().email(),
-  phone: z.string().min(10),
+const simpleSchema = m.object({
+  name: m.str().min(1, "Name required"),
+  email: m.str().email("Valid email required"),
+  phone: m.str().min(10, "Phone too short"),
 });
 
-type SimpleInput = z.infer<typeof simpleSchema>;
+type SimpleInput = { name: string; email: string; phone: string };
 
 function makeLeadSubmitter(override?: Partial<ILeadSubmitter>): ILeadSubmitter {
   return {

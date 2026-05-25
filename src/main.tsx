@@ -1,9 +1,7 @@
 import { createRoot } from "react-dom/client";
-import { lazy, Suspense } from "react";
 // react-helmet-async removed — replaced by useSEO hook (direct DOM manipulation)
-// Analytics deferred — they inject scripts via useEffect; no need to block initial render
-const Analytics    = lazy(() => import("@vercel/analytics/react").then(m => ({ default: m.Analytics })));
-const SpeedInsights = lazy(() => import("@vercel/speed-insights/react").then(m => ({ default: m.SpeedInsights })));
+// @vercel/analytics and @vercel/speed-insights replaced with native script injection
+// (saves ~14KB raw from index chunk; same auto-tracking behavior)
 import App from "./App.tsx";
 import "./index.css";
 import { initAttribution } from "./lib/attribution";
@@ -32,10 +30,37 @@ if (typeof window !== "undefined") {
   }
 }
 
-createRoot(document.getElementById("root")!).render(
-  <>
-    <App />
-    <Suspense fallback={null}><Analytics /></Suspense>
-    <Suspense fallback={null}><SpeedInsights /></Suspense>
-  </>
-);
+// ── Vercel Analytics + Speed Insights: native script injection ─────────────
+// Replaces @vercel/analytics/react and @vercel/speed-insights/react React components.
+// The scripts themselves load asynchronously; no impact on LCP or TBT.
+if (typeof window !== "undefined") {
+  // Initialize queues (consumed by deferred scripts)
+  (window as { va?: unknown }).va = function (...args: unknown[]) {
+    ((window as { vaq?: unknown[] }).vaq = (window as { vaq?: unknown[] }).vaq ?? []).push(args);
+  };
+  (window as { si?: unknown }).si = function (...args: unknown[]) {
+    ((window as { siq?: unknown[] }).siq = (window as { siq?: unknown[] }).siq ?? []).push(args);
+  };
+
+  // Inject scripts after first interaction to keep TBT at zero
+  const injectVercel = () => {
+    const inject = (src: string, attrs: Record<string, string>) => {
+      if (document.head.querySelector(`script[src*="${src}"]`)) return;
+      const s = document.createElement("script");
+      s.src = src;
+      s.defer = true;
+      Object.entries(attrs).forEach(([k, v]) => s.setAttribute(k, v));
+      document.head.appendChild(s);
+    };
+    inject("/_vercel/insights/script.js",       { "data-sdkn": "@vercel/analytics/react",      "data-sdkv": "2.0.1" });
+    inject("/_vercel/speed-insights/script.js", { "data-sdkn": "@vercel/speed-insights/react", "data-sdkv": "2.0.0" });
+  };
+  // Fire after first user gesture OR after 5s, whichever is first
+  const once = { once: true, passive: true } as const;
+  ["click", "scroll", "keydown", "touchstart"].forEach(e =>
+    document.addEventListener(e, injectVercel, once)
+  );
+  setTimeout(injectVercel, 5000);
+}
+
+createRoot(document.getElementById("root")!).render(<App />);

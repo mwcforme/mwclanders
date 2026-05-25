@@ -49,8 +49,7 @@ export default defineConfig(({ mode }) => ({
           "vendor-router": ["react-router-dom"],
           // Supabase — network heavy, separate chunk
           "vendor-supabase": ["@supabase/supabase-js"],
-          // Form + validation
-          "vendor-forms": ["zod"],
+          // vendor-forms removed — zod replaced by miniSchema (no external dep)
           // Tiny utilities — always needed, very cheap (<5KB)
           "vendor-utils": ["clsx", "tailwind-merge", "class-variance-authority"],
           // Heavier UI primitives — only loaded when a route that needs them loads

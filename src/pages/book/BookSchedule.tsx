@@ -46,7 +46,7 @@ const NoAvailFallback = ({ onChangeCenter }: { onChangeCenter: () => void }) => 
     borderRadius: 10, padding: 16,
     fontFamily: "Inter, sans-serif",
   }}>
-    <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 15, color: "var(--brand-cream)", marginBottom: 8 }}>
+    <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 16, color: "var(--brand-cream)", marginBottom: 8 }}>
       No times for this day
     </p>
     <p style={{ fontSize: 16, color: "rgba(245,243,240,0.85)", marginBottom: 16, fontWeight: 500, lineHeight: 1.6 }}>
@@ -59,7 +59,7 @@ const NoAvailFallback = ({ onChangeCenter }: { onChangeCenter: () => void }) => 
       style={{
         display: "block", width: "100%", minHeight: 56,
         background: "var(--brand-cta)", border: "none",
-        color: "#FFFFFF", borderRadius: 8, fontSize: 15, fontWeight: 700,
+        color: "#FFFFFF", borderRadius: 8, fontSize: 16, fontWeight: 700,
         fontFamily: "Inter, sans-serif", cursor: "pointer",
         padding: "12px 16px", marginBottom: 12,
         // hardcoded-color-allow-next-line
@@ -214,7 +214,7 @@ const BookSchedule = () => {
             }}>
               <MapPin size={15} strokeWidth={2} style={{ color: "var(--brand-cta)", flexShrink: 0 }} />
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: 15, fontWeight: 700, color: "#0B1029", lineHeight: 1.3 }}>
+                <div style={{ fontSize: 16, fontWeight: 700, color: "#0B1029", lineHeight: 1.3 }}>
                   {locationData.name.replace("Men's Wellness Centers, ", "")}
                 </div>
                 <div style={{ fontSize: 14, color: "#374151", marginTop: 2, lineHeight: 1.4, fontWeight: 500 }}>
@@ -252,7 +252,7 @@ const BookSchedule = () => {
           </h1>
           {/* Trust line — highest-value compliance cue. Styled prominently, not as throwaway subtitle. */}
           {/* No orange here — orange is reserved for the Next available CTA card only. */}
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 15, color: "rgba(255,255,255,0.90)", margin: 0, fontWeight: 600, lineHeight: 1.5, letterSpacing: "0.01em" }}>
+          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 16, color: "rgba(255,255,255,0.90)", margin: 0, fontWeight: 600, lineHeight: 1.5, letterSpacing: "0.01em" }}>
             Licensed Virginia provider · Same-day labs
           </p>
         </section>
@@ -333,7 +333,7 @@ const BookSchedule = () => {
                       padding: "14px 16px", borderRadius: 8,
                       // hardcoded-color-allow-next-line
                       border: "1px solid #2B3247", background: "var(--brand-navy-deep)",
-                      color: "var(--brand-cream)", fontSize: 15, fontWeight: 600,
+                      color: "var(--brand-cream)", fontSize: 16, fontWeight: 600,
                       textAlign: "left", cursor: "pointer",
                       fontFamily: "Inter, sans-serif",
                     }}
