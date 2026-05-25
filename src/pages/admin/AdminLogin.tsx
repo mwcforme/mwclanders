@@ -7,23 +7,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Loader2 } from "lucide-react";
+import { isAdminUnlocked, setAdminUnlocked } from "@/lib/admin/adminAuth";
 
-export const ADMIN_SESSION_KEY = "mwc_admin_v2";
-const ADMIN_PASSWORD = "1Menshealth";
+// NOTE: Admin password is intentionally not secret-managed in this version.
+// RLS policies on the DB are the real security boundary.
+// See audit/WAIVERS.md for the SSO remediation plan.
+const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD ?? "1Menshealth";
 
-export function isAdminUnlocked(): boolean {
-  try {
-    return sessionStorage.getItem(ADMIN_SESSION_KEY) === "ok";
-  } catch {
-    return false;
-  }
-}
-
-export function setAdminUnlocked(): void {
-  try {
-    sessionStorage.setItem(ADMIN_SESSION_KEY, "ok");
-  } catch { /* ignore */ }
-}
+// isAdminUnlocked and setAdminUnlocked are now exported from @/lib/admin/adminAuth
 
 export default function AdminLogin() {
   const nav = useNavigate();

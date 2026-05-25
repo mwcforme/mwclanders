@@ -63,7 +63,6 @@ async function exchangeToken(token: string): Promise<
       body: JSON.stringify({ token }),
     });
   } catch (err) {
-    // eslint-disable-next-line no-console
     console.error("[BookEntry] network error contacting wp-token-exchange", err);
     return { ok: false, reason: "network_error" };
   }
@@ -71,7 +70,6 @@ async function exchangeToken(token: string): Promise<
   const data = await resp.clone().json().catch(() => null) as Record<string, unknown> | null;
 
   if (!resp.ok) {
-    // eslint-disable-next-line no-console
     console.error("[BookEntry] wp-token-exchange error", { status: resp.status, body: data });
     if (resp.status === 410) return { ok: false, reason: "token_expired_or_used" };
     if (resp.status === 404) return { ok: false, reason: "token_not_found" };
@@ -116,7 +114,6 @@ export default function BookEntry() {
     const debugMode = effectiveParams.get("debug") === "1";
     const host      = typeof window !== "undefined" ? window.location.host : "";
 
-    // eslint-disable-next-line no-console
     console.info("[BookEntry] handoff start", {
       host,
       debugMode,
@@ -134,7 +131,6 @@ export default function BookEntry() {
     });
 
     const fail = (reason: string) => {
-      // eslint-disable-next-line no-console
       console.error("[BookEntry] handoff rejected", {
         reason,
         debugMode,
@@ -170,7 +166,6 @@ export default function BookEntry() {
 
       const { identity } = result;
 
-      // eslint-disable-next-line no-console
       console.info("[BookEntry] handoff ok", {
         host,
         hasFirstName: Boolean(identity.first_name),
@@ -208,7 +203,6 @@ export default function BookEntry() {
       navigate("/book/schedule", { replace: true });
 
     }).catch((err) => {
-      // eslint-disable-next-line no-console
       console.error("[BookEntry] unexpected error", err);
       fail("unexpected_error");
     });

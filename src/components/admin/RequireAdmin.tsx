@@ -5,7 +5,7 @@
  */
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { isAdminUnlocked } from "@/pages/admin/AdminLogin";
+import { isAdminUnlocked } from "@/lib/admin/adminAuth";
 import { Loader2 } from "lucide-react";
 
 interface Props {
