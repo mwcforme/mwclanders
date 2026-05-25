@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import { HelmetProvider } from "react-helmet-async";
+// react-helmet-async removed — replaced by useSEO hook (direct DOM manipulation)
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import App from "./App.tsx";
@@ -31,9 +31,9 @@ if (typeof window !== "undefined") {
 }
 
 createRoot(document.getElementById("root")!).render(
-  <HelmetProvider>
+  <>
     <App />
     <Analytics />
     <SpeedInsights />
-  </HelmetProvider>
+  </>
 );

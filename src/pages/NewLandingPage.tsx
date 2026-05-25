@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { Helmet } from "react-helmet-async";
+import { useJsonLd } from "@/lib/useSEO";
 import { TRTHeader } from "@/components/landing/trt/TRTHeader";
 import { TRTHero } from "@/components/landing/trt/TRTHero";
 import { CredibilityBand } from "@/components/landing/trt/CredibilityBand";
@@ -32,15 +32,13 @@ const faqSchema = JSON.stringify(buildFaqJsonLd());
 
 const NewLandingPage = () => {
   useScrollDepth();
+  useJsonLd(faqSchema);
   return (
     <div className="min-h-screen flex flex-col" style={{ fontFamily: "Inter, sans-serif", overflowX: "hidden" }}>
       <SEO
         title="Men's Wellness Centers | Low Testosterone Therapy in Virginia"
         description="Provider-supervised testosterone replacement therapy at 3 Virginia locations. Testing and results reviewed in-visit. Walk in today."
       />
-      <Helmet>
-        <script type="application/ld+json">{faqSchema}</script>
-      </Helmet>
       <TRTHeader />
       <main className="flex-1">
         {/* Above fold — eager */}
