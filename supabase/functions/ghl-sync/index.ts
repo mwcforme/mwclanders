@@ -1,6 +1,7 @@
-// ghl-sync — fetches free slots for all centers (prod + stage) and upserts into the cache.
+// ghl-sync — fetches free slots for all prod centers and upserts into the cache.
 // Triggered hourly by pg_cron, or manually via POST. Manual triggers return 202 immediately
 // and run the actual sync as a background task so the admin UI never times out.
+// Stage environment removed 2026-05-25.
 import { corsHeaders, jsonResponse } from "../_shared/cors.ts";
 import { GHL_API_BASE, GHL_API_VERSION } from "../_shared/ghlEnv.ts";
 import { createAdminClient } from "../_shared/supabaseAdmin.ts";
@@ -8,7 +9,7 @@ import { createAdminClient } from "../_shared/supabaseAdmin.ts";
 const TIMEZONE = "America/New_York";
 
 interface Env {
-  name: "prod" | "stage";
+  name: "prod";
   apiKey: string | undefined;
   centers: { key: string; calendarId: string }[];
 }
@@ -17,20 +18,11 @@ function loadEnvs(): Env[] {
   return [
     {
       name: "prod",
-      apiKey: Deno.env.get("GHL_API_KEY"),
+      apiKey: Deno.env.get("GHL_API_KEY_PROD_1") ?? Deno.env.get("GHL_API_KEY"),
       centers: [
         { key: "richmond", calendarId: "1Cfy5JnO2A4ggiZlMVvX" },
         { key: "virginia-beach", calendarId: "4xmnBGMWJ6TVUKcAPpPb" },
         { key: "newport-news", calendarId: "lBaRbjUpEmesxEloFBME" },
-      ],
-    },
-    {
-      name: "stage",
-      apiKey: Deno.env.get("GHL_API_KEY_STAGE_1") ?? Deno.env.get("GHL_API_KEY_STAGE"),
-      centers: [
-        { key: "richmond", calendarId: "CpcOAez2bv3tQTvTdRkO" },
-        { key: "virginia-beach", calendarId: "HbuYjmaupXDpYoiYzvUk" },
-        { key: "newport-news", calendarId: "6cSOOYintvb8y0B42uTc" },
       ],
     },
   ];

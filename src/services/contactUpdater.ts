@@ -32,13 +32,9 @@ async function invokeGhlProxy(
   method: "PUT" | "POST",
   body: Record<string, unknown>,
 ): Promise<void> {
-  // Lazy-import both supabase and the runtime env to keep this module lean.
-  const [{ supabase }, { APP_ENV }] = await Promise.all([
-    import("@/integrations/supabase/client"),
-    import("@/lib/env"),
-  ]);
+  const { supabase } = await import("@/integrations/supabase/client");
   supabase.functions
-    .invoke("ghl-proxy", { body: { path, method, body, __env: APP_ENV } })
+    .invoke("ghl-proxy", { body: { path, method, body } })
     .catch(() => { /* non-blocking - UX must never depend on this */ });
 }
 

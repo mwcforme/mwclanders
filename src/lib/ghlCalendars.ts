@@ -1,5 +1,4 @@
 import { ghl } from "@/lib/ghl";
-import { IS_PROD } from "@/lib/env";
 
 export type LocationKey = "richmond" | "virginia-beach" | "newport-news";
 
@@ -16,14 +15,7 @@ const PROD_CALENDARS: Record<LocationKey, CenterCalendar> = {
   "newport-news": { key: "newport-news", label: "Newport News", calendarId: "lBaRbjUpEmesxEloFBME" },
 };
 
-// Stage calendars (sandbox GHL location CKDRQ73SXifxYOqPLLq0).
-const STAGE_CALENDARS: Record<LocationKey, CenterCalendar> = {
-  richmond: { key: "richmond", label: "Richmond", calendarId: "CpcOAez2bv3tQTvTdRkO" },
-  "virginia-beach": { key: "virginia-beach", label: "Virginia Beach", calendarId: "HbuYjmaupXDpYoiYzvUk" },
-  "newport-news": { key: "newport-news", label: "Newport News", calendarId: "6cSOOYintvb8y0B42uTc" },
-};
-
-export const CENTER_CALENDARS: Record<LocationKey, CenterCalendar> = IS_PROD ? PROD_CALENDARS : STAGE_CALENDARS;
+export const CENTER_CALENDARS: Record<LocationKey, CenterCalendar> = PROD_CALENDARS;
 
 export const TIMEZONE = "America/New_York";
 

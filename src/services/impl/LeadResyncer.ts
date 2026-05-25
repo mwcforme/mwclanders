@@ -3,7 +3,6 @@
  * AdminLeads imports this service; it does not call supabase directly.
  */
 import { supabase } from "@/integrations/supabase/legacy";
-import { APP_ENV } from "@/lib/env";
 
 export interface ResyncResult {
   ok: boolean;
@@ -29,7 +28,6 @@ export async function resyncLead(lead: ResyncLead): Promise<ResyncResult> {
     phone: lead.phone ?? undefined,
     location: lead.location ?? undefined,
     source: lead.source ?? "admin-resync",
-    __env: APP_ENV,
   };
 
   const { data, error } = await supabase.functions.invoke("ghl-proxy", {

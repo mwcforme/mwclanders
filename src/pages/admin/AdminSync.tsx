@@ -3,9 +3,7 @@ import { AdminLayout } from "@/components/admin/AdminLayout";
 import { AdminError, AdminLoading, AdminEmpty } from "@/components/admin/AdminFeedback";
 import { Th, Td, StatusPill } from "@/components/admin/AdminTable";
 import { supabase } from "@/integrations/supabase/legacy";
-import { APP_ENV } from "@/lib/env";
 import { Loader2, RefreshCw, Play, ShieldCheck } from "lucide-react";
-import { EnvChangeHistory } from "@/components/admin/EnvChangeHistory";
 
 interface Run {
   id: string;
@@ -113,9 +111,6 @@ export default function AdminSync() {
         >
           <RefreshCw size={14} /> Refresh
         </button>
-        <span className="ml-auto text-xs uppercase tracking-wider text-white/50">
-          env: {APP_ENV}
-        </span>
       </div>
 
       {error && <AdminError message={error} />}
@@ -185,7 +180,6 @@ export default function AdminSync() {
       </p>
 
       <div className="mt-8">
-        <EnvChangeHistory />
       </div>
     </AdminLayout>
   );

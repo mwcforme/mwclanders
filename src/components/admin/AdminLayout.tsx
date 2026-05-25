@@ -9,7 +9,6 @@ import {
   RefreshCw,
   Users,
 } from "lucide-react";
-import { EnvSwitcher } from "./EnvSwitcher";
 
 const NAV: ReadonlyArray<{ to: string; label: string; icon: typeof LayoutDashboard; end?: boolean }> = [
   { to: "/admin/overview", label: "Overview",  icon: LayoutDashboard, end: true },
@@ -102,7 +101,6 @@ export function AdminLayout({ title, children }: Props) {
               {title}
             </h1>
             <div className="flex items-center gap-4 print:hidden">
-              <EnvSwitcher />
               <div className="text-xs text-white/60">{email}</div>
             </div>
           </header>

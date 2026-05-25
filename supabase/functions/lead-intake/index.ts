@@ -4,7 +4,7 @@
 
 import { mapToCanonical, splitName, type CanonicalLead } from "./mapping.ts";
 import { corsHeaders, jsonResponse, corsResponse } from "../_shared/cors.ts";
-import { detectEnv, tryGetGhlCreds, GHL_API_BASE, GHL_API_VERSION } from "../_shared/ghlEnv.ts";
+import { tryGetGhlCreds, GHL_API_BASE, GHL_API_VERSION } from "../_shared/ghlEnv.ts";
 import { createAdminClient } from "../_shared/supabaseAdmin.ts";
 
 // ---- Structured logger ----
@@ -219,15 +219,15 @@ Deno.serve(async (req) => {
   const captureId = inserted.id as string;
 
   // ---- Forward to GHL (env-aware) ----
-  const appEnv = detectEnv(req, (raw as Record<string, unknown>).__env);
-  const creds = tryGetGhlCreds(appEnv);
+  const creds = tryGetGhlCreds();
   if (!creds) {
     await supabase
       .from("lead_captures")
-      .update({ crm_status: "failed", crm_error: `GHL ${appEnv} credentials not configured` })
+      .update({ crm_status: "failed", crm_error: "GHL credentials not configured" })
       .eq("id", captureId);
     return jsonResponse(502, { ok: false, capture_id: captureId, error: "CRM not configured" });
   }
+  const appEnv = "prod";
   const { apiKey: ghlToken, locationId: ghlLocationId } = creds;
 
   try {

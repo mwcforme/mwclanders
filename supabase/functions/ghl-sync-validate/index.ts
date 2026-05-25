@@ -1,11 +1,10 @@
 // ghl-sync-validate — audits ghl_free_slots + ghl_sync_runs against the canonical
-// prod/stage calendar-id sets so the frontend can rely on env isolation.
+// prod calendar-id set. Stage environment removed 2026-05-25.
 //
 // What it checks:
-//   1. Every distinct calendar_id present in ghl_free_slots maps to a known
-//      calendar in either PROD or STAGE. Unknown ids = drift.
-//   2. Each env (prod, stage) has at least one row per known calendar with
-//      fetched_at within FRESH_WINDOW_MIN. Missing/stale = sync regression.
+//   1. Every distinct calendar_id in ghl_free_slots maps to a known prod calendar.
+//      Unknown ids = drift.
+//   2. Each prod calendar has at least one row with fetched_at within FRESH_WINDOW_MIN.
 //   3. The most recent ghl_sync_runs row finished successfully and is fresh.
 //
 // Result: a single booking_event_log row of event_type='sync_validation' with
@@ -22,16 +21,11 @@ const PROD_CALENDARS: Record<string, string> = {
   "newport-news": "lBaRbjUpEmesxEloFBME",
 };
 
-const STAGE_CALENDARS: Record<string, string> = {
-  richmond: "CpcOAez2bv3tQTvTdRkO",
-  "virginia-beach": "HbuYjmaupXDpYoiYzvUk",
-  "newport-news": "6cSOOYintvb8y0B42uTc",
-};
 
 const FRESH_WINDOW_MIN = 90; // sync runs every 30min, give 3x grace
 
 interface CenterReport {
-  env: "prod" | "stage";
+  env: "prod";
   location: string;
   calendar_id: string;
   slot_count: number;
@@ -75,9 +69,6 @@ Deno.serve(async (req) => {
     ...Object.entries(PROD_CALENDARS).map(([location, id]) =>
       ({ env: "prod" as const, location, calendar_id: id }),
     ),
-    ...Object.entries(STAGE_CALENDARS).map(([location, id]) =>
-      ({ env: "stage" as const, location, calendar_id: id }),
-    ),
   ];
 
   for (const c of allKnown) {
@@ -113,10 +104,7 @@ Deno.serve(async (req) => {
   }
 
   // ---- Drift: unknown calendar ids in the table ----
-  const known = new Set([
-    ...Object.values(PROD_CALENDARS),
-    ...Object.values(STAGE_CALENDARS),
-  ]);
+  const known = new Set(Object.values(PROD_CALENDARS));
   const { data: distinctRows } = await supabase
     .from("ghl_free_slots")
     .select("calendar_id")

@@ -1,4 +1,4 @@
-// ghl-proxy v5 — env-aware (prod vs stage) + route allowlist + manual CORS
+// ghl-proxy v5 — prod only (stage removed 2026-05-25)
 import { corsHeaders, jsonResponse, corsResponse } from "../_shared/cors.ts";
 import { detectEnv, tryGetGhlCreds, GHL_API_BASE, GHL_API_VERSION } from "../_shared/ghlEnv.ts";
 
@@ -165,22 +165,22 @@ function validateBody(method: string, path: string, body: unknown): { ok: true; 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return corsResponse();
 
-  let payload: ProxyRequest & { __env?: unknown };
+  let payload: ProxyRequest;
   try {
     payload = await req.json();
   } catch {
     return jsonResponse(400, { error: "Invalid JSON body" });
   }
 
-  const env = detectEnv(req, payload.__env);
-  const creds = tryGetGhlCreds(env);
+  const creds = tryGetGhlCreds();
   if (!creds) {
-    return jsonResponse(500, { error: `GHL API key for ${env} is not configured` });
+    return jsonResponse(500, { error: "GHL API key not configured" });
   }
   const { apiKey, locationId } = creds;
   if (!locationId) {
-    return jsonResponse(500, { error: `GHL location id for ${env} is not configured` });
+    return jsonResponse(500, { error: "GHL location id not configured" });
   }
+  const env = "prod";
 
   const { path, method = "GET", query = {}, body } = payload;
   if (!path || typeof path !== "string" || !path.startsWith("/")) {

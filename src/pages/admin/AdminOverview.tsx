@@ -1,14 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { supabase } from "@/integrations/supabase/legacy";
-import { APP_ENV } from "@/lib/env";
 import { AlertCircle, Calendar, RefreshCw, TrendingUp, Users } from "lucide-react";
 import { AdminError } from "@/components/admin/AdminFeedback";
 import { StatCard } from "@/components/admin/StatCard";
 import { ToolsGrid } from "@/components/admin/ToolsGrid";
 import { RecentLeadsTable, type RecentLead } from "@/components/admin/RecentLeadsTable";
 import { SyncStatusPanel, type SyncRun } from "@/components/admin/SyncStatusPanel";
-import { EnvironmentPanel } from "@/components/admin/EnvironmentPanel";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -117,7 +115,6 @@ export default function AdminOverview() {
     setTimeout(() => setSyncBusy(false), 1500);
   };
 
-  const isProd = APP_ENV === "prod";
   const todayDelta = stats ? stats.leadsToday - stats.leadsYesterday : 0;
   const minutesSince = Math.floor((Date.now() - lastRefreshed.getTime()) / 60_000);
   const refreshLabel = minutesSince === 0 ? "just now" : `${minutesSince} min ago`;
@@ -130,9 +127,6 @@ export default function AdminOverview() {
           <h2 className="text-[28px] font-bold text-white leading-none" style={{ fontFamily: "Oswald, Inter, sans-serif" }}>
             Dashboard
           </h2>
-          <span className={`rounded-md px-2.5 py-1 text-xs font-bold uppercase tracking-wider ${isProd ? "bg-red-500/20 text-red-300 border border-red-500/40" : "bg-amber-500/15 text-amber-300 border border-amber-500/30"}`}>
-            {APP_ENV}
-          </span>
         </div>
         <div className="flex items-center gap-3">
           <span className="text-xs text-white/50">Last refreshed: {refreshLabel}</span>
@@ -144,12 +138,10 @@ export default function AdminOverview() {
 
       {statsError && <AdminError message={statsError} />}
 
-      {isProd && (
-        <div className="mb-6 flex items-center gap-2 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">
-          <AlertCircle size={16} strokeWidth={1.75} className="shrink-0" />
-          <span>Live data — changes affect real customers</span>
-        </div>
-      )}
+      <div className="mb-6 flex items-center gap-2 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+        <AlertCircle size={16} strokeWidth={1.75} className="shrink-0" />
+        <span>Live data — changes affect real customers</span>
+      </div>
 
       {/* Quick stats */}
       <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -177,7 +169,6 @@ export default function AdminOverview() {
           error={syncError}
           onRunSync={() => void runSync()}
         />
-        <EnvironmentPanel />
       </div>
 
       <ToolsGrid />
