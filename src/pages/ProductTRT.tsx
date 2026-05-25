@@ -6,11 +6,11 @@
  * Sections ordered for maximum conversion from paid media visitors.
  */
 
-import { useCallback, useState, useEffect, useRef } from "react";
+import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  Phone, Check, X, Minus, FlaskConical, Stethoscope, ClipboardList,
-  ArrowRight, Clock,
+  Check, FlaskConical, Stethoscope, ClipboardList,
+  ArrowRight,
 } from "lucide-react";
 
 import { TRTHeroForm }               from "@/components/landing/trt/TRTHeroForm";
@@ -27,7 +27,7 @@ import { TRTCandidateQuiz }          from "@/components/landing/trt/TRTCandidate
 import { TRTVisualTimeline }         from "@/components/landing/trt/TRTVisualTimeline";
 import { TRTStatStrip }              from "@/components/landing/trt/TRTStatStrip";
 import { SEO }                       from "@/components/SEO";
-import { PHONE }                     from "@/lib/constants";
+
 
 /* ─── CSS keyframe animations ────────────────────────────────────────────── */
 const GLOBAL_STYLES = `
