@@ -1,81 +1,53 @@
 import { ChevronRight, LucideIcon } from "lucide-react";
 
 interface OptionRowProps {
-  icon: LucideIcon;
+  icon?: LucideIcon;
   label: string;
   selected: boolean;
   onClick: () => void;
 }
 
-/**
- * Refined survey option row.
- * hardcoded-color-allow-next-line
- * - Soft default border (#E5E7EB) — clean, not boxy
- * - Hover lifts and tints the icon chip
- * - Selection: orange ring + warm cream fill, no thick border jump
- * - 17/20px Inter, 600 weight, generous tap target
- */
 const OptionRow = ({ icon: Icon, label, selected, onClick }: OptionRowProps) => (
   <button
     type="button"
     onClick={onClick}
     aria-pressed={selected}
-    data-selected={selected}
-    className="group flex w-full items-center gap-3 md:gap-4 transition-all focus:outline-none focus-visible:ring-4 min-h-[68px] md:min-h-[84px] px-4 md:px-5 py-3 md:py-4 hover:-translate-y-[1px]"
     style={{
+      width: "100%",
+      minHeight: 64,
+      background: selected ? "rgba(232,103,10,0.10)" : "rgba(255,255,255,0.04)",
+      border: selected ? "1px solid var(--brand-cta)" : "1px solid rgba(255,255,255,0.10)",
+      borderLeft: selected ? "4px solid var(--brand-cta)" : "4px solid transparent",
       borderRadius: 14,
-      // hardcoded-color-allow-next-line
-      border: `2px solid ${selected ? "var(--brand-cta)" : "#8B92A0"}`,
-      // hardcoded-color-allow-next-line
-      background: selected ? "#FFF7F0" : "var(--bg-white)",
+      padding: Icon ? "0 18px 0 16px" : "0 18px",
       cursor: "pointer",
-      transition: "border-color 160ms, background-color 160ms, box-shadow 160ms, transform 160ms",
-      outlineColor: "var(--brand-cta)",
-      outlineOffset: 2,
-      boxShadow: selected
-        // hardcoded-color-allow-next-line
-        ? "0 0 0 4px rgba(232,103,10,0.15), 0 6px 16px -8px rgba(232,103,10,0.35)"
-        // hardcoded-color-allow-next-line
-        : "0 1px 2px rgba(15,23,42,0.04)",
+      display: "flex",
+      alignItems: "center",
+      gap: 14,
+      textAlign: "left",
+      transition: "background 150ms ease-out, border-color 150ms ease-out",
       WebkitTapHighlightColor: "transparent",
     }}
   >
-    <span
-      aria-hidden="true"
-      className="flex items-center justify-center flex-shrink-0 w-11 h-11 md:w-12 md:h-12 transition-colors group-hover:bg-[#FFEDDD]"
-      style={{
-        borderRadius: 10,
-        background: selected ? "var(--brand-cta)" : "var(--c-chip-orange-bg)",
-      }}
-    >
+    {Icon && (
       <Icon
-        size={22}
-        strokeWidth={2.25}
-        style={{ color: selected ? "var(--c-text-on-dark)" : "var(--brand-navy-deep)" }}
+        size={20}
+        strokeWidth={1.75}
+        style={{ color: selected ? "var(--brand-cta)" : "rgba(255,255,255,0.40)", flexShrink: 0 }}
+        aria-hidden
       />
-    </span>
-    <span
-      className="flex-1 text-left text-[17px] md:text-[19px]"
-      style={{
-        color: "var(--brand-navy-deep)",
-        fontWeight: 600,
-        lineHeight: 1.3,
-        letterSpacing: "-0.005em",
-        fontFamily: "Inter, sans-serif",
-      }}
-    >
+    )}
+    <span style={{
+      fontFamily: "Inter, sans-serif",
+      fontSize: 17,
+      fontWeight: 500,
+      color: selected ? "var(--brand-cream)" : "rgba(255,255,255,0.85)",
+      flex: 1,
+      lineHeight: 1.4,
+    }}>
       {label}
     </span>
-    <ChevronRight
-      size={22}
-      strokeWidth={2.25}
-      className="transition-transform group-hover:translate-x-0.5"
-      style={{
-        color: selected ? "var(--brand-cta)" : "var(--c-text-on-light-muted-2)",
-        flexShrink: 0,
-      }}
-      aria-hidden="true"
-    />
+    {selected && <ChevronRight size={16} style={{ color: "var(--brand-cta)", flexShrink: 0 }} aria-hidden />}
   </button>
 );
 

@@ -100,13 +100,6 @@ const DayStrip = ({
     return () => window.removeEventListener("resize", update);
   }, [slotsByDay, weekStart, loading]);
 
-  // Check if any Sunday falls in the visible 7-day window (before Sunday filtering).
-  // Every 7-day range contains exactly one Sunday, but we check explicitly per spec.
-  const hasSundayInRange = Array.from({ length: 7 }).some((_, i) => {
-    const d = new Date(weekStart.getTime() + i * 24 * 60 * 60 * 1000);
-    return isSundayInTimeZone(d, TIMEZONE);
-  });
-
   return (
     <>
       {/* ── Week navigation ──────────────────────────────────────────────── */}
@@ -117,19 +110,16 @@ const DayStrip = ({
           onClick={onPrevWeek}
           aria-label="Previous week"
           style={{
-            background: prevDisabled ? "#F4F5F8" : SURFACE,
-            color: prevDisabled ? MUTED : INK,
-            border: `1.5px solid ${prevDisabled ? "#E5E7EB" : BORDER}`,
-            borderRadius: 10, padding: "0 16px",
-            fontSize: 14, fontWeight: 700, minHeight: 44, minWidth: 80,
-            display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 4,
+            width: 40, height: 40, borderRadius: 10,
+            background: "rgba(255,255,255,0.06)",
+            border: "1px solid rgba(255,255,255,0.12)",
+            display: "flex", alignItems: "center", justifyContent: "center",
             cursor: prevDisabled ? "not-allowed" : "pointer",
-            opacity: prevDisabled ? 0.5 : 1,
-            // hardcoded-color-allow-next-line
-            boxShadow: prevDisabled ? "none" : "0 1px 3px rgba(11,16,41,0.08)",
+            opacity: prevDisabled ? 0.3 : 1,
+            flexShrink: 0,
           }}
         >
-          <ChevronLeft size={16} /> Prev
+          <ChevronLeft size={18} style={{ color: "var(--brand-cream)" }} />
         </button>
 
         {/* Week range label — centered between nav buttons */}
@@ -145,17 +135,15 @@ const DayStrip = ({
           onClick={onNextWeek}
           aria-label="Next week"
           style={{
-            background: SURFACE, color: INK,
-            border: `1.5px solid ${BORDER}`,
-            borderRadius: 10, padding: "0 16px",
-            fontSize: 14, fontWeight: 700, minHeight: 44, minWidth: 80,
-            display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 4,
+            width: 40, height: 40, borderRadius: 10,
+            background: "rgba(255,255,255,0.06)",
+            border: "1px solid rgba(255,255,255,0.12)",
+            display: "flex", alignItems: "center", justifyContent: "center",
             cursor: "pointer",
-            // hardcoded-color-allow-next-line
-            boxShadow: "0 1px 3px rgba(11,16,41,0.08)",
+            flexShrink: 0,
           }}
         >
-          Next <ChevronRight size={16} />
+          <ChevronRight size={18} style={{ color: "var(--brand-cream)" }} />
         </button>
       </div>
 
@@ -298,13 +286,6 @@ const DayStrip = ({
               transition: "opacity 150ms ease",
             }} />
           </div>
-        )}
-
-        {/* Sundays closed note — shown when a Sunday falls in the visible week range */}
-        {hasSundayInRange && (
-          <p style={{ fontSize: 14, color: MUTED, fontStyle: "italic", marginTop: 8, paddingLeft: 4 }}>
-            Sundays: closed
-          </p>
         )}
 
         {loadError && (

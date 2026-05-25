@@ -5,13 +5,10 @@
  */
 import { TIMEZONE } from "@/lib/ghlCalendars";
 
-const INK    = "var(--brand-navy-deep)";
 // hardcoded-color-allow-next-line
 const MUTED  = "var(--c-text-on-light-muted)";
 // hardcoded-color-allow-next-line
 const LINE   = "#E5E7EB";
-// hardcoded-color-allow-next-line
-const BORDER = "#8B92A0";
 const SURFACE = "var(--bg-white)";
 const ORANGE  = "var(--brand-cta)";
 
@@ -83,10 +80,10 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
           <div key={period} style={{ marginBottom: 20 }}>
             {/* Period label — 14px, uppercase ok (≤3 words) */}
             <p style={{
-              fontSize: 14, fontWeight: 700, letterSpacing: "0.06em",
-              textTransform: "uppercase", color: MUTED,
+              fontSize: 12, fontWeight: 700, letterSpacing: "0.06em",
+              textTransform: "uppercase", color: "rgba(255,255,255,0.35)",
               marginBottom: 12, paddingBottom: 0,
-              ...(isFirst ? {} : { borderTop: "1px solid #F3F4F6", paddingTop: 12, marginTop: 4 }),
+              ...(isFirst ? {} : { borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 12, marginTop: 4 }),
             }}>
               {GROUP_LABELS[period]}
             </p>
@@ -102,16 +99,16 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
                     aria-pressed={active}
                     onClick={() => onSlotSelect(iso)}
                     style={{
-                      background: active ? ORANGE : SURFACE,
-                      border: active ? "1px solid transparent" : `1px solid ${BORDER}`,
+                      background: active ? ORANGE : "rgba(255,255,255,0.06)",
+                      border: active ? "1px solid var(--brand-cta)" : "1px solid rgba(255,255,255,0.14)",
                       borderRadius: 999,
-                      padding: "12px 20px",
+                      padding: "0 18px",
                       display: "inline-flex", alignItems: "center", gap: 6,
-                      color: active ? "white" : INK,
+                      color: active ? "#fff" : "var(--brand-cream)",
                       cursor: "pointer",
                       transition: "background-color 120ms ease",
                       whiteSpace: "nowrap",
-                      minHeight: 52,
+                      minHeight: 48,
                     }}
                   >
                     <span style={{ fontFamily: "Oswald, Inter, sans-serif", fontWeight: 700, fontSize: 18 }}>

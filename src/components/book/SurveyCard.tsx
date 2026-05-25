@@ -21,11 +21,11 @@ interface SurveyCardProps {
 }
 
 const SurveyCard = ({
-  progressLabel,
-  filledSegments,
-  totalSegments = 3,
-  step,
-  total,
+  progressLabel: _progressLabel,
+  filledSegments: _filledSegments,
+  totalSegments: _totalSegments = 3,
+  step: _step,
+  total: _total,
   title,
   subtitle,
   helperText,
@@ -33,19 +33,6 @@ const SurveyCard = ({
   prevLabel = "Back",
   onPrev,
 }: SurveyCardProps) => {
-  const filled =
-    typeof filledSegments === "number"
-      ? filledSegments
-      : typeof step === "number"
-      ? step
-      : 1;
-  const segs = totalSegments;
-  const label =
-    progressLabel ??
-    (typeof step === "number" && typeof total === "number"
-      ? `Step ${step} of ${total}`
-      : "");
-
   return (
     <div className="px-3 md:px-6 py-4 md:py-12 pb-8 md:pb-12 flex justify-center">
       <div
@@ -61,53 +48,6 @@ const SurveyCard = ({
         }}
       >
         <div className="p-4 md:p-10">
-          {label && (
-            <div
-              className="mb-3 text-center"
-              style={{
-                fontSize: 14,
-                // hardcoded-color-allow-next-line
-                color: "#3A4258",
-                letterSpacing: "0.04em",
-                fontWeight: 700,
-                fontFamily: "Inter, sans-serif",
-                textTransform: "uppercase",
-              }}
-            >
-              {label}
-            </div>
-          )}
-
-          {/* 3-segment progress bar */}
-          <div
-            className="flex gap-2 mb-5 md:mb-8"
-            role="progressbar"
-            aria-valuemin={0}
-            aria-valuemax={segs}
-            aria-valuenow={filled}
-          >
-            {Array.from({ length: segs }).map((_, i) => {
-              const isFilled = i < filled;
-              return (
-                <div
-                  key={i}
-                  className="flex-1 relative overflow-hidden"
-                  style={{ height: 8, borderRadius: 4, background: "#E5E7EB" }}
-                >
-                  <div
-                    style={{
-                      position: "absolute",
-                      inset: 0,
-                      width: isFilled ? "100%" : "0%",
-                      background: "var(--brand-cta)",
-                      borderRadius: 4,
-                      transition: "width 240ms ease",
-                    }}
-                  />
-                </div>
-              );
-            })}
-          </div>
 
           {/* Title */}
           <h1

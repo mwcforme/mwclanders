@@ -64,7 +64,7 @@ const BookLetsTalk = () => {
                 lineHeight: 1.1, letterSpacing: "0.01em", textTransform: "uppercase", marginBottom: 12,
               }}
             >
-              Let's find the right visit for you.
+              TALK TO US.
             </h1>
             <p
               className="text-base md:text-lg"
@@ -76,14 +76,16 @@ const BookLetsTalk = () => {
 
           {/* Contact cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-            <ContactCard
-              type="call"
-              phoneDisplay={PHONE_DISPLAY}
-              phoneTel={PHONE_TEL}
-              smsHref={SMS_HREF}
-              onCallClick={() => trackEvent("phone_click", "lets-talk")}
-              onSmsClick={() => trackEvent("sms_click", "lets-talk")}
-            />
+            <div style={{ border: "1px solid rgba(232,103,10,0.30)", borderRadius: 16 }}>
+              <ContactCard
+                type="call"
+                phoneDisplay={PHONE_DISPLAY}
+                phoneTel={PHONE_TEL}
+                smsHref={SMS_HREF}
+                onCallClick={() => trackEvent("phone_click", "lets-talk")}
+                onSmsClick={() => trackEvent("sms_click", "lets-talk")}
+              />
+            </div>
             <ContactCard
               type="text"
               phoneDisplay={PHONE_DISPLAY}
@@ -99,7 +101,7 @@ const BookLetsTalk = () => {
             <Link
               to="/"
               className="inline-flex items-center gap-2 text-sm font-semibold transition-opacity hover:opacity-70"
-              style={{ color: "rgba(255,255,255,0.55)", fontFamily: "Inter, sans-serif", textDecoration: "none" }}
+              style={{ color: "rgba(255,255,255,0.75)", fontFamily: "Inter, sans-serif", textDecoration: "none" }}
             >
               <ArrowLeft size={14} />
               Book online instead

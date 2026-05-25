@@ -11,7 +11,7 @@
 
 import { useState, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, ArrowRight, Clock, MapPin } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import BookLayout from "@/components/book/BookLayout";
 import GHLDayView from "@/components/book/GHLDayView";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
@@ -167,66 +167,21 @@ const BookSchedule = () => {
           >
             <ArrowLeft size={18} /> Back
           </button>
-          {/* Progress indicator — single continuous track, 75% fill = almost done */}
-          <div style={{ marginTop: 12, display: "flex", alignItems: "center", gap: 10 }}>
-            <div style={{ flex: 1, height: 6, borderRadius: 999, background: "rgba(255,255,255,0.12)", overflow: "hidden" }}>
-              <div style={{ width: "75%", height: "100%", background: "var(--brand-cta)", borderRadius: 999, transition: "width 400ms ease" }} />
-            </div>
-            <span style={{
-              fontSize: 14,
-              fontWeight: 700,
-              color: "var(--brand-cta)",
-              fontFamily: "Inter, sans-serif",
-              whiteSpace: "nowrap",
-              letterSpacing: "0.04em",
-            }}>
-              Pick your time
-            </span>
-          </div>
+
         </div>
 
-        {/* ── Compact physician + address bar ────────────────────────────── */}
+        {/* ── Compact location line ────────────────────────────── */}
         {locationData && (
-          <div
-            className="mx-auto w-full"
-            style={{ maxWidth: 720 }}
-          >
-            <div style={{
-              // hardcoded-color-allow-next-line
-              background: "#FFFFFF",
-              // hardcoded-color-allow-next-line
-              border: "1px solid #E5E7EB",
-              borderRadius: 10,
-              padding: "10px 14px",
-              minHeight: 48,
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              fontFamily: "Inter, sans-serif",
-              // hardcoded-color-allow-next-line
-              boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
-              borderLeft: "3px solid var(--brand-cta)",
-            }}>
-              <MapPin size={15} strokeWidth={2} style={{ color: "var(--brand-cta)", flexShrink: 0 }} />
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: 16, fontWeight: 700, color: "#0B1029", lineHeight: 1.3 }}>
-                  {locationData.name.replace("Men's Wellness Centers, ", "")}
-                </div>
-                <div style={{ fontSize: 14, color: "var(--c-text-on-light-muted)", marginTop: 2, lineHeight: 1.4, fontWeight: 500 }}>
-                  {locationData.address} &middot; {locationData.cityStateZip}
-                </div>
-              </div>
+          <div className="mx-auto w-full" style={{ maxWidth: 720 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 4px 4px" }}>
+              <span style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "rgba(255,255,255,0.55)", fontWeight: 500 }}>
+                {locationData.name.replace("Men's Wellness Centers, ", "")}
+              </span>
+              <span style={{ color: "rgba(255,255,255,0.25)", fontSize: 12 }}>·</span>
               <button
                 type="button"
                 onClick={() => navigate("/book/location")}
-                style={{
-                  background: "none", border: "none", color: "var(--brand-cta)",
-                  fontSize: 14, fontWeight: 700, cursor: "pointer",
-                  fontFamily: "Inter, sans-serif", flexShrink: 0,
-                  minHeight: 56, minWidth: 80, padding: "8px 4px",
-                  textDecoration: "underline", textDecorationColor: "var(--brand-cta)",
-                  textUnderlineOffset: "2px",
-                }}
+                style={{ fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 700, color: "var(--brand-cta)", background: "none", border: "none", cursor: "pointer", padding: 0 }}
               >
                 Change
               </button>
@@ -245,50 +200,25 @@ const BookSchedule = () => {
           }}>
             {heading}
           </h1>
-          {/* Trust line — highest-value compliance cue. Styled prominently, not as throwaway subtitle. */}
-          {/* No orange here — orange is reserved for the Next available CTA card only. */}
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 16, color: "rgba(255,255,255,0.90)", margin: 0, fontWeight: 600, lineHeight: 1.5, letterSpacing: "0.01em" }}>
-            Licensed Virginia provider · Same-day labs
-          </p>
+
         </section>
 
-        {/* ── Next available CTA card ─────────────────────────────────────── */}
-        {/* Orange appears ONCE in this zone — here only. No orange text elsewhere above. */}
+        {/* ── Next available inline pill ─────────────────────────────────────── */}
         {nextAvailableLabel && (
           <div className="mx-auto w-full" style={{ maxWidth: 720 }}>
-            <button
-              type="button"
-              aria-label={`Book next available slot: ${nextAvailableLabel}`}
-              onClick={() => {
-                document.querySelector<HTMLElement>('[aria-label="Pick a date and time"]')
-                  ?.scrollIntoView({ behavior: "smooth", block: "start" });
-              }}
-              style={{
-                display: "flex", alignItems: "center", gap: 12, width: "100%",
-                background: "var(--brand-cta)", border: "none", borderRadius: 12,
-                padding: "12px 18px", cursor: "pointer",
-                // hardcoded-color-allow-next-line
-                boxShadow: "0 4px 20px rgba(232,103,10,0.40)",
-                textAlign: "left",
-              }}
-            >
-              <Clock size={18} style={{ color: "#fff", flexShrink: 0 }} />
-              <div style={{ flex: 1, minWidth: 0 }}>
-                {/* Time-first label format per brief: "Mon, May 25 · 11:00 AM" */}
-                <div style={{ fontFamily: "Oswald, sans-serif", fontSize: 17, fontWeight: 700, color: "#fff", lineHeight: 1.2, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                  {nextAvailableLabel}
-                </div>
-                <div style={{ fontFamily: "Inter, sans-serif", fontSize: 12, fontWeight: 600, color: "rgba(255,255,255,0.82)", marginTop: 2, letterSpacing: "0.02em" }}>
-                  Next available slot · tap to book
-                </div>
-              </div>
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2, flexShrink: 0 }}>
-                <span style={{ fontFamily: "Inter, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "rgba(255,255,255,0.80)" }}>
-                  Pick mine
-                </span>
-                <ArrowRight size={18} strokeWidth={2.5} style={{ color: "#fff" }} aria-hidden="true" />
-              </div>
-            </button>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "4px 0 8px" }}>
+              <span style={{ width: 7, height: 7, borderRadius: "50%", background: "var(--brand-cta)", flexShrink: 0 }} />
+              <span style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "rgba(255,255,255,0.75)", fontWeight: 500 }}>
+                Next available: {nextAvailableLabel}
+              </span>
+              <button
+                type="button"
+                onClick={() => document.querySelector<HTMLElement>('[aria-label="Pick a date and time"]')?.scrollIntoView({ behavior: "smooth", block: "start" })}
+                style={{ marginLeft: "auto", fontFamily: "Inter, sans-serif", fontSize: 13, fontWeight: 700, color: "var(--brand-cta)", background: "none", border: "none", cursor: "pointer", padding: "4px 0", whiteSpace: "nowrap" }}
+              >
+                Book →
+              </button>
+            </div>
           </div>
         )}
 

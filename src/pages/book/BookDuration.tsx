@@ -1,16 +1,15 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { CalendarClock, CalendarDays, CalendarRange, History } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import BookLayout from "@/components/book/BookLayout";
-import SurveyCard from "@/components/book/SurveyCard";
 import OptionRow from "@/components/book/OptionRow";
 import { useBookingStore, type UrgencyTier, type Duration } from "@/domain/booking/bookingStore";
 
 const OPTIONS = [
-  { value: "lt6mo", label: "Less than 6 months", icon: CalendarClock, urgency: "early" as UrgencyTier },
-  { value: "6to12mo", label: "6 to 12 months", icon: CalendarDays, urgency: "building" as UrgencyTier },
-  { value: "1to2yr", label: "1 to 2 years", icon: CalendarRange, urgency: "overdue" as UrgencyTier },
-  { value: "gt2yr", label: "More than 2 years", icon: History, urgency: "long_overdue" as UrgencyTier },
+  { value: "lt6mo", label: "Less than 6 months", urgency: "early" as UrgencyTier },
+  { value: "6to12mo", label: "6 to 12 months", urgency: "building" as UrgencyTier },
+  { value: "1to2yr", label: "1 to 2 years", urgency: "overdue" as UrgencyTier },
+  { value: "gt2yr", label: "More than 2 years", urgency: "long_overdue" as UrgencyTier },
 ] as const;
 
 const BookDuration = () => {
@@ -42,25 +41,40 @@ const BookDuration = () => {
 
   return (
     <BookLayout page="duration" title="How long has this been going on? | Men's Wellness Centers">
-      <SurveyCard
-        progressLabel="Almost done. 2 quick questions"
-        filledSegments={2}
-        totalSegments={3}
-        title="How long has this been going on?"
-        subtitle="A rough estimate is fine."
-        prevLabel="Back"
-        onPrev={() => navigate("/book/symptom")}
-      >
-        {OPTIONS.map((o) => (
-          <OptionRow
-            key={o.value}
-            icon={o.icon}
-            label={o.label}
-            selected={selected === o.value}
-            onClick={() => handleSelect(o.value as Duration, o.urgency)}
-          />
-        ))}
-      </SurveyCard>
+      <div style={{ minHeight: "100dvh", background: "var(--brand-navy-deep)", display: "flex", flexDirection: "column" }}>
+        {/* Back */}
+        <div style={{ padding: "16px 20px 0" }}>
+          <button
+            type="button"
+            onClick={() => navigate("/book/symptom")}
+            style={{ background: "none", border: "none", color: "rgba(255,255,255,0.55)", fontFamily: "Inter, sans-serif", fontSize: 15, fontWeight: 500, cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 0", minHeight: 44 }}
+          >
+            <ArrowLeft size={16} aria-hidden /> Back
+          </button>
+        </div>
+
+        {/* Heading */}
+        <div style={{ padding: "28px 20px 24px" }}>
+          <h1 style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: "clamp(28px, 7vw, 40px)", color: "var(--brand-cream)", textTransform: "uppercase", lineHeight: 1.05, letterSpacing: "0.01em", marginBottom: 8 }}>
+            When did you first notice this?
+          </h1>
+          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 16, color: "rgba(255,255,255,0.55)", lineHeight: 1.5 }}>
+            A rough estimate is fine.
+          </p>
+        </div>
+
+        {/* Options */}
+        <div style={{ padding: "0 20px 32px", display: "flex", flexDirection: "column", gap: 10, flex: 1 }}>
+          {OPTIONS.map((o) => (
+            <OptionRow
+              key={o.value}
+              label={o.label}
+              selected={selected === o.value}
+              onClick={() => handleSelect(o.value as Duration, o.urgency)}
+            />
+          ))}
+        </div>
+      </div>
     </BookLayout>
   );
 };

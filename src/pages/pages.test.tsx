@@ -29,14 +29,14 @@ describe("NotFound", () => {
 
   it("renders a link back to home", () => {
     render(<Wrapper><NotFound /></Wrapper>);
-    const link = screen.getByRole("link", { name: /return to home/i });
+    const link = screen.getByRole("link", { name: /back to home/i });
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute("href", "/");
   });
 
   it("renders page not found text", () => {
     render(<Wrapper><NotFound /></Wrapper>);
-    expect(screen.getByText(/page not found/i)).toBeInTheDocument();
+    expect(screen.getByText(/this page doesn't exist/i)).toBeInTheDocument();
   });
 });
 

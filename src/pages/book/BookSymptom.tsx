@@ -1,10 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
-import { Zap, Heart, Scale, HelpCircle } from "lucide-react";
+import { Zap, Heart, Scale, HelpCircle, ArrowLeft } from "lucide-react";
 import BookLayout from "@/components/book/BookLayout";
 
-import SurveyCard from "@/components/book/SurveyCard";
 import OptionRow from "@/components/book/OptionRow";
 import { useBookingStore } from "@/domain/booking/bookingStore";
 
@@ -61,111 +60,63 @@ const BookSymptom = () => {
 
   return (
     <BookLayout page="symptom" title="What brings you in? | Men's Wellness Centers">
-      <SurveyCard
-        progressLabel="Almost done. 2 quick questions"
-        filledSegments={1}
-        totalSegments={3}
-        title="What brings you in?"
-        subtitle="Pick the one that fits best."
-        helperText="This helps us prepare your personalized consultation."
-        prevLabel="Back"
-        onPrev={() => navigate("/")}
-      >
-        {OPTIONS.map((o) => (
-          <OptionRow
-            key={o.value}
-            icon={o.icon}
-            label={o.label}
-            selected={selected === o.value}
-            onClick={() => handleSelect(o.value)}
-          />
-        ))}
-
-        {showOtherPanel && (
-          <div
-            className="mt-4 p-4 md:p-5"
-            style={{
-              // hardcoded-color-allow-next-line
-              background: "#FFF7F0",
-              // hardcoded-color-allow-next-line
-              border: "1px solid #FCD9B6",
-              borderRadius: 12,
-            }}
+      <div style={{ minHeight: "100dvh", background: "var(--brand-navy-deep)", display: "flex", flexDirection: "column" }}>
+        {/* Back */}
+        <div style={{ padding: "16px 20px 0" }}>
+          <button
+            type="button"
+            onClick={() => navigate("/")}
+            style={{ background: "none", border: "none", color: "rgba(255,255,255,0.55)", fontFamily: "Inter, sans-serif", fontSize: 15, fontWeight: 500, cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 0", minHeight: 44 }}
           >
-            <h2
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontWeight: 700,
-                fontSize: 18,
-                color: "var(--brand-navy-deep)",
-                marginBottom: 6,
-              }}
-            >
-              Tell us a bit more
-            </h2>
-            <label
-              htmlFor="other-note"
-              style={{
-                display: "block",
-                fontSize: 16,
-                color: "var(--c-text-on-light-muted)",
-                marginBottom: 8,
-                fontFamily: "Inter, sans-serif",
-              }}
-            >
-              What's the main thing you'd like help with?
-            </label>
+            <ArrowLeft size={16} aria-hidden /> Back
+          </button>
+        </div>
+
+        {/* Heading */}
+        <div style={{ padding: "28px 20px 24px" }}>
+          <h1 style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: "clamp(28px, 7vw, 40px)", color: "var(--brand-cream)", textTransform: "uppercase", lineHeight: 1.05, letterSpacing: "0.01em", marginBottom: 8 }}>
+            What brings you in?
+          </h1>
+          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 16, color: "rgba(255,255,255,0.55)", lineHeight: 1.5 }}>
+            Pick the one that fits best.
+          </p>
+        </div>
+
+        {/* Options */}
+        <div style={{ padding: "0 20px 32px", display: "flex", flexDirection: "column", gap: 10, flex: 1 }}>
+          {OPTIONS.map((o) => (
+            <OptionRow
+              key={o.value}
+              icon={o.icon}
+              label={o.label}
+              selected={selected === o.value}
+              onClick={() => handleSelect(o.value)}
+            />
+          ))}
+        </div>
+
+        {/* "Other" text panel */}
+        {showOtherPanel && (
+          <div style={{ padding: "0 20px 32px" }}>
             <textarea
               id="other-note"
+              rows={3}
               value={otherNote}
               onChange={(e) => setOtherNote(e.target.value)}
-              placeholder="e.g., sleep issues, mood, focus, recovery..."
-              rows={3}
-              style={{
-                width: "100%",
-                padding: "12px 14px",
-                borderRadius: 10,
-                // hardcoded-color-allow-next-line
-                border: "2px solid #E5E7EB",
-                fontFamily: "Inter, sans-serif",
-                fontSize: 16,
-                color: "var(--brand-navy-deep)",
-                outline: "none",
-                resize: "vertical",
-              }}
-              onFocus={(e) => (e.currentTarget.style.borderColor = "var(--brand-cta)")}
-              onBlur={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
+              placeholder="Tell us briefly what's going on..."
+              style={{ width: "100%", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.16)", borderRadius: 12, padding: "14px 16px", fontFamily: "Inter, sans-serif", fontSize: 16, color: "var(--brand-cream)", lineHeight: 1.5, resize: "none", outline: "none" }}
             />
             <button
               type="button"
               onClick={handleOtherContinue}
               disabled={otherNote.trim().length < 3}
-              style={{
-                marginTop: 12,
-                width: "100%",
-                minHeight: 52,
-                background: otherNote.trim().length < 3 ? "var(--c-btn-disabled-bg)" : "var(--brand-cta)",
-                color: otherNote.trim().length < 3 ? "var(--c-btn-disabled-fg)" : "var(--c-text-on-dark)",
-                border: 0,
-                borderRadius: 10,
-                fontSize: 17,
-                fontWeight: 700,
-                letterSpacing: "0.02em",
-                textTransform: "uppercase",
-                cursor: otherNote.trim().length < 3 ? "not-allowed" : "pointer",
-                fontFamily: "Inter, sans-serif",
-                boxShadow:
-                  otherNote.trim().length < 3
-                    ? "none"
-                    // hardcoded-color-allow-next-line
-                    : "0 2px 6px rgba(232,103,10,0.35)",
-              }}
+              style={{ marginTop: 12, width: "100%", height: 56, background: otherNote.trim().length < 3 ? "rgba(255,255,255,0.10)" : "var(--brand-cta)", color: otherNote.trim().length < 3 ? "rgba(255,255,255,0.35)" : "#fff", border: "none", borderRadius: 12, fontFamily: "Inter, sans-serif", fontSize: 16, fontWeight: 700, cursor: otherNote.trim().length < 3 ? "not-allowed" : "pointer" }}
             >
               Continue
             </button>
           </div>
         )}
-      </SurveyCard>
+      </div>
     </BookLayout>
   );
 };
