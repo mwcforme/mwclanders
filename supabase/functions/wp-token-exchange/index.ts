@@ -7,11 +7,11 @@
  *
  * Called client-side from /book/entry?t=<token>
  */
-import { corsHeaders, jsonResponse as json, corsResponse } from "../_shared/cors.ts";
+import { corsHeadersFor, jsonResponse as json, corsResponse } from "../_shared/cors.ts";
 import { createAdminClient } from "../_shared/supabaseAdmin.ts";
 
 Deno.serve(async (req) => {
-  if (req.method === "OPTIONS") return corsResponse();
+  if (req.method === "OPTIONS") return corsResponse(req);
   if (req.method !== "POST") return json(405, { ok: false, error: "method not allowed" });
 
   let body: { token?: string };

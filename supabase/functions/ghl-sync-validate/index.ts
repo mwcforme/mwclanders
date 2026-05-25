@@ -10,7 +10,7 @@
 // Result: a single booking_event_log row of event_type='sync_validation' with
 // meta = full report and error = first failure summary (or null when ok).
 
-import { corsHeaders, jsonResponse, corsResponse } from "../_shared/cors.ts";
+import { corsHeadersFor, jsonResponse, corsResponse } from "../_shared/cors.ts";
 import { createAdminClient } from "../_shared/supabaseAdmin.ts";
 
 // Mirror of src/lib/ghlCalendars.ts + supabase/functions/ghl-sync/index.ts.
@@ -50,7 +50,7 @@ interface ValidationReport {
 }
 
 Deno.serve(async (req) => {
-  if (req.method === "OPTIONS") return corsResponse();
+  if (req.method === "OPTIONS") return corsResponse(req);
 
   let supabase: ReturnType<typeof createAdminClient>;
   try {

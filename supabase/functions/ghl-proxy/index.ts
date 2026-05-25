@@ -1,5 +1,5 @@
 // ghl-proxy v5 — prod only (stage removed 2026-05-25)
-import { corsHeaders, jsonResponse, corsResponse } from "../_shared/cors.ts";
+import { corsHeadersFor, jsonResponse, corsResponse } from "../_shared/cors.ts";
 import { detectEnv, tryGetGhlCreds, GHL_API_BASE, GHL_API_VERSION } from "../_shared/ghlEnv.ts";
 
 const log = {
@@ -164,7 +164,7 @@ function validateBody(method: string, path: string, body: unknown): { ok: true; 
 }
 
 Deno.serve(async (req) => {
-  if (req.method === "OPTIONS") return corsResponse();
+  if (req.method === "OPTIONS") return corsResponse(req);
 
   let payload: ProxyRequest;
   try {
