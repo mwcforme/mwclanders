@@ -233,7 +233,7 @@ export const TRTResults = () => {
               minHeight: 56,
               background: "var(--brand-cta)",
               color: "var(--c-text-on-dark)",
-              fontSize: "clamp(15px, 3.5vw, 19px)",
+              fontSize: "clamp(16px, 3.5vw, 19px)",
               letterSpacing: "0.06em",
               fontFamily: "Inter, sans-serif",
               whiteSpace: "nowrap",

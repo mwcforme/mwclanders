@@ -23,7 +23,7 @@ export const AffordabilityClosingCTA = () => {
         </p>
         <button type="button" onClick={() => navigate("/book/location")}
           className="inline-flex items-center justify-center rounded-lg px-10 font-bold cursor-pointer border-none"
-          style={{ height: 56, minHeight: 56, background: "var(--brand-cta)", color: "var(--c-text-on-dark)", fontSize: "clamp(15px, 3.5vw, 19px)", letterSpacing: "0.06em", fontFamily: "Inter, sans-serif", whiteSpace: "nowrap" }}
+          style={{ height: 56, minHeight: 56, background: "var(--brand-cta)", color: "var(--c-text-on-dark)", fontSize: "clamp(16px, 3.5vw, 19px)", letterSpacing: "0.06em", fontFamily: "Inter, sans-serif", whiteSpace: "nowrap" }}
           onMouseEnter={(e) => { e.currentTarget.style.background = "var(--brand-cta-hover)"; }}
           onMouseLeave={(e) => { e.currentTarget.style.background = "var(--brand-cta)"; }}>
           Book My No-Cost Visit
