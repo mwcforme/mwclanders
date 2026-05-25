@@ -142,11 +142,12 @@ function object<S extends ObjectShape>(shape: S): Schema<ObjectOutput<S>> {
         if (result.success) {
           out[key] = result.data as ObjectOutput<S>[typeof key];
         } else {
-          for (const issue of result.error.issues) {
+          for (const issue of (result as Failure).error.issues) {
             issues.push({ path: [key as string, ...issue.path], message: issue.message });
           }
         }
       }
+
 
       if (issues.length) return fail(issues);
       return ok(out as ObjectOutput<S>);
