@@ -6,6 +6,7 @@ import { mapToCanonical, splitName, type CanonicalLead } from "./mapping.ts";
 import { corsHeaders, jsonResponse, corsResponse } from "../_shared/cors.ts";
 import { tryGetGhlCreds, GHL_API_BASE, GHL_API_VERSION } from "../_shared/ghlEnv.ts";
 import { createAdminClient } from "../_shared/supabaseAdmin.ts";
+import { sendEmail } from "../_shared/sendEmail.ts";
 
 // ---- Structured logger ----
 const log = {
@@ -257,6 +258,43 @@ Deno.serve(async (req) => {
     } else {
       log.warn("token insert failed", { error: tokenErr?.message });
     }
+
+    // Fire lead notification email (fire-and-forget — never block the response)
+    const locationLabel: Record<string, string> = { richmond: "Richmond", "virginia-beach": "Virginia Beach", "newport-news": "Newport News" };
+    const serviceLabel: Record<string, string> = { trt: "TRT", ed: "ED", wl: "Weight Loss" };
+    const locName = locationLabel[canonical.location ?? ""] ?? canonical.location ?? "?";
+    const svcName = serviceLabel[canonical.service ?? ""] ?? canonical.service ?? "";
+    const timeET = new Date().toLocaleString("en-US", { timeZone: "America/New_York", weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit", hour12: true }) + " ET";
+    const { firstName } = splitName(canonical.fullName);
+    void sendEmail({
+      to: "eobrien@menswellnesscenters.com",
+      subject: `New ${svcName} lead \u2014 ${canonical.fullName || "Unknown"} \u00b7 ${locName} \u00b7 ${timeET}`,
+      html: `<!DOCTYPE html><html><body style="font-family:Inter,Arial,sans-serif;background:#f9fafb;padding:24px;">
+<div style="max-width:560px;margin:0 auto;background:#fff;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden;">
+  <div style="background:#0B1029;padding:16px 24px;">
+    <h1 style="color:#fff;font-size:17px;margin:0;font-weight:700;">New ${svcName} Lead</h1>
+    <p style="color:rgba(255,255,255,0.70);font-size:12px;margin:4px 0 0;">${timeET}</p>
+  </div>
+  <div style="padding:20px 24px;">
+    <table style="width:100%;border-collapse:collapse;">
+      <tr><td style="padding:5px 0;color:#6b7280;font-size:13px;width:110px;">Name</td><td style="padding:5px 0;font-weight:600;color:#111827;font-size:13px;">${canonical.fullName || "\u2014"}</td></tr>
+      <tr><td style="padding:5px 0;color:#6b7280;font-size:13px;">Phone</td><td style="padding:5px 0;font-size:13px;"><a href="tel:${(canonical.phone ?? "").replace(/\D/g,"")}" style="color:#e8670a;text-decoration:none;font-weight:600;">${canonical.phone || "\u2014"}</a></td></tr>
+      <tr><td style="padding:5px 0;color:#6b7280;font-size:13px;">Email</td><td style="padding:5px 0;font-size:13px;">${canonical.email ? `<a href="mailto:${canonical.email}" style="color:#e8670a;text-decoration:none;">${canonical.email}</a>` : "\u2014"}</td></tr>
+      <tr><td style="padding:5px 0;color:#6b7280;font-size:13px;">Location</td><td style="padding:5px 0;font-weight:600;color:#111827;font-size:13px;">${locName}</td></tr>
+      <tr><td style="padding:5px 0;color:#6b7280;font-size:13px;">Service</td><td style="padding:5px 0;font-weight:600;color:#111827;font-size:13px;">${svcName}</td></tr>
+      <tr><td style="padding:5px 0;color:#6b7280;font-size:13px;">Source</td><td style="padding:5px 0;color:#111827;font-size:13px;">${canonical.form_source_label || "\u2014"}</td></tr>
+      ${canonical.utm_source ? `<tr><td style="padding:5px 0;color:#6b7280;font-size:13px;">UTM Source</td><td style="padding:5px 0;color:#111827;font-size:13px;">${canonical.utm_source}</td></tr>` : ""}
+      ${canonical.utm_campaign_id ? `<tr><td style="padding:5px 0;color:#6b7280;font-size:13px;">Campaign</td><td style="padding:5px 0;color:#111827;font-size:13px;">${canonical.utm_campaign_id}</td></tr>` : ""}
+      ${canonical.gclid ? `<tr><td style="padding:5px 0;color:#6b7280;font-size:13px;">GCLID</td><td style="padding:5px 0;color:#111827;font-size:13px;">${canonical.gclid}</td></tr>` : ""}
+    </table>
+    <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
+      ${canonical.phone ? `<a href="tel:${(canonical.phone ?? "").replace(/\D/g,"")}" style="display:inline-block;background:#e8670a;color:#fff;font-weight:700;padding:9px 18px;border-radius:8px;text-decoration:none;font-size:13px;">Call ${canonical.phone}</a>` : ""}
+      ${contactId ? `<a href="https://app.gohighlevel.com/contacts/${contactId}" style="display:inline-block;background:#0b1029;color:#fff;font-weight:700;padding:9px 18px;border-radius:8px;text-decoration:none;font-size:13px;">Open in GHL</a>` : ""}
+    </div>
+  </div>
+</div>
+</body></html>`,
+    }).catch((e) => log.warn("lead notify email error", { error: (e as Error).message }));
 
     return jsonResponse(200, {
       ok: true,
