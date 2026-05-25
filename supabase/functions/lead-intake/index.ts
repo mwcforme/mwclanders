@@ -154,12 +154,13 @@ Deno.serve(async (req) => {
   const contentLength = parseInt(req.headers.get("content-length") ?? "0", 10);
   if (contentLength > 10_240) return jsonResponse(413, { ok: false, error: "payload too large" }, req);
 
-  // Optional shared-secret check (required if LEAD_INTAKE_TOKEN env var is set)
+  // Required shared-secret check — endpoint is locked unless LEAD_INTAKE_TOKEN is configured
   const expectedToken = Deno.env.get("LEAD_INTAKE_TOKEN");
-  if (expectedToken) {
-    const got = req.headers.get("x-intake-token") ?? "";
-    if (got !== expectedToken) return jsonResponse(401, { ok: false, error: "unauthorized" }, req);
+  if (!expectedToken) {
+    return jsonResponse(503, { ok: false, error: "intake endpoint not configured" }, req);
   }
+  const got = req.headers.get("x-intake-token") ?? "";
+  if (got !== expectedToken) return jsonResponse(401, { ok: false, error: "unauthorized" }, req);
 
   // Rate limit — use last IP in X-Forwarded-For chain (trusted proxy sets this)
   const xffChain = req.headers.get("x-forwarded-for") ?? "";
@@ -187,6 +188,27 @@ Deno.serve(async (req) => {
 
   // ---- Persist FIRST (zero data loss) ----
   const supabase = createAdminClient();
+
+  // ---- Phone-based rate limiting (persistent, cross-instance) ----
+  const phoneDigits = canonical.phone?.replace(/\D/g, "") ?? "";
+  if (phoneDigits.length >= 10) {
+    const phoneHashBuf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(phoneDigits));
+    const phoneHash = Array.from(new Uint8Array(phoneHashBuf)).map(b => b.toString(16).padStart(2, "0")).join("");
+    const { data: rl } = await supabase.from("lead_rate_limit")
+      .select("count, window_start")
+      .eq("phone_hash", phoneHash)
+      .maybeSingle();
+    const windowAge = rl ? (Date.now() - new Date(rl.window_start).getTime()) / 60_000 : 999;
+    if (rl && windowAge < 60 && rl.count >= 3) {
+      log.warn("phone rate limit exceeded", { phone_hash: phoneHash.slice(0, 8), request_id: requestId });
+      return jsonResponse(429, { ok: false, error: "rate limit exceeded" }, req);
+    }
+    if (!rl || windowAge >= 60) {
+      await supabase.from("lead_rate_limit").upsert({ phone_hash: phoneHash, count: 1, window_start: new Date().toISOString() });
+    } else {
+      await supabase.from("lead_rate_limit").update({ count: rl.count + 1 }).eq("phone_hash", phoneHash);
+    }
+  }
 
   const tags: string[] = [];
   if (canonical.form_source_label) tags.push(`form:${canonical.form_source_label}`);
