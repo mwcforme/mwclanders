@@ -89,7 +89,7 @@ const BookLocation = () => {
             className="inline-flex items-center gap-1 mb-4"
             style={{
               background: "transparent", border: 0, color: "var(--c-text-on-dark)",
-              fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 600,
+              fontFamily: "Inter, sans-serif", fontSize: 16, fontWeight: 600,
               opacity: 0.75, cursor: "pointer", minHeight: 44, padding: "10px 0",
             }}
             aria-label="Back to contact info"
@@ -114,7 +114,7 @@ const BookLocation = () => {
           <h1 style={{ fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: "clamp(22px, 4vw, 30px)", color: "var(--c-text-on-dark)", marginBottom: 8, lineHeight: 1.2 }}>
             {firstName ? `${firstName}, which location works for you?` : "Which location works for you?"}
           </h1>
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 15, color: "rgba(255,255,255,0.55)", marginBottom: 32, lineHeight: 1.5 }}>
+          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 16, color: "var(--c-footnote-on-dark)", marginBottom: 32, lineHeight: 1.5 }}>
             Pick the clinic closest to you.
           </p>
 
