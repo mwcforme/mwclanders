@@ -126,7 +126,7 @@ export default function ProductTRTSchedule() {
                   display: "flex", alignItems: "center", justifyContent: "center",
                   boxShadow: step === "calendar" ? "0 2px 12px rgba(232,103,10,0.45)" : "none",
                 }}>
-                  <span style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 14, color: step === "calendar" ? "#fff" : "#9CA3AF" }}>2</span>
+                  <span style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 14, color: step === "calendar" ? "#fff" : "var(--c-text-on-light-muted)" }}>2</span>
                 </div>
                 <span style={{
                   fontSize: 13, fontWeight: step === "calendar" ? 700 : 500,

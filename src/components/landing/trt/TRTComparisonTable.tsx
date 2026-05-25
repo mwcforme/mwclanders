@@ -50,8 +50,8 @@ const COMPARE_ROWS: {
 
 const CellIcon = ({ type }: { type: "check" | "x" | "partial" | "text" }) => {
   if (type === "check")   return <Check size={18} strokeWidth={2.5} style={{ color: "var(--brand-cta)", flexShrink: 0 }} />;
-  if (type === "x")       return <X     size={18} strokeWidth={2.5} style={{ color: "#9CA3AF",          flexShrink: 0 }} />;
-  if (type === "partial") return <Minus size={18} strokeWidth={2.5} style={{ color: "#9CA3AF",          flexShrink: 0 }} />;
+  if (type === "x")       return <X     size={18} strokeWidth={2.5} style={{ color: "var(--c-text-on-light-muted-2)", flexShrink: 0 }} />;
+  if (type === "partial") return <Minus size={18} strokeWidth={2.5} style={{ color: "var(--c-text-on-light-muted-2)", flexShrink: 0 }} />;
   return null;
 };
 

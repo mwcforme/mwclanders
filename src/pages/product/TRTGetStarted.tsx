@@ -273,7 +273,7 @@ export default function TRTGetStarted() {
                   width: 24, height: 24, borderRadius: "50%", background: "#E5E7EB",
                   display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
                 }}>
-                  <span style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 12, color: "#9CA3AF" }}>2</span>
+                  <span style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 12, color: "var(--c-text-on-light-muted)" }}>2</span>
                 </div>
                 <span style={{ fontSize: 12, fontWeight: 500, color: "var(--c-text-on-light-muted)", fontFamily: "Inter, sans-serif" }}>Medical History</span>
               </div>
@@ -283,7 +283,7 @@ export default function TRTGetStarted() {
                   width: 24, height: 24, borderRadius: "50%", background: "#E5E7EB",
                   display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
                 }}>
-                  <span style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 12, color: "#9CA3AF" }}>3</span>
+                  <span style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 12, color: "var(--c-text-on-light-muted)" }}>3</span>
                 </div>
                 <span style={{ fontSize: 12, fontWeight: 500, color: "var(--c-text-on-light-muted)", fontFamily: "Inter, sans-serif" }}>Done</span>
               </div>
