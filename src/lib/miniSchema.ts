@@ -113,7 +113,7 @@ function enumField<T extends string>(values: readonly T[], msg: string): Schema<
 }
 
 /** Literal field (e.g. boolean true) */
-function literal<T>(value: T, msg: string): Schema<T> {
+function literal<const T>(value: T, msg: string): Schema<T> {
   return {
     safeParse(raw: unknown): ParseResult<T> {
       if (raw === value) return ok(value);
@@ -121,6 +121,7 @@ function literal<T>(value: T, msg: string): Schema<T> {
     },
   };
 }
+
 
 type ObjectShape = Record<string, Schema<unknown>>;
 type ObjectOutput<S extends ObjectShape> = { [K in keyof S]: S[K] extends Schema<infer T> ? T : never };
