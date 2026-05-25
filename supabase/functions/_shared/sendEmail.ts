@@ -11,7 +11,7 @@ export async function sendEmail(opts: {
   const apiKey = Deno.env.get("SENDGRID_API_KEY");
   if (!apiKey) return { ok: false, error: "SENDGRID_API_KEY not set" };
 
-  const from = opts.from ?? "MWC Leads <leads@book.menswellnesscenters.com>";
+  const from = opts.from ?? "Men's Wellness Centers <info@menswellnesscenters.com>";
   const toList = Array.isArray(opts.to) ? opts.to : [opts.to];
 
   const res = await fetch("https://api.sendgrid.com/v3/mail/send", {
