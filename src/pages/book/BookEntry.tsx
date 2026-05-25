@@ -198,12 +198,13 @@ export default function BookEntry() {
 
       if (debugMode) {
         setDebugInfo({
-          ...buildDebug("ok — would route to /book/symptom", identity),
+          ...buildDebug("ok — would route to /book/schedule", identity),
         });
         return;
       }
 
-      navigate("/book/symptom", { replace: true });
+      navigate("/book/schedule", { replace: true });
+
     }).catch((err) => {
       // eslint-disable-next-line no-console
       console.error("[BookEntry] unexpected error", err);
