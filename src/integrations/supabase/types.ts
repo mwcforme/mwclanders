@@ -14,7 +14,116 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      lead_captures: {
+        Row: {
+          attribution: Json | null
+          created_at: string
+          crm_contact_id: string | null
+          crm_error: string | null
+          crm_status: string
+          email: string | null
+          id: string
+          location: string | null
+          name: string
+          page_url: string | null
+          phone: string | null
+          service: string | null
+          source: string | null
+          tags: string[] | null
+          updated_at: string
+        }
+        Insert: {
+          attribution?: Json | null
+          created_at?: string
+          crm_contact_id?: string | null
+          crm_error?: string | null
+          crm_status?: string
+          email?: string | null
+          id?: string
+          location?: string | null
+          name: string
+          page_url?: string | null
+          phone?: string | null
+          service?: string | null
+          source?: string | null
+          tags?: string[] | null
+          updated_at?: string
+        }
+        Update: {
+          attribution?: Json | null
+          created_at?: string
+          crm_contact_id?: string | null
+          crm_error?: string | null
+          crm_status?: string
+          email?: string | null
+          id?: string
+          location?: string | null
+          name?: string
+          page_url?: string | null
+          phone?: string | null
+          service?: string | null
+          source?: string | null
+          tags?: string[] | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      wp_intake_tokens: {
+        Row: {
+          capture_id: string
+          contact_id: string
+          created_at: string
+          email: string | null
+          expires_at: string
+          first_name: string
+          last_name: string | null
+          location: string | null
+          phone: string
+          service: string | null
+          source: string | null
+          token: string
+          used: boolean
+        }
+        Insert: {
+          capture_id: string
+          contact_id: string
+          created_at?: string
+          email?: string | null
+          expires_at?: string
+          first_name: string
+          last_name?: string | null
+          location?: string | null
+          phone: string
+          service?: string | null
+          source?: string | null
+          token?: string
+          used?: boolean
+        }
+        Update: {
+          capture_id?: string
+          contact_id?: string
+          created_at?: string
+          email?: string | null
+          expires_at?: string
+          first_name?: string
+          last_name?: string | null
+          location?: string | null
+          phone?: string
+          service?: string | null
+          source?: string | null
+          token?: string
+          used?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wp_intake_tokens_capture_id_fkey"
+            columns: ["capture_id"]
+            isOneToOne: false
+            referencedRelation: "lead_captures"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
