@@ -282,7 +282,7 @@ Deno.serve(async (req) => {
     const locName = locationLabel[canonical.location ?? ""] ?? canonical.location ?? "?";
     const svcName = serviceLabel[canonical.service ?? ""] ?? canonical.service ?? "";
     const timeET = new Date().toLocaleString("en-US", { timeZone: "America/New_York", weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit", hour12: true }) + " ET";
-    const { firstName } = splitName(canonical.fullName);
+    // firstName already declared above (line: const { firstName, lastName } = splitName(...))
     void sendEmail({
       to: "eobrien@menswellnesscenters.com",
       subject: `New ${svcName} lead \u2014 ${canonical.fullName || "Unknown"} \u00b7 ${locName} \u00b7 ${timeET}`,
