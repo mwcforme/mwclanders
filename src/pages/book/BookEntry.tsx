@@ -19,6 +19,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useBookingStore, isKnownService } from "@/domain/booking/bookingStore";
 import { PHONE }                            from "@/lib/constants";
+import { supabase }                         from "@/integrations/supabase/client";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
