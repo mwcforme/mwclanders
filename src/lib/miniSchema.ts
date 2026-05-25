@@ -70,7 +70,8 @@ function strTransform<U>(base: ReturnType<typeof str>, transform: (v: string) =>
     optional() { return optionalTransform(st); },
     _parse(raw: unknown): ParseResult<U> {
       const r = base.safeParse(raw);
-      if (!r.success) return r;
+      if (!r.success) return r as Failure;
+
       const v = transform(r.data);
       for (const refine of refines) {
         const res = refine(v);
