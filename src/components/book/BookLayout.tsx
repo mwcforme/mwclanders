@@ -55,13 +55,13 @@ const FunnelFooter = () => (
       />
     </a>
     {/* hardcoded-color-allow-next-line */}
-    <p style={{ fontSize: 13, color: "rgba(255,255,255,0.50)", margin: 0 }}>
+    <p style={{ fontSize: 14, color: "var(--c-footnote-on-dark)", margin: 0, fontFamily: "Inter, sans-serif" }}>
       Need help?{" "}
       <a href={PHONE.tel} style={{ color: "var(--brand-cta)", fontWeight: 600, textDecoration: "none" }}>
         {PHONE.display}
       </a>
       {" · "}
-      <span>Men's Wellness Centers</span>
+      <span>HIPAA Compliant · Men's Wellness Centers</span>
     </p>
   </footer>
 );
