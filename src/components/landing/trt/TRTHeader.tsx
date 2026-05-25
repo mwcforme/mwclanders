@@ -36,6 +36,7 @@ export const TRTHeader = ({ minimal = false, hideCta = false }: { minimal?: bool
             src="/logos/Text_Logo_white.webp" onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/logos/Text_Logo_white.png"; }}
             decoding="async"
             loading="eager"
+            fetchPriority="high"
             width={180}
             height={28}
             alt="Men's Wellness Centers"

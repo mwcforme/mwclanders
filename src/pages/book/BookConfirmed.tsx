@@ -111,7 +111,7 @@ export default function BookConfirmed() {
               </div>
               <CelebrationBurst active={checkDrawn} />
             </div>
-            <p style={{ fontSize: 14, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "#4ADE80", marginBottom: 10 }}>Appointment Confirmed</p>
+            <p style={{ fontSize: 14, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "var(--c-success-on-dark)", marginBottom: 10 }}>Appointment Confirmed</p>
             <h1 style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: "clamp(28px, 5vw, 44px)", color: "var(--brand-cream)", lineHeight: 1.1, marginBottom: 8 }}>
               {firstName ? `This is your moment, ${firstName}.` : "This is your moment."}
             </h1>
@@ -140,7 +140,7 @@ export default function BookConfirmed() {
                   </div>
                   <div style={{ display: "flex", gap: 8, marginTop: 4, flexWrap: "wrap" }}>
                     {/* WCAG AA: all badge colors meet 4.5:1 on navy bg */}
-                    {[["No-cost consultation", "#4ADE80"], ["Provider reserved", "var(--brand-cta)"], ["Bring photo ID", "rgba(245,243,240,0.85)"]].map(([label, color]) => (
+                    {[["No-cost consultation", "var(--c-success-on-dark)"], ["Provider reserved", "var(--brand-cta)"], ["Bring photo ID", "rgba(245,243,240,0.85)"]].map(([label, color]) => (
                       <span key={label} style={{ display: "inline-flex", alignItems: "center", gap: 4, fontSize: 13, fontWeight: 700, color, letterSpacing: "0.04em" }}>
                         <span style={{ width: 6, height: 6, borderRadius: "50%", background: color as string, flexShrink: 0 }} />{label}
                       </span>
