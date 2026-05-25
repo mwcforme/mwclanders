@@ -114,7 +114,7 @@ export default function BookEntry() {
     const debugMode = effectiveParams.get("debug") === "1";
     const host      = typeof window !== "undefined" ? window.location.host : "";
 
-    console.info("[BookEntry] handoff start", {
+    if (import.meta.env.DEV) console.info("[BookEntry] handoff start", {
       host,
       debugMode,
       tokenPresent:  Boolean(token),
@@ -131,7 +131,7 @@ export default function BookEntry() {
     });
 
     const fail = (reason: string) => {
-      console.error("[BookEntry] handoff rejected", {
+      if (import.meta.env.DEV) console.error("[BookEntry] handoff rejected", {
         reason,
         debugMode,
         tokenPresent: Boolean(token),
@@ -166,7 +166,7 @@ export default function BookEntry() {
 
       const { identity } = result;
 
-      console.info("[BookEntry] handoff ok", {
+      if (import.meta.env.DEV) console.info("[BookEntry] handoff ok", {
         host,
         hasFirstName: Boolean(identity.first_name),
         hasPhone:     Boolean(identity.phone),
