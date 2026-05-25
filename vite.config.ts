@@ -58,7 +58,8 @@ export default defineConfig(({ mode }) => ({
           // are kept as dependencies but NOT listed here — Vite tree-shakes them
           // into the specific chunks that import them, rather than preloading eagerly.
           "vendor-ui": [
-            "@radix-ui/react-dialog",
+            // react-dialog removed: only used in lazy booking routes (BookSchedule2, GHLAccordionView)
+            // — it will tree-shake into those lazy chunks instead of the eager vendor-ui
             "@radix-ui/react-toast",
             "@radix-ui/react-tooltip",
             "lucide-react",
