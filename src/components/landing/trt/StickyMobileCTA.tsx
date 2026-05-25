@@ -105,14 +105,14 @@ export const StickyMobileCTA = () => {
           textDecoration: "none",
           fontFamily: "Inter, sans-serif",
           letterSpacing: "0.06em",
-          fontSize: 13,
+          fontSize: 14,
           borderRight: "1px solid var(--c-border-on-dark)",
         }}
       >
         <span className="inline-flex items-center gap-1.5">
           <Phone size={16} /> Call Us
         </span>
-        <span style={{ fontSize: 13, fontWeight: 600, opacity: 0.85 }}>{nearest.phone}</span>
+        <span style={{ fontSize: 14, fontWeight: 600, opacity: 0.85 }}>{nearest.phone}</span>
       </a>
       <button
         type="button"
