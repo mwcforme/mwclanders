@@ -134,17 +134,17 @@ export default function AdminLogin() {
                 onKeyDown={(e) => e.key === "Enter" && handleBypassLogin()}
                 autoFocus
                 style={{
-                  flex: 1, height: 40, borderRadius: 8,
+                  flex: 1, height: 44, borderRadius: 8,
                   border: "1px solid rgba(255,255,255,0.35)",
                   background: "rgba(255,255,255,0.05)", color: "#FFFFFF",
-                  fontSize: 14, fontFamily: "Inter, sans-serif", padding: "0 12px",
+                  fontSize: 16, fontFamily: "Inter, sans-serif", padding: "0 12px",
                   outline: "none",
                 }}
               />
               <button
                 type="button"
                 onClick={handleBypassLogin}
-                style={{ height: 40, padding: "0 16px", borderRadius: 8, background: "var(--brand-cta)", color: "#FFF", border: "none", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "Inter, sans-serif" }}
+                style={{ height: 44, padding: "0 16px", borderRadius: 8, background: "var(--brand-cta)", color: "#FFF", border: "none", fontSize: 16, fontWeight: 700, cursor: "pointer", fontFamily: "Inter, sans-serif" }}
               >
                 Go
               </button>

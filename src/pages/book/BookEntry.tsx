@@ -194,10 +194,10 @@ function LoadingScreen() {
         }}
       />
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-      <p style={{ color: "rgba(255,255,255,0.60)", fontSize: 14 }}>
+      <p style={{ color: "var(--c-text-on-dark-muted)", fontSize: 16, fontFamily: "Inter, sans-serif" }}>
         Setting up your visit…
       </p>
-      <p style={{ color: "rgba(255,255,255,0.35)", fontSize: 12 }}>
+      <p style={{ color: "var(--c-footnote-on-dark)", fontSize: 14, fontFamily: "Inter, sans-serif" }}>
         Having trouble?{" "}
         <a href={PHONE.tel} style={{ color: "var(--brand-cta)", textDecoration: "none" }}>
           {PHONE.display}

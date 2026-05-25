@@ -11,7 +11,7 @@
  */
 import { useCallback, useRef, useState } from "react";
 
-import type { ZodSchema } from "zod";
+// ZodSchema replaced by miniSchema interface — same safeParse API
 import { useServices } from "@/app/providers/ServicesProvider";
 import { getAttribution, attributionTags } from "@/lib/attribution";
 import { trackConversion } from "@/lib/capi";

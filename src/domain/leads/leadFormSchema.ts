@@ -1,67 +1,43 @@
-import { z } from "zod";
-
 /**
- * Canonical validation rules for any lead-capture form.
- * Field schemas are exported individually so callers (e.g. the booking confirm
- * flow) can compose only the pieces they need without re-asserting TCPA.
+ * Canonical validation rules for lead-capture forms.
+ * Uses miniSchema (tiny inline validator) instead of zod to keep zod out of the critical path.
+ * API-compatible with ZodSchema<T>.safeParse() — useLeadSubmitController works unchanged.
  */
+import { m } from "@/lib/miniSchema";
 
-export const nameField = z
-  .string()
-  .trim()
-  .min(1, "Full name is required")
-  .max(100, "Name must be under 100 characters");
+export const nameField  = m.str().trim().min(1, "Full name is required").max(100, "Name must be under 100 characters");
+export const phoneField = m.str().transform((v: string) => v.replace(/\D/g, "")).refine((d: string) => d.length === 10, "Valid 10-digit phone required");
+export const emailField = m.str().trim().max(255, "Email must be under 255 characters").email("Valid email is required");
 
-export const phoneField = z
-  .string()
-  .transform((v) => v.replace(/\D/g, ""))
-  .refine((d) => d.length === 10, "Valid 10-digit phone required");
+const LOCATIONS = ["richmond", "newport-news", "virginia-beach"] as const;
+export type LocationKey = typeof LOCATIONS[number];
+export const locationField = m.enumField(LOCATIONS, "Please select a location");
+export const tcpaField     = m.literal(true, "Consent required to continue");
 
-export const emailField = z
-  .string()
-  .trim()
-  .max(255, "Email must be under 255 characters")
-  .email("Valid email is required");
-
-export const locationField = z.enum(["richmond", "newport-news", "virginia-beach"], {
-  errorMap: () => ({ message: "Please select a location" }),
-});
-
-export const tcpaField = z.literal(true, {
-  errorMap: () => ({ message: "Consent required to continue" }),
-});
-
-/**
- * Hero-form schema: name + phone + location + TCPA.
- * Email removed — collected post-booking on /book/confirmed.
- */
-export const heroLeadSchema = z.object({
-  name: nameField,
-  phone: phoneField,
+/** Hero-form schema: name + phone + location + TCPA. */
+export const heroLeadSchema = m.object({
+  name:     nameField,
+  phone:    phoneField,
   location: locationField,
-  tcpa: tcpaField,
+  tcpa:     tcpaField,
 });
+export type HeroLeadInput = {
+  name: string;
+  phone: string;
+  location: LocationKey;
+  tcpa: true;
+};
 
-export type HeroLeadInput = z.infer<typeof heroLeadSchema>;
-
-/**
- * Short hero-form schema: phone + location + TCPA only.
- * Name and email collected downstream at /book/schedule where intent is highest.
- * CRO: reduces above-fold friction from 5 fields → 3.
- */
-export const shortHeroLeadSchema = z.object({
-  phone: phoneField,
+/** Short hero-form: phone + location + TCPA only. */
+export const shortHeroLeadSchema = m.object({
+  phone:    phoneField,
   location: locationField,
-  tcpa: tcpaField,
+  tcpa:     tcpaField,
 });
 
-
-
-/** Booking-confirm schema: TCPA already collected upstream; fields optional. */
-export const confirmLeadSchema = z.object({
-  name: nameField.optional(),
+/** Booking-confirm: all fields optional (TCPA already collected). */
+export const confirmLeadSchema = m.object({
+  name:  nameField.optional(),
   phone: phoneField.optional(),
   email: emailField.optional(),
 });
-
-
