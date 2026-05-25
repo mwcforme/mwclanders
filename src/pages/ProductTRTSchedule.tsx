@@ -87,7 +87,7 @@ export default function ProductTRTSchedule() {
         </a>
         <a href={PHONE.tel} style={{
           display: "flex", alignItems: "center", gap: 8, textDecoration: "none",
-          color: "var(--c-text-on-dark)", fontWeight: 600, fontSize: 15,
+          color: "var(--c-text-on-dark)", fontWeight: 600, fontSize: 16,
         }}>
           <Phone size={16} strokeWidth={1.75} style={{ color: "var(--brand-cta)" }} />
           {PHONE.display}
@@ -170,7 +170,7 @@ export default function ProductTRTSchedule() {
                 }}>
                   Choose Your Location
                 </h1>
-                <p style={{ fontSize: 15, color: "var(--c-text-on-light-muted)" }}>
+                <p style={{ fontSize: 16, color: "var(--c-text-on-light-muted)" }}>
                   Select the Men's Wellness Centers nearest to you.
                 </p>
                 <div style={{ width: 48, height: 3, background: "var(--brand-cta)", margin: "14px auto 0", borderRadius: 2 }} />
@@ -206,7 +206,7 @@ export default function ProductTRTSchedule() {
                         {sel && <div style={{ width: 10, height: 10, borderRadius: "50%", background: "var(--brand-cta)" }} />}
                       </div>
                       <div>
-                        <div style={{ fontWeight: 700, fontSize: 15, color: "var(--brand-navy)" }}>{label}</div>
+                        <div style={{ fontWeight: 700, fontSize: 16, color: "var(--brand-navy)" }}>{label}</div>
                         <div style={{ fontSize: 12, color: "var(--c-placeholder-light)", marginTop: 2 }}>{address}</div>
                       </div>
                     </label>

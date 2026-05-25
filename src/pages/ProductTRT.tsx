@@ -318,7 +318,7 @@ const ProductTRT = () => {
                 ].map((line) => (
                   <li key={line} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
                     <Check size={16} strokeWidth={2.5} style={{ color: "var(--brand-cta)", flexShrink: 0, marginTop: 2 }} />
-                    <span style={{ fontSize: 15, color: "rgba(255,255,255,0.80)", lineHeight: 1.5 }}>{line}</span>
+                    <span style={{ fontSize: 16, color: "rgba(255,255,255,0.80)", lineHeight: 1.5 }}>{line}</span>
                   </li>
                 ))}
               </ul>
