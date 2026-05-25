@@ -8,6 +8,7 @@
 import { Star, ArrowUpRight, CheckCircle } from "lucide-react";
 import { COPY } from "@/data/copy";
 import { TESTIMONIALS, GBP_REVIEWS_URL } from "@/data/testimonials";
+import { useScrollToForm } from "@/hooks/useScrollToForm";
 
 /** Google G logo SVG — official brand colors */
 const GoogleG = ({ size = 16 }: { size?: number }) => (
@@ -20,8 +21,7 @@ const GoogleG = ({ size = 16 }: { size?: number }) => (
 );
 
 export const TRTResults = () => {
-  const scrollToForm = () =>
-    document.getElementById("final-cta")?.scrollIntoView({ behavior: "smooth" });
+  const scrollToForm = useScrollToForm();
 
   return (
     <section id="results" style={{ background: "var(--brand-cream)" }}>

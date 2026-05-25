@@ -1,0 +1,429 @@
+{
+  "timestamp": "2026-05-25T02:43:45Z",
+  "total_raw_bytes": 1213391,
+  "total_gzip_bytes": 379167,
+  "top_chunks": [
+    {
+      "name": "vendor-ui-BdoLDShJ.js",
+      "raw": 249216,
+      "gzip": 78229
+    },
+    {
+      "name": "vendor-supabase-BNJzsviN.js",
+      "raw": 208150,
+      "gzip": 54236
+    },
+    {
+      "name": "index-CLjtP7rF.js",
+      "raw": 133056,
+      "gzip": 41776
+    },
+    {
+      "name": "vendor-forms-nobZjvGX.js",
+      "raw": 52968,
+      "gzip": 12047
+    },
+    {
+      "name": "ProductTRT-fSm1gsaI.js",
+      "raw": 39367,
+      "gzip": 10279
+    },
+    {
+      "name": "index-DB0Njfvp.css",
+      "raw": 48724,
+      "gzip": 9779
+    },
+    {
+      "name": "vendor-router-CFIrLpvS.js",
+      "raw": 23207,
+      "gzip": 8564
+    },
+    {
+      "name": "vendor-state-CdlGAEDr.js",
+      "raw": 25222,
+      "gzip": 7670
+    },
+    {
+      "name": "CROOptimized-DOOq_kqQ.js",
+      "raw": 24568,
+      "gzip": 7563
+    },
+    {
+      "name": "vendor-utils-CyvyRcDv.js",
+      "raw": 20909,
+      "gzip": 7080
+    }
+  ],
+  "all_chunks": [
+    {
+      "name": "vendor-ui-BdoLDShJ.js",
+      "raw": 249216,
+      "gzip": 78229
+    },
+    {
+      "name": "vendor-supabase-BNJzsviN.js",
+      "raw": 208150,
+      "gzip": 54236
+    },
+    {
+      "name": "index-CLjtP7rF.js",
+      "raw": 133056,
+      "gzip": 41776
+    },
+    {
+      "name": "vendor-forms-nobZjvGX.js",
+      "raw": 52968,
+      "gzip": 12047
+    },
+    {
+      "name": "ProductTRT-fSm1gsaI.js",
+      "raw": 39367,
+      "gzip": 10279
+    },
+    {
+      "name": "index-DB0Njfvp.css",
+      "raw": 48724,
+      "gzip": 9779
+    },
+    {
+      "name": "vendor-router-CFIrLpvS.js",
+      "raw": 23207,
+      "gzip": 8564
+    },
+    {
+      "name": "vendor-state-CdlGAEDr.js",
+      "raw": 25222,
+      "gzip": 7670
+    },
+    {
+      "name": "CROOptimized-DOOq_kqQ.js",
+      "raw": 24568,
+      "gzip": 7563
+    },
+    {
+      "name": "vendor-utils-CyvyRcDv.js",
+      "raw": 20909,
+      "gzip": 7080
+    },
+    {
+      "name": "TRTEducation-Bpwztbbb.js",
+      "raw": 22185,
+      "gzip": 6734
+    },
+    {
+      "name": "TRTQuiz-DPM8ei78.js",
+      "raw": 18585,
+      "gzip": 6201
+    },
+    {
+      "name": "BookSchedule2-BexhrHZl.js",
+      "raw": 15029,
+      "gzip": 5409
+    },
+    {
+      "name": "BookConfirmed-D1a0wtpK.js",
+      "raw": 16798,
+      "gzip": 5215
+    },
+    {
+      "name": "TRTQuizApproved-CvfU2Uh-.js",
+      "raw": 17608,
+      "gzip": 5129
+    },
+    {
+      "name": "GHLDayView-CDocf3KJ.js",
+      "raw": 14032,
+      "gzip": 5121
+    },
+    {
+      "name": "Affordability-DQdV-90A.js",
+      "raw": 17736,
+      "gzip": 5073
+    },
+    {
+      "name": "confetti.module-DX0toIYy.js",
+      "raw": 10666,
+      "gzip": 4291
+    },
+    {
+      "name": "LpDirectory-B1xOq8Na.js",
+      "raw": 12403,
+      "gzip": 3986
+    },
+    {
+      "name": "TRTQuestionnaire-DBtzDoXx.js",
+      "raw": 13452,
+      "gzip": 3947
+    },
+    {
+      "name": "NewED-DLalWwhC.js",
+      "raw": 11001,
+      "gzip": 3867
+    },
+    {
+      "name": "NewWeightLoss-8vNgRdfg.js",
+      "raw": 11095,
+      "gzip": 3860
+    },
+    {
+      "name": "TRTGetStarted-BY_uGEH0.js",
+      "raw": 11819,
+      "gzip": 3629
+    },
+    {
+      "name": "quizState-Cm58yAPn.js",
+      "raw": 7650,
+      "gzip": 3481
+    },
+    {
+      "name": "AdminOverview-BvhnJUdi.js",
+      "raw": 10980,
+      "gzip": 3464
+    },
+    {
+      "name": "AdminLogin-DJVxUmxw.js",
+      "raw": 7444,
+      "gzip": 3193
+    },
+    {
+      "name": "AdminLeads-Bh4GdKJB.js",
+      "raw": 7760,
+      "gzip": 2914
+    },
+    {
+      "name": "BookSchedule-Bdd4ZCrE.js",
+      "raw": 8590,
+      "gzip": 2883
+    },
+    {
+      "name": "ProductTRTSchedule-BsZcaJOM.js",
+      "raw": 8869,
+      "gzip": 2789
+    },
+    {
+      "name": "TRTSuccess-J91UtElN.js",
+      "raw": 7144,
+      "gzip": 2761
+    },
+    {
+      "name": "AdminAnalytics-D20YXZM6.js",
+      "raw": 8233,
+      "gzip": 2530
+    },
+    {
+      "name": "TRTFooter-D-pLB6xc.js",
+      "raw": 6576,
+      "gzip": 2297
+    },
+    {
+      "name": "FormEmbed-MrS_rmFs.js",
+      "raw": 5077,
+      "gzip": 2192
+    },
+    {
+      "name": "TRTResults-BuouLyCk.js",
+      "raw": 5802,
+      "gzip": 2188
+    },
+    {
+      "name": "TRTLocations-BftU42hk.js",
+      "raw": 6118,
+      "gzip": 2171
+    },
+    {
+      "name": "WLFAQ-BuSi8rDI.js",
+      "raw": 4434,
+      "gzip": 2109
+    },
+    {
+      "name": "TRTMedicalProtocol-DhuYJDWR.js",
+      "raw": 6015,
+      "gzip": 2105
+    },
+    {
+      "name": "BookLetsTalk-Dl7bzW5j.js",
+      "raw": 5195,
+      "gzip": 2086
+    },
+    {
+      "name": "EDFAQ-ZD79u0Yv.js",
+      "raw": 4351,
+      "gzip": 2076
+    },
+    {
+      "name": "BookEntry-LInvN0jr.js",
+      "raw": 4363,
+      "gzip": 2031
+    },
+    {
+      "name": "useConfirmAppointment-l3JGNwS5.js",
+      "raw": 4641,
+      "gzip": 1933
+    },
+    {
+      "name": "EDHowItWorks-CUax58Px.js",
+      "raw": 4219,
+      "gzip": 1900
+    },
+    {
+      "name": "WLHowItWorks-DTZRC5mf.js",
+      "raw": 4177,
+      "gzip": 1853
+    },
+    {
+      "name": "BookLocation-CVEg4tyf.js",
+      "raw": 4155,
+      "gzip": 1776
+    },
+    {
+      "name": "BookSymptom-CWgj7JRJ.js",
+      "raw": 3839,
+      "gzip": 1757
+    },
+    {
+      "name": "TRTBloodwork-DW2tyAEM.js",
+      "raw": 4090,
+      "gzip": 1650
+    },
+    {
+      "name": "OptionRow-If4ihZwU.js",
+      "raw": 3919,
+      "gzip": 1598
+    },
+    {
+      "name": "TRTIdentityVerification-Y8Wu_eu2.js",
+      "raw": 3722,
+      "gzip": 1596
+    },
+    {
+      "name": "TRTPillars-BZBghAmH.js",
+      "raw": 4368,
+      "gzip": 1530
+    },
+    {
+      "name": "TRTLabRequisition-C2ltLDcY.js",
+      "raw": 3450,
+      "gzip": 1417
+    },
+    {
+      "name": "BookLayout-CoopzjkP.js",
+      "raw": 2692,
+      "gzip": 1388
+    },
+    {
+      "name": "PrivacyPolicy-JKwClz_3.js",
+      "raw": 3110,
+      "gzip": 1386
+    },
+    {
+      "name": "TRTFinalCTA-DQ_7YB39.js",
+      "raw": 3093,
+      "gzip": 1323
+    },
+    {
+      "name": "TRTHowItWorks-LXvmLYiT.js",
+      "raw": 2708,
+      "gzip": 1306
+    },
+    {
+      "name": "AdminFeedback-DLg33EM8.js",
+      "raw": 3219,
+      "gzip": 1289
+    },
+    {
+      "name": "TermsOfService-Dg_UBGqo.js",
+      "raw": 2568,
+      "gzip": 1185
+    },
+    {
+      "name": "TRTFAQ-DAceD4lY.js",
+      "raw": 2446,
+      "gzip": 1163
+    },
+    {
+      "name": "AdminEvents-CkA0nW_f.js",
+      "raw": 2644,
+      "gzip": 1145
+    },
+    {
+      "name": "ServiceFinalCTA-P5ZmoXia.js",
+      "raw": 2819,
+      "gzip": 1089
+    },
+    {
+      "name": "TcpaDisclosure-I2tszMB0.js",
+      "raw": 1787,
+      "gzip": 897
+    },
+    {
+      "name": "PrescribingPolicy-DsUQzg7u.js",
+      "raw": 1787,
+      "gzip": 890
+    },
+    {
+      "name": "TRTLandingPage-CtJYLotd.js",
+      "raw": 1824,
+      "gzip": 852
+    },
+    {
+      "name": "BookDuration-B_AQOTkW.js",
+      "raw": 1518,
+      "gzip": 816
+    },
+    {
+      "name": "LegalPage-BuBoj9yo.js",
+      "raw": 1839,
+      "gzip": 802
+    },
+    {
+      "name": "AdminTable-BO5cMMxw.js",
+      "raw": 1687,
+      "gzip": 720
+    },
+    {
+      "name": "TRTMarquee-7jbU9IWQ.js",
+      "raw": 1377,
+      "gzip": 675
+    },
+    {
+      "name": "NotFound-CIrxYaq_.js",
+      "raw": 978,
+      "gzip": 539
+    },
+    {
+      "name": "RequireAdmin-Cov8LUbM.js",
+      "raw": 846,
+      "gzip": 526
+    },
+    {
+      "name": "contactUpdater-BL6p4g9Q.js",
+      "raw": 564,
+      "gzip": 367
+    },
+    {
+      "name": "client-BLSMyVg_.js",
+      "raw": 414,
+      "gzip": 358
+    },
+    {
+      "name": "useScrollToForm-DuXqF5NN.js",
+      "raw": 233,
+      "gzip": 201
+    },
+    {
+      "name": "allowlist-ISL2WVuQ.js",
+      "raw": 109,
+      "gzip": 117
+    },
+    {
+      "name": "legacy-cvX7CLB6.js",
+      "raw": 119,
+      "gzip": 115
+    },
+    {
+      "name": "vendor-react-Bl3_kJiN.js",
+      "raw": 33,
+      "gzip": 53
+    }
+  ]
+}

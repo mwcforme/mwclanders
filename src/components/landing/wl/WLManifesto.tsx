@@ -1,13 +1,15 @@
 import { Quote } from "lucide-react";
 import { COPY } from "@/data/copy";
+import { Eyebrow } from "@/components/landing/shared/primitives";
+import { useScrollToForm } from "@/hooks/useScrollToForm";
 
-export const WLManifesto = () => (
+export const WLManifesto = () => {
+  const scrollToForm = useScrollToForm();
+  return (
   <section className="py-10 md:py-16" style={{ background: "var(--brand-navy)" }}>
     <div className="max-w-[1200px] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-center">
       <div className="order-2 md:order-1">
-        <div className="uppercase mb-3" style={{ color: "var(--brand-cta-accessible)", fontFamily: "Inter, sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: "0.12em" }}>
-          Why Men Choose Us
-        </div>
+        <Eyebrow>Why Men Choose Us</Eyebrow>
         <h2 className="font-bold uppercase" style={{ fontFamily: "Oswald, sans-serif", fontSize: "clamp(28px, 4vw, 40px)", color: "var(--c-text-on-dark)", fontWeight: 700, lineHeight: 1.1 }}>
           Real medicine.<br />Real follow-up.
         </h2>
@@ -41,7 +43,7 @@ export const WLManifesto = () => (
         </figure>
 
         <button
-          onClick={() => document.getElementById("final-cta")?.scrollIntoView({ behavior: "smooth" })}
+          onClick={scrollToForm}
           className="mt-7 w-full sm:w-auto inline-flex items-center justify-center rounded-lg px-8 font-bold cursor-pointer border-none"
           style={{ height: 56, minHeight: 56, background: "var(--brand-cta)", color: "var(--c-text-on-dark)", fontSize: 15, letterSpacing: "0.08em", fontFamily: "Inter, sans-serif" }}
         >
@@ -66,4 +68,5 @@ export const WLManifesto = () => (
       </div>
     </div>
   </section>
-);
+  );
+};

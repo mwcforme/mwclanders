@@ -57,7 +57,7 @@ async function exchangeToken(token: string): Promise<
     });
     data  = (result.data  as Record<string, unknown>) ?? {};
     error = result.error;
-  } catch (err) {
+  } catch (_err) {
     return { ok: false, reason: "network_error" };
   }
 

@@ -1,4 +1,6 @@
 import { COPY } from "@/data/copy";
+import { Eyebrow, SectionHeading } from "@/components/landing/shared/primitives";
+import { useScrollToForm } from "@/hooks/useScrollToForm";
 
 const steps = [
   {
@@ -19,39 +21,15 @@ const steps = [
 ];
 
 export const TRTHowItWorks = () => {
-  const scrollToForm = () => {
-    document.getElementById("final-cta")?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const eyebrow = (text: string) => (
-    <p style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: "var(--brand-cta-accessible)", borderLeft: "3px solid var(--brand-cta)", paddingLeft: 10, lineHeight: 1, marginBottom: 12 }}>
-      {text}
-    </p>
-  );
-
-  const heading = (text: string) => (
-    <h2
-      className="font-bold uppercase"
-      style={{
-        fontFamily: "Oswald, sans-serif",
-        fontSize: "clamp(28px, 4vw, 44px)",
-        color: "var(--brand-navy)",
-        fontWeight: 700,
-        lineHeight: 1.05,
-        letterSpacing: "-0.01em",
-      }}
-    >
-      {text}
-    </h2>
-  );
+  const scrollToForm = useScrollToForm();
 
   return (
     <section id="how-it-works" className="py-12 md:py-20" style={{ background: "var(--brand-cream)", scrollMarginTop: 64 }} aria-label="Symptoms and how it works">
       {/* How It Works — full width, left column removed */}
       <div className="max-w-[720px] mx-auto px-6">
         <div>
-          {eyebrow("The Fix")}
-          {heading("Here's how it works in one visit")}
+          <Eyebrow>The Fix</Eyebrow>
+          <SectionHeading line1="Here's how it works in one visit" size="lg" />
 
           <div className="mt-8 flex flex-col gap-6">
             {steps.map((s, i) => {

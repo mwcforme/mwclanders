@@ -1,6 +1,7 @@
 const imgManifesto = "/assets/lp/provider-consultation-trt.webp";
 import { Quote } from "lucide-react";
 import { COPY } from "@/data/copy";
+import { Eyebrow } from "@/components/landing/shared/primitives";
 
 interface TRTManifestoProps {
   ctaScrollTarget?: string;
@@ -12,9 +13,7 @@ export const TRTManifesto = ({ ctaScrollTarget = "final-cta" }: TRTManifestoProp
       <div className="max-w-[1200px] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-center">
         {/* Left: copy (mobile second) */}
         <div className="order-2 md:order-1">
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--brand-cta-accessible)", borderLeft: "3px solid var(--brand-cta)", paddingLeft: 10, lineHeight: 1, marginBottom: 12 }}>
-            Why Men Choose Us
-          </p>
+          <Eyebrow>Why Men Choose Us</Eyebrow>
           <h2
             className="font-bold uppercase"
             style={{ fontFamily: "Oswald, sans-serif", fontSize: "clamp(28px, 4vw, 40px)", color: "var(--c-text-on-dark)", fontWeight: 700, lineHeight: 1.1 }}

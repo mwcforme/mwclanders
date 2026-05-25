@@ -66,7 +66,7 @@ const FunnelFooter = () => (
   </footer>
 );
 
-const BookLayout = ({ page, title, description, variant = "default", children }: BookLayoutProps) => {
+const BookLayout = ({ page, title, description, variant: _variant = "default", children }: BookLayoutProps) => {
   useEffect(() => {
     document.body.dataset.page = page;
     return () => {

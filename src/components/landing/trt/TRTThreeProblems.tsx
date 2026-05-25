@@ -7,6 +7,7 @@
  */
 import { COPY } from "@/data/copy";
 import { ArrowRight, Droplet, HeartPulse, TrendingDown } from "lucide-react";
+import { Eyebrow, SectionHeading, SectionSubhead } from "@/components/landing/shared/primitives";
 
 const SERVICES = [
   {
@@ -63,45 +64,17 @@ export const TRTThreeProblems = ({ onCta, headlineOverride }: TRTThreeProblemsPr
       <div className="max-w-[1200px] mx-auto px-6 py-16 md:py-24">
         {/* Section heading */}
         <div className="text-center mb-12 md:mb-16">
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--brand-cta-accessible)", marginBottom: 14 }}>
-            Integrated Care
-          </p>
-          <h2
-            style={{
-              fontFamily: "Oswald, sans-serif",
-              fontWeight: 700,
-              fontSize: "clamp(26px, 3.5vw, 40px)",
-              color: "var(--brand-navy)",
-              lineHeight: 1.1,
-              textTransform: "uppercase",
-            }}
-          >
-            {headlineOverride?.line1 ? (
-              <>
-                {headlineOverride.line1}
-                {headlineOverride.line2 && (
-                  <><br /><span style={{ color: "var(--brand-cta)" }}>{headlineOverride.line2}</span></>
-                )}
-              </>
-            ) : (
-              <>
-                ONE PROVIDER.
-                <br />
-                <span style={{ color: "var(--brand-cta)" }}>THREE CONCERNS.</span>
-              </>
-            )}
-          </h2>
-          <p
-            className="mt-4 max-w-[560px] mx-auto"
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: 17,
-              color: "var(--c-text-on-light-muted)",
-              lineHeight: 1.6,
-            }}
-          >
-            TRT, ED care, and medical weight loss in one Virginia center. Your provider reviews your labs in person, same day. No referrals, no waiting rooms, no generic protocols.
-          </p>
+          <Eyebrow>Integrated Care</Eyebrow>
+          <SectionHeading
+            center
+            line1={headlineOverride?.line1 ?? "ONE PROVIDER."}
+            line2={headlineOverride?.line2 ?? "THREE CONCERNS."}
+          />
+          <div className="mt-4">
+            <SectionSubhead center maxWidth={560}>
+              TRT, ED care, and medical weight loss in one Virginia center. Your provider reviews your labs in person, same day. No referrals, no waiting rooms, no generic protocols.
+            </SectionSubhead>
+          </div>
         </div>
 
         {/* Service cards */}
