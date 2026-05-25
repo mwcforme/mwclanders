@@ -124,7 +124,7 @@ export const TRTProductFAQ = () => {
                     style={{
                       padding: "0 28px 22px 44px",
                       background: "#f5f7ff",
-                      fontSize: 15,
+                      fontSize: 16,
                       color: "var(--c-text-on-light-muted)",
                       lineHeight: 1.75,
                       borderLeft: "3px solid #E8670A",

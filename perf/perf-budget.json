@@ -1,0 +1,58 @@
+{
+  "description": "MWC Booking Funnel Performance Budget",
+  "updated": "2026-05-25",
+  "baseline": {
+    "total_gzip_kb": 370.3,
+    "index_gzip_kb": 41.96
+  },
+  "current": {
+    "total_gzip_kb": 318.4,
+    "index_gzip_kb": 26.71
+  },
+  "budgets": {
+    "total_gzip_kb": {
+      "budget": 340,
+      "current": 318.4,
+      "status": "PASS",
+      "margin": 21.6
+    },
+    "critical_path_gzip_kb": {
+      "comment": "vendor-router + vendor-ui + vendor-state + index.js",
+      "budget": 120,
+      "current": 86,
+      "status": "PASS",
+      "margin": 34
+    },
+    "index_gzip_kb": {
+      "budget": 35,
+      "current": 26.71,
+      "status": "PASS",
+      "margin": 8.29
+    },
+    "vendor_supabase_gzip_kb": {
+      "comment": "Lazy-loaded; not on critical path",
+      "budget": 60,
+      "current": 54.43,
+      "status": "PASS",
+      "margin": 5.57
+    },
+    "css_gzip_kb": {
+      "budget": 12,
+      "current": 9.5,
+      "status": "PASS",
+      "margin": 2.5
+    },
+    "single_lazy_chunk_gzip_kb": {
+      "budget": 20,
+      "current": 16.42,
+      "status": "PASS",
+      "margin": 3.58
+    }
+  },
+  "rules": {
+    "no_new_deps_without_tree_shaking_verification": true,
+    "no_eager_loading_of_booking_routes": true,
+    "supabase_must_be_lazy": true,
+    "critical_path_js_max_gzip_kb": 120
+  }
+}
