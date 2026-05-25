@@ -5,6 +5,7 @@
 import { Calendar, Clock, MapPin } from "lucide-react";
 import { CelebrationBurst } from "@/components/book/CelebrationBurst";
 import type { Location } from "@/data/locations";
+import { CTA_BUTTON_BASE, FONT_INTER, FONT_OSWALD } from "@/lib/styles";
 
 interface ApptDate {
   weekday: string;
@@ -30,7 +31,7 @@ interface BookConfirmedHeroProps {
 export function BookConfirmedHero({ firstName, apptDate, calLinks, center, checkDrawn }: BookConfirmedHeroProps) {
   return (
     <div style={{ background: "linear-gradient(180deg, #0B1029 0%, #0D1535 100%)", padding: "48px 20px 56px" }}>
-      <div style={{ maxWidth: 640, margin: "0 auto", fontFamily: "Inter, sans-serif" }}>
+      <div style={{ maxWidth: 640, margin: "0 auto", fontFamily: FONT_INTER }}>
         <div style={{ textAlign: "center", marginBottom: 36 }}>
           <div style={{ position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
             <div style={{ width: 80, height: 80, borderRadius: "50%", background: "rgba(22,163,74,0.20)", border: "2px solid rgba(22,163,74,0.60)", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
@@ -42,7 +43,7 @@ export function BookConfirmedHero({ firstName, apptDate, calLinks, center, check
             <CelebrationBurst active={checkDrawn} />
           </div>
           <p style={{ fontSize: 14, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "var(--c-success-on-dark)", marginBottom: 10 }}>Appointment Confirmed</p>
-          <h1 style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: "clamp(28px, 5vw, 44px)", color: "var(--brand-cream)", lineHeight: 1.1, marginBottom: 8 }}>
+          <h1 style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: "clamp(28px, 5vw, 44px)", color: "var(--brand-cream)", lineHeight: 1.1, marginBottom: 8 }}>
             {firstName ? `This is your moment, ${firstName}.` : "This is your moment."}
           </h1>
           <p style={{ fontSize: 16, fontWeight: 500, color: "rgba(245,243,240,0.85)", lineHeight: 1.6 }}>
@@ -55,14 +56,14 @@ export function BookConfirmedHero({ firstName, apptDate, calLinks, center, check
           <div style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.35)", borderRadius: 16, overflow: "hidden", marginBottom: 28 }}>
             <div style={{ display: "flex" }}>
               <div style={{ background: "var(--brand-cta)", padding: "24px 20px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minWidth: 88, flexShrink: 0 }}>
-                <span style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 11, color: "rgba(255,255,255,0.80)", letterSpacing: "0.12em" }}>{apptDate.month}</span>
-                <span style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 48, color: "var(--c-text-on-dark)", lineHeight: 1 }}>{apptDate.day}</span>
-                <span style={{ fontFamily: "Oswald, sans-serif", fontWeight: 600, fontSize: 11, color: "rgba(255,255,255,0.80)", letterSpacing: "0.10em" }}>{apptDate.weekday.slice(0, 3).toUpperCase()}</span>
+                <span style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 11, color: "rgba(255,255,255,0.80)", letterSpacing: "0.12em" }}>{apptDate.month}</span>
+                <span style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 48, color: "var(--c-text-on-dark)", lineHeight: 1 }}>{apptDate.day}</span>
+                <span style={{ fontFamily: FONT_OSWALD, fontWeight: 600, fontSize: 11, color: "rgba(255,255,255,0.80)", letterSpacing: "0.10em" }}>{apptDate.weekday.slice(0, 3).toUpperCase()}</span>
               </div>
               <div style={{ padding: "20px 20px", display: "flex", flexDirection: "column", justifyContent: "center", gap: 8 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <Clock size={15} strokeWidth={2} style={{ color: "var(--brand-cta)", flexShrink: 0 }} />
-                  <span style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 22, color: "var(--brand-cream)" }}>{apptDate.time}</span>
+                  <span style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 22, color: "var(--brand-cream)" }}>{apptDate.time}</span>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <MapPin size={15} strokeWidth={2} style={{ color: "var(--brand-cta)", flexShrink: 0 }} />
@@ -85,11 +86,11 @@ export function BookConfirmedHero({ firstName, apptDate, calLinks, center, check
           <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 8 }}>
             <a href={calLinks.google} target="_blank" rel="noopener noreferrer"
               aria-label="Add to Google Calendar (opens in new tab)"
-              style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, height: 56, background: "var(--brand-cta)", color: "#FFF", borderRadius: 10, textDecoration: "none", fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 16, boxShadow: "0 4px 16px rgba(232,103,10,0.35)" }}>
+              style={{ ...CTA_BUTTON_BASE, gap: 10 }}>
               <Calendar size={18} strokeWidth={2} aria-hidden /> Add to Google Calendar
             </a>
             <a href={calLinks.ics} download="mwc-appointment.ics"
-              style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, height: 56, background: "rgba(255,255,255,0.10)", border: "1px solid rgba(255,255,255,0.35)", color: "var(--brand-cream)", borderRadius: 10, textDecoration: "none", fontFamily: "Inter, sans-serif", fontWeight: 600, fontSize: 16 }}>
+              style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, height: 56, background: "rgba(255,255,255,0.10)", border: "1px solid rgba(255,255,255,0.35)", color: "var(--brand-cream)", borderRadius: 10, textDecoration: "none", fontFamily: FONT_INTER, fontWeight: 600, fontSize: 16 }}>
               <Calendar size={18} strokeWidth={2} aria-hidden /> Apple / Outlook (.ics)
             </a>
           </div>

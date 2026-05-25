@@ -7,6 +7,7 @@ import { MapPin, Navigation, ExternalLink, Clock, ClipboardList, FlaskConical, S
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
 import { EmailCapture } from "@/components/book/EmailCapture";
 import type { Location } from "@/data/locations";
+import { CARD_WHITE, CARD_WHITE_PAD, FONT_INTER, FONT_OSWALD } from "@/lib/styles";
 
 const EXPECT_VIDEO_SRC = "/videos/what-to-expect.mp4";
 
@@ -39,9 +40,9 @@ export function BookConfirmedContent({ center, mapsSearchUrl, mapsEmbedUrl, emai
       <div style={{ maxWidth: 640, margin: "0 auto", display: "flex", flexDirection: "column", gap: 20, paddingTop: 24, fontFamily: "Inter, sans-serif" }}>
 
         {/* Outcome cards */}
-        <div style={{ background: "#FFFFFF", borderRadius: 14, overflow: "hidden", border: "1px solid rgba(255,255,255,0.15)", boxShadow: "0 4px 24px rgba(0,0,0,0.25)" }}>
+        <div style={CARD_WHITE}>
           <div style={{ padding: "16px 20px 12px", borderBottom: "1px solid #E5E7EB" }}>
-            <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--brand-cta)", margin: 0 }}>You leave with</p>
+            <p style={{ fontFamily: FONT_INTER, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--brand-cta)", margin: 0 }}>You leave with</p>
           </div>
           {OUTCOME_ITEMS.map(({ icon, text }, idx, arr) => (
             <div key={text} style={{ display: "flex", alignItems: "center", gap: 12, padding: "14px 20px", borderBottom: idx < arr.length - 1 ? "1px solid #F3F4F6" : "none" }}>
@@ -52,24 +53,24 @@ export function BookConfirmedContent({ center, mapsSearchUrl, mapsEmbedUrl, emai
         </div>
 
         {/* Video */}
-        <div style={{ background: "#FFFFFF", borderRadius: 14, overflow: "hidden", border: "1px solid rgba(255,255,255,0.15)", boxShadow: "0 4px 24px rgba(0,0,0,0.25)" }}>
+        <div style={CARD_WHITE}>
           <div style={{ position: "relative", width: "100%", paddingBottom: "52%", background: "#000" }}>
             <video ref={videoRef} src={EXPECT_VIDEO_SRC} poster="/images/video-poster.webp" muted loop={false} playsInline controls preload="none"
               aria-label="What to expect at your visit — 2 minute overview"
               style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", border: 0 }} />
           </div>
           <div style={{ padding: "16px 24px 20px" }}>
-            <h2 style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 20, color: "var(--brand-navy-deep)", marginBottom: 0 }}>What happens when you walk in. 2 min.</h2>
+            <h2 style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 20, color: "var(--brand-navy-deep)", marginBottom: 0 }}>What happens when you walk in. 2 min.</h2>
           </div>
         </div>
 
         {/* Prep steps */}
-        <div style={{ background: "#FFFFFF", borderRadius: 14, padding: "18px 20px", border: "1px solid rgba(255,255,255,0.15)", boxShadow: "0 4px 24px rgba(0,0,0,0.25)" }}>
-          <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--brand-cta)", marginBottom: 14 }}>Before you arrive</p>
+        <div style={CARD_WHITE_PAD}>
+          <p style={{ fontFamily: FONT_INTER, fontSize: 12, fontWeight: 800, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--brand-cta)", marginBottom: 14 }}>Before you arrive</p>
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {PREP_STEPS.map(({ n, text }) => (
               <div key={n} style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                <div style={{ width: 28, height: 28, borderRadius: "50%", background: "var(--brand-cta)", color: "#FFF", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 13, flexShrink: 0 }}>{n}</div>
+                <div style={{ width: 28, height: 28, borderRadius: "50%", background: "var(--brand-cta)", color: "#FFF", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 13, flexShrink: 0 }}>{n}</div>
                 <p style={{ fontSize: 16, fontWeight: 500, color: "var(--c-text-on-light)", lineHeight: 1.4, margin: 0 }}>{text}</p>
               </div>
             ))}
@@ -77,9 +78,9 @@ export function BookConfirmedContent({ center, mapsSearchUrl, mapsEmbedUrl, emai
         </div>
 
         {/* Location tile */}
-        <div style={{ background: "#FFFFFF", borderRadius: 14, overflow: "hidden", border: "1px solid rgba(255,255,255,0.15)", boxShadow: "0 4px 24px rgba(0,0,0,0.25)" }}>
+        <div style={CARD_WHITE}>
           <div style={{ padding: "22px 24px 18px" }}>
-            <h2 style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 22, color: "var(--brand-navy-deep)", textTransform: "uppercase", marginBottom: 4 }}>{center.city}</h2>
+            <h2 style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 22, color: "var(--brand-navy-deep)", textTransform: "uppercase", marginBottom: 4 }}>{center.city}</h2>
             <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 16 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <Navigation size={16} strokeWidth={2.5} style={{ color: "var(--brand-cta)", flexShrink: 0 }} />
@@ -106,7 +107,7 @@ export function BookConfirmedContent({ center, mapsSearchUrl, mapsEmbedUrl, emai
           </div>
           <a href={mapsSearchUrl} target="_blank" rel="noopener noreferrer"
             aria-label={`Get directions to ${center.name} (opens in new tab)`}
-            style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, padding: "16px 20px", minHeight: 56, background: "var(--brand-navy-deep)", color: "var(--brand-cream)", fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 16, textDecoration: "none", borderTop: "1px solid #E5E7EB" }}>
+            style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, padding: "16px 20px", minHeight: 56, background: "var(--brand-navy-deep)", color: "var(--brand-cream)", fontFamily: FONT_INTER, fontWeight: 700, fontSize: 16, textDecoration: "none", borderTop: "1px solid #E5E7EB" }}>
             <MapPin size={15} strokeWidth={2} style={{ color: "var(--brand-cta)" }} aria-hidden />
             Get Directions
             <ExternalLink size={13} strokeWidth={2} style={{ marginLeft: 2 }} aria-hidden />
@@ -115,11 +116,11 @@ export function BookConfirmedContent({ center, mapsSearchUrl, mapsEmbedUrl, emai
 
         {/* Email capture */}
         {!emailCaptured && (
-          <div style={{ background: "#FFFFFF", borderRadius: 14, padding: "18px 20px", border: "1px solid rgba(255,255,255,0.15)", boxShadow: "0 4px 24px rgba(0,0,0,0.25)" }}>
-            <p style={{ fontFamily: "Inter, sans-serif", fontSize: 16, fontWeight: 700, color: "var(--c-text-on-light)", marginBottom: 4 }}>
+          <div style={CARD_WHITE_PAD}>
+            <p style={{ fontFamily: FONT_INTER, fontSize: 16, fontWeight: 700, color: "var(--c-text-on-light)", marginBottom: 4 }}>
               Send my confirmation
             </p>
-            <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "var(--c-text-on-light-muted)", marginBottom: 12 }}>
+            <p style={{ fontFamily: FONT_INTER, fontSize: 14, color: "var(--c-text-on-light-muted)", marginBottom: 12 }}>
               We'll email your appointment details and a reminder.
             </p>
             <BookingErrorBoundary>
