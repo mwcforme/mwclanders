@@ -64,7 +64,7 @@ export const OrangeBullet = ({
       alignItems: "flex-start",
       gap: 12,
       marginBottom: 14,
-      fontSize: 15,
+      fontSize: 16,
       color: light ? "rgba(255,255,255,0.88)" : "var(--c-text-on-light)",
       lineHeight: 1.55,
     }}

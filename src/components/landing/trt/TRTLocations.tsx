@@ -218,7 +218,7 @@ export const TRTLocations = () => {
                         background: isSelected ? "var(--brand-cta)" : "var(--brand-navy)",
                         color: "#fff",
                         border: "none", borderRadius: 10, cursor: "pointer",
-                        fontFamily: "Inter, sans-serif", fontSize: 15, fontWeight: 700,
+                        fontFamily: "Inter, sans-serif", fontSize: 16, fontWeight: 700,
                         letterSpacing: "0.01em",
                         display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
                         transition: "background 150ms ease",

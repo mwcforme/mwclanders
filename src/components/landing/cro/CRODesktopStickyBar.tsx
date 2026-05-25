@@ -29,7 +29,7 @@ export const CRODesktopStickyBar = () => {
       transition: "opacity 300ms ease",
     }} aria-hidden={!visible}>
       {/* hardcoded-color-allow-next-line */}
-      <span style={{ fontSize: 15, fontWeight: 600, color: "rgba(245,240,235,0.90)", letterSpacing: "0.01em" }}>
+      <span style={{ fontSize: 16, fontWeight: 600, color: "rgba(245,240,235,0.90)", letterSpacing: "0.01em" }}>
         Virginia&rsquo;s #1 Men&rsquo;s Health Clinic
         <span style={{ margin: "0 12px", color: "var(--brand-cta)" }}>&middot;</span>
         Same-Day Availability

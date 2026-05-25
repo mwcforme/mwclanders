@@ -39,7 +39,7 @@ export const TRTProductHeader = () => (
         textDecoration: "none",
         color: "var(--c-text-on-dark)",
         fontWeight: 600,
-        fontSize: 15,
+        fontSize: 16,
       }}
     >
       <Phone size={16} strokeWidth={1.75} style={{ color: "var(--brand-cta)" }} />

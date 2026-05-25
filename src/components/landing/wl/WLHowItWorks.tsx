@@ -97,7 +97,7 @@ export const WLHowItWorks = () => {
           <button
             onClick={scrollToForm}
             className="mt-10 w-full sm:w-auto inline-flex items-center justify-center rounded-lg px-8 font-bold cursor-pointer transition-colors duration-200"
-            style={{ height: 56, minHeight: 56, background: "var(--brand-cta)", color: "var(--c-text-on-dark)", fontSize: 15, letterSpacing: "0.07em", fontFamily: "Inter, sans-serif", border: "none", whiteSpace: "nowrap" }}
+            style={{ height: 56, minHeight: 56, background: "var(--brand-cta)", color: "var(--c-text-on-dark)", fontSize: 16, letterSpacing: "0.07em", fontFamily: "Inter, sans-serif", border: "none", whiteSpace: "nowrap" }}
             onMouseEnter={(e) => { e.currentTarget.style.background = "var(--brand-cta-hover)"; }}
             onMouseLeave={(e) => { e.currentTarget.style.background = "var(--brand-cta)"; }}
           >

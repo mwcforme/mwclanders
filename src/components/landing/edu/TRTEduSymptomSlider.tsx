@@ -173,7 +173,7 @@ const DefaultBullets = ({ bullets }: { bullets: string[] }) => (
         borderRadius: 10, padding: "14px 16px",
       }}>
         <ChevronRight size={18} color="#E8670A" style={{ flexShrink: 0, marginTop: 2 }} />
-        <span style={{ color: "rgba(255,255,255,0.80)", fontSize: 15, lineHeight: 1.6 }}>{b}</span>
+        <span style={{ color: "rgba(255,255,255,0.80)", fontSize: 16, lineHeight: 1.6 }}>{b}</span>
       </div>
     ))}
   </div>
@@ -243,7 +243,7 @@ export const TRTEduSymptomSlider = () => {
             </h3>
           </div>
 
-          <p style={{ color: "rgba(255,255,255,0.65)", fontSize: 15, lineHeight: 1.7, marginBottom: 20 }}>
+          <p style={{ color: "rgba(255,255,255,0.65)", fontSize: 16, lineHeight: 1.7, marginBottom: 20 }}>
             {s.body}
           </p>
 

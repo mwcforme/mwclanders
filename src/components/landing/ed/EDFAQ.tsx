@@ -95,7 +95,7 @@ export const EDFAQ = () => {
                         height: 52,
                         background: "var(--brand-cta)",
                         color: "var(--c-text-on-dark)",
-                        fontSize: 15,
+                        fontSize: 16,
                         letterSpacing: "0.07em",
                         fontFamily: "Inter, sans-serif",
                         border: "none",

@@ -61,7 +61,7 @@ export const TRTCandidateQuiz = ({ onNavigateSchedule }: { onNavigateSchedule: (
           }}>
             Answer 3 Quick Questions
           </h2>
-          <p style={{ fontSize: 15, color: "var(--c-text-on-light-muted)" }}>
+          <p style={{ fontSize: 16, color: "var(--c-text-on-light-muted)" }}>
             Takes 60 seconds. No login required.
           </p>
         </div>
@@ -155,7 +155,7 @@ export const TRTCandidateQuiz = ({ onNavigateSchedule }: { onNavigateSchedule: (
             }}>
               You Are In Good Hands.
             </h3>
-            <p style={{ fontSize: 15, color: "var(--c-text-on-light-muted)", lineHeight: 1.7, maxWidth: 520, margin: "0 auto 32px" }}>
+            <p style={{ fontSize: 16, color: "var(--c-text-on-light-muted)", lineHeight: 1.7, maxWidth: 520, margin: "0 auto 32px" }}>
               Our licensed Virginia providers review your symptoms, run labs on-site, and build a plan based on your results. Individual results vary.
             </p>
             <button

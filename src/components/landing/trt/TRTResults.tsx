@@ -141,7 +141,7 @@ export const TRTResults = () => {
                     style={{
                       fontFamily: "Inter, sans-serif",
                       fontWeight: 700,
-                      fontSize: 15,
+                      fontSize: 16,
                       color: "var(--brand-navy)",
                       lineHeight: 1.2,
                     }}
@@ -175,7 +175,7 @@ export const TRTResults = () => {
               <p
                 style={{
                   fontFamily: "Inter, sans-serif",
-                  fontSize: 15,
+                  fontSize: 16,
                   lineHeight: 1.65,
                   color: "var(--c-text-on-light)",
                   flex: 1,

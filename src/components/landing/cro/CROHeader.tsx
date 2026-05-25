@@ -29,7 +29,7 @@ export const CROHeader = () => (
     </a>
     <a href={PHONE.tel} style={{
       display: "flex", alignItems: "center", gap: 8, textDecoration: "none",
-      color: "var(--c-text-on-dark)", fontWeight: 600, fontSize: 15,
+      color: "var(--c-text-on-dark)", fontWeight: 600, fontSize: 16,
     }}>
       <Phone size={16} strokeWidth={1.75} style={{ color: ORANGE }} />
       {PHONE.display}

@@ -103,7 +103,7 @@ export const TRTEduHero = () => {
             background: "transparent",
             color: "rgba(255,255,255,0.75)",
             fontWeight: 600,
-            fontSize: 15,
+            fontSize: 16,
             borderRadius: 8,
             border: "1px solid rgba(255,255,255,0.2)",
             cursor: "pointer",

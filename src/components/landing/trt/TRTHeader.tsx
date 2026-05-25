@@ -69,7 +69,7 @@ export const TRTHeader = ({ minimal = false, hideCta = false }: { minimal?: bool
                 color: "var(--c-text-on-dark)",
                 border: "none",
                 borderRadius: 8,
-                fontSize: 15,
+                fontSize: 16,
                 fontWeight: 700,
                 letterSpacing: "0.06em",
                 fontFamily: "Inter, sans-serif",

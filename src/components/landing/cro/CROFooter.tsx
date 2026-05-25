@@ -21,7 +21,7 @@ export const CROFooter = () => {
           <img src="/logos/Text_Logo_white.webp"
             onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/logos/Text_Logo_white.png"; }}
             alt="Men's Wellness Centers" style={{ height: 36, width: "auto" }} width={180} height={36} loading="lazy" decoding="async" />
-          <a href={PHONE.tel} style={{ fontSize: 15, fontWeight: 600, color: "var(--c-text-on-dark)", textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}>
+          <a href={PHONE.tel} style={{ fontSize: 16, fontWeight: 600, color: "var(--c-text-on-dark)", textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}>
             <Phone size={15} strokeWidth={1.75} style={{ color: ORANGE }} />{PHONE.display}
           </a>
         </div>

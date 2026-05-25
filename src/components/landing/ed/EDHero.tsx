@@ -115,7 +115,7 @@ export const EDHero = () => {
                 style={{ color: COLORS.cream, fontFamily: "Inter, sans-serif" }}
               >
                 <Check className="h-[18px] w-[18px] flex-shrink-0" strokeWidth={3} style={{ color: COLORS.orange }} />
-                <span style={{ fontSize: 15, fontWeight: 500 }}>{t}</span>
+                <span style={{ fontSize: 16, fontWeight: 500 }}>{t}</span>
               </li>
             ))}
           </ul>

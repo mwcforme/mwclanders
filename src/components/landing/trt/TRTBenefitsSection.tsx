@@ -150,7 +150,7 @@ export const TRTBenefitsSection = memo(() => (
                 </span>
                 <span
                   style={{
-                    fontSize: 15,
+                    fontSize: 16,
                     color: "rgba(255,255,255,0.88)",
                     lineHeight: 1.45,
                   }}

@@ -148,7 +148,7 @@ export const TRTPricing = ({ className }: TRTPricingProps) => {
                   display: "flex",
                   alignItems: "flex-start",
                   gap: 10,
-                  fontSize: 15,
+                  fontSize: 16,
                   color: "var(--c-text-on-light)",
                   lineHeight: 1.45,
                 }}
@@ -175,7 +175,7 @@ export const TRTPricing = ({ className }: TRTPricingProps) => {
               color: "var(--c-text-on-dark)",
               border: "none",
               borderRadius: 999,
-              fontSize: 15,
+              fontSize: 16,
               fontWeight: 700,
               letterSpacing: "0.05em",
               fontFamily: "Inter, sans-serif",

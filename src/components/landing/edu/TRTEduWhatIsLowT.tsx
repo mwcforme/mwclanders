@@ -73,7 +73,7 @@ export const TRTEduWhatIsLowT = () => (
               <h3 style={{ color: "#FFFFFF", fontSize: 18, fontWeight: 700, marginBottom: 8, margin: "0 0 8px" }}>
                 {item.title}
               </h3>
-              <p style={{ color: "rgba(255,255,255,0.60)", fontSize: 15, lineHeight: 1.7, margin: 0 }}>
+              <p style={{ color: "rgba(255,255,255,0.60)", fontSize: 16, lineHeight: 1.7, margin: 0 }}>
                 {item.body}
               </p>
             </div>

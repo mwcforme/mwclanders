@@ -91,7 +91,7 @@ export const TRTEverythingIncluded = () => (
                   alignItems: "flex-start",
                   gap: 12,
                   fontFamily: "Inter, sans-serif",
-                  fontSize: 15,
+                  fontSize: 16,
                   color: "var(--c-text-on-dark)",
                   lineHeight: 1.5,
                 }}
@@ -134,7 +134,7 @@ export const TRTEverythingIncluded = () => (
                   alignItems: "flex-start",
                   gap: 12,
                   fontFamily: "Inter, sans-serif",
-                  fontSize: 15,
+                  fontSize: 16,
                   color: "var(--c-text-on-dark-muted)",
                   lineHeight: 1.5,
                 }}
