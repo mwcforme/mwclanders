@@ -71,8 +71,7 @@ const OptionRow = ({ icon: Icon, label, selected, onClick }: OptionRowProps) => 
       strokeWidth={2.25}
       className="transition-transform group-hover:translate-x-0.5"
       style={{
-        // hardcoded-color-allow-next-line
-        color: selected ? "var(--brand-cta)" : "#6B7280",
+        color: selected ? "var(--brand-cta)" : "var(--c-text-on-light-muted-2)",
         flexShrink: 0,
       }}
       aria-hidden="true"

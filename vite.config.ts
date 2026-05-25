@@ -63,8 +63,8 @@ export default defineConfig(({ mode }) => ({
             // react-toast removed: Toaster removed from App.tsx; toast replaced with inline state in LpDirectory
             "lucide-react",
           ],
-          // State + query
-          "vendor-state": ["zustand", "@tanstack/react-query"],
+          // State — react-query removed: QueryClientProvider wrapped App but useQuery/useMutation never called
+          "vendor-state": ["zustand"],
         },
       },
     },

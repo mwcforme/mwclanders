@@ -143,8 +143,7 @@ const SurveyCard = ({
             <p
               className="text-center text-sm"
               style={{
-                // hardcoded-color-allow-next-line
-                color: "#6B7280",
+                color: "var(--c-text-on-light-muted-2)",
                 fontFamily: "Inter, sans-serif",
                 marginBottom: 18,
               }}

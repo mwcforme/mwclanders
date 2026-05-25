@@ -79,7 +79,7 @@ const BookSchedule2 = () => {
           >
             {heading}
           </h1>
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: "#6B7280", margin: 0 }}>
+          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "var(--c-text-on-dark-muted)", margin: 0 }}>
             {metaLine}
           </p>
         </section>
@@ -101,7 +101,7 @@ const BookSchedule2 = () => {
             />
           ) : (
             <div style={{ background: "var(--c-text-on-dark)", border: "1px solid #E5E7EB", borderRadius: 12, padding: 20, fontFamily: "Inter, sans-serif" }}>
-              <div style={{ fontSize: 13, color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.04em", fontWeight: 700, marginBottom: 10 }}>
+              <div style={{ fontSize: 14, color: "var(--c-text-on-light-muted-2)", textTransform: "uppercase", letterSpacing: "0.04em", fontWeight: 700, marginBottom: 10 }}>
                 Choose your center
               </div>
               <div className="grid gap-2">

@@ -3,7 +3,7 @@ import { PHONE } from "@/lib/constants";
 import { Component, type ReactNode } from "react";
 // Toaster removed — toast() only called in LpDirectory (internal admin), replaced with inline state
 // TooltipProvider removed — no Tooltip components are used anywhere in the app
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+// @tanstack/react-query removed — QueryClientProvider wrapped App but zero useQuery calls exist in codebase
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ServicesProvider } from "@/app/providers/ServicesProvider";
 import { MobileFooterBar } from "./components/shared/MobileFooterBar";
@@ -95,16 +95,6 @@ const PageLoader = () => (
   </div>
 );
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 60_000,        // don't refetch data younger than 60s
-      gcTime: 5 * 60_000,       // keep unused cache for 5 min
-      retry: 1,                 // one retry on failure, not three
-      refetchOnWindowFocus: false, // don't hammer APIs on tab switch
-    },
-  },
-});
 
 const ErrorFallback = ({ resetError }: { resetError: () => void }) => (
   <div
@@ -164,7 +154,7 @@ class AppErrorBoundary extends Component<{ children: ReactNode }, { error: Error
 
 const App = () => (
   <AppErrorBoundary>
-    <QueryClientProvider client={queryClient}>
+    <>
       <>
         <BrowserRouter>
           <ServicesProvider>
@@ -240,7 +230,7 @@ const App = () => (
           </ServicesProvider>
         </BrowserRouter>
       </>
-    </QueryClientProvider>
+    </>
   </AppErrorBoundary>
 );
 
