@@ -9,14 +9,14 @@ import { TIMEZONE } from "@/lib/ghlCalendars";
 import { isSundayInTimeZone } from "@/lib/etDate";
 
 // Brand tokens (duplicated from GHLDayView — intentional; each file is self-contained)
-const INK       = "var(--brand-navy-deep)";
+const INK       = "var(--brand-cream)";
 // hardcoded-color-allow-next-line
-const INK_SOFT  = "#2C3346";
+const INK_SOFT  = "rgba(255,255,255,0.70)";
 // hardcoded-color-allow-next-line
-const MUTED     = "var(--c-text-on-light-muted)";
+const MUTED     = "rgba(255,255,255,0.45)";
 // hardcoded-color-allow-next-line
-const BORDER    = "#8B92A0";
-const SURFACE   = "var(--bg-white)";
+const BORDER    = "rgba(255,255,255,0.18)";
+const SURFACE   = "var(--brand-navy-deep)";
 const ORANGE    = "var(--brand-cta)";
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────

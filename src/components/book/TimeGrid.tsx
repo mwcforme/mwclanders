@@ -6,10 +6,10 @@
 import { TIMEZONE } from "@/lib/ghlCalendars";
 
 // hardcoded-color-allow-next-line
-const MUTED  = "var(--c-text-on-light-muted)";
+const MUTED  = "rgba(255,255,255,0.45)";
 // hardcoded-color-allow-next-line
-const LINE   = "#E5E7EB";
-const SURFACE = "var(--bg-white)";
+const LINE   = "rgba(255,255,255,0.10)";
+const SURFACE = "var(--brand-navy-deep)";
 const ORANGE  = "var(--brand-cta)";
 
 const fmtTimeParts = (iso: string): { time: string; ampm: string; hour: number } => {

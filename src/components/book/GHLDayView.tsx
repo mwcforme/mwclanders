@@ -19,12 +19,12 @@ import TimeGrid from "./TimeGrid";
 // ConfirmDialog removed — slot tap confirms directly, no modal step
 
 // Brand tokens (confirm bar only — child components manage their own)
-const INK    = "var(--brand-navy-deep)";
+const INK    = "var(--brand-cream)";
 // hardcoded-color-allow-next-line
 const _MUTED  = "#4B5563";
 // hardcoded-color-allow-next-line
-const LINE   = "#E5E7EB";
-const SURFACE = "var(--bg-white)";
+const LINE   = "rgba(255,255,255,0.10)";
+const SURFACE = "var(--brand-navy-deep)";
 const ORANGE  = "var(--brand-cta)";
 
 // ─── Supabase lazy import ─────────────────────────────────────────────────────
@@ -275,7 +275,7 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
         background: SURFACE, border: `1px solid ${LINE}`, borderRadius: 16,
         overflow: "hidden", color: INK, fontFamily: "Inter, system-ui, sans-serif",
         // hardcoded-color-allow-next-line
-        boxShadow: "0 1px 2px rgba(11,16,41,0.04), 0 24px 48px -24px rgba(11,16,41,0.18)",
+        boxShadow: "0 4px 32px rgba(0,0,0,0.35)",
       }}>
         <DayStrip
           days={days}
@@ -304,7 +304,7 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
           {/* Selected slot recap — shown when a slot is chosen */}
           {selectedSlot && (
             <p style={{
-              fontSize: 16, color: "var(--c-text-on-light-muted)", fontFamily: "Inter, sans-serif",
+              fontSize: 16, color: "rgba(255,255,255,0.75)", fontFamily: "Inter, sans-serif",
               marginBottom: 10, textAlign: "center", fontWeight: 500, lineHeight: 1.4,
             }}>
               {new Date(selectedSlot).toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric", timeZone: TIMEZONE })}
@@ -320,9 +320,9 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
             style={{
               width: "100%", minHeight: 60,
               // hardcoded-color-allow-next-line
-              background: canConfirm ? ORANGE : "#E5E7EB",
+              background: canConfirm ? ORANGE : "rgba(255,255,255,0.08)",
               // hardcoded-color-allow-next-line
-              color: canConfirm ? "var(--c-text-on-dark)" : "#3D4350",
+              color: canConfirm ? "var(--c-text-on-dark)" : "rgba(255,255,255,0.35)",
               border: 0, borderRadius: 12, fontSize: 16, fontWeight: 700,
               letterSpacing: canConfirm ? "0.06em" : "0.02em",
               textTransform: canConfirm ? "uppercase" : "none",
