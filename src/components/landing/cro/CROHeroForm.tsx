@@ -3,7 +3,6 @@
  * Handles name, phone, location, TCPA, GHL submission, and booking funnel entry.
  */
 import { useState, useEffect, useRef } from "react";
-import { z } from "zod";
 import { useNavigate } from "react-router-dom";
 import { Loader2, Phone, User, AlertCircle, ArrowRight, Star, Check } from "lucide-react";
 
@@ -19,7 +18,8 @@ import { CROLocationSelector } from "./CROLocationSelector";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
 
 const croHeroLeadSchema = heroLeadSchema;
-type CROHeroLeadInput = z.infer<typeof croHeroLeadSchema>;
+import type { HeroLeadInput } from "@/domain/leads/leadFormSchema";
+type CROHeroLeadInput = HeroLeadInput;
 
 // hardcoded-color-allow-next-line
 const ERR_RED = "#DC2626";

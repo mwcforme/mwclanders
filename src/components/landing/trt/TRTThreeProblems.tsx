@@ -101,7 +101,7 @@ export const TRTThreeProblems = ({ onCta, headlineOverride }: TRTThreeProblemsPr
                   style={{
                     fontFamily: "Oswald, sans-serif",
                     fontWeight: 700,
-                    fontSize: 15,
+                    fontSize: 16,
                     letterSpacing: "0.08em",
                     textTransform: "uppercase" as const,
                     color: "var(--brand-navy)",
@@ -159,7 +159,7 @@ export const TRTThreeProblems = ({ onCta, headlineOverride }: TRTThreeProblemsPr
                 <p
                   style={{
                     fontFamily: "Inter, sans-serif",
-                    fontSize: 15,
+                    fontSize: 16,
                     color: "var(--c-text-on-light-muted)",
                     lineHeight: 1.6,
                     flex: 1,
@@ -179,7 +179,7 @@ export const TRTThreeProblems = ({ onCta, headlineOverride }: TRTThreeProblemsPr
                     borderRadius: 8,
                     padding: "12px 20px",
                     fontFamily: "Inter, sans-serif",
-                    fontSize: 15,
+                    fontSize: 16,
                     fontWeight: 700,
                     transition: "background 150ms ease",
                     alignSelf: "flex-start",

@@ -61,7 +61,7 @@ export const TRTVisualTimeline = ({ onSchedule }: { onSchedule: () => void }) =>
           }}>
             Everything Done In One Visit
           </h2>
-          <p style={{ fontSize: 15, color: "rgba(255,255,255,0.55)", maxWidth: 500, margin: "0 auto" }}>
+          <p style={{ fontSize: 16, color: "rgba(255,255,255,0.55)", maxWidth: 500, margin: "0 auto" }}>
             Start to finish, here is exactly what your first appointment looks like.
           </p>
         </div>

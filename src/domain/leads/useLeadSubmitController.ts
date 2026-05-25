@@ -36,7 +36,7 @@ type LeadCaptureInsert = {
 export type LeadSubmitStatus = "idle" | "submitting" | "success" | "error";
 
 export interface LeadSubmitOptions<TInput> {
-  schema: ZodSchema<TInput>;
+  schema: { safeParse(raw: unknown): { success: true; data: TInput } | { success: false; error: { issues: Array<{ path: (string|number)[]; message: string }> } } };
   toLeadInput: (input: TInput) => LeadInput;
   source?: string;
   tags?: string[];

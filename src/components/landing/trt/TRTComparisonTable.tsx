@@ -73,7 +73,7 @@ export const TRTComparisonTable = () => (
       >
         MWC vs. Primary Care vs. Telehealth
       </h2>
-      <p style={{ fontSize: 15, color: "var(--c-text-on-light-muted)", marginBottom: 40, maxWidth: 600 }}>
+      <p style={{ fontSize: 16, color: "var(--c-text-on-light-muted)", marginBottom: 40, maxWidth: 600 }}>
         Most men have already tried their GP. Here's why they come to us instead.
       </p>
 

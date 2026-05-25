@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Loader2, MapPin } from "lucide-react";
 import { QuizTrustBlock } from "./QuizTrustBlock";
-import { z } from "zod";
 import { useLeadSubmitController } from "@/domain/leads/useLeadSubmitController";
-import { nameField, phoneField } from "@/domain/leads/leadFormSchema";
+import { nameField, phoneField, tcpaField } from "@/domain/leads/leadFormSchema";
+import { m } from "@/lib/miniSchema";
 import { QuizShell } from "./QuizShell";
 import { PrimaryQuizButton } from "./PrimaryQuizButton";
 import { LocationSelector } from "@/components/landing/trt/LocationSelector";
@@ -22,19 +22,15 @@ interface StepLeadProps {
 }
 
 /** Email is optional — allow empty string or a valid email address. */
-const optionalEmailField = z.union([
-  z.literal(""),
-  z.string().trim().max(255).email("Enter a valid email or leave blank"),
-]);
+const optionalEmailField = m.str().trim().max(255, "Email must be under 255 chars").email("Enter a valid email or leave blank").optional();
+const quizLocationField = m.str().min(2, "Please select a location");
 
-const locationField = z.string().min(2, "Please select a location");
-
-const quizLeadSchema = z.object({
+const quizLeadSchema = m.object({
   name: nameField,
   email: optionalEmailField,
   phone: phoneField,
-  location: locationField,
-  tcpa: z.literal(true, { errorMap: () => ({ message: "Consent required to continue" }) }),
+  location: quizLocationField,
+  tcpa: tcpaField,
 });
 
 const formatPhone = (v: string) => {

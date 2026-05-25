@@ -42,7 +42,7 @@ function str(): {
     optional() { return optionalStr(chain); },
     safeParse(raw: unknown): ParseResult<string> {
       if (typeof raw !== "string") return fail([{ path: [], message: "Required" }]);
-      let v = doTrim ? raw.trim() : raw;
+      const v = doTrim ? raw.trim() : raw;
       for (const r of rules) {
         const err = r(v);
         if (err) return fail([{ path: [], message: err }]);
