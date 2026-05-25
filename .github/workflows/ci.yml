@@ -1,0 +1,113 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci:
+    name: Typecheck · Lint · Test · Build · Security
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      # ── Quality gates ─────────────────────────────────────────────────────
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Lint (zero warnings)
+        run: npm run lint -- --max-warnings 0
+
+      - name: Test
+        run: npm test -- --run
+
+      # ── Build ─────────────────────────────────────────────────────────────
+
+      - name: Build
+        run: npm run build
+
+      # ── Secret scan ───────────────────────────────────────────────────────
+      # Fail if any known secret patterns appear in source files.
+      # Edge function secrets (Deno.env.get) are intentionally excluded.
+
+      - name: Secret scan
+        run: |
+          echo "Scanning for hardcoded secrets..."
+          FOUND=0
+
+          # GHL private integration token
+          if grep -rn "pit-" src/ --include="*.ts" --include="*.tsx" | grep -v ".test." | grep -v "node_modules"; then
+            echo "ERROR: GHL PIT token found in source"
+            FOUND=1
+          fi
+
+          # SendGrid API keys
+          if grep -rn "SG\." src/ --include="*.ts" --include="*.tsx" | grep -v ".test." | grep -v "node_modules"; then
+            echo "ERROR: SendGrid API key found in source"
+            FOUND=1
+          fi
+
+          # Supabase access tokens
+          if grep -rn "sbp_" src/ --include="*.ts" --include="*.tsx" | grep -v ".test." | grep -v "node_modules"; then
+            echo "ERROR: Supabase access token found in source"
+            FOUND=1
+          fi
+
+          # Hardcoded passwords (any string matching known patterns)
+          if grep -rn "1Menshealth\|ADMIN_PASSWORD\s*=\s*[\"'][^\"']*[\"']" src/ --include="*.ts" --include="*.tsx" | grep -v ".test." | grep -v "node_modules"; then
+            echo "ERROR: Hardcoded admin password found in source"
+            FOUND=1
+          fi
+
+          # Vercel tokens
+          if grep -rn "vcp_" src/ --include="*.ts" --include="*.tsx" | grep -v ".test." | grep -v "node_modules"; then
+            echo "ERROR: Vercel token found in source"
+            FOUND=1
+          fi
+
+          if [ "$FOUND" -eq 1 ]; then
+            echo "Secret scan FAILED — remove secrets from source before merging"
+            exit 1
+          fi
+          echo "Secret scan passed."
+
+      # ── Bundle size check ─────────────────────────────────────────────────
+      # Fail if any individual JS chunk exceeds 350 KB gzip.
+
+      - name: Bundle size check
+        run: |
+          echo "Checking bundle sizes..."
+          OVER_LIMIT=0
+          LIMIT_BYTES=358400  # 350 KB in bytes
+
+          for f in dist/assets/*.js; do
+            SIZE=$(gzip -c "$f" | wc -c)
+            NAME=$(basename "$f")
+            SIZE_KB=$(echo "scale=1; $SIZE/1024" | bc)
+            if [ "$SIZE" -gt "$LIMIT_BYTES" ]; then
+              echo "FAIL: $NAME is ${SIZE_KB} KB gzip (limit: 350 KB)"
+              OVER_LIMIT=1
+            else
+              echo "OK:   $NAME is ${SIZE_KB} KB gzip"
+            fi
+          done
+
+          if [ "$OVER_LIMIT" -eq 1 ]; then
+            echo "Bundle size check FAILED — split or lazy-load large chunks"
+            exit 1
+          fi
+          echo "Bundle size check passed."
