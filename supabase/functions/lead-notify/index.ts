@@ -3,6 +3,7 @@
 // Uses Resend API
 
 import { corsHeaders, jsonResponse as json, corsResponse } from "../_shared/cors.ts";
+import { sendEmail } from "../_shared/sendEmail.ts";
 
 const log = {
   info:  (msg: string, data?: Record<string, unknown>) => console.log(JSON.stringify({ level: "info",  fn: "lead-notify", msg, ts: new Date().toISOString(), ...data })),
@@ -158,36 +159,20 @@ Deno.serve(async (req) => {
 </body>
 </html>`;
 
-  const resendKey = Deno.env.get("RESEND_API_KEY");
-  if (!resendKey) {
-    log.warn("RESEND_API_KEY not set — skipping email");
-    return json(200, { ok: true, skipped: "no api key" });
-  }
-
   try {
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${resendKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: "MWC Leads <leads@book.menswellnesscenters.com>",
-        to: ["eobrien@menswellnesscenters.com"],
-        subject,
-        html: bodyHtml,
-      }),
+    const result = await sendEmail({
+      to: "eobrien@menswellnesscenters.com",
+      subject,
+      html: bodyHtml,
     });
-
-    const data = await res.json();
-    if (!res.ok) {
-      log.error("resend API error", { status: res.status, body: JSON.stringify(data) });
-      return json(502, { ok: false, error: data });
+    if (!result.ok) {
+      log.error("sendgrid error", { error: result.error });
+      return json(502, { ok: false, error: result.error });
     }
-    log.info("email sent", { email_id: data.id, subject });
-    return json(200, { ok: true, email_id: data.id });
+    log.info("email sent", { subject });
+    return json(200, { ok: true });
   } catch (e) {
-    log.error("fetch error", { error: (e as Error).message });
+    log.error("send error", { error: (e as Error).message });
     return json(502, { ok: false, error: (e as Error).message });
   }
 });

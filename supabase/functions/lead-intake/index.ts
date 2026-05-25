@@ -14,7 +14,7 @@ const log = {
   error: (msg: string, data?: Record<string, unknown>) => console.error(JSON.stringify({ level: "error", fn: "lead-intake", msg, ts: new Date().toISOString(), ...data })),
 };
 
-// ---- Failure alert via Resend ----
+// ---- Failure alert via SendGrid ----
 async function sendFailureAlert(opts: {
   captureId: string;
   name: string;
@@ -22,26 +22,18 @@ async function sendFailureAlert(opts: {
   error: string;
   env: string;
 }): Promise<void> {
-  const resendKey = Deno.env.get("RESEND_API_KEY");
-  if (!resendKey) return;
   try {
-    await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${resendKey}`, "Content-Type": "application/json" },
-      body: JSON.stringify({
-        from: "MWC Alerts <leads@book.menswellnesscenters.com>",
-        to: ["eobrien@menswellnesscenters.com"],
-        subject: `[MWC ALERT] GHL lead submission failed — ${opts.name || opts.phone}`,
-        html: `<div style="font-family:Arial,sans-serif;padding:24px;">
-          <h2 style="color:#dc2626;margin:0 0 16px">GHL Lead Submission Failed</h2>
-          <p><strong>Capture ID:</strong> ${opts.captureId}</p>
-          <p><strong>Name:</strong> ${opts.name || "—"}</p>
-          <p><strong>Phone:</strong> ${opts.phone || "—"}</p>
-          <p><strong>Environment:</strong> ${opts.env}</p>
-          <p><strong>Error:</strong> <code style="background:#f3f4f6;padding:4px 8px;border-radius:4px">${opts.error}</code></p>
-          <p style="margin-top:20px">The lead was saved to the database. <a href="https://book.menswellnesscenters.com/admin/leads" style="color:#e8670a">View in Admin</a> and manually create the GHL contact.</p>
-        </div>`,
-      }),
+    await sendEmail({
+      to: "eobrien@menswellnesscenters.com",
+      subject: `[MWC ALERT] GHL lead submission failed — ${opts.name || opts.phone}`,
+      html: `<div style="font-family:Arial,sans-serif;padding:24px;">
+        <h2 style="color:#dc2626;margin:0 0 16px">GHL Lead Submission Failed</h2>
+        <p><strong>Capture ID:</strong> ${opts.captureId}</p>
+        <p><strong>Name:</strong> ${opts.name || "—"}</p>
+        <p><strong>Phone:</strong> ${opts.phone || "—"}</p>
+        <p><strong>Error:</strong> <code style="background:#f3f4f6;padding:4px 8px;border-radius:4px">${opts.error}</code></p>
+        <p style="margin-top:20px">The lead was saved to the database. <a href="https://book.menswellnesscenters.com/admin/leads" style="color:#e8670a">View in Admin</a> and manually create the GHL contact.</p>
+      </div>`,
     });
   } catch (e) {
     log.warn("failure alert email error", { error: (e as Error).message });

@@ -14,6 +14,7 @@
 
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { corsHeaders, jsonResponse, corsResponse } from "../_shared/cors.ts";
+import { sendEmail } from "../_shared/sendEmail.ts";
 
 const log = {
   info:  (msg: string, d?: Record<string, unknown>) => console.log(JSON.stringify({ level: "info",  fn: "slot-monitor", msg, ts: new Date().toISOString(), ...d })),
@@ -47,21 +48,9 @@ function shouldAlert(state: AlertState, key: string): boolean {
   return hoursSince >= DEDUP_HOURS;
 }
 
-async function sendAlert(resendKey: string, subject: string, html: string): Promise<void> {
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${resendKey}`, "Content-Type": "application/json" },
-    body: JSON.stringify({
-      from: "MWC Monitor <leads@book.menswellnesscenters.com>",
-      to: [ALERT_EMAIL],
-      subject,
-      html,
-    }),
-  });
-  if (!res.ok) {
-    const body = await res.text();
-    log.error("resend failed", { status: res.status, body });
-  }
+async function sendAlert(_key: string, subject: string, html: string): Promise<void> {
+  const result = await sendEmail({ to: ALERT_EMAIL, subject, html });
+  if (!result.ok) log.error("sendgrid failed", { error: result.error });
 }
 
 Deno.serve(async (req) => {
@@ -69,8 +58,6 @@ Deno.serve(async (req) => {
 
   const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
   const serviceKey  = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-  const resendKey   = Deno.env.get("RESEND_API_KEY");
-
   const sb = createClient(supabaseUrl, serviceKey, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
@@ -157,7 +144,7 @@ Deno.serve(async (req) => {
 </div>
 </body></html>`;
 
-    await sendAlert(resendKey, `[MWC Alert] ${alerts.length} slot issue${alerts.length > 1 ? "s" : ""} detected`, html);
+    await sendAlert("", `[MWC Alert] ${alerts.length} slot issue${alerts.length > 1 ? "s" : ""} detected`, html);
     log.info("alert sent", { count: alerts.length });
   }
 
