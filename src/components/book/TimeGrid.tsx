@@ -9,7 +9,7 @@ import { TIMEZONE } from "@/lib/ghlCalendars";
 const MUTED  = "var(--c-text-on-light-muted)";
 // hardcoded-color-allow-next-line
 const LINE   = "#E5E7EB";
-const SURFACE = "var(--bg-white)";
+const SURFACE = "#F4F6FA";
 const ORANGE  = "var(--brand-cta)";
 
 const fmtTimeParts = (iso: string): { time: string; ampm: string; hour: number } => {
@@ -99,7 +99,7 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
                     aria-pressed={active}
                     onClick={() => onSlotSelect(iso)}
                     style={{
-                              background: active ? ORANGE : "#F4F6FA",
+                              background: active ? ORANGE : "#FFFFFF",
                       border: active ? "2px solid var(--brand-cta)" : "1.5px solid #D1D5DB",
                       borderRadius: 10,
                       padding: "0 16px",

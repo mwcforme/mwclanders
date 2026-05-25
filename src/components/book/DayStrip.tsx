@@ -16,7 +16,7 @@ const INK_SOFT  = "#374151";
 const MUTED     = "var(--c-text-on-light-muted)";
 // hardcoded-color-allow-next-line
 const BORDER    = "#D1D5DB";
-const SURFACE   = "var(--bg-white)";
+const SURFACE   = "#F4F6FA";
 const ORANGE    = "var(--brand-cta)";
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -110,21 +110,22 @@ const DayStrip = ({
           onClick={onPrevWeek}
           aria-label="Previous week"
           style={{
-            width: 40, height: 40, borderRadius: 10,
-            background: "rgba(255,255,255,0.06)",
-            border: "1px solid rgba(255,255,255,0.12)",
+            width: 36, height: 36, borderRadius: 8,
+            background: "#FFFFFF",
+            border: "1.5px solid #D1D5DB",
             display: "flex", alignItems: "center", justifyContent: "center",
             cursor: prevDisabled ? "not-allowed" : "pointer",
-            opacity: prevDisabled ? 0.3 : 1,
+            opacity: prevDisabled ? 0.35 : 1,
             flexShrink: 0,
+            boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
           }}
         >
-          <ChevronLeft size={18} style={{ color: "var(--brand-cream)" }} />
+          <ChevronLeft size={16} style={{ color: "var(--brand-navy)" }} />
         </button>
 
         {/* Week range label — centered between nav buttons */}
         {days.length > 0 && (
-          <div style={{ fontSize: 13, color: MUTED, fontWeight: 700, fontFamily: "Inter, sans-serif", textAlign: "center", flex: 1, letterSpacing: "0.03em" }}>
+          <div style={{ fontSize: 13, color: "var(--brand-navy)", fontWeight: 700, fontFamily: "Inter, sans-serif", textAlign: "center", flex: 1, letterSpacing: "0.03em" }}>
             {fmtMonthDay(days[0])} – {fmtMonthDay(days[days.length - 1])}
           </div>
         )}
@@ -135,15 +136,16 @@ const DayStrip = ({
           onClick={onNextWeek}
           aria-label="Next week"
           style={{
-            width: 40, height: 40, borderRadius: 10,
-            background: "rgba(255,255,255,0.06)",
-            border: "1px solid rgba(255,255,255,0.12)",
+            width: 36, height: 36, borderRadius: 8,
+            background: "#FFFFFF",
+            border: "1.5px solid #D1D5DB",
             display: "flex", alignItems: "center", justifyContent: "center",
             cursor: "pointer",
             flexShrink: 0,
+            boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
           }}
         >
-          <ChevronRight size={18} style={{ color: "var(--brand-cream)" }} />
+          <ChevronRight size={16} style={{ color: "var(--brand-navy)" }} />
         </button>
       </div>
 
@@ -214,7 +216,7 @@ const DayStrip = ({
                       minHeight: 72,
                       scrollSnapAlign: "start",
                       // hardcoded-color-allow-next-line
-                      background: selected ? ORANGE : (isSunday || !available) ? "#F4F5F8" : SURFACE,
+                      background: selected ? ORANGE : (isSunday || !available) ? "#ECEEF2" : "#FFFFFF",
                       border: selected ? `2px solid ${ORANGE}` : `1px solid ${BORDER}`,
                       borderRadius: 14,
                       padding: "10px 6px 12px",
@@ -273,7 +275,7 @@ const DayStrip = ({
               position: "absolute", left: 0, top: 0, bottom: 4, width: 28,
               pointerEvents: "none",
               // hardcoded-color-allow-next-line
-              background: `linear-gradient(to right, ${SURFACE}, rgba(255,255,255,0))`,
+              background: `linear-gradient(to right, ${SURFACE}, rgba(244,246,250,0))`,
               opacity: showLeftFade ? 1 : 0,
               transition: "opacity 150ms ease",
             }} />
@@ -281,7 +283,7 @@ const DayStrip = ({
               position: "absolute", right: 0, top: 0, bottom: 4, width: 28,
               pointerEvents: "none",
               // hardcoded-color-allow-next-line
-              background: `linear-gradient(to left, ${SURFACE}, rgba(255,255,255,0))`,
+              background: `linear-gradient(to left, ${SURFACE}, rgba(244,246,250,0))`,
               opacity: showRightFade ? 1 : 0,
               transition: "opacity 150ms ease",
             }} />

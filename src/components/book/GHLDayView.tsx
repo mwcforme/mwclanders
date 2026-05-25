@@ -24,7 +24,7 @@ const INK    = "var(--brand-navy-deep)";
 const _MUTED  = "#4B5563";
 // hardcoded-color-allow-next-line
 const LINE   = "#E5E7EB";
-const SURFACE = "var(--bg-white)";
+const SURFACE = "#F4F6FA";
 const ORANGE  = "var(--brand-cta)";
 
 // ─── Supabase lazy import ─────────────────────────────────────────────────────
