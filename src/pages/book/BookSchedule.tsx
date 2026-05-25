@@ -17,16 +17,11 @@ import GHLDayView from "@/components/book/GHLDayView";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
 import { useBookingStore } from "@/domain/booking/bookingStore";
 import { CENTER_CALENDARS, type LocationKey } from "@/lib/ghlCalendars";
-import { LOCATIONS } from "@/data/locations";
+import { LOCATIONS, LOCATION_KEY_TO_SLUG } from "@/data/locations";
 import { PHONE } from "@/lib/constants";
 
 // ─── Location lookup ─────────────────────────────────────────────────────────
 
-const SLUG_MAP: Record<string, string> = {
-  richmond: "richmond-va",
-  "virginia-beach": "virginia-beach-va",
-  "newport-news": "newport-news-va",
-};
 
 const LOCATION_LABEL: Record<string, string> = {
   richmond: "Richmond Center",
@@ -106,7 +101,7 @@ const BookSchedule = () => {
   const heading = firstName ? `${firstName}, PICK MY TIME.` : "PICK MY TIME.";
 
   // Resolve location data for compact bar
-  const locationSlug = location ? SLUG_MAP[location] : null;
+  const locationSlug = location ? LOCATION_KEY_TO_SLUG[location] : null;
   const locationData = locationSlug ? LOCATIONS.find((l) => l.slug === locationSlug) : null;
 
   const customFields = {

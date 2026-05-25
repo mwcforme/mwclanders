@@ -7,15 +7,9 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import BookLayout from "@/components/book/BookLayout";
 import { useBookingStore } from "@/domain/booking/bookingStore";
-import { LOCATIONS, getMapsSearchUrl, type Location } from "@/data/locations";
+import { LOCATIONS, getMapsSearchUrl, LOCATION_KEY_TO_SLUG, type Location } from "@/data/locations";
 import { BookConfirmedHero } from "@/components/book/BookConfirmedHero";
 import { BookConfirmedContent } from "@/components/book/BookConfirmedContent";
-
-const SLUG_MAP: Record<string, string> = {
-  "newport-news": "newport-news-va",
-  "virginia-beach": "virginia-beach-va",
-  "richmond": "richmond-va",
-};
 
 const DEFAULT_CENTER = LOCATIONS[1];
 
@@ -55,7 +49,7 @@ export default function BookConfirmed() {
   const [emailCaptured, setEmailCaptured] = useState(false);
   const [checkDrawn, setCheckDrawn] = useState(false);
 
-  const slug = location ? SLUG_MAP[location] : null;
+  const slug = location ? LOCATION_KEY_TO_SLUG[location] : null;
   const center: Location = (slug && LOCATIONS.find((l) => l.slug === slug)) || DEFAULT_CENTER;
   const mapsSearchUrl = getMapsSearchUrl(center);
   const mapsEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(center.mapsQuery)}&output=embed`;

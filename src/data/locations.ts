@@ -133,3 +133,13 @@ export const LOCATIONS: Location[] = [
 export function getMapsSearchUrl(loc: Location): string {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc.mapsQuery)}`;
 }
+
+/**
+ * Maps short location keys (used by booking/lead forms) to the full Location slug.
+ * Single source of truth — import this instead of defining inline SLUG_MAPs.
+ */
+export const LOCATION_KEY_TO_SLUG: Record<string, Location["slug"]> = {
+  "richmond":       "richmond-va",
+  "virginia-beach": "virginia-beach-va",
+  "newport-news":   "newport-news-va",
+} as const;
