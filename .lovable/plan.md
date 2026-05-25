@@ -1,62 +1,35 @@
-# WCAG AA Contrast Audit & Fix Plan
+## Goal
 
-The project already has a comprehensive audit harness (`scripts/wcag-audit.mjs`) covering 87 color pairs across landing, hero, forms, booking funnel, quiz, footer, sticky bar, etc. Running it now reports **81 PASS / 6 FAIL**. Tokens and most pairs are already AA-compliant (see `a11y/contrast-audit.md`). This plan resolves the remaining 6 failures with minimal hue change, routes them through semantic tokens in `src/index.css`, and verifies via the existing script.
+Provide a hardened Fluent Forms → `lead-intake` PHP snippet with rich, greppable debug logging at every step, so any failure (token mismatch, field mapping, non-200 response, missing `funnel_url`, redirect filter not firing) is obvious from `wp-content/debug.log`.
 
-## 1. Failing pairs (current)
+## What the snippet will log
 
-| # | Pair | FG | BG | Ratio | Need |
-|---|---|---|---|---:|---:|
-| 1 | Form placeholder on white | rgba(11,16,41,0.45) → #91939F | #FFFFFF | 3.05 | 4.5 |
-| 2 | Header CTA orange / white label (small-bold) | #FFFFFF | #E8670A | 3.29 | 4.5 |
-| 3 | Sticky bar "Book" text on orange (normal-bold) | #FFFFFF | #E8670A | 3.29 | 4.5 |
-| 4 | OptionRow orange icon on cream chip | #E8670A | #FFF1E3 | 2.97 | 3.0 (UI) |
-| 5 | LetsTalk SMS reply note on white | #9CA3AF | #FFFFFF | 2.54 | 4.5 |
-| 6 | BookSymptom disabled btn label on #D1D5DB | #6B7280 | #D1D5DB | 3.28 | 4.5 |
+Every log line prefixed `[MWC-INTAKE]` + a per-submission request ID (8-char hex) so you can trace one submission end-to-end in the log.
 
-## 2. Fixes (token-first, brand-preserving)
+1. **Hook fired** — entry id, form id, form title
+2. **Form gate** — whether form id matched `$TARGET_FORM_IDS` (skip vs proceed)
+3. **Raw form data** — `print_r` of `$formData` keys + values (so you can confirm field names like `names`, `phone`, `email`)
+4. **Mapped payload** — final JSON body before POST, with token presence check (`MWC_INTAKE_TOKEN` defined? length? first/last 4 chars only — never log full secret)
+5. **Endpoint URL** being called
+6. **HTTP response** — status code, full body, `wp_remote_retrieve_headers`
+7. **WP_Error path** — full error message if `is_wp_error($response)`
+8. **Parsed response** — `capture_id`, `crm_contact_id`, `funnel_url` (or missing)
+9. **Redirect decision** — whether filter was registered, what URL will be used
+10. **Filter invocation** — log inside the `fluentform/submission_confirmation` filter so you know it actually ran (common failure: Fluent's confirmation settings override it)
 
-| # | Resolution | New ratio |
-|---|---|---:|
-| 1 | Swap inline `rgba(11,16,41,0.45)` placeholders to existing token `--c-placeholder-on-white` (#636B80). | 5.32:1 ✓ |
-| 2 | Use existing token `--brand-cta-accessible` (#BF5608) as the **fill** for any orange CTA that carries small/normal-bold white text (header pill, sticky bar). Keep `--brand-cta` (#E8670A) for hero-sized large-bold CTAs where 3.29:1 qualifies AA-large. | 4.62:1 ✓ |
-| 3 | Same as #2 — apply to `StickyMobileCTA` book-side fill. | 4.62:1 ✓ |
-| 4 | Darken the cream chip background from `#FFF1E3` to `#FFE4CC` (still warm/on-brand), or use icon `--brand-cta-accessible` on `#FFF1E3`. Chosen: switch chip bg to `#FFE4CC`. Define `--c-chip-orange-bg`. | 3.04:1 ✓ |
-| 5 | Replace tailwind `text-gray-400` (#9CA3AF) with `--c-text-on-light-muted` (#424857) for the SMS reply note. | 9.5:1 ✓ |
-| 6 | Disabled button: switch text from #6B7280 to `--c-text-on-light` (#000033) at opacity 1, and use disabled bg `#E5E7EB` with explicit `aria-disabled` styling. New pair #000033 on #E5E7EB. | 14.5:1 ✓ |
+## Safety / config
 
-## 3. Token changes in `src/index.css`
+- Wraps everything in `try/catch` so a logging bug never breaks form submission
+- Only logs when `WP_DEBUG` is true OR a new `MWC_INTAKE_DEBUG` constant is defined (so you can leave it in prod and toggle via wp-config)
+- Logs token **fingerprint only** (`strlen` + first4…last4), never the secret itself
+- Adds a `X-Request-Id` header on the POST so the same id appears in Supabase edge logs → you can correlate WP log line with Supabase log line in one search
 
-Add (or reuse):
-```css
---c-placeholder-on-white: #636B80;     /* exists */
---brand-cta-accessible:   #BF5608;     /* exists */
---c-chip-orange-bg:       #FFE4CC;     /* NEW */
---c-btn-disabled-bg:      #E5E7EB;     /* NEW */
---c-btn-disabled-fg:      #000033;     /* alias of --c-text-on-light */
-```
+## Deliverable
 
-No hue redesign. Brand orange `#E8670A` stays the canonical accent for large/icon usage.
+A single PHP snippet (in chat, not committed to the repo) you can paste into WPCode replacing the current one. Plus a 3-line "how to read the logs" cheat sheet:
 
-## 4. Files to touch
+- `tail -f wp-content/debug.log | grep MWC-INTAKE`
+- Grep the request id in Supabase edge function logs to see the matching server-side trace
+- Common signatures: `token_fingerprint=…` mismatch, `http_code=401`, `funnel_url=MISSING`, `filter_fired=NO`
 
-- `src/index.css` — add the two new tokens.
-- Hero/landing forms (placeholders): `TRTHeroForm.tsx`, `TRTHeroFormShort.tsx`, `TRTFinalCTA.tsx`, `IntakeFormHelpers.tsx`.
-- Orange CTA fills with small/normal-bold labels: `TRTHeader.tsx` (phone/CTA pill), `StickyMobileCTA.tsx`.
-- `src/components/book/OptionRow.tsx` — chip bg token.
-- `src/pages/book/BookLetsTalk.tsx` — SMS note color.
-- `src/pages/book/BookSymptom.tsx` — disabled button colors.
-- `scripts/wcag-audit.mjs` — update the 6 pairs with new values so the matrix stays the source of truth.
-
-## 5. Verification
-
-1. `node scripts/wcag-audit.mjs` → expect `PASS: 87  FAIL: 0`.
-2. Visual spot-check (mobile 823×519): hero CTA pill, sticky mobile CTA, BookLetsTalk page, BookSymptom disabled state, OptionRow.
-3. Update `a11y/contrast-audit.md` with the new ratios and tokens.
-
-## 6. Out of scope
-
-- Shadcn `--primary/--secondary/...` tokens are already AA on both modes (black on cream / white on navy). No changes to base HSL semantic tokens.
-- No redesign of palette; only minimal value shifts to clear AA thresholds.
-- Light/dark mode parity verified — dark mode uses navy + white which already passes; cream/orange tokens are mode-agnostic.
-
-Once approved I'll apply the edits, run the audit, and report the final counts.
+No project code changes — this is a WordPress-side artifact only.
