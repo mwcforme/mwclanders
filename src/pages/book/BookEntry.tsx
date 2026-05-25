@@ -41,8 +41,10 @@ interface DebugInfo {
   identity?:      Partial<TokenIdentity>;
 }
 
+// Built from VITE_SUPABASE_URL so the URL follows whichever Supabase project
+// the deployment is wired to (Lovable Cloud, self-hosted, migrated, etc.).
 const TOKEN_EXCHANGE_URL =
-  "https://yvuwzaxnyxoejwzqfbdf.supabase.co/functions/v1/wp-token-exchange";
+  `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/wp-token-exchange`;
 
 // ── Token exchange ────────────────────────────────────────────────────────────
 
