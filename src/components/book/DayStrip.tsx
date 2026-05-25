@@ -13,7 +13,7 @@ const INK       = "var(--brand-navy-deep)";
 // hardcoded-color-allow-next-line
 const INK_SOFT  = "#2C3346";
 // hardcoded-color-allow-next-line
-const MUTED     = "#374151";
+const MUTED     = "var(--c-text-on-light-muted)";
 // hardcoded-color-allow-next-line
 const BORDER    = "#8B92A0";
 const SURFACE   = "var(--bg-white)";

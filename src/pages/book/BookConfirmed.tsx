@@ -185,7 +185,7 @@ export default function BookConfirmed() {
             ].map(({ icon, text }, idx, arr) => (
               <div key={text} style={{ display: "flex", alignItems: "center", gap: 12, padding: "14px 20px", borderBottom: idx < arr.length - 1 ? "1px solid #F3F4F6" : "none" }}>
                 <div style={{ width: 36, height: 36, borderRadius: 8, background: "rgba(232,103,10,0.08)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{icon}</div>
-                <span style={{ fontSize: 16, fontWeight: 500, color: "#111827", lineHeight: 1.5 }}>{text}</span>
+                <span style={{ fontSize: 16, fontWeight: 500, color: "var(--c-text-on-light)", lineHeight: 1.5 }}>{text}</span>
               </div>
             ))}
           </div>
@@ -213,7 +213,7 @@ export default function BookConfirmed() {
               ].map(({ n, text }) => (
                 <div key={n} style={{ display: "flex", alignItems: "center", gap: 12 }}>
                   <div style={{ width: 28, height: 28, borderRadius: "50%", background: "var(--brand-cta)", color: "#FFF", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 13, flexShrink: 0 }}>{n}</div>
-                  <p style={{ fontSize: 16, fontWeight: 500, color: "#111827", lineHeight: 1.4, margin: 0 }}>{text}</p>
+                  <p style={{ fontSize: 16, fontWeight: 500, color: "var(--c-text-on-light)", lineHeight: 1.4, margin: 0 }}>{text}</p>
                 </div>
               ))}
             </div>
@@ -237,7 +237,7 @@ export default function BookConfirmed() {
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <Clock size={16} strokeWidth={2.5} style={{ color: "var(--brand-cta)", flexShrink: 0 }} />
-                  <span style={{ fontSize: 16, fontWeight: 500, color: "#111827" }}>{center.hours}</span>
+                  <span style={{ fontSize: 16, fontWeight: 500, color: "var(--c-text-on-light)" }}>{center.hours}</span>
                 </div>
               </div>
             </div>
@@ -270,10 +270,10 @@ export default function BookConfirmed() {
           {!emailCaptured && (
             <div style={{ background: "#FFFFFF", borderRadius: 14, padding: "18px 20px", border: "1px solid rgba(255,255,255,0.15)", boxShadow: "0 4px 24px rgba(0,0,0,0.25)" }}>
               {/* WCAG AA: #374151 on white = 9.7:1 — passes. Was #6B7280 = 3.0:1 — failed */}
-              <p style={{ fontFamily: "Inter, sans-serif", fontSize: 16, fontWeight: 700, color: "#111827", marginBottom: 4 }}>
+              <p style={{ fontFamily: "Inter, sans-serif", fontSize: 16, fontWeight: 700, color: "var(--c-text-on-light)", marginBottom: 4 }}>
                 Send my confirmation
               </p>
-              <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "#374151", marginBottom: 12 }}>
+              <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "var(--c-text-on-light-muted)", marginBottom: 12 }}>
                 We'll email your appointment details and a reminder.
               </p>
               <BookingErrorBoundary>

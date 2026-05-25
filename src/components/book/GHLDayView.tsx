@@ -304,7 +304,7 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
           {/* Selected slot recap — shown when a slot is chosen */}
           {selectedSlot && (
             <p style={{
-              fontSize: 15, color: "#374151", fontFamily: "Inter, sans-serif",
+              fontSize: 15, color: "var(--c-text-on-light-muted)", fontFamily: "Inter, sans-serif",
               marginBottom: 10, textAlign: "center", fontWeight: 500, lineHeight: 1.4,
             }}>
               {new Date(selectedSlot).toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric", timeZone: TIMEZONE })}

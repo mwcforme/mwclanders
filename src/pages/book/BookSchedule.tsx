@@ -217,7 +217,7 @@ const BookSchedule = () => {
                 <div style={{ fontSize: 16, fontWeight: 700, color: "#0B1029", lineHeight: 1.3 }}>
                   {locationData.name.replace("Men's Wellness Centers, ", "")}
                 </div>
-                <div style={{ fontSize: 14, color: "#374151", marginTop: 2, lineHeight: 1.4, fontWeight: 500 }}>
+                <div style={{ fontSize: 14, color: "var(--c-text-on-light-muted)", marginTop: 2, lineHeight: 1.4, fontWeight: 500 }}>
                   {locationData.address} &middot; {locationData.cityStateZip}
                 </div>
               </div>

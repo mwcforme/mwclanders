@@ -32,7 +32,7 @@ export function EmailCapture({ contactId, onComplete }: Props) {
 
   return (
     <div>
-      <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "#374151", marginBottom: 10 }}>
+      <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "var(--c-text-on-light-muted)", marginBottom: 10 }}>
         We'll send your appointment details and a reminder.
       </p>
       <form onSubmit={handleSubmit} noValidate style={{ display: "flex", gap: 8 }}>
@@ -50,7 +50,7 @@ export function EmailCapture({ contactId, onComplete }: Props) {
           style={{
             flex: 1, height: 44, borderRadius: 8,
             border: `1.5px solid ${error ? "var(--c-error-on-light)" : "#D1D5DB"}`,
-            background: "#F9FAFB", color: "#111827",
+            background: "var(--bg-white)", color: "var(--c-text-on-light)",
             fontSize: 16, fontFamily: "Inter, sans-serif", padding: "0 14px", outline: "none",
           }}
         />

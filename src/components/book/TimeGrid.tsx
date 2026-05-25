@@ -7,7 +7,7 @@ import { TIMEZONE } from "@/lib/ghlCalendars";
 
 const INK    = "var(--brand-navy-deep)";
 // hardcoded-color-allow-next-line
-const MUTED  = "#374151";
+const MUTED  = "var(--c-text-on-light-muted)";
 // hardcoded-color-allow-next-line
 const LINE   = "#E5E7EB";
 // hardcoded-color-allow-next-line
