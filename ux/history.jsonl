@@ -1,0 +1,20 @@
+{"pass":1,"category":"D","target":"#6B7280 contrast","decision":"KEEP","files":["SurveyCard.tsx","OptionRow.tsx","BookSchedule2.tsx","TRTBloodwork.tsx"]}
+{"pass":2,"category":"D","target":"#9CA3AF contrast","decision":"KEEP","files":["TRTComparisonTable.tsx","TRTGetStarted.tsx","ProductTRTSchedule.tsx"]}
+{"pass":3,"category":"B","target":"Back button 13→16px","decision":"KEEP","files":["BookSchedule2.tsx"]}
+{"pass":4,"category":"H","target":"Error message readability","decision":"KEEP","files":["GHLAccordionView.tsx","AppointmentConfirmModal.tsx","EmailCapture.tsx"]}
+{"pass":5,"category":"C","target":"Touch targets and loading text","decision":"KEEP","files":["BookEntry.tsx","AdminLogin.tsx"]}
+{"pass":6,"category":"B","target":"15→16px body text in TRT sections","decision":"KEEP","files":["TRTComparisonTable.tsx","TRTVisualTimeline.tsx","TRTThreeProblems.tsx"]}
+{"pass":7,"category":"G","target":"Sticky CTA call button 13→14px","decision":"KEEP","files":["StickyMobileCTA.tsx"]}
+{"pass":8,"category":"D","target":"Success token in BookConfirmed","decision":"KEEP","files":["BookConfirmed.tsx"]}
+{"pass":9,"category":"F","target":"EmailCapture ARIA and font","decision":"KEEP","files":["EmailCapture.tsx","BookSymptom.tsx"]}
+{"pass":10,"category":"E","target":"15→16px in shared components","decision":"KEEP","files":["TRTHeroForm.tsx","CROHeroSection.tsx","AffordabilityHowPricing.tsx","AffordabilityMemberTerms.tsx","PricingCard.tsx"]}
+{"pass":11,"category":"K","target":"Heading hierarchy BookConfirmed","decision":"KEEP","files":["BookConfirmed.tsx"]}
+{"pass":12,"category":"L","target":"BookLocation 14→16px text","decision":"KEEP","files":["BookLocation.tsx"]}
+{"pass":13,"category":"L","target":"BookSchedule 15→16px + test fix","decision":"KEEP","files":["BookSchedule.tsx","renderWithProviders.tsx"]}
+{"pass":14,"category":"N","target":"HIPAA trust signal in funnel footer","decision":"KEEP","files":["BookLayout.tsx"]}
+{"pass":15,"category":"O","target":"Token replacement #111827/#374151","decision":"KEEP","files":["BookConfirmed.tsx","BookSchedule.tsx","EmailCapture.tsx","DayStrip.tsx","TimeGrid.tsx","GHLDayView.tsx"]}
+{"pass":16,"category":"A","target":"CTA button clamp(15→16px)","decision":"KEEP","files":["TRTManifesto.tsx","TRTHowItWorks.tsx","TRTResults.tsx","AffordabilityClosingCTA.tsx","AffordabilityHero.tsx"]}
+{"pass":17,"category":"B","target":"Mass 15→16px landing components","decision":"KEEP","count":30}
+{"pass":18,"category":"B","target":"Book components 15→16px","decision":"KEEP","files":["BookingErrorBoundary.tsx","AppointmentConfirmModal.tsx","GHLAccordionView.tsx","GHLDayView.tsx"]}
+{"pass":19,"category":"L","target":"Product pages 15→16px","decision":"KEEP","files":["ProductTRT.tsx","ProductTRTSchedule.tsx"]}
+{"pass":20,"category":"ALL","target":"Final audit - all categories verified","decision":"KEEP","violations":0}
