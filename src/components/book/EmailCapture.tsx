@@ -38,6 +38,10 @@ export function EmailCapture({ contactId, onComplete }: Props) {
       <form onSubmit={handleSubmit} noValidate style={{ display: "flex", gap: 8 }}>
         <input
           type="email"
+          id="email-capture-input"
+          aria-label="Email address"
+          aria-invalid={!!error}
+          aria-describedby={error ? "email-capture-error" : undefined}
           placeholder="your@email.com"
           value={email}
           autoComplete="email"
@@ -47,7 +51,7 @@ export function EmailCapture({ contactId, onComplete }: Props) {
             flex: 1, height: 44, borderRadius: 8,
             border: `1.5px solid ${error ? "var(--c-error-on-light)" : "#D1D5DB"}`,
             background: "#F9FAFB", color: "#111827",
-            fontSize: 15, fontFamily: "Inter, sans-serif", padding: "0 14px", outline: "none",
+            fontSize: 16, fontFamily: "Inter, sans-serif", padding: "0 14px", outline: "none",
           }}
         />
         <button
@@ -55,7 +59,7 @@ export function EmailCapture({ contactId, onComplete }: Props) {
           disabled={loading}
           style={{
             height: 44, padding: "0 18px", background: "var(--brand-cta)", color: "#FFF",
-            border: "none", borderRadius: 8, fontFamily: "Inter, sans-serif", fontSize: 13,
+            border: "none", borderRadius: 8, fontFamily: "Inter, sans-serif", fontSize: 14,
             fontWeight: 700, cursor: loading ? "not-allowed" : "pointer",
             display: "flex", alignItems: "center", gap: 6, flexShrink: 0,
           }}
@@ -63,7 +67,7 @@ export function EmailCapture({ contactId, onComplete }: Props) {
           <Send size={14} strokeWidth={2} /> Send
         </button>
       </form>
-      {error && <p role="alert" style={{ color: "var(--c-error-on-light)", fontSize: 14, marginTop: 4, fontFamily: "Inter, sans-serif" }}>{error}</p>}
+      {error && <p id="email-capture-error" role="alert" style={{ color: "var(--c-error-on-light)", fontSize: 14, marginTop: 4, fontFamily: "Inter, sans-serif" }}>{error}</p>}
     </div>
   );
 }

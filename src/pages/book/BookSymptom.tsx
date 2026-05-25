@@ -107,9 +107,8 @@ const BookSymptom = () => {
               htmlFor="other-note"
               style={{
                 display: "block",
-                fontSize: 14,
-                // hardcoded-color-allow-next-line
-                color: "#3A4258",
+                fontSize: 16,
+                color: "var(--c-text-on-light-muted)",
                 marginBottom: 8,
                 fontFamily: "Inter, sans-serif",
               }}
