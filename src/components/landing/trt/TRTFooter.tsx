@@ -72,21 +72,6 @@ export const TRTFooter = () => {
             </ul>
           </div>
 
-          {/* Company */}
-          <div>
-            {col("Company")}
-            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-              {/* hardcoded-color-allow-next-line */}
-              {li(<span style={{ color: "rgba(255,255,255,0.75)" }}>How It Works</span>)}
-              {/* hardcoded-color-allow-next-line */}
-              {li(<span style={{ color: "rgba(255,255,255,0.75)" }}>About Us</span>)}
-              {/* hardcoded-color-allow-next-line */}
-              {li(<span style={{ color: "rgba(255,255,255,0.75)" }}>Careers</span>)}
-              {/* hardcoded-color-allow-next-line */}
-              {li(<span style={{ color: "rgba(255,255,255,0.75)" }}>FAQ</span>)}
-            </ul>
-          </div>
-
           {/* Contact */}
           <div>
             {col("Contact")}
