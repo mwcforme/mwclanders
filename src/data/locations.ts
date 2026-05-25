@@ -1,6 +1,6 @@
 /**
  * Single source of truth for all 3 Virginia center locations.
- * Phone strings: Newport News and Virginia Beach share (757) 612-4428.
+ * Newport News: (757) 806-6263 | Virginia Beach: (757) 612-4428
  *
  * Richmond & Virginia Beach:
  *   Mon & Fri 8am–6pm · Tue/Wed/Thu 9am–5pm · Sat 8am–3pm
@@ -77,8 +77,8 @@ export const LOCATIONS: Location[] = [
     address: "827 Diligence Drive, Suite 206",
     cityStateZip: "Newport News, VA 23606",
     fullAddress: "827 Diligence Drive, Suite 206, Newport News, VA 23606",
-    phone: "(757) 612-4428",
-    phoneHref: "tel:7576124428",
+    phone: "(757) 806-6263",
+    phoneHref: "tel:7578066263",
     hours: "Mon & Tue 9am–5pm · Wed closed · Thu & Fri 9am–5pm · Sat 8am–3pm",
     schedule: {
       Mo: ["09:00", "17:00"],

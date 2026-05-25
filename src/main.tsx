@@ -1,11 +1,8 @@
 import { createRoot } from "react-dom/client";
 import { HelmetProvider } from "react-helmet-async";
-import { inject } from "@vercel/analytics";
+import { Analytics } from "@vercel/analytics/react";
 import App from "./App.tsx";
 import "./index.css";
-
-// Vercel Web Analytics — Core Web Vitals + page views, privacy-friendly
-inject();
 import { initAttribution } from "./lib/attribution";
 import { initBookingQueue } from "./lib/bookingQueue";
 import { sanitizeAnalyticsForBookingRoute, fireSanitizedPageView } from "./lib/analyticsGuard";
@@ -35,5 +32,6 @@ if (typeof window !== "undefined") {
 createRoot(document.getElementById("root")!).render(
   <HelmetProvider>
     <App />
+    <Analytics />
   </HelmetProvider>
 );
