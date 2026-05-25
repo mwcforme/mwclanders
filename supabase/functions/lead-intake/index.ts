@@ -3,7 +3,7 @@
 // `lead_captures` first, then forwards to GHL CRM. Zero-data-loss guarantee.
 
 import { mapToCanonical, splitName, type CanonicalLead } from "./mapping.ts";
-import { corsHeaders, jsonResponse, corsResponse } from "../_shared/cors.ts";
+import { corsHeadersFor, jsonResponse, corsResponse } from "../_shared/cors.ts";
 import { tryGetGhlCreds, GHL_API_BASE, GHL_API_VERSION } from "../_shared/ghlEnv.ts";
 import { createAdminClient } from "../_shared/supabaseAdmin.ts";
 import { sendEmail } from "../_shared/sendEmail.ts";
@@ -96,8 +96,16 @@ function validate(c: CanonicalLead): { ok: true } | { ok: false; error: string }
     return { ok: false, error: "invalid email" };
   }
   if (c.email && c.email.length > 255) return { ok: false, error: "email too long" };
-  if (c.phone && c.phone.length > 40) return { ok: false, error: "phone too long" };
+  if (c.phone) {
+    if (c.phone.length > 40) return { ok: false, error: "phone too long" };
+    if (!/^\+?[\d\s\-().]{7,20}$/.test(c.phone)) return { ok: false, error: "invalid phone format" };
+  }
   if (c.location && c.location.length > 100) return { ok: false, error: "location too long" };
+  // Consent is required — reject if falsy
+  const consent = c.consent;
+  if (consent !== true && consent !== "true" && consent !== "1" && consent !== 1) {
+    return { ok: false, error: "consent required" };
+  }
   return { ok: true };
 }
 
@@ -136,25 +144,34 @@ async function forwardToGhl(c: CanonicalLead, accessToken: string, locationId: s
 }
 
 Deno.serve(async (req) => {
-  if (req.method === "OPTIONS") return corsResponse();
-  if (req.method !== "POST") return jsonResponse(405, { ok: false, error: "method not allowed" });
+  // Correlation ID — propagated through all downstream calls
+  const requestId = req.headers.get("x-request-id") ?? crypto.randomUUID();
 
-  // Optional shared-secret check
+  if (req.method === "OPTIONS") return corsResponse(req);
+  if (req.method !== "POST") return jsonResponse(405, { ok: false, error: "method not allowed" }, req);
+
+  // Body size guard — reject oversized payloads (DoS protection)
+  const contentLength = parseInt(req.headers.get("content-length") ?? "0", 10);
+  if (contentLength > 10_240) return jsonResponse(413, { ok: false, error: "payload too large" }, req);
+
+  // Optional shared-secret check (required if LEAD_INTAKE_TOKEN env var is set)
   const expectedToken = Deno.env.get("LEAD_INTAKE_TOKEN");
   if (expectedToken) {
     const got = req.headers.get("x-intake-token") ?? "";
-    if (got !== expectedToken) return jsonResponse(401, { ok: false, error: "unauthorized" });
+    if (got !== expectedToken) return jsonResponse(401, { ok: false, error: "unauthorized" }, req);
   }
 
-  // Rate limit by client IP
-  const ip = req.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown";
-  if (!rateLimit(ip)) return jsonResponse(429, { ok: false, error: "rate limit exceeded" });
+  // Rate limit — use last IP in X-Forwarded-For chain (trusted proxy sets this)
+  const xffChain = req.headers.get("x-forwarded-for") ?? "";
+  const ips = xffChain.split(",").map(s => s.trim()).filter(Boolean);
+  const ip = ips[ips.length - 1] ?? "unknown";
+  if (!rateLimit(ip)) return jsonResponse(429, { ok: false, error: "rate limit exceeded" }, req);
 
   let raw: Record<string, unknown>;
   try {
     raw = await parseBody(req);
   } catch (e) {
-    return jsonResponse(400, { ok: false, error: `bad body: ${(e as Error).message}` });
+    return jsonResponse(400, { ok: false, error: `bad body: ${(e as Error).message}` }, req);
   }
 
   const referer = req.headers.get("referer") ?? undefined;
@@ -162,11 +179,11 @@ Deno.serve(async (req) => {
 
   // Honeypot — silently accept and drop
   if (canonical.honeypot && canonical.honeypot.length > 0) {
-    return jsonResponse(200, { ok: true, dropped: "honeypot" });
+    return jsonResponse(200, { ok: true, dropped: "honeypot" }, req);
   }
 
   const v = validate(canonical);
-  if (!v.ok) return jsonResponse(400, { ok: false, error: v.error });
+  if (!v.ok) return jsonResponse(400, { ok: false, error: v.error }, req);
 
   // ---- Persist FIRST (zero data loss) ----
   const supabase = createAdminClient();
@@ -206,8 +223,8 @@ Deno.serve(async (req) => {
     .single();
 
   if (insertErr || !inserted) {
-    log.error("db insert failed", { error: insertErr?.message });
-    return jsonResponse(500, { ok: false, error: "failed to persist lead" });
+    log.error("db insert failed", { error: insertErr?.message, request_id: requestId });
+    return jsonResponse(500, { ok: false, error: "failed to persist lead" }, req);
   }
   const captureId = inserted.id as string;
 
@@ -218,7 +235,7 @@ Deno.serve(async (req) => {
       .from("lead_captures")
       .update({ crm_status: "failed", crm_error: "GHL credentials not configured" })
       .eq("id", captureId);
-    return jsonResponse(502, { ok: false, capture_id: captureId, error: "CRM not configured" });
+    return jsonResponse(502, { ok: false, capture_id: captureId, error: "CRM not configured" }, req);
   }
   const appEnv = "prod";
   const { apiKey: ghlToken, locationId: ghlLocationId } = creds;
@@ -300,11 +317,12 @@ Deno.serve(async (req) => {
       ok: true,
       capture_id: captureId,
       crm_contact_id: contactId,
+      request_id: requestId,
       ...(funnelUrl ? { funnel_url: funnelUrl } : {}),
-    });
+    }, req);
   } catch (e) {
     const msg = (e as Error).message ?? "GHL forward failed";
-    log.error("ghl forward failed", { capture_id: captureId, error: msg, env: appEnv });
+    log.error("ghl forward failed", { capture_id: captureId, error: msg, env: appEnv, request_id: requestId });
     await supabase
       .from("lead_captures")
       .update({ crm_status: "failed", crm_error: msg.slice(0, 500) })
@@ -317,6 +335,6 @@ Deno.serve(async (req) => {
       error: msg,
       env: appEnv,
     });
-    return jsonResponse(502, { ok: false, capture_id: captureId, error: msg });
+    return jsonResponse(502, { ok: false, capture_id: captureId, error: msg, request_id: requestId }, req);
   }
 });
