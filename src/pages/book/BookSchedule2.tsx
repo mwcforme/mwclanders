@@ -52,7 +52,7 @@ const BookSchedule2 = () => {
             className="flex items-center gap-1"
             style={{
               background: "transparent", border: 0, color: "var(--c-text-on-dark)",
-              fontFamily: "Inter, sans-serif", fontSize: 13, fontWeight: 600,
+              fontFamily: "Inter, sans-serif", fontSize: 16, fontWeight: 600,
               opacity: 0.85, cursor: "pointer", padding: "4px 0",
             }}
             aria-label="Back to previous step"
