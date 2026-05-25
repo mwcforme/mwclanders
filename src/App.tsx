@@ -1,7 +1,7 @@
 import { lazy, Suspense } from "react";
 import { PHONE } from "@/lib/constants";
 import { Component, type ReactNode } from "react";
-import { Toaster } from "@/components/ui/toaster";
+// Toaster removed — toast() only called in LpDirectory (internal admin), replaced with inline state
 // TooltipProvider removed — no Tooltip components are used anywhere in the app
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
@@ -166,7 +166,6 @@ const App = () => (
   <AppErrorBoundary>
     <QueryClientProvider client={queryClient}>
       <>
-        <Toaster />
         <BrowserRouter>
           <ServicesProvider>
             <Suspense fallback={<PageLoader />}>

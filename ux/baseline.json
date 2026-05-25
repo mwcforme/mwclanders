@@ -1,0 +1,82 @@
+{
+  "capturedAt": "2026-05-25",
+  "buildStatus": "passing",
+  "routes": ["/", "/trt", "/ed", "/wl", "/book/symptom", "/book/schedule", "/book/confirmed"],
+  "viewports": ["375", "768", "1440"],
+  "screenshotsCapured": 21,
+  "contrastViolations": [
+    {
+      "file": "src/components/book/SurveyCard.tsx:147",
+      "color": "#6B7280",
+      "surface": "white",
+      "ratio": "3.0:1",
+      "type": "body text",
+      "failsAA": true
+    },
+    {
+      "file": "src/components/book/OptionRow.tsx:75",
+      "color": "#6B7280",
+      "surface": "white",
+      "ratio": "3.0:1",
+      "type": "UI icon (ChevronRight)",
+      "failsAA": true
+    },
+    {
+      "file": "src/pages/book/BookSchedule2.tsx:82",
+      "color": "#6B7280",
+      "surface": "dark bg",
+      "ratio": "3.0:1",
+      "type": "body text 13px",
+      "failsAA": true
+    },
+    {
+      "file": "src/pages/book/BookSchedule2.tsx:104",
+      "color": "#6B7280",
+      "surface": "white",
+      "ratio": "3.0:1",
+      "type": "section label 13px uppercase",
+      "failsAA": true
+    },
+    {
+      "file": "src/pages/product/TRTBloodwork.tsx:77",
+      "color": "#6B7280",
+      "surface": "light",
+      "ratio": "3.0:1",
+      "type": "icon span",
+      "failsAA": true
+    },
+    {
+      "file": "src/components/landing/trt/TRTComparisonTable.tsx:53,54",
+      "color": "#9CA3AF",
+      "surface": "white",
+      "ratio": "2.33:1",
+      "type": "UI icon 18px",
+      "failsAA": true
+    },
+    {
+      "file": "src/pages/product/TRTGetStarted.tsx:276,286",
+      "color": "#9CA3AF",
+      "surface": "light",
+      "ratio": "2.33:1",
+      "type": "step number 12px",
+      "failsAA": true
+    },
+    {
+      "file": "src/pages/ProductTRTSchedule.tsx:129",
+      "color": "#9CA3AF",
+      "surface": "light",
+      "ratio": "2.33:1",
+      "type": "step number 14px",
+      "failsAA": true
+    }
+  ],
+  "fontSizeViolations": [
+    "src/pages/book/BookSchedule2.tsx:82 — fontSize 13",
+    "src/pages/book/BookSchedule2.tsx:104 — fontSize 13",
+    "src/pages/product/TRTGetStarted.tsx:276,286 — fontSize 12",
+    "src/pages/ProductTRTSchedule.tsx:129 — fontSize 14"
+  ],
+  "aiSlopFound": [],
+  "hardcodedHexCount": 9,
+  "touchTargetIssues": []
+}

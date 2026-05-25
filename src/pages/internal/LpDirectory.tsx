@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AlertTriangle, CheckCircle2, XCircle, ChevronLeft } from "lucide-react";
 import { SEO } from "@/components/SEO";
-import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { LANDING_PAGES, BOOKING_STEPS, COMPLIANCE_PAGES } from "@/data/landingPages";
 import { ATTRIBUTION_KEYS, getAttribution } from "@/lib/attribution";
@@ -32,7 +31,7 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 }
 
 const LpDirectory = () => {
-  const { toast } = useToast();
+  const [copiedLabel, setCopiedLabel] = useState<string | null>(null);
   const [dataLayerOk, setDataLayerOk] = useState<Health>("pending");
   const [pixelOk, setPixelOk] = useState<Health>("pending");
   const [supabaseOk, setSupabaseOk] = useState<Health>("pending");
@@ -52,7 +51,10 @@ const LpDirectory = () => {
   }, []);
 
   const copy = (text: string, label: string) => {
-    void navigator.clipboard.writeText(text).then(() => toast({ title: `Copied ${label}`, description: text }));
+    void navigator.clipboard.writeText(text).then(() => {
+      setCopiedLabel(label);
+      setTimeout(() => setCopiedLabel(null), 2000);
+    });
   };
 
   const buildTime = new Date().toISOString();
@@ -76,6 +78,13 @@ const LpDirectory = () => {
               </p>
             </div>
           </div>
+
+          {/* Copy feedback */}
+          {copiedLabel && (
+            <div style={{ position: "fixed", bottom: 24, right: 24, background: "#22C55E", color: "#fff", padding: "8px 16px", borderRadius: 8, fontWeight: 600, fontSize: 13, zIndex: 9999 }}>
+              ✓ Copied {copiedLabel}
+            </div>
+          )}
 
           {/* Live LPs */}
           <SectionTitle>Live landing pages</SectionTitle>

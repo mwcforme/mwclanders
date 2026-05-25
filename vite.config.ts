@@ -60,7 +60,7 @@ export default defineConfig(({ mode }) => ({
           "vendor-ui": [
             // react-dialog removed: only used in lazy booking routes (BookSchedule2, GHLAccordionView)
             // react-tooltip removed: TooltipProvider was unused (no Tooltip components exist in app)
-            "@radix-ui/react-toast",
+            // react-toast removed: Toaster removed from App.tsx; toast replaced with inline state in LpDirectory
             "lucide-react",
           ],
           // State + query
