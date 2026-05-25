@@ -80,10 +80,10 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
           <div key={period} style={{ marginBottom: 20 }}>
             {/* Period label — 14px, uppercase ok (≤3 words) */}
             <p style={{
-              fontSize: 12, fontWeight: 700, letterSpacing: "0.06em",
-              textTransform: "uppercase", color: "rgba(255,255,255,0.35)",
+              fontSize: 11, fontWeight: 700, letterSpacing: "0.10em",
+              textTransform: "uppercase", color: "rgba(255,255,255,0.50)",
               marginBottom: 12, paddingBottom: 0,
-              ...(isFirst ? {} : { borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 12, marginTop: 4 }),
+              ...(isFirst ? {} : { borderTop: "1px solid rgba(255,255,255,0.12)", paddingTop: 16, marginTop: 8 }),
             }}>
               {GROUP_LABELS[period]}
             </p>
@@ -99,16 +99,18 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
                     aria-pressed={active}
                     onClick={() => onSlotSelect(iso)}
                     style={{
-                      background: active ? ORANGE : "rgba(255,255,255,0.06)",
-                      border: active ? "1px solid var(--brand-cta)" : "1px solid rgba(255,255,255,0.14)",
-                      borderRadius: 999,
-                      padding: "0 18px",
-                      display: "inline-flex", alignItems: "center", gap: 6,
+                      background: active ? ORANGE : "rgba(255,255,255,0.10)",
+                      border: active ? "2px solid var(--brand-cta)" : "1.5px solid rgba(255,255,255,0.28)",
+                      borderRadius: 10,
+                      padding: "0 16px",
+                      display: "inline-flex", alignItems: "center", gap: 5,
                       color: active ? "#fff" : "var(--brand-cream)",
                       cursor: "pointer",
-                      transition: "background-color 120ms ease",
+                      transition: "all 120ms ease",
                       whiteSpace: "nowrap",
-                      minHeight: 48,
+                      minHeight: 52,
+                      // hardcoded-color-allow-next-line
+                      boxShadow: active ? "0 4px 16px rgba(232,103,10,0.45)" : "none",
                     }}
                   >
                     <span style={{ fontFamily: "Oswald, Inter, sans-serif", fontWeight: 700, fontSize: 18 }}>

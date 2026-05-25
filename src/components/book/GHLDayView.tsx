@@ -272,7 +272,7 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
   return (
     <>
       <div style={{
-        background: SURFACE, border: `1px solid ${LINE}`, borderRadius: 16,
+        background: SURFACE, border: "1px solid rgba(255,255,255,0.16)", borderRadius: 16,
         overflow: "hidden", color: INK, fontFamily: "Inter, system-ui, sans-serif",
         // hardcoded-color-allow-next-line
         boxShadow: "0 4px 32px rgba(0,0,0,0.35)",
@@ -320,9 +320,10 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
             style={{
               width: "100%", minHeight: 60,
               // hardcoded-color-allow-next-line
-              background: canConfirm ? ORANGE : "rgba(255,255,255,0.08)",
+              background: canConfirm ? ORANGE : "rgba(255,255,255,0.06)",
               // hardcoded-color-allow-next-line
-              color: canConfirm ? "var(--c-text-on-dark)" : "rgba(255,255,255,0.35)",
+              border: canConfirm ? "none" : "1px solid rgba(255,255,255,0.14)",
+              color: canConfirm ? "var(--c-text-on-dark)" : "rgba(255,255,255,0.30)",
               border: 0, borderRadius: 12, fontSize: 16, fontWeight: 700,
               letterSpacing: canConfirm ? "0.06em" : "0.02em",
               textTransform: canConfirm ? "uppercase" : "none",

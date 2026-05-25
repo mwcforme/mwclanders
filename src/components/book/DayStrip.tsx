@@ -214,8 +214,8 @@ const DayStrip = ({
                       minHeight: 72,
                       scrollSnapAlign: "start",
                       // hardcoded-color-allow-next-line
-                      background: selected ? ORANGE : (isSunday || !available) ? "#F4F5F8" : SURFACE,
-                      border: selected ? `1px solid ${ORANGE}` : `1px solid ${BORDER}`,
+                      background: selected ? ORANGE : (isSunday || !available) ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.07)",
+                      border: selected ? `2px solid ${ORANGE}` : (isSunday || !available) ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(255,255,255,0.22)",
                       borderRadius: 14,
                       padding: "10px 6px 12px",
                       color: selected ? "var(--c-text-on-dark)" : (isSunday || !available) ? MUTED : INK,
