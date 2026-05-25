@@ -142,7 +142,7 @@ const GHLAccordionView = ({ location, firstName, lastName, email, phone, source,
               />
             ))}
           </div>
-          {loadError && <div style={{ marginTop: 10, fontSize: 13, color: "#B91C1C" }}>{loadError}</div>}
+          {loadError && <div role="alert" style={{ marginTop: 10, fontSize: 16, color: "var(--c-error-on-light)", fontFamily: "Inter, sans-serif" }}>{loadError}</div>}
         </div>
 
         <div style={{ borderTop: `1px solid ${LINE}`, background: SURFACE, padding: 16 }}>

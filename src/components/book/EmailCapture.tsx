@@ -63,7 +63,7 @@ export function EmailCapture({ contactId, onComplete }: Props) {
           <Send size={14} strokeWidth={2} /> Send
         </button>
       </form>
-      {error && <p style={{ color: "var(--c-error-on-light)", fontSize: 12, marginTop: 4, fontFamily: "Inter, sans-serif" }}>{error}</p>}
+      {error && <p role="alert" style={{ color: "var(--c-error-on-light)", fontSize: 14, marginTop: 4, fontFamily: "Inter, sans-serif" }}>{error}</p>}
     </div>
   );
 }

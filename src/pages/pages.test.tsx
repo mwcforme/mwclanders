@@ -5,7 +5,7 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import { HelmetProvider } from "react-helmet-async";
+
 import NotFound from "@/pages/NotFound";
 import { LegalPage } from "@/pages/legal/LegalPage";
 import PrivacyPolicy from "@/pages/legal/PrivacyPolicy";
@@ -14,9 +14,9 @@ import TcpaDisclosure from "@/pages/legal/TcpaDisclosure";
 import PrescribingPolicy from "@/pages/legal/PrescribingPolicy";
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => (
-  <HelmetProvider>
+  
     <MemoryRouter>{children}</MemoryRouter>
-  </HelmetProvider>
+  
 );
 
 // ─── NotFound ─────────────────────────────────────────────────────────────────

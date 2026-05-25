@@ -6,15 +6,15 @@
 import { describe, it, expect, vi } from "vitest";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import { HelmetProvider } from "react-helmet-async";
+
 import { ServicesProvider } from "@/app/providers/ServicesProvider";
 
 const Wrap = ({ children }: { children: React.ReactNode }) => (
-  <HelmetProvider>
+  
     <MemoryRouter>
       <ServicesProvider>{children}</ServicesProvider>
     </MemoryRouter>
-  </HelmetProvider>
+  
 );
 
 // ─── TRTResults ───────────────────────────────────────────────────────────────

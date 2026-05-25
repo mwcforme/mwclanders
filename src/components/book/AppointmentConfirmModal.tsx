@@ -55,7 +55,7 @@ export function AppointmentConfirmModal({ open, onOpenChange, selectedSlot, full
             // hardcoded-color-allow-next-line
             border: "1px solid #EF4444",
             // hardcoded-color-allow-next-line
-            borderRadius: 8, color: "#B91C1C", fontSize: 13,
+            borderRadius: 8, color: "var(--c-error-on-light)", fontSize: 16, fontFamily: "Inter, sans-serif",
           }}>
             {submitError}
           </div>
