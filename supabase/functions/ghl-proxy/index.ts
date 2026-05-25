@@ -19,11 +19,12 @@ const ALLOW: { m: string; re: RegExp }[] = [
   { m: "POST", re: /^\/contacts\/[A-Za-z0-9_-]+\/tags$/ },
 ];
 
-// Paths where we must NOT inject locationId into the upstream body
-// (GHL contact update + tag endpoints reject extra fields).
+// Paths where we must NOT inject locationId into the upstream body or query.
+// GHL contact update, tag endpoints, and calendar free-slots reject extra fields.
 const NO_LOC_INJECT = [
   /^\/contacts\/[A-Za-z0-9_-]+$/,
   /^\/contacts\/[A-Za-z0-9_-]+\/tags$/,
+  /^\/calendars\/[A-Za-z0-9_-]+\/free-slots$/,
 ];
 
 interface ProxyRequest {
@@ -200,14 +201,14 @@ Deno.serve(async (req) => {
     if (k === "locationId") continue; // server-injected only
     search.set(k, String(v));
   }
-  if (method === "GET" && payload.injectLocationId !== false && !search.has("locationId")) search.set("locationId", locationId);
+  const skipLocInject = NO_LOC_INJECT.some((re) => re.test(cleanPath));
+  if (method === "GET" && !skipLocInject && payload.injectLocationId !== false && !search.has("locationId")) search.set("locationId", locationId);
 
   const url = `${GHL_API_BASE}${cleanPath}${search.toString() ? `?${search}` : ""}`;
 
   let outBody: string | undefined;
   if (method !== "GET" && method !== "DELETE") {
-    const skipLoc = NO_LOC_INJECT.some((re) => re.test(cleanPath));
-    outBody = JSON.stringify(skipLoc ? validated.body : { locationId, ...validated.body });
+    outBody = JSON.stringify(skipLocInject ? validated.body : { locationId, ...validated.body });
   }
 
   try {
