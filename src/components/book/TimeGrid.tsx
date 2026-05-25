@@ -128,11 +128,7 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
           </div>
         );
       })}
-      {/* Timezone note — supplementary copy, 13px acceptable per brief */}
-      {/* hardcoded-color-allow-next-line */}
-      <p style={{ fontSize: 13, color: "#6B7280", marginTop: 12, fontFamily: "Inter, sans-serif" }}>
-        All times shown in Eastern Time (ET)
-      </p>
+
     </div>
   );
 };
