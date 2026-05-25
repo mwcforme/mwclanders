@@ -1,53 +1,33 @@
-import { useEffect, useState } from "react";
+/**
+ * RequireAdmin — client-side UX gate for /admin/* routes.
+ * Checks sessionStorage for the shared password session.
+ * No Supabase auth dependency — simplified from OAuth flow.
+ */
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
-import { isAdminEmail } from "@/lib/admin/allowlist";
+import { isAdminUnlocked } from "@/pages/admin/AdminLogin";
 import { Loader2 } from "lucide-react";
 
 interface Props {
   children: React.ReactNode;
 }
 
-/**
- * Route guard for /admin/*.
- * onAuthStateChange fires immediately with the current session, so a single
- * subscription is enough — no need to also call getSession() (which raced
- * setState and caused a brief loader flash on sign-out).
- *
- * NOTE: this is a client-side gate for UX. The DB-side gate
- * (current_user_is_admin + RLS policies) is what actually enforces access.
- */
 export function RequireAdmin({ children }: Props) {
   const nav = useNavigate();
-  const [state, setState] = useState<"loading" | "ok">("loading");
 
   useEffect(() => {
-    // Temporary shared-password bypass
-    if (sessionStorage.getItem("mwc_admin_bypass_v1") === "ok") {
-      setState("ok");
-      return;
+    if (!isAdminUnlocked()) {
+      nav("/admin", { replace: true });
     }
-
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (!session) {
-        nav("/admin", { replace: true });
-        return;
-      }
-      if (!isAdminEmail(session.user.email)) {
-        nav("/admin?error=forbidden", { replace: true });
-        return;
-      }
-      setState("ok");
-    });
-    return () => sub.subscription.unsubscribe();
   }, [nav]);
 
-  if (state === "loading") {
+  if (!isAdminUnlocked()) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[var(--brand-navy-deep)] text-white">
         <Loader2 className="h-6 w-6 animate-spin" />
       </div>
     );
   }
+
   return <>{children}</>;
 }
