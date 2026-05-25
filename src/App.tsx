@@ -2,7 +2,7 @@ import { lazy, Suspense } from "react";
 import { PHONE } from "@/lib/constants";
 import { Component, type ReactNode } from "react";
 import { Toaster } from "@/components/ui/toaster";
-import { TooltipProvider } from "@/components/ui/tooltip";
+// TooltipProvider removed — no Tooltip components are used anywhere in the app
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ServicesProvider } from "@/app/providers/ServicesProvider";
@@ -165,7 +165,7 @@ class AppErrorBoundary extends Component<{ children: ReactNode }, { error: Error
 const App = () => (
   <AppErrorBoundary>
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
+      <>
         <Toaster />
         <BrowserRouter>
           <ServicesProvider>
@@ -240,7 +240,7 @@ const App = () => (
 
           </ServicesProvider>
         </BrowserRouter>
-      </TooltipProvider>
+      </>
     </QueryClientProvider>
   </AppErrorBoundary>
 );

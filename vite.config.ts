@@ -59,9 +59,8 @@ export default defineConfig(({ mode }) => ({
           // into the specific chunks that import them, rather than preloading eagerly.
           "vendor-ui": [
             // react-dialog removed: only used in lazy booking routes (BookSchedule2, GHLAccordionView)
-            // — it will tree-shake into those lazy chunks instead of the eager vendor-ui
+            // react-tooltip removed: TooltipProvider was unused (no Tooltip components exist in app)
             "@radix-ui/react-toast",
-            "@radix-ui/react-tooltip",
             "lucide-react",
           ],
           // State + query
