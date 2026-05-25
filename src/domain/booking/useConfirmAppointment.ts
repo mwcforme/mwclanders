@@ -24,7 +24,7 @@ export interface ConfirmInput {
   email?: string;
   phone?: string;
   source?: string;
-  /** Structured PHI-safe context — written to GHL contact custom fields only. */
+  /** Structured PHI-safe context - written to GHL contact custom fields only. */
   customFields?: MwcCustomFields;
 }
 
@@ -48,11 +48,39 @@ export interface ConfirmAppointmentController {
 
 const FAILED_INTENT_KEY = "mwc_booking_failed_intent_v1";
 
+/**
+ * Resolves (or creates) a GHL contact ID for the booking.
+ * Fast path: reuses storedContactId from the hero form and fires a
+ * fire-and-forget custom-fields update. Slow path: creates the contact.
+ */
+async function resolveContactId(
+  input: ConfirmInput,
+  storedContactId: string | undefined,
+): Promise<string> {
+  const payload = {
+    firstName: input.firstName || "Guest",
+    lastName: input.lastName || undefined,
+    email: input.email || undefined,
+    phone: input.phone || undefined,
+    source: input.source || "mwc-book-funnel",
+    customFields: input.customFields,
+  };
+  const { GhlProxyLeadSubmitter } = await import("@/services/impl/GhlProxyLeadSubmitter");
+  const submitter = new GhlProxyLeadSubmitter();
+  if (storedContactId) {
+    // Fire-and-forget custom fields update - don't block booking
+    void submitter.submitLead(payload).catch(() => { /* non-blocking */ });
+    return storedContactId;
+  }
+  const r = await submitter.submitLead(payload);
+  return r.contactId;
+}
+
 export function useConfirmAppointment(opts?: {
   onBooked?: (slotIso: string) => void;
 }): ConfirmAppointmentController {
   const { booking } = useServices();
-  // Stable ref for opts.onBooked — prevents `confirm` from being recreated on
+  // Stable ref for opts.onBooked - prevents `confirm` from being recreated on
   // every render when the caller doesn't memoize the opts object.
   const onBookedRef = useRef(opts?.onBooked);
   onBookedRef.current = opts?.onBooked;
@@ -115,45 +143,17 @@ export function useConfirmAppointment(opts?: {
       setStatus("submitting");
       setError(null);
 
-      // Hard timeout — confirm button can never hang longer than 12 seconds
+      // Hard timeout - confirm button can never hang longer than 12 seconds
       const confirmTimeout = window.setTimeout(() => {
         setStatus("error");
         setError("Something took too long. Please try again or call us.");
       }, 12000);
 
-      // Use stored contactId from hero form submit if available —
-      // avoids a redundant GHL upsert round-trip on every booking confirm.
+      // Resolve (or create) GHL contact — see resolveContactId() above.
       const storedContactId = useBookingStore.getState().identity?.ghlContactId;
-
       let contactId: string;
       try {
-        if (storedContactId) {
-          // Fast path: contact already exists, just update custom fields async
-          contactId = storedContactId;
-          // Fire-and-forget custom fields update — don’t block booking
-          void import("@/services/impl/GhlProxyLeadSubmitter").then(({ GhlProxyLeadSubmitter }) =>
-            new GhlProxyLeadSubmitter().submitLead({
-              firstName: input.firstName || "Guest",
-              lastName: input.lastName || undefined,
-              email: input.email || undefined,
-              phone: input.phone || undefined,
-              source: input.source || "mwc-book-funnel",
-              customFields: input.customFields,
-            })
-          ).catch(() => { /* non-blocking */ });
-        } else {
-          // Slow path: upsert contact first (guest/short-form users)
-          const { GhlProxyLeadSubmitter } = await import("@/services/impl/GhlProxyLeadSubmitter");
-          const r = await new GhlProxyLeadSubmitter().submitLead({
-            firstName: input.firstName || "Guest",
-            lastName: input.lastName || undefined,
-            email: input.email || undefined,
-            phone: input.phone || undefined,
-            source: input.source || "mwc-book-funnel",
-            customFields: input.customFields,
-          });
-          contactId = r.contactId;
-        }
+        contactId = await resolveContactId(input, storedContactId);
       } catch (e) {
         clearTimeout(confirmTimeout);
         const msg = (e as Error).message || "Booking failed. Please try another time.";
@@ -162,7 +162,7 @@ export function useConfirmAppointment(opts?: {
         return false;
       }
 
-      // Book the appointment — clinical detail lives on contact custom fields only.
+      // Book the appointment - clinical detail lives on contact custom fields only.
       try {
         await booking.bookAppointment({
           location: input.location,
@@ -205,7 +205,7 @@ export function useConfirmAppointment(opts?: {
         } catch {
           /* ignore */
         }
-        // Queue the booking offline — never lose a lead even if GHL is down
+        // Queue the booking offline - never lose a lead even if GHL is down
         const cal = CENTER_CALENDARS[input.location];
         if (cal && contactId) {
           enqueueBooking({
@@ -215,7 +215,7 @@ export function useConfirmAppointment(opts?: {
             calendarId: cal.calendarId,
             source: input.source || "booking-funnel",
           });
-          // Tell user they're confirmed — we'll sync in background
+          // Tell user they're confirmed - we'll sync in background
           setStatus("success");
           onBookedRef.current?.(input.slotIso);
           return true;
