@@ -135,9 +135,11 @@ export function useLeadSubmitController<TInput>(
     const parsed = opts.schema.safeParse(raw);
     if (!parsed.success) {
       const fe: Record<string, string> = {};
-      for (const issue of parsed.error.issues) {
+      const failure = parsed as { success: false; error: { issues: Array<{ path: (string|number)[]; message: string }> } };
+      for (const issue of failure.error.issues) {
         const key = issue.path[0];
         if (typeof key === "string" && !fe[key]) fe[key] = issue.message;
+
       }
       setFieldErrors(fe);
       setStatus("error");
