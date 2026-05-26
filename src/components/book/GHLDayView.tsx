@@ -5,6 +5,7 @@
  * Rendering is delegated to DayStrip, TimeGrid, and ConfirmDialog.
  */
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Lock } from "lucide-react";
 import { CENTER_CALENDARS, TIMEZONE, type LocationKey } from "@/lib/ghlCalendars";
 import {
   addDaysInTimeZone,
@@ -16,18 +17,8 @@ import { useConfirmAppointment } from "@/domain/booking/useConfirmAppointment";
 import { trackFunnelEvent } from "@/hooks/useAnalytics";
 import DayStrip from "./DayStrip";
 import TimeGrid from "./TimeGrid";
-// ConfirmDialog removed — slot tap confirms directly, no modal step
 
-// Brand tokens (confirm bar only — child components manage their own)
-// hardcoded-color-allow-next-line
-const INK    = "#FFFFFF";
-// hardcoded-color-allow-next-line
-const _MUTED  = "#8A96A8";
-// hardcoded-color-allow-next-line
-const LINE   = "rgba(255,255,255,0.08)";
-// hardcoded-color-allow-next-line
-const SURFACE = "#0D1B3E";
-const ORANGE  = "var(--brand-cta)";
+const ORANGE = "var(--brand-cta)";
 
 // ─── Supabase lazy import ─────────────────────────────────────────────────────
 
@@ -95,12 +86,15 @@ const dropPastSlots = (day: Date, slots: string[]): string[] => {
   });
 };
 
-const _fmtTimeParts = (iso: string): { time: string; ampm: string } => {
-  const s = new Date(iso).toLocaleTimeString("en-US", {
-    hour: "numeric", minute: "2-digit", hour12: true, timeZone: TIMEZONE,
-  });
-  const [time, ampm] = s.split(" ");
-  return { time, ampm };
+// ─── Confirm button label ─────────────────────────────────────────────────────
+
+const fmtConfirmLabel = (iso: string): string => {
+  const d = new Date(iso);
+  const weekday = d.toLocaleDateString("en-US", { weekday: "short", timeZone: TIMEZONE });
+  const month   = d.toLocaleDateString("en-US", { month: "short", timeZone: TIMEZONE });
+  const day     = d.toLocaleDateString("en-US", { day: "numeric", timeZone: TIMEZONE });
+  const time    = d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true, timeZone: TIMEZONE });
+  return `Lock In ${weekday}, ${month} ${day} at ${time}`;
 };
 
 // ─── Props ────────────────────────────────────────────────────────────────────
@@ -131,14 +125,11 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
   const [loadError, setLoadError]     = useState<string | null>(null);
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
-  // modalOpen removed — no confirmation dialog
   const [refreshNonce, _setRefreshNonce] = useState(0);
 
   const confirmCtl = useConfirmAppointment({
     onBooked: (slot) => {
       trackFunnelEvent("booking_completed", { location });
-      // Fire Schedule CAPI event with value — $500 = conservative estimated revenue
-      // per booked consult (accounts for no-shows). Signals booking quality to Meta + Google.
       void import("@/lib/capi").then(({ trackConversion }) =>
         trackConversion("Schedule", {
           custom_data: {
@@ -160,7 +151,6 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
 
   const cal = CENTER_CALENDARS[location];
 
-  // Visible window: 7 operating days from weekStart (Sundays excluded).
   const days = useMemo(() => {
     return Array.from({ length: 7 })
       .map((_, i) => addDaysInTimeZone(weekStart, i, TIMEZONE))
@@ -168,7 +158,6 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
       .filter((d) => !isSundayInTimeZone(d, TIMEZONE));
   }, [weekStart, today]);
 
-  // Slot loading
   useEffect(() => {
     let cancelled = false;
     const start = new Date(weekStart);
@@ -191,8 +180,7 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
             if (slots.length > 0) out[key] = slots;
           });
           setSlotsByDay(out);
-          const now = new Date();
-          lastUpdatedRef.current = now;
+          lastUpdatedRef.current = new Date();
           if (isInitial) {
             const firstWith = days.find((d) => out[ymd(d)]?.length);
             setSelectedDay(firstWith ? ymd(firstWith) : null);
@@ -223,7 +211,6 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [weekStart, location, refreshNonce]);
 
-  // Focus the confirm button when a slot is picked (a11y + CRO).
   useEffect(() => {
     if (!selectedSlot) return;
     const btn = confirmBtnRef.current;
@@ -236,7 +223,6 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
     }
   }, [selectedSlot]);
 
-  // Earliest recommended slots (for onNextAvailable callback).
   const recommendedSlots = useMemo(() => {
     const all: { iso: string }[] = [];
     days.forEach((d) => {
@@ -255,17 +241,10 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
   const times      = selectedDay ? slotsByDay[selectedDay] || [] : [];
   const canConfirm = Boolean(selectedSlot);
   const prevDisabled = weekStart <= today;
-  const _fullName   = [firstName, lastName].filter(Boolean).join(" ").trim();
 
   const handleFinalConfirm = async () => {
     if (!selectedSlot) return;
-    // If no phone, we're in the product funnel (contact captured later).
-    // Fire onBooked immediately with the selected slot — skip GHL API.
-    if (!phone) {
-      onBooked?.(selectedSlot);
-      return;
-    }
-    // Normal booking flow — confirm in GHL first.
+    if (!phone) { onBooked?.(selectedSlot); return; }
     await confirmCtl.confirm({
       slotIso: selectedSlot, location, firstName, lastName, email, phone, source, customFields,
     });
@@ -273,15 +252,16 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
 
   return (
     <>
+      {/* White card — matches mockup exactly */}
       <div style={{
+        background: "#FFFFFF",
         // hardcoded-color-allow-next-line
-        background: "#0D1B3E",
-        // hardcoded-color-allow-next-line
-        border: "1px solid rgba(255,255,255,0.08)",
+        border: "1px solid rgba(255,255,255,0.15)",
         borderRadius: 16,
-        overflow: "hidden", color: INK, fontFamily: "Montserrat, Inter, system-ui, sans-serif",
+        overflow: "hidden",
+        fontFamily: "Montserrat, Inter, system-ui, sans-serif",
         // hardcoded-color-allow-next-line
-        boxShadow: "0 20px 60px -10px rgba(0,0,0,0.60), 0 0 0 1px rgba(255,255,255,0.04) inset",
+        boxShadow: "0 20px 60px -10px rgba(0,0,0,0.40)",
       }}>
         <DayStrip
           days={days}
@@ -306,21 +286,12 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
         />
 
         {/* Confirm bar */}
-        <div style={{ borderTop: LINE, padding: "16px 20px",
+        <div style={{
           // hardcoded-color-allow-next-line
-          background: "#0A1630",
+          borderTop: "1px solid #F3F4F6",
+          padding: "16px 20px",
+          background: "#FFFFFF",
         }}>
-          {/* Selected slot recap */}
-          {selectedSlot && (
-            <p style={{
-              fontSize: 15, color: "rgba(255,255,255,0.85)", fontFamily: "Montserrat, Inter, sans-serif",
-              marginBottom: 12, textAlign: "center", fontWeight: 600, lineHeight: 1.4,
-            }}>
-              {new Date(selectedSlot).toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric", timeZone: TIMEZONE })}
-              {" · "}
-              {new Date(selectedSlot).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true, timeZone: TIMEZONE })}
-            </p>
-          )}
           {canConfirm ? (
             <button
               ref={confirmBtnRef}
@@ -331,24 +302,29 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
                 background: ORANGE,
                 border: "none",
                 color: "#fff",
-                borderRadius: 12, fontSize: 15, fontWeight: 700,
-                letterSpacing: "0.08em",
+                borderRadius: 12,
+                fontSize: 15, fontWeight: 700,
+                letterSpacing: "0.06em",
                 textTransform: "uppercase",
                 cursor: "pointer",
                 fontFamily: "Montserrat, Inter, sans-serif",
                 // hardcoded-color-allow-next-line
                 boxShadow: "0 10px 24px -8px rgba(232,103,10,0.55)",
                 transition: "all 150ms ease",
+                display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
               }}
             >
-              Confirm My Appointment
+              <Lock size={15} strokeWidth={2.5} aria-hidden />
+              {selectedSlot ? fmtConfirmLabel(selectedSlot) : "Confirm My Appointment"} →
             </button>
           ) : (
             <p style={{
               textAlign: "center",
               fontFamily: "Montserrat, Inter, sans-serif",
               fontSize: 13, fontWeight: 700, letterSpacing: "0.10em",
-              textTransform: "uppercase", color: "rgba(255,255,255,0.35)",
+              textTransform: "uppercase",
+              // hardcoded-color-allow-next-line
+              color: "#9CA3AF",
               margin: "8px 0",
             }}>
               Select a time to continue
@@ -356,8 +332,6 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
           )}
         </div>
       </div>
-
-      {/* ConfirmDialog removed — booking fires directly on button tap */}
     </>
   );
 };

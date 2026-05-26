@@ -171,37 +171,31 @@ const BookSchedule = () => {
 
         </div>
 
-        {/* ── Compact location line ────────────────────────────── */}
-        {locationData && (
-          <div className="mx-auto w-full" style={{ maxWidth: 720 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 4px 4px" }}>
-              <span style={{ fontFamily: "Montserrat, Inter, sans-serif", fontSize: 14, color: "rgba(255,255,255,0.65)", fontWeight: 500 }}>
-                {locationData.name.replace("Men's Wellness Centers, ", "")}
-              </span>
-              <span style={{ color: "rgba(255,255,255,0.25)", fontSize: 12 }}>·</span>
-              <button
-                type="button"
-                onClick={() => navigate("/book/location")}
-                style={{ fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 700, color: "var(--brand-cta)", background: "none", border: "none", cursor: "pointer", padding: 0 }}
-              >
-                Change
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* ── Identity zone (heading + trust line only — 2 text nodes max) ──── */}
-        {/* DO NOT add instruction copy here — the day-picker grid is self-evident. */}
+        {/* ── Heading + subtitle block ─────────────────────────── */}
         <section className="mx-auto" style={{ maxWidth: 720 }}>
           <h1 style={{
             fontFamily: "Oswald, sans-serif", fontWeight: 700,
-            fontSize: "clamp(22px, 4vw, 32px)", lineHeight: 1.1,
-            letterSpacing: "0.02em", marginBottom: 6, color: "var(--c-text-on-dark)",
+            fontSize: "clamp(28px, 5vw, 40px)", lineHeight: 1.05,
+            letterSpacing: "0.02em", marginBottom: 8, color: "#FFFFFF",
             textTransform: "uppercase",
           }}>
             {heading}
           </h1>
-
+          {locationData && (
+            <p style={{ fontFamily: "Inter, sans-serif", fontSize: 15, fontWeight: 500, color: "rgba(255,255,255,0.75)", marginBottom: 2, lineHeight: 1.5 }}>
+              {locationData.name.replace("Men's Wellness Centers, ", "")}.{" "}
+              <button
+                type="button"
+                onClick={() => navigate("/book/location")}
+                style={{ fontFamily: "Inter, sans-serif", fontSize: 15, fontWeight: 700, color: "var(--brand-cta)", background: "none", border: "none", cursor: "pointer", padding: 0, textDecoration: "underline", textUnderlineOffset: 3 }}
+              >
+                Change
+              </button>
+            </p>
+          )}
+          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 15, fontWeight: 500, color: "rgba(255,255,255,0.65)", marginBottom: 0 }}>
+            60-minute consult. No charge today.
+          </p>
         </section>
 
         {/* ── Next available bar ─────────────────────────────────────────────── */}
@@ -211,7 +205,7 @@ const BookSchedule = () => {
               style={{
                 display: "flex", alignItems: "center", justifyContent: "space-between",
                 // hardcoded-color-allow-next-line
-                background: "rgba(255,255,255,0.06)",
+                background: "rgba(11,16,41,0.70)",
                 // hardcoded-color-allow-next-line
                 border: "1px solid rgba(255,255,255,0.10)",
                 borderRadius: 12, padding: "14px 18px",
@@ -259,12 +253,14 @@ const BookSchedule = () => {
           ) : (
             /* No location set — show center picker inline */
             <div style={{
+              background: "#FFFFFF",
               // hardcoded-color-allow-next-line
-              background: "#0D1B3E",
+              border: "1px solid #E5E7EB",
+              borderRadius: 16, padding: 20, fontFamily: "Inter, sans-serif",
               // hardcoded-color-allow-next-line
-              border: "1px solid rgba(255,255,255,0.08)",
-              borderRadius: 12, padding: 20, fontFamily: "Inter, sans-serif" }}>
-              <div style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: 700, marginBottom: 12 }}>
+              boxShadow: "0 20px 60px -10px rgba(0,0,0,0.40)",
+            }}>
+              <div style={{ fontSize: 12, color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 700, marginBottom: 12 }}>
                 Choose your center
               </div>
               <div className="grid gap-2">
@@ -274,12 +270,12 @@ const BookSchedule = () => {
                     type="button"
                     onClick={() => setLocation(c.key)}
                     style={{
-                      padding: "14px 16px", borderRadius: 8,
+                      padding: "14px 16px", borderRadius: 10,
                       // hardcoded-color-allow-next-line
-                      border: "1px solid rgba(255,255,255,0.10)",
+                      border: "1.5px solid #D1D5DB",
+                      background: "#FFFFFF",
                       // hardcoded-color-allow-next-line
-                      background: "rgba(255,255,255,0.06)",
-                      color: "rgba(255,255,255,0.90)", fontSize: 16, fontWeight: 600,
+                      color: "#0B1029", fontSize: 16, fontWeight: 600,
                       textAlign: "left", cursor: "pointer",
                       fontFamily: "Inter, sans-serif",
                     }}
@@ -298,11 +294,22 @@ const BookSchedule = () => {
 
 
 
-        {/* ── Help line ──────────────────────────────────────────────────── */}
-        <div className="mx-auto text-center" style={{ maxWidth: 720, color: "var(--c-text-on-dark)", fontSize: 16, fontFamily: "Inter, sans-serif", fontWeight: 500 }}>
-          Need help?{" "}
-          <a href={PHONE.tel} style={{ color: "var(--c-text-on-dark)", textDecoration: "underline", fontWeight: 600 }}>
-            Call {PHONE.display}
+        {/* ── Help bar ──────────────────────────────────────────────────── */}
+        <div className="mx-auto w-full" style={{ maxWidth: 720 }}>
+          <a
+            href={PHONE.tel}
+            style={{
+              display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+              minHeight: 52, borderRadius: 12,
+              // hardcoded-color-allow-next-line
+              background: "rgba(255,255,255,0.05)",
+              // hardcoded-color-allow-next-line
+              border: "1px solid rgba(255,255,255,0.10)",
+              fontFamily: "Inter, sans-serif", fontSize: 15, fontWeight: 600,
+              color: "rgba(255,255,255,0.75)", textDecoration: "none",
+            }}
+          >
+            Need help? Call {PHONE.display}
           </a>
         </div>
       </div>
