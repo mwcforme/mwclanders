@@ -1,11 +1,15 @@
 /* Fonts loaded via non-blocking <link> in index.html — @import removed to eliminate render-blocking request */
+
+/* MWC Locked overlay — non-destructive presentation refresh for /book/schedule
+   and /book/confirmed. Matches https://mwclocked.pplx.app.
+   IMPORTANT: This @import MUST stay above @tailwind directives —
+   CSS @import rules must precede all other rules per CSS spec, otherwise
+   PostCSS silently drops them. */
+@import "./styles/mwc-locked-overlay.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* MWC Locked overlay — non-destructive presentation refresh for /book/schedule
-   and /book/confirmed. Matches https://mwclocked.pplx.app. */
-@import "./styles/mwc-locked-overlay.css";
 
 @layer base {
   :root {
