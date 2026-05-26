@@ -232,7 +232,7 @@ body[data-page="confirmed"] a:focus-visible {
 
 /* Mobile: larger time text to match mockup */
 .mwc-time-slot-btn {
-  min-height: 62px;
+  min-height: 68px;
 }
 .mwc-time-slot-time {
   font-size: 24px !important;

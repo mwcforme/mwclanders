@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Lock as LockIcon } from "lucide-react";
 import BookLayout from "@/components/book/BookLayout";
 import GHLDayView from "@/components/book/GHLDayView";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
@@ -78,36 +78,43 @@ function ScheduleHeading({
 function NextAvailableBanner({ label, onLockIn }: { label: string; onLockIn: () => void }) {
   return (
     <div style={{ maxWidth: 720, width: "100%", margin: "0 auto" }}>
-      <div style={{
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-        background: COLORS.bannerBg, border: `1px solid ${COLORS.glassBorder}`,
-        borderRadius: 12, padding: "14px 18px",
-        boxShadow: "0 2px 16px rgba(0,0,0,0.30)",
-      }}>
+      {/* Mockup: stacked layout, banner is fully clickable, ~119px tall */}
+      <button
+        type="button"
+        onClick={onLockIn}
+        style={{
+          width: "100%",
+          display: "flex", flexDirection: "column", alignItems: "flex-start",
+          gap: 14,
+          background: COLORS.bannerBg, border: `1px solid ${COLORS.glassBorder}`,
+          borderRadius: 12, padding: "20px 20px",
+          boxShadow: "0 2px 16px rgba(0,0,0,0.30)",
+          cursor: "pointer", textAlign: "left",
+        }}
+      >
+        {/* Top row: dot + next available text */}
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <span style={{
             width: 8, height: 8, borderRadius: "50%",
             background: COLORS.orange, flexShrink: 0,
             animation: "pulse 2s cubic-bezier(.4,0,.6,1) infinite",
           }} />
-          {/* Mockup: 17px weight 600 */}
           <span style={{ fontFamily: FONTS.ui, fontSize: 17, color: "#fff", fontWeight: 600 }}>
             <strong>Next available:</strong> {label}
           </span>
         </div>
-        <button
-          type="button"
-          onClick={onLockIn}
-          style={{
+        {/* Bottom row: LOCK IN → with lock icon — matches mockup */}
+        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+          <LockIcon size={15} strokeWidth={2.5} style={{ color: "#C34A09" }} aria-hidden />
+          <span style={{
             fontFamily: FONTS.ui, fontSize: 17, fontWeight: 700,
             // hardcoded-color-allow-next-line — mockup: rgb(195,74,9)
-            color: "#C34A09", background: "none", border: "none",
-            cursor: "pointer", padding: 0, whiteSpace: "nowrap", letterSpacing: "0.06em",
-          }}
-        >
-          LOCK IN →
-        </button>
-      </div>
+            color: "#C34A09", letterSpacing: "0.06em",
+          }}>
+            LOCK IN →
+          </span>
+        </div>
+      </button>
     </div>
   );
 }
@@ -263,7 +270,7 @@ const BookSchedule = () => {
   return (
     <>
       <BookLayout page="schedule" variant="confirmation" title="Book Your Physician Assessment | Men's Wellness Centers">
-        <div style={{ display: "flex", flexDirection: "column", gap: 24, padding: "40px 16px 96px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 24, padding: "20px 16px 96px" }}>
 
           <div style={{ maxWidth: 720, width: "100%", margin: "0 auto" }}>
             <BackButton onClick={() => navigate(-1)} />

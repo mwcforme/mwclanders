@@ -318,17 +318,28 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
               {selectedSlot ? fmtConfirmLabel(selectedSlot) : "Confirm My Appointment"} →
             </button>
           ) : (
-            <p style={{
-              textAlign: "center",
-              fontFamily: "Montserrat, Inter, sans-serif",
-              fontSize: 13, fontWeight: 700, letterSpacing: "0.10em",
-              textTransform: "uppercase",
-              // hardcoded-color-allow-next-line
-              color: "#9CA3AF",
-              margin: "8px 0",
-            }}>
-              Select a time to continue
-            </p>
+            /* Inactive state — dark navy button matching mwclocked mockup */
+            <button
+              type="button"
+              disabled
+              aria-disabled="true"
+              style={{
+                width: "100%", minHeight: 56,
+                // hardcoded-color-allow-next-line
+                background: "#0B1029",
+                border: "none",
+                color: "#FFFFFF",
+                borderRadius: 12,
+                fontSize: 15, fontWeight: 700,
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                cursor: "default",
+                fontFamily: "Montserrat, Inter, sans-serif",
+                opacity: 0.55,
+              }}
+            >
+              Select a Time
+            </button>
           )}
         </div>
       </div>
