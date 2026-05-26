@@ -220,7 +220,30 @@ const BookSchedule = () => {
               </div>
               <button
                 type="button"
-                onClick={() => document.querySelector<HTMLElement>('[aria-label="Pick a date and time"]')?.scrollIntoView({ behavior: "smooth", block: "start" })}
+                onClick={() => {
+                  // 1. Tell GHLDayView which slot to select (window custom event —
+                  //    avoids prop drilling / refs across the BookingErrorBoundary).
+                  if (nextAvailable) {
+                    window.dispatchEvent(
+                      new CustomEvent("mwc:select-slot", { detail: { iso: nextAvailable } })
+                    );
+                  }
+                  // 2. Scroll the matching time chip into view after React commits.
+                  //    Falls back to scrolling the calendar card if the chip isn't
+                  //    found (slots not yet rendered, edge case).
+                  window.requestAnimationFrame(() => {
+                    const chip = nextAvailable
+                      ? document.querySelector<HTMLElement>(`[data-slot-iso="${nextAvailable}"]`)
+                      : null;
+                    if (chip) {
+                      chip.scrollIntoView({ behavior: "smooth", block: "center" });
+                    } else {
+                      document
+                        .querySelector<HTMLElement>('[aria-label="Pick a date and time"]')
+                        ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }
+                  });
+                }}
                 style={{ fontFamily: "Montserrat, Inter, sans-serif", fontSize: 13, fontWeight: 800, color: "var(--brand-cta)", background: "none", border: "none", cursor: "pointer", padding: 0, whiteSpace: "nowrap", letterSpacing: "0.06em" }}
               >
                 LOCK IN →

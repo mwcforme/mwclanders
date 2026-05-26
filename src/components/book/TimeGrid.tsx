@@ -107,8 +107,14 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
             }}>
               {GROUP_LABELS[period]}
             </p>
-            {/* Slot grid — 4 columns to match mockup */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8 }}>
+            {/* Slot grid — fixed 4 columns, uniform chip width regardless of
+                row count or active state. minmax(0, 1fr) prevents content from
+                stretching a column wider than its siblings. */}
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
+              gap: 8,
+            }}>
               {slots.map((iso) => {
                 const active = iso === selectedSlot;
                 const { time, ampm } = fmtTimeParts(iso);
@@ -116,30 +122,36 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
                   <button
                     key={iso}
                     type="button"
+                    data-slot-iso={iso}
                     aria-pressed={active}
                     onClick={() => onSlotSelect(iso)}
                     style={{
+                      width: "100%",          // fill the 1fr column — no content sizing
+                      minWidth: 0,            // allow ellipsis if ever needed
                       background: active ? ORANGE : "#FFFFFF",
                       border: active
                         ? `2px solid ${ORANGE}`
                         // hardcoded-color-allow-next-line
-                        // hardcoded-color-allow-next-line
                         : "1.5px solid #0B1029",
                       borderRadius: 10,
-                      padding: "0 10px",
-                      display: "flex", alignItems: "center",
-                      justifyContent: active ? "space-between" : "flex-start",
-                      gap: 3,
+                      padding: "0 8px",
+                      display: "flex",
+                      alignItems: "center",
+                      // Always center content so chip width stays stable when
+                      // the active arrow appears/disappears.
+                      justifyContent: "center",
+                      gap: 6,
                       color: active ? "#FFFFFF" : INK,
                       cursor: "pointer",
-                      transition: "all 150ms ease",
+                      transition: "background 150ms ease, border-color 150ms ease, box-shadow 150ms ease",
                       whiteSpace: "nowrap",
                       minHeight: 58,
+                      boxSizing: "border-box",
                       // hardcoded-color-allow-next-line
                       boxShadow: active ? "0 8px 20px -6px rgba(232,103,10,0.55)" : "0 1px 2px rgba(0,0,0,0.04)",
                     }}
                   >
-                    <div style={{ display: "flex", alignItems: "baseline", gap: 2 }}>
+                    <span style={{ display: "flex", alignItems: "baseline", gap: 2 }}>
                       <span style={{
                         fontFamily: "Montserrat, Inter, sans-serif",
                         fontWeight: 700, fontSize: 15, letterSpacing: "-0.01em",
@@ -153,8 +165,8 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
                       }}>
                         {ampm}
                       </span>
-                    </div>
-                    {active && <ArrowRight size={14} strokeWidth={2.5} aria-hidden />}
+                    </span>
+                    {active && <ArrowRight size={14} strokeWidth={2.5} aria-hidden style={{ flexShrink: 0 }} />}
                   </button>
                 );
               })}

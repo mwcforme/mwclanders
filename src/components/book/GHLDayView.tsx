@@ -223,6 +223,28 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
     }
   }, [selectedSlot]);
 
+  // External slot selection (e.g. "Next available → LOCK IN" banner in BookSchedule).
+  // Listens for a window-level custom event so we don't need a ref or prop drilling.
+  useEffect(() => {
+    const handler = (evt: Event) => {
+      const detail = (evt as CustomEvent<{ iso?: string }>).detail;
+      const iso = detail?.iso;
+      if (!iso) return;
+      // Derive the day key (YYYY-MM-DD in clinic timezone) from the ISO.
+      const d = new Date(iso);
+      const dayKey = new Intl.DateTimeFormat("en-CA", {
+        timeZone: TIMEZONE, year: "numeric", month: "2-digit", day: "2-digit",
+      }).format(d);
+      // Only commit if this slot is actually loaded and available.
+      const daySlots = slotsByDay[dayKey];
+      if (!daySlots || !daySlots.includes(iso)) return;
+      setSelectedDay(dayKey);
+      setSelectedSlot(iso);
+    };
+    window.addEventListener("mwc:select-slot", handler as EventListener);
+    return () => window.removeEventListener("mwc:select-slot", handler as EventListener);
+  }, [slotsByDay]);
+
   const recommendedSlots = useMemo(() => {
     const all: { iso: string }[] = [];
     days.forEach((d) => {
