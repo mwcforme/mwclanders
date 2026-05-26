@@ -142,19 +142,19 @@ function AppointmentTicket({ apptDate, center }: { apptDate: ApptDate; center: L
 
 function CalendarButtons({ calLinks }: { calLinks: CalLinks }) {
   return (
-    <div style={{ display: "flex", flexDirection: "row", gap: 12, marginBottom: 8 }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 8 }}>
       <a
         href={calLinks.google} target="_blank" rel="noopener noreferrer"
         aria-label="Add to Google Calendar (opens in new tab)"
-        style={{ ...CAL_BUTTON_BASE, flex: 1, background: COLORS.orange, boxShadow: COLORS.orangeShadow, color: "#FFFFFF", fontSize: 13 }}
+        style={{ ...CAL_BUTTON_BASE, background: COLORS.orange, boxShadow: COLORS.orangeShadow, color: "#FFFFFF", fontSize: 17 }}
       >
-        <Calendar size={16} strokeWidth={2} aria-hidden /> Add to Google Calendar
+        <Calendar size={18} strokeWidth={2} aria-hidden /> Add to Google Calendar
       </a>
       <a
         href={calLinks.ics} download="mwc-appointment.ics"
-        style={{ ...CAL_BUTTON_BASE, flex: 1, background: APPLE_BTN, color: "#FFFFFF", fontSize: 13 }}
+        style={{ ...CAL_BUTTON_BASE, background: APPLE_BTN, color: "#FFFFFF", fontSize: 17 }}
       >
-        <Calendar size={16} strokeWidth={2} aria-hidden /> Apple or Outlook
+        <Calendar size={18} strokeWidth={2} aria-hidden /> Apple or Outlook
       </a>
     </div>
   );
@@ -174,14 +174,17 @@ export function BookConfirmedHero({ firstName, apptDate, calLinks, center, check
             <CelebrationBurst active={checkDrawn} />
           </div>
           {/* "APPOINTMENT CONFIRMED" — green rgb(16,183,127) */}
-          <p style={{ fontSize: 13, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: GREEN, marginBottom: 12 }}>
+          {/* Mockup: 17px weight 700 */}
+          <p style={{ fontSize: 17, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: GREEN, marginBottom: 12 }}>
             Appointment Confirmed
           </p>
-          <h1 style={{ fontFamily: FONTS.display, fontWeight: 700, fontSize: "clamp(28px, 6vw, 42px)", color: "#FFFFFF", lineHeight: 1.05, marginBottom: 10, textTransform: "uppercase" }}>
+          {/* Mockup: 34px weight 700 */}
+          <h1 style={{ fontFamily: FONTS.display, fontWeight: 700, fontSize: 34, color: "#FFFFFF", lineHeight: 1.05, marginBottom: 10, textTransform: "uppercase" }}>
             {firstName ? `You're booked, ${firstName}.` : "You're booked."}
           </h1>
           {/* Subtitle — rgb(203,213,225) */}
-          <p style={{ fontSize: 16, fontWeight: 400, color: SUBTITLE, lineHeight: 1.6 }}>
+          {/* Mockup: 19.125px weight 400 */}
+          <p style={{ fontSize: 19, fontWeight: 400, color: SUBTITLE, lineHeight: 1.6 }}>
             Your provider is reserved. Here's everything you need.
           </p>
         </div>

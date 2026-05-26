@@ -43,7 +43,7 @@ function ScheduleHeading({
     <section style={{ maxWidth: 720, width: "100%", margin: "0 auto" }}>
       <h1 style={{
         fontFamily: FONTS.display, fontWeight: 700,
-        fontSize: "clamp(28px, 5vw, 40px)", lineHeight: 1.05,
+        fontSize: 34, lineHeight: 1.05,
         letterSpacing: "0.02em", marginBottom: 8,
         color: "#FFFFFF", textTransform: "uppercase",
       }}>
@@ -51,13 +51,13 @@ function ScheduleHeading({
       </h1>
 
       {locationName && (
-        <p style={{ fontFamily: FONTS.body, fontSize: 15, fontWeight: 500, color: COLORS.textSubtle, marginBottom: 2, lineHeight: 1.5 }}>
+        <p style={{ fontFamily: FONTS.body, fontSize: 19.125, fontWeight: 400, color: "#FFFFFF", marginBottom: 2, lineHeight: 1.5 }}>
           {locationName}.{" "}
           <button
             type="button"
             onClick={onChangeLocation}
             style={{
-              fontFamily: FONTS.body, fontSize: 15, fontWeight: 700,
+              fontFamily: FONTS.body, fontSize: 19.125, fontWeight: 400,
               color: COLORS.orange, background: "none", border: "none",
               cursor: "pointer", padding: 0,
               textDecoration: "underline", textUnderlineOffset: 3,
@@ -68,7 +68,7 @@ function ScheduleHeading({
         </p>
       )}
 
-      <p style={{ fontFamily: FONTS.body, fontSize: 15, fontWeight: 500, color: COLORS.textMuted, marginBottom: 0 }}>
+      <p style={{ fontFamily: FONTS.body, fontSize: 17, fontWeight: 400, color: "#CBD5E1", marginBottom: 0 }}>
         60-minute consult. No charge today.
       </p>
     </section>
@@ -90,7 +90,8 @@ function NextAvailableBanner({ label, onLockIn }: { label: string; onLockIn: () 
             background: COLORS.orange, flexShrink: 0,
             animation: "pulse 2s cubic-bezier(.4,0,.6,1) infinite",
           }} />
-          <span style={{ fontFamily: FONTS.ui, fontSize: 14, color: "#fff", fontWeight: 600 }}>
+          {/* Mockup: 17px weight 600 */}
+          <span style={{ fontFamily: FONTS.ui, fontSize: 17, color: "#fff", fontWeight: 600 }}>
             <strong>Next available:</strong> {label}
           </span>
         </div>
@@ -98,8 +99,9 @@ function NextAvailableBanner({ label, onLockIn }: { label: string; onLockIn: () 
           type="button"
           onClick={onLockIn}
           style={{
-            fontFamily: FONTS.ui, fontSize: 13, fontWeight: 800,
-            color: COLORS.orange, background: "none", border: "none",
+            fontFamily: FONTS.ui, fontSize: 17, fontWeight: 700,
+            // hardcoded-color-allow-next-line — mockup: rgb(195,74,9)
+            color: "#C34A09", background: "none", border: "none",
             cursor: "pointer", padding: 0, whiteSpace: "nowrap", letterSpacing: "0.06em",
           }}
         >
@@ -189,8 +191,8 @@ function HelpBar() {
           display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
           minHeight: 52, borderRadius: 12,
           background: COLORS.glassBg, border: `1px solid ${COLORS.glassBorder}`,
-          fontFamily: FONTS.body, fontSize: 15, fontWeight: 600,
-          color: COLORS.textSubtle, textDecoration: "none",
+          fontFamily: FONTS.body, fontSize: 19.125, fontWeight: 600,
+          color: "#FFFFFF", textDecoration: "none",
         }}
       >
         Need help? Call {PHONE.display}

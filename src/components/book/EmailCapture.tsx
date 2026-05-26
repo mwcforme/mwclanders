@@ -38,8 +38,9 @@ export function EmailCapture({ contactId, onComplete }: Props) {
   return (
     <form onSubmit={handleSubmit} noValidate style={{ display: "flex", flexDirection: "column", gap: 10 }}>
       {/* "Your email address" label — rgb(10,15,41) weight 600 */}
+      {/* Label: 17px weight 600 per mockup */}
       <label htmlFor="email-capture-input" style={{
-        fontSize: 14, fontWeight: 600,
+        fontSize: 17, fontWeight: 600,
         // hardcoded-color-allow-next-line
         color: "#0A0F29", fontFamily: "Inter, sans-serif",
       }}>
@@ -63,7 +64,7 @@ export function EmailCapture({ contactId, onComplete }: Props) {
           background: "#FFFFFF",
           // hardcoded-color-allow-next-line
           color: "#0A0F29",
-          fontSize: 16, fontFamily: "Inter, sans-serif", padding: "0 16px", outline: "none",
+          fontSize: 17, fontFamily: "Inter, sans-serif", padding: "0 16px", outline: "none",
         }}
       />
       {/* "SEND TO MY EMAIL" button — orange full-width uppercase */}
@@ -75,7 +76,7 @@ export function EmailCapture({ contactId, onComplete }: Props) {
           background: "var(--brand-cta)", color: "#FFFFFF",
           border: "none", borderRadius: 10,
           fontFamily: "Montserrat, Inter, sans-serif",
-          fontSize: 15, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase",
+          fontSize: 17, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase",
           cursor: loading ? "not-allowed" : "pointer",
           display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
           // hardcoded-color-allow-next-line
