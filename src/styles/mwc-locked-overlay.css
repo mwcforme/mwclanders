@@ -1,0 +1,250 @@
+/* =============================================================================
+   MWC Locked overlay — non-destructive presentation layer for /book/schedule
+   and /book/confirmed. Matches https://mwclocked.pplx.app design language.
+
+   IMPORTANT: This file uses high-specificity rules and `!important` because the
+   underlying booking components use inline styles. We do not touch booking
+   business logic, form fields, validation, or DOM structure.
+
+   Targeted via `body[data-page="schedule"]` and `body[data-page="confirmed"]`
+   set by BookLayout. Safe to remove without breaking the booking flow.
+   ============================================================================= */
+
+/* -------- Shared design tokens (mwclocked) ------------------------------ */
+:root {
+  --mwc-locked-bg:           #0B1029;  /* Midnight Navy */
+  --mwc-locked-bg-elevated:  #11173A;  /* Subtle panel for vignette */
+  --mwc-locked-panel:        #FFFFFF;
+  --mwc-locked-ink:          #0B1029;
+  --mwc-locked-ink-muted:    #4B5363;
+  --mwc-locked-line:         #E6E8EE;
+  --mwc-locked-accent:       #E8670A;  /* Brand Orange */
+  --mwc-locked-accent-hover: #C2410C;
+  --mwc-locked-on-accent:    #FFFFFF;  /* white on orange — brand standard */
+  --mwc-locked-radius:       16px;
+  --mwc-locked-radius-sm:    10px;
+  --mwc-locked-shadow:       0 20px 60px -10px rgba(0,0,0,0.45);
+  --mwc-locked-shadow-sm:    0 1px 2px rgba(0,0,0,0.04);
+  --mwc-locked-font-display: "Oswald", "Bebas Neue", sans-serif;
+  --mwc-locked-font-body:    "Montserrat", "Inter", system-ui, sans-serif;
+}
+
+/* =============================================================================
+   1. CANVAS — Dark navy vignette on both pages
+   ============================================================================= */
+body[data-page="schedule"],
+body[data-page="confirmed"] {
+  background: var(--mwc-locked-bg) !important;
+  font-family: var(--mwc-locked-font-body) !important;
+}
+
+/* Subtle vignette behind the white card so the canvas reads premium, not flat */
+body[data-page="schedule"]::before,
+body[data-page="confirmed"]::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%,  rgba(232,103,10,0.05) 0%, transparent 60%),
+    radial-gradient(ellipse 90% 60% at 50% 100%, rgba(11,16,41,1) 0%, rgba(11,16,41,0) 70%);
+}
+
+/* Hide the top marketing header on funnel steps. mwclocked has no header.
+   The confirmation page keeps its header (full layout). */
+body[data-page="schedule"] header {
+  display: none !important;
+}
+body[data-page="schedule"] main {
+  padding-top: 24px !important;
+}
+
+/* =============================================================================
+   2. SCHEDULE PAGE — refine spacing + typography + day strip
+   ============================================================================= */
+
+/* Container width — match mwclocked (max-w-2xl ~ 672px, lg widens to 5xl) */
+body[data-page="schedule"] main > div {
+  max-width: none !important;
+}
+body[data-page="schedule"] main > div > div.mx-auto {
+  max-width: 672px !important;
+}
+@media (min-width: 1024px) {
+  body[data-page="schedule"] main > div > div.mx-auto {
+    max-width: 960px !important;
+  }
+}
+
+/* Headline — tighten letter-spacing, lift weight */
+body[data-page="schedule"] h1 {
+  font-family: var(--mwc-locked-font-display) !important;
+  letter-spacing: 0.01em !important;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.20);
+}
+
+/* "Next available" banner — premium glass */
+body[data-page="schedule"] [aria-label="Pick a date and time"] {
+  position: relative;
+  z-index: 1;
+}
+
+/* White card panel — softer border, deeper shadow */
+body[data-page="schedule"] [aria-label="Pick a date and time"] > div {
+  border-radius: var(--mwc-locked-radius) !important;
+  box-shadow: var(--mwc-locked-shadow) !important;
+  border: 1px solid rgba(255,255,255,0.06) !important;
+}
+
+/* Hide TODAY / TMRW kicker labels on day pills — mwclocked shows weekday only.
+   We target the first child <span> inside each day button. */
+body[data-page="schedule"] [aria-label="Pick a date and time"] [aria-pressed] > span:first-child {
+  /* Replace the kicker text with the weekday short-name using ::after.
+     Easier path: just hide it so the date number is visually dominant.
+     The day number alone is still clear because the strip shows a sequence. */
+  /* Keep visible — accessibility — but normalize text */
+  text-transform: uppercase !important;
+  letter-spacing: 0.10em !important;
+  font-size: 9px !important;
+}
+
+/* Day pill — refine */
+body[data-page="schedule"] [aria-label="Pick a date and time"] [aria-pressed][role],
+body[data-page="schedule"] [aria-label="Pick a date and time"] button[aria-pressed] {
+  transition: transform 120ms ease, box-shadow 150ms ease, background 150ms ease !important;
+}
+body[data-page="schedule"] [aria-label="Pick a date and time"] button[aria-pressed]:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+body[data-page="schedule"] [aria-label="Pick a date and time"] button[aria-pressed="true"] {
+  box-shadow: 0 8px 24px -6px rgba(232,103,10,0.55) !important;
+}
+
+/* Time slot pill — slightly tighter border, premium hover */
+body[data-page="schedule"] [aria-label="Pick a date and time"] button[aria-pressed]:not([disabled]):hover {
+  border-color: var(--mwc-locked-accent) !important;
+  box-shadow: 0 4px 14px -4px rgba(232,103,10,0.30) !important;
+}
+
+/* Confirm CTA bar — already orange. Just lift on hover. */
+body[data-page="schedule"] [aria-label="Pick a date and time"] > div > div:last-child button[type="button"]:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+/* Help bar at the bottom — premium dark chip */
+body[data-page="schedule"] main > div > div.mx-auto:last-child a[href^="tel:"] {
+  background: rgba(255,255,255,0.04) !important;
+  border-color: rgba(255,255,255,0.08) !important;
+  backdrop-filter: blur(8px);
+}
+
+/* =============================================================================
+   3. CONFIRMED PAGE — banish teal, harmonize with brand orange
+   ============================================================================= */
+
+/* Hero background — Midnight Navy (#0B1029), not #0D1B3E */
+body[data-page="confirmed"] main > div > div[style*="0D1B3E"],
+body[data-page="confirmed"] main > div > div:first-child {
+  background: var(--mwc-locked-bg) !important;
+  position: relative;
+  z-index: 1;
+}
+
+/* Teal-removal safety net — case-insensitive selectors catch any residual teal
+   that might survive in other components or future merges. Source components
+   were also updated to use Accent Orange directly. */
+body[data-page="confirmed"] [style*="rgba(46,196,165" i],
+body[data-page="confirmed"] [style*="rgba(46, 196, 165" i] {
+  background: rgba(232,103,10,0.10) !important;
+  border-color: var(--mwc-locked-accent) !important;
+}
+body[data-page="confirmed"] svg path[stroke="#2EC4A5" i],
+body[data-page="confirmed"] svg path[stroke="#2ec4a5" i] {
+  stroke: var(--mwc-locked-accent) !important;
+}
+body[data-page="confirmed"] [style*="#2EC4A5" i],
+body[data-page="confirmed"] [style*="2ec4a5" i] {
+  color: var(--mwc-locked-accent) !important;
+  border-color: var(--mwc-locked-accent) !important;
+}
+
+/* Headline tightening */
+body[data-page="confirmed"] h1 {
+  font-family: var(--mwc-locked-font-display) !important;
+  letter-spacing: 0.01em !important;
+}
+
+/* White appointment ticket — match schedule panel shadow */
+body[data-page="confirmed"] main > div > div:first-child > div[style*="background"]:not([style*="rgba(46"]):not([style*="rgba(232"]):not([style*="0D1B3E"]):not([style*="#0B1029"]) {
+  /* ticket card */
+}
+body[data-page="confirmed"] div[style*="border-radius: 20"] {
+  border-radius: var(--mwc-locked-radius) !important;
+  box-shadow: var(--mwc-locked-shadow) !important;
+}
+
+/* Orange date block — already orange, just refine corner radius */
+body[data-page="confirmed"] div[style*="var(--brand-cta)"][style*="border-radius: 14"] {
+  border-radius: 14px !important;
+  box-shadow: 0 8px 20px -6px rgba(232,103,10,0.45);
+}
+
+/* Checklist items — kill teal */
+body[data-page="confirmed"] div[style*="rgba(46,196,165,0.12)"] {
+  background: rgba(232,103,10,0.10) !important;
+  border-color: var(--mwc-locked-accent) !important;
+}
+
+/* Calendar CTAs — primary keeps orange, secondary becomes dark glass */
+body[data-page="confirmed"] a[aria-label*="Google Calendar"] {
+  background: var(--mwc-locked-accent) !important;
+  box-shadow: 0 10px 28px -8px rgba(232,103,10,0.55) !important;
+}
+body[data-page="confirmed"] a[download$=".ics"] {
+  background: rgba(255,255,255,0.06) !important;
+  border-color: rgba(255,255,255,0.12) !important;
+  backdrop-filter: blur(8px);
+}
+
+/* =============================================================================
+   4. ACCESSIBILITY — focus rings, reduced motion
+   ============================================================================= */
+body[data-page="schedule"] button:focus-visible,
+body[data-page="schedule"] a:focus-visible,
+body[data-page="confirmed"] button:focus-visible,
+body[data-page="confirmed"] a:focus-visible {
+  outline: 3px solid var(--mwc-locked-accent) !important;
+  outline-offset: 3px !important;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-page="schedule"] *,
+  body[data-page="confirmed"] * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* =============================================================================
+   5. RESPONSIVE — desktop widens, mobile stays single-column
+   ============================================================================= */
+@media (min-width: 1024px) {
+  /* Day strip gets 7 columns; time grid widens to 4 columns naturally */
+  body[data-page="schedule"] [aria-label="Pick a date and time"] > div {
+    padding: 24px !important;
+  }
+}
+
+/* Mobile: ensure card sits flush */
+@media (max-width: 640px) {
+  body[data-page="schedule"] main > div {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  body[data-page="confirmed"] main {
+    padding-top: 0 !important;
+  }
+}

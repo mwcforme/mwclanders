@@ -3,6 +3,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* MWC Locked overlay — non-destructive presentation refresh for /book/schedule
+   and /book/confirmed. Matches https://mwclocked.pplx.app. */
+@import "./styles/mwc-locked-overlay.css";
+
 @layer base {
   :root {
     /* MWC 3-Color Palette */
