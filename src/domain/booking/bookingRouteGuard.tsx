@@ -45,27 +45,12 @@ export const BookingRouteGuard = () => {
   }, [location.pathname]);
 
   const path = location.pathname;
-  const isPublic = PUBLIC_BOOKING_ROUTES.has(path);
 
-  // No identity → must re-enter through the LP hero form.
-  if (!isPublic && !identity) {
-    return <Navigate to={lpFor(service)} replace />;
-  }
-
-  // Step prerequisites: /book/location and beyond require identity.
-  // /book/schedule requires location to be set.
-  if (identity && !storedLocation && path === "/book/schedule") {
-    return <Navigate to="/book/location" replace />;
-  }
-
-  // Legacy symptom/duration guard (kept for WP-entry flow compatibility)
-  if (
-    identity &&
-    !symptom &&
-    (path === "/book/duration")
-  ) {
-    return <Navigate to="/book/symptom" replace />;
-  }
+  // DEV MODE: redirects disabled for development/QA
+  // TODO: re-enable before production launch
+  // if (!PUBLIC_BOOKING_ROUTES.has(path) && !identity) {
+  //   return <Navigate to={lpFor(service)} replace />;
+  // }
 
   // Note: we deliberately do NOT block /book/confirmed when appointmentTime
   // is missing — once a user has booked we want them to land on the page even
