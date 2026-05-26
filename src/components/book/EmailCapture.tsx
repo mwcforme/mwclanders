@@ -3,7 +3,6 @@ import { Send } from "lucide-react";
 import { contactUpdater } from "@/services/contactUpdater";
 import { useBookingStore } from "@/domain/booking/bookingStore";
 
-// Mockup source: display:flex; gap:8px (inline input + button side by side)
 interface Props {
   contactId?: string;
   onComplete: () => void;
@@ -33,7 +32,6 @@ export function EmailCapture({ contactId, onComplete }: Props) {
 
   return (
     <div>
-      {/* Mockup: form display:flex gap:8px — inline layout */}
       <form onSubmit={handleSubmit} noValidate style={{ display: "flex", gap: 8 }}>
         <input
           type="email"
@@ -49,11 +47,10 @@ export function EmailCapture({ contactId, onComplete }: Props) {
           style={{
             flex: 1, height: 44, borderRadius: 8,
             // hardcoded-color-allow-next-line
-            border: `1.5px solid ${error ? "#f87171" : "rgba(255,255,255,0.15)"}`,
+            border: `1.5px solid ${error ? "#dc2626" : "rgba(11,16,41,0.20)"}`,
+            background: "#FFFFFF",
             // hardcoded-color-allow-next-line
-            background: "rgba(255,255,255,0.07)",
-            // hardcoded-color-allow-next-line
-            color: "rgba(255,255,255,0.92)",
+            color: "#0B1029",
             fontSize: 16, fontFamily: "Inter, sans-serif", padding: "0 14px", outline: "none",
           }}
         />
@@ -73,7 +70,7 @@ export function EmailCapture({ contactId, onComplete }: Props) {
       {error && (
         <p id="email-capture-error" role="alert" style={{
           // hardcoded-color-allow-next-line
-          color: "#f87171", fontSize: 14, marginTop: 4, fontFamily: "Inter, sans-serif",
+          color: "#dc2626", fontSize: 14, marginTop: 4, fontFamily: "Inter, sans-serif",
         }}>
           {error}
         </p>
