@@ -103,7 +103,7 @@ function AppointmentTicket({ apptDate, center }: { apptDate: ApptDate; center: L
       </div>
 
       {/* Responsive body: vertical on mobile, horizontal on desktop */}
-      <div className="mwc-appt-body" style={{ padding: "24px 20px 0" }}>
+      <div className="mwc-appt-body" style={{ padding: "24px 0px 0" }}>
         <DateBlock apptDate={apptDate} />
         {/* Mobile centered details */}
         <div className="mwc-appt-details-center">
