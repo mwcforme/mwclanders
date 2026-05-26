@@ -210,9 +210,13 @@ const BookSchedule = () => {
             <div
               style={{
                 display: "flex", alignItems: "center", justifyContent: "space-between",
-                background: "#111827",
+                // hardcoded-color-allow-next-line
+                background: "rgba(255,255,255,0.06)",
+                // hardcoded-color-allow-next-line
+                border: "1px solid rgba(255,255,255,0.10)",
                 borderRadius: 12, padding: "14px 18px",
-                boxShadow: "0 2px 8px rgba(0,0,0,0.25)",
+                // hardcoded-color-allow-next-line
+                boxShadow: "0 2px 16px rgba(0,0,0,0.30)",
               }}
             >
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -254,8 +258,13 @@ const BookSchedule = () => {
             </BookingErrorBoundary>
           ) : (
             /* No location set — show center picker inline */
-            <div style={{ background: "#161B3A", border: "1px solid #2B3247", borderRadius: 12, padding: 20, fontFamily: "Inter, sans-serif" }}>
-              <div style={{ fontSize: 13, color: "rgba(255,255,255,0.55)", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: 700, marginBottom: 12 }}>
+            <div style={{
+              // hardcoded-color-allow-next-line
+              background: "#0D1B3E",
+              // hardcoded-color-allow-next-line
+              border: "1px solid rgba(255,255,255,0.08)",
+              borderRadius: 12, padding: 20, fontFamily: "Inter, sans-serif" }}>
+              <div style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: 700, marginBottom: 12 }}>
                 Choose your center
               </div>
               <div className="grid gap-2">
@@ -267,8 +276,10 @@ const BookSchedule = () => {
                     style={{
                       padding: "14px 16px", borderRadius: 8,
                       // hardcoded-color-allow-next-line
-                      border: "1px solid #2B3247", background: "var(--brand-navy-deep)",
-                      color: "var(--brand-cream)", fontSize: 16, fontWeight: 600,
+                      border: "1px solid rgba(255,255,255,0.10)",
+                      // hardcoded-color-allow-next-line
+                      background: "rgba(255,255,255,0.06)",
+                      color: "rgba(255,255,255,0.90)", fontSize: 16, fontWeight: 600,
                       textAlign: "left", cursor: "pointer",
                       fontFamily: "Inter, sans-serif",
                     }}

@@ -19,12 +19,14 @@ import TimeGrid from "./TimeGrid";
 // ConfirmDialog removed — slot tap confirms directly, no modal step
 
 // Brand tokens (confirm bar only — child components manage their own)
-const INK    = "var(--brand-navy-deep)";
 // hardcoded-color-allow-next-line
-const _MUTED  = "#4B5563";
+const INK    = "#FFFFFF";
 // hardcoded-color-allow-next-line
-const LINE   = "#E5E7EB";
-const SURFACE = "#F4F6FA";
+const _MUTED  = "#8A96A8";
+// hardcoded-color-allow-next-line
+const LINE   = "rgba(255,255,255,0.08)";
+// hardcoded-color-allow-next-line
+const SURFACE = "#0D1B3E";
 const ORANGE  = "var(--brand-cta)";
 
 // ─── Supabase lazy import ─────────────────────────────────────────────────────
@@ -272,10 +274,14 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
   return (
     <>
       <div style={{
-        background: "var(--bg-white)", border: "1px solid #E5E7EB", borderRadius: 16,
+        // hardcoded-color-allow-next-line
+        background: "#0D1B3E",
+        // hardcoded-color-allow-next-line
+        border: "1px solid rgba(255,255,255,0.08)",
+        borderRadius: 16,
         overflow: "hidden", color: INK, fontFamily: "Montserrat, Inter, system-ui, sans-serif",
         // hardcoded-color-allow-next-line
-        boxShadow: "0 10px 30px -10px rgba(0,0,0,0.25), inset 0 1px 0 0 rgba(255,255,255,0.80)",
+        boxShadow: "0 20px 60px -10px rgba(0,0,0,0.60), 0 0 0 1px rgba(255,255,255,0.04) inset",
       }}>
         <DayStrip
           days={days}
@@ -300,11 +306,14 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
         />
 
         {/* Confirm bar */}
-        <div style={{ borderTop: "1px solid #F3F4F6", padding: "16px 20px" }}>
+        <div style={{ borderTop: LINE, padding: "16px 20px",
+          // hardcoded-color-allow-next-line
+          background: "#0A1630",
+        }}>
           {/* Selected slot recap */}
           {selectedSlot && (
             <p style={{
-              fontSize: 15, color: "#374151", fontFamily: "Montserrat, Inter, sans-serif",
+              fontSize: 15, color: "rgba(255,255,255,0.85)", fontFamily: "Montserrat, Inter, sans-serif",
               marginBottom: 12, textAlign: "center", fontWeight: 600, lineHeight: 1.4,
             }}>
               {new Date(selectedSlot).toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric", timeZone: TIMEZONE })}
@@ -339,7 +348,7 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
               textAlign: "center",
               fontFamily: "Montserrat, Inter, sans-serif",
               fontSize: 13, fontWeight: 700, letterSpacing: "0.10em",
-              textTransform: "uppercase", color: "#9CA3AF",
+              textTransform: "uppercase", color: "rgba(255,255,255,0.35)",
               margin: "8px 0",
             }}>
               Select a time to continue
