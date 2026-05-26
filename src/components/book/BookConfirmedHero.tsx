@@ -34,21 +34,28 @@ interface Props {
 const CHECKLIST_ITEMS = ["No-cost consultation", "Your provider reserved", "Bring photo ID"] as const;
 
 function CheckIcon() {
-  // Simple teal checkmark — matches screenshot (no circle, just the tick)
+  // Screenshot: teal circle outline with teal checkmark inside
   return (
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style={{ flexShrink: 0 }}>
-      <path d="M3 9.5L7 13.5L15 5.5" stroke={TEAL} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <div style={{
+      width: 20, height: 20, borderRadius: "50%",
+      border: `1.5px solid ${TEAL}`,
+      background: "transparent",
+      display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+    }}>
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+        <path d="M1.5 5.5L4 8L8.5 2.5" stroke={TEAL} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </div>
   );
 }
 
 function AnimatedCheck({ drawn }: { drawn: boolean }) {
-  // Mockup: background:rgba(46,196,165,0.12) border:2px solid rgb(46,196,165) — teal
+  // Screenshot: teal circle outline, no fill
   return (
     <div style={{
       width: 80, height: 80, borderRadius: "50%",
-      background: TEAL_TINT,
-      border: `2px solid ${TEAL}`,
+      background: "transparent",
+      border: `2.5px solid ${TEAL}`,
       display: "inline-flex", alignItems: "center", justifyContent: "center",
     }}>
       <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
