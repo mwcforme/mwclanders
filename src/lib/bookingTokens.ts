@@ -7,13 +7,22 @@ import type { CSSProperties } from "react";
 // ─── Colors ──────────────────────────────────────────────────────────────────
 
 export const COLORS = {
-  // Teal accent — used for success states on confirmed page
+  // Green accent — exact computed color from mockup: rgb(16,183,127)
   // hardcoded-color-allow-next-line
-  teal:      "#2EC4A5",
+  teal:      "#10B77F",
   // hardcoded-color-allow-next-line
-  tealTint:  "rgba(46,196,165,0.12)",
+  tealTint:  "rgba(16,183,127,0.15)",
   // hardcoded-color-allow-next-line
-  tealBorder: "rgb(46,196,165)",
+  tealBorder: "#10B77F",
+  // Section label gray from mockup: rgb(72,86,106)
+  // hardcoded-color-allow-next-line
+  sectionGray: "#485666",
+  // Dark navy for Apple button + reschedule card: rgb(26,32,61)
+  // hardcoded-color-allow-next-line
+  darkCard: "#1A203D",
+  // Muted blue-gray for reschedule copy: rgb(203,213,225)
+  // hardcoded-color-allow-next-line
+  mutedBlue: "#CBD5E1",
 
   // Backgrounds
   pageBg:        "#0B1029",  // Midnight Navy

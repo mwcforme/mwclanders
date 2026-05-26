@@ -3,6 +3,11 @@ import { Send } from "lucide-react";
 import { contactUpdater } from "@/services/contactUpdater";
 import { useBookingStore } from "@/domain/booking/bookingStore";
 
+// Exact computed styles from mwclocked.pplx.app/#/confirmed:
+// - "Your email address" label: color rgb(10,15,41) size 17px weight 600
+// - Input: white bg, dark border
+// - "Send to my email" button: orange bg, white text, uppercase, weight 700
+
 interface Props {
   contactId?: string;
   onComplete: () => void;
@@ -32,7 +37,12 @@ export function EmailCapture({ contactId, onComplete }: Props) {
 
   return (
     <form onSubmit={handleSubmit} noValidate style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-      <label htmlFor="email-capture-input" style={{ fontSize: 14, fontWeight: 600, color: "#0B1029", fontFamily: "Inter, sans-serif" }}>
+      {/* "Your email address" label — rgb(10,15,41) weight 600 */}
+      <label htmlFor="email-capture-input" style={{
+        fontSize: 14, fontWeight: 600,
+        // hardcoded-color-allow-next-line
+        color: "#0A0F29", fontFamily: "Inter, sans-serif",
+      }}>
         Your email address
       </label>
       <input
@@ -49,19 +59,20 @@ export function EmailCapture({ contactId, onComplete }: Props) {
         style={{
           width: "100%", height: 52, borderRadius: 10, boxSizing: "border-box",
           // hardcoded-color-allow-next-line
-          border: `1.5px solid ${error ? "#dc2626" : "rgba(11,16,41,0.20)"}`,
+          border: `1.5px solid ${error ? "#dc2626" : "rgba(10,15,41,0.20)"}`,
           background: "#FFFFFF",
           // hardcoded-color-allow-next-line
-          color: "#0B1029",
+          color: "#0A0F29",
           fontSize: 16, fontFamily: "Inter, sans-serif", padding: "0 16px", outline: "none",
         }}
       />
+      {/* "SEND TO MY EMAIL" button — orange full-width uppercase */}
       <button
         type="submit"
         disabled={loading}
         style={{
           width: "100%", height: 52,
-          background: "var(--brand-cta)", color: "#FFF",
+          background: "var(--brand-cta)", color: "#FFFFFF",
           border: "none", borderRadius: 10,
           fontFamily: "Montserrat, Inter, sans-serif",
           fontSize: 15, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase",
