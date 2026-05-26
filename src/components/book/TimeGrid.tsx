@@ -10,7 +10,6 @@ const MUTED  = "var(--c-text-on-light-muted)";
 // hardcoded-color-allow-next-line
 const LINE   = "#E5E7EB";
 const SURFACE = "#F4F6FA";
-const ORANGE  = "var(--brand-cta)";
 
 const fmtTimeParts = (iso: string): { time: string; ampm: string; hour: number } => {
   const d = new Date(iso);
@@ -81,7 +80,10 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
             {/* Period label — 14px, uppercase ok (≤3 words) */}
             <p style={{
               fontSize: 11, fontWeight: 700, letterSpacing: "0.10em",
-              textTransform: "uppercase", color: "var(--c-text-on-light-muted)",
+              textTransform: "uppercase",
+              // hardcoded-color-allow-next-line
+              color: "#9CA3AF",
+              fontFamily: "Montserrat, Inter, sans-serif",
               marginBottom: 12, paddingBottom: 0,
               ...(isFirst ? {} : { borderTop: "1px solid #E5E7EB", paddingTop: 16, marginTop: 8 }),
             }}>
@@ -99,25 +101,29 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
                     aria-pressed={active}
                     onClick={() => onSlotSelect(iso)}
                     style={{
-                              background: active ? ORANGE : "#FFFFFF",
-                      border: active ? "2px solid var(--brand-cta)" : "1.5px solid #D1D5DB",
+                      background: active ? "var(--brand-cta)" : "#F9FAFB",
+                      border: active ? "2px solid var(--brand-cta)" : "1.5px solid #E5E7EB",
                       borderRadius: 10,
                       padding: "0 16px",
                       display: "inline-flex", alignItems: "center", gap: 5,
-                      color: active ? "#fff" : "var(--brand-navy)",
+                      // hardcoded-color-allow-next-line
+                      color: active ? "#fff" : "#111827",
                       cursor: "pointer",
                       transition: "all 120ms ease",
                       whiteSpace: "nowrap",
-                      minHeight: 52,
+                      minHeight: 48,
+                      fontFamily: "Montserrat, Inter, sans-serif",
+                      fontWeight: active ? 700 : 600,
+                      fontSize: 16,
                       // hardcoded-color-allow-next-line
-                      boxShadow: active ? "0 4px 16px rgba(232,103,10,0.45)" : "none",
+                      boxShadow: active ? "0 10px 24px -8px rgba(232,103,10,0.55)" : "0 1px 2px rgba(0,0,0,0.04)",
                     }}
                   >
-                    <span style={{ fontFamily: "Oswald, Inter, sans-serif", fontWeight: 700, fontSize: 18 }}>
+                    <span style={{ fontWeight: "inherit", fontSize: "inherit" }}>
                       {time}
                     </span>
                     {/* hardcoded-color-allow-next-line */}
-                    <span style={{ fontSize: 14, fontWeight: 700, letterSpacing: "0.06em", color: active ? "rgba(255,255,255,0.85)" : "var(--c-text-on-light-muted)" }}>
+                    <span style={{ fontSize: 13, fontWeight: 600, letterSpacing: "0.04em", color: active ? "rgba(255,255,255,0.85)" : "#6B7280" }}>
                       {ampm}
                     </span>
                   </button>

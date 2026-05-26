@@ -18,8 +18,8 @@ export const CARD_WHITE: CSSProperties = {
   background: "#FFFFFF",
   borderRadius: 14,
   overflow: "hidden",
-  border: "1px solid rgba(255,255,255,0.15)",
-  boxShadow: "0 4px 24px rgba(0,0,0,0.25)",
+  border: "1px solid #F3F4F6",
+  boxShadow: "0 4px 16px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.80)",
 };
 
 /**
@@ -29,8 +29,8 @@ export const CARD_WHITE_PAD: CSSProperties = {
   background: "#FFFFFF",
   borderRadius: 14,
   padding: "18px 20px",
-  border: "1px solid rgba(255,255,255,0.15)",
-  boxShadow: "0 4px 24px rgba(0,0,0,0.25)",
+  border: "1px solid #F3F4F6",
+  boxShadow: "0 4px 16px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.80)",
 };
 
 /**
@@ -46,8 +46,8 @@ export const CTA_BUTTON_BASE: CSSProperties = {
   color: "#FFF",
   borderRadius: 10,
   textDecoration: "none",
-  fontFamily: FONT_INTER,
+  fontFamily: "Montserrat, Inter, sans-serif",
   fontWeight: 700,
   fontSize: 16,
-  boxShadow: "0 4px 16px rgba(232,103,10,0.35)",
+  boxShadow: "0 10px 24px -8px rgba(232,103,10,0.55)",
 };

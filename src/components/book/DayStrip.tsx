@@ -9,14 +9,14 @@ import { TIMEZONE } from "@/lib/ghlCalendars";
 import { isSundayInTimeZone } from "@/lib/etDate";
 
 // Brand tokens (duplicated from GHLDayView — intentional; each file is self-contained)
-const INK       = "var(--brand-navy-deep)";
+// hardcoded-color-allow-next-line
+const INK       = "#111827";
 // hardcoded-color-allow-next-line
 const INK_SOFT  = "#374151";
 // hardcoded-color-allow-next-line
-const MUTED     = "var(--c-text-on-light-muted)";
+const MUTED     = "#6B7280";
 // hardcoded-color-allow-next-line
-const BORDER    = "#D1D5DB";
-const SURFACE   = "#F4F6FA";
+const BORDER    = "#E5E7EB";
 const ORANGE    = "var(--brand-cta)";
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -112,11 +112,12 @@ const DayStrip = ({
           style={{
             width: 36, height: 36, borderRadius: 8,
             background: "#FFFFFF",
-            border: "1.5px solid #D1D5DB",
+            border: "1.5px solid #E5E7EB",
             display: "flex", alignItems: "center", justifyContent: "center",
             cursor: prevDisabled ? "not-allowed" : "pointer",
             opacity: prevDisabled ? 0.35 : 1,
             flexShrink: 0,
+            transition: "background 150ms ease, box-shadow 150ms ease",
             boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
           }}
         >
@@ -138,10 +139,11 @@ const DayStrip = ({
           style={{
             width: 36, height: 36, borderRadius: 8,
             background: "#FFFFFF",
-            border: "1.5px solid #D1D5DB",
+            border: "1.5px solid #E5E7EB",
             display: "flex", alignItems: "center", justifyContent: "center",
             cursor: "pointer",
             flexShrink: 0,
+            transition: "background 150ms ease, box-shadow 150ms ease",
             boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
           }}
         >
@@ -228,9 +230,9 @@ const DayStrip = ({
                       opacity: !available && !selected ? 0.7 : 1,
                       boxShadow: selected
                         // hardcoded-color-allow-next-line
-                        ? "0 8px 18px -8px rgba(232,103,10,0.45)"
+                        ? "0 4px 12px rgba(232,103,10,0.35)"
                         // hardcoded-color-allow-next-line
-                        : "0 1px 2px rgba(11,16,41,0.04)",
+                        : "0 1px 2px rgba(0,0,0,0.04)",
                     }}
                   >
                     {/* Day-of-week label */}
@@ -275,7 +277,7 @@ const DayStrip = ({
               position: "absolute", left: 0, top: 0, bottom: 4, width: 28,
               pointerEvents: "none",
               // hardcoded-color-allow-next-line
-              background: `linear-gradient(to right, ${SURFACE}, rgba(244,246,250,0))`,
+              background: "linear-gradient(to right, #FFFFFF, rgba(255,255,255,0))",
               opacity: showLeftFade ? 1 : 0,
               transition: "opacity 150ms ease",
             }} />
@@ -283,7 +285,7 @@ const DayStrip = ({
               position: "absolute", right: 0, top: 0, bottom: 4, width: 28,
               pointerEvents: "none",
               // hardcoded-color-allow-next-line
-              background: `linear-gradient(to left, ${SURFACE}, rgba(244,246,250,0))`,
+              background: "linear-gradient(to left, #FFFFFF, rgba(255,255,255,0))",
               opacity: showRightFade ? 1 : 0,
               transition: "opacity 150ms ease",
             }} />

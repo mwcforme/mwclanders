@@ -148,6 +148,7 @@ const BookSchedule = () => {
   const _inlineEmailRef = useRef<HTMLDivElement>(null);
 
   return (
+    <>{""}  
     <BookLayout page="schedule" title="Book Your Physician Assessment | Men's Wellness Centers">
       <div className="px-4 md:px-6 py-1 md:py-6 space-y-3 md:space-y-5 pb-24">
 
@@ -174,7 +175,7 @@ const BookSchedule = () => {
         {locationData && (
           <div className="mx-auto w-full" style={{ maxWidth: 720 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 4px 4px" }}>
-              <span style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "rgba(255,255,255,0.55)", fontWeight: 500 }}>
+              <span style={{ fontFamily: "Montserrat, Inter, sans-serif", fontSize: 14, color: "rgba(255,255,255,0.65)", fontWeight: 500 }}>
                 {locationData.name.replace("Men's Wellness Centers, ", "")}
               </span>
               <span style={{ color: "rgba(255,255,255,0.25)", fontSize: 12 }}>·</span>
@@ -207,8 +208,8 @@ const BookSchedule = () => {
         {nextAvailableLabel && (
           <div className="mx-auto w-full" style={{ maxWidth: 720 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "4px 0 8px" }}>
-              <span style={{ width: 7, height: 7, borderRadius: "50%", background: "var(--brand-cta)", flexShrink: 0 }} />
-              <span style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "rgba(255,255,255,0.75)", fontWeight: 500 }}>
+              <span style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--brand-cta)", flexShrink: 0, animation: "pulse 2s cubic-bezier(.4,0,.6,1) infinite" }} />
+              <span style={{ fontFamily: "Montserrat, Inter, sans-serif", fontSize: 14, color: "rgba(255,255,255,0.75)", fontWeight: 500 }}>
                 Next available: {nextAvailableLabel}
               </span>
               <button
@@ -286,7 +287,8 @@ const BookSchedule = () => {
         </div>
       </div>
     </BookLayout>
-  );
+    <style>{`@keyframes pulse { 50% { opacity: .5; } }`}</style>
+  </>);
 };
 
 export default BookSchedule;

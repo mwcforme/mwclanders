@@ -42,7 +42,7 @@ export function BookConfirmedHero({ firstName, apptDate, calLinks, center, check
             </div>
             <CelebrationBurst active={checkDrawn} />
           </div>
-          <p style={{ fontSize: 14, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "var(--c-success-on-dark)", marginBottom: 10 }}>Appointment Confirmed</p>
+          <p style={{ fontSize: 14, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--c-success-on-dark)", marginBottom: 10 }}>Appointment Confirmed</p>
           <h1 style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: "clamp(28px, 5vw, 44px)", color: "var(--brand-cream)", lineHeight: 1.1, marginBottom: 8 }}>
             {firstName ? `This is your moment, ${firstName}.` : "This is your moment."}
           </h1>
@@ -53,7 +53,7 @@ export function BookConfirmedHero({ firstName, apptDate, calLinks, center, check
 
         {/* Appointment ticket */}
         {apptDate && (
-          <div style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.35)", borderRadius: 16, overflow: "hidden", marginBottom: 28 }}>
+          <div style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.35)", borderRadius: 16, overflow: "hidden", marginBottom: 28, boxShadow: "0 10px 30px -10px rgba(0,0,0,0.35), inset 0 1px 0 0 rgba(255,255,255,0.06)" }}>
             <div style={{ display: "flex" }}>
               <div style={{ background: "var(--brand-cta)", padding: "24px 20px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minWidth: 88, flexShrink: 0 }}>
                 <span style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 11, color: "rgba(255,255,255,0.80)", letterSpacing: "0.12em" }}>{apptDate.month}</span>
@@ -86,11 +86,11 @@ export function BookConfirmedHero({ firstName, apptDate, calLinks, center, check
           <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 8 }}>
             <a href={calLinks.google} target="_blank" rel="noopener noreferrer"
               aria-label="Add to Google Calendar (opens in new tab)"
-              style={{ ...CTA_BUTTON_BASE, gap: 10 }}>
+              style={{ ...CTA_BUTTON_BASE, gap: 10, boxShadow: "0 10px 24px -8px rgba(232,103,10,0.55)", fontFamily: "Montserrat, Inter, sans-serif" }}>
               <Calendar size={18} strokeWidth={2} aria-hidden /> Add to Google Calendar
             </a>
             <a href={calLinks.ics} download="mwc-appointment.ics"
-              style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, height: 56, background: "rgba(255,255,255,0.10)", border: "1px solid rgba(255,255,255,0.35)", color: "var(--brand-cream)", borderRadius: 10, textDecoration: "none", fontFamily: FONT_INTER, fontWeight: 600, fontSize: 16 }}>
+              style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, height: 56, background: "rgba(255,255,255,0.10)", border: "1px solid rgba(255,255,255,0.35)", color: "var(--brand-cream)", borderRadius: 10, textDecoration: "none", fontFamily: "Montserrat, Inter, sans-serif", fontWeight: 600, fontSize: 16 }}>
               <Calendar size={18} strokeWidth={2} aria-hidden /> Apple / Outlook (.ics)
             </a>
           </div>

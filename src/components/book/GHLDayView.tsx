@@ -272,10 +272,10 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
   return (
     <>
       <div style={{
-        background: SURFACE, border: "1px solid #E5E7EB", borderRadius: 16,
-        overflow: "hidden", color: INK, fontFamily: "Inter, system-ui, sans-serif",
+        background: "var(--bg-white)", border: "1px solid #E5E7EB", borderRadius: 16,
+        overflow: "hidden", color: INK, fontFamily: "Montserrat, Inter, system-ui, sans-serif",
         // hardcoded-color-allow-next-line
-        boxShadow: "0 4px 32px rgba(0,0,0,0.35)",
+        boxShadow: "0 10px 30px -10px rgba(0,0,0,0.25), inset 0 1px 0 0 rgba(255,255,255,0.80)",
       }}>
         <DayStrip
           days={days}
@@ -304,7 +304,7 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
           {/* Selected slot recap — shown when a slot is chosen */}
           {selectedSlot && (
             <p style={{
-              fontSize: 16, color: "var(--c-text-on-light-muted)", fontFamily: "Inter, sans-serif",
+              fontSize: 16, color: "#374151", fontFamily: "Montserrat, Inter, sans-serif",
               marginBottom: 10, textAlign: "center", fontWeight: 500, lineHeight: 1.4,
             }}>
               {new Date(selectedSlot).toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric", timeZone: TIMEZONE })}
@@ -323,14 +323,14 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
               background: canConfirm ? ORANGE : "#F4F5F8",
               // hardcoded-color-allow-next-line
               border: canConfirm ? "none" : "1px solid #D1D5DB",
-              color: canConfirm ? "var(--c-text-on-dark)" : "var(--c-text-on-light-muted)",
+              color: canConfirm ? "#fff" : "#9CA3AF",
               border: 0, borderRadius: 12, fontSize: 16, fontWeight: 700,
               letterSpacing: canConfirm ? "0.06em" : "0.02em",
               textTransform: canConfirm ? "uppercase" : "none",
               cursor: canConfirm ? "pointer" : "not-allowed",
               fontFamily: "Oswald, Inter, sans-serif",
               // hardcoded-color-allow-next-line
-              boxShadow: canConfirm ? "0 10px 24px -10px rgba(232,103,10,0.55)" : "none",
+              boxShadow: canConfirm ? "0 10px 24px -8px rgba(232,103,10,0.55)" : "none",
               transition: "all 150ms ease",
             }}
           >
