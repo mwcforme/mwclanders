@@ -51,14 +51,7 @@ body[data-page="confirmed"]::before {
     radial-gradient(ellipse 90% 60% at 50% 100%, rgba(11,16,41,1) 0%, rgba(11,16,41,0) 70%);
 }
 
-/* Hide the top marketing header on funnel steps. mwclocked has no header.
-   The confirmation page keeps its header (full layout). */
-body[data-page="schedule"] header {
-  display: none !important;
-}
-body[data-page="schedule"] main {
-  padding-top: 24px !important;
-}
+/* Header is present on all pages — no hiding */
 
 /* =============================================================================
    2. SCHEDULE PAGE — refine spacing + typography + day strip
@@ -288,7 +281,5 @@ body[data-page="confirmed"] a:focus-visible {
     padding-left: 16px !important;
     padding-right: 16px !important;
   }
-  body[data-page="confirmed"] main {
-    padding-top: 0 !important;
-  }
+  /* confirmed main padding handled by pt-16 from BookLayout */
 }
