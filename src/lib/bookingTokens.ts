@@ -62,7 +62,7 @@ export const COLORS = {
 
 export const FONTS = {
   display: "Oswald, sans-serif",
-  body:    "Inter, sans-serif",
+  body:    "Montserrat, Inter, sans-serif",
   ui:      "Montserrat, Inter, sans-serif",
 } as const;
 

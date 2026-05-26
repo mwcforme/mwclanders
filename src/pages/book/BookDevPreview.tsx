@@ -27,7 +27,7 @@ function useSeed(apptTime?: string) {
 }
 
 export function BookDevConfirmed() {
-  const ready = useSeed("2026-05-26T13:00:00.000Z");
+  const ready = useSeed("2026-05-26T12:00:00.000Z");
   return ready ? <BookConfirmed /> : null;
 }
 
