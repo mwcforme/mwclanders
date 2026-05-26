@@ -59,6 +59,7 @@ export default function BookConfirmed() {
   const calLinks = apptDate ? buildCalendarLinks(apptDate.iso, center.fullAddress) : null;
 
   useEffect(() => {
+    window.scrollTo(0, 0); // always start at top on page load
     if (identity && !identity.phone && !identity.email) patchAction({ identity: undefined });
     const t = setTimeout(() => setCheckDrawn(true), 200);
     return () => clearTimeout(t);

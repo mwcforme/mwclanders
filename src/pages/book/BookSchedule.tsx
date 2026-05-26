@@ -9,7 +9,7 @@
  * - Capacity nudge (hidden by default, only shown when API confirms ≤3 slots)
  */
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import BookLayout from "@/components/book/BookLayout";
@@ -112,6 +112,9 @@ const BookSchedule = () => {
     ...(service ? { mwc_funnel_service: service } : {}),
     ...(lpSlug ? { mwc_lp_slug: lpSlug } : {}),
   };
+
+  // Scroll to top on mount — prevents browser restoring mid-page position
+  useEffect(() => { window.scrollTo(0, 0); }, []);
 
   const [nextAvailable, setNextAvailable] = useState<string | null>(null);
   const [_bookedSlot, _setBookedSlot] = useState<string | null>(null);
