@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MWC Operations Runbook v3</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 13px; color: #1a1a2e; background: #fff; line-height: 1.55; }
+
+  .cover { background: #0B1029; color: #fff; padding: 56px 48px 44px; }
+  .cover-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #E8670A; margin-bottom: 12px; }
+  .cover h1 { font-size: 28px; font-weight: 700; letter-spacing: 0.01em; margin-bottom: 6px; }
+  .cover .sub { font-size: 14px; color: rgba(255,255,255,0.60); margin-bottom: 4px; }
+  .cover .ver { font-size: 12px; color: #E8670A; font-weight: 700; margin-bottom: 24px; }
+  .cover .meta { font-size: 11px; color: rgba(255,255,255,0.35); border-top: 1px solid rgba(255,255,255,0.10); padding-top: 14px; }
+
+  .page { padding: 28px 48px; }
+
+  h2 { font-size: 15px; font-weight: 700; color: #0B1029; border-bottom: 2px solid #E8670A; padding-bottom: 5px; margin: 28px 0 14px; letter-spacing: 0.02em; text-transform: uppercase; }
+  h3 { font-size: 11px; font-weight: 700; color: #374151; margin: 16px 0 7px; text-transform: uppercase; letter-spacing: 0.08em; }
+
+  table { width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 12px; }
+  th { background: #0B1029; color: #fff; padding: 7px 10px; text-align: left; font-size: 10px; letter-spacing: 0.07em; text-transform: uppercase; }
+  td { padding: 6px 10px; border-bottom: 1px solid #e5e7eb; vertical-align: top; line-height: 1.5; }
+  tr:nth-child(even) td { background: #f9fafb; }
+
+  .code { background: #0d1220; color: #e2e8f0; padding: 10px 14px; border-radius: 6px; font-family: 'Courier New', monospace; font-size: 11px; margin: 6px 0 14px; line-height: 1.65; overflow-x: auto; }
+  .code .cm { color: #64748b; }
+  .code .kw { color: #E8670A; }
+  .code .str { color: #4ade80; }
+
+  .note { background: #fff7ed; border-left: 3px solid #E8670A; padding: 9px 13px; margin: 6px 0 14px; font-size: 12px; line-height: 1.55; }
+  .alert { background: #fef2f2; border-left: 3px solid #dc2626; padding: 9px 13px; margin: 6px 0 14px; font-size: 12px; line-height: 1.55; }
+  .good { background: #f0fdf4; border-left: 3px solid #16a34a; padding: 9px 13px; margin: 6px 0 14px; font-size: 12px; line-height: 1.55; }
+
+  .badge { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+  .green { background: #dcfce7; color: #166534; }
+  .orange-b { background: #fff7ed; color: #9a3412; }
+  .red-b { background: #fef2f2; color: #991b1b; }
+  .gray-b { background: #f3f4f6; color: #374151; }
+
+  a { color: #E8670A; text-decoration: none; }
+  hr { border: none; border-top: 1px solid #e5e7eb; margin: 22px 0; }
+
+  .flow { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin: 8px 0 14px; }
+  .flow-step { background: #0B1029; color: #fff; padding: 5px 12px; border-radius: 6px; font-size: 11px; font-weight: 600; white-space: nowrap; }
+  .flow-step.orange { background: #E8670A; }
+  .flow-step.green-s { background: #166534; }
+  .flow-arrow { color: #9ca3af; font-size: 14px; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .stat-box { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 6px; padding: 12px 14px; }
+  .stat-val { font-size: 20px; font-weight: 700; color: #E8670A; }
+  .stat-label { font-size: 10px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
+
+  .toc { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px 20px; margin-bottom: 24px; }
+  .toc ol { padding-left: 18px; columns: 2; column-gap: 24px; }
+  .toc li { padding: 2px 0; font-size: 12px; line-height: 1.6; }
+
+  @media print { body { -webkit-print-color-adjust: exact; } }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <p class="cover-eyebrow">Men's Wellness Centers</p>
+  <h1>Operations Runbook</h1>
+  <p class="sub">Full-Stack Architecture · Infrastructure · Credentials · Incident Response</p>
+  <p class="ver">Version 3.0 — Post-SRE Audit + UI Redesign</p>
+  <p class="meta">Generated: May 26, 2026 &nbsp;|&nbsp; CONFIDENTIAL — Internal Use Only</p>
+</div>
+
+<div class="page">
+
+<div class="two-col" style="margin-top:20px;">
+  <div class="stat-box"><div class="stat-val">318 KB</div><div class="stat-label">Bundle (gzip)</div></div>
+  <div class="stat-box"><div class="stat-val">86 KB</div><div class="stat-label">Critical path (gzip)</div></div>
+  <div class="stat-box"><div class="stat-val">0</div><div class="stat-label">WCAG AA violations</div></div>
+  <div class="stat-box"><div class="stat-val">461</div><div class="stat-label">Tests passing</div></div>
+</div>
+
+<div class="toc">
+  <h3 style="margin-top:0;">Contents</h3>
+  <ol>
+    <li>Infrastructure Overview</li>
+    <li>Data &amp; Request Flows</li>
+    <li>Monitoring Stack</li>
+    <li>Key URLs &amp; Dashboards</li>
+    <li>Credentials &amp; Secrets</li>
+    <li>Supabase — Database &amp; Edge Functions</li>
+    <li>GHL Integration</li>
+    <li>Email Notifications (SendGrid)</li>
+    <li>WordPress → Funnel Integration (Hammad)</li>
+    <li>Booking Funnel Route Map</li>
+    <li>AI Agent Workflow</li>
+    <li>Incident Runbook</li>
+    <li>Deployment Procedures</li>
+    <li>Performance &amp; Security Baseline</li>
+  </ol>
+</div>
+
+<!-- 1. INFRASTRUCTURE -->
+<h2>1. Infrastructure Overview</h2>
+<table>
+  <tr><th>Layer</th><th>Technology</th><th>Purpose</th><th>Host</th><th>Status</th></tr>
+  <tr><td><strong>Frontend</strong></td><td>React + Vite + TypeScript + Tailwind</td><td>Landing pages, booking funnel, admin panel</td><td>Vercel</td><td><span class="badge green">Live</span></td></tr>
+  <tr><td><strong>Edge Functions</strong></td><td>Deno / TypeScript (8 functions)</td><td>GHL proxy, lead intake, token exchange, Meta CAPI, email alerts, calendar sync, slot monitor</td><td>Supabase</td><td><span class="badge green">Live</span></td></tr>
+  <tr><td><strong>Database</strong></td><td>PostgreSQL + pg_cron + pg_net + RLS</td><td>Lead captures, calendar slot cache, booking events, tokens, rate limits</td><td>Supabase</td><td><span class="badge green">Live</span></td></tr>
+  <tr><td><strong>CRM</strong></td><td>GoHighLevel (GHL)</td><td>Contact management, appointments, pipelines</td><td>GHL Cloud</td><td><span class="badge green">Live</span></td></tr>
+  <tr><td><strong>Email</strong></td><td>SendGrid Web API v3</td><td>Lead notifications, failure alerts, slot monitoring alerts</td><td>SendGrid</td><td><span class="badge green">Live</span></td></tr>
+  <tr><td><strong>WordPress</strong></td><td>WordPress + Fluent Forms</td><td>Marketing site, form collection, handoff to booking funnel</td><td>menswellnesscenters.com</td><td><span class="badge green">Live</span></td></tr>
+  <tr><td><strong>Source control</strong></td><td>GitHub</td><td>Version control, CI/CD trigger for Vercel</td><td>mwcforme org</td><td><span class="badge green">Active</span></td></tr>
+  <tr><td><strong>CI/CD</strong></td><td>GitHub Actions</td><td>Lint, typecheck, test, build, secret scan, bundle size gate</td><td>GitHub</td><td><span class="badge green">Active</span></td></tr>
+</table>
+
+<h3>Deployment Flow</h3>
+<div class="flow">
+  <span class="flow-step">Code edit (Cursor / Claude Code / Antigravity)</span><span class="flow-arrow">→</span>
+  <span class="flow-step">git push origin main</span><span class="flow-arrow">→</span>
+  <span class="flow-step orange">GitHub Actions CI (lint+tsc+test+build+secrets+bundle)</span><span class="flow-arrow">→</span>
+  <span class="flow-step">Vercel auto-deploy (~30s)</span><span class="flow-arrow">→</span>
+  <span class="flow-step green-s">book.menswellnesscenters.com live</span>
+</div>
+<div class="alert"><strong>Supabase edge functions do NOT auto-deploy on git push.</strong> Must run <code>npx supabase functions deploy</code> manually after any edge function change. A GitHub Action exists for this — see §13.</div>
+
+<!-- 2. DATA FLOWS -->
+<h2>2. Data &amp; Request Flows</h2>
+
+<h3>A. WordPress Form → Booking Funnel</h3>
+<div class="flow">
+  <span class="flow-step">Fluent Form submit</span><span class="flow-arrow">→</span>
+  <span class="flow-step">PHP webhook</span><span class="flow-arrow">→</span>
+  <span class="flow-step orange">lead-intake (Supabase)</span><span class="flow-arrow">→</span>
+  <span class="flow-step">GHL contact upsert</span><span class="flow-arrow">→</span>
+  <span class="flow-step">15-min token issued</span><span class="flow-arrow">→</span>
+  <span class="flow-step orange">funnel_url returned</span><span class="flow-arrow">→</span>
+  <span class="flow-step">WP redirects user</span><span class="flow-arrow">→</span>
+  <span class="flow-step green-s">/book/entry?t=TOKEN</span>
+</div>
+<div class="flow" style="margin-top:4px;">
+  <span class="flow-step green-s">BookEntry</span><span class="flow-arrow">→</span>
+  <span class="flow-step">wp-token-exchange</span><span class="flow-arrow">→</span>
+  <span class="flow-step">Booking store seeded</span><span class="flow-arrow">→</span>
+  <span class="flow-step green-s">/book/symptom</span>
+</div>
+<div class="note"><strong>Parallel:</strong> lead-intake fires SendGrid email to eobrien@menswellnesscenters.com with full lead data, UTM attribution, and Call/GHL action buttons.</div>
+
+<h3>B. Landing Page Hero Form → Booking Funnel</h3>
+<div class="flow">
+  <span class="flow-step">TRTHeroForm submit</span><span class="flow-arrow">→</span>
+  <span class="flow-step orange">useLeadSubmitController</span><span class="flow-arrow">→</span>
+  <span class="flow-step">ghl-proxy → GHL contact upsert</span><span class="flow-arrow">→</span>
+  <span class="flow-step green-s">/book/symptom</span>
+</div>
+
+<h3>C. Calendar Slot Loading</h3>
+<div class="flow">
+  <span class="flow-step">User opens /book/schedule</span><span class="flow-arrow">→</span>
+  <span class="flow-step orange">Query ghl_free_slots table (cached)</span><span class="flow-arrow">→</span>
+  <span class="flow-step">Display day + time grid</span>
+</div>
+<div class="flow" style="margin-top:4px;">
+  <span class="flow-step">pg_cron every 30 min</span><span class="flow-arrow">→</span>
+  <span class="flow-step orange">ghl-sync</span><span class="flow-arrow">→</span>
+  <span class="flow-step">GHL /free-slots API</span><span class="flow-arrow">→</span>
+  <span class="flow-step green-s">ghl_free_slots refreshed</span>
+</div>
+
+<!-- 3. MONITORING -->
+<h2>3. Monitoring Stack</h2>
+<table>
+  <tr><th>Tool</th><th>What It Catches</th><th>Dashboard</th><th>ID / Key</th></tr>
+  <tr><td><strong>Sentry</strong></td><td>JS errors, crashes, slow loads, session replay (PHI-masked)</td><td>sentry.io</td><td>DSN: https://25e951c2...@o4511385905528832.ingest.us.sentry.io/4511447194468352</td></tr>
+  <tr><td><strong>Clarity (funnel)</strong></td><td>Session recordings, heatmaps, rage clicks</td><td>clarity.microsoft.com</td><td>wwba9yepnx</td></tr>
+  <tr><td><strong>Clarity (WordPress)</strong></td><td>Session recordings on marketing site</td><td>clarity.microsoft.com</td><td>vttwm0cuk9</td></tr>
+  <tr><td><strong>UptimeRobot</strong></td><td>Site downtime, SMS + email alert</td><td>dashboard.uptimerobot.com/monitors/803146043</td><td>Monitor #803146043</td></tr>
+  <tr><td><strong>Vercel Analytics</strong></td><td>Page views, Core Web Vitals (real users)</td><td>Vercel Dashboard → Analytics</td><td>@vercel/analytics</td></tr>
+  <tr><td><strong>Vercel Speed Insights</strong></td><td>LCP, INP, CLS per page</td><td>Vercel Dashboard → Speed Insights</td><td>@vercel/speed-insights</td></tr>
+  <tr><td><strong>GA4</strong></td><td>Funnel events: booking_started → booking_completed</td><td>analytics.google.com</td><td>G-286547777</td></tr>
+  <tr><td><strong>GTM</strong></td><td>Tag management</td><td>tagmanager.google.com</td><td>GTM-5X9DB23T</td></tr>
+  <tr><td><strong>Slot Monitor</strong></td><td>Zero slots for any location, stale sync (&gt;2h)</td><td>Email alert to Eric</td><td>pg_cron every 30 min, 4h dedup</td></tr>
+</table>
+
+<h3>Alert Routing</h3>
+<table>
+  <tr><th>Alert Type</th><th>Destination</th><th>Source</th></tr>
+  <tr><td>Site down</td><td>SMS + email (UptimeRobot contacts)</td><td>UptimeRobot</td></tr>
+  <tr><td>New lead captured</td><td>eobrien@menswellnesscenters.com (info folder)</td><td>SendGrid via lead-intake</td></tr>
+  <tr><td>GHL submission failed</td><td>eobrien@menswellnesscenters.com — red header "ACTION NEEDED"</td><td>SendGrid via lead-intake</td></tr>
+  <tr><td>Zero calendar slots / stale sync</td><td>eobrien@menswellnesscenters.com</td><td>SendGrid via slot-monitor (every 30 min)</td></tr>
+  <tr><td>JS errors / crashes</td><td>Sentry dashboard + email alerts</td><td>Sentry</td></tr>
+</table>
+
+<!-- 4. KEY URLS -->
+<h2>4. Key URLs &amp; Dashboards</h2>
+<table>
+  <tr><th>Resource</th><th>URL</th></tr>
+  <tr><td>Live booking funnel</td><td><a href="https://book.menswellnesscenters.com">https://book.menswellnesscenters.com</a></td></tr>
+  <tr><td>TRT landing page (primary ad destination)</td><td><a href="https://book.menswellnesscenters.com/trt">https://book.menswellnesscenters.com/trt</a></td></tr>
+  <tr><td>ED landing page</td><td><a href="https://book.menswellnesscenters.com/ed">https://book.menswellnesscenters.com/ed</a></td></tr>
+  <tr><td>Weight loss landing page</td><td><a href="https://book.menswellnesscenters.com/wl">https://book.menswellnesscenters.com/wl</a></td></tr>
+  <tr><td>Admin panel</td><td><a href="https://book.menswellnesscenters.com/admin">https://book.menswellnesscenters.com/admin</a> — code: 1Menshealth</td></tr>
+  <tr><td>Booking funnel debug</td><td>https://book.menswellnesscenters.com/book/entry?t=TOKEN&amp;debug=1</td></tr>
+  <tr><td>Vercel dashboard</td><td><a href="https://vercel.com/men-s-wellness-centers/mwclanders">vercel.com/men-s-wellness-centers/mwclanders</a></td></tr>
+  <tr><td>Supabase dashboard</td><td><a href="https://supabase.com/dashboard/project/lapvqhmmgeduuedleyhf">supabase.com/dashboard/project/lapvqhmmgeduuedleyhf</a></td></tr>
+  <tr><td>GitHub repo</td><td><a href="https://github.com/mwcforme/mwclanders">github.com/mwcforme/mwclanders</a></td></tr>
+  <tr><td>WordPress site</td><td><a href="https://menswellnesscenters.com">https://menswellnesscenters.com</a></td></tr>
+  <tr><td>GHL CRM</td><td><a href="https://app.gohighlevel.com">https://app.gohighlevel.com</a></td></tr>
+  <tr><td>Perf report</td><td>github.com/mwcforme/mwclanders/blob/main/perf/OPTIMIZATION_REPORT.md</td></tr>
+  <tr><td>SRE audit report</td><td>github.com/mwcforme/mwclanders/blob/main/audit/FINAL_REPORT.md</td></tr>
+  <tr><td>UX audit report</td><td>github.com/mwcforme/mwclanders/blob/main/ux/UX_REFINEMENT_REPORT.md</td></tr>
+</table>
+
+<!-- 5. CREDENTIALS -->
+<h2>5. Credentials &amp; Secrets</h2>
+<div class="alert"><strong>SECURITY:</strong> Store all credentials in 1Password. Rotate GHL PIT, SendGrid key, and Supabase service role every 90 days. Never commit secrets to git — CI secret scan will block the push.</div>
+
+<h3>Supabase (Active Project)</h3>
+<table>
+  <tr><th>Field</th><th>Value</th></tr>
+  <tr><td>Project ID</td><td>lapvqhmmgeduuedleyhf</td></tr>
+  <tr><td>Project URL</td><td>https://lapvqhmmgeduuedleyhf.supabase.co</td></tr>
+  <tr><td>Anon / Publishable Key</td><td>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxhcHZxaG1tZ2VkdXVlZGxleWhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MTgwNDYsImV4cCI6MjA5NTI5NDA0Nn0.VKCzn3kpFtUV3aKGHdAU4TfMPlN97AxVyTjwu7vFIW8</td></tr>
+  <tr><td>DB Password</td><td>[DB-PASSWORD-REDACTED]</td></tr>
+  <tr><td>DB Connection</td><td>postgresql://postgres:[DB-PASSWORD-REDACTED]@db.lapvqhmmgeduuedleyhf.supabase.co:5432/postgres</td></tr>
+  <tr><td>Access Token (CLI)</td><td>[REDACTED — supabase.com/dashboard/account/tokens]</td></tr>
+  <tr><td>Old project (decommissioned)</td><td>yvuwzaxnyxoejwzqfbdf — no longer active</td></tr>
+</table>
+
+<h3>Vercel</h3>
+<table>
+  <tr><th>Field</th><th>Value</th></tr>
+  <tr><td>Team</td><td>men-s-wellness-centers</td></tr>
+  <tr><td>Project</td><td>mwclanders</td></tr>
+  <tr><td>Access Token (CLI)</td><td>[REDACTED — vercel.com/account/tokens]</td></tr>
+</table>
+
+<h3>Vercel Environment Variables</h3>
+<table>
+  <tr><th>Variable</th><th>Value</th></tr>
+  <tr><td>VITE_SUPABASE_URL</td><td>https://lapvqhmmgeduuedleyhf.supabase.co</td></tr>
+  <tr><td>VITE_SUPABASE_PROJECT_ID</td><td>lapvqhmmgeduuedleyhf</td></tr>
+  <tr><td>VITE_SUPABASE_PUBLISHABLE_KEY</td><td>eyJhbGci... (see Vercel dashboard)</td></tr>
+  <tr><td>VITE_WP_HANDOFF_SECRET</td><td>[INTAKE-TOKEN-REDACTED]</td></tr>
+  <tr><td>VITE_CLARITY_PROJECT_ID</td><td>wwba9yepnx</td></tr>
+  <tr><td>VITE_SENTRY_DSN</td><td>https://25e951c20fe3d87749ed4b2628b97553@o4511385905528832.ingest.us.sentry.io/4511447194468352</td></tr>
+  <tr><td>VITE_ADMIN_PASSWORD</td><td>1Menshealth</td></tr>
+</table>
+
+<h3>Supabase Secrets (Edge Functions)</h3>
+<table>
+  <tr><th>Secret</th><th>Value / Notes</th></tr>
+  <tr><td>GHL_API_KEY</td><td>[GHL-PIT-REDACTED]</td></tr>
+  <tr><td>GHL_API_KEY_PROD_1</td><td>[GHL-PIT-REDACTED]</td></tr>
+  <tr><td>GHL_LOCATION_ID</td><td>Ghstz8eIsHWLeXek47dk</td></tr>
+  <tr><td>GHL_LOCATION_ID_PROD_1</td><td>Ghstz8eIsHWLeXek47dk</td></tr>
+  <tr><td>LEAD_INTAKE_TOKEN</td><td>[INTAKE-TOKEN-REDACTED]</td></tr>
+  <tr><td>WP_HANDOFF_SECRET</td><td>[INTAKE-TOKEN-REDACTED]</td></tr>
+  <tr><td>FUNNEL_BASE_URL</td><td>https://book.menswellnesscenters.com</td></tr>
+  <tr><td>SENDGRID_API_KEY</td><td>[SENDGRID-KEY-REDACTED]</td></tr>
+  <tr><td>META_PIXEL_ID</td><td>[Not yet configured]</td></tr>
+  <tr><td>META_CAPI_TOKEN</td><td>[Not yet configured]</td></tr>
+</table>
+
+<h3>WordPress REST API</h3>
+<table>
+  <tr><th>Field</th><th>Value</th></tr>
+  <tr><td>Site URL</td><td>https://menswellnesscenters.com</td></tr>
+  <tr><td>Username</td><td>opeclassz</td></tr>
+  <tr><td>Application Password</td><td>[WP-APP-PASSWORD-REDACTED]</td></tr>
+  <tr><td>User ID</td><td>17</td></tr>
+</table>
+
+<h3>Analytics IDs</h3>
+<table>
+  <tr><th>Service</th><th>ID</th></tr>
+  <tr><td>GA4 (booking funnel)</td><td>G-286547777</td></tr>
+  <tr><td>Google Ads</td><td>AW-954193072</td></tr>
+  <tr><td>GTM Container</td><td>GTM-5X9DB23T</td></tr>
+  <tr><td>Clarity (funnel)</td><td>wwba9yepnx</td></tr>
+  <tr><td>Clarity (WordPress)</td><td>vttwm0cuk9</td></tr>
+  <tr><td>Sentry Org</td><td>o4511385905528832</td></tr>
+  <tr><td>UptimeRobot Monitor</td><td>803146043</td></tr>
+  <tr><td>SendGrid Verified Sender</td><td>info@menswellnesscenters.com</td></tr>
+</table>
+
+<!-- 6. SUPABASE -->
+<h2>6. Supabase — Database &amp; Edge Functions</h2>
+
+<h3>Database Tables</h3>
+<table>
+  <tr><th>Table</th><th>Purpose</th><th>Key Columns</th></tr>
+  <tr><td>lead_captures</td><td>Every form submission — partial, full, failed</td><td>id, name, phone, email, location, service, source, crm_status, crm_contact_id, attribution, tags</td></tr>
+  <tr><td>ghl_free_slots</td><td>Cached calendar availability (refreshed every 30 min)</td><td>calendar_id, slot_start, fetched_at</td></tr>
+  <tr><td>wp_intake_tokens</td><td>Single-use 15-min tokens for WP → funnel handoff</td><td>token, capture_id, contact_id, first_name, phone, expires_at, used</td></tr>
+  <tr><td>booking_event_log</td><td>Appointment events, slot-monitor dedup state</td><td>event_type, meta, created_at</td></tr>
+  <tr><td>ghl_sync_runs</td><td>Sync job history, watchdog for stale sync</td><td>id, status, started_at, finished_at</td></tr>
+  <tr><td>lead_rate_limit</td><td>Phone-based rate limiting (3 attempts / 60 min)</td><td>phone_hash (SHA-256), count, window_start</td></tr>
+</table>
+
+<h3>Edge Functions</h3>
+<table>
+  <tr><th>Function</th><th>Trigger</th><th>Purpose</th></tr>
+  <tr><td>lead-intake</td><td>POST from WordPress PHP</td><td>Persist lead → GHL contact → token → SendGrid notification. LEAD_INTAKE_TOKEN required.</td></tr>
+  <tr><td>ghl-proxy</td><td>React frontend</td><td>Proxies all GHL API calls server-side. Allowlisted routes only.</td></tr>
+  <tr><td>wp-token-exchange</td><td>BookEntry.tsx</td><td>Exchanges single-use token for identity → seeds booking store.</td></tr>
+  <tr><td>meta-capi</td><td>Frontend on lead submit</td><td>Server-side Meta Conversions API (hashed PII, deduplication).</td></tr>
+  <tr><td>lead-notify</td><td>DB trigger on lead_captures INSERT</td><td>Backup notification path (primary is direct call in lead-intake).</td></tr>
+  <tr><td>ghl-sync</td><td>pg_cron every 30 min</td><td>Fetches calendar free slots from GHL → caches in ghl_free_slots.</td></tr>
+  <tr><td>ghl-sync-validate</td><td>Manual / admin</td><td>Audits slot freshness and coverage across all 3 calendars.</td></tr>
+  <tr><td>slot-monitor</td><td>pg_cron every 30 min</td><td>Checks for zero-slot conditions and stale sync → SendGrid alert (4h dedup).</td></tr>
+</table>
+
+<h3>Cron Schedule</h3>
+<div class="code">ghl-sync:       <span class="str">*/30 * * * *</span>   <span class="cm">-- refresh calendar slots from GHL API</span>
+slot-monitor:   <span class="str">*/30 * * * *</span>   <span class="cm">-- alert if zero slots or sync stale &gt;2h</span></div>
+
+<!-- 7. GHL -->
+<h2>7. GHL Integration</h2>
+<table>
+  <tr><th>Field</th><th>Value</th></tr>
+  <tr><td>Production Location ID</td><td>Ghstz8eIsHWLeXek47dk</td></tr>
+  <tr><td>API Key (PIT)</td><td>[GHL-PIT-REDACTED]</td></tr>
+  <tr><td>Richmond Calendar ID</td><td>1Cfy5JnO2A4ggiZlMVvX</td></tr>
+  <tr><td>Virginia Beach Calendar ID</td><td>4xmnBGMWJ6TVUKcAPpPb</td></tr>
+  <tr><td>Newport News Calendar ID</td><td>lBaRbjUpEmesxEloFBME</td></tr>
+</table>
+
+<h3>Location Phone Numbers</h3>
+<table>
+  <tr><th>Location</th><th>Display</th><th>Tel Link</th></tr>
+  <tr><td>Richmond / Glen Allen</td><td>(804) 346-4636</td><td>tel:8043464636</td></tr>
+  <tr><td>Newport News</td><td>(757) 806-6263</td><td>tel:7578066263</td></tr>
+  <tr><td>Virginia Beach</td><td>(757) 612-4428</td><td>tel:7576124428</td></tr>
+  <tr><td>Main line</td><td>(866) 344-4955</td><td>tel:+18663444955</td></tr>
+</table>
+
+<h3>GHL Custom Fields Written by Funnel</h3>
+<table>
+  <tr><th>Field</th><th>Values</th><th>Purpose</th></tr>
+  <tr><td>mwc_symptom</td><td>energy | sexual | weight | other</td><td>Intake reason</td></tr>
+  <tr><td>mwc_symptom_duration</td><td>lt6mo | 6to12mo | 1to2yr | gt2yr</td><td>Duration</td></tr>
+  <tr><td>mwc_urgency_tier</td><td>early | building | overdue | long_overdue</td><td>Sales prioritization</td></tr>
+  <tr><td>mwc_funnel_service</td><td>trt | ed | wl</td><td>Service booked for</td></tr>
+  <tr><td>mwc_lp_slug</td><td>URL path</td><td>Landing page source</td></tr>
+</table>
+
+<!-- 8. EMAIL -->
+<h2>8. Email Notifications (SendGrid)</h2>
+<table>
+  <tr><th>Email Type</th><th>Subject Format</th><th>Trigger</th></tr>
+  <tr><td>New lead</td><td>New TRT lead — Name · Location · Day, Date, Time ET</td><td>Every successful lead submission</td></tr>
+  <tr><td>Partial lead</td><td>Partial lead — Name left without booking</td><td>Form started but not completed</td></tr>
+  <tr><td>GHL failure</td><td>ACTION NEEDED — GHL failed for Name (Location)</td><td>GHL contact creation fails</td></tr>
+  <tr><td>Slot alert</td><td>[MWC Alert] N slot issue(s) detected</td><td>slot-monitor every 30 min (conditional, 4h dedup)</td></tr>
+</table>
+<div class="note"><strong>Inbox routing:</strong> Emails send from info@menswellnesscenters.com and arrive in the <strong>info</strong> subfolder at eobrien@menswellnesscenters.com. Create an Outlook rule to move to Inbox if needed.</div>
+
+<!-- 9. WORDPRESS INTEGRATION -->
+<h2>9. WordPress → Funnel Integration (Hammad)</h2>
+<div class="alert"><strong>CURRENT ISSUE:</strong> The Supabase project was migrated. Hammad must update MWC_INTAKE_URL to the new endpoint or the funnel redirect will not work.</div>
+
+<h3>The Flow</h3>
+<div class="code">Fluent Form submit
+  → PHP webhook POSTs to Supabase lead-intake
+  → lead-intake: persists lead + creates GHL contact + issues 15-min token
+  → Returns: { <span class="str">"funnel_url": "https://book.menswellnesscenters.com/book/entry?t=TOKEN"</span> }
+  → WordPress redirects user to funnel_url
+  → BookEntry exchanges token → seeds store → /book/symptom</div>
+
+<h3>Required PHP Constants</h3>
+<table>
+  <tr><th>Constant</th><th>Current Value</th><th>Note</th></tr>
+  <tr><td>MWC_INTAKE_URL</td><td>https://lapvqhmmgeduuedleyhf.supabase.co/functions/v1/lead-intake</td><td><strong>Updated — use this new URL</strong></td></tr>
+  <tr><td>MWC_INTAKE_TOKEN</td><td>[INTAKE-TOKEN-REDACTED]</td><td>Unchanged</td></tr>
+  <tr><td>MWC_FUNNEL_BASE</td><td>https://book.menswellnesscenters.com</td><td>Unchanged</td></tr>
+</table>
+
+<h3>Consent Field Fix</h3>
+<div class="code"><span class="cm">// WRONG — sends empty string:</span>
+'consent' => $formData['terms-n-condition'],
+
+<span class="cm">// CORRECT — sends boolean true:</span>
+'consent' => isset($formData['terms-n-condition']) && $formData['terms-n-condition'] === 'on',</div>
+
+<h3>Expected Success Response</h3>
+<div class="good">Response must contain <strong>funnel_url</strong>. If it's missing, the redirect will not happen.
+<br/>Check Supabase Edge Function logs: Dashboard → Edge Functions → lead-intake → Logs</div>
+<div class="code">{
+  "ok": true,
+  "capture_id": "...",
+  "crm_contact_id": "...",
+  <span class="str">"funnel_url": "https://book.menswellnesscenters.com/book/entry?t=..."</span>
+}</div>
+
+<h3>Debug Mode</h3>
+<div class="code"><span class="cm"># Add &debug=1 to the entry URL to see what failed:</span>
+https://book.menswellnesscenters.com/book/entry?t=TOKEN&amp;debug=1</div>
+
+<!-- 10. ROUTE MAP -->
+<h2>10. Booking Funnel Route Map</h2>
+<table>
+  <tr><th>Route</th><th>Component</th><th>Notes</th></tr>
+  <tr><td>/trt</td><td>TRTLandingPage</td><td>Primary paid traffic destination</td></tr>
+  <tr><td>/ed</td><td>NewED</td><td>ED landing page</td></tr>
+  <tr><td>/wl</td><td>NewWeightLoss</td><td>Weight loss landing page</td></tr>
+  <tr><td>/</td><td>NewLandingPage</td><td>Homepage — all 3 services</td></tr>
+  <tr><td>/book/entry</td><td>BookEntry</td><td>WordPress handoff — accepts <strong>?t=token only</strong></td></tr>
+  <tr><td>/book/symptom</td><td>BookSymptom</td><td>Step 1: what brings you in (full-bleed dark layout)</td></tr>
+  <tr><td>/book/duration</td><td>BookDuration</td><td>Step 2: how long (no calendar icons)</td></tr>
+  <tr><td>/book/location</td><td>BookLocation</td><td>Step 3: clinic picker with drive time</td></tr>
+  <tr><td>/book/schedule</td><td>BookSchedule</td><td>Step 4: GHL calendar (white card on dark bg)</td></tr>
+  <tr><td>/book/confirmed</td><td>BookConfirmed</td><td>Post-booking confirmation (dark sections)</td></tr>
+  <tr><td>/book/lets-talk</td><td>BookLetsTalk</td><td>"TALK TO US." — phone/text fallback</td></tr>
+  <tr><td>/admin</td><td>AdminLogin</td><td>Password gate — shared code: 1Menshealth</td></tr>
+</table>
+
+<!-- 11. AI AGENTS -->
+<h2>11. AI Agent Workflow</h2>
+<table>
+  <tr><th>Agent</th><th>Best For</th><th>How to Access</th></tr>
+  <tr><td><strong>OpenClaw</strong></td><td>Strategy, audits, architecture decisions, orchestrating large tasks</td><td>WhatsApp +14257530838</td></tr>
+  <tr><td><strong>Cursor</strong></td><td>Primary editor, fast inline edits</td><td>Open github.com/mwcforme/mwclanders</td></tr>
+  <tr><td><strong>Claude Code</strong></td><td>Complex multi-file refactors, long context</td><td>Open repo directory</td></tr>
+  <tr><td><strong>Antigravity (Google Ultra)</strong></td><td>Autonomous background tasks, unattended runs</td><td>Point at GitHub repo</td></tr>
+</table>
+<div class="note">All agents read <strong>AGENTS.md</strong> at repo root automatically. Rules include: components ≤150 LOC, functions ≤30 LOC, no em-dashes, no "free", "Members" not "patients", no hardcoded hex outside tokens.</div>
+<div class="alert"><strong>Supabase edge functions are separate from Vercel deploys.</strong> Git push does NOT deploy edge functions. Must run <code>npx supabase functions deploy --project-ref lapvqhmmgeduuedleyhf</code> manually, OR the GitHub Action will deploy automatically when files under <code>supabase/functions/</code> change on push to main.</div>
+
+<!-- 12. INCIDENT RUNBOOK -->
+<h2>12. Incident Runbook</h2>
+
+<h3>Site Down</h3>
+<div class="code">1. Check UptimeRobot: https://dashboard.uptimerobot.com/monitors/803146043
+2. Check Vercel deployments: https://vercel.com/men-s-wellness-centers/mwclanders/deployments
+3. If bad deploy → Vercel → Deployments → previous → Redeploy
+4. Check Sentry for JS crashes causing blank screen</div>
+
+<h3>Calendar Showing "Full" / Zero Slots</h3>
+<div class="code">1. You will receive a slot-monitor email alert within 30 min if this persists
+2. Trigger manual sync: POST https://lapvqhmmgeduuedleyhf.supabase.co/functions/v1/ghl-sync
+   (Authorization: Bearer [anon key])
+3. Check GHL calendar availability is configured for that location
+4. Supabase Dashboard → Edge Functions → ghl-sync → Logs for errors</div>
+
+<h3>WordPress Form Not Redirecting to Funnel</h3>
+<div class="code">1. Check WP debug log for "FLUENT FORM - SUPABASE RESPONSE"
+2. Response must contain funnel_url — if missing, see §9 above
+3. Verify MWC_INTAKE_URL = https://lapvqhmmgeduuedleyhf.supabase.co/functions/v1/lead-intake
+4. If correct URL but still no funnel_url, check Supabase → Edge Functions → lead-intake → Logs
+5. Test with debug mode: https://book.menswellnesscenters.com/book/entry?t=TOKEN&amp;debug=1</div>
+
+<h3>Leads Not Appearing in GHL</h3>
+<div class="code">1. Check email — GHL failure alert fires immediately with lead details + manual action link
+2. Check Supabase: lead_captures table → filter crm_status = 'failed'
+3. Verify GHL API key not expired: [GHL-PIT-REDACTED]
+4. Supabase → Edge Functions → lead-intake → Logs</div>
+
+<h3>No Lead Notification Emails</h3>
+<div class="code">1. Check info subfolder at eobrien@menswellnesscenters.com first
+2. Check SendGrid activity log for bounce or spam issues
+3. Verify SENDGRID_API_KEY set in Supabase secrets
+4. Supabase → Edge Functions → lead-intake → Logs for SendGrid errors</div>
+
+<h3>CI Pipeline Failing</h3>
+<div class="code">1. GitHub → mwcforme/mwclanders → Actions → latest run → see which step failed
+2. Common causes:
+   - TypeScript error: npx tsc --noEmit locally to reproduce
+   - Lint error: npm run lint -- --max-warnings 0 locally
+   - Test failure: npm test -- --run locally
+   - Bundle over 350 KB gzip: check dist/assets after npm run build
+   - Secret scan: grep -rn "pit-|SG\.|vcp_|sbp_" src/ — remove any matches</div>
+
+<!-- 13. DEPLOYMENT -->
+<h2>13. Deployment Procedures</h2>
+
+<h3>Frontend (Automatic via CI)</h3>
+<div class="code">git add -A && git commit -m "feat: ..." && git push origin main
+<span class="cm"># GitHub Actions runs → Vercel deploys in ~30 seconds if CI passes</span></div>
+
+<h3>Supabase Edge Functions (via GitHub Action)</h3>
+<div class="code"><span class="cm"># Automatic: push changes to supabase/functions/** on main branch
+# The deploy-functions.yml GitHub Action triggers automatically
+# Requires SUPABASE_ACCESS_TOKEN in GitHub repository secrets</span></div>
+
+<h3>Supabase Edge Functions (Manual)</h3>
+<div class="code">export SUPABASE_ACCESS_TOKEN=[your token from supabase.com/dashboard/account/tokens]
+<span class="cm"># Deploy all functions:</span>
+npx supabase functions deploy --project-ref lapvqhmmgeduuedleyhf
+<span class="cm"># Deploy one function:</span>
+npx supabase functions deploy lead-intake --project-ref lapvqhmmgeduuedleyhf</div>
+
+<h3>Database Migrations</h3>
+<div class="code">npx supabase link --project-ref lapvqhmmgeduuedleyhf --password [DB-PASSWORD-REDACTED]
+npx supabase db push --password [DB-PASSWORD-REDACTED]</div>
+
+<h3>Vercel Environment Variables (CLI)</h3>
+<div class="code">export VERCEL_TOKEN=[your token]
+echo "value" | vercel env add VARIABLE_NAME production</div>
+
+<h3>Trigger Manual Calendar Sync</h3>
+<div class="code">curl -X POST https://lapvqhmmgeduuedleyhf.supabase.co/functions/v1/ghl-sync \
+  -H "Authorization: Bearer [anon key]" \
+  -H "Content-Type: application/json" \
+  -d '{}'</div>
+
+<!-- 14. PERFORMANCE -->
+<h2>14. Performance &amp; Security Baseline</h2>
+
+<h3>Performance (Post-Optimization)</h3>
+<table>
+  <tr><th>Metric</th><th>Before</th><th>After</th><th>Change</th></tr>
+  <tr><td>Bundle (gzip)</td><td>370 KB</td><td>318 KB</td><td>-14%</td></tr>
+  <tr><td>Critical path (gzip)</td><td>170 KB</td><td>86 KB</td><td>-49%</td></tr>
+  <tr><td>WCAG AA contrast violations</td><td>9</td><td>0</td><td>-100%</td></tr>
+  <tr><td>Tests passing</td><td>464</td><td>461</td><td>Stable</td></tr>
+</table>
+
+<h3>Security (Post-SRE Audit)</h3>
+<table>
+  <tr><th>Control</th><th>Status</th></tr>
+  <tr><td>LEAD_INTAKE_TOKEN required</td><td><span class="badge green">Enforced</span> — 503 if not configured</td></tr>
+  <tr><td>Phone rate limiting</td><td><span class="badge green">Active</span> — 3 per 60 min, SHA-256 hashed phone, DB-backed</td></tr>
+  <tr><td>IP rate limiting</td><td><span class="badge green">Active</span> — in-memory, 10 per 60 min</td></tr>
+  <tr><td>CORS</td><td><span class="badge green">Allowlist</span> — no wildcard origins</td></tr>
+  <tr><td>RLS on all tables</td><td><span class="badge green">Enforced</span> — anon denied on sensitive tables</td></tr>
+  <tr><td>CSP headers</td><td><span class="badge green">Set</span> — vercel.json</td></tr>
+  <tr><td>Secret scan in CI</td><td><span class="badge green">Active</span> — blocks push if secrets found in src/</td></tr>
+  <tr><td>Admin auth</td><td><span class="badge orange-b">Shared password</span> — SSO planned by 2026-06-01</td></tr>
+  <tr><td>Meta CAPI secrets</td><td><span class="badge orange-b">Not configured</span> — META_PIXEL_ID + META_CAPI_TOKEN needed</td></tr>
+</table>
+
+<hr/>
+<p style="text-align:center;font-size:10px;color:#9ca3af;margin-top:16px;padding-bottom:8px;">Men's Wellness Centers · Operations Runbook v3.0 · May 26, 2026 · CONFIDENTIAL</p>
+
+</div>
+</body>
+</html>
