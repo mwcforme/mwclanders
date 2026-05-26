@@ -262,8 +262,8 @@ const BookSchedule = () => {
 
   return (
     <>
-      <BookLayout page="schedule" title="Book Your Physician Assessment | Men's Wellness Centers">
-        <div style={{ display: "flex", flexDirection: "column", gap: 24, padding: "64px 16px 96px" }}>
+      <BookLayout page="schedule" variant="confirmation" title="Book Your Physician Assessment | Men's Wellness Centers">
+        <div style={{ display: "flex", flexDirection: "column", gap: 24, padding: "40px 16px 96px" }}>
 
           <div style={{ maxWidth: 720, width: "100%", margin: "0 auto" }}>
             <BackButton onClick={() => navigate(-1)} />

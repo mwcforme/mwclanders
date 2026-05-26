@@ -189,7 +189,7 @@ You've been told your labs are normal. You don't feel normal. At Men's Wellness 
         {/* RIGHT - form. No decoration. DO NOT add borders, accents, or wrappers around the form. */}
         <div id="hero-form" className="w-full flex lg:justify-end">
           <div className="w-full">
-            <TRTHeroForm />
+            <TRTHeroForm formId="hero-trt" />
           </div>
         </div>
 
