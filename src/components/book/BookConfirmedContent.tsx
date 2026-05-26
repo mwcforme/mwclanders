@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Phone, MapPin, Navigation, ExternalLink, Clock, ClipboardList, FlaskConical, Stethoscope } from "lucide-react";
+import { MapPin, Navigation, ExternalLink, Clock, ClipboardList, FlaskConical, Stethoscope } from "lucide-react";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
 import { EmailCapture } from "@/components/book/EmailCapture";
 import type { Location } from "@/data/locations";
@@ -22,11 +22,12 @@ const PREP_STEPS = [
 
 const EXPECT_VIDEO_SRC = "/videos/what-to-expect.mp4";
 
-// Section eyebrow — orange to match mockup
-const EYEBROW: React.CSSProperties = {
-  fontFamily: FONTS.ui, fontSize: 11, fontWeight: 800,
+// Teal eyebrow — matches mockup source exactly: color: rgb(46, 196, 165)
+const TEAL_EYEBROW: React.CSSProperties = {
+  fontFamily: FONTS.body,
+  fontSize: 11, fontWeight: 800,
   letterSpacing: "0.14em", textTransform: "uppercase",
-  color: COLORS.orangeHex, marginBottom: 14, margin: 0,
+  color: COLORS.teal, marginBottom: 14,
 };
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
@@ -35,7 +36,8 @@ function OutcomeCard() {
   return (
     <div style={GLASS_CARD}>
       <div style={{ padding: "14px 20px 12px", borderBottom: `1px solid ${COLORS.glassDivider}` }}>
-        <p style={EYEBROW}>What you'll leave with</p>
+        {/* Mockup source: "You leave with" — no "What" prefix */}
+        <p style={{ ...TEAL_EYEBROW, marginBottom: 0 }}>You leave with</p>
       </div>
       {OUTCOME_ITEMS.map(({ icon, text }, idx, arr) => (
         <div
@@ -45,7 +47,8 @@ function OutcomeCard() {
             borderBottom: idx < arr.length - 1 ? `1px solid ${COLORS.glassDivider}` : "none",
           }}
         >
-          <div style={{ width: 36, height: 36, borderRadius: "50%", background: COLORS.orangeIconBg, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+          {/* Mockup: width:36 height:36 border-radius:8px background:rgba(232,103,10,0.12) */}
+          <div style={{ width: 36, height: 36, borderRadius: 8, background: COLORS.orangeIconBg, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
             {icon}
           </div>
           <span style={{ fontSize: 15, fontWeight: 500, color: COLORS.textPrimary, lineHeight: 1.5 }}>{text}</span>
@@ -59,7 +62,8 @@ function VideoCard() {
   const videoRef = useRef<HTMLVideoElement>(null);
   return (
     <div style={GLASS_CARD}>
-      <div style={{ position: "relative", width: "100%", paddingBottom: "56%", background: "#000" }}>
+      {/* Mockup: padding-bottom: 52% */}
+      <div style={{ position: "relative", width: "100%", paddingBottom: "52%", background: "#000" }}>
         <video
           ref={videoRef}
           src={EXPECT_VIDEO_SRC}
@@ -69,10 +73,11 @@ function VideoCard() {
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", border: 0 }}
         />
       </div>
+      {/* Mockup: padding: 16px 20px 18px */}
       <div style={{ padding: "16px 20px 18px", borderTop: `1px solid ${COLORS.glassDivider}` }}>
-        <p style={{ ...EYEBROW, marginBottom: 6 }}>2 minute video</p>
-        <h2 style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 18, color: COLORS.textPrimary, marginBottom: 0, textTransform: "uppercase" }}>
-          What happens when you walk in
+        {/* Mockup: font-size:18px Oswald color:rgba(255,255,255,0.92) */}
+        <h2 style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 18, color: COLORS.textPrimary, marginBottom: 0 }}>
+          What happens when you walk in. 2 min.
         </h2>
       </div>
     </div>
@@ -82,10 +87,12 @@ function VideoCard() {
 function PrepCard() {
   return (
     <div style={GLASS_CARD_PAD}>
-      <p style={{ ...EYEBROW, marginBottom: 14 }}>Before you arrive</p>
+      {/* Mockup: teal eyebrow "Before you arrive" */}
+      <p style={TEAL_EYEBROW}>Before you arrive</p>
       <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
         {PREP_STEPS.map(({ n, text }) => (
           <div key={n} style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            {/* Mockup: width:28 height:28 border-radius:50% background:var(--brand-cta) */}
             <div style={{
               width: 28, height: 28, borderRadius: "50%",
               background: "var(--brand-cta)", color: "#FFF",
@@ -106,11 +113,11 @@ function LocationCard({ center, mapsSearchUrl, mapsEmbedUrl }: { center: Locatio
   return (
     <div style={GLASS_CARD}>
       <div style={{ padding: "20px 20px 16px" }}>
-        <p style={{ ...EYEBROW, marginBottom: 8 }}>Location</p>
-        <h2 style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 22, color: COLORS.textPrimary, textTransform: "uppercase", marginBottom: 14 }}>
+        {/* Mockup: font-size:20px Oswald uppercase */}
+        <h2 style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 20, color: COLORS.textPrimary, textTransform: "uppercase", marginBottom: 12 }}>
           {center.city}
         </h2>
-        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 4 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <Navigation size={15} strokeWidth={2.5} style={{ color: "var(--brand-cta)", flexShrink: 0 }} />
             <span style={{ fontSize: 14, fontWeight: 700, color: "var(--brand-cta)", textTransform: "uppercase", letterSpacing: "0.05em" }}>{center.driveTime}</span>
@@ -121,9 +128,9 @@ function LocationCard({ center, mapsSearchUrl, mapsEmbedUrl }: { center: Locatio
               {center.address}<br />{center.cityStateZip}
             </a>
           </div>
-          <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
-            <Clock size={15} strokeWidth={2.5} style={{ color: "var(--brand-cta)", flexShrink: 0, marginTop: 2 }} />
-            <span style={{ fontSize: 14, fontWeight: 500, color: COLORS.textSecondary, lineHeight: 1.5 }}>{center.hours}</span>
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <Clock size={15} strokeWidth={2.5} style={{ color: "var(--brand-cta)", flexShrink: 0 }} />
+            <span style={{ fontSize: 15, fontWeight: 500, color: COLORS.textSecondary }}>{center.hours}</span>
           </div>
         </div>
       </div>
@@ -138,6 +145,7 @@ function LocationCard({ center, mapsSearchUrl, mapsEmbedUrl }: { center: Locatio
         />
       </div>
 
+      {/* Mockup: background:rgba(232,103,10,0.1) border-top:glass */}
       <a
         href={mapsSearchUrl}
         target="_blank"
@@ -145,16 +153,15 @@ function LocationCard({ center, mapsSearchUrl, mapsEmbedUrl }: { center: Locatio
         aria-label={`Get directions to ${center.name} (opens in new tab)`}
         style={{
           display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-          padding: "16px 20px", minHeight: 52,
-          background: "transparent",
-          border: `1px solid ${COLORS.orangeHex}`,
-          borderRadius: "0 0 16px 16px",
-          color: COLORS.orangeHex,
-          fontFamily: FONTS.ui, fontWeight: 700, fontSize: 14,
-          letterSpacing: "0.06em", textTransform: "uppercase", textDecoration: "none",
+          padding: "14px 20px", minHeight: 52,
+          background: COLORS.orangeIconBg,
+          borderTop: `1px solid ${COLORS.glassDivider}`,
+          color: "var(--brand-cta)", fontFamily: FONTS.body, fontWeight: 700, fontSize: 15, textDecoration: "none",
         }}
       >
-        Get Directions <ExternalLink size={13} strokeWidth={2} style={{ marginLeft: 4 }} aria-hidden />
+        <MapPin size={15} strokeWidth={2} style={{ color: "var(--brand-cta)" }} aria-hidden />
+        Get Directions
+        <ExternalLink size={13} strokeWidth={2} style={{ marginLeft: 2 }} aria-hidden />
       </a>
     </div>
   );
@@ -163,12 +170,12 @@ function LocationCard({ center, mapsSearchUrl, mapsEmbedUrl }: { center: Locatio
 function EmailCard({ contactId, onComplete }: { contactId: string | undefined; onComplete: () => void }) {
   return (
     <div style={GLASS_CARD_PAD}>
-      <p style={{ ...EYEBROW, marginBottom: 8 }}>Email reminder</p>
-      <p style={{ fontFamily: FONTS.ui, fontSize: 18, fontWeight: 700, color: COLORS.textPrimary, marginBottom: 4, textTransform: "uppercase", letterSpacing: "0.02em" }}>
+      {/* Mockup: simple p font-size:16px font-weight:700 — no eyebrow, no uppercase */}
+      <p style={{ fontFamily: FONTS.body, fontSize: 16, fontWeight: 700, color: COLORS.textPrimary, marginBottom: 4 }}>
         Send my confirmation
       </p>
-      <p style={{ fontFamily: FONTS.body, fontSize: 14, color: COLORS.textSecondary, marginBottom: 14 }}>
-        We'll email your appointment details and a reminder the day before.
+      <p style={{ fontFamily: FONTS.body, fontSize: 14, color: COLORS.textSecondary, marginBottom: 12 }}>
+        We'll email your appointment details and a reminder.
       </p>
       <BookingErrorBoundary>
         <EmailCapture contactId={contactId} onComplete={onComplete} />
@@ -177,40 +184,31 @@ function EmailCard({ contactId, onComplete }: { contactId: string | undefined; o
   );
 }
 
-function RescheduleCard({ center }: { center: Location }) {
+function RescheduleSection({ center }: { center: Location }) {
   return (
-    <div style={{ ...GLASS_CARD_PAD, textAlign: "center" }}>
-      <p style={{ fontFamily: FONTS.ui, fontSize: 13, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: COLORS.textPrimary, marginBottom: 6 }}>
-        Need to change your appointment?
-      </p>
-      <p style={{ fontFamily: FONTS.body, fontSize: 14, color: COLORS.textSecondary, marginBottom: 16 }}>
-        We're happy to help. 24-hour notice is appreciated.
-      </p>
-      <a
-        href={center.phoneHref}
-        style={{
-          display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-          background: "var(--brand-cta)", color: "#FFFFFF",
-          fontFamily: FONTS.ui, fontWeight: 700, fontSize: 15,
-          letterSpacing: "0.06em", textTransform: "uppercase",
-          padding: "14px 20px", borderRadius: 10, textDecoration: "none",
-          minHeight: 52, width: "100%", marginBottom: 12,
-          // hardcoded-color-allow-next-line
-          boxShadow: "0 8px 20px -6px rgba(232,103,10,0.45)",
-        }}
-      >
-        <Phone size={16} strokeWidth={2} aria-hidden /> Call {center.phone}
-      </a>
+    /* Mockup: plain flex column, no card wrapper */
+    <div style={{ textAlign: "center", display: "flex", flexDirection: "column", gap: 10 }}>
+      {/* Mockup: glass ghost button "Pick a Different Time" */}
       <a
         href="/book/schedule"
         style={{
-          display: "block", textAlign: "center",
-          color: COLORS.textSecondary, fontSize: 14, fontWeight: 600,
-          textDecoration: "underline", textUnderlineOffset: 3,
+          display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
+          // hardcoded-color-allow-next-line
+          background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)",
+          color: COLORS.textPrimary, fontWeight: 600, fontSize: 15,
+          padding: "12px 20px", borderRadius: 10, textDecoration: "none", minHeight: 52, width: "100%",
         }}
       >
-        Or pick a different time
+        Pick a Different Time
       </a>
+      {/* Mockup: "Or call us: (phone) · 24-hour notice appreciated" */}
+      <p style={{ color: COLORS.textSecondary, fontSize: 14, marginTop: 2 }}>
+        Or call us:{" "}
+        <a href={center.phoneHref} style={{ color: "rgba(255,255,255,0.80)", fontWeight: 700, textDecoration: "underline", textUnderlineOffset: 3 }}>
+          {center.phone}
+        </a>
+        {" · 24-hour notice appreciated"}
+      </p>
     </div>
   );
 }
@@ -235,7 +233,7 @@ export function BookConfirmedContent({ center, mapsSearchUrl, mapsEmbedUrl, emai
         <PrepCard />
         <LocationCard center={center} mapsSearchUrl={mapsSearchUrl} mapsEmbedUrl={mapsEmbedUrl} />
         {!emailCaptured && <EmailCard contactId={contactId} onComplete={onEmailCaptured} />}
-        <RescheduleCard center={center} />
+        <RescheduleSection center={center} />
       </div>
     </div>
   );

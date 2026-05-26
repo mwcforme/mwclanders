@@ -7,6 +7,14 @@ import type { CSSProperties } from "react";
 // ─── Colors ──────────────────────────────────────────────────────────────────
 
 export const COLORS = {
+  // Teal accent — used for success states on confirmed page
+  // hardcoded-color-allow-next-line
+  teal:      "#2EC4A5",
+  // hardcoded-color-allow-next-line
+  tealTint:  "rgba(46,196,165,0.12)",
+  // hardcoded-color-allow-next-line
+  tealBorder: "rgb(46,196,165)",
+
   // Backgrounds
   pageBg:        "#0B1029",  // Midnight Navy
   cardBg:        "#FFFFFF",

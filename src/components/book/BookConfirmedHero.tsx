@@ -4,6 +4,12 @@ import type { Location } from "@/data/locations";
 import { FONT_OSWALD } from "@/lib/styles";
 import { COLORS, FONTS, CAL_BUTTON_BASE } from "@/lib/bookingTokens";
 
+// Teal for success states — matches mockup source exactly
+// hardcoded-color-allow-next-line
+const TEAL      = "#2EC4A5";
+// hardcoded-color-allow-next-line
+const TEAL_TINT = "rgba(46,196,165,0.12)";
+
 interface ApptDate {
   weekday: string;
   month: string;
@@ -28,32 +34,34 @@ interface Props {
 const CHECKLIST_ITEMS = ["No-cost consultation", "Your provider reserved", "Bring photo ID"] as const;
 
 function CheckIcon() {
+  // Mockup: background:rgba(46,196,165,0.12) border:1.5px solid rgb(46,196,165) — teal
   return (
     <div style={{
       width: 22, height: 22, borderRadius: "50%",
-      background: COLORS.orangeTint,
-      border: `1.5px solid ${COLORS.orangeHex}`,
+      background: TEAL_TINT,
+      border: `1.5px solid ${TEAL}`,
       display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
     }}>
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-        <path d="M2 6.5L5 9.5L10 3.5" stroke={COLORS.orangeHex} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M2 6.5L5 9.5L10 3.5" stroke={TEAL} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     </div>
   );
 }
 
 function AnimatedCheck({ drawn }: { drawn: boolean }) {
+  // Mockup: background:rgba(46,196,165,0.12) border:2px solid rgb(46,196,165) — teal
   return (
     <div style={{
       width: 80, height: 80, borderRadius: "50%",
-      background: COLORS.orangeTint,
-      border: `2px solid ${COLORS.orangeHex}`,
+      background: TEAL_TINT,
+      border: `2px solid ${TEAL}`,
       display: "inline-flex", alignItems: "center", justifyContent: "center",
     }}>
       <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
         <path
           d="M5 12.5L10 17.5L19 7.5"
-          stroke={COLORS.orangeHex}
+          stroke={TEAL}
           strokeWidth="2.5"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -169,7 +177,8 @@ export function BookConfirmedHero({ firstName, apptDate, calLinks, center, check
             <AnimatedCheck drawn={checkDrawn} />
             <CelebrationBurst active={checkDrawn} />
           </div>
-          <p style={{ fontSize: 13, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: COLORS.orangeHex, marginBottom: 12 }}>
+          {/* Mockup: color:rgb(46,196,165) — teal */}
+          <p style={{ fontSize: 13, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: TEAL, marginBottom: 12 }}>
             Appointment Confirmed
           </p>
           <h1 style={{ fontFamily: FONTS.display, fontWeight: 700, fontSize: "clamp(28px, 6vw, 42px)", color: "#FFFFFF", lineHeight: 1.05, marginBottom: 10, textTransform: "uppercase" }}>
