@@ -113,3 +113,14 @@
 - Coverage of 80.11% achieved via systematic smoke tests of all pages + components
 - Component splits in Sessions 2-3 reduced production LOC by ~2400 lines
 - Test files add ~3800 lines to total src/ LOC (expected, not counted in production metric)
+
+
+## Variance Gate Tracking
+| ts | surface | vp | pixelmatch | resemble | avg | lower | pass |
+|---|---|---|---|---|---|---|---|
+| 2026-05-26T16:35:54.212Z | BookConfirmed | 390 | 29.93% | 34.32% | 32.13% | 29.93% | ❌ |
+| 2026-05-26T16:39:23.462Z | BookConfirmed | 390 | 40.87% | 46.34% | 43.60% | 40.87% | ❌ |
+| 2026-05-26T16:43:15.838Z | BookConfirmed | 390 | 40.95% | 46.42% | 43.68% | 40.95% | ❌ |
+| 2026-05-26T16:44:57.464Z | BookConfirmed | 390 | 40.95% | 46.42% | 43.68% | 40.95% | ❌ |
+| 2026-05-26T16:50:08.195Z | BookConfirmed | 390 | 38.06% | 43.63% | 40.85% | 38.06% | ❌ |
+| 2026-05-26T16:53:53.172Z | BookConfirmed | 390 | 21.44% | 25.60% | 23.52% | 21.44% | ❌ |

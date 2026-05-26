@@ -26,7 +26,8 @@ const DEFAULT_DESC: Record<BookLayoutProps["page"], string> = {
 };
 
 
-const BookLayout = ({ page, title, description, variant: _variant = "default", children }: BookLayoutProps) => {
+const BookLayout = ({ page, title, description, variant = "default", children }: BookLayoutProps) => {
+  const isConfirmation = variant === "confirmation";
   useEffect(() => {
     document.body.dataset.page = page;
     return () => {
@@ -37,8 +38,8 @@ const BookLayout = ({ page, title, description, variant: _variant = "default", c
   return (
     <div className="min-h-screen flex flex-col" style={{ fontFamily: "Inter, sans-serif", background: "var(--brand-navy-deep)", overflowX: "hidden" }}>
       <SEO title={title} description={description || DEFAULT_DESC[page]} />
-      <TRTHeader minimal={false} hideCta={false} />
-      <main className="flex-1 pt-16 animate-in fade-in duration-200">{children}</main>
+      {!isConfirmation && <TRTHeader minimal={false} hideCta={false} />}
+      <main className={`flex-1 animate-in fade-in duration-200${isConfirmation ? "" : " pt-16"}`}>{children}</main>
       <Suspense fallback={null}>
         <TRTFooter />
       </Suspense>

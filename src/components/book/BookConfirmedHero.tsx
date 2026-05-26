@@ -47,34 +47,31 @@ function AnimatedCheck({ drawn }: { drawn: boolean }) {
 }
 
 function CheckIcon() {
+  // Simple check mark (no circle border) matching reference
   return (
-    <div style={{
-      width: 20, height: 20, borderRadius: "50%",
-      border: `1.5px solid ${GREEN}`,
-      background: "transparent",
-      display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
-    }}>
-      <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-        <path d="M1.5 5.5L4 8L8.5 2.5" stroke={GREEN} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    </div>
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0, marginTop: 2 }}>
+      <path d="M3 8.5L6.5 12L13 5" stroke={GREEN} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
   );
 }
 
 function DateBlock({ apptDate }: { apptDate: ApptDate }) {
+  // Large pill/stadium shape, centered, ~70-75% card width — matches reference
   return (
     <div style={{
-      background: COLORS.orange, borderRadius: 14,
-      minWidth: 80, padding: "14px 10px",
-      display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", flexShrink: 0,
+      background: COLORS.orange,
+      borderRadius: 40,
+      padding: "20px 24px 18px",
+      display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+      width: "75%", margin: "0 auto",
     }}>
-      <span style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 12, color: "rgba(255,255,255,0.85)", letterSpacing: "0.10em", textTransform: "uppercase" }}>
+      <span style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 13, color: "rgba(255,255,255,0.85)", letterSpacing: "0.12em", textTransform: "uppercase" }}>
         {apptDate.month}
       </span>
-      <span style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 52, color: "#FFFFFF", lineHeight: 1 }}>
+      <span style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 64, color: "#FFFFFF", lineHeight: 1, margin: "2px 0" }}>
         {apptDate.day}
       </span>
-      <span style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 12, color: "rgba(255,255,255,0.85)", letterSpacing: "0.10em", textTransform: "uppercase" }}>
+      <span style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 13, color: "rgba(255,255,255,0.85)", letterSpacing: "0.12em", textTransform: "uppercase" }}>
         {apptDate.weekday.slice(0, 3).toUpperCase()}
       </span>
     </div>
@@ -82,19 +79,16 @@ function DateBlock({ apptDate }: { apptDate: ApptDate }) {
 }
 
 function AppointmentDetails({ apptDate, center }: { apptDate: ApptDate; center: Location }) {
-  // Exact layout from mockup computed styles:
-  // time: 31.875px weight 700 — "8:00 AM"
-  // "60 minutes" + "In-person": 19.125px weight 600, separate spans
-  // "Glen Allen": 19.125px weight 600
+  // Centered below the date badge — matches reference
   return (
-    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 4, paddingTop: 2 }}>
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, marginTop: 16 }}>
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
         <Clock size={16} strokeWidth={2} style={{ color: COLORS.orangeHex, flexShrink: 0 }} />
         <span style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 32, color: INK, lineHeight: 1 }}>
           {apptDate.time}
         </span>
       </div>
-      <span style={{ fontSize: 15, fontWeight: 600, color: INK, paddingLeft: 24 }}>
+      <span style={{ fontSize: 15, fontWeight: 500, color: INK }}>
         60 minutes · In-person
       </span>
       <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
@@ -111,26 +105,31 @@ function AppointmentTicket({ apptDate, center }: { apptDate: ApptDate; center: L
       background: "#FFFFFF", borderRadius: 20, overflow: "hidden",
       marginBottom: 20, boxShadow: COLORS.cardShadow,
     }}>
-      {/* "YOUR APPOINTMENT" label — gray, uppercase */}
-      <div style={{ padding: "16px 20px 0" }}>
+      {/* "YOUR APPOINTMENT" label — gray, uppercase, left-aligned */}
+      <div style={{ padding: "16px 20px 12px" }}>
         <p style={{ fontFamily: FONTS.ui, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: COLORS.sectionGray, margin: 0 }}>
           Your Appointment
         </p>
       </div>
 
-      <div style={{ padding: "12px 20px 0", display: "flex", gap: 16, alignItems: "flex-start" }}>
+      {/* Date badge centered, full-width pill shape */}
+      <div style={{ padding: "0 20px" }}>
         <DateBlock apptDate={apptDate} />
+      </div>
+
+      {/* Details centered below badge */}
+      <div style={{ padding: "0 20px" }}>
         <AppointmentDetails apptDate={apptDate} center={center} />
       </div>
 
       <div style={{ margin: "16px 20px 0", borderTop: "1px solid #EBEBEB" }} />
 
-      {/* Checklist — 3-column grid with green check circles */}
-      <div style={{ padding: "14px 20px 20px", display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "8px 6px" }}>
+      {/* Checklist — vertical stacked list, left-aligned */}
+      <div style={{ padding: "14px 20px 20px", display: "flex", flexDirection: "column", gap: 10 }}>
         {CHECKLIST_ITEMS.map((label) => (
-          <div key={label} style={{ display: "flex", alignItems: "flex-start", gap: 6 }}>
+          <div key={label} style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
             <CheckIcon />
-            <span style={{ fontSize: 13, fontWeight: 600, color: INK, fontFamily: FONTS.body, lineHeight: 1.35 }}>
+            <span style={{ fontSize: 15, fontWeight: 600, color: INK, fontFamily: FONTS.body, lineHeight: 1.35 }}>
               {label}
             </span>
           </div>
