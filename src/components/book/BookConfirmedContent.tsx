@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { MapPin, Navigation, ExternalLink, Clock, ClipboardList, FlaskConical, Stethoscope } from "lucide-react";
+import { Phone, MapPin, Navigation, ExternalLink, Clock, ClipboardList, FlaskConical, Stethoscope } from "lucide-react";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
 import { EmailCapture } from "@/components/book/EmailCapture";
 import type { Location } from "@/data/locations";
@@ -22,11 +22,11 @@ const PREP_STEPS = [
 
 const EXPECT_VIDEO_SRC = "/videos/what-to-expect.mp4";
 
-// Shared label style for section eyebrows
+// Section eyebrow — orange to match mockup
 const EYEBROW: React.CSSProperties = {
-  fontFamily: FONTS.body, fontSize: 11, fontWeight: 800,
+  fontFamily: FONTS.ui, fontSize: 11, fontWeight: 800,
   letterSpacing: "0.14em", textTransform: "uppercase",
-  color: COLORS.textMuted, marginBottom: 14,
+  color: COLORS.orangeHex, marginBottom: 14, margin: 0,
 };
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
@@ -35,7 +35,7 @@ function OutcomeCard() {
   return (
     <div style={GLASS_CARD}>
       <div style={{ padding: "14px 20px 12px", borderBottom: `1px solid ${COLORS.glassDivider}` }}>
-        <p style={{ ...EYEBROW, marginBottom: 0 }}>You leave with</p>
+        <p style={EYEBROW}>What you'll leave with</p>
       </div>
       {OUTCOME_ITEMS.map(({ icon, text }, idx, arr) => (
         <div
@@ -45,7 +45,7 @@ function OutcomeCard() {
             borderBottom: idx < arr.length - 1 ? `1px solid ${COLORS.glassDivider}` : "none",
           }}
         >
-          <div style={{ width: 36, height: 36, borderRadius: 8, background: COLORS.orangeIconBg, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+          <div style={{ width: 36, height: 36, borderRadius: "50%", background: COLORS.orangeIconBg, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
             {icon}
           </div>
           <span style={{ fontSize: 15, fontWeight: 500, color: COLORS.textPrimary, lineHeight: 1.5 }}>{text}</span>
@@ -59,7 +59,7 @@ function VideoCard() {
   const videoRef = useRef<HTMLVideoElement>(null);
   return (
     <div style={GLASS_CARD}>
-      <div style={{ position: "relative", width: "100%", paddingBottom: "52%", background: "#000" }}>
+      <div style={{ position: "relative", width: "100%", paddingBottom: "56%", background: "#000" }}>
         <video
           ref={videoRef}
           src={EXPECT_VIDEO_SRC}
@@ -70,8 +70,9 @@ function VideoCard() {
         />
       </div>
       <div style={{ padding: "16px 20px 18px", borderTop: `1px solid ${COLORS.glassDivider}` }}>
-        <h2 style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 18, color: COLORS.textPrimary, marginBottom: 0 }}>
-          What happens when you walk in. 2 min.
+        <p style={{ ...EYEBROW, marginBottom: 6 }}>2 minute video</p>
+        <h2 style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 18, color: COLORS.textPrimary, marginBottom: 0, textTransform: "uppercase" }}>
+          What happens when you walk in
         </h2>
       </div>
     </div>
@@ -81,7 +82,7 @@ function VideoCard() {
 function PrepCard() {
   return (
     <div style={GLASS_CARD_PAD}>
-      <p style={EYEBROW}>Before you arrive</p>
+      <p style={{ ...EYEBROW, marginBottom: 14 }}>Before you arrive</p>
       <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
         {PREP_STEPS.map(({ n, text }) => (
           <div key={n} style={{ display: "flex", alignItems: "center", gap: 12 }}>
@@ -105,10 +106,11 @@ function LocationCard({ center, mapsSearchUrl, mapsEmbedUrl }: { center: Locatio
   return (
     <div style={GLASS_CARD}>
       <div style={{ padding: "20px 20px 16px" }}>
-        <h2 style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 20, color: COLORS.textPrimary, textTransform: "uppercase", marginBottom: 12 }}>
+        <p style={{ ...EYEBROW, marginBottom: 8 }}>Location</p>
+        <h2 style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 22, color: COLORS.textPrimary, textTransform: "uppercase", marginBottom: 14 }}>
           {center.city}
         </h2>
-        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <Navigation size={15} strokeWidth={2.5} style={{ color: "var(--brand-cta)", flexShrink: 0 }} />
             <span style={{ fontSize: 14, fontWeight: 700, color: "var(--brand-cta)", textTransform: "uppercase", letterSpacing: "0.05em" }}>{center.driveTime}</span>
@@ -119,9 +121,9 @@ function LocationCard({ center, mapsSearchUrl, mapsEmbedUrl }: { center: Locatio
               {center.address}<br />{center.cityStateZip}
             </a>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <Clock size={15} strokeWidth={2.5} style={{ color: "var(--brand-cta)", flexShrink: 0 }} />
-            <span style={{ fontSize: 15, fontWeight: 500, color: COLORS.textSecondary }}>{center.hours}</span>
+          <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
+            <Clock size={15} strokeWidth={2.5} style={{ color: "var(--brand-cta)", flexShrink: 0, marginTop: 2 }} />
+            <span style={{ fontSize: 14, fontWeight: 500, color: COLORS.textSecondary, lineHeight: 1.5 }}>{center.hours}</span>
           </div>
         </div>
       </div>
@@ -143,14 +145,16 @@ function LocationCard({ center, mapsSearchUrl, mapsEmbedUrl }: { center: Locatio
         aria-label={`Get directions to ${center.name} (opens in new tab)`}
         style={{
           display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-          padding: "14px 20px", minHeight: 52,
-          background: COLORS.orangeIconBg, borderTop: `1px solid ${COLORS.glassDivider}`,
-          color: "var(--brand-cta)", fontFamily: FONTS.body, fontWeight: 700, fontSize: 15, textDecoration: "none",
+          padding: "16px 20px", minHeight: 52,
+          background: "transparent",
+          border: `1px solid ${COLORS.orangeHex}`,
+          borderRadius: "0 0 16px 16px",
+          color: COLORS.orangeHex,
+          fontFamily: FONTS.ui, fontWeight: 700, fontSize: 14,
+          letterSpacing: "0.06em", textTransform: "uppercase", textDecoration: "none",
         }}
       >
-        <MapPin size={15} strokeWidth={2} style={{ color: "var(--brand-cta)" }} aria-hidden />
-        Get Directions
-        <ExternalLink size={13} strokeWidth={2} style={{ marginLeft: 2 }} aria-hidden />
+        Get Directions <ExternalLink size={13} strokeWidth={2} style={{ marginLeft: 4 }} aria-hidden />
       </a>
     </div>
   );
@@ -159,11 +163,12 @@ function LocationCard({ center, mapsSearchUrl, mapsEmbedUrl }: { center: Locatio
 function EmailCard({ contactId, onComplete }: { contactId: string | undefined; onComplete: () => void }) {
   return (
     <div style={GLASS_CARD_PAD}>
-      <p style={{ fontFamily: FONTS.body, fontSize: 16, fontWeight: 700, color: COLORS.textPrimary, marginBottom: 4 }}>
+      <p style={{ ...EYEBROW, marginBottom: 8 }}>Email reminder</p>
+      <p style={{ fontFamily: FONTS.ui, fontSize: 18, fontWeight: 700, color: COLORS.textPrimary, marginBottom: 4, textTransform: "uppercase", letterSpacing: "0.02em" }}>
         Send my confirmation
       </p>
-      <p style={{ fontFamily: FONTS.body, fontSize: 14, color: COLORS.textSecondary, marginBottom: 12 }}>
-        We'll email your appointment details and a reminder.
+      <p style={{ fontFamily: FONTS.body, fontSize: 14, color: COLORS.textSecondary, marginBottom: 14 }}>
+        We'll email your appointment details and a reminder the day before.
       </p>
       <BookingErrorBoundary>
         <EmailCapture contactId={contactId} onComplete={onComplete} />
@@ -172,32 +177,45 @@ function EmailCard({ contactId, onComplete }: { contactId: string | undefined; o
   );
 }
 
-function RescheduleFooter({ center }: { center: Location }) {
+function RescheduleCard({ center }: { center: Location }) {
   return (
-    <div style={{ textAlign: "center", display: "flex", flexDirection: "column", gap: 10 }}>
+    <div style={{ ...GLASS_CARD_PAD, textAlign: "center" }}>
+      <p style={{ fontFamily: FONTS.ui, fontSize: 13, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: COLORS.textPrimary, marginBottom: 6 }}>
+        Need to change your appointment?
+      </p>
+      <p style={{ fontFamily: FONTS.body, fontSize: 14, color: COLORS.textSecondary, marginBottom: 16 }}>
+        We're happy to help. 24-hour notice is appreciated.
+      </p>
+      <a
+        href={center.phoneHref}
+        style={{
+          display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+          background: "var(--brand-cta)", color: "#FFFFFF",
+          fontFamily: FONTS.ui, fontWeight: 700, fontSize: 15,
+          letterSpacing: "0.06em", textTransform: "uppercase",
+          padding: "14px 20px", borderRadius: 10, textDecoration: "none",
+          minHeight: 52, width: "100%", marginBottom: 12,
+          // hardcoded-color-allow-next-line
+          boxShadow: "0 8px 20px -6px rgba(232,103,10,0.45)",
+        }}
+      >
+        <Phone size={16} strokeWidth={2} aria-hidden /> Call {center.phone}
+      </a>
       <a
         href="/book/schedule"
         style={{
-          display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
-          background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)",
-          color: COLORS.textPrimary, fontWeight: 600, fontSize: 15,
-          padding: "12px 20px", borderRadius: 10, textDecoration: "none", minHeight: 52, width: "100%",
+          display: "block", textAlign: "center",
+          color: COLORS.textSecondary, fontSize: 14, fontWeight: 600,
+          textDecoration: "underline", textUnderlineOffset: 3,
         }}
       >
-        Pick a Different Time
+        Or pick a different time
       </a>
-      <p style={{ color: COLORS.textSecondary, fontSize: 14, marginTop: 2 }}>
-        Or call us:{" "}
-        <a href={center.phoneHref} style={{ color: "rgba(255,255,255,0.80)", fontWeight: 700, textDecoration: "underline", textUnderlineOffset: 3 }}>
-          {center.phone}
-        </a>
-        {" · 24-hour notice appreciated"}
-      </p>
     </div>
   );
 }
 
-// ─── Props ────────────────────────────────────────────────────────────────────
+// ─── Props + Component ────────────────────────────────────────────────────────
 
 interface Props {
   center: Location;
@@ -208,8 +226,6 @@ interface Props {
   contactId: string | undefined;
 }
 
-// ─── Component ────────────────────────────────────────────────────────────────
-
 export function BookConfirmedContent({ center, mapsSearchUrl, mapsEmbedUrl, emailCaptured, onEmailCaptured, contactId }: Props) {
   return (
     <div style={{ background: COLORS.pageBg, padding: "0 20px 48px" }}>
@@ -219,7 +235,7 @@ export function BookConfirmedContent({ center, mapsSearchUrl, mapsEmbedUrl, emai
         <PrepCard />
         <LocationCard center={center} mapsSearchUrl={mapsSearchUrl} mapsEmbedUrl={mapsEmbedUrl} />
         {!emailCaptured && <EmailCard contactId={contactId} onComplete={onEmailCaptured} />}
-        <RescheduleFooter center={center} />
+        <RescheduleCard center={center} />
       </div>
     </div>
   );
