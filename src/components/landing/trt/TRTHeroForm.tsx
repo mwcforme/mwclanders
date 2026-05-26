@@ -33,11 +33,14 @@ interface TRTHeroFormProps {
   heading?:    string;
   subheading?: string;
   ctaLabel?:   string;
+  /** Unique ID prefix — prevents duplicate id="hf-tcpa" when form appears multiple times on a page */
+  formId?:     string;
 }
 
 export const TRTHeroForm = ({
   service   = "trt",
   ctaLabel  = COPY.cta.bookConsult,
+  formId    = "hf",
 }: TRTHeroFormProps = {}) => {
   const [name,     setName]     = useState("");
   const [phone,    setPhone]    = useState("");
@@ -129,7 +132,7 @@ export const TRTHeroForm = ({
           </div>
 
           <div ref={tcpaRef}>
-            <TCPADisclaimer id="hf-tcpa" checked={tcpa} onChange={(v) => { setTcpa(v); clearErr("tcpa"); }} error={errors.tcpa} />
+            <TCPADisclaimer id={`${formId}-tcpa`} checked={tcpa} onChange={(v) => { setTcpa(v); clearErr("tcpa"); }} error={errors.tcpa} />
           </div>
 
           <button type="submit" disabled={isSubmitting} style={{

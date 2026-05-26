@@ -107,8 +107,8 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
             }}>
               {GROUP_LABELS[period]}
             </p>
-            {/* Slot grid — 4 columns to match mockup */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8 }}>
+            {/* Slot grid — responsive: 1 col mobile, 4 col desktop */}
+            <div className="mwc-time-grid" style={{ display: "grid", gap: 8 }}>
               {slots.map((iso) => {
                 const active = iso === selectedSlot;
                 const { time, ampm } = fmtTimeParts(iso);
@@ -118,15 +118,15 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
                     type="button"
                     aria-pressed={active}
                     onClick={() => onSlotSelect(iso)}
+                    className="mwc-time-slot-btn"
                     style={{
                       background: active ? ORANGE : "#FFFFFF",
                       border: active
                         ? `2px solid ${ORANGE}`
                         // hardcoded-color-allow-next-line
-                        // hardcoded-color-allow-next-line
                         : "1.5px solid #0B1029",
                       borderRadius: 10,
-                      padding: "0 10px",
+                      padding: "0 16px",
                       display: "flex", alignItems: "center",
                       justifyContent: active ? "space-between" : "flex-start",
                       gap: 3,
@@ -139,14 +139,14 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
                       boxShadow: active ? "0 8px 20px -6px rgba(232,103,10,0.55)" : "0 1px 2px rgba(0,0,0,0.04)",
                     }}
                   >
-                    <div style={{ display: "flex", alignItems: "baseline", gap: 2 }}>
-                      <span style={{
+                    <div style={{ display: "flex", alignItems: "baseline", gap: 3 }}>
+                      <span className="mwc-time-slot-time" style={{
                         fontFamily: "Montserrat, Inter, sans-serif",
                         fontWeight: 700, fontSize: 15, letterSpacing: "-0.01em",
                       }}>
                         {time}
                       </span>
-                      <span style={{
+                      <span className="mwc-time-slot-ampm" style={{
                         fontFamily: "Montserrat, Inter, sans-serif",
                         fontSize: 11, fontWeight: 700, letterSpacing: "0.04em",
                         color: active ? "rgba(255,255,255,0.85)" : INK,
@@ -154,7 +154,7 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
                         {ampm}
                       </span>
                     </div>
-                    {active && <ArrowRight size={14} strokeWidth={2.5} aria-hidden />}
+                    {active && <ArrowRight size={16} strokeWidth={2.5} aria-hidden />}
                   </button>
                 );
               })}

@@ -222,6 +222,42 @@ body[data-page="confirmed"] a:focus-visible {
 }
 
 /* =============================================================================
+   4a. TIME SLOT GRID — 1 col mobile, 4 col desktop
+   ============================================================================= */
+
+/* Mobile (default): single column, full-width slots */
+.mwc-time-grid {
+  grid-template-columns: 1fr;
+}
+
+/* Mobile: larger time text to match mockup */
+.mwc-time-slot-btn {
+  min-height: 62px;
+}
+.mwc-time-slot-time {
+  font-size: 24px !important;
+}
+.mwc-time-slot-ampm {
+  font-size: 14px !important;
+}
+
+/* Desktop ≥640px: 4 columns, restore smaller text */
+@media (min-width: 640px) {
+  .mwc-time-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .mwc-time-slot-btn {
+    min-height: 58px;
+  }
+  .mwc-time-slot-time {
+    font-size: 15px !important;
+  }
+  .mwc-time-slot-ampm {
+    font-size: 11px !important;
+  }
+}
+
+/* =============================================================================
    4b. DAY STRIP GRID — mobile swipe / desktop full row
    ============================================================================= */
 
