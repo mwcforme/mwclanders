@@ -467,7 +467,7 @@ input[type="radio"] {
   /* Vertical checklist — mobile */
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
 }
 
 .mwc-appt-checklist-h {

@@ -77,7 +77,7 @@ function DateBlock({ apptDate }: { apptDate: ApptDate }) {
 
 function AppointmentDetailsInner({ apptDate, center, centered }: { apptDate: ApptDate; center: Location; centered: boolean }) {
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: centered ? 6 : 4, alignItems: centered ? "center" : "flex-start", justifyContent: "center", paddingTop: centered ? 0 : 2, marginTop: centered ? 16 : 0 }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: centered ? 10 : 4, alignItems: centered ? "center" : "flex-start", justifyContent: "center", paddingTop: centered ? 0 : 2, marginTop: centered ? 20 : 0 }}>
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
         <Clock size={16} strokeWidth={2} style={{ color: COLORS.orangeHex, flexShrink: 0 }} />
         <span style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 32, color: INK, lineHeight: 1 }}>{apptDate.time}</span>
@@ -116,10 +116,10 @@ function AppointmentTicket({ apptDate, center }: { apptDate: ApptDate; center: L
         </div>
       </div>
 
-      <div style={{ margin: "16px 20px 0", borderTop: "1px solid #EBEBEB" }} />
+      <div style={{ margin: "20px 20px 0", borderTop: "1px solid #EBEBEB" }} />
 
       {/* Mobile: vertical checklist */}
-      <div className="mwc-appt-checklist-v" style={{ padding: "14px 20px 20px" }}>
+      <div className="mwc-appt-checklist-v" style={{ padding: "16px 20px 24px" }}>
         {CHECKLIST_ITEMS.map((label) => (
           <div key={label} style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
             <CheckIcon />
