@@ -80,8 +80,11 @@ const BookLayout = ({ page, title, description, variant: _variant = "default", c
   return (
     <div className="min-h-screen flex flex-col" style={{ fontFamily: "Inter, sans-serif", background: "var(--brand-navy-deep)", overflowX: "hidden" }}>
       <SEO title={title} description={description || DEFAULT_DESC[page]} />
-      <TRTHeader minimal={isConfirmation} hideCta={!isConfirmation} />
-      <main className="flex-1 pt-16 animate-in fade-in duration-200">{children}</main>
+      {/* Schedule + confirmed: no site header — matches mwclocked (back arrow inline) */}
+      {page !== "schedule" && page !== "confirmed" && (
+        <TRTHeader minimal={false} hideCta={true} />
+      )}
+      <main className={`flex-1 animate-in fade-in duration-200 ${page === "schedule" || page === "confirmed" ? "" : "pt-16"}`}>{children}</main>
       {isConfirmation ? (
         <Suspense fallback={null}>
           <TRTFooter />

@@ -133,7 +133,7 @@ const DayStrip = ({
             <Loader2 size={22} className="animate-spin" style={{ color: ORANGE }} />
           </div>
         )}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: 6 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: 8 }}>
           {days.map((d) => {
             const key         = ymd(d);
             const actualCount = slotsByDay[key]?.length || 0;
@@ -166,8 +166,8 @@ const DayStrip = ({
                     // hardcoded-color-allow-next-line
                     : isDisabled ? "rgba(11,16,41,0.35)" : NAVY,
                   border: "none",
-                  borderRadius: 10,
-                  padding: "10px 4px",
+                  borderRadius: 12,
+                  padding: "12px 6px",
                   cursor: isDisabled ? "not-allowed" : "pointer",
                   textAlign: "center",
                   display: "flex",
@@ -178,7 +178,7 @@ const DayStrip = ({
                   // hardcoded-color-allow-next-line
                   boxShadow: selected ? "0 4px 16px rgba(232,103,10,0.45)" : "none",
                   opacity: isDisabled && !isSunday ? 0.50 : 1,
-                  minHeight: 78,
+                  minHeight: 88,
                   justifyContent: "center",
                 }}
               >

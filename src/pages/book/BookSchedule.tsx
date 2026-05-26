@@ -150,7 +150,7 @@ const BookSchedule = () => {
   return (
     <>{""}  
     <BookLayout page="schedule" title="Book Your Physician Assessment | Men's Wellness Centers">
-      <div className="px-4 md:px-6 py-1 md:py-6 space-y-3 md:space-y-5 pb-24">
+      <div className="px-4 md:px-6 pt-16 pb-24" style={{ display: "flex", flexDirection: "column", gap: 24 }}>
 
         {/* ── Progress + back ─────────────────────────────────────────────── */}
         <div className="mx-auto w-full" style={{ maxWidth: 720 }}>
@@ -161,8 +161,7 @@ const BookSchedule = () => {
             style={{
               background: "transparent", border: 0, color: "var(--c-text-on-dark)",
               fontFamily: "Inter, sans-serif", fontSize: 16, fontWeight: 600,
-              opacity: 0.85, cursor: "pointer", minHeight: 56, minWidth: 56,
-              padding: "10px 12px", marginLeft: -12,
+              cursor: "pointer", padding: "8px 0", marginLeft: 0, display: "inline-flex", alignItems: "center", gap: 6,
             }}
             aria-label="Back"
           >
@@ -231,7 +230,7 @@ const BookSchedule = () => {
         )}
 
         {/* ── Calendar ───────────────────────────────────────────────────── */}
-        <section className="mx-auto" aria-label="Pick a date and time" style={{ maxWidth: 720 }}>
+        <section className="mx-auto" aria-label="Pick a date and time" style={{ maxWidth: 720, marginTop: 8 }}>
           {location && location in CENTER_CALENDARS ? (
             <BookingErrorBoundary>
               <GHLDayView

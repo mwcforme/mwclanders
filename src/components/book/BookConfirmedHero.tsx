@@ -40,12 +40,12 @@ export function BookConfirmedHero({ firstName, apptDate, calLinks, center, check
     <div style={{
       // hardcoded-color-allow-next-line — Midnight Navy per MWC brand
       background: "#0B1029",
-      padding: "48px 20px 56px",
+      padding: "64px 20px 56px",
     }}>
       <div style={{ maxWidth: 640, margin: "0 auto", fontFamily: FONT_INTER }}>
 
         {/* ── Check icon + headline ── */}
-        <div style={{ textAlign: "center", marginBottom: 36 }}>
+        <div style={{ textAlign: "center", marginBottom: 34 }}>
           <div style={{ position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
             <div style={{
               width: 80, height: 80, borderRadius: "50%",
@@ -82,7 +82,7 @@ export function BookConfirmedHero({ firstName, apptDate, calLinks, center, check
             boxShadow: "0 20px 60px -10px rgba(0,0,0,0.50)",
           }}>
             {/* Card header label */}
-            <div style={{ padding: "16px 20px 0" }}>
+            <div style={{ padding: "8px 20px 0" }}>
               <p style={{ fontFamily: "Montserrat, Inter, sans-serif", fontSize: 11, fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase",
                 // hardcoded-color-allow-next-line
                 color: "#1A1A2E", margin: 0 }}>
@@ -91,7 +91,7 @@ export function BookConfirmedHero({ firstName, apptDate, calLinks, center, check
             </div>
 
             {/* Date block + details row */}
-            <div style={{ padding: "14px 20px 0", display: "flex", gap: 16, alignItems: "flex-start" }}>
+            <div style={{ padding: "8px 20px 0", display: "flex", gap: 14, alignItems: "flex-start" }}>
               {/* Orange date square */}
               <div style={{
                 background: "var(--brand-cta)", borderRadius: 14,
