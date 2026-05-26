@@ -31,50 +31,56 @@ export function EmailCapture({ contactId, onComplete }: Props) {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} noValidate style={{ display: "flex", gap: 8 }}>
-        <input
-          type="email"
-          id="email-capture-input"
-          aria-label="Email address"
-          aria-invalid={!!error}
-          aria-describedby={error ? "email-capture-error" : undefined}
-          placeholder="your@email.com"
-          value={email}
-          autoComplete="email"
-          inputMode="email"
-          onChange={(e) => { setEmail(e.target.value); setError(""); }}
-          style={{
-            flex: 1, height: 44, borderRadius: 8,
-            // hardcoded-color-allow-next-line
-            border: `1.5px solid ${error ? "#dc2626" : "rgba(11,16,41,0.20)"}`,
-            background: "#FFFFFF",
-            // hardcoded-color-allow-next-line
-            color: "#0B1029",
-            fontSize: 16, fontFamily: "Inter, sans-serif", padding: "0 14px", outline: "none",
-          }}
-        />
-        <button
-          type="submit"
-          disabled={loading}
-          style={{
-            height: 44, padding: "0 18px", background: "var(--brand-cta)", color: "#FFF",
-            border: "none", borderRadius: 8, fontFamily: "Inter, sans-serif", fontSize: 14,
-            fontWeight: 700, cursor: loading ? "not-allowed" : "pointer",
-            display: "flex", alignItems: "center", gap: 6, flexShrink: 0,
-          }}
-        >
-          <Send size={14} strokeWidth={2} /> Send
-        </button>
-      </form>
+    <form onSubmit={handleSubmit} noValidate style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+      <label htmlFor="email-capture-input" style={{ fontSize: 14, fontWeight: 600, color: "#0B1029", fontFamily: "Inter, sans-serif" }}>
+        Your email address
+      </label>
+      <input
+        type="email"
+        id="email-capture-input"
+        aria-label="Email address"
+        aria-invalid={!!error}
+        aria-describedby={error ? "email-capture-error" : undefined}
+        placeholder="you@example.com"
+        value={email}
+        autoComplete="email"
+        inputMode="email"
+        onChange={(e) => { setEmail(e.target.value); setError(""); }}
+        style={{
+          width: "100%", height: 52, borderRadius: 10, boxSizing: "border-box",
+          // hardcoded-color-allow-next-line
+          border: `1.5px solid ${error ? "#dc2626" : "rgba(11,16,41,0.20)"}`,
+          background: "#FFFFFF",
+          // hardcoded-color-allow-next-line
+          color: "#0B1029",
+          fontSize: 16, fontFamily: "Inter, sans-serif", padding: "0 16px", outline: "none",
+        }}
+      />
+      <button
+        type="submit"
+        disabled={loading}
+        style={{
+          width: "100%", height: 52,
+          background: "var(--brand-cta)", color: "#FFF",
+          border: "none", borderRadius: 10,
+          fontFamily: "Montserrat, Inter, sans-serif",
+          fontSize: 15, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase",
+          cursor: loading ? "not-allowed" : "pointer",
+          display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+          // hardcoded-color-allow-next-line
+          boxShadow: "0 8px 20px -6px rgba(232,103,10,0.40)",
+        }}
+      >
+        <Send size={16} strokeWidth={2} aria-hidden /> Send to my email
+      </button>
       {error && (
         <p id="email-capture-error" role="alert" style={{
           // hardcoded-color-allow-next-line
-          color: "#dc2626", fontSize: 14, marginTop: 4, fontFamily: "Inter, sans-serif",
+          color: "#dc2626", fontSize: 14, margin: 0, fontFamily: "Inter, sans-serif",
         }}>
           {error}
         </p>
       )}
-    </div>
+    </form>
   );
 }

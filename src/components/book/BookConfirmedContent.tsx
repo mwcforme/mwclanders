@@ -199,11 +199,12 @@ function LocationCard({ center, mapsSearchUrl, mapsEmbedUrl }: { center: Locatio
 function EmailCard({ contactId, onComplete }: { contactId: string | undefined; onComplete: () => void }) {
   return (
     <div style={WHITE_CARD_PAD}>
-      <p style={{ fontFamily: FONTS.body, fontSize: 16, fontWeight: 700, color: INK, marginBottom: 4 }}>
+      <p style={{ ...TEAL_EYEBROW, marginBottom: 6 }}>Email reminder</p>
+      <p style={{ fontFamily: FONTS.ui, fontSize: 18, fontWeight: 800, color: INK, marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.02em" }}>
         Send my confirmation
       </p>
-      <p style={{ fontFamily: FONTS.body, fontSize: 14, color: INK_MUTED, marginBottom: 12 }}>
-        We'll email your appointment details and a reminder.
+      <p style={{ fontFamily: FONTS.body, fontSize: 14, color: INK_MUTED, marginBottom: 14 }}>
+        We'll email your appointment details and a reminder the day before.
       </p>
       <BookingErrorBoundary>
         <EmailCapture contactId={contactId} onComplete={onComplete} />
@@ -212,28 +213,43 @@ function EmailCard({ contactId, onComplete }: { contactId: string | undefined; o
   );
 }
 
-function RescheduleSection({ center }: { center: Location }) {
+function RescheduleCard({ center }: { center: Location }) {
+  // hardcoded-color-allow-next-line
+  const DARK_CARD: React.CSSProperties = { background: "#111827", borderRadius: 16, padding: "24px 20px", textAlign: "center" };
   return (
-    <div style={{ textAlign: "center", display: "flex", flexDirection: "column", gap: 10 }}>
+    <div style={DARK_CARD}>
+      <p style={{ fontFamily: FONTS.ui, fontSize: 14, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", color: "#FFFFFF", marginBottom: 8 }}>
+        Need to change your appointment?
+      </p>
+      <p style={{ fontFamily: FONTS.body, fontSize: 14, color: "rgba(255,255,255,0.65)", marginBottom: 20 }}>
+        We're happy to help. 24-hour notice is appreciated.
+      </p>
+      <a
+        href={center.phoneHref}
+        style={{
+          display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
+          background: COLORS.orangeHex, color: "#FFFFFF",
+          fontFamily: FONTS.ui, fontWeight: 700, fontSize: 15,
+          letterSpacing: "0.06em", textTransform: "uppercase",
+          padding: "15px 20px", borderRadius: 10, textDecoration: "none",
+          minHeight: 52, width: "100%", marginBottom: 16, boxSizing: "border-box",
+          // hardcoded-color-allow-next-line
+          boxShadow: "0 8px 20px -6px rgba(232,103,10,0.45)",
+        }}
+      >
+        📞 Call {center.phone}
+      </a>
       <a
         href="/book/schedule"
         style={{
-          display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
-          // hardcoded-color-allow-next-line
-          background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)",
-          color: COLORS.textPrimary, fontWeight: 600, fontSize: 15,
-          padding: "12px 20px", borderRadius: 10, textDecoration: "none", minHeight: 52, width: "100%",
+          display: "block", textAlign: "center",
+          color: "rgba(255,255,255,0.75)", fontSize: 13, fontWeight: 700,
+          fontFamily: FONTS.ui, letterSpacing: "0.08em", textTransform: "uppercase",
+          textDecoration: "underline", textUnderlineOffset: 3,
         }}
       >
-        Pick a Different Time
+        Or pick a different time
       </a>
-      <p style={{ color: COLORS.textSecondary, fontSize: 14, marginTop: 2 }}>
-        Or call us:{" "}
-        <a href={center.phoneHref} style={{ color: "rgba(255,255,255,0.80)", fontWeight: 700, textDecoration: "underline", textUnderlineOffset: 3 }}>
-          {center.phone}
-        </a>
-        {" · 24-hour notice appreciated"}
-      </p>
     </div>
   );
 }
@@ -258,7 +274,7 @@ export function BookConfirmedContent({ center, mapsSearchUrl, mapsEmbedUrl, emai
         <PrepCard />
         <LocationCard center={center} mapsSearchUrl={mapsSearchUrl} mapsEmbedUrl={mapsEmbedUrl} />
         {!emailCaptured && <EmailCard contactId={contactId} onComplete={onEmailCaptured} />}
-        <RescheduleSection center={center} />
+        <RescheduleCard center={center} />
       </div>
     </div>
   );
