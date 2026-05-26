@@ -56,41 +56,33 @@ function CheckIcon() {
 }
 
 function DateBlock({ apptDate }: { apptDate: ApptDate }) {
-  // Large pill/stadium shape, centered, ~70-75% card width — matches reference
+  const textStyle = { fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 12, color: "rgba(255,255,255,0.85)" as const, letterSpacing: "0.10em", textTransform: "uppercase" as const };
   return (
-    <div style={{
-      background: COLORS.orange,
-      borderRadius: 40,
-      padding: "20px 24px 18px",
-      display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-      width: "75%", margin: "0 auto",
-    }}>
-      <span style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 13, color: "rgba(255,255,255,0.85)", letterSpacing: "0.12em", textTransform: "uppercase" }}>
-        {apptDate.month}
-      </span>
-      <span style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 64, color: "#FFFFFF", lineHeight: 1, margin: "2px 0" }}>
-        {apptDate.day}
-      </span>
-      <span style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 13, color: "rgba(255,255,255,0.85)", letterSpacing: "0.12em", textTransform: "uppercase" }}>
-        {apptDate.weekday.slice(0, 3).toUpperCase()}
-      </span>
-    </div>
+    <>
+      {/* Pill (mobile) */}
+      <div className="mwc-appt-date-pill">
+        <span style={{ ...textStyle, fontSize: 13 }}>{apptDate.month}</span>
+        <span style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 64, color: "#FFFFFF", lineHeight: 1, margin: "2px 0" }}>{apptDate.day}</span>
+        <span style={{ ...textStyle, fontSize: 13 }}>{apptDate.weekday.slice(0, 3).toUpperCase()}</span>
+      </div>
+      {/* Square (desktop) */}
+      <div className="mwc-appt-date-square">
+        <span style={textStyle}>{apptDate.month}</span>
+        <span style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 52, color: "#FFFFFF", lineHeight: 1 }}>{apptDate.day}</span>
+        <span style={textStyle}>{apptDate.weekday.slice(0, 3).toUpperCase()}</span>
+      </div>
+    </>
   );
 }
 
-function AppointmentDetails({ apptDate, center }: { apptDate: ApptDate; center: Location }) {
-  // Centered below the date badge — matches reference
+function AppointmentDetailsInner({ apptDate, center, centered }: { apptDate: ApptDate; center: Location; centered: boolean }) {
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, marginTop: 16 }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: centered ? 6 : 4, alignItems: centered ? "center" : "flex-start", justifyContent: "center", paddingTop: centered ? 0 : 2, marginTop: centered ? 16 : 0 }}>
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
         <Clock size={16} strokeWidth={2} style={{ color: COLORS.orangeHex, flexShrink: 0 }} />
-        <span style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 32, color: INK, lineHeight: 1 }}>
-          {apptDate.time}
-        </span>
+        <span style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 32, color: INK, lineHeight: 1 }}>{apptDate.time}</span>
       </div>
-      <span style={{ fontSize: 15, fontWeight: 500, color: INK }}>
-        60 minutes · In-person
-      </span>
+      <span style={{ fontSize: 15, fontWeight: centered ? 500 : 600, color: INK, paddingLeft: centered ? 0 : 24 }}>60 minutes · In-person</span>
       <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
         <MapPin size={15} strokeWidth={2} style={{ color: COLORS.orangeHex, flexShrink: 0 }} />
         <span style={{ fontSize: 15, fontWeight: 600, color: INK }}>{center.city}</span>
@@ -105,33 +97,42 @@ function AppointmentTicket({ apptDate, center }: { apptDate: ApptDate; center: L
       background: "#FFFFFF", borderRadius: 20, overflow: "hidden",
       marginBottom: 20, boxShadow: COLORS.cardShadow,
     }}>
-      {/* "YOUR APPOINTMENT" label — gray, uppercase, left-aligned */}
-      <div style={{ padding: "16px 20px 12px" }}>
+      <div style={{ padding: "16px 20px 0" }}>
         <p style={{ fontFamily: FONTS.ui, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: COLORS.sectionGray, margin: 0 }}>
           Your Appointment
         </p>
       </div>
 
-      {/* Date badge centered, full-width pill shape */}
-      <div style={{ padding: "0 20px" }}>
+      {/* Responsive body: vertical on mobile, horizontal on desktop */}
+      <div className="mwc-appt-body" style={{ padding: "12px 20px 0" }}>
         <DateBlock apptDate={apptDate} />
-      </div>
-
-      {/* Details centered below badge */}
-      <div style={{ padding: "0 20px" }}>
-        <AppointmentDetails apptDate={apptDate} center={center} />
+        {/* Mobile centered details */}
+        <div className="mwc-appt-details-center">
+          <AppointmentDetailsInner apptDate={apptDate} center={center} centered />
+        </div>
+        {/* Desktop side details */}
+        <div className="mwc-appt-details-side">
+          <AppointmentDetailsInner apptDate={apptDate} center={center} centered={false} />
+        </div>
       </div>
 
       <div style={{ margin: "16px 20px 0", borderTop: "1px solid #EBEBEB" }} />
 
-      {/* Checklist — vertical stacked list, left-aligned */}
-      <div style={{ padding: "14px 20px 20px", display: "flex", flexDirection: "column", gap: 10 }}>
+      {/* Mobile: vertical checklist */}
+      <div className="mwc-appt-checklist-v" style={{ padding: "14px 20px 20px" }}>
         {CHECKLIST_ITEMS.map((label) => (
           <div key={label} style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
             <CheckIcon />
-            <span style={{ fontSize: 15, fontWeight: 600, color: INK, fontFamily: FONTS.body, lineHeight: 1.35 }}>
-              {label}
-            </span>
+            <span style={{ fontSize: 15, fontWeight: 600, color: INK, fontFamily: FONTS.body, lineHeight: 1.35 }}>{label}</span>
+          </div>
+        ))}
+      </div>
+      {/* Desktop: 3-column horizontal checklist */}
+      <div className="mwc-appt-checklist-h" style={{ padding: "14px 20px 20px" }}>
+        {CHECKLIST_ITEMS.map((label) => (
+          <div key={label} style={{ display: "flex", alignItems: "flex-start", gap: 6 }}>
+            <CheckIcon />
+            <span style={{ fontSize: 13, fontWeight: 600, color: INK, fontFamily: FONTS.body, lineHeight: 1.35 }}>{label}</span>
           </div>
         ))}
       </div>
@@ -141,17 +142,17 @@ function AppointmentTicket({ apptDate, center }: { apptDate: ApptDate; center: L
 
 function CalendarButtons({ calLinks }: { calLinks: CalLinks }) {
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 8 }}>
+    <div className="mwc-cal-buttons">
       <a
         href={calLinks.google} target="_blank" rel="noopener noreferrer"
         aria-label="Add to Google Calendar (opens in new tab)"
-        style={{ ...CAL_BUTTON_BASE, background: COLORS.orange, boxShadow: COLORS.orangeShadow, color: "#FFFFFF", fontSize: 17 }}
+        style={{ ...CAL_BUTTON_BASE, flex: 1, background: COLORS.orange, boxShadow: COLORS.orangeShadow, color: "#FFFFFF", fontSize: 17 }}
       >
         <Calendar size={18} strokeWidth={2} aria-hidden /> Add to Google Calendar
       </a>
       <a
         href={calLinks.ics} download="mwc-appointment.ics"
-        style={{ ...CAL_BUTTON_BASE, background: APPLE_BTN, color: "#FFFFFF", fontSize: 17 }}
+        style={{ ...CAL_BUTTON_BASE, flex: 1, background: APPLE_BTN, color: "#FFFFFF", fontSize: 17 }}
       >
         <Calendar size={18} strokeWidth={2} aria-hidden /> Apple or Outlook
       </a>

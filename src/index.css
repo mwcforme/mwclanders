@@ -410,3 +410,114 @@ input[type="checkbox"],
 input[type="radio"] {
   cursor: pointer;
 }
+
+/* ─── BookConfirmed appointment card — responsive layout ─────────────────── */
+/* Mobile-first: pill badge centered + vertical details + vertical checklist */
+.mwc-appt-body {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.mwc-appt-date-pill {
+  /* Large pill — mobile */
+  background: #E8670A;
+  border-radius: 40px;
+  padding: 20px 24px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 75%;
+  margin: 0 auto;
+}
+
+.mwc-appt-date-square {
+  /* Small square — desktop (hidden on mobile) */
+  display: none;
+  background: #E8670A;
+  border-radius: 14px;
+  min-width: 80px;
+  padding: 14px 10px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mwc-appt-details-center {
+  /* Centered details — mobile */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+}
+
+.mwc-appt-details-side {
+  /* Side details — desktop (hidden on mobile) */
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  padding-top: 2px;
+}
+
+.mwc-appt-checklist-v {
+  /* Vertical checklist — mobile */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mwc-appt-checklist-h {
+  /* Horizontal checklist — desktop (hidden on mobile) */
+  display: none;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px 6px;
+}
+
+.mwc-cal-buttons {
+  /* Vertical stack — mobile */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+@media (min-width: 640px) {
+  .mwc-appt-body {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .mwc-appt-date-pill {
+    display: none;
+  }
+
+  .mwc-appt-date-square {
+    display: flex;
+  }
+
+  .mwc-appt-details-center {
+    display: none;
+  }
+
+  .mwc-appt-details-side {
+    display: flex;
+  }
+
+  .mwc-appt-checklist-v {
+    display: none;
+  }
+
+  .mwc-appt-checklist-h {
+    display: grid;
+  }
+
+  .mwc-cal-buttons {
+    flex-direction: row;
+    gap: 12px;
+  }
+}
