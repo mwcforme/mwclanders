@@ -1,8 +1,6 @@
-import { ReactNode, lazy, Suspense } from "react";
-import { useEffect } from "react";
+import { ReactNode, lazy, Suspense, useEffect } from "react";
 import { TRTHeader } from "@/components/landing/trt/TRTHeader";
 import { SEO } from "@/components/SEO";
-import { PHONE } from "@/lib/constants";
 
 // Footer is heavy — lazy load it so funnel pages don't pay the cost upfront
 const TRTFooter = lazy(() =>
@@ -27,44 +25,6 @@ const DEFAULT_DESC: Record<BookLayoutProps["page"], string> = {
   location: "Choose a Men's Wellness Centers location in Virginia for your consultation.",
 };
 
-/** Minimal footer for funnel steps — phone + required LegitScript badge */
-const FunnelFooter = () => (
-  <footer style={{
-    // hardcoded-color-allow-next-line
-    background: "#000814",
-    // hardcoded-color-allow-next-line
-    borderTop: "1px solid rgba(255,255,255,0.08)",
-    padding: "20px 24px",
-    textAlign: "center",
-    fontFamily: "Inter, sans-serif",
-  }}>
-    <a
-      href="https://www.legitscript.com/websites/?checker_keywords=menswellnesscenters.com"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Verify LegitScript Certification"
-      style={{ display: "inline-block", marginBottom: 12 }}
-    >
-      <img
-        src="/images/badges/legitscript.webp"
-        alt="LegitScript Certified"
-        width={140}
-        height={40}
-        style={{ height: 40, width: "auto", opacity: 0.9 }}
-        loading="lazy"
-      />
-    </a>
-    {/* hardcoded-color-allow-next-line */}
-    <p style={{ fontSize: 14, color: "var(--c-footnote-on-dark)", margin: 0, fontFamily: "Inter, sans-serif" }}>
-      Need help?{" "}
-      <a href={PHONE.tel} style={{ color: "var(--brand-cta)", fontWeight: 600, textDecoration: "none" }}>
-        {PHONE.display}
-      </a>
-      {" · "}
-      <span>HIPAA Compliant · Men's Wellness Centers</span>
-    </p>
-  </footer>
-);
 
 const BookLayout = ({ page, title, description, variant: _variant = "default", children }: BookLayoutProps) => {
   useEffect(() => {
@@ -74,24 +34,14 @@ const BookLayout = ({ page, title, description, variant: _variant = "default", c
     };
   }, [page]);
 
-  // Only show full footer on confirmation page — funnel steps get minimal footer
-  const isConfirmation = page === "confirmed";
-
   return (
     <div className="min-h-screen flex flex-col" style={{ fontFamily: "Inter, sans-serif", background: "var(--brand-navy-deep)", overflowX: "hidden" }}>
       <SEO title={title} description={description || DEFAULT_DESC[page]} />
-      {/* Schedule + confirmed: no site header — matches mwclocked (back arrow inline) */}
-      {page !== "schedule" && page !== "confirmed" && (
-        <TRTHeader minimal={false} hideCta={true} />
-      )}
-      <main className={`flex-1 animate-in fade-in duration-200 ${page === "schedule" || page === "confirmed" ? "" : "pt-16"}`}>{children}</main>
-      {isConfirmation ? (
-        <Suspense fallback={null}>
-          <TRTFooter />
-        </Suspense>
-      ) : (
-        <FunnelFooter />
-      )}
+      <TRTHeader minimal={false} hideCta={false} />
+      <main className="flex-1 pt-16 animate-in fade-in duration-200">{children}</main>
+      <Suspense fallback={null}>
+        <TRTFooter />
+      </Suspense>
     </div>
   );
 };
