@@ -23,7 +23,6 @@ interface CalLinks  { google: string; ics: string; }
 interface Props {
   firstName: string;
   apptDate: ApptDate | null;
-  calLinks: CalLinks | null;
   center: Location;
   checkDrawn: boolean;
 }
@@ -97,14 +96,14 @@ function AppointmentTicket({ apptDate, center }: { apptDate: ApptDate; center: L
       background: "#FFFFFF", borderRadius: 20, overflow: "hidden",
       marginBottom: 20, boxShadow: COLORS.cardShadow,
     }}>
-      <div style={{ padding: "16px 20px 0" }}>
+      <div style={{ padding: "24px 20px 0" }}>
         <p style={{ fontFamily: FONTS.ui, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: COLORS.sectionGray, margin: 0 }}>
           Your Appointment
         </p>
       </div>
 
       {/* Responsive body: vertical on mobile, horizontal on desktop */}
-      <div className="mwc-appt-body" style={{ padding: "12px 20px 0" }}>
+      <div className="mwc-appt-body" style={{ padding: "24px 20px 0" }}>
         <DateBlock apptDate={apptDate} />
         {/* Mobile centered details */}
         <div className="mwc-appt-details-center">
@@ -119,7 +118,7 @@ function AppointmentTicket({ apptDate, center }: { apptDate: ApptDate; center: L
       <div style={{ margin: "20px 20px 0", borderTop: "1px solid #EBEBEB" }} />
 
       {/* Mobile: vertical checklist */}
-      <div className="mwc-appt-checklist-v" style={{ padding: "16px 20px 24px" }}>
+      <div className="mwc-appt-checklist-v" style={{ padding: "16px 20px 34px" }}>
         {CHECKLIST_ITEMS.map((label) => (
           <div key={label} style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
             <CheckIcon />
@@ -162,7 +161,7 @@ function CalendarButtons({ calLinks }: { calLinks: CalLinks }) {
 
 // ─── Main component ───────────────────────────────────────────────────────────
 
-export function BookConfirmedHero({ firstName, apptDate, calLinks, center, checkDrawn }: Props) {
+export function BookConfirmedHero({ firstName, apptDate, center, checkDrawn }: Props) {
   return (
     <div style={{ background: COLORS.pageBg, padding: "40px 20px 56px" }}>
       <div style={{ maxWidth: 640, margin: "0 auto", fontFamily: FONTS.body }}>
@@ -190,7 +189,6 @@ export function BookConfirmedHero({ firstName, apptDate, calLinks, center, check
         </div>
 
         {apptDate && <AppointmentTicket apptDate={apptDate} center={center} />}
-        {calLinks  && <CalendarButtons calLinks={calLinks} />}
       </div>
     </div>
   );

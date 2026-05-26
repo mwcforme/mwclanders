@@ -71,7 +71,6 @@ export default function BookConfirmed() {
       <BookConfirmedHero
         firstName={firstName}
         apptDate={apptDate}
-        calLinks={calLinks}
         center={center}
         checkDrawn={checkDrawn}
       />
@@ -82,6 +81,7 @@ export default function BookConfirmed() {
         emailCaptured={emailCaptured}
         onEmailCaptured={() => setEmailCaptured(true)}
         contactId={identity?.ghlContactId}
+        calLinks={calLinks}
       />
     </BookLayout>
   );

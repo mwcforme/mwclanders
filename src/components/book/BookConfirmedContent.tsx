@@ -1,9 +1,9 @@
 import { useRef } from "react";
-import { MapPin, ChevronRight, Clock, ClipboardList, FlaskConical, Stethoscope } from "lucide-react";
+import { Calendar, MapPin, ChevronRight, Clock, ClipboardList, FlaskConical, Stethoscope } from "lucide-react";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
 import { EmailCapture } from "@/components/book/EmailCapture";
 import type { Location } from "@/data/locations";
-import { COLORS, FONTS } from "@/lib/bookingTokens";
+import { COLORS, FONTS, CAL_BUTTON_BASE } from "@/lib/bookingTokens";
 
 // ─── Exact computed px values from mwclocked.pplx.app/#/confirmed ────────────
 // All sizes are browser-rendered, not design-spec approximations.
@@ -256,6 +256,31 @@ function RescheduleCard({ center }: { center: Location }) {
 
 // ─── Props + Component ────────────────────────────────────────────────────────
 
+// hardcoded-color-allow-next-line
+const APPLE_BTN = "#1A203D";
+
+interface CalLinks { google: string; ics: string; }
+
+function CalendarButtons({ calLinks }: { calLinks: CalLinks }) {
+  return (
+    <div className="mwc-cal-buttons" style={{ marginBottom: 0 }}>
+      <a
+        href={calLinks.google} target="_blank" rel="noopener noreferrer"
+        aria-label="Add to Google Calendar (opens in new tab)"
+        style={{ ...CAL_BUTTON_BASE, flex: 1, background: COLORS.orange, boxShadow: COLORS.orangeShadow, color: "#FFFFFF", fontSize: 17 }}
+      >
+        <Calendar size={18} strokeWidth={2} aria-hidden /> Add to Google Calendar
+      </a>
+      <a
+        href={calLinks.ics} download="mwc-appointment.ics"
+        style={{ ...CAL_BUTTON_BASE, flex: 1, background: APPLE_BTN, color: "#FFFFFF", fontSize: 17 }}
+      >
+        <Calendar size={18} strokeWidth={2} aria-hidden /> Apple or Outlook
+      </a>
+    </div>
+  );
+}
+
 interface Props {
   center: Location;
   mapsSearchUrl: string;
@@ -263,12 +288,14 @@ interface Props {
   emailCaptured: boolean;
   onEmailCaptured: () => void;
   contactId: string | undefined;
+  calLinks: CalLinks | null;
 }
 
-export function BookConfirmedContent({ center, mapsSearchUrl, mapsEmbedUrl, emailCaptured, onEmailCaptured, contactId }: Props) {
+export function BookConfirmedContent({ center, mapsSearchUrl, mapsEmbedUrl, emailCaptured, onEmailCaptured, contactId, calLinks }: Props) {
   return (
     <div style={{ background: COLORS.pageBg, padding: "0 20px 48px" }}>
       <div style={{ maxWidth: 640, margin: "0 auto", display: "flex", flexDirection: "column", gap: 16, paddingTop: 20, fontFamily: FONTS.body }}>
+        {calLinks && <CalendarButtons calLinks={calLinks} />}
         <OutcomeCard />
         <VideoCard />
         <PrepCard />
