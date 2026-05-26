@@ -149,7 +149,7 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
                       <span style={{
                         fontFamily: "Montserrat, Inter, sans-serif",
                         fontSize: 11, fontWeight: 700, letterSpacing: "0.04em",
-                        color: active ? "rgba(255,255,255,0.85)" : "#9CA3AF",
+                        color: active ? "rgba(255,255,255,0.85)" : INK,
                       }}>
                         {ampm}
                       </span>
