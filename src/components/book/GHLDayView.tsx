@@ -252,6 +252,42 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
 
   return (
     <>
+      {/* Fixed-bottom "Select a time" overlay — matches mwclocked mockup.
+          Mockup: position fixed, height 101px wrapper, dark navy btn 72px.
+          Only shown when no slot selected (canConfirm === false). */}
+      {!canConfirm && (
+        <div
+          aria-hidden="true"
+          className="mwc-select-time-overlay"
+          style={{
+            position: "fixed", bottom: 0, left: 0, right: 0,
+            height: 101, zIndex: 50,
+            // hardcoded-color-allow-next-line
+            background: "linear-gradient(to bottom, transparent 0%, #0B1029 40%)",
+            display: "flex", alignItems: "flex-end", justifyContent: "center",
+            padding: "0 16px 15px",
+            pointerEvents: "none",
+          }}
+        >
+          <div
+            style={{
+              width: "100%", maxWidth: 720,
+              height: 72,
+              // hardcoded-color-allow-next-line
+              background: "#1F274C",
+              borderRadius: 12,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontFamily: "Montserrat, Inter, sans-serif",
+              fontSize: 15, fontWeight: 700, letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              color: "#FFFFFF",
+              opacity: 0.85,
+            }}
+          >
+            Select a Time
+          </div>
+        </div>
+      )}
       {/* White card — matches mockup exactly */}
       <div style={{
         background: "#FFFFFF",

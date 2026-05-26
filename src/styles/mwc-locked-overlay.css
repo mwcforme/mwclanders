@@ -225,6 +225,13 @@ body[data-page="confirmed"] a:focus-visible {
    4a. TIME SLOT GRID — 1 col mobile, 4 col desktop
    ============================================================================= */
 
+/* Mobile-only: select-a-time overlay (fixed bottom) */
+@media (min-width: 768px) {
+  .mwc-select-time-overlay {
+    display: none !important;
+  }
+}
+
 /* Mobile (default): single column, full-width slots */
 .mwc-time-grid {
   grid-template-columns: 1fr;
@@ -254,6 +261,13 @@ body[data-page="confirmed"] a:focus-visible {
   }
   .mwc-time-slot-ampm {
     font-size: 11px !important;
+  }
+}
+
+/* Wide desktop ≥1024px: 5 columns to match mockup */
+@media (min-width: 1024px) {
+  .mwc-time-grid {
+    grid-template-columns: repeat(5, 1fr);
   }
 }
 
