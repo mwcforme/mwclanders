@@ -34,18 +34,11 @@ interface Props {
 const CHECKLIST_ITEMS = ["No-cost consultation", "Your provider reserved", "Bring photo ID"] as const;
 
 function CheckIcon() {
-  // Mockup: background:rgba(46,196,165,0.12) border:1.5px solid rgb(46,196,165) — teal
+  // Simple teal checkmark — matches screenshot (no circle, just the tick)
   return (
-    <div style={{
-      width: 22, height: 22, borderRadius: "50%",
-      background: TEAL_TINT,
-      border: `1.5px solid ${TEAL}`,
-      display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
-    }}>
-      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-        <path d="M2 6.5L5 9.5L10 3.5" stroke={TEAL} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    </div>
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style={{ flexShrink: 0 }}>
+      <path d="M3 9.5L7 13.5L15 5.5" stroke={TEAL} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
   );
 }
 
@@ -91,12 +84,12 @@ function AppointmentTicket({ apptDate, center }: { apptDate: ApptDate; center: L
 
       <div style={{ margin: "16px 20px 0", borderTop: `1px solid ${COLORS.cardDivider}` }} />
 
-      {/* Mockup source: flex-direction:column gap:12px */}
-      <div style={{ padding: "14px 20px 20px", display: "flex", flexDirection: "column", gap: 12 }}>
+      {/* 3-column horizontal row matching screenshot */}
+      <div style={{ padding: "16px 20px 20px", display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "8px 4px" }}>
         {CHECKLIST_ITEMS.map((label) => (
-          <div key={label} style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <div key={label} style={{ display: "flex", alignItems: "flex-start", gap: 6 }}>
             <CheckIcon />
-            <span style={{ fontSize: 15, fontWeight: 700, color: COLORS.navyInkMid, fontFamily: FONTS.ui }}>
+            <span style={{ fontSize: 13, fontWeight: 500, color: COLORS.navyInkMid, fontFamily: FONTS.body, lineHeight: 1.35 }}>
               {label}
             </span>
           </div>
@@ -128,19 +121,24 @@ function DateBlock({ apptDate }: { apptDate: ApptDate }) {
 
 function AppointmentDetails({ apptDate, center }: { apptDate: ApptDate; center: Location }) {
   return (
-    // Mockup source: display:flex flex-direction:column justify-content:center gap:6px padding-top:4px
-    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 6, paddingTop: 4 }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+    // Screenshot layout: time on top, duration on own line, location below
+    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 4, paddingTop: 2 }}>
+      {/* Large time with clock icon */}
+      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 2 }}>
         <Clock size={16} strokeWidth={2} style={{ color: COLORS.orange, flexShrink: 0 }} />
-        <span style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 26, color: COLORS.navyInkMid, lineHeight: 1 }}>
+        <span style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 28, color: COLORS.navyInkMid, lineHeight: 1 }}>
           {apptDate.time}
         </span>
       </div>
-      {/* Mockup source: "Glen Allen · 60 min · In-person" all on one line with map pin */}
-      <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+      {/* Duration on its own line — matches screenshot */}
+      <span style={{ fontSize: 15, fontWeight: 500, color: COLORS.navyInkMid, paddingLeft: 24 }}>
+        60 minutes · In-person
+      </span>
+      {/* Location */}
+      <div style={{ display: "flex", alignItems: "center", gap: 7, marginTop: 2 }}>
         <MapPin size={15} strokeWidth={2} style={{ color: COLORS.orange, flexShrink: 0 }} />
-        <span style={{ fontSize: 15, fontWeight: 600, color: COLORS.navyInkMid }}>
-          {center.city} · 60 min · In-person
+        <span style={{ fontSize: 15, fontWeight: 500, color: COLORS.navyInkMid }}>
+          {center.city}
         </span>
       </div>
     </div>
@@ -149,23 +147,23 @@ function AppointmentDetails({ apptDate, center }: { apptDate: ApptDate; center: 
 
 function CalendarButtons({ calLinks }: { calLinks: CalLinks }) {
   return (
-    // Mockup source: flex-direction:column gap:10px
-    <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 8 }}>
+    // Screenshot: side-by-side buttons
+    <div style={{ display: "flex", flexDirection: "row", gap: 12, marginBottom: 8 }}>
       <a
         href={calLinks.google}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Add to Google Calendar (opens in new tab)"
-        style={{ ...CAL_BUTTON_BASE, background: COLORS.orange, boxShadow: COLORS.orangeShadow, color: "#FFFFFF" }}
+        style={{ ...CAL_BUTTON_BASE, flex: 1, background: COLORS.orange, boxShadow: COLORS.orangeShadow, color: "#FFFFFF", fontSize: 13 }}
       >
-        <Calendar size={18} strokeWidth={2} aria-hidden /> Add to Google Calendar
+        <Calendar size={16} strokeWidth={2} aria-hidden /> Add to Google Calendar
       </a>
       <a
         href={calLinks.ics}
         download="mwc-appointment.ics"
-        style={{ ...CAL_BUTTON_BASE, background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.90)" }}
+        style={{ ...CAL_BUTTON_BASE, flex: 1, background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.20)", color: "rgba(255,255,255,0.90)", fontSize: 13 }}
       >
-        <Calendar size={18} strokeWidth={2} aria-hidden /> Apple or Outlook
+        <Calendar size={16} strokeWidth={2} aria-hidden /> Apple or Outlook
       </a>
     </div>
   );
