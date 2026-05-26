@@ -29,14 +29,17 @@ interface BookConfirmedHeroProps {
 }
 
 export function BookConfirmedHero({ firstName, apptDate, calLinks, center, checkDrawn }: BookConfirmedHeroProps) {
-  // Teal accent matching mockup: #2EC4A5
+  // Brand accent: MWC Accent Orange. Replaces previous teal to align with
+  // mwclocked design language and brand standards (no teal anywhere).
   // hardcoded-color-allow-next-line
-  const TEAL = "#2EC4A5";
+  const ACCENT = "#E8670A";
+  // Soft tinted fill at 10% used behind check circles.
+  const ACCENT_TINT = "rgba(232,103,10,0.10)";
 
   return (
     <div style={{
-      // hardcoded-color-allow-next-line
-      background: "#0D1B3E",
+      // hardcoded-color-allow-next-line — Midnight Navy per MWC brand
+      background: "#0B1029",
       padding: "48px 20px 56px",
     }}>
       <div style={{ maxWidth: 640, margin: "0 auto", fontFamily: FONT_INTER }}>
@@ -46,20 +49,18 @@ export function BookConfirmedHero({ firstName, apptDate, calLinks, center, check
           <div style={{ position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
             <div style={{
               width: 80, height: 80, borderRadius: "50%",
-              // hardcoded-color-allow-next-line
-              background: "rgba(46,196,165,0.12)",
-              // hardcoded-color-allow-next-line
-              border: `2px solid ${TEAL}`,
+              background: ACCENT_TINT,
+              border: `2px solid ${ACCENT}`,
               display: "inline-flex", alignItems: "center", justifyContent: "center",
             }}>
               <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-                <path d="M5 12.5L10 17.5L19 7.5" stroke={TEAL} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                <path d="M5 12.5L10 17.5L19 7.5" stroke={ACCENT} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
                   style={{ strokeDasharray: 28, strokeDashoffset: checkDrawn ? 0 : 28, transition: "stroke-dashoffset 600ms ease-out" }} />
               </svg>
             </div>
             <CelebrationBurst active={checkDrawn} />
           </div>
-          <p style={{ fontSize: 13, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: TEAL, marginBottom: 12 }}>
+          <p style={{ fontSize: 13, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ACCENT, marginBottom: 12 }}>
             Appointment Confirmed
           </p>
           <h1 style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: "clamp(28px, 6vw, 42px)", color: "#FFFFFF", lineHeight: 1.05, marginBottom: 10, textTransform: "uppercase" }}>
@@ -133,14 +134,13 @@ export function BookConfirmedHero({ firstName, apptDate, calLinks, center, check
                 "Bring photo ID",
               ].map((label) => (
                 <div key={label} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                  {/* Teal check circle */}
+                  {/* Brand accent check circle */}
                   <div style={{ width: 22, height: 22, borderRadius: "50%",
-                    // hardcoded-color-allow-next-line
-                    background: "rgba(46,196,165,0.12)",
-                    border: `1.5px solid ${TEAL}`,
+                    background: ACCENT_TINT,
+                    border: `1.5px solid ${ACCENT}`,
                     display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                      <path d="M2 6.5L5 9.5L10 3.5" stroke={TEAL} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                      <path d="M2 6.5L5 9.5L10 3.5" stroke={ACCENT} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </div>
                   {/* hardcoded-color-allow-next-line */}
