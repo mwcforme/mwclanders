@@ -80,12 +80,12 @@ function AppointmentDetailsInner({ apptDate, center, centered }: { apptDate: App
     <div style={{ display: "flex", flexDirection: "column", gap: centered ? 10 : 4, alignItems: centered ? "center" : "flex-start", justifyContent: "center", paddingTop: centered ? 0 : 2, marginTop: centered ? 20 : 0 }}>
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
         <Clock size={16} strokeWidth={2} style={{ color: COLORS.orangeHex, flexShrink: 0 }} />
-        <span style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 32, color: INK, lineHeight: 1 }}>{apptDate.time}</span>
+        <span style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: centered ? 32 : 31.875, color: INK, lineHeight: 1 }}>{apptDate.time}</span>
       </div>
-      <span style={{ fontSize: 15, fontWeight: centered ? 500 : 600, color: INK, paddingLeft: centered ? 0 : 24 }}>60 minutes · In-person</span>
+      <span style={{ fontSize: centered ? 15 : 19.125, fontWeight: 600, color: INK, paddingLeft: centered ? 0 : 24 }}>60 minutes · In-person</span>
       <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-        <MapPin size={15} strokeWidth={2} style={{ color: COLORS.orangeHex, flexShrink: 0 }} />
-        <span style={{ fontSize: 15, fontWeight: 600, color: INK }}>{center.city}</span>
+        <MapPin size={centered ? 15 : 16} strokeWidth={2} style={{ color: COLORS.orangeHex, flexShrink: 0 }} />
+        <span style={{ fontSize: centered ? 15 : 19.125, fontWeight: 600, color: INK }}>{center.city}</span>
       </div>
     </div>
   );
@@ -132,7 +132,7 @@ function AppointmentTicket({ apptDate, center }: { apptDate: ApptDate; center: L
         {CHECKLIST_ITEMS.map((label) => (
           <div key={label} style={{ display: "flex", alignItems: "flex-start", gap: 6 }}>
             <CheckIcon />
-            <span style={{ fontSize: 13, fontWeight: 600, color: INK, fontFamily: FONTS.body, lineHeight: 1.35 }}>{label}</span>
+            <span style={{ fontSize: 14.875, fontWeight: 600, color: INK, fontFamily: FONTS.body, lineHeight: 1.35 }}>{label}</span>
           </div>
         ))}
       </div>
@@ -164,7 +164,7 @@ function CalendarButtons({ calLinks }: { calLinks: CalLinks }) {
 
 export function BookConfirmedHero({ firstName, apptDate, calLinks, center, checkDrawn }: Props) {
   return (
-    <div style={{ background: COLORS.pageBg, padding: "64px 20px 56px" }}>
+    <div style={{ background: COLORS.pageBg, padding: "40px 20px 56px" }}>
       <div style={{ maxWidth: 640, margin: "0 auto", fontFamily: FONTS.body }}>
 
         {/* Check + headline */}
