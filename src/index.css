@@ -486,6 +486,10 @@ input[type="radio"] {
 }
 
 @media (min-width: 640px) {
+  .mwc-hero-headline {
+    font-size: 44px !important;
+  }
+
   .mwc-appt-body {
     flex-direction: row;
     align-items: flex-start;

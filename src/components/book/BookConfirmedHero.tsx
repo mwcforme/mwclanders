@@ -178,7 +178,7 @@ export function BookConfirmedHero({ firstName, apptDate, center, checkDrawn }: P
             Appointment Confirmed
           </p>
           {/* Mockup: 34px weight 700 */}
-          <h1 style={{ fontFamily: FONTS.display, fontWeight: 700, fontSize: 34, color: "#FFFFFF", lineHeight: 1.05, marginBottom: 10, textTransform: "uppercase" }}>
+          <h1 className="mwc-hero-headline" style={{ fontFamily: FONTS.display, fontWeight: 700, fontSize: 34, color: "#FFFFFF", lineHeight: 1.05, marginBottom: 10, textTransform: "uppercase" }}>
             {firstName ? `You're booked, ${firstName}.` : "You're booked."}
           </h1>
           {/* Subtitle — rgb(203,213,225) */}
