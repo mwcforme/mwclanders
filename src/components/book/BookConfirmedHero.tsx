@@ -167,7 +167,7 @@ export function BookConfirmedHero({ firstName, apptDate, center, checkDrawn }: P
       <div style={{ maxWidth: 640, margin: "0 auto", fontFamily: FONTS.body }}>
 
         {/* Check + headline */}
-        <div style={{ textAlign: "center", marginBottom: 34 }}>
+        <div className="mwc-hero-intro" style={{ textAlign: "center", marginBottom: 34 }}>
           <div style={{ position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
             <AnimatedCheck drawn={checkDrawn} />
             <CelebrationBurst active={checkDrawn} />

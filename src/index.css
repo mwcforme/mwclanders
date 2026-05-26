@@ -490,6 +490,10 @@ input[type="radio"] {
     font-size: 50px !important;
   }
 
+  .mwc-hero-intro {
+    margin-bottom: 46px !important;
+  }
+
   .mwc-appt-body {
     flex-direction: row;
     align-items: flex-start;
