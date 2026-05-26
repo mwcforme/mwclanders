@@ -420,7 +420,7 @@ input[type="radio"] {
 }
 
 .mwc-appt-date-pill {
-  /* Large pill — mobile — reference is ~301px wide (86% of 350px card), br ~17px */
+  /* Large pill — mobile — reference is ~301px wide (86% of 350px card), br ~17px, h ~219px */
   background: #E8670A;
   border-radius: 17px;
   padding: 20px 24px 36px;

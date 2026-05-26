@@ -118,7 +118,7 @@ function AppointmentTicket({ apptDate, center }: { apptDate: ApptDate; center: L
       <div style={{ margin: "20px 20px 0", borderTop: "1px solid #EBEBEB" }} />
 
       {/* Mobile: vertical checklist */}
-      <div className="mwc-appt-checklist-v" style={{ padding: "16px 20px 109px" }}>
+      <div className="mwc-appt-checklist-v" style={{ padding: "16px 20px 72px" }}>
         {CHECKLIST_ITEMS.map((label) => (
           <div key={label} style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
             <CheckIcon />
