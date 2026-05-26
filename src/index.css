@@ -494,6 +494,10 @@ input[type="radio"] {
     margin-bottom: 46px !important;
   }
 
+  .mwc-hero-section {
+    padding-top: 56px !important;
+  }
+
   .mwc-appt-body {
     flex-direction: row;
     align-items: flex-start;

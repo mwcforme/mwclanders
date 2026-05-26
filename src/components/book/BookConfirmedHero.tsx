@@ -163,7 +163,7 @@ function CalendarButtons({ calLinks }: { calLinks: CalLinks }) {
 
 export function BookConfirmedHero({ firstName, apptDate, center, checkDrawn }: Props) {
   return (
-    <div style={{ background: COLORS.pageBg, padding: "40px 20px 56px" }}>
+    <div className="mwc-hero-section" style={{ background: COLORS.pageBg, padding: "40px 20px 56px" }}>
       <div style={{ maxWidth: 640, margin: "0 auto", fontFamily: FONTS.body }}>
 
         {/* Check + headline */}
