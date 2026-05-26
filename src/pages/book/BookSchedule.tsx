@@ -1,15 +1,4 @@
-/**
- * /book/schedule — Step 2 of 2 (new funnel architecture).
- *
- * Features added per brief:
- * - Compact physician + address bar at top (moat signal, no separate step)
- * - Time-of-day filter chips (ALL / MORNING / AFTERNOON / EVENING)
- * - Inline email reveal after date + time selected (Rev 2.1 pattern)
- * - No-availability fallback (3 action chips — never a dead end)
- * - Capacity nudge (hidden by default, only shown when API confirms ≤3 slots)
- */
-
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import BookLayout from "@/components/book/BookLayout";
@@ -19,305 +8,311 @@ import { useBookingStore } from "@/domain/booking/bookingStore";
 import { CENTER_CALENDARS, type LocationKey } from "@/lib/ghlCalendars";
 import { LOCATIONS, LOCATION_KEY_TO_SLUG } from "@/data/locations";
 import { PHONE } from "@/lib/constants";
+import { COLORS, FONTS, formatSlotLabel } from "@/lib/bookingTokens";
 
-// ─── Location lookup ─────────────────────────────────────────────────────────
+// ─── Sub-components ───────────────────────────────────────────────────────────
 
-
-const LOCATION_LABEL: Record<string, string> = {
-  richmond: "Richmond Center",
-  "virginia-beach": "Virginia Beach Center",
-  "newport-news": "Newport News Center",
-};
-
-
-// ─── No-availability fallback ─────────────────────────────────────────────────
-
-const NoAvailFallback = ({ onChangeCenter }: { onChangeCenter: () => void }) => (
-  <div style={{
-    // hardcoded-color-allow-next-line
-    background: "rgba(255,107,122,0.06)",
-    // hardcoded-color-allow-next-line
-    border: "1px solid rgba(255,107,122,0.25)",
-    borderRadius: 10, padding: 16,
-    fontFamily: "Inter, sans-serif",
-  }}>
-    <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 16, color: "var(--brand-cream)", marginBottom: 8 }}>
-      No times for this day
-    </p>
-    <p style={{ fontSize: 16, color: "rgba(245,243,240,0.85)", marginBottom: 16, fontWeight: 500, lineHeight: 1.6 }}>
-      Try a different date or another Men's Wellness Centers location.
-    </p>
-    {/* Primary: try another center. Secondary: call us — not equal weight */}
+function BackButton({ onClick }: { onClick: () => void }) {
+  return (
     <button
       type="button"
-      onClick={onChangeCenter}
+      onClick={onClick}
+      aria-label="Back"
       style={{
-        display: "block", width: "100%", minHeight: 56,
-        background: "var(--brand-cta)", border: "none",
-        color: "#FFFFFF", borderRadius: 8, fontSize: 16, fontWeight: 700,
-        fontFamily: "Inter, sans-serif", cursor: "pointer",
-        padding: "12px 16px", marginBottom: 12,
-        // hardcoded-color-allow-next-line
-        boxShadow: "0 4px 16px rgba(232,103,10,0.35)",
+        background: "transparent", border: 0, cursor: "pointer",
+        padding: "8px 0", display: "inline-flex", alignItems: "center",
+        gap: 6, fontFamily: FONTS.body, fontSize: 16, fontWeight: 600,
+        color: "var(--c-text-on-dark)",
       }}
     >
-      Try Another Center
+      <ArrowLeft size={18} /> Back
     </button>
-    <p style={{ textAlign: "center", margin: 0 }}>
+  );
+}
+
+function ScheduleHeading({
+  heading,
+  locationName,
+  onChangeLocation,
+}: {
+  heading: string;
+  locationName: string | null;
+  onChangeLocation: () => void;
+}) {
+  return (
+    <section style={{ maxWidth: 720, width: "100%", margin: "0 auto" }}>
+      <h1 style={{
+        fontFamily: FONTS.display, fontWeight: 700,
+        fontSize: "clamp(28px, 5vw, 40px)", lineHeight: 1.05,
+        letterSpacing: "0.02em", marginBottom: 8,
+        color: "#FFFFFF", textTransform: "uppercase",
+      }}>
+        {heading}
+      </h1>
+
+      {locationName && (
+        <p style={{ fontFamily: FONTS.body, fontSize: 15, fontWeight: 500, color: COLORS.textSubtle, marginBottom: 2, lineHeight: 1.5 }}>
+          {locationName}.{" "}
+          <button
+            type="button"
+            onClick={onChangeLocation}
+            style={{
+              fontFamily: FONTS.body, fontSize: 15, fontWeight: 700,
+              color: COLORS.orange, background: "none", border: "none",
+              cursor: "pointer", padding: 0,
+              textDecoration: "underline", textUnderlineOffset: 3,
+            }}
+          >
+            Change
+          </button>
+        </p>
+      )}
+
+      <p style={{ fontFamily: FONTS.body, fontSize: 15, fontWeight: 500, color: COLORS.textMuted, marginBottom: 0 }}>
+        60-minute consult. No charge today.
+      </p>
+    </section>
+  );
+}
+
+function NextAvailableBanner({ label, onLockIn }: { label: string; onLockIn: () => void }) {
+  return (
+    <div style={{ maxWidth: 720, width: "100%", margin: "0 auto" }}>
+      <div style={{
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        background: COLORS.bannerBg, border: `1px solid ${COLORS.glassBorder}`,
+        borderRadius: 12, padding: "14px 18px",
+        boxShadow: "0 2px 16px rgba(0,0,0,0.30)",
+      }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <span style={{
+            width: 8, height: 8, borderRadius: "50%",
+            background: COLORS.orange, flexShrink: 0,
+            animation: "pulse 2s cubic-bezier(.4,0,.6,1) infinite",
+          }} />
+          <span style={{ fontFamily: FONTS.ui, fontSize: 14, color: "#fff", fontWeight: 600 }}>
+            <strong>Next available:</strong> {label}
+          </span>
+        </div>
+        <button
+          type="button"
+          onClick={onLockIn}
+          style={{
+            fontFamily: FONTS.ui, fontSize: 13, fontWeight: 800,
+            color: COLORS.orange, background: "none", border: "none",
+            cursor: "pointer", padding: 0, whiteSpace: "nowrap", letterSpacing: "0.06em",
+          }}
+        >
+          LOCK IN →
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function LocationPicker({ onSelect, onNoAvail }: { onSelect: (key: string) => void; onNoAvail: () => void }) {
+  return (
+    <div style={{
+      background: COLORS.cardBg, border: "1px solid #E5E7EB",
+      borderRadius: 16, padding: 20, fontFamily: FONTS.body,
+      boxShadow: COLORS.panelShadow,
+    }}>
+      <p style={{ fontSize: 12, color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 700, marginBottom: 12 }}>
+        Choose your center
+      </p>
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        {Object.values(CENTER_CALENDARS).map((c) => (
+          <button
+            key={c.key}
+            type="button"
+            onClick={() => onSelect(c.key)}
+            style={{
+              padding: "14px 16px", borderRadius: 10,
+              border: "1.5px solid #D1D5DB",
+              background: COLORS.cardBg,
+              color: COLORS.navyInk, fontSize: 16, fontWeight: 600,
+              textAlign: "left", cursor: "pointer", fontFamily: FONTS.body,
+            }}
+          >
+            {c.label}
+          </button>
+        ))}
+      </div>
+      <div style={{ marginTop: 16 }}>
+        <NoAvailFallback onChangeCenter={onNoAvail} />
+      </div>
+    </div>
+  );
+}
+
+function NoAvailFallback({ onChangeCenter }: { onChangeCenter: () => void }) {
+  return (
+    <div style={{
+      background: "rgba(255,107,122,0.06)",
+      border: "1px solid rgba(255,107,122,0.25)",
+      borderRadius: 10, padding: 16, fontFamily: FONTS.body,
+    }}>
+      <p style={{ fontWeight: 700, fontSize: 16, color: "var(--brand-cream)", marginBottom: 8 }}>
+        No times for this day
+      </p>
+      <p style={{ fontSize: 16, color: "rgba(245,243,240,0.85)", marginBottom: 16, fontWeight: 500, lineHeight: 1.6 }}>
+        Try a different date or another Men's Wellness Centers location.
+      </p>
+      <button
+        type="button"
+        onClick={onChangeCenter}
+        style={{
+          display: "block", width: "100%", minHeight: 56,
+          background: COLORS.orange, border: "none",
+          color: "#FFFFFF", borderRadius: 8, fontSize: 16, fontWeight: 700,
+          fontFamily: FONTS.body, cursor: "pointer", padding: "12px 16px", marginBottom: 12,
+          boxShadow: "0 4px 16px rgba(232,103,10,0.35)",
+        }}
+      >
+        Try Another Center
+      </button>
+      <p style={{ textAlign: "center", margin: 0 }}>
+        <a href={PHONE.tel} style={{ color: "rgba(245,243,240,0.70)", fontSize: 14, fontWeight: 600, textDecoration: "underline", textUnderlineOffset: 3 }}>
+          Or call us: {PHONE.display}
+        </a>
+      </p>
+    </div>
+  );
+}
+
+function HelpBar() {
+  return (
+    <div style={{ maxWidth: 720, width: "100%", margin: "0 auto" }}>
       <a
         href={PHONE.tel}
         style={{
-          color: "rgba(245,243,240,0.70)", fontSize: 14, fontWeight: 600,
-          fontFamily: "Inter, sans-serif", textDecoration: "underline",
-          textUnderlineOffset: 3,
+          display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+          minHeight: 52, borderRadius: 12,
+          background: COLORS.glassBg, border: `1px solid ${COLORS.glassBorder}`,
+          fontFamily: FONTS.body, fontSize: 15, fontWeight: 600,
+          color: COLORS.textSubtle, textDecoration: "none",
         }}
       >
-        Or call us: {PHONE.display}
+        Need help? Call {PHONE.display}
       </a>
-    </p>
-  </div>
-);
+    </div>
+  );
+}
 
-// ─── Main component ───────────────────────────────────────────────────────────
+// ─── Hooks ────────────────────────────────────────────────────────────────────
+
+function useScheduleState() {
+  const location    = useBookingStore((s) => s.location);
+  const identity    = useBookingStore((s) => s.identity);
+  const symptom     = useBookingStore((s) => s.symptom);
+  const note        = useBookingStore((s) => s.note);
+  const duration    = useBookingStore((s) => s.duration);
+  const urgencyTier = useBookingStore((s) => s.urgencyTier);
+  const service     = useBookingStore((s) => s.service);
+  const lpSlug      = useBookingStore((s) => s.lpSlug);
+  const source      = useBookingStore((s) => s.source);
+  const setLocation        = useBookingStore((s) => s.setLocation);
+  const setAppointmentTime = useBookingStore((s) => s.setAppointmentTime);
+
+  const firstName = identity?.firstName ?? "";
+  const lastName  = identity?.lastName  ?? "";
+
+  const heading = firstName ? `${firstName}, LOCK IN A TIME.` : "LOCK IN A TIME.";
+
+  const locationSlug = location ? LOCATION_KEY_TO_SLUG[location] : null;
+  const locationData = locationSlug ? LOCATIONS.find((l) => l.slug === locationSlug) : null;
+  const locationName = locationData?.name.replace("Men's Wellness Centers, ", "") ?? null;
+
+  const customFields = {
+    ...(symptom     ? { mwc_symptom:          symptom              } : {}),
+    ...(duration    ? { mwc_symptom_duration:  duration             } : {}),
+    ...(urgencyTier ? { mwc_urgency_tier:      urgencyTier          } : {}),
+    ...(note        ? { mwc_clinical_note:     note.slice(0, 500)   } : {}),
+    ...(service     ? { mwc_funnel_service:    service              } : {}),
+    ...(lpSlug      ? { mwc_lp_slug:           lpSlug               } : {}),
+  };
+
+  return {
+    location, identity, source, urgencyTier,
+    firstName, lastName, heading, locationName,
+    customFields, setLocation, setAppointmentTime,
+  };
+}
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
 
 const BookSchedule = () => {
   const navigate = useNavigate();
-  const identity = useBookingStore((s) => s.identity);
-  const location = useBookingStore((s) => s.location);
-  const symptom = useBookingStore((s) => s.symptom);
-  const note = useBookingStore((s) => s.note);
-  const duration = useBookingStore((s) => s.duration);
-  const urgencyTier = useBookingStore((s) => s.urgencyTier);
-  const service = useBookingStore((s) => s.service);
-  const lpSlug = useBookingStore((s) => s.lpSlug);
-  const source = useBookingStore((s) => s.source);
-  const setLocation = useBookingStore((s) => s.setLocation);
-  const setAppointmentTime = useBookingStore((s) => s.setAppointmentTime);
-  const setIdentity = useBookingStore((s) => s.setIdentity);
-
-  const firstName = identity?.firstName || "";
-  const lastName = identity?.lastName || "";
-  // PICK YOUR TIME — ≤4 words, Oswald uppercase. Personalised when firstName present.
-  const heading = firstName ? `${firstName}, LOCK IN A TIME.` : "LOCK IN A TIME.";
-
-  // Resolve location data for compact bar
-  const locationSlug = location ? LOCATION_KEY_TO_SLUG[location] : null;
-  const locationData = locationSlug ? LOCATIONS.find((l) => l.slug === locationSlug) : null;
-
-  const customFields = {
-    ...(symptom ? { mwc_symptom: symptom } : {}),
-    ...(duration ? { mwc_symptom_duration: duration } : {}),
-    ...(urgencyTier ? { mwc_urgency_tier: urgencyTier } : {}),
-    ...(note ? { mwc_clinical_note: note.slice(0, 500) } : {}),
-    ...(service ? { mwc_funnel_service: service } : {}),
-    ...(lpSlug ? { mwc_lp_slug: lpSlug } : {}),
-  };
-
-  // Scroll to top on mount — prevents browser restoring mid-page position
-  useEffect(() => { window.scrollTo(0, 0); }, []);
+  const store = useScheduleState();
 
   const [nextAvailable, setNextAvailable] = useState<string | null>(null);
-  const [_bookedSlot, _setBookedSlot] = useState<string | null>(null);
-  const [_emailCaptured, _setEmailCaptured] = useState(false);
   const handleNextAvailable = useCallback((iso: string | null) => setNextAvailable(iso), []);
+  const nextAvailableLabel  = nextAvailable ? formatSlotLabel(nextAvailable) : null;
 
-  // Time-first label format: "Mon, May 25 · 11:00 AM" (no em-dash, no "at")
-  const nextAvailableLabel = nextAvailable ? (() => {
-    const d = new Date(nextAvailable);
-    const day = d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", timeZone: "America/New_York" });
-    const time = d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true, timeZone: "America/New_York" });
-    return `${day} · ${time}`;
-  })() : null;
+  useEffect(() => { window.scrollTo(0, 0); }, []);
 
-  const bookedSlotLabel = _bookedSlot ? (() => {
-    const d = new Date(_bookedSlot);
-    const day = d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", timeZone: "America/New_York" });
-    const time = d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true, timeZone: "America/New_York" });
-    return `${day} · ${time}`;
-  })() : null;
+  const scrollToCalendar = () =>
+    document.querySelector<HTMLElement>('[aria-label="Pick a date and time"]')
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
 
-  const _emailRecap = bookedSlotLabel
-    ? `${bookedSlotLabel} · ${LOCATION_LABEL[location ?? ""] ?? "MWC"} · 60-min Physician Assessment`
-    : "";
-
-  const _handleEmailComplete = (email: string) => {
-    if (identity) setIdentity({ ...identity, email });
-    _setEmailCaptured(true);
-    if (_bookedSlot) {
-      navigate("/book/confirmed", { state: { appointmentTime: _bookedSlot } });
-    }
-  };
-
-  const _inlineEmailRef = useRef<HTMLDivElement>(null);
+  const { location, identity, source, urgencyTier, firstName, lastName, heading, locationName, customFields, setLocation, setAppointmentTime } = store;
+  const hasCalendar = Boolean(location && location in CENTER_CALENDARS);
 
   return (
-    <>{""}  
-    <BookLayout page="schedule" title="Book Your Physician Assessment | Men's Wellness Centers">
-      <div className="px-4 md:px-6 pt-16 pb-24" style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+    <>
+      <BookLayout page="schedule" title="Book Your Physician Assessment | Men's Wellness Centers">
+        <div style={{ display: "flex", flexDirection: "column", gap: 24, padding: "64px 16px 96px" }}>
 
-        {/* ── Progress + back ─────────────────────────────────────────────── */}
-        <div className="mx-auto w-full" style={{ maxWidth: 720 }}>
-          <button
-            type="button"
-            onClick={() => navigate(-1)}
-            className="inline-flex items-center gap-1"
-            style={{
-              background: "transparent", border: 0, color: "var(--c-text-on-dark)",
-              fontFamily: "Inter, sans-serif", fontSize: 16, fontWeight: 600,
-              cursor: "pointer", padding: "8px 0", marginLeft: 0, display: "inline-flex", alignItems: "center", gap: 6,
-            }}
-            aria-label="Back"
-          >
-            <ArrowLeft size={18} /> Back
-          </button>
-
-        </div>
-
-        {/* ── Heading + subtitle block ─────────────────────────── */}
-        <section className="mx-auto" style={{ maxWidth: 720 }}>
-          <h1 style={{
-            fontFamily: "Oswald, sans-serif", fontWeight: 700,
-            fontSize: "clamp(28px, 5vw, 40px)", lineHeight: 1.05,
-            letterSpacing: "0.02em", marginBottom: 8, color: "#FFFFFF",
-            textTransform: "uppercase",
-          }}>
-            {heading}
-          </h1>
-          {locationData && (
-            <p style={{ fontFamily: "Inter, sans-serif", fontSize: 15, fontWeight: 500, color: "rgba(255,255,255,0.75)", marginBottom: 2, lineHeight: 1.5 }}>
-              {locationData.name.replace("Men's Wellness Centers, ", "")}.{" "}
-              <button
-                type="button"
-                onClick={() => navigate("/book/location")}
-                style={{ fontFamily: "Inter, sans-serif", fontSize: 15, fontWeight: 700, color: "var(--brand-cta)", background: "none", border: "none", cursor: "pointer", padding: 0, textDecoration: "underline", textUnderlineOffset: 3 }}
-              >
-                Change
-              </button>
-            </p>
-          )}
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 15, fontWeight: 500, color: "rgba(255,255,255,0.65)", marginBottom: 0 }}>
-            60-minute consult. No charge today.
-          </p>
-        </section>
-
-        {/* ── Next available bar ─────────────────────────────────────────────── */}
-        {nextAvailableLabel && (
-          <div className="mx-auto w-full" style={{ maxWidth: 720, marginBottom: 8 }}>
-            <div
-              style={{
-                display: "flex", alignItems: "center", justifyContent: "space-between",
-                // hardcoded-color-allow-next-line
-                background: "rgba(11,16,41,0.70)",
-                // hardcoded-color-allow-next-line
-                border: "1px solid rgba(255,255,255,0.10)",
-                borderRadius: 12, padding: "14px 18px",
-                // hardcoded-color-allow-next-line
-                boxShadow: "0 2px 16px rgba(0,0,0,0.30)",
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <span style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--brand-cta)", flexShrink: 0, animation: "pulse 2s cubic-bezier(.4,0,.6,1) infinite" }} />
-                <span style={{ fontFamily: "Montserrat, Inter, sans-serif", fontSize: 14, color: "#fff", fontWeight: 600 }}>
-                  <strong>Next available:</strong> {nextAvailableLabel}
-                </span>
-              </div>
-              <button
-                type="button"
-                onClick={() => document.querySelector<HTMLElement>('[aria-label="Pick a date and time"]')?.scrollIntoView({ behavior: "smooth", block: "start" })}
-                style={{ fontFamily: "Montserrat, Inter, sans-serif", fontSize: 13, fontWeight: 800, color: "var(--brand-cta)", background: "none", border: "none", cursor: "pointer", padding: 0, whiteSpace: "nowrap", letterSpacing: "0.06em" }}
-              >
-                LOCK IN →
-              </button>
-            </div>
+          <div style={{ maxWidth: 720, width: "100%", margin: "0 auto" }}>
+            <BackButton onClick={() => navigate(-1)} />
           </div>
-        )}
 
-        {/* ── Calendar ───────────────────────────────────────────────────── */}
-        <section className="mx-auto" aria-label="Pick a date and time" style={{ maxWidth: 720, marginTop: 8 }}>
-          {location && location in CENTER_CALENDARS ? (
-            <BookingErrorBoundary>
-              <GHLDayView
-                location={location as LocationKey}
-                firstName={firstName}
-                lastName={lastName}
-                email={identity?.email}
-                phone={identity?.phone}
-                source={source || "mwc-book-funnel"}
-                urgencyTier={urgencyTier}
-                customFields={customFields}
-                onNextAvailable={handleNextAvailable}
-                onBooked={(slotIso) => {
-                  setAppointmentTime(slotIso);
-                  navigate("/book/confirmed", { state: { appointmentTime: slotIso } });
-                }}
-              />
-            </BookingErrorBoundary>
-          ) : (
-            /* No location set — show center picker inline */
-            <div style={{
-              background: "#FFFFFF",
-              // hardcoded-color-allow-next-line
-              border: "1px solid #E5E7EB",
-              borderRadius: 16, padding: 20, fontFamily: "Inter, sans-serif",
-              // hardcoded-color-allow-next-line
-              boxShadow: "0 20px 60px -10px rgba(0,0,0,0.40)",
-            }}>
-              <div style={{ fontSize: 12, color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 700, marginBottom: 12 }}>
-                Choose your center
-              </div>
-              <div className="grid gap-2">
-                {Object.values(CENTER_CALENDARS).map((c) => (
-                  <button
-                    key={c.key}
-                    type="button"
-                    onClick={() => setLocation(c.key)}
-                    style={{
-                      padding: "14px 16px", borderRadius: 10,
-                      // hardcoded-color-allow-next-line
-                      border: "1.5px solid #D1D5DB",
-                      background: "#FFFFFF",
-                      // hardcoded-color-allow-next-line
-                      color: "#0B1029", fontSize: 16, fontWeight: 600,
-                      textAlign: "left", cursor: "pointer",
-                      fontFamily: "Inter, sans-serif",
-                    }}
-                  >
-                    {c.label}
-                  </button>
-                ))}
-              </div>
-              {/* No-avail fallback pattern */}
-              <div style={{ marginTop: 16 }}>
-                <NoAvailFallback onChangeCenter={() => navigate("/book/location")} />
-              </div>
-            </div>
+          <ScheduleHeading
+            heading={heading}
+            locationName={locationName}
+            onChangeLocation={() => navigate("/book/location")}
+          />
+
+          {nextAvailableLabel && (
+            <NextAvailableBanner label={nextAvailableLabel} onLockIn={scrollToCalendar} />
           )}
-        </section>
 
-
-
-        {/* ── Help bar ──────────────────────────────────────────────────── */}
-        <div className="mx-auto w-full" style={{ maxWidth: 720 }}>
-          <a
-            href={PHONE.tel}
-            style={{
-              display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-              minHeight: 52, borderRadius: 12,
-              // hardcoded-color-allow-next-line
-              background: "rgba(255,255,255,0.05)",
-              // hardcoded-color-allow-next-line
-              border: "1px solid rgba(255,255,255,0.10)",
-              fontFamily: "Inter, sans-serif", fontSize: 15, fontWeight: 600,
-              color: "rgba(255,255,255,0.75)", textDecoration: "none",
-            }}
+          <section
+            aria-label="Pick a date and time"
+            style={{ maxWidth: 720, width: "100%", margin: "0 auto", marginTop: 8 }}
           >
-            Need help? Call {PHONE.display}
-          </a>
+            {hasCalendar ? (
+              <BookingErrorBoundary>
+                <GHLDayView
+                  location={location as LocationKey}
+                  firstName={firstName}
+                  lastName={lastName}
+                  email={identity?.email}
+                  phone={identity?.phone}
+                  source={source ?? "mwc-book-funnel"}
+                  urgencyTier={urgencyTier}
+                  customFields={customFields}
+                  onNextAvailable={handleNextAvailable}
+                  onBooked={(slotIso) => {
+                    setAppointmentTime(slotIso);
+                    navigate("/book/confirmed", { state: { appointmentTime: slotIso } });
+                  }}
+                />
+              </BookingErrorBoundary>
+            ) : (
+              <LocationPicker
+                onSelect={(key) => setLocation(key)}
+                onNoAvail={() => navigate("/book/location")}
+              />
+            )}
+          </section>
+
+          <HelpBar />
         </div>
-      </div>
-    </BookLayout>
-    <style>{`@keyframes pulse { 50% { opacity: .5; } }`}</style>
-  </>);
+      </BookLayout>
+      <style>{`@keyframes pulse { 50% { opacity: .5; } }`}</style>
+    </>
+  );
 };
 
 export default BookSchedule;
