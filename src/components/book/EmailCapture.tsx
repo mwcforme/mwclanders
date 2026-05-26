@@ -32,9 +32,6 @@ export function EmailCapture({ contactId, onComplete }: Props) {
 
   return (
     <div>
-      <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "var(--c-text-on-light-muted)", marginBottom: 10 }}>
-        We'll send your appointment details and a reminder.
-      </p>
       <form onSubmit={handleSubmit} noValidate style={{ display: "flex", gap: 8 }}>
         <input
           type="email"
@@ -49,8 +46,12 @@ export function EmailCapture({ contactId, onComplete }: Props) {
           onChange={(e) => { setEmail(e.target.value); setError(""); }}
           style={{
             flex: 1, height: 44, borderRadius: 8,
-            border: `1.5px solid ${error ? "var(--c-error-on-light)" : "#D1D5DB"}`,
-            background: "var(--bg-white)", color: "var(--c-text-on-light)",
+            // hardcoded-color-allow-next-line
+            border: `1.5px solid ${error ? "#f87171" : "rgba(255,255,255,0.15)"}`,
+            // hardcoded-color-allow-next-line
+            background: "rgba(255,255,255,0.07)",
+            // hardcoded-color-allow-next-line
+            color: "rgba(255,255,255,0.92)",
             fontSize: 16, fontFamily: "Inter, sans-serif", padding: "0 14px", outline: "none",
           }}
         />
@@ -67,7 +68,9 @@ export function EmailCapture({ contactId, onComplete }: Props) {
           <Send size={14} strokeWidth={2} /> Send
         </button>
       </form>
-      {error && <p id="email-capture-error" role="alert" style={{ color: "var(--c-error-on-light)", fontSize: 14, marginTop: 4, fontFamily: "Inter, sans-serif" }}>{error}</p>}
+      {error && <p id="email-capture-error" role="alert" style={{
+        // hardcoded-color-allow-next-line
+        color: "#f87171", fontSize: 14, marginTop: 4, fontFamily: "Inter, sans-serif" }}>{error}</p>}
     </div>
   );
 }
