@@ -204,20 +204,29 @@ const BookSchedule = () => {
 
         </section>
 
-        {/* ── Next available inline pill ─────────────────────────────────────── */}
+        {/* ── Next available bar ─────────────────────────────────────────────── */}
         {nextAvailableLabel && (
-          <div className="mx-auto w-full" style={{ maxWidth: 720 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "4px 0 8px" }}>
-              <span style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--brand-cta)", flexShrink: 0, animation: "pulse 2s cubic-bezier(.4,0,.6,1) infinite" }} />
-              <span style={{ fontFamily: "Montserrat, Inter, sans-serif", fontSize: 14, color: "rgba(255,255,255,0.75)", fontWeight: 500 }}>
-                Next available: {nextAvailableLabel}
-              </span>
+          <div className="mx-auto w-full" style={{ maxWidth: 720, marginBottom: 8 }}>
+            <div
+              style={{
+                display: "flex", alignItems: "center", justifyContent: "space-between",
+                background: "#111827",
+                borderRadius: 12, padding: "14px 18px",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.25)",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <span style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--brand-cta)", flexShrink: 0, animation: "pulse 2s cubic-bezier(.4,0,.6,1) infinite" }} />
+                <span style={{ fontFamily: "Montserrat, Inter, sans-serif", fontSize: 14, color: "#fff", fontWeight: 600 }}>
+                  <strong>Next available:</strong> {nextAvailableLabel}
+                </span>
+              </div>
               <button
                 type="button"
                 onClick={() => document.querySelector<HTMLElement>('[aria-label="Pick a date and time"]')?.scrollIntoView({ behavior: "smooth", block: "start" })}
-                style={{ marginLeft: "auto", fontFamily: "Inter, sans-serif", fontSize: 13, fontWeight: 700, color: "var(--brand-cta)", background: "none", border: "none", cursor: "pointer", padding: "4px 0", whiteSpace: "nowrap" }}
+                style={{ fontFamily: "Montserrat, Inter, sans-serif", fontSize: 13, fontWeight: 800, color: "var(--brand-cta)", background: "none", border: "none", cursor: "pointer", padding: 0, whiteSpace: "nowrap", letterSpacing: "0.06em" }}
               >
-                Book →
+                LOCK IN →
               </button>
             </div>
           </div>

@@ -1,15 +1,10 @@
 /**
  * TimeGrid — time slots grouped by Morning / Afternoon / Evening.
- * MangoRx-inspired grouping reduces cognitive load.
- * Senior-mobile optimised: 52px touch targets, 16px body, 14px labels.
+ * Matches reference design: dark labels, white rectangular pills, orange selected.
  */
 import { TIMEZONE } from "@/lib/ghlCalendars";
 
-// hardcoded-color-allow-next-line
-const MUTED  = "var(--c-text-on-light-muted)";
-// hardcoded-color-allow-next-line
-const LINE   = "#E5E7EB";
-const SURFACE = "#F4F6FA";
+const ORANGE = "var(--brand-cta)";
 
 const fmtTimeParts = (iso: string): { time: string; ampm: string; hour: number } => {
   const d = new Date(iso);
@@ -38,8 +33,8 @@ export interface TimeGridProps {
 const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: TimeGridProps) => {
   if (!selectedDay) {
     return (
-      <div className="px-5 md:px-7 pb-6" style={{ borderTop: `1px solid ${LINE}`, paddingTop: 20, background: SURFACE }}>
-        <div style={{ color: MUTED, fontSize: 16, fontWeight: 500, lineHeight: 1.6, padding: "20px 4px" }}>
+      <div style={{ padding: "20px 20px 24px", borderTop: "1px solid #F3F4F6" }}>
+        <div style={{ color: "#9CA3AF", fontSize: 15, fontWeight: 500, fontFamily: "Montserrat, Inter, sans-serif", lineHeight: 1.6 }}>
           {loading ? "Loading availability…" : "Pick a date above to see available times."}
         </div>
       </div>
@@ -48,15 +43,14 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
 
   if (times.length === 0) {
     return (
-      <div className="px-5 md:px-7 pb-6" style={{ borderTop: `1px solid ${LINE}`, paddingTop: 20, background: SURFACE }}>
-        <div style={{ color: MUTED, fontSize: 16, fontWeight: 500, lineHeight: 1.6, padding: "20px 4px" }}>
-          No times available on this day between 8 AM and 5 PM. Try selecting another day.
+      <div style={{ padding: "20px 20px 24px", borderTop: "1px solid #F3F4F6" }}>
+        <div style={{ color: "#9CA3AF", fontSize: 15, fontWeight: 500, fontFamily: "Montserrat, Inter, sans-serif", lineHeight: 1.6 }}>
+          No times available. Try another day.
         </div>
       </div>
     );
   }
 
-  // Group slots by period
   const groups: Record<string, string[]> = { morning: [], afternoon: [], evening: [] };
   for (const iso of times) {
     const { hour } = fmtTimeParts(iso);
@@ -65,32 +59,28 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
     else groups.evening.push(iso);
   }
 
-  // Track first rendered group for conditional top border (mutated synchronously in map — safe in render)
   let firstRendered = true;
 
   return (
-    <div className="px-5 md:px-7 pb-6" style={{ borderTop: `1px solid ${LINE}`, paddingTop: 20, background: SURFACE }}>
+    <div style={{ padding: "4px 20px 20px", borderTop: "1px solid #F3F4F6" }}>
       {(["morning", "afternoon", "evening"] as const).map((period) => {
         const slots = groups[period];
         if (!slots.length) return null;
         const isFirst = firstRendered;
         firstRendered = false;
         return (
-          <div key={period} style={{ marginBottom: 20 }}>
-            {/* Period label — 14px, uppercase ok (≤3 words) */}
+          <div key={period} style={{ marginTop: isFirst ? 16 : 20 }}>
+            {/* Period label */}
             <p style={{
-              fontSize: 11, fontWeight: 700, letterSpacing: "0.10em",
-              textTransform: "uppercase",
-              // hardcoded-color-allow-next-line
-              color: "#9CA3AF",
               fontFamily: "Montserrat, Inter, sans-serif",
-              marginBottom: 12, paddingBottom: 0,
-              ...(isFirst ? {} : { borderTop: "1px solid #E5E7EB", paddingTop: 16, marginTop: 8 }),
+              fontSize: 11, fontWeight: 700, letterSpacing: "0.12em",
+              textTransform: "uppercase", color: "#9CA3AF",
+              marginBottom: 10,
             }}>
               {GROUP_LABELS[period]}
             </p>
-            {/* Slot pills — 52px touch target, 10px gap */}
-            <div className="flex flex-wrap" style={{ gap: 10 }}>
+            {/* Slot grid — 3 columns */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
               {slots.map((iso) => {
                 const active = iso === selectedSlot;
                 const { time, ampm } = fmtTimeParts(iso);
@@ -101,29 +91,31 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
                     aria-pressed={active}
                     onClick={() => onSlotSelect(iso)}
                     style={{
-                      background: active ? "var(--brand-cta)" : "#F9FAFB",
-                      border: active ? "2px solid var(--brand-cta)" : "1.5px solid #E5E7EB",
-                      borderRadius: 10,
-                      padding: "0 16px",
-                      display: "inline-flex", alignItems: "center", gap: 5,
+                      background: active ? ORANGE : "#FFFFFF",
                       // hardcoded-color-allow-next-line
+                      border: active ? `2px solid ${ORANGE}` : "1.5px solid #E5E7EB",
+                      borderRadius: 10,
+                      padding: "0 12px",
+                      display: "flex", alignItems: "center", justifyContent: "flex-start", gap: 4,
                       color: active ? "#fff" : "#111827",
                       cursor: "pointer",
-                      transition: "all 120ms ease",
+                      transition: "all 150ms ease",
                       whiteSpace: "nowrap",
-                      minHeight: 48,
-                      fontFamily: "Montserrat, Inter, sans-serif",
-                      fontWeight: active ? 700 : 600,
-                      fontSize: 16,
+                      minHeight: 52,
                       // hardcoded-color-allow-next-line
                       boxShadow: active ? "0 10px 24px -8px rgba(232,103,10,0.55)" : "0 1px 2px rgba(0,0,0,0.04)",
                     }}
                   >
-                    <span style={{ fontWeight: "inherit", fontSize: "inherit" }}>
+                    <span style={{ fontFamily: "Montserrat, Inter, sans-serif", fontWeight: 700, fontSize: 16, letterSpacing: "-0.01em" }}>
                       {time}
                     </span>
-                    {/* hardcoded-color-allow-next-line */}
-                    <span style={{ fontSize: 13, fontWeight: 600, letterSpacing: "0.04em", color: active ? "rgba(255,255,255,0.85)" : "#6B7280" }}>
+                    <span style={{
+                      fontFamily: "Montserrat, Inter, sans-serif",
+                      fontSize: 12, fontWeight: 700, letterSpacing: "0.04em",
+                      // hardcoded-color-allow-next-line
+                      color: active ? "rgba(255,255,255,0.80)" : "#9CA3AF",
+                      marginTop: 1,
+                    }}>
                       {ampm}
                     </span>
                   </button>
@@ -133,7 +125,6 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
           </div>
         );
       })}
-
     </div>
   );
 };

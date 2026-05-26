@@ -300,42 +300,51 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
         />
 
         {/* Confirm bar */}
-        <div className="px-5 md:px-7 py-4" style={{ borderTop: `1px solid ${LINE}`, background: SURFACE }}>
-          {/* Selected slot recap — shown when a slot is chosen */}
+        <div style={{ borderTop: "1px solid #F3F4F6", padding: "16px 20px" }}>
+          {/* Selected slot recap */}
           {selectedSlot && (
             <p style={{
-              fontSize: 16, color: "#374151", fontFamily: "Montserrat, Inter, sans-serif",
-              marginBottom: 10, textAlign: "center", fontWeight: 500, lineHeight: 1.4,
+              fontSize: 15, color: "#374151", fontFamily: "Montserrat, Inter, sans-serif",
+              marginBottom: 12, textAlign: "center", fontWeight: 600, lineHeight: 1.4,
             }}>
               {new Date(selectedSlot).toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric", timeZone: TIMEZONE })}
               {" · "}
               {new Date(selectedSlot).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true, timeZone: TIMEZONE })}
             </p>
           )}
-          <button
-            ref={confirmBtnRef}
-            type="button"
-            onClick={() => canConfirm && handleFinalConfirm()}
-            disabled={!canConfirm}
-            style={{
-              width: "100%", minHeight: 60,
-              // hardcoded-color-allow-next-line
-              background: canConfirm ? ORANGE : "#F4F5F8",
-              // hardcoded-color-allow-next-line
-              border: canConfirm ? "none" : "1px solid #D1D5DB",
-              color: canConfirm ? "#fff" : "#9CA3AF",
-              border: 0, borderRadius: 12, fontSize: 16, fontWeight: 700,
-              letterSpacing: canConfirm ? "0.06em" : "0.02em",
-              textTransform: canConfirm ? "uppercase" : "none",
-              cursor: canConfirm ? "pointer" : "not-allowed",
-              fontFamily: "Oswald, Inter, sans-serif",
-              // hardcoded-color-allow-next-line
-              boxShadow: canConfirm ? "0 10px 24px -8px rgba(232,103,10,0.55)" : "none",
-              transition: "all 150ms ease",
-            }}
-          >
-            {canConfirm ? "Confirm My Appointment" : "Select a time to continue"}
-          </button>
+          {canConfirm ? (
+            <button
+              ref={confirmBtnRef}
+              type="button"
+              onClick={() => handleFinalConfirm()}
+              style={{
+                width: "100%", minHeight: 56,
+                background: ORANGE,
+                border: "none",
+                color: "#fff",
+                borderRadius: 12, fontSize: 15, fontWeight: 700,
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                cursor: "pointer",
+                fontFamily: "Montserrat, Inter, sans-serif",
+                // hardcoded-color-allow-next-line
+                boxShadow: "0 10px 24px -8px rgba(232,103,10,0.55)",
+                transition: "all 150ms ease",
+              }}
+            >
+              Confirm My Appointment
+            </button>
+          ) : (
+            <p style={{
+              textAlign: "center",
+              fontFamily: "Montserrat, Inter, sans-serif",
+              fontSize: 13, fontWeight: 700, letterSpacing: "0.10em",
+              textTransform: "uppercase", color: "#9CA3AF",
+              margin: "8px 0",
+            }}>
+              Select a time to continue
+            </p>
+          )}
         </div>
       </div>
 

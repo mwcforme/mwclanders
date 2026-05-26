@@ -1,25 +1,18 @@
 /**
- * DayStrip — horizontal week-navigation + day-pill date picker.
- * Extracted from GHLDayView as part of P2-1 component split.
- * Senior-mobile optimised: 80px wide pills, 56px nav targets, 16px body text.
+ * DayStrip — week navigation + day pill grid.
+ * 2-row grid layout matching reference design.
+ * Dark navy pills, orange selected, muted unavailable.
  */
 import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { TIMEZONE } from "@/lib/ghlCalendars";
 import { isSundayInTimeZone } from "@/lib/etDate";
 
-// Brand tokens (duplicated from GHLDayView — intentional; each file is self-contained)
+const ORANGE = "var(--brand-cta)";
 // hardcoded-color-allow-next-line
-const INK       = "#111827";
+const NAVY = "#161B3A";
 // hardcoded-color-allow-next-line
-const INK_SOFT  = "#374151";
-// hardcoded-color-allow-next-line
-const MUTED     = "#6B7280";
-// hardcoded-color-allow-next-line
-const BORDER    = "#E5E7EB";
-const ORANGE    = "var(--brand-cta)";
-
-// ─── Helpers ─────────────────────────────────────────────────────────────────
+const NAVY_DEEP = "#0B1029";
 
 const ymd = (d: Date): string =>
   new Intl.DateTimeFormat("en-CA", {
@@ -32,30 +25,21 @@ const fmtDayShort = (d: Date): string =>
 const fmtMonthDay = (d: Date): string =>
   d.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: TIMEZONE }).toUpperCase();
 
-const fmtFullDay = (d: Date): string =>
-  d.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", timeZone: TIMEZONE });
-
 const todayET = (): string =>
   new Intl.DateTimeFormat("en-CA", {
     timeZone: TIMEZONE, year: "numeric", month: "2-digit", day: "2-digit",
   }).format(new Date());
 
 const isTodayET = (day: Date): boolean => todayET() === ymd(day);
-
 const isTomorrowET = (day: Date): boolean => {
   const t = new Date();
   t.setDate(t.getDate() + 1);
-  const tom = new Intl.DateTimeFormat("en-CA", {
-    timeZone: TIMEZONE, year: "numeric", month: "2-digit", day: "2-digit",
-  }).format(t);
+  const tom = new Intl.DateTimeFormat("en-CA", { timeZone: TIMEZONE, year: "numeric", month: "2-digit", day: "2-digit" }).format(t);
   return tom === ymd(day);
 };
 
-// ─── Props ────────────────────────────────────────────────────────────────────
-
 export interface DayStripProps {
   days: Date[];
-  /** First date of the visible 7-day window. */
   weekStart: Date;
   today: Date;
   selectedDay: string | null;
@@ -65,11 +49,8 @@ export interface DayStripProps {
   loadError: string | null;
   onPrevWeek: () => void;
   onNextWeek: () => void;
-  /** Called with the YYYY-MM-DD key of the tapped day. */
   onDaySelect: (key: string) => void;
 }
-
-// ─── Component ────────────────────────────────────────────────────────────────
 
 const DayStrip = ({
   days,
@@ -83,27 +64,11 @@ const DayStrip = ({
   onNextWeek,
   onDaySelect,
 }: DayStripProps) => {
-  const dayStripRef = useRef<HTMLDivElement | null>(null);
-  const [showLeftFade, setShowLeftFade]   = useState(false);
-  const [showRightFade, setShowRightFade] = useState(false);
-
-  // Recompute edge-fade visibility whenever days / loading state changes.
-  useEffect(() => {
-    const el = dayStripRef.current;
-    if (!el) return;
-    const update = () => {
-      setShowLeftFade(el.scrollLeft > 4);
-      setShowRightFade(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
-    };
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, [slotsByDay, weekStart, loading]);
 
   return (
     <>
-      {/* ── Week navigation ──────────────────────────────────────────────── */}
-      <div className="px-4 md:px-7 pt-3 md:pt-5 flex items-center justify-between gap-3">
+      {/* ── Week navigation ── */}
+      <div style={{ padding: "16px 16px 12px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <button
           type="button"
           disabled={prevDisabled}
@@ -111,26 +76,23 @@ const DayStrip = ({
           aria-label="Previous week"
           style={{
             width: 36, height: 36, borderRadius: 8,
-            background: "#FFFFFF",
+            // hardcoded-color-allow-next-line
+            background: "#F4F6FA",
+            // hardcoded-color-allow-next-line
             border: "1.5px solid #E5E7EB",
             display: "flex", alignItems: "center", justifyContent: "center",
             cursor: prevDisabled ? "not-allowed" : "pointer",
             opacity: prevDisabled ? 0.35 : 1,
             flexShrink: 0,
-            transition: "background 150ms ease, box-shadow 150ms ease",
-            boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
           }}
         >
-          <ChevronLeft size={16} style={{ color: "var(--brand-navy)" }} />
+          {/* hardcoded-color-allow-next-line */}
+          <ChevronLeft size={16} style={{ color: "#374151" }} />
         </button>
 
-        {/* Week range label — centered between nav buttons */}
-        {days.length > 0 && (
-          <div style={{ fontSize: 13, color: "var(--brand-navy)", fontWeight: 700, fontFamily: "Inter, sans-serif", textAlign: "center", flex: 1, letterSpacing: "0.03em" }}>
-            {fmtMonthDay(days[0])} – {fmtMonthDay(days[days.length - 1])}
-          </div>
-        )}
-        {days.length === 0 && <div style={{ flex: 1 }} />}
+        <div style={{ fontSize: 14, fontWeight: 700, color: "#111827", fontFamily: "Montserrat, Inter, sans-serif", letterSpacing: "0.04em" }}>
+          {days.length > 0 ? `${fmtMonthDay(days[0])} – ${fmtMonthDay(days[days.length - 1])}` : ""}
+        </div>
 
         <button
           type="button"
@@ -138,162 +100,111 @@ const DayStrip = ({
           aria-label="Next week"
           style={{
             width: 36, height: 36, borderRadius: 8,
-            background: "#FFFFFF",
+            // hardcoded-color-allow-next-line
+            background: "#F4F6FA",
+            // hardcoded-color-allow-next-line
             border: "1.5px solid #E5E7EB",
             display: "flex", alignItems: "center", justifyContent: "center",
-            cursor: "pointer",
-            flexShrink: 0,
-            transition: "background 150ms ease, box-shadow 150ms ease",
-            boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
+            cursor: "pointer", flexShrink: 0,
           }}
         >
-          <ChevronRight size={16} style={{ color: "var(--brand-navy)" }} />
+          {/* hardcoded-color-allow-next-line */}
+          <ChevronRight size={16} style={{ color: "#374151" }} />
         </button>
       </div>
 
-      {/* ── Day pills ────────────────────────────────────────────────────── */}
-      <div className="px-5 md:px-7 py-5" style={{ position: "relative" }}>
+      {/* ── Day pills grid — 2 rows of up to 4 ── */}
+      <div style={{ padding: "0 16px 16px", position: "relative" }}>
         {loading && (
-          <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(255,255,255,0.7)", zIndex: 1 }}>
-            <Loader2 size={22} className="animate-spin" color={INK} />
+          <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(255,255,255,0.75)", zIndex: 1, borderRadius: 8 }}>
+            <Loader2 size={22} className="animate-spin" style={{ color: NAVY }} />
           </div>
         )}
-        {days.length === 0 ? (
-          <div style={{ color: MUTED, fontSize: 16, fontWeight: 500, lineHeight: 1.6, padding: "12px 4px" }}>
-            No remaining days this week. Tap Next.
-          </div>
-        ) : (
-          <div style={{ position: "relative" }}>
-            <div
-              ref={dayStripRef}
-              onScroll={(e) => {
-                const el = e.currentTarget;
-                setShowLeftFade(el.scrollLeft > 4);
-                setShowRightFade(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
-              }}
-              className="flex gap-2 overflow-x-auto scrollbar-hide"
-              style={{
-                scrollSnapType: "x mandatory",
-                WebkitOverflowScrolling: "touch",
-                paddingBottom: 4,
-                scrollbarWidth: "none",
-                flexWrap: "nowrap",
-                /* justify-start — overflow-x-auto + justify-center breaks scroll-to-start on narrow screens */
-                justifyContent: "flex-start",
-              }}
-            >
-              {days.map((d) => {
-                const key         = ymd(d);
-                const actualCount = slotsByDay[key]?.length || 0;
-                const isSunday    = isSundayInTimeZone(d, TIMEZONE);
-                const isToday     = isTodayET(d);
-                // Today always renders — shows as "Full" if no slots, like other full days
-                const available   = actualCount > 0 && !isSunday;
-                const selected    = selectedDay === key;
-                const isTomorrow  = isTomorrowET(d);
-                const scarce      = available && actualCount <= 3;
-                const isFull      = !isSunday && !available;
-                const badgeText   = !loading
-                  ? isSunday   ? "Closed"
-                  : !available ? "Full"
-                  : scarce     ? `Only ${actualCount} left`
-                  :              `${actualCount} slots`
-                  : "···";
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8 }}>
+          {days.map((d) => {
+            const key         = ymd(d);
+            const actualCount = slotsByDay[key]?.length || 0;
+            const isSunday    = isSundayInTimeZone(d, TIMEZONE);
+            const isToday     = isTodayET(d);
+            const isTomorrow  = isTomorrowET(d);
+            const available   = actualCount > 0 && !isSunday;
+            const selected    = selectedDay === key;
+            const scarce      = available && actualCount <= 3;
+            const isFull      = !isSunday && !available;
+            const isDisabled  = isSunday || !available;
 
-                return (
-                  <button
-                    key={key}
-                    type="button"
-                    disabled={isSunday || !available}
-                    aria-pressed={selected}
-                    aria-label={`${fmtFullDay(d)} — ${isSunday ? "Closed on Sundays" : `${actualCount} times available`}`}
-                    title={isFull ? "No availability — tap another day" : undefined}
-                    onClick={isSunday ? undefined : (e) => {
-                      onDaySelect(key);
-                      e.currentTarget.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-                    }}
-                    style={{
-                      flex: "0 0 80px",
-                      minWidth: 80,
-                      minHeight: 72,
-                      scrollSnapAlign: "start",
-                      // hardcoded-color-allow-next-line
-                      background: selected ? ORANGE : (isSunday || !available) ? "#ECEEF2" : "#FFFFFF",
-                      border: selected ? `2px solid ${ORANGE}` : `1px solid ${BORDER}`,
-                      borderRadius: 14,
-                      padding: "10px 6px 12px",
-                      color: selected ? "var(--c-text-on-dark)" : (isSunday || !available) ? MUTED : INK,
-                      cursor: (isSunday || !available) ? "not-allowed" : "pointer",
-                      textAlign: "center",
-                      transition: "background-color 120ms ease, border-color 120ms ease, transform 120ms ease",
-                      position: "relative",
-                      opacity: !available && !selected ? 0.7 : 1,
-                      boxShadow: selected
-                        // hardcoded-color-allow-next-line
-                        ? "0 4px 12px rgba(232,103,10,0.35)"
-                        // hardcoded-color-allow-next-line
-                        : "0 1px 2px rgba(0,0,0,0.04)",
-                    }}
-                  >
-                    {/* Day-of-week label */}
-                    <div style={{
-                      fontSize: 12, fontWeight: 800, letterSpacing: "0.08em",
-                      color: selected ? "var(--c-text-on-dark)"
-                        : (isSunday || !available) ? MUTED
-                        : (isToday || isTomorrow) ? ORANGE
-                        : INK_SOFT,
-                      marginBottom: 2,
-                    }}>
-                      {isToday ? "TODAY" : isTomorrow ? "TMRW" : fmtDayShort(d)}
-                    </div>
-                    {/* Date number only — month shown in week header above, no redundancy */}
-                    {/* Strikethrough ONLY on Sundays (closed) — full days just show greyed, not struck */}
-                    <div style={{
-                      fontFamily: "Oswald, Inter, sans-serif", fontWeight: 700, fontSize: 22,
-                      letterSpacing: "0.01em", lineHeight: 1.1,
-                      textDecoration: isSunday ? "line-through" : "none",
-                      textDecorationColor: MUTED,
-                    }}>
-                      {d.toLocaleDateString("en-US", { day: "numeric", timeZone: TIMEZONE })}
-                    </div>
-                    {/* Slot count / status badge */}
-                    <div style={{
-                      fontSize: 12, fontWeight: 700,
-                      color: selected ? "var(--c-text-on-dark)"
-                        : (isSunday || !available) ? MUTED
-                        : scarce ? ORANGE
-                        : INK_SOFT,
-                      marginTop: 6, letterSpacing: "0.04em",
-                    }}>
-                      {badgeText}
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
+            const badgeText = !loading
+              ? isSunday   ? "Closed"
+              : !available ? "Full"
+              : scarce     ? `${actualCount} left`
+              :              `${actualCount} slots`
+              : "···";
 
-            {/* Edge fade affordances */}
-            <div aria-hidden="true" style={{
-              position: "absolute", left: 0, top: 0, bottom: 4, width: 28,
-              pointerEvents: "none",
-              // hardcoded-color-allow-next-line
-              background: "linear-gradient(to right, #FFFFFF, rgba(255,255,255,0))",
-              opacity: showLeftFade ? 1 : 0,
-              transition: "opacity 150ms ease",
-            }} />
-            <div aria-hidden="true" style={{
-              position: "absolute", right: 0, top: 0, bottom: 4, width: 28,
-              pointerEvents: "none",
-              // hardcoded-color-allow-next-line
-              background: "linear-gradient(to left, #FFFFFF, rgba(255,255,255,0))",
-              opacity: showRightFade ? 1 : 0,
-              transition: "opacity 150ms ease",
-            }} />
-          </div>
-        )}
+            const dayLabel = isToday ? "TODAY" : isTomorrow ? "TMRW" : fmtDayShort(d);
+            const dayNum = d.toLocaleDateString("en-US", { day: "numeric", timeZone: TIMEZONE });
 
+            return (
+              <button
+                key={key}
+                type="button"
+                disabled={isDisabled}
+                aria-pressed={selected}
+                onClick={isDisabled ? undefined : () => onDaySelect(key)}
+                style={{
+                  // hardcoded-color-allow-next-line
+                  background: selected ? ORANGE : isDisabled ? "#1A2040" : NAVY,
+                  border: selected ? `2px solid ${ORANGE}` : "2px solid transparent",
+                  borderRadius: 12,
+                  padding: "10px 8px 10px",
+                  cursor: isDisabled ? "not-allowed" : "pointer",
+                  textAlign: "center",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: 2,
+                  transition: "background 150ms ease, border-color 150ms ease, box-shadow 150ms ease",
+                  // hardcoded-color-allow-next-line
+                  boxShadow: selected ? "0 4px 12px rgba(232,103,10,0.40)" : "none",
+                  opacity: isDisabled && !isSunday ? 0.55 : 1,
+                  minHeight: 80,
+                  justifyContent: "center",
+                }}
+              >
+                {/* Day label */}
+                <span style={{
+                  fontFamily: "Montserrat, Inter, sans-serif",
+                  fontSize: 10, fontWeight: 700, letterSpacing: "0.10em",
+                  // hardcoded-color-allow-next-line
+                  color: selected ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.55)",
+                  lineHeight: 1,
+                }}>
+                  {dayLabel}
+                </span>
+                {/* Day number */}
+                <span style={{
+                  fontFamily: "Oswald, sans-serif",
+                  fontSize: 28, fontWeight: 700, lineHeight: 1,
+                  color: selected ? "#fff" : isDisabled ? "rgba(255,255,255,0.40)" : "#fff",
+                  letterSpacing: "0.01em",
+                }}>
+                  {dayNum}
+                </span>
+                {/* Slot badge */}
+                <span style={{
+                  fontFamily: "Montserrat, Inter, sans-serif",
+                  fontSize: 11, fontWeight: 600,
+                  // hardcoded-color-allow-next-line
+                  color: selected ? "rgba(255,255,255,0.90)" : isDisabled ? "rgba(255,255,255,0.30)" : "rgba(255,255,255,0.65)",
+                  lineHeight: 1, marginTop: 2,
+                }}>
+                  {badgeText}
+                </span>
+              </button>
+            );
+          })}
+        </div>
         {loadError && (
-          <div style={{ marginTop: 10, fontSize: 14, color: "#B91C1C" }}>{loadError}</div>
+          <div style={{ marginTop: 8, fontSize: 13, color: "#B91C1C", fontFamily: "Montserrat, Inter, sans-serif" }}>{loadError}</div>
         )}
       </div>
     </>
