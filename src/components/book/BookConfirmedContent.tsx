@@ -9,9 +9,9 @@ import { COLORS, FONTS, GLASS_CARD, GLASS_CARD_PAD } from "@/lib/bookingTokens";
 // ─── Static data ──────────────────────────────────────────────────────────────
 
 const OUTCOME_ITEMS = [
-  { icon: <FlaskConical size={18} strokeWidth={1.75} style={{ color: "#FFFFFF" }} aria-hidden />, text: "Your bloodwork results, explained in plain English" },
-  { icon: <Stethoscope size={18} strokeWidth={1.75} style={{ color: "#FFFFFF" }} aria-hidden />, text: "A clear answer on whether treatment fits your situation" },
-  { icon: <ClipboardList size={18} strokeWidth={1.75} style={{ color: "#FFFFFF" }} aria-hidden />, text: "A personalized protocol you can start the same day, when medically appropriate" },
+  { icon: <FlaskConical size={18} strokeWidth={1.75} style={{ color: "var(--brand-cta)" }} aria-hidden />, text: "Your bloodwork results, explained in plain English" },
+  { icon: <Stethoscope size={18} strokeWidth={1.75} style={{ color: "var(--brand-cta)" }} aria-hidden />, text: "A clear answer on whether treatment fits your situation" },
+  { icon: <ClipboardList size={18} strokeWidth={1.75} style={{ color: "var(--brand-cta)" }} aria-hidden />, text: "A personalized protocol you can start the same day, when medically appropriate" },
 ] as const;
 
 const PREP_STEPS = [
@@ -36,8 +36,8 @@ function OutcomeCard() {
   return (
     <div style={GLASS_CARD}>
       <div style={{ padding: "14px 20px 12px", borderBottom: `1px solid ${COLORS.glassDivider}` }}>
-        {/* Desktop mockup shows: "WHAT YOU'LL LEAVE WITH" */}
-        <p style={{ ...TEAL_EYEBROW, marginBottom: 0 }}>What you'll leave with</p>
+        {/* Mockup source: "You leave with" */}
+        <p style={{ ...TEAL_EYEBROW, marginBottom: 0 }}>You leave with</p>
       </div>
       {OUTCOME_ITEMS.map(({ icon, text }, idx, arr) => (
         <div
@@ -47,8 +47,8 @@ function OutcomeCard() {
             borderBottom: idx < arr.length - 1 ? `1px solid ${COLORS.glassDivider}` : "none",
           }}
         >
-          {/* Mockup screenshot: solid orange circle icons */}
-          <div style={{ width: 36, height: 36, borderRadius: "50%", background: COLORS.orangeHex, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+          {/* Mockup source: width:36 height:36 border-radius:8px background:rgba(232,103,10,0.12) */}
+          <div style={{ width: 36, height: 36, borderRadius: 8, background: COLORS.orangeIconBg, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
             {icon}
           </div>
           <span style={{ fontSize: 15, fontWeight: 500, color: COLORS.textPrimary, lineHeight: 1.5 }}>{text}</span>

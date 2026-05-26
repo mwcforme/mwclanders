@@ -91,12 +91,12 @@ function AppointmentTicket({ apptDate, center }: { apptDate: ApptDate; center: L
 
       <div style={{ margin: "16px 20px 0", borderTop: `1px solid ${COLORS.cardDivider}` }} />
 
-      {/* Horizontal 3-across row matching desktop mockup */}
-      <div style={{ padding: "14px 20px 20px", display: "flex", flexDirection: "row", gap: 8, flexWrap: "wrap" }}>
+      {/* Mockup source: flex-direction:column gap:12px */}
+      <div style={{ padding: "14px 20px 20px", display: "flex", flexDirection: "column", gap: 12 }}>
         {CHECKLIST_ITEMS.map((label) => (
-          <div key={label} style={{ display: "flex", alignItems: "flex-start", gap: 6, flex: "1 1 auto", minWidth: 100 }}>
+          <div key={label} style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <CheckIcon />
-            <span style={{ fontSize: 13, fontWeight: 600, color: COLORS.navyInkMid, fontFamily: FONTS.ui, lineHeight: 1.3 }}>
+            <span style={{ fontSize: 15, fontWeight: 700, color: COLORS.navyInkMid, fontFamily: FONTS.ui }}>
               {label}
             </span>
           </div>
@@ -128,23 +128,19 @@ function DateBlock({ apptDate }: { apptDate: ApptDate }) {
 
 function AppointmentDetails({ apptDate, center }: { apptDate: ApptDate; center: Location }) {
   return (
-    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 4, paddingTop: 4 }}>
-      {/* Time - large Oswald with clock icon */}
+    // Mockup source: display:flex flex-direction:column justify-content:center gap:6px padding-top:4px
+    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 6, paddingTop: 4 }}>
       <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
         <Clock size={16} strokeWidth={2} style={{ color: COLORS.orange, flexShrink: 0 }} />
         <span style={{ fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 26, color: COLORS.navyInkMid, lineHeight: 1 }}>
           {apptDate.time}
         </span>
       </div>
-      {/* Duration + type on its own line */}
-      <span style={{ fontSize: 15, fontWeight: 500, color: COLORS.navyInkMid, paddingLeft: 23 }}>
-        60 minutes · In-person
-      </span>
-      {/* Location */}
+      {/* Mockup source: "Glen Allen · 60 min · In-person" all on one line with map pin */}
       <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
         <MapPin size={15} strokeWidth={2} style={{ color: COLORS.orange, flexShrink: 0 }} />
         <span style={{ fontSize: 15, fontWeight: 600, color: COLORS.navyInkMid }}>
-          {center.city}
+          {center.city} · 60 min · In-person
         </span>
       </div>
     </div>
@@ -153,23 +149,23 @@ function AppointmentDetails({ apptDate, center }: { apptDate: ApptDate; center: 
 
 function CalendarButtons({ calLinks }: { calLinks: CalLinks }) {
   return (
-    // Side-by-side on desktop, stacked on mobile
-    <div style={{ display: "flex", flexDirection: "row", gap: 10, marginBottom: 8, flexWrap: "wrap" }}>
+    // Mockup source: flex-direction:column gap:10px
+    <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 8 }}>
       <a
         href={calLinks.google}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Add to Google Calendar (opens in new tab)"
-        style={{ ...CAL_BUTTON_BASE, flex: 1, minWidth: 160, background: COLORS.orange, boxShadow: COLORS.orangeShadow, color: "#FFFFFF" }}
+        style={{ ...CAL_BUTTON_BASE, background: COLORS.orange, boxShadow: COLORS.orangeShadow, color: "#FFFFFF" }}
       >
-        <Calendar size={16} strokeWidth={2} aria-hidden /> Add to Google Calendar
+        <Calendar size={18} strokeWidth={2} aria-hidden /> Add to Google Calendar
       </a>
       <a
         href={calLinks.ics}
         download="mwc-appointment.ics"
-        style={{ ...CAL_BUTTON_BASE, flex: 1, minWidth: 140, background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.90)" }}
+        style={{ ...CAL_BUTTON_BASE, background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.90)" }}
       >
-        <Calendar size={16} strokeWidth={2} aria-hidden /> Apple or Outlook
+        <Calendar size={18} strokeWidth={2} aria-hidden /> Apple or Outlook
       </a>
     </div>
   );
