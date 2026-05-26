@@ -98,7 +98,7 @@ const BookSchedule = () => {
   const firstName = identity?.firstName || "";
   const lastName = identity?.lastName || "";
   // PICK YOUR TIME — ≤4 words, Oswald uppercase. Personalised when firstName present.
-  const heading = firstName ? `${firstName}, PICK MY TIME.` : "PICK MY TIME.";
+  const heading = firstName ? `${firstName}, LOCK IN A TIME.` : "LOCK IN A TIME.";
 
   // Resolve location data for compact bar
   const locationSlug = location ? LOCATION_KEY_TO_SLUG[location] : null;
