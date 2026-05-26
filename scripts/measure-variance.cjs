@@ -1,42 +1,24 @@
-// scripts/measure-variance.cjs (CommonJS wrapper)
-// Usage: node scripts/measure-variance.cjs <surface> <viewport>
+// scripts/measure-variance.js
+// Usage: node scripts/measure-variance.js <surface> <viewport>
+// surface: BookSchedule | BookConfirmed
+// viewport: 390 | 1280
 const { chromium } = require("playwright");
+const pixelmatch = require("pixelmatch").default || require("pixelmatch");
 const { PNG } = require("pngjs");
 const resemble = require("resemblejs");
 const fs = require("fs");
 const path = require("path");
 
 const SURFACES = {
-  BookSchedule:  { dev: "https://mwclanders.vercel.app/book/schedule",  lock: "https://mwclocked.pplx.app/#/" },
-  BookConfirmed: { dev: "https://mwclanders.vercel.app/book/confirmed", lock: "https://mwclocked.pplx.app/#/confirmed" },
+  BookSchedule:  { dev: "https://book.menswellnesscenters.com/book/dev-schedule",  lock: "https://mwclocked.pplx.app/#/" },
+  BookConfirmed: { dev: "https://book.menswellnesscenters.com/book/dev-confirmed", lock: "https://mwclocked.pplx.app/#/confirmed" },
 };
 
-// Demo booking state injected for BookConfirmed to match reference which shows a real appointment
-const DEMO_BOOKING_STATE = JSON.stringify({
-  state: {
-    identity: { firstName: "Eric", lastName: "Smith", phone: "5555555555", email: "eric@test.com" },
-    service: "trt",
-    location: "richmond",
-    appointmentTime: "2026-05-26T08:00:00-04:00",
-    source: "demo",
-  },
-  version: 0,
-});
-
-async function shot(url, vp, outPath, surface) {
+async function shot(url, vp, outPath) {
   const browser = await chromium.launch({ args: ["--no-sandbox","--disable-gpu"] });
   const ctx = await browser.newContext({ viewport: { width: Number(vp), height: 900 } });
   const page = await ctx.newPage();
   try {
-    // For confirmed page dev, inject booking session state before navigation
-    if (surface === "BookConfirmed" && !url.includes("mwclocked.pplx.app")) {
-      // Navigate to origin first to set session storage
-      // Set session storage on origin before navigating to confirmed page
-      await page.goto(url.replace("/book/confirmed", "/"), { waitUntil: "domcontentloaded", timeout: 20000 });
-      await page.evaluate((state) => {
-        sessionStorage.setItem("mwc_booking_state_v2", state);
-      }, DEMO_BOOKING_STATE);
-    }
     await page.goto(url, { waitUntil: "domcontentloaded", timeout: 25000 });
     await page.waitForTimeout(6000);
     await page.screenshot({ path: outPath, fullPage: false });
@@ -73,12 +55,9 @@ async function resembleScore(devPath, lockPath) {
 }
 
 (async () => {
-  // Dynamic import pixelmatch (ESM-only)
-  const { default: pixelmatch } = await import("pixelmatch");
-
   const [,,surface, vp] = process.argv;
   if (!SURFACES[surface] || !["390","1280"].includes(vp)) {
-    console.error("usage: measure-variance.cjs <BookSchedule|BookConfirmed> <390|1280>");
+    console.error("usage: measure-variance.js <BookSchedule|BookConfirmed> <390|1280>");
     process.exit(2);
   }
   const { dev, lock } = SURFACES[surface];
@@ -88,8 +67,8 @@ async function resembleScore(devPath, lockPath) {
   const lockPath = path.join(outDir, `${surface}_${vp}_lock.png`);
   const diffPath = path.join(outDir, `${surface}_${vp}_diff.png`);
 
-  await shot(dev, vp, devPath, surface);
-  await shot(lock, vp, lockPath, surface);
+  await shot(dev, vp, devPath);
+  await shot(lock, vp, lockPath);
 
   const [a, b, w, h] = cropToCommon(loadPng(devPath), loadPng(lockPath));
   const diff = new PNG({ width: w, height: h });

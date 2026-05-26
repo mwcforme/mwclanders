@@ -47,6 +47,8 @@ const BookSchedule2   = lazy(() => import("./pages/book/BookSchedule2"));
 const BookConfirmed   = lazy(() => import("./pages/book/BookConfirmed"));
 const BookLetsTalk    = lazy(() => import("./pages/book/BookLetsTalk"));
 const BookEntry        = lazy(() => import("./pages/book/BookEntry"));
+const BookDevConfirmed = lazy(() => import("./pages/book/BookDevPreview").then(m => ({ default: m.BookDevConfirmed })));
+const BookDevSchedule  = lazy(() => import("./pages/book/BookDevPreview").then(m => ({ default: m.BookDevSchedule })));
 
 
 // Legal — rarely visited, no rush
@@ -195,7 +197,9 @@ const App = () => (
                 {/* Legacy contact route — redirect to location */}
                 <Route path="/book/contact" element={<Navigate to="/book/location" replace />} />
                 {/* WordPress handoff — token exchange, no BookingRouteGuard */}
-                <Route path="/book/entry" element={<BookEntry />} />
+                <Route path="/book/entry"         element={<BookEntry />} />
+                <Route path="/book/dev-confirmed"  element={<BookDevConfirmed />} />
+                <Route path="/book/dev-schedule"   element={<BookDevSchedule />} />
 
                 <Route element={<BookingRouteGuard />}>
                   <Route path="/book/location"  element={<BookLocation />} />
