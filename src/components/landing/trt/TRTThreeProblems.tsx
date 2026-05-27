@@ -71,7 +71,7 @@ export const TRTThreeProblems = ({ onCta, headlineOverride }: TRTThreeProblemsPr
             line2={headlineOverride?.line2 ?? "THREE CONCERNS."}
           />
           <div className="mt-4">
-            <SectionSubhead center maxWidth={560}>
+            <SectionSubhead center maxWidth={720}>
               TRT, ED care, and medical weight loss in one Virginia center. Your provider reviews your labs in person, same day. No referrals, no waiting rooms, no generic protocols.
             </SectionSubhead>
           </div>
