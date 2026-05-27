@@ -141,7 +141,7 @@ function DayPill({ day, selected, onSelect }: { day: DayCell; selected: boolean;
       <div
         role="radio" aria-checked={false} aria-disabled
         aria-label={`${formatLong(day.date)} — ${day.full ? "Fully booked" : "Closed"}`}
-        className={`${base} bg-disabled-light text-disabled-light-foreground opacity-55`}
+        className={`${base} bg-disabled-light text-disabled-light-foreground`}
       >
         <p className="font-display text-[10px] font-bold uppercase tracking-[0.1em]">{dow}</p>
         <p className="font-display text-xl font-bold leading-none">{day.date.getDate()}</p>
@@ -550,32 +550,32 @@ export default function BookSchedule() {
 
           {/* Back */}
           <button type="button" onClick={() => navigate(-1)}
-            className="inline-flex items-center gap-2 text-base font-semibold text-foreground hover:text-primary -ml-2 px-2">
+            className="inline-flex items-center gap-2 text-base font-semibold text-panel-foreground hover:text-primary -ml-2 px-2">
             <ArrowLeft className="h-5 w-5" aria-hidden /> Back
           </button>
 
           {/* Location row */}
           <div className="mt-4 flex items-center gap-3 min-h-[36px]">
             <MapPin className="h-5 w-5 flex-shrink-0 text-primary" aria-hidden />
-            <span className="font-display text-xl font-bold uppercase tracking-wide text-foreground">
+            <span className="font-display text-xl font-bold uppercase tracking-wide text-panel-foreground">
               {clinicCity ?? "Select center"}
             </span>
           </div>
 
           {/* Headline */}
-          <h1 className="mt-2 font-display text-3xl sm:text-4xl font-bold uppercase tracking-tight text-foreground leading-tight">
+          <h1 className="mt-2 font-display text-3xl sm:text-4xl font-bold uppercase tracking-tight text-panel-foreground leading-tight">
             {heading}
           </h1>
-          <p className="mt-1 text-base text-text-muted">60-minute consult. No charge today.</p>
+          <p className="mt-1 text-base" style={{ color: "var(--c-text-on-light-muted)" }}>60-minute consult. No charge today.</p>
 
           {/* Next available */}
           {nextAvailable && !selectedSlot && (
             <button type="button"
               onClick={() => { setSelectedDayIdx(nextAvailable.idx); setSelectedSlot(nextAvailable.iso); }}
-              className="mt-2.5 inline-flex items-center gap-2 text-sm leading-tight text-foreground hover:text-primary transition-colors">
+              className="mt-2.5 inline-flex items-center gap-2 text-sm leading-tight text-panel-foreground hover:text-primary transition-colors">
               <span className="inline-block h-2 w-2 flex-shrink-0 rounded-full bg-primary" aria-hidden />
               <span>
-                Next: <span className="text-text-muted whitespace-nowrap">{nextAvailable.label}</span>
+                Next: <span className="whitespace-nowrap" style={{ color: "var(--c-text-on-light-muted)" }}>{nextAvailable.label}</span>
                 {" "}<span className="ml-1 font-display font-bold uppercase tracking-wide text-primary underline underline-offset-4">Lock in →</span>
               </span>
             </button>
@@ -667,7 +667,7 @@ export default function BookSchedule() {
 
           {/* Help line */}
           <a href={PHONE.tel}
-            className="mt-5 flex w-full items-center justify-center gap-3 rounded-2xl border-2 border-border-subtle bg-surface px-5 py-4 text-base font-semibold text-foreground hover:border-primary hover:text-primary transition-colors">
+            className="mt-5 flex w-full items-center justify-center gap-3 rounded-2xl bg-surface px-5 py-4 text-base font-semibold text-white hover:opacity-90 transition-opacity">
             <Phone className="h-5 w-5 text-primary" aria-hidden />
             Need help? Call {PHONE.display}
           </a>
