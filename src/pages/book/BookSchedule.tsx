@@ -44,7 +44,7 @@ function ScheduleHeading({
       <h1 style={{
         fontFamily: FONTS.display, fontWeight: 700,
         fontSize: 34, lineHeight: 1.05,
-        letterSpacing: "0.02em", marginBottom: 8,
+        letterSpacing: "0.02em", marginBottom: 16,
         color: "#FFFFFF", textTransform: "uppercase",
       }}>
         {heading}
