@@ -323,6 +323,11 @@ body[data-page="confirmed"] a:focus-visible {
   body[data-page="schedule"] [aria-label="Pick a date and time"] > div {
     padding: 24px !important;
   }
+  /* Widen all maxWidth:720 sections to match mockup's ~1037px content width */
+  body[data-page="schedule"] main > div > div[style*="max-width: 720"],
+  body[data-page="schedule"] main > div > section[style*="max-width: 720"] {
+    max-width: 1037px !important;
+  }
 }
 
 /* Mobile: ensure card sits flush */
