@@ -73,9 +73,9 @@ function NextAvailableBanner({ label, onLockIn }: { label: string; onLockIn: () 
         style={{
           width: "100%",
           display: "flex", flexDirection: "column", alignItems: "flex-start",
-          gap: 14,
+          gap: 12,
           background: COLORS.bannerBg, border: `1px solid ${COLORS.glassBorder}`,
-          borderRadius: 12, padding: "20px 20px",
+          borderRadius: 12, padding: "18px 20px",
           boxShadow: "0 2px 16px rgba(0,0,0,0.30)",
           cursor: "pointer", textAlign: "left",
         }}
