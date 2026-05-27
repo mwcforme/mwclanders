@@ -533,3 +533,42 @@ input[type="radio"] {
     gap: 12px;
   }
 }
+
+/* =============================================================================
+   Booking funnel WCAG AA token system (PickTime + Confirmed pages)
+   Extends :root — does not conflict with existing --brand-* tokens.
+   ============================================================================= */
+:root {
+  /* Surfaces */
+  --surface:               230 41% 17%;   /* #161B3A navy-mid */
+  --surface-2:             230 42% 21%;   /* #1E244A navy-light */
+
+  /* Text scale */
+  --text-muted:            213 27% 84%;   /* #CBD5E1 — 12.6:1 on dark bg */
+  --text-subtle:           215 20% 65%;   /* #94A3B8 — 7.3:1 on dark bg */
+
+  /* Border */
+  --border-subtle:         230 42% 26%;   /* navy-tinted divider */
+
+  /* Primary (brand orange — booking context) */
+  --primary:               22 91% 47%;    /* #E8670A */
+  --primary-foreground:    0 0% 100%;
+  --primary-hover:         21 91% 40%;    /* #C2410C */
+
+  /* White panel (booking card on dark page) */
+  --panel:                 0 0% 100%;     /* #FFFFFF */
+  --panel-foreground:      230 60% 10%;   /* #0B1029 — 18.7:1 */
+  --panel-muted:           215 19% 35%;   /* #475569 — 7.6:1 on white */
+  --panel-border:          215 16% 47%;   /* #64748B — 4.6:1 on white */
+  --panel-divider:         214 32% 91%;   /* #E2E8F0 — decorative */
+
+  /* Status */
+  --success:               160 84% 39%;   /* #10B981 — 7.4:1 on dark */
+  --success-on-light:      162 94% 24%;   /* #047857 — 5.5:1 on white */
+
+  /* Disabled */
+  --disabled:              230 42% 21%;
+  --disabled-foreground:   215 20% 65%;
+  --disabled-light:        214 32% 91%;
+  --disabled-light-foreground: 215 19% 35%;
+}

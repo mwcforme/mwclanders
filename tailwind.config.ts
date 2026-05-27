@@ -65,6 +65,30 @@ export default {
 				deep: 'hsl(var(--clinical-deep))'
 			},
 			trust: 'hsl(var(--trust))',
+			// ── Booking funnel token system ──
+			surface: 'hsl(var(--surface) / <alpha-value>)',
+			'surface-2': 'hsl(var(--surface-2) / <alpha-value>)',
+			'text-muted': 'hsl(var(--text-muted) / <alpha-value>)',
+			'text-subtle': 'hsl(var(--text-subtle) / <alpha-value>)',
+			'border-subtle': 'hsl(var(--border-subtle) / <alpha-value>)',
+			panel: {
+				DEFAULT: 'hsl(var(--panel) / <alpha-value>)',
+				foreground: 'hsl(var(--panel-foreground) / <alpha-value>)',
+				muted: 'hsl(var(--panel-muted) / <alpha-value>)',
+				border: 'hsl(var(--panel-border) / <alpha-value>)',
+				divider: 'hsl(var(--panel-divider) / <alpha-value>)',
+			},
+			success: {
+				DEFAULT: 'hsl(var(--success) / <alpha-value>)',
+				foreground: 'hsl(var(--success-on-light) / <alpha-value>)',
+			},
+			disabled: {
+				DEFAULT: 'hsl(var(--disabled) / <alpha-value>)',
+				foreground: 'hsl(var(--disabled-foreground) / <alpha-value>)',
+				light: 'hsl(var(--disabled-light) / <alpha-value>)',
+				'light-foreground': 'hsl(var(--disabled-light-foreground) / <alpha-value>)',
+			},
+			'primary-hover': 'hsl(var(--primary-hover) / <alpha-value>)',
 		},
   		borderRadius: {
   			lg: 'var(--radius)',
@@ -95,7 +119,9 @@ export default {
 			md: 'var(--shadow-md)',
 			lg: 'var(--shadow-lg)',
 			xl: 'var(--shadow-xl)',
-			'2xl': 'var(--shadow-2xl)'
+			'2xl': 'var(--shadow-2xl)',
+			card: '0 10px 30px -10px rgba(0,0,0,0.6), 0 2px 0 0 rgba(255,255,255,0.04) inset',
+			cta: '0 10px 24px -8px rgba(232,103,10,0.55)',
 		}
   	}
   },
