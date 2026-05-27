@@ -52,19 +52,7 @@ function ScheduleHeading({
 
       {locationName && (
         <p style={{ fontFamily: FONTS.body, fontSize: 19.125, fontWeight: 400, color: "#FFFFFF", marginBottom: 2, lineHeight: 1.5 }}>
-          {locationName}.{" "}
-          <button
-            type="button"
-            onClick={onChangeLocation}
-            style={{
-              fontFamily: FONTS.body, fontSize: 19.125, fontWeight: 400,
-              color: COLORS.orange, background: "none", border: "none",
-              cursor: "pointer", padding: 0,
-              textDecoration: "underline", textUnderlineOffset: 3,
-            }}
-          >
-            Change
-          </button>
+          {locationName}.
         </p>
       )}
 
