@@ -1,8 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ChevronRight } from "lucide-react";
 import BookLayout from "@/components/book/BookLayout";
-import OptionRow from "@/components/book/OptionRow";
 import { useBookingStore, type UrgencyTier, type Duration } from "@/domain/booking/bookingStore";
 
 const OPTIONS = [
@@ -41,38 +40,57 @@ const BookDuration = () => {
 
   return (
     <BookLayout page="duration" title="How long has this been going on? | Men's Wellness Centers">
-      <div style={{ minHeight: "100dvh", background: "var(--brand-navy-deep)", display: "flex", flexDirection: "column" }}>
+      <div className="flex flex-col min-h-[calc(100dvh-64px)]">
         {/* Back */}
-        <div style={{ padding: "16px 20px 0" }}>
+        <div className="px-5 pt-4">
           <button
             type="button"
             onClick={() => navigate("/book/symptom")}
-            style={{ background: "none", border: "none", color: "rgba(255,255,255,0.55)", fontFamily: "Inter, sans-serif", fontSize: 15, fontWeight: 500, cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 0", minHeight: 44 }}
+            className="inline-flex items-center gap-1.5 text-base font-semibold text-panel-foreground hover:text-primary transition-colors py-2 min-h-[44px]"
           >
             <ArrowLeft size={16} aria-hidden /> Back
           </button>
         </div>
 
         {/* Heading */}
-        <div style={{ padding: "28px 20px 24px" }}>
-          <h1 style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: "clamp(28px, 7vw, 40px)", color: "var(--brand-cream)", textTransform: "uppercase", lineHeight: 1.05, letterSpacing: "0.01em", marginBottom: 8 }}>
+        <div className="px-5 pt-7 pb-5">
+          <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-white bg-panel-foreground rounded-md px-2 py-1 inline-block mb-3">
+            About Your Symptoms
+          </p>
+          <h1 className="font-display font-bold text-[clamp(28px,7vw,40px)] text-panel-foreground uppercase leading-tight mb-2">
             When did you first notice this?
           </h1>
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 16, color: "rgba(255,255,255,0.55)", lineHeight: 1.5 }}>
+          <p className="text-base" style={{ color: "var(--c-text-on-light-muted)" }}>
             A rough estimate is fine.
           </p>
         </div>
 
         {/* Options */}
-        <div style={{ padding: "0 20px 32px", display: "flex", flexDirection: "column", gap: 10, flex: 1 }}>
-          {OPTIONS.map((o) => (
-            <OptionRow
-              key={o.value}
-              label={o.label}
-              selected={selected === o.value}
-              onClick={() => handleSelect(o.value as Duration, o.urgency)}
-            />
-          ))}
+        <div className="px-5 pb-8 flex flex-col gap-2.5 flex-1">
+          {OPTIONS.map((o) => {
+            const isSelected = selected === o.value;
+            return (
+              <button
+                key={o.value}
+                type="button"
+                onClick={() => handleSelect(o.value as Duration, o.urgency)}
+                aria-pressed={isSelected}
+                className={[
+                  "w-full min-h-[64px] text-left rounded-2xl px-4 py-3.5 flex items-center gap-3.5",
+                  "border-[1.5px] bg-panel transition-all",
+                  isSelected
+                    ? "border-primary shadow-cta"
+                    : "border-panel-border hover:border-primary shadow-card",
+                  "cursor-pointer",
+                ].join(" ")}
+              >
+                <span className="font-display text-base font-bold uppercase tracking-wide text-panel-foreground flex-1">
+                  {o.label}
+                </span>
+                {isSelected && <ChevronRight size={16} className="text-primary flex-shrink-0" aria-hidden />}
+              </button>
+            );
+          })}
         </div>
       </div>
     </BookLayout>
