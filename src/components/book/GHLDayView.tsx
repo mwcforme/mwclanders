@@ -275,13 +275,12 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
               height: 72,
               // hardcoded-color-allow-next-line
               background: "#1F274C",
-              borderRadius: 12,
+              borderRadius: 17,
               display: "flex", alignItems: "center", justifyContent: "center",
               fontFamily: "Montserrat, Inter, sans-serif",
               fontSize: 15, fontWeight: 700, letterSpacing: "0.08em",
               textTransform: "uppercase",
               color: "#FFFFFF",
-              opacity: 0.85,
             }}
           >
             Select a Time
