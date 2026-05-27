@@ -87,15 +87,16 @@ function NextAvailableBanner({ label, onLockIn }: { label: string; onLockIn: () 
             background: COLORS.orange, flexShrink: 0,
             animation: "pulse 2s cubic-bezier(.4,0,.6,1) infinite",
           }} />
-          <span style={{ fontFamily: FONTS.ui, fontSize: 17, color: "#fff", fontWeight: 600 }}>
-            <strong>Next available:</strong> {label}
+          <span style={{ fontFamily: FONTS.ui, fontSize: 15, color: "#fff", fontWeight: 600, lineHeight: 1.4 }}>
+            <strong>Next available:</strong>{" "}
+            <span style={{ whiteSpace: "nowrap" }}>{label}</span>
           </span>
         </div>
         {/* Bottom row: LOCK IN → with lock icon — matches mockup */}
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <LockIcon size={15} strokeWidth={2.5} style={{ color: "#C34A09" }} aria-hidden />
           <span style={{
-            fontFamily: FONTS.ui, fontSize: 17, fontWeight: 700,
+            fontFamily: FONTS.ui, fontSize: 15, fontWeight: 700,
             // hardcoded-color-allow-next-line — mockup: rgb(195,74,9)
             color: "#C34A09", letterSpacing: "0.06em",
           }}>

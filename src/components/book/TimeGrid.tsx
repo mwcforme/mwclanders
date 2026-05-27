@@ -114,19 +114,21 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
                         boxShadow: active ? "0 8px 20px -6px rgba(232,103,10,0.55)" : "0 1px 2px rgba(0,0,0,0.04)",
                       }}
                     >
-                      {/* Time + AM/PM — same weight and color, matching mockup */}
+                      {/* Time + AM/PM — large time, small AM/PM label */}
                       <span style={{
                         fontFamily: "Montserrat, Inter, sans-serif",
                         fontWeight: 700,
-                        fontSize: 19,
+                        fontSize: 22,
                         letterSpacing: "-0.01em",
-                        display: "flex", alignItems: "baseline", gap: 4,
+                        lineHeight: 1,
+                        display: "flex", alignItems: "baseline", gap: 3,
                       }}>
                         {time}
                         <span style={{
-                          fontSize: 13,
-                          fontWeight: 700,
-                          color: active ? "rgba(255,255,255,0.85)" : INK,
+                          fontSize: 12,
+                          fontWeight: 600,
+                          lineHeight: 1,
+                          color: active ? "rgba(255,255,255,0.80)" : "rgba(11,16,41,0.60)",
                         }}>
                           {ampm}
                         </span>

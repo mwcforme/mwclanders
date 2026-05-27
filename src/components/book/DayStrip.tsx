@@ -115,7 +115,7 @@ const DayStrip = ({
       {/* ── Day pills grid ──
           Mobile (.day-strip-grid): 3-col + horizontal scroll; chips snap.
           Desktop (≥768px): all days fit in equal columns.                */}
-      <div style={{ padding: "20px 3px 4px", position: "relative" }}>
+      <div style={{ padding: "20px 12px 4px", position: "relative" }}>
         {loading && (
           <div style={{
             position: "absolute", inset: 0,

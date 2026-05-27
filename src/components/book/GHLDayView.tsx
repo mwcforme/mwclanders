@@ -259,10 +259,10 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
 
   return (
     <>
-      {/* Fixed-bottom "Select a time" overlay — matches mwclocked mockup.
-          Mockup: position fixed, height 101px wrapper, dark navy btn 72px.
-          Only shown when no slot selected (canConfirm === false). */}
-      {!canConfirm && (
+      {/* Fixed-bottom "Select a time" overlay — only shown when a day is selected
+          but no time slot chosen yet. Hidden before day selection so it doesn't
+          cover the day chip strip. */}
+      {!canConfirm && selectedDay && (
         <div
           aria-hidden="true"
           className="mwc-select-time-overlay"
@@ -374,8 +374,8 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
                 Lock In My Spot →
               </button>
             </>
-          ) : (
-            /* Inactive state — dark navy button matching mwclocked mockup */
+          ) : selectedDay ? (
+            /* Day selected, no time yet — disabled confirm in card */
             <button
               type="button"
               disabled
@@ -392,12 +392,12 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
                 textTransform: "uppercase",
                 cursor: "default",
                 fontFamily: "Montserrat, Inter, sans-serif",
-                opacity: 0.55,
+                opacity: 0.45,
               }}
             >
               Select a Time
             </button>
-          )}
+          ) : null}
         </div>
       </div>
     </>
