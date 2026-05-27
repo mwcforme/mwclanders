@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Calendar, MapPin, ChevronRight, ClipboardList, FlaskConical, Stethoscope } from "lucide-react";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
 import { EmailCapture } from "@/components/book/EmailCapture";
@@ -84,8 +84,59 @@ function OutcomeCard() {
 
 function VideoCard() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [playing, setPlaying] = useState(false);
+
+  const handlePlay = () => {
+    if (videoRef.current) {
+      videoRef.current.play();
+      setPlaying(true);
+    }
+  };
+
   return (
     <div style={WHITE_CARD}>
+      {/* Video area with custom play button overlay */}
+      <div style={{ position: "relative", width: "100%", paddingBottom: "56%", background: "#0B1029", borderBottom: DIVIDER }}>
+        <video
+          ref={videoRef}
+          src={EXPECT_VIDEO_SRC}
+          poster="/images/video-poster.webp"
+          loop={false} playsInline preload="none"
+          aria-label="What to expect at your visit — 2 minute overview"
+          controls={playing}
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", border: 0 }}
+          onEnded={() => setPlaying(false)}
+        />
+        {/* Custom play button overlay — hidden once playing */}
+        {!playing && (
+          <button
+            type="button"
+            onClick={handlePlay}
+            aria-label="Play video"
+            style={{
+              position: "absolute", inset: 0,
+              width: "100%", height: "100%",
+              background: "transparent",
+              border: "none", cursor: "pointer",
+              display: "flex", alignItems: "center", justifyContent: "center",
+            }}
+          >
+            <div style={{
+              width: 72, height: 72, borderRadius: "50%",
+              background: COLORS.orangeHex,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              // hardcoded-color-allow-next-line
+              boxShadow: "0 8px 32px -8px rgba(232,103,10,0.65)",
+              flexShrink: 0,
+            }}>
+              {/* Play triangle */}
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden>
+                <polygon points="9,6 23,14 9,22" fill="#FFFFFF" />
+              </svg>
+            </div>
+          </button>
+        )}
+      </div>
       <div style={{ padding: "18px 20px 14px" }}>
         {/* 19.125px weight 700 uppercase */}
         <p style={{ fontFamily: FONTS.body, fontSize: 19.125, fontWeight: 700, color: INK, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 6 }}>
@@ -95,16 +146,6 @@ function VideoCard() {
         <p style={{ fontFamily: FONTS.body, fontSize: 17, fontWeight: 600, color: INK_MUTED, margin: 0 }}>
           2 minute video
         </p>
-      </div>
-      <div style={{ position: "relative", width: "100%", paddingBottom: "52%", background: "#000", borderTop: DIVIDER }}>
-        <video
-          ref={videoRef}
-          src={EXPECT_VIDEO_SRC}
-          poster="/images/video-poster.webp"
-          muted loop={false} playsInline controls preload="none"
-          aria-label="What to expect at your visit — 2 minute overview"
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", border: 0 }}
-        />
       </div>
     </div>
   );
