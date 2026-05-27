@@ -16,7 +16,11 @@ const fmtTimeParts = (iso: string): { time: string; ampm: string; hour: number }
   const s = d.toLocaleTimeString("en-US", {
     hour: "numeric", minute: "2-digit", hour12: true, timeZone: TIMEZONE,
   });
-  const [time, ampm] = s.split(" ");
+  // Split on any whitespace including narrow no-break space (U+202F) which
+  // Safari/iOS uses between time and AM/PM in toLocaleTimeString.
+  const parts = s.split(/[\s\u202f]+/);
+  const time = parts[0] ?? "";
+  const ampm = parts[1] ?? "";
   const hour = parseInt(new Date(iso).toLocaleString("en-US", { hour: "numeric", hour12: false, timeZone: TIMEZONE }), 10);
   return { time, ampm, hour };
 };

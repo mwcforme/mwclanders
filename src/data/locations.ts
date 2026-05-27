@@ -64,7 +64,7 @@ export const LOCATIONS: Location[] = [
     weeklyCloses: "18:00",
     weeklyClosesSat: "15:00",
     openDays: [1, 2, 3, 4, 5, 6],
-    driveTime: "5 min from I-64",
+    driveTime: "5 minutes from I-64",
     parking: "On-site parking, no charge",
     mapsQuery: "Men's Wellness Centers, 4050 Innslake Dr, Suite 360, Glen Allen, VA 23060",
     geo: { latitude: 37.6648, longitude: -77.5497 },
