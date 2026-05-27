@@ -91,7 +91,7 @@ const DayStrip = ({
           fontSize: 13, fontWeight: 700, color: INK,
           letterSpacing: "0.10em",
         }}>
-          {visibleDays.length > 0 ? `${fmtMonthDay(visibleDays[0])} – ${fmtMonthDay(visibleDays[visibleDays.length - 1])}` : ""}
+          {visibleDays.length > 0 ? `${fmtMonthDay(visibleDays[0])} · ${fmtMonthDay(visibleDays[visibleDays.length - 1])}` : ""}
         </div>
 
         <button

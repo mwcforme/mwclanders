@@ -64,7 +64,7 @@ export default function ProductTRTSchedule() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "#F4F6FA" }}>
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "var(--brand-cream)" }}>
       <SEO
         title="Schedule Your Consultation | Men's Wellness Centers"
         description="Book your no-cost testosterone consultation at a Virginia Men's Wellness Centers location."

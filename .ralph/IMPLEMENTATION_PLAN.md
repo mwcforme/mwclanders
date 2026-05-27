@@ -1,24 +1,24 @@
 # MWC Polish — Implementation Plan
 
 ## P0 — Compliance sweep (run once, repo-wide)
-- [ ] P0.1 Grep landing surfaces for banned terms (`free`, `guy`, `guys`, `clinic`, `patients`). Replace each with brand-approved equivalent.
+- [x] P0.1 Grep landing surfaces for banned terms (`free`, `guy`, `guys`, `clinic`, `patients`). Replace each with brand-approved equivalent.
   Verify: `grep -nEi '\b(free|guy|guys|clinic|patients?)\b' src/pages src/components/landing`
-- [ ] P0.2 Grep for em-dashes / en-dashes. Replace with period, comma, colon, or rephrase.
+- [x] P0.2 Grep for em-dashes / en-dashes. Replace with period, comma, colon, or rephrase.
   Verify: `grep -nE '[—–]' src/pages src/components/landing`
-- [ ] P0.3 Grep for hardcoded `#0B1029` / `#E8670A` / `#000033` / `#F5F0EB` in components. Replace with `var(--brand-*)` tokens.
+- [x] P0.3 Grep for hardcoded `#0B1029` / `#E8670A` / `#000033` / `#F5F0EB` in components. Replace with `var(--brand-*)` tokens.
   Verify: `grep -nEi '#0B1029|#E8670A|#000033|#F5F0EB' src/pages src/components/landing`
 
 ## P1 — Landing pages
-- [ ] P1.1 / (NewLandingPage.tsx) — hero, manifesto, pillars, final CTA
-- [ ] P1.2 /wl (NewWeightLoss.tsx) — symptom list + cream/navy alternation + final CTA star strip
+- [x] P1.1 / (NewLandingPage.tsx) — hero, manifesto, pillars, final CTA
+- [x] P1.2 /wl (NewWeightLoss.tsx) — symptom list + cream/navy alternation + final CTA star strip
 
 ## P2 — Secondary pages
-- [ ] P2.1 /pricing (Affordability.tsx) — pricing tier hover lift + star strip
-- [ ] P2.2 /trt-education (TRTEducation.tsx) — eyebrow normalization, Lucide bullets
+- [x] P2.1 /pricing (Affordability.tsx) — pricing tier hover lift + star strip
+- [x] P2.2 /trt-education (TRTEducation.tsx) — eyebrow normalization, Lucide bullets
 
 ## P3 — Cleanup
-- [ ] P3.1 /cro-op (CROOptimized.tsx) — token + icon pass
-- [ ] P3.2 /quiz, /quiz/approved — heavy hex-literal cleanup (TRTQuizApproved has 62 hexes)
+- [x] P3.1 /cro-op (CROOptimized.tsx) — token + icon pass
+- [x] P3.2 /quiz, /quiz/approved — heavy hex-literal cleanup (TRTQuizApproved has 62 hexes)
 
 ## P4 — Booking funnel (VISUAL SHELL ONLY — anchored to mwclocked · <2% variance · 10-loop floor)
 - [ ] P4.1 ProductTRT.tsx — tokens + icons
