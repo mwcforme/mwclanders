@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Lock as LockIcon } from "lucide-react";
+import { ArrowLeft, Lock as LockIcon, Phone } from "lucide-react";
 import BookLayout from "@/components/book/BookLayout";
 import GHLDayView from "@/components/book/GHLDayView";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
@@ -190,6 +190,7 @@ function HelpBar() {
           color: "#FFFFFF", textDecoration: "none",
         }}
       >
+        <Phone size={18} strokeWidth={1.75} style={{ color: COLORS.orange, flexShrink: 0 }} aria-hidden />
         Need help? Call {PHONE.display}
       </a>
     </div>

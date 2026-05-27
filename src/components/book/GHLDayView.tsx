@@ -334,30 +334,45 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
           background: "#FFFFFF",
         }}>
           {canConfirm ? (
-            <button
-              ref={confirmBtnRef}
-              type="button"
-              onClick={() => handleFinalConfirm()}
-              style={{
-                width: "100%", minHeight: 56,
-                background: ORANGE,
-                border: "none",
-                color: "#fff",
-                borderRadius: 12,
-                fontSize: 15, fontWeight: 700,
-                letterSpacing: "0.06em",
-                textTransform: "uppercase",
-                cursor: "pointer",
-                fontFamily: "Montserrat, Inter, sans-serif",
-                // hardcoded-color-allow-next-line
-                boxShadow: "0 10px 24px -8px rgba(232,103,10,0.55)",
-                transition: "all 150ms ease",
-                display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-              }}
-            >
-              <Lock size={15} strokeWidth={2.5} aria-hidden />
-              {selectedSlot ? fmtConfirmLabel(selectedSlot) : "Confirm My Appointment"} →
-            </button>
+            <>
+              {/* Date recap line above button — matches mockup */}
+              {selectedSlot && (
+                <p style={{
+                  textAlign: "center",
+                  fontFamily: "Montserrat, Inter, sans-serif",
+                  fontSize: 14, fontWeight: 600,
+                  // hardcoded-color-allow-next-line
+                  color: "#374151",
+                  marginBottom: 10,
+                }}>
+                  {fmtConfirmLabel(selectedSlot)}
+                </p>
+              )}
+              <button
+                ref={confirmBtnRef}
+                type="button"
+                onClick={() => handleFinalConfirm()}
+                style={{
+                  width: "100%", minHeight: 62,
+                  background: ORANGE,
+                  border: "none",
+                  color: "#fff",
+                  borderRadius: 12,
+                  fontSize: 17, fontWeight: 700,
+                  letterSpacing: "0.06em",
+                  textTransform: "uppercase",
+                  cursor: "pointer",
+                  fontFamily: "Montserrat, Inter, sans-serif",
+                  // hardcoded-color-allow-next-line
+                  boxShadow: "0 10px 24px -8px rgba(232,103,10,0.55)",
+                  transition: "all 150ms ease",
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+                }}
+              >
+                <Lock size={16} strokeWidth={2.5} aria-hidden />
+                Lock In My Spot →
+              </button>
+            </>
           ) : (
             /* Inactive state — dark navy button matching mwclocked mockup */
             <button
