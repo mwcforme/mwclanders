@@ -263,7 +263,7 @@ export default function BookSchedule() {
           <h1 className="mt-2 font-display text-3xl sm:text-4xl font-bold uppercase tracking-tight text-panel-foreground leading-tight">
             {heading}
           </h1>
-          <p className="mt-1 text-base" style={{ color: "var(--c-text-on-light-muted)" }}>60-minute consult. No charge today.</p>
+          <p className="mt-1 text-base" style={{ color: "var(--c-text-on-light-muted)" }}>60-minute complimentary medical consultation.</p>
 
           {/* Next available shortcut */}
           {nextAvailable && !selectedSlot && (
