@@ -9,6 +9,8 @@ import {
   ClipboardList, Droplet, Phone, ChevronRight, Play,
 } from "lucide-react";
 import { useBookingStore } from "@/domain/booking/bookingStore";
+import { TRTHeader } from "@/components/landing/trt/TRTHeader";
+import { TRTFooter } from "@/components/landing/trt/TRTFooter";
 import { LOCATIONS, getMapsSearchUrl, LOCATION_KEY_TO_SLUG, type Location } from "@/data/locations";
 import { EmailCapture } from "@/components/book/EmailCapture";
 
@@ -71,7 +73,8 @@ export default function BookConfirmed() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
-      <main className="flex-1 mx-auto w-full max-w-2xl px-4 sm:px-6 pt-5 sm:pt-8 pb-24">
+      <TRTHeader minimal hideCta />
+      <main className="flex-1 mx-auto w-full max-w-2xl px-4 sm:px-6 pt-20 sm:pt-24 pb-24">
 
         {/* Location + status row */}
         <div className="flex items-center justify-between gap-3">
@@ -259,6 +262,7 @@ export default function BookConfirmed() {
           </p>
         </section>
       </main>
+      <TRTFooter />
     </div>
   );
 }
