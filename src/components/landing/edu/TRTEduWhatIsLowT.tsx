@@ -6,7 +6,7 @@ export const TRTEduWhatIsLowT = () => (
     }}
   >
     <div style={{ maxWidth: 800, margin: "0 auto" }}>
-      <p style={{ color: "#E8670A", fontSize: 13, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 16, textAlign: "center" }}>
+      <p style={{ color: "var(--brand-cta)", fontSize: 13, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 16, textAlign: "center" }}>
         The Science, Simply Explained
       </p>
       <h2

@@ -2,7 +2,7 @@ const STEPS = [
   {
     num: "01",
     title: "Comprehensive Lab Testing",
-    body: "We draw blood in-clinic and measure your full hormone panel: total testosterone, free testosterone, SHBG, estradiol, PSA, CBC, and metabolic markers. Results are reviewed with your provider the same visit.",
+    body: "We draw blood on-site and measure your full hormone panel: total testosterone, free testosterone, SHBG, estradiol, PSA, CBC, and metabolic markers. Results are reviewed with your provider the same visit.",
     badge: "Same-Day Results",
   },
   {
@@ -34,7 +34,7 @@ export const TRTEduHowTRTWorks = () => (
   >
     <div style={{ maxWidth: 800, margin: "0 auto" }}>
       <div style={{ textAlign: "center", marginBottom: 56 }}>
-        <p style={{ color: "#E8670A", fontSize: 13, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 12 }}>
+        <p style={{ color: "var(--brand-cta)", fontSize: 13, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
           The MWC Approach
         </p>
         <h2
@@ -79,7 +79,7 @@ export const TRTEduHowTRTWorks = () => (
                   justifyContent: "center",
                   fontFamily: "'Bebas Neue', sans-serif",
                   fontSize: 20,
-                  color: "#E8670A",
+                  color: "var(--brand-cta)",
                   flexShrink: 0,
                   zIndex: 1,
                 }}
@@ -101,7 +101,7 @@ export const TRTEduHowTRTWorks = () => (
                   style={{
                     background: "rgba(232,103,10,0.15)",
                     border: "1px solid rgba(232,103,10,0.30)",
-                    color: "#E8670A",
+                    color: "var(--brand-cta)",
                     fontSize: 11,
                     fontWeight: 700,
                     letterSpacing: "0.06em",

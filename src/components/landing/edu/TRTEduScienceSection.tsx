@@ -14,7 +14,7 @@ export const TRTEduScienceSection = () => (
   >
     <div style={{ maxWidth: 960, margin: "0 auto" }}>
       <div style={{ textAlign: "center", marginBottom: 56 }}>
-        <p style={{ color: "#E8670A", fontSize: 13, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 12 }}>
+        <p style={{ color: "var(--brand-cta)", fontSize: 13, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
           By the Numbers
         </p>
         <h2
@@ -27,7 +27,7 @@ export const TRTEduScienceSection = () => (
           }}
         >
           THIS IS MORE COMMON<br />
-          <span style={{ color: "#E8670A" }}>THAN MOST MEN KNOW</span>
+          <span style={{ color: "var(--brand-cta)" }}>THAN MOST MEN KNOW</span>
         </h2>
       </div>
 
@@ -55,7 +55,7 @@ export const TRTEduScienceSection = () => (
               style={{
                 fontFamily: "'Bebas Neue', sans-serif",
                 fontSize: "clamp(40px, 6vw, 60px)",
-                color: "#E8670A",
+                color: "var(--brand-cta)",
                 lineHeight: 1,
                 marginBottom: 12,
               }}

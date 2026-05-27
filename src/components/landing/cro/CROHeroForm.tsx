@@ -193,7 +193,7 @@ export const CROHeroForm = ({
           )}
           {/* hardcoded-color-allow-next-line */}
           <p style={{ fontSize: 11, color: "rgba(245,240,235,0.45)", textAlign: "center", lineHeight: 1.5, marginTop: 2 }}>
-            &ldquo;I&rsquo;ve been to two GPs who told me my levels were fine. After one visit here I had answers and a plan. Game-changer for me.&rdquo; &mdash; R.T., Richmond &middot; Verified patient
+            &ldquo;I&rsquo;ve been to two GPs who told me my levels were fine. After one visit here I had answers and a plan. Game-changer for me.&rdquo; R.T., Richmond &middot; Verified member
           </p>
         </form>
       </div>

@@ -18,7 +18,7 @@ export const TRTEduCTA = () => (
     }}
   >
     <div style={{ maxWidth: 680, margin: "0 auto" }}>
-      <p style={{ color: "#E8670A", fontSize: 13, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 16 }}>
+      <p style={{ color: "var(--brand-cta)", fontSize: 13, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 16 }}>
         Men's Wellness Centers, Virginia
       </p>
       <h2
@@ -31,7 +31,7 @@ export const TRTEduCTA = () => (
         }}
       >
         READY TO FIND OUT<br />
-        <span style={{ color: "#E8670A" }}>WHERE YOU ACTUALLY STAND?</span>
+        <span style={{ color: "var(--brand-cta)" }}>WHERE YOU ACTUALLY STAND?</span>
       </h2>
       <p style={{ color: "rgba(255,255,255,0.60)", fontSize: 17, lineHeight: 1.65, marginBottom: 48 }}>
         Stop guessing. A comprehensive hormone panel at Men's Wellness Centers gives you real data, reviewed by a real clinician, in one visit. Walk in. No referral needed.
@@ -47,7 +47,7 @@ export const TRTEduCTA = () => (
           justifyContent: "center",
           height: 60,
           padding: "0 40px",
-          background: "#E8670A",
+          background: "var(--brand-cta)",
           color: "#fff",
           fontWeight: 700,
           fontSize: 17,
@@ -90,7 +90,7 @@ export const TRTEduCTA = () => (
               minWidth: 220,
             }}
           >
-            <MapPin size={16} color="#E8670A" style={{ flexShrink: 0 }} />
+            <MapPin size={16} color="var(--brand-cta)" style={{ flexShrink: 0 }} />
             <div style={{ textAlign: "left" }}>
               <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 2 }}>{loc.name}</div>
               <div style={{ fontSize: 14, color: "rgba(255,255,255,0.60)", display: "flex", alignItems: "center", gap: 6 }}>
