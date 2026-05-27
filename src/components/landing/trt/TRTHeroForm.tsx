@@ -115,13 +115,13 @@ export const TRTHeroForm = ({
           Reserve Your 60-Minute Visit.
         </h2>
         <form onSubmit={handleSubmit} noValidate style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-          <FloatInput id="hf-name" label="Name" type="text" autoComplete="given-name" placeholder="John"
+          <FloatInput id={`${formId}-name`} label="Name" type="text" autoComplete="given-name" placeholder="John"
             value={name} inputRef={nameRef} error={errors.name} ariaInvalid={!!errors.name}
             icon={<User size={16} strokeWidth={1.75} />}
             onChange={(v) => { setName(v); clearErr("name"); }}
             onFocus={() => { void import("@/pages/book/BookLocation"); }} />
 
-          <FloatInput id="hf-phone" label="Phone" type="tel" inputMode="tel" autoComplete="tel"
+          <FloatInput id={`${formId}-phone`} label="Phone" type="tel" inputMode="tel" autoComplete="tel"
             placeholder="(555) 000-0000" value={phone} inputRef={phoneRef} error={errors.phone} ariaInvalid={!!errors.phone}
             icon={<Phone size={16} strokeWidth={1.75} />}
             onChange={(v) => { setPhone(formatPhone(v)); clearErr("phone"); }}
