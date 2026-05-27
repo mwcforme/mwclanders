@@ -1,322 +1,42 @@
 /**
- * BookSchedule — new PickTime UI wired to real Supabase slot data.
- * Design: /data/.openclaw/workspace/mwc-book-upload/client/src/pages/PickTime.tsx
- * Data:   GHLDayView slot fetching logic (Supabase ghl_free_slots)
+ * BookSchedule — PickTime UI wired to real Supabase slot data.
+ *
+ * Sub-components extracted to:
+ *   src/components/book/DayPill.tsx
+ *   src/components/book/SlotGroup.tsx
+ *   src/components/book/ReviewSheet.tsx
+ * Slot fetching extracted to:
+ *   src/hooks/useSlotFetching.ts
+ * Shared utils/types:
+ *   src/lib/scheduleUtils.ts
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  ArrowLeft, ArrowRight, Calendar, ChevronLeft, ChevronRight,
-  Clock, Lock, MapPin, Phone, X,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, MapPin, Phone } from "lucide-react";
 import { useBookingStore } from "@/domain/booking/bookingStore";
 import { useConfirmAppointment } from "@/domain/booking/useConfirmAppointment";
 import { CENTER_CALENDARS, TIMEZONE, type LocationKey } from "@/lib/ghlCalendars";
 import { LOCATIONS, LOCATION_KEY_TO_SLUG } from "@/data/locations";
 import { PHONE } from "@/lib/constants";
-import {
-  addDaysInTimeZone, dateFromYmdInTimeZone, isSundayInTimeZone, ymdInTimeZone,
-} from "@/lib/etDate";
+import { addDaysInTimeZone, isSundayInTimeZone } from "@/lib/etDate";
 import { trackFunnelEvent } from "@/hooks/useAnalytics";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
-
-// ─── Types ────────────────────────────────────────────────────────────────────
-
-type DayCell = {
-  date: Date;
-  slotsLeft: number;
-  full: boolean;
-  closed: boolean;
-};
-
-type TimeSlot = { iso: string; display: string; meridiem: "AM" | "PM" };
-
-// ─── Constants ────────────────────────────────────────────────────────────────
-
-const HOLD_SECONDS = 5 * 60;
-const HOUR_MIN = 8;
-const HOUR_MAX = 18;
-const MONTHS_SHORT = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-const DOW_SHORT    = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-const MONTHS_UPPER = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
-
-// ─── Supabase slot fetching (from GHLDayView) ─────────────────────────────────
-
-const getSupabase = () => import("@/integrations/supabase/legacy").then(m => m.supabase);
-
-async function fetchCachedSlots(
-  calendarId: string,
-  start: Date,
-  end: Date,
-): Promise<Record<string, string[]>> {
-  const supabase = await getSupabase();
-  const { data, error } = await supabase
-    .from("ghl_free_slots")
-    .select("slot_start")
-    .eq("calendar_id", calendarId)
-    .gte("slot_start", start.toISOString())
-    .lt("slot_start", end.toISOString())
-    .order("slot_start", { ascending: true })
-    .limit(200);
-  if (error) throw new Error(error.message);
-  const out: Record<string, string[]> = {};
-  for (const row of data || []) {
-    const iso = row.slot_start as string;
-    const key = new Intl.DateTimeFormat("en-CA", {
-      timeZone: TIMEZONE, year: "numeric", month: "2-digit", day: "2-digit",
-    }).format(new Date(iso));
-    (out[key] ||= []).push(iso);
-  }
-  return out;
-}
-
-const ymd = (d: Date): string => ymdInTimeZone(d, TIMEZONE);
-
-function isTodayET(d: Date): boolean {
-  return ymd(d) === new Intl.DateTimeFormat("en-CA", {
-    timeZone: TIMEZONE, year: "numeric", month: "2-digit", day: "2-digit",
-  }).format(new Date());
-}
-
-function etHourOf(iso: string): number {
-  const s = new Intl.DateTimeFormat("en-US", {
-    timeZone: TIMEZONE, hour: "numeric", hour12: false,
-  }).format(new Date(iso));
-  const n = parseInt(s, 10);
-  return n === 24 ? 0 : n;
-}
-
-function dropPastAndOutOfHours(d: Date, slots: string[]): string[] {
-  const cutoffMs = isTodayET(d) ? Date.now() : 0;
-  return slots.filter(iso => {
-    const h = etHourOf(iso);
-    if (h < HOUR_MIN || h >= HOUR_MAX) return false;
-    return new Date(iso).getTime() > cutoffMs;
-  });
-}
-
-function fmtTimeParts(iso: string): { display: string; meridiem: "AM" | "PM" } {
-  const s = new Date(iso).toLocaleTimeString("en-US", {
-    hour: "numeric", minute: "2-digit", hour12: true, timeZone: TIMEZONE,
-  });
-  const parts = s.split(/[\s\u202f]+/);
-  return {
-    display: parts[0] ?? "",
-    meridiem: (parts[1]?.toUpperCase() === "PM" ? "PM" : "AM") as "AM" | "PM",
-  };
-}
-
-function formatLong(d: Date): string {
-  const dow = DOW_SHORT[d.getDay()];
-  const mo  = MONTHS_SHORT[d.getMonth()];
-  return `${dow}, ${mo} ${d.getDate()}`;
-}
-
-function formatLongFull(d: Date): string {
-  return `${DOW_SHORT[d.getDay()]}, ${MONTHS_SHORT[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
-}
-
-function groupSlots(slots: TimeSlot[]) {
-  const morning: TimeSlot[]   = [];
-  const afternoon: TimeSlot[] = [];
-  const evening: TimeSlot[]   = [];
-  for (const s of slots) {
-    const h = parseInt(s.display.split(":")[0], 10);
-    if (s.meridiem === "AM") morning.push(s);
-    else if (h === 12 || h < 5) afternoon.push(s);
-    else evening.push(s);
-  }
-  return { morning, afternoon, evening };
-}
-
-// ─── Sub-components ───────────────────────────────────────────────────────────
-
-function DayPill({ day, selected, onSelect }: { day: DayCell; selected: boolean; onSelect: () => void }) {
-  const disabled = day.full || day.closed;
-  const dow = ["SUN","MON","TUE","WED","THU","FRI","SAT"][day.date.getDay()];
-  const base = "relative flex flex-col items-center justify-center gap-1 rounded-xl px-1 py-2.5 text-center select-none transition-colors min-h-[72px] cursor-pointer";
-
-  if (disabled) {
-    return (
-      <div
-        role="radio" aria-checked={false} aria-disabled
-        aria-label={`${formatLong(day.date)} — ${day.full ? "Fully booked" : "Closed"}`}
-        className={`${base} bg-disabled-light text-disabled-light-foreground`}
-      >
-        <p className="font-display text-[10px] font-bold uppercase tracking-[0.1em]">{dow}</p>
-        <p className="font-display text-xl font-bold leading-none">{day.date.getDate()}</p>
-        <p className="text-[9px] font-bold uppercase">{day.full ? "Full" : "Closed"}</p>
-      </div>
-    );
-  }
-
-  if (selected) {
-    return (
-      <button type="button" onClick={onSelect} role="radio" aria-checked
-        className={`${base} bg-primary text-white shadow-cta`}>
-        <p className="font-display text-[10px] font-bold uppercase tracking-[0.1em] opacity-90">{dow}</p>
-        <p className="font-display text-xl font-bold leading-none">{day.date.getDate()}</p>
-        <span className="h-[5px] w-[5px] rounded-full bg-white" aria-hidden />
-      </button>
-    );
-  }
-
-  return (
-    <button type="button" onClick={onSelect} role="radio" aria-checked={false}
-      aria-label={`${formatLong(day.date)} — ${day.slotsLeft} slots available`}
-      className={`${base} bg-panel text-panel-foreground border-[1.5px] border-panel-border hover:border-primary`}>
-      <p className="font-display text-[10px] font-bold uppercase tracking-[0.1em] text-panel-muted">{dow}</p>
-      <p className="font-display text-xl font-bold leading-none">{day.date.getDate()}</p>
-      <span className="h-[5px] w-[5px] rounded-full bg-primary" aria-hidden />
-    </button>
-  );
-}
-
-function SlotGroup({
-  title, slots, startIdx, selected, setSelected, slotRefs, onKey,
-}: {
-  title: string; slots: TimeSlot[]; startIdx: number;
-  selected: string | null; setSelected: (v: string) => void;
-  slotRefs: React.MutableRefObject<(HTMLButtonElement | null)[]>;
-  onKey: (e: React.KeyboardEvent<HTMLButtonElement>, idx: number) => void;
-}) {
-  if (slots.length === 0) return null;
-  return (
-    <div>
-      <h3 className="mb-2 font-display text-xs font-bold uppercase tracking-[0.16em] text-panel-foreground">
-        {title}
-      </h3>
-      <div className="h-px bg-panel-divider mb-2.5" aria-hidden />
-      <div role="radiogroup" aria-label={`${title} time slots`}
-        className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-2">
-        {slots.map((s, i) => {
-          const idx = startIdx + i;
-          const value = s.iso;
-          const isSelected = selected === value;
-          return (
-            <button
-              key={value}
-              ref={el => (slotRefs.current[idx] = el)}
-              type="button" role="radio" aria-checked={isSelected}
-              onKeyDown={e => onKey(e, idx)}
-              onClick={() => setSelected(value)}
-              className={[
-                "h-[50px] rounded-xl px-2 inline-flex items-center justify-center transition-colors border-[1.5px]",
-                isSelected
-                  ? "bg-primary text-primary-foreground border-primary shadow-cta"
-                  : "bg-panel text-panel-foreground border-panel-border hover:border-primary",
-              ].join(" ")}
-            >
-              <span className="font-display text-base font-bold leading-none">
-                {s.display}
-                <span className="ml-1 text-[10px] font-bold uppercase tracking-wider opacity-75">{s.meridiem}</span>
-              </span>
-            </button>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-function ReviewSheet({
-  firstName, slotIso, day, onCommit, onChangeTime, confirming,
-}: {
-  firstName: string; slotIso: string; day: DayCell;
-  onCommit: () => void; onChangeTime: () => void; confirming: boolean;
-}) {
-  const [secondsLeft, setSecondsLeft] = useState(HOLD_SECONDS);
-  useEffect(() => {
-    const id = window.setInterval(() => setSecondsLeft(s => Math.max(0, s - 1)), 1000);
-    return () => window.clearInterval(id);
-  }, []);
-  useEffect(() => {
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = prev; };
-  }, []);
-
-  const { display: slotDisplay, meridiem } = fmtTimeParts(slotIso);
-  const slotLabel = `${slotDisplay} ${meridiem}`;
-
-  const endTimeLabel = useMemo(() => {
-    const d = new Date(slotIso);
-    const end = new Date(d.getTime() + 60 * 60 * 1000);
-    return end.toLocaleTimeString("en-US", {
-      hour: "numeric", minute: "2-digit", hour12: true, timeZone: TIMEZONE,
-    }).replace(/\u202f/g, " ");
-  }, [slotIso]);
-
-  const dayLong = formatLongFull(day.date);
-  const minutes = Math.floor(secondsLeft / 60);
-  const seconds = secondsLeft % 60;
-  const timer = `${minutes}:${seconds.toString().padStart(2, "0")}`;
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center"
-      role="dialog" aria-modal aria-labelledby="review-title">
-      <button type="button" aria-label="Close" onClick={onChangeTime}
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
-      <div className="relative w-full max-w-2xl bg-panel text-panel-foreground rounded-t-3xl sm:rounded-3xl sm:mb-8 shadow-card"
-        style={{ animation: "slideUp 280ms cubic-bezier(0.22,1,0.36,1)" }}>
-        <style>{`@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }`}</style>
-        <div className="flex justify-center pt-2.5 pb-1">
-          <span className="h-1 w-10 rounded-full bg-panel-divider" aria-hidden />
-        </div>
-        <button type="button" onClick={onChangeTime}
-          className="hidden sm:inline-flex absolute top-4 right-4 h-9 w-9 items-center justify-center rounded-full text-panel-muted hover:bg-panel-divider"
-          aria-label="Close">
-          <X className="h-5 w-5" aria-hidden />
-        </button>
-        <div className="px-6 pt-2 pb-4 text-center">
-          <p id="review-title" className="font-display text-2xl font-bold uppercase tracking-[0.05em] text-panel-foreground">
-            {DOW_SHORT[day.date.getDay()]}, {MONTHS_SHORT[day.date.getMonth()].toUpperCase()} {day.date.getDate()}{" "}
-            <span className="text-primary">·</span> {slotLabel}
-          </p>
-          <p className="mt-2 inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.1em] text-primary">
-            <Clock className="h-3.5 w-3.5" aria-hidden /> Holding your slot · {timer}
-          </p>
-        </div>
-        <div className="h-px bg-panel-divider" aria-hidden />
-        <div className="px-6 py-5 flex items-start gap-4">
-          <span className="grid h-10 w-10 flex-shrink-0 place-items-center rounded-full bg-primary/10 text-primary" aria-hidden>
-            <Calendar className="h-5 w-5" />
-          </span>
-          <div>
-            <p className="font-display text-base font-bold uppercase tracking-wide text-panel-foreground">Consultation</p>
-            <p className="mt-1 text-sm leading-snug text-panel-foreground">
-              {dayLong}<br />
-              {slotLabel} <span className="text-panel-muted">to</span> {endTimeLabel}{" "}
-              <span className="text-panel-muted">(60-minute visit)</span>
-            </p>
-            <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-panel-muted">
-              Physician-led · In-person
-            </p>
-          </div>
-        </div>
-        <div className="px-5 pt-3 pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:pb-5 border-t border-panel-divider">
-          <button type="button" onClick={onCommit} disabled={confirming}
-            className="w-full inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-4 font-display font-bold uppercase tracking-wider text-lg bg-primary text-white hover:bg-primary-hover shadow-cta disabled:opacity-60 disabled:cursor-wait">
-            <Lock className="h-5 w-5" aria-hidden strokeWidth={2.5} />
-            {confirming ? "Booking…" : firstName ? `Lock it in, ${firstName}` : "Lock it in"}
-            <ArrowRight className="h-5 w-5" aria-hidden />
-          </button>
-          <button type="button" onClick={onChangeTime}
-            className="mt-2 w-full inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-2.5 font-display text-sm font-bold uppercase tracking-wider text-panel-muted hover:text-panel-foreground">
-            Change time
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
+import { DayPill } from "@/components/book/DayPill";
+import { SlotGroup } from "@/components/book/SlotGroup";
+import { ReviewSheet } from "@/components/book/ReviewSheet";
+import { useSlotFetching } from "@/hooks/useSlotFetching";
+import {
+  MONTHS_UPPER, DOW_SHORT, MONTHS_SHORT,
+  dropPastAndOutOfHours, fmtTimeParts, groupSlots, ymd,
+  type DayCell,
+} from "@/lib/scheduleUtils";
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
 export default function BookSchedule() {
   const navigate = useNavigate();
 
-  // Store
+  // ── Store ──────────────────────────────────────────────────────────────────
   const location    = useBookingStore(s => s.location);
   const identity    = useBookingStore(s => s.identity);
   const symptom     = useBookingStore(s => s.symptom);
@@ -341,22 +61,25 @@ export default function BookSchedule() {
     ? CENTER_CALENDARS[location as LocationKey]
     : null;
 
-  // Week / day state
+  // ── Week state ─────────────────────────────────────────────────────────────
   const [weekStart, setWeekStart] = useState(() => {
     const d = new Date(); d.setHours(0, 0, 0, 0); return d;
   });
-  const [slotsByDay, setSlotsByDay] = useState<Record<string, string[]>>({});
-  const [loading, setLoading]       = useState(false);
-  const [loadError, setLoadError]   = useState<string | null>(null);
-  const [refreshNonce, setRefreshNonce] = useState(0);
 
-  // Build 7-day array
+  // ── Slot fetching (OPT 2 extracted hook; BUG 4 fix inside hook) ────────────
+  const { slotsByDay, loading, loadError } = useSlotFetching(
+    cal?.calendarId ?? null,
+    location ?? null,
+    weekStart,
+  );
+
+  // ── Build 7-day array ──────────────────────────────────────────────────────
   const days = useMemo(() =>
     Array.from({ length: 7 }, (_, i) => addDaysInTimeZone(weekStart, i, TIMEZONE)),
     [weekStart],
   );
 
-  // Build DayCell array
+  // ── Build DayCell array (OPT 5: useMemo) ──────────────────────────────────
   const dayCells: DayCell[] = useMemo(() => days.map(d => {
     const key = ymd(d);
     const closed = isSundayInTimeZone(d, TIMEZONE);
@@ -371,42 +94,18 @@ export default function BookSchedule() {
   }), [days, slotsByDay, loading]);
 
   const firstAvailableIdx = dayCells.findIndex(d => !d.full && !d.closed && d.slotsLeft > 0);
+
   const [selectedDayIdx, setSelectedDayIdx] = useState<number | null>(null);
   const [selectedSlot, setSelectedSlot]     = useState<string | null>(null);
   const [reviewOpen, setReviewOpen]         = useState(false);
   const [confirming, setConfirming]         = useState(false);
 
-  // Auto-select first available day once slots load
+  // Auto-select first available day once slots load (BUG 5: guard already present)
   useEffect(() => {
     if (selectedDayIdx === null && firstAvailableIdx !== -1 && !loading) {
       setSelectedDayIdx(firstAvailableIdx);
     }
   }, [firstAvailableIdx, loading, selectedDayIdx]);
-
-  // Fetch slots
-  useEffect(() => {
-    if (!cal) return;
-    let cancelled = false;
-    const fetchWeek = async () => {
-      setLoading(true);
-      setLoadError(null);
-      try {
-        const end = addDaysInTimeZone(weekStart, 7, TIMEZONE);
-        const data = await fetchCachedSlots(cal.calendarId, weekStart, end);
-        if (!cancelled) setSlotsByDay(data);
-      } catch (e) {
-        if (!cancelled) setLoadError("Couldn't load slots. Tap to retry.");
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    };
-    fetchWeek();
-    const interval = window.setInterval(() => setRefreshNonce(n => n + 1), 60_000);
-    const onFocus = () => setRefreshNonce(n => n + 1);
-    window.addEventListener("focus", onFocus);
-    return () => { cancelled = true; window.clearInterval(interval); window.removeEventListener("focus", onFocus); };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [weekStart, location, refreshNonce]);
 
   // Open review sheet when slot picked
   useEffect(() => {
@@ -416,17 +115,17 @@ export default function BookSchedule() {
     }
   }, [selectedSlot, location]);
 
-  // Build time slots for selected day
+  // ── Time slots for selected day ────────────────────────────────────────────
   const selectedDay = selectedDayIdx !== null ? dayCells[selectedDayIdx] : null;
-  const rawTimes = selectedDayIdx !== null ? slotsByDay[ymd(days[selectedDayIdx])] || [] : [];
+  const rawTimes    = selectedDayIdx !== null ? slotsByDay[ymd(days[selectedDayIdx])] || [] : [];
   const filteredTimes = selectedDay ? dropPastAndOutOfHours(selectedDay.date, rawTimes) : [];
-  const timeSlots: TimeSlot[] = filteredTimes.map(iso => ({ iso, ...fmtTimeParts(iso) }));
-  const groups = useMemo(() => groupSlots(timeSlots), [timeSlots]);
+  const timeSlots = filteredTimes.map(iso => ({ iso, ...fmtTimeParts(iso) }));
+  const groups    = useMemo(() => groupSlots(timeSlots), [timeSlots]);
 
-  // Next available
+  // ── Next available label ───────────────────────────────────────────────────
   const nextAvailable = useMemo(() => {
     if (firstAvailableIdx === -1) return null;
-    const d = dayCells[firstAvailableIdx];
+    const d   = dayCells[firstAvailableIdx];
     const key = ymd(days[firstAvailableIdx]);
     const raw = slotsByDay[key] || [];
     const avail = dropPastAndOutOfHours(d.date, raw);
@@ -439,6 +138,7 @@ export default function BookSchedule() {
     };
   }, [firstAvailableIdx, dayCells, days, slotsByDay]);
 
+  // ── Keyboard navigation for slot grid ─────────────────────────────────────
   const slotRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const handleSlotKey = (e: React.KeyboardEvent<HTMLButtonElement>, idx: number) => {
@@ -448,11 +148,11 @@ export default function BookSchedule() {
     const all = [...groups.morning, ...groups.afternoon, ...groups.evening];
     let next = idx;
     if (e.key === "ArrowRight" || e.key === "ArrowDown") next = Math.min(all.length - 1, idx + (e.key === "ArrowRight" ? 1 : cols));
-    if (e.key === "ArrowLeft" || e.key === "ArrowUp")   next = Math.max(0, idx - (e.key === "ArrowLeft" ? 1 : cols));
+    if (e.key === "ArrowLeft"  || e.key === "ArrowUp")   next = Math.max(0, idx - (e.key === "ArrowLeft" ? 1 : cols));
     slotRefs.current[next]?.focus();
   };
 
-  // Confirm appointment — pass onBooked so navigation fires on success
+  // ── Confirm appointment hook ───────────────────────────────────────────────
   const confirmCtl = useConfirmAppointment({
     onBooked: useCallback((slotIso: string) => {
       setAppointmentTime(slotIso);
@@ -460,13 +160,22 @@ export default function BookSchedule() {
     }, [setAppointmentTime, navigate]),
   });
 
+  // OPT 6 fix: Destructure confirmCtl before useCallback so onCommit is NOT recreated
+  // on every render (confirmCtl itself is a new object reference every render).
+  const {
+    confirm: confirmBooking,
+    isSubmitting: hookSubmitting,
+    error: bookingError,
+    redirect: bookingRedirect,
+  } = confirmCtl;
+
   const customFields = useMemo(() => ({
-    ...(symptom     ? { mwc_symptom: symptom }                      : {}),
-    ...(duration    ? { mwc_symptom_duration: duration }             : {}),
-    ...(urgencyTier ? { mwc_urgency_tier: urgencyTier }              : {}),
-    ...(note        ? { mwc_clinical_note: note.slice(0, 500) }      : {}),
-    ...(service     ? { mwc_funnel_service: service }                : {}),
-    ...(lpSlug      ? { mwc_lp_slug: lpSlug }                        : {}),
+    ...(symptom     ? { mwc_symptom: symptom }                 : {}),
+    ...(duration    ? { mwc_symptom_duration: duration }        : {}),
+    ...(urgencyTier ? { mwc_urgency_tier: urgencyTier }         : {}),
+    ...(note        ? { mwc_clinical_note: note.slice(0, 500) } : {}),
+    ...(service     ? { mwc_funnel_service: service }           : {}),
+    ...(lpSlug      ? { mwc_lp_slug: lpSlug }                   : {}),
   }), [symptom, duration, urgencyTier, note, service, lpSlug]);
 
   const onCommit = useCallback(async () => {
@@ -478,7 +187,7 @@ export default function BookSchedule() {
       navigate("/book/confirmed", { state: { appointmentTime: selectedSlot } });
       return;
     }
-    const ok = await confirmCtl.confirm({
+    const ok = await confirmBooking({
       slotIso: selectedSlot,
       location: location as LocationKey,
       firstName, lastName,
@@ -488,8 +197,10 @@ export default function BookSchedule() {
       urgencyTier,
       customFields,
     });
+    // BUG 2 fix: only clear local confirming — button disabled is driven by
+    // hookSubmitting || confirming, so hook reset will also release the button.
     if (!ok) setConfirming(false);
-  }, [selectedSlot, confirming, location, firstName, lastName, identity, source, urgencyTier, customFields, setAppointmentTime, navigate, confirmCtl]);
+  }, [selectedSlot, confirming, location, firstName, lastName, identity, source, urgencyTier, customFields, setAppointmentTime, navigate, confirmBooking]);
 
   const onChangeTime = useCallback(() => {
     setReviewOpen(false);
@@ -497,13 +208,11 @@ export default function BookSchedule() {
     setConfirming(false);
   }, []);
 
-  // Day strip shows all 7 days — week nav arrows (above) handle week changes.
-
   const heading = firstName ? `${firstName}, lock in a time.` : "Lock in a time.";
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
-  // No location → show location picker
+  // ── No location → show location picker ───────────────────────────────────
   if (!cal) {
     return (
       <div className="min-h-screen flex flex-col" style={{ background: "var(--brand-navy-deep)", fontFamily: "Montserrat, sans-serif" }}>
@@ -553,7 +262,7 @@ export default function BookSchedule() {
           </h1>
           <p className="mt-1 text-base" style={{ color: "var(--c-text-on-light-muted)" }}>60-minute consult. No charge today.</p>
 
-          {/* Next available */}
+          {/* Next available shortcut */}
           {nextAvailable && !selectedSlot && (
             <button type="button"
               onClick={() => { setSelectedDayIdx(nextAvailable.idx); setSelectedSlot(nextAvailable.iso); }}
@@ -573,7 +282,14 @@ export default function BookSchedule() {
             {/* Week navigator */}
             <div className="flex items-center justify-between gap-3 px-4 sm:px-6 pt-4 pb-3">
               <button type="button"
-                onClick={() => { const d = new Date(weekStart); d.setDate(d.getDate() - 7); setWeekStart(d); setSelectedDayIdx(null); setDayWindowStart(0); }}
+                onClick={() => {
+                  const d = new Date(weekStart);
+                  d.setDate(d.getDate() - 7);
+                  setWeekStart(d);
+                  setSelectedDayIdx(null);
+                  setSelectedSlot(null);   // BUG 3 fix: clear stale slot on week change
+                  setReviewOpen(false);    // BUG 3 fix: close sheet so stale slot isn't shown
+                }}
                 className="inline-flex h-9 w-9 items-center justify-center rounded-full border-[1.5px] border-panel-border text-panel-foreground hover:border-primary hover:text-primary-hover"
                 aria-label="Previous week">
                 <ChevronLeft className="h-5 w-5" aria-hidden />
@@ -582,20 +298,35 @@ export default function BookSchedule() {
                 {MONTHS_UPPER[days[0].getMonth()]} {days[0].getDate()} to {MONTHS_UPPER[days[6].getMonth()]} {days[6].getDate()}
               </h2>
               <button type="button"
-                onClick={() => { const d = new Date(weekStart); d.setDate(d.getDate() + 7); setWeekStart(d); setSelectedDayIdx(null); setDayWindowStart(0); }}
+                onClick={() => {
+                  const d = new Date(weekStart);
+                  d.setDate(d.getDate() + 7);
+                  setWeekStart(d);
+                  setSelectedDayIdx(null);
+                  setSelectedSlot(null);   // BUG 3 fix
+                  setReviewOpen(false);    // BUG 3 fix
+                }}
                 className="inline-flex h-9 w-9 items-center justify-center rounded-full border-[1.5px] border-panel-border text-panel-foreground hover:border-primary hover:text-primary-hover"
                 aria-label="Next week">
                 <ChevronRight className="h-5 w-5" aria-hidden />
               </button>
             </div>
 
-            {/* 5-day strip — first 5 days of the week, nav arrows handle prev/next */}
+            {/* 5-day strip */}
             <div className="px-4 sm:px-6 pb-4">
               <div role="radiogroup" aria-label="Day" className="grid grid-cols-5 gap-2">
                 {dayCells.slice(0, 5).map((day, dayIdx) => (
-                  <DayPill key={`${weekStart.getTime()}-${dayIdx}`}
-                    day={day} selected={dayIdx === selectedDayIdx}
-                    onSelect={() => { if (day.full || day.closed) return; setSelectedDayIdx(dayIdx); setSelectedSlot(null); trackFunnelEvent("date_selected", { location: location ?? "" }); }} />
+                  <DayPill
+                    key={`${weekStart.getTime()}-${dayIdx}`}
+                    day={day}
+                    selected={dayIdx === selectedDayIdx}
+                    onSelect={() => {
+                      if (day.full || day.closed) return;
+                      setSelectedDayIdx(dayIdx);
+                      setSelectedSlot(null);
+                      trackFunnelEvent("date_selected", { location: location ?? "" });
+                    }}
+                  />
                 ))}
               </div>
             </div>
@@ -651,8 +382,15 @@ export default function BookSchedule() {
         {/* Review sheet */}
         {reviewOpen && selectedSlot && selectedDay && (
           <ReviewSheet
-            firstName={firstName} slotIso={selectedSlot} day={selectedDay}
-            onCommit={onCommit} onChangeTime={onChangeTime} confirming={confirming} />
+            firstName={firstName}
+            slotIso={selectedSlot}
+            day={selectedDay}
+            onCommit={onCommit}
+            onChangeTime={onChangeTime}
+            confirming={hookSubmitting || confirming}  // BUG 2 fix: source of truth from hook
+            error={bookingError}                       // BUG 1 fix: surface error to user
+            redirect={bookingRedirect}                 // BUG 1 fix: show redirect countdown
+          />
         )}
       </div>
     </BookingErrorBoundary>

@@ -6,10 +6,11 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Calendar, Check, MapPin, Clock, IdCard, FlaskConical,
-  ClipboardList, Droplet, Send, Phone, ChevronRight, Play,
+  ClipboardList, Droplet, Phone, ChevronRight, Play,
 } from "lucide-react";
 import { useBookingStore } from "@/domain/booking/bookingStore";
 import { LOCATIONS, getMapsSearchUrl, LOCATION_KEY_TO_SLUG, type Location } from "@/data/locations";
+import { EmailCapture } from "@/components/book/EmailCapture";
 
 const DEFAULT_CENTER = LOCATIONS[0];
 const TIMEZONE = "America/New_York";
@@ -58,7 +59,6 @@ export default function BookConfirmed() {
   const appt      = formatAppt(effectiveAppt);
   const calLinks  = appt ? buildCalendarLinks(appt.iso, center.fullAddress) : null;
 
-  const [email, setEmail]   = useState("");
   const [sent, setSent]     = useState(false);
   const [playing, setPlaying] = useState(false);
 
@@ -220,30 +220,24 @@ export default function BookConfirmed() {
           </div>
         </section>
 
-        {/* Email reminder */}
+        {/* Email reminder — BUG 6 fix: use EmailCapture component for real API call */}
         <section className="mt-8 rounded-2xl bg-panel text-panel-foreground shadow-card p-6">
           <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-white bg-panel-foreground rounded-md px-2 py-1 inline-block mb-1">Email Reminder</p>
           <p className="mt-2 font-display text-2xl font-bold uppercase text-panel-foreground">Send my confirmation</p>
           <p className="mt-2 text-lg text-panel-foreground leading-snug">
             We'll email your appointment details and a reminder the day before.
           </p>
-          <form onSubmit={e => { e.preventDefault(); setSent(true); }}
-            className="mt-5 flex flex-col gap-3" aria-label="Send confirmation by email">
-            <label htmlFor="conf-email" className="font-display text-base font-semibold text-panel-foreground">
-              Your email address
-            </label>
-            <input id="conf-email" type="email" required placeholder="you@example.com"
-              value={email} onChange={e => setEmail(e.target.value)}
-              className="rounded-xl border-2 border-panel-border bg-panel text-panel-foreground placeholder:text-panel-muted px-5 py-4 text-lg focus-visible:border-primary min-h-[56px]" />
-            <button type="submit"
-              className="inline-flex items-center justify-center gap-3 rounded-xl bg-primary text-white hover:bg-primary-hover font-display font-bold uppercase tracking-wide px-5 py-4 text-base shadow-cta min-h-[56px]">
-              <Send className="h-6 w-6" aria-hidden /> {sent ? "Sent!" : "Send to my email"}
-            </button>
-          </form>
-          {sent && (
-            <p role="status" className="mt-4 inline-flex items-center gap-2 px-4 py-3 rounded-lg bg-success/15 text-panel-foreground font-semibold text-base">
-              <Check className="h-5 w-5 text-success" aria-hidden /> Confirmation sent to {email}
+          {sent ? (
+            <p role="status" className="mt-5 inline-flex items-center gap-2 px-4 py-3 rounded-lg bg-success/15 text-panel-foreground font-semibold text-base">
+              <Check className="h-5 w-5 text-success" aria-hidden /> Confirmation email sent!
             </p>
+          ) : (
+            <div className="mt-5">
+              <EmailCapture
+                contactId={identity?.ghlContactId}
+                onComplete={() => setSent(true)}
+              />
+            </div>
           )}
         </section>
 
