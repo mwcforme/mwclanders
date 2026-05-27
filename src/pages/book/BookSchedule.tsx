@@ -503,16 +503,7 @@ export default function BookSchedule() {
     setConfirming(false);
   }, []);
 
-  // 5-day window (mobile)
-  const [dayWindowStart, setDayWindowStart] = useState(0);
-  useEffect(() => {
-    if (selectedDayIdx === null) return;
-    if (selectedDayIdx < dayWindowStart) setDayWindowStart(selectedDayIdx);
-    else if (selectedDayIdx > dayWindowStart + 4) setDayWindowStart(Math.min(2, selectedDayIdx - 4));
-  }, [selectedDayIdx, dayWindowStart]);
-  const visibleDays = dayCells.slice(dayWindowStart, dayWindowStart + 5);
-  const canPageLeft  = dayWindowStart > 0;
-  const canPageRight = dayWindowStart + 5 < dayCells.length;
+  // Day strip shows all 7 days — week nav arrows (above) handle week changes.
 
   const heading = firstName ? `${firstName}, lock in a time.` : "Lock in a time.";
 
@@ -604,34 +595,14 @@ export default function BookSchedule() {
               </button>
             </div>
 
-            {/* 5-day strip */}
+            {/* 7-day strip — all days visible, week nav arrows above handle prev/next */}
             <div className="px-4 sm:px-6 pb-4">
-              <div className="flex items-center gap-2">
-                <button type="button"
-                  onClick={() => setDayWindowStart(Math.max(0, dayWindowStart - 5))}
-                  disabled={!canPageLeft}
-                  className="sm:hidden flex-shrink-0 h-9 w-9 inline-flex items-center justify-center rounded-full text-panel-muted disabled:opacity-30"
-                  aria-label="Previous days">
-                  <ChevronLeft className="h-5 w-5" aria-hidden />
-                </button>
-                <div role="radiogroup" aria-label="Day"
-                  className="flex-1 grid grid-cols-5 sm:grid-cols-7 gap-2">
-                  {(typeof window !== "undefined" && window.matchMedia("(min-width: 640px)").matches ? dayCells : visibleDays).map((day, i) => {
-                    const dayIdx = typeof window !== "undefined" && window.matchMedia("(min-width: 640px)").matches ? i : dayWindowStart + i;
-                    return (
-                      <DayPill key={`${weekStart.getTime()}-${dayIdx}`}
-                        day={day} selected={dayIdx === selectedDayIdx}
-                        onSelect={() => { if (day.full || day.closed) return; setSelectedDayIdx(dayIdx); setSelectedSlot(null); trackFunnelEvent("date_selected", { location: location ?? "" }); }} />
-                    );
-                  })}
-                </div>
-                <button type="button"
-                  onClick={() => setDayWindowStart(Math.min(dayCells.length - 5, dayWindowStart + 5))}
-                  disabled={!canPageRight}
-                  className="sm:hidden flex-shrink-0 h-9 w-9 inline-flex items-center justify-center rounded-full text-panel-muted disabled:opacity-30"
-                  aria-label="Next days">
-                  <ChevronRight className="h-5 w-5" aria-hidden />
-                </button>
+              <div role="radiogroup" aria-label="Day" className="grid grid-cols-7 gap-1.5">
+                {dayCells.map((day, dayIdx) => (
+                  <DayPill key={`${weekStart.getTime()}-${dayIdx}`}
+                    day={day} selected={dayIdx === selectedDayIdx}
+                    onSelect={() => { if (day.full || day.closed) return; setSelectedDayIdx(dayIdx); setSelectedSlot(null); trackFunnelEvent("date_selected", { location: location ?? "" }); }} />
+                ))}
               </div>
             </div>
 
