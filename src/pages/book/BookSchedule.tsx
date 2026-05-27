@@ -452,8 +452,13 @@ export default function BookSchedule() {
     slotRefs.current[next]?.focus();
   };
 
-  // Confirm appointment
-  const confirmCtl = useConfirmAppointment();
+  // Confirm appointment — pass onBooked so navigation fires on success
+  const confirmCtl = useConfirmAppointment({
+    onBooked: useCallback((slotIso: string) => {
+      setAppointmentTime(slotIso);
+      navigate("/book/confirmed", { state: { appointmentTime: slotIso } });
+    }, [setAppointmentTime, navigate]),
+  });
 
   const customFields = useMemo(() => ({
     ...(symptom     ? { mwc_symptom: symptom }                      : {}),
@@ -473,29 +478,18 @@ export default function BookSchedule() {
       navigate("/book/confirmed", { state: { appointmentTime: selectedSlot } });
       return;
     }
-    try {
-      await confirmCtl.confirm({
-        slotIso: selectedSlot,
-        location: location as LocationKey,
-        firstName, lastName,
-        email: identity?.email,
-        phone: identity.phone,
-        source: source ?? "mwc-book-funnel",
-        urgencyTier,
-        customFields,
-      });
-    } catch {
-      setConfirming(false);
-    }
+    const ok = await confirmCtl.confirm({
+      slotIso: selectedSlot,
+      location: location as LocationKey,
+      firstName, lastName,
+      email: identity?.email,
+      phone: identity.phone,
+      source: source ?? "mwc-book-funnel",
+      urgencyTier,
+      customFields,
+    });
+    if (!ok) setConfirming(false);
   }, [selectedSlot, confirming, location, firstName, lastName, identity, source, urgencyTier, customFields, setAppointmentTime, navigate, confirmCtl]);
-
-  // Listen for GHL confirm success
-  useEffect(() => {
-    if (confirmCtl.booked && confirmCtl.slotIso) {
-      setAppointmentTime(confirmCtl.slotIso);
-      navigate("/book/confirmed", { state: { appointmentTime: confirmCtl.slotIso } });
-    }
-  }, [confirmCtl.booked, confirmCtl.slotIso, setAppointmentTime, navigate]);
 
   const onChangeTime = useCallback(() => {
     setReviewOpen(false);
