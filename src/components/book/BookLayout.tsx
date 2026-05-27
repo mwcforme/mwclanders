@@ -1,5 +1,5 @@
 import { ReactNode, lazy, Suspense, useEffect } from "react";
-import { TRTHeader } from "@/components/landing/trt/TRTHeader";
+import { BookHeader } from "@/components/book/BookHeader";
 import { SEO } from "@/components/SEO";
 
 // Footer is heavy — lazy load it so funnel pages don't pay the cost upfront
@@ -38,7 +38,7 @@ const BookLayout = ({ page, title, description, variant = "default", children }:
   return (
     <div className="min-h-screen flex flex-col bg-background overflow-x-hidden" style={{ fontFamily: "Inter, sans-serif" }}>
       <SEO title={title} description={description || DEFAULT_DESC[page]} />
-      <TRTHeader minimal hideCta />
+      <BookHeader />
       <main className="flex-1 pt-16 animate-in fade-in duration-200">{children}</main>
       <Suspense fallback={null}>
         <TRTFooter />

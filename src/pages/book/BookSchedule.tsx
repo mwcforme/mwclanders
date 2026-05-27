@@ -21,7 +21,7 @@ import { PHONE } from "@/lib/constants";
 import { addDaysInTimeZone, isSundayInTimeZone } from "@/lib/etDate";
 import { trackFunnelEvent } from "@/hooks/useAnalytics";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
-import { TRTHeader } from "@/components/landing/trt/TRTHeader";
+import { BookHeader } from "@/components/book/BookHeader";
 import { TRTFooter } from "@/components/landing/trt/TRTFooter";
 import { DayPill } from "@/components/book/DayPill";
 import { SlotGroup } from "@/components/book/SlotGroup";
@@ -242,7 +242,7 @@ export default function BookSchedule() {
   return (
     <BookingErrorBoundary>
       <div className="min-h-screen flex flex-col bg-background text-foreground">
-        <TRTHeader minimal hideCta />
+        <BookHeader />
         <main className="flex-1 mx-auto w-full max-w-2xl lg:max-w-5xl px-4 sm:px-6 pt-20 pb-32 sm:pb-12">
 
           {/* Back */}
