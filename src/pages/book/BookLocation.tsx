@@ -79,28 +79,31 @@ const BookLocation = () => {
 
   return (
     <BookLayout page="location" title="Choose Your Location | Men's Wellness Centers">
-      <div style={{ minHeight: "100dvh", background: "var(--brand-navy-deep)", display: "flex", flexDirection: "column" }}>
+      <div className="flex flex-col min-h-[calc(100dvh-64px)]">
         {/* Back */}
-        <div style={{ padding: "16px 20px 0" }}>
+        <div className="px-5 pt-4">
           <button
             type="button"
             onClick={() => navigate("/")}
             aria-label="Back to contact info"
-            style={{ background: "none", border: "none", color: "rgba(255,255,255,0.55)", fontFamily: "Inter, sans-serif", fontSize: 15, fontWeight: 500, cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 0", minHeight: 44 }}
+            className="inline-flex items-center gap-1.5 text-base font-semibold text-panel-foreground hover:text-primary transition-colors py-2 min-h-[44px]"
           >
             <ArrowLeft size={16} aria-hidden /> Back
           </button>
         </div>
 
         {/* Heading */}
-        <div style={{ padding: "28px 20px 24px" }}>
-          <h1 style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: "clamp(28px, 7vw, 40px)", color: "var(--brand-cream)", textTransform: "uppercase", lineHeight: 1.05, letterSpacing: "0.01em" }}>
+        <div className="px-5 pt-7 pb-5">
+          <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-white bg-panel-foreground rounded-md px-2 py-1 inline-block mb-3">
+            Book Your Visit
+          </p>
+          <h1 className="font-display font-bold text-[clamp(28px,7vw,40px)] text-panel-foreground uppercase leading-tight">
             {firstName ? `${firstName}, choose` : "Choose"} your location.
           </h1>
         </div>
 
         {/* Location options */}
-        <div style={{ padding: "0 20px 32px", display: "flex", flexDirection: "column", gap: 10, flex: 1 }}>
+        <div className="px-5 pb-8 flex flex-col gap-2.5 flex-1">
           {OPTIONS.map((opt) => {
             const isSelected = selected === opt.key;
             return (
@@ -110,36 +113,27 @@ const BookLocation = () => {
                 onClick={() => handleSelect(opt.key)}
                 disabled={advancing}
                 aria-pressed={isSelected}
-                style={{
-                  width: "100%",
-                  minHeight: 80,
-                  textAlign: "left",
-                  cursor: advancing ? "not-allowed" : "pointer",
-                  background: isSelected ? "rgba(232,103,10,0.08)" : "rgba(255,255,255,0.04)",
-                  border: isSelected ? "1px solid var(--brand-cta)" : "1px solid rgba(255,255,255,0.10)",
-                  borderLeft: isSelected ? "4px solid var(--brand-cta)" : "4px solid transparent",
-                  borderRadius: 14,
-                  padding: "16px 18px",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  transition: "all 220ms ease",
-                  transform: isSelected ? "translateY(-3px)" : "translateY(0)",
-                  WebkitTapHighlightColor: "transparent",
-                }}
+                className={[
+                  "w-full min-h-[80px] text-left rounded-2xl px-4 py-4 flex justify-between items-center",
+                  "border-[1.5px] bg-panel shadow-card transition-all duration-200",
+                  isSelected
+                    ? "border-primary -translate-y-0.5"
+                    : "border-panel-border hover:border-primary",
+                  advancing ? "cursor-not-allowed opacity-70" : "cursor-pointer",
+                ].join(" ")}
               >
                 <div>
-                  <div style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 20, color: "var(--brand-cream)", textTransform: "uppercase", letterSpacing: "0.02em" }}>
+                  <div className="font-display font-bold text-xl text-panel-foreground uppercase tracking-wide">
                     {opt.label}
                   </div>
-                  <div style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: "rgba(255,255,255,0.45)", marginTop: 3 }}>
+                  <div className="text-sm mt-0.5" style={{ color: "var(--c-text-on-light-muted)" }}>
                     {opt.address}
                   </div>
-                  <div style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: "var(--brand-cta)", marginTop: 4, fontWeight: 600 }}>
+                  <div className="text-xs mt-1 font-semibold text-primary">
                     {opt.driveTime}
                   </div>
                 </div>
-                {isSelected && <Check size={18} color="var(--brand-cta)" aria-hidden />}
+                {isSelected && <Check size={18} className="text-primary flex-shrink-0" aria-hidden />}
               </button>
             );
           })}
