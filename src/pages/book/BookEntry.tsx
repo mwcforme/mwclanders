@@ -220,23 +220,11 @@ export default function BookEntry() {
 
 function LoadingScreen() {
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "var(--brand-navy-deep)",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        fontFamily: "Inter, sans-serif",
-        gap: 16,
-      }}
-    >
+    <div className="min-h-screen flex flex-col items-center justify-center bg-background gap-4">
       <div
         style={{
           width: 40,
           height: 40,
-          // hardcoded-color-allow-next-line
           border: "3px solid rgba(232,103,10,0.25)",
           borderTopColor: "var(--brand-cta)",
           borderRadius: "50%",
@@ -244,12 +232,12 @@ function LoadingScreen() {
         }}
       />
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-      <p style={{ color: "var(--c-text-on-dark-muted)", fontSize: 16, fontFamily: "Inter, sans-serif" }}>
+      <p className="text-base" style={{ color: "var(--c-text-on-light-muted)" }}>
         Setting up your visit…
       </p>
-      <p style={{ color: "var(--c-footnote-on-dark)", fontSize: 14, fontFamily: "Inter, sans-serif" }}>
+      <p className="text-sm text-panel-muted">
         Having trouble?{" "}
-        <a href={PHONE.tel} style={{ color: "var(--brand-cta)", textDecoration: "none" }}>
+        <a href={PHONE.tel} className="text-primary hover:underline">
           {PHONE.display}
         </a>
       </p>
