@@ -1,8 +1,8 @@
-import { Calendar, Clock, MapPin } from "lucide-react";
+import { Clock, MapPin } from "lucide-react";
 import { CelebrationBurst } from "@/components/book/CelebrationBurst";
 import type { Location } from "@/data/locations";
 import { FONT_OSWALD } from "@/lib/styles";
-import { COLORS, FONTS, CAL_BUTTON_BASE } from "@/lib/bookingTokens";
+import { COLORS, FONTS } from "@/lib/bookingTokens";
 
 // Exact computed values from mwclocked.pplx.app/#/confirmed
 // hardcoded-color-allow-next-line
@@ -12,14 +12,11 @@ const GREEN_TINT = "rgba(16,183,127,0.15)"; // check circle bg
 // hardcoded-color-allow-next-line
 const INK        = "#0A0F29";          // rgb(10,15,41) — body text on white cards
 // hardcoded-color-allow-next-line
-const APPLE_BTN  = "#1A203D";          // rgb(26,32,61) — Apple/Outlook button bg
-// hardcoded-color-allow-next-line
 const SUBTITLE   = "#CBD5E1";          // rgb(203,213,225) — subtitle text
 
 const CHECKLIST_ITEMS = ["No-cost consultation", "Your provider reserved", "Bring photo ID"] as const;
 
 interface ApptDate { weekday: string; month: string; day: string; time: string; iso: string; }
-interface CalLinks  { google: string; ics: string; }
 interface Props {
   firstName: string;
   apptDate: ApptDate | null;
@@ -135,26 +132,6 @@ function AppointmentTicket({ apptDate, center }: { apptDate: ApptDate; center: L
           </div>
         ))}
       </div>
-    </div>
-  );
-}
-
-function CalendarButtons({ calLinks }: { calLinks: CalLinks }) {
-  return (
-    <div className="mwc-cal-buttons">
-      <a
-        href={calLinks.google} target="_blank" rel="noopener noreferrer"
-        aria-label="Add to Google Calendar (opens in new tab)"
-        style={{ ...CAL_BUTTON_BASE, flex: 1, background: COLORS.orange, boxShadow: COLORS.orangeShadow, color: "#FFFFFF", fontSize: 17 }}
-      >
-        <Calendar size={18} strokeWidth={2} aria-hidden /> Add to Google Calendar
-      </a>
-      <a
-        href={calLinks.ics} download="mwc-appointment.ics"
-        style={{ ...CAL_BUTTON_BASE, flex: 1, background: APPLE_BTN, color: "#FFFFFF", fontSize: 17 }}
-      >
-        <Calendar size={18} strokeWidth={2} aria-hidden /> Apple or Outlook
-      </a>
     </div>
   );
 }

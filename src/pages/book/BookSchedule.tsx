@@ -33,7 +33,7 @@ function BackButton({ onClick }: { onClick: () => void }) {
 function ScheduleHeading({
   heading,
   locationName,
-  onChangeLocation,
+  onChangeLocation: _onChangeLocation,
 }: {
   heading: string;
   locationName: string | null;

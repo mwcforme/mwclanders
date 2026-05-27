@@ -12,39 +12,18 @@
  *     personalised DOM text or PHI-laden URLs to Sentry.
  */
 import { useEffect } from "react";
-import { Outlet, useLocation, Navigate } from "react-router-dom";
-import { useBookingStore } from "@/domain/booking/bookingStore";
+import { Outlet, useLocation } from "react-router-dom";
 import { sanitizeAnalyticsForBookingRoute } from "@/lib/analyticsGuard";
 
-// Routes that may be entered without prior identity (entry / fallback pages).
-const PUBLIC_BOOKING_ROUTES = new Set(["/book/lets-talk"]);
-
-const lpFor = (service?: string): string => {
-  switch (service) {
-    case "wl":
-      return "/wl";
-    case "ed":
-      return "/ed";
-    case "trt":
-    default:
-      return "/";
-  }
-};
-
+// TODO (pre-launch): re-enable identity guard
+// Redirects are disabled for dev/QA — restore before production.
 export const BookingRouteGuard = () => {
   const location = useLocation();
-  const identity = useBookingStore((s) => s.identity);
-  const symptom = useBookingStore((s) => s.symptom);
-  const service = useBookingStore((s) => s.service);
-  const storedLocation = useBookingStore((s) => s.location);
 
-  // Run analytics + Sentry hardening on every /book/* navigation, BEFORE any
-  // potential redirect, so the unsanitized URL is never reported.
+  // Analytics + Sentry hardening on every /book/* navigation
   useEffect(() => {
     sanitizeAnalyticsForBookingRoute(location.pathname);
   }, [location.pathname]);
-
-  const path = location.pathname;
 
   // DEV MODE: redirects disabled for development/QA
   // TODO: re-enable before production launch

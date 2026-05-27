@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Calendar, MapPin, ChevronRight, Clock, ClipboardList, FlaskConical, Stethoscope } from "lucide-react";
+import { Calendar, MapPin, ChevronRight, ClipboardList, FlaskConical, Stethoscope } from "lucide-react";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
 import { EmailCapture } from "@/components/book/EmailCapture";
 import type { Location } from "@/data/locations";
