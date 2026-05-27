@@ -180,7 +180,7 @@ const DayStrip = ({
                   transition: "background 150ms ease, box-shadow 150ms ease, transform 120ms ease",
                   // hardcoded-color-allow-next-line
                   boxShadow: selected ? "0 6px 18px rgba(232,103,10,0.40)" : "none",
-                  minHeight: 96,
+                  minHeight: 123,
                   justifyContent: "center",
                   scrollSnapAlign: "start",
                 }}
@@ -225,7 +225,7 @@ const DayStrip = ({
           // hardcoded-color-allow-next-line — matches mwclocked.pplx.app swipe hint: orange-tinted
           color: "rgba(232,103,10,0.55)",
           letterSpacing: "0.04em",
-          margin: "10px 0 35px",
+          margin: "10px 0 8px",
         }}>
           Swipe to see more days
         </p>
