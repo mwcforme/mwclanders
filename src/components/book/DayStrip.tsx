@@ -222,7 +222,8 @@ const DayStrip = ({
           textAlign: "center",
           fontFamily: "Montserrat, Inter, sans-serif",
           fontSize: 11, fontWeight: 500,
-          color: "rgba(11,16,41,0.45)",
+          // hardcoded-color-allow-next-line — matches mwclocked.pplx.app swipe hint: orange-tinted
+          color: "rgba(232,103,10,0.55)",
           letterSpacing: "0.04em",
           margin: "10px 0 6px",
         }}>
