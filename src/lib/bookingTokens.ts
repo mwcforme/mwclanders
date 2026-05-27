@@ -28,7 +28,8 @@ export const COLORS = {
   pageBg:        "#0B1029",  // Midnight Navy
   cardBg:        "#FFFFFF",
   glassBg:       "rgba(255,255,255,0.05)",
-  bannerBg:      "rgba(11,16,41,0.70)",
+  // hardcoded-color-allow-next-line — matches mwclocked banner card rgb(26,32,61)
+  bannerBg:      "#1A203D",
 
   // Brand
   orange:        "var(--brand-cta)",        // #E8670A
