@@ -94,7 +94,8 @@ const fmtConfirmLabel = (iso: string): string => {
   const month   = d.toLocaleDateString("en-US", { month: "short", timeZone: TIMEZONE });
   const day     = d.toLocaleDateString("en-US", { day: "numeric", timeZone: TIMEZONE });
   const time    = d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true, timeZone: TIMEZONE });
-  return `LOCK IN ${weekday.toUpperCase()}, ${month.toUpperCase()} ${day} AT ${time}`;
+  // e.g. "Wed, MAY 27 at 5:00 PM"
+  return `${weekday}, ${month.toUpperCase()} ${day} at ${time}`;
 };
 
 // ─── Props ────────────────────────────────────────────────────────────────────

@@ -12,28 +12,17 @@
  *     personalised DOM text or PHI-laden URLs to Sentry.
  */
 import { useEffect } from "react";
-import { Outlet, useLocation, Navigate } from "react-router-dom";
-import { useBookingStore } from "@/domain/booking/bookingStore";
+import { Outlet, useLocation } from "react-router-dom";
 import { sanitizeAnalyticsForBookingRoute } from "@/lib/analyticsGuard";
 
-// Routes that may be entered without prior identity (entry / fallback pages).
-const PUBLIC_BOOKING_ROUTES = new Set(["/book/lets-talk", "/book/entry"]);
-
-const lpFor = (service?: string): string => {
-  switch (service) {
-    case "wl":  return "/wl";
-    case "ed":  return "/ed";
-    case "trt":
-    default:    return "/";
-  }
-};
+// DEV MODE: guard is disabled — re-enable these before production launch
+// import { Navigate } from "react-router-dom";
+// import { useBookingStore } from "@/domain/booking/bookingStore";
+// const PUBLIC_BOOKING_ROUTES = new Set(["/book/lets-talk", "/book/entry"]);
+// const lpFor = (service?: string) => service === "wl" ? "/wl" : service === "ed" ? "/ed" : "/";
 
 export const BookingRouteGuard = () => {
-  const location    = useLocation();
-  const identity    = useBookingStore((s) => s.identity);
-  const symptom     = useBookingStore((s) => s.symptom);
-  const service     = useBookingStore((s) => s.service);
-  const storedLocation = useBookingStore((s) => s.location);
+  const location = useLocation();
 
   // Analytics + Sentry hardening on every /book/* navigation, BEFORE any
   // potential redirect, so the unsanitised URL is never reported.
@@ -41,23 +30,12 @@ export const BookingRouteGuard = () => {
     sanitizeAnalyticsForBookingRoute(location.pathname);
   }, [location.pathname]);
 
-  const path     = location.pathname;
-  const isPublic = PUBLIC_BOOKING_ROUTES.has(path);
+  const _path = location.pathname;
 
-  // No identity → must re-enter through the LP hero form.
-  if (!isPublic && !identity) {
-    return <Navigate to={lpFor(service)} replace />;
-  }
-
-  // /book/schedule requires a location to be selected.
-  if (identity && !storedLocation && path === "/book/schedule") {
-    return <Navigate to="/book/location" replace />;
-  }
-
-  // Legacy symptom guard kept for WP-entry flow compatibility.
-  if (identity && !symptom && path === "/book/duration") {
-    return <Navigate to="/book/symptom" replace />;
-  }
+  // DEV MODE: redirects disabled — re-enable before production launch
+  // if (!PUBLIC_BOOKING_ROUTES.has(_path) && !identity) return <Navigate to={lpFor(service)} replace />;
+  // if (identity && !storedLocation && _path === '/book/schedule') return <Navigate to='/book/location' replace />;
+  // if (identity && !symptom && _path === '/book/duration') return <Navigate to='/book/symptom' replace />;
 
   // Note: we deliberately do NOT block /book/confirmed when appointmentTime
   // is missing — once a user has booked we want them to land on the page even
