@@ -99,7 +99,7 @@ export default function BookConfirmed() {
         {/* Appointment hero card */}
         <section className="mt-5 rounded-2xl bg-panel text-panel-foreground p-5 sm:p-7 shadow-card border-2 border-panel-divider"
           aria-label="Appointment details">
-          <p className="font-display text-sm font-bold uppercase tracking-[0.22em] text-panel-muted">
+          <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-white bg-panel-foreground rounded-md px-2 py-1 inline-block mb-1">
             Your Appointment
           </p>
 
@@ -277,7 +277,7 @@ function SectionCard({ eyebrow, items, ordered }: {
   const Tag = ordered ? "ol" : "ul";
   return (
     <section className="mt-8 rounded-2xl bg-panel text-panel-foreground shadow-card p-6">
-      <p className="font-display text-sm font-bold uppercase tracking-[0.22em] text-panel-muted">{eyebrow}</p>
+      <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-white bg-panel-foreground rounded-md px-2 py-1 inline-block mb-1">{eyebrow}</p>
       <Tag className="mt-5 space-y-5" aria-label={eyebrow}>
         {items.map((item, i) => (
           <li key={i} className="flex items-start gap-4">
