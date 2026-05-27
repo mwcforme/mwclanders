@@ -172,6 +172,7 @@ const DayStrip = ({
                   borderRadius: 14,
                   padding: "14px 6px",
                   cursor: isDisabled ? "not-allowed" : "pointer",
+                  opacity: isDisabled ? 0.55 : 1,
                   textAlign: "center",
                   display: "flex",
                   flexDirection: "column",
