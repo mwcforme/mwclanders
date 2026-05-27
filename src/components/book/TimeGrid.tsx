@@ -125,7 +125,7 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
                         ? `2px solid ${ORANGE}`
                         // hardcoded-color-allow-next-line
                         : "1.5px solid #0B1029",
-                      borderRadius: 10,
+                      borderRadius: 17,
                       padding: "0 16px",
                       display: "flex", alignItems: "center",
                       justifyContent: active ? "space-between" : "flex-start",
@@ -134,7 +134,6 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
                       cursor: "pointer",
                       transition: "all 150ms ease",
                       whiteSpace: "nowrap",
-                      minHeight: 58,
                       // hardcoded-color-allow-next-line
                       boxShadow: active ? "0 8px 20px -6px rgba(232,103,10,0.55)" : "0 1px 2px rgba(0,0,0,0.04)",
                     }}
