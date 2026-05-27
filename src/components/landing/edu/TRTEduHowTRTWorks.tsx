@@ -14,7 +14,7 @@ const STEPS = [
   {
     num: "03",
     title: "Personalized TRT Protocol",
-    body: "Most patients start with testosterone cypionate injections, the gold standard for bioavailable, controllable therapy. Dosing is dialed in based on your labs, symptoms, and goals. Adjustments happen as needed.",
+    body: "Most members start with testosterone cypionate injections, the gold standard for bioavailable, controllable therapy. Dosing is dialed in based on your labs, symptoms, and goals. Adjustments happen as needed.",
     badge: "Your Protocol",
   },
   {
