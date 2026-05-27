@@ -40,7 +40,7 @@ function ScheduleHeading({
   onChangeLocation: () => void;
 }) {
   return (
-    <section style={{ maxWidth: 720, width: "100%", margin: "0 auto", marginTop: 8 }}>
+    <section style={{ maxWidth: 720, width: "100%", margin: "0 auto", marginTop: 12 }}>
       <h1 style={{
         fontFamily: FONTS.display, fontWeight: 700,
         fontSize: 34, lineHeight: 1.05,
