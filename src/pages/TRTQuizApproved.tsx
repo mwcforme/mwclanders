@@ -88,7 +88,7 @@ function ResultsTopBar() {
   return (
     <div
       className="sticky top-0 z-40"
-      style={{ background: "#000814", color: "var(--c-text-on-dark)" }}
+      style={{ background: "var(--brand-navy-deep)", color: "var(--c-text-on-dark)" }}
     >
       <div className="mx-auto flex items-center justify-between px-5 md:px-8 h-14" style={{ maxWidth: 1180 }}>
         <img src="/logos/Text_Logo_white.webp" onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/logos/Text_Logo_white.png"; }} alt="Men's Wellness Centers" className="h-5 md:h-6 w-auto" width={150} height={24} loading="lazy" decoding="async" />
@@ -119,7 +119,7 @@ function Section1Header({ firstName }: { firstName: string }) {
           fontSize: "clamp(40px, 8vw, 76px)",
           letterSpacing: "0.005em",
           // hardcoded-color-allow-next-line
-          color: "#000814",
+          color: "var(--brand-navy-deep)",
         }}
       >
         {firstName}'s
@@ -174,7 +174,7 @@ function Section2Status({ indicatorPct, bracket, totalScore }: { indicatorPct: n
             width: 20, height: 20,
             background: "var(--c-text-on-dark)",
             // hardcoded-color-allow-next-line
-            border: "3px solid #000814",
+            border: "3px solid var(--brand-navy-deep)",
             borderRadius: "50%",
             // hardcoded-color-allow-next-line
             boxShadow: "0 4px 10px rgba(0,0,0,0.25)",
@@ -222,7 +222,7 @@ function Section3Symptoms({ top }: { top: ReturnType<typeof topCategories> }) {
     <section className="mt-12">
       <h2
         className="font-bold uppercase mb-5"
-        style={{ fontFamily: "Oswald, sans-serif", fontSize: "clamp(22px, 4vw, 30px)", letterSpacing: "0.02em", color: "#000814" }}
+        style={{ fontFamily: "Oswald, sans-serif", fontSize: "clamp(22px, 4vw, 30px)", letterSpacing: "0.02em", color: "var(--brand-navy-deep)" }}
       >
         My top symptoms
       </h2>
@@ -267,7 +267,7 @@ function Section4WhyAct() {
     <section className="mt-12">
       <h2
         className="font-bold uppercase mb-3"
-        style={{ fontFamily: "Oswald, sans-serif", fontSize: "clamp(22px, 4vw, 30px)", letterSpacing: "0.02em", color: "#000814" }}
+        style={{ fontFamily: "Oswald, sans-serif", fontSize: "clamp(22px, 4vw, 30px)", letterSpacing: "0.02em", color: "var(--brand-navy-deep)" }}
       >
         Why act now
       </h2>
@@ -295,7 +295,7 @@ function Section5Outcome() {
     <section className="mt-12">
       <h2
         className="font-bold uppercase"
-        style={{ fontFamily: "Oswald, sans-serif", fontSize: "clamp(24px, 4.5vw, 34px)", letterSpacing: "0.02em", color: "#000814" }}
+        style={{ fontFamily: "Oswald, sans-serif", fontSize: "clamp(24px, 4.5vw, 34px)", letterSpacing: "0.02em", color: "var(--brand-navy-deep)" }}
       >
         What clinical data shows
       </h2>
@@ -360,7 +360,7 @@ function Section6NextSteps() {
     <section className="mt-12">
       <h2
         className="font-bold uppercase mb-5"
-        style={{ fontFamily: "Oswald, sans-serif", fontSize: "clamp(22px, 4vw, 30px)", letterSpacing: "0.02em", color: "#000814" }}
+        style={{ fontFamily: "Oswald, sans-serif", fontSize: "clamp(22px, 4vw, 30px)", letterSpacing: "0.02em", color: "var(--brand-navy-deep)" }}
       >
         My next steps
       </h2>
@@ -375,7 +375,7 @@ function Section6NextSteps() {
                 </span>
                 <Icon size={20} style={{ color: "var(--brand-cta)" }} />
               </div>
-              <h3 className="font-bold uppercase mb-1" style={{ fontFamily: "Oswald, sans-serif", fontSize: 18, color: "#000814" }}>
+              <h3 className="font-bold uppercase mb-1" style={{ fontFamily: "Oswald, sans-serif", fontSize: 18, color: "var(--brand-navy-deep)" }}>
                 {s.title}
               </h3>
               <p className="text-sm" style={{ color: "#475569" }}>{s.body}</p>
@@ -392,7 +392,7 @@ function Section7Offer({ ctaHref, ctaLabel, disqualified }: { ctaHref: string; c
     <section className="mt-12">
       <div
         className="rounded-2xl p-6 md:p-8"
-        style={{ background: "#000814", color: "var(--brand-cream)", border: "1px solid #1E293B" }}
+        style={{ background: "var(--brand-navy-deep)", color: "var(--brand-cream)", border: "1px solid #1E293B" }}
       >
         <p className="text-xs uppercase tracking-[0.18em] font-bold mb-2" style={{ color: "var(--brand-cta-accessible)" }}>
           Your invitation
@@ -451,9 +451,9 @@ function Section8Testimonials() {
     <section className="mt-12">
       <h2
         className="font-bold uppercase mb-5"
-        style={{ fontFamily: "Oswald, sans-serif", fontSize: "clamp(22px, 4vw, 30px)", letterSpacing: "0.02em", color: "#000814" }}
+        style={{ fontFamily: "Oswald, sans-serif", fontSize: "clamp(22px, 4vw, 30px)", letterSpacing: "0.02em", color: "var(--brand-navy-deep)" }}
       >
-        From verified MWC patients
+        From verified MWC members
       </h2>
       <div className="space-y-4">
         {RESULTS_TESTIMONIALS.map((t) => (
@@ -467,7 +467,7 @@ function Section8Testimonials() {
               "{t.quote}"
             </p>
             <p className="mt-2 text-xs" style={{ color: "#64748B" }}>
-              {t.name} . Verified MWC patient . {t.date}
+              {t.name} . Verified MWC member . {t.date}
             </p>
           </div>
         ))}
@@ -488,7 +488,7 @@ function Section9WeekByWeek() {
     <section className="mt-12">
       <h2
         className="font-bold uppercase mb-3"
-        style={{ fontFamily: "Oswald, sans-serif", fontSize: "clamp(22px, 4vw, 30px)", letterSpacing: "0.02em", color: "#000814" }}
+        style={{ fontFamily: "Oswald, sans-serif", fontSize: "clamp(22px, 4vw, 30px)", letterSpacing: "0.02em", color: "var(--brand-navy-deep)" }}
       >
         What to expect, week by week.
       </h2>
@@ -517,7 +517,7 @@ function Section10Faq() {
     <section className="mt-12">
       <h2
         className="font-bold uppercase mb-5"
-        style={{ fontFamily: "Oswald, sans-serif", fontSize: "clamp(22px, 4vw, 30px)", letterSpacing: "0.02em", color: "#000814" }}
+        style={{ fontFamily: "Oswald, sans-serif", fontSize: "clamp(22px, 4vw, 30px)", letterSpacing: "0.02em", color: "var(--brand-navy-deep)" }}
       >
         Frequently asked questions
       </h2>

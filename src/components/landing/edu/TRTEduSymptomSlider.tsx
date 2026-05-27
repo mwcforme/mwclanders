@@ -118,14 +118,14 @@ const LibidoChart = () => {
         {/* Points + labels */}
         {pts.map((p, i) => (
           <g key={i}>
-            <circle cx={p.x} cy={p.y} r={4} fill="#0A0A0A" stroke="#E8670A" strokeWidth={1.5} />
+            <circle cx={p.x} cy={p.y} r={4} fill="#0A0A0A" stroke="var(--brand-cta)" strokeWidth={1.5} />
             <text x={p.x} y={p.y - 8} textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize={9}>{p.val}</text>
             <text x={p.x} y={height - 4} textAnchor="middle" fill="rgba(255,255,255,0.35)" fontSize={9}>{p.age}</text>
           </g>
         ))}
         {/* Peak label */}
         <rect x={pts[2].x - 22} y={pts[2].y - 26} width={44} height={16} rx={8} fill="rgba(232,103,10,0.25)" />
-        <text x={pts[2].x} y={pts[2].y - 15} textAnchor="middle" fill="#E8670A" fontSize={9} fontWeight="bold">PEAK</text>
+        <text x={pts[2].x} y={pts[2].y - 15} textAnchor="middle" fill="var(--brand-cta)" fontSize={9} fontWeight="bold">PEAK</text>
       </svg>
     </div>
   );
@@ -140,7 +140,7 @@ const MoodStats = ({ bullets }: { bullets: MoodBullet[] }) => (
         background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.35)",
         borderRadius: 10, padding: "14px 16px",
       }}>
-        <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 32, color: "#E8670A", lineHeight: 1, flexShrink: 0, width: 52 }}>
+        <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 32, color: "var(--brand-cta)", lineHeight: 1, flexShrink: 0, width: 52 }}>
           {b.highlight}
         </span>
         <span style={{ color: "rgba(255,255,255,0.75)", fontSize: 14, lineHeight: 1.5 }}>{b.text}</span>
@@ -172,7 +172,7 @@ const DefaultBullets = ({ bullets }: { bullets: string[] }) => (
         background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.35)",
         borderRadius: 10, padding: "14px 16px",
       }}>
-        <ChevronRight size={18} color="#E8670A" style={{ flexShrink: 0, marginTop: 2 }} />
+        <ChevronRight size={18} color="var(--brand-cta)" style={{ flexShrink: 0, marginTop: 2 }} />
         <span style={{ color: "rgba(255,255,255,0.80)", fontSize: 16, lineHeight: 1.6 }}>{b}</span>
       </div>
     ))}
@@ -188,7 +188,7 @@ export const TRTEduSymptomSlider = () => {
       <div style={{ maxWidth: 960, margin: "0 auto", padding: "0 24px" }}>
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: 48 }}>
-          <p style={{ color: "#E8670A", fontSize: 13, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 12 }}>
+          <p style={{ color: "var(--brand-cta)", fontSize: 13, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
             Know the Signs
           </p>
           <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: "clamp(36px, 7vw, 64px)", color: "#FFFFFF", lineHeight: 1.05, margin: "0 auto 16px" }}>
@@ -207,9 +207,9 @@ export const TRTEduSymptomSlider = () => {
               onClick={() => { setActive(i); trackCro(`edu_symptom_tab_${i}`); }}
               style={{
                 padding: "8px 18px", borderRadius: 100,
-                border: i === active ? "1px solid #E8670A" : "1px solid rgba(255,255,255,0.35)",
+                border: i === active ? "1px solid var(--brand-cta)" : "1px solid rgba(255,255,255,0.35)",
                 background: i === active ? "rgba(232,103,10,0.18)" : "transparent",
-                color: i === active ? "#E8670A" : "rgba(255,255,255,0.55)",
+                color: i === active ? "var(--brand-cta)" : "rgba(255,255,255,0.55)",
                 fontSize: 14, fontWeight: 600, cursor: "pointer", transition: "all 0.2s",
                 display: "flex", alignItems: "center", gap: 7,
               }}
@@ -281,7 +281,7 @@ export const TRTEduSymptomSlider = () => {
             <button key={i} onClick={() => setActive(i)} aria-label={`Symptom ${i + 1}`}
               style={{
                 width: i === active ? 24 : 8, height: 8, borderRadius: 100,
-                background: i === active ? "#E8670A" : "rgba(255,255,255,0.20)",
+                background: i === active ? "var(--brand-cta)" : "rgba(255,255,255,0.20)",
                 border: "none", cursor: "pointer", transition: "all 0.3s", padding: 0,
               }}
             />

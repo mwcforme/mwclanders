@@ -21,6 +21,14 @@ export const AffordabilityClosingCTA = () => {
         <p style={{ fontFamily: "Inter, sans-serif", fontSize: 17, color: "var(--c-text-on-dark-muted)", lineHeight: 1.65, maxWidth: 560, margin: "0 auto 32px" }}>
           Your provider walks every number with you in writing at your visit. You decide what to do with that information.
         </p>
+        <div className="flex items-center justify-center gap-2 mb-6">
+          {Array.from({ length: 5 }).map((_, i) => (
+            /* hardcoded-color-allow-next-line */
+            <span key={i} style={{ color: "#C9A00A", fontSize: "20px" }}>&#9733;</span>
+          ))}
+          {/* hardcoded-color-allow-next-line */}
+          <span style={{ fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 600, color: "rgba(245,240,235,0.80)" }}>4.9 &middot; 191 verified Google reviews</span>
+        </div>
         <button type="button" onClick={() => navigate("/book/location")}
           className="inline-flex items-center justify-center rounded-lg px-10 font-bold cursor-pointer border-none"
           style={{ height: 56, minHeight: 56, background: "var(--brand-cta)", color: "var(--c-text-on-dark)", fontSize: "clamp(16px, 3.5vw, 19px)", letterSpacing: "0.06em", fontFamily: "Inter, sans-serif", whiteSpace: "nowrap" }}

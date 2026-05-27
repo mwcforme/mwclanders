@@ -39,8 +39,8 @@ export const TRTEduHero = () => {
           marginBottom: 28,
         }}
       >
-        <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#E8670A", display: "inline-block" }} />
-        <span style={{ color: "#E8670A", fontSize: 13, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+        <span style={{ width: 7, height: 7, borderRadius: "50%", background: "var(--brand-cta)", display: "inline-block" }} />
+        <span style={{ color: "var(--brand-cta)", fontSize: 13, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>
           TRT Education
         </span>
       </div>
@@ -59,7 +59,7 @@ export const TRTEduHero = () => {
         }}
       >
         YOUR BODY ISN'T<br />
-        <span style={{ color: "#E8670A" }}>FAILING.</span><br />
+        <span style={{ color: "var(--brand-cta)" }}>FAILING.</span><br />
         YOUR TESTOSTERONE IS.
       </h1>
 
@@ -83,7 +83,7 @@ export const TRTEduHero = () => {
           style={{
             height: 56,
             padding: "0 32px",
-            background: "#E8670A",
+            background: "var(--brand-cta)",
             color: "#fff",
             fontWeight: 700,
             fontSize: 16,

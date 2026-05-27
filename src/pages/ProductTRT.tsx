@@ -74,7 +74,7 @@ const ProductTRT = () => {
 
   return (
     <div style={{
-      background: "#fff",
+      background: "var(--bg-white)",
       fontFamily: "Inter, sans-serif",
       overflowX: "hidden",
       minHeight: "100vh",
@@ -115,7 +115,8 @@ const ProductTRT = () => {
         <section
           id="hero"
           style={{
-            background: "linear-gradient(135deg, #0B1029 0%, #0D1535 40%, #111B3A 100%)",
+            /* hardcoded-color-allow-next-line — gradient needs intermediate stops */
+            background: "linear-gradient(135deg, var(--brand-navy-deep) 0%, #0D1535 40%, #111B3A 100%)",
             paddingTop: 72,
             paddingBottom: 0,
             position: "relative",
@@ -161,8 +162,8 @@ const ProductTRT = () => {
                 marginBottom: 24,
                 marginTop: 16,
               }}>
-                <span style={{ color: "#fff", display: "block" }}>Your Labs.</span>
-                <span style={{ color: "#fff", display: "block" }}>Your Plan.</span>
+                <span style={{ color: "var(--c-text-on-dark)", display: "block" }}>Your Labs.</span>
+                <span style={{ color: "var(--c-text-on-dark)", display: "block" }}>Your Plan.</span>
                 <span style={{ color: "var(--brand-cta)", display: "block" }}>In One Visit.</span>
               </h1>
 
@@ -235,7 +236,8 @@ const ProductTRT = () => {
 
         {/* 12. CLOSING CTA */}
         <section style={{
-          background: "linear-gradient(135deg, #0B1029 0%, #111B3A 100%)",
+          /* hardcoded-color-allow-next-line — gradient needs intermediate stop */
+          background: "linear-gradient(135deg, var(--brand-navy-deep) 0%, #111B3A 100%)",
           padding: "80px 24px",
           textAlign: "center",
         }}>
@@ -244,7 +246,7 @@ const ProductTRT = () => {
               fontFamily: "Oswald, sans-serif",
               fontWeight: 700,
               fontSize: "clamp(28px, 4vw, 44px)",
-              color: "#fff",
+              color: "var(--c-text-on-dark)",
               marginBottom: 12,
               lineHeight: 1.15,
             }}>

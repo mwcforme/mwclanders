@@ -63,7 +63,7 @@ export const CROHeroSection = () => {
           </p>
           <div className="mt-6 rounded-xl overflow-hidden" style={{ aspectRatio: "16/7", position: "relative", flexShrink: 0 }}>
             <img src="/images/clinic-lab-draw.webp"
-              alt="Licensed provider reviewing lab results with a patient at Men's Wellness Centers Virginia"
+              alt="Licensed provider reviewing lab results with a member at Men's Wellness Centers Virginia"
               style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%", display: "block" }}
               width={720} height={315} loading="eager" decoding="async" />
             <div aria-hidden style={{

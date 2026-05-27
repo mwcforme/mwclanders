@@ -6,7 +6,7 @@
  * Previous DIY form redirected to a static thank-you URL with no GHL
  * integration — that path is now removed.
  */
-import { MapPin } from "lucide-react";
+import { Check, MapPin } from "lucide-react";
 import { TRTHeroForm } from "@/components/landing/trt/TRTHeroForm";
 import type { Service } from "@/domain/booking/bookingStore";
 import { COPY } from "@/data/copy";
@@ -42,10 +42,11 @@ export const ServiceFinalCTA = ({
           </p>
           <div className="flex items-center justify-center gap-2 mt-4">
             {Array.from({ length: 5 }).map((_, i) => (
-              <span key={i} style={{ color: "#9C7A0A", fontSize: "20px" }}>★</span>
+              /* hardcoded-color-allow-next-line */
+              <span key={i} style={{ color: "#C9A00A", fontSize: "20px" }}>★</span>
             ))}
             {/* hardcoded-color-allow-next-line */}
-            <span className="text-sm font-medium" style={{ color: "rgba(255,255,255,0.80)" }}>200+ Reviews</span>
+            <span className="text-sm font-medium" style={{ color: "rgba(255,255,255,0.80)" }}>4.9 &middot; 191 verified Google reviews</span>
           </div>
         </div>
 
@@ -60,7 +61,7 @@ export const ServiceFinalCTA = ({
               {bullets.map((t) => (
                 <li key={t} className="flex items-start gap-3" style={{ color: "rgba(255,255,255,0.92)", fontFamily: "Inter, sans-serif" }}>
                   {/* hardcoded-color-allow-next-line */}
-                  <span className="mt-0.5 flex-shrink-0" style={{ color: "#2ECC71", fontSize: 18, lineHeight: 1 }}>✓</span>
+                  <Check className="h-5 w-5 flex-shrink-0 mt-0.5" strokeWidth={3} style={{ color: "#2ECC71" }} />
                   <span className="text-base">{t}</span>
                 </li>
               ))}

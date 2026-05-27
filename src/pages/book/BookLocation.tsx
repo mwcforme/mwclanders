@@ -123,7 +123,8 @@ const BookLocation = () => {
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
-                  transition: "all 150ms ease-out",
+                  transition: "all 220ms ease",
+                  transform: isSelected ? "translateY(-3px)" : "translateY(0)",
                   WebkitTapHighlightColor: "transparent",
                 }}
               >

@@ -30,7 +30,7 @@ const StatInner = ({ value, label }: { value: string; label: string }) => (
 );
 
 export const CROSocialProof = () => (
-  <section style={{ background: "#0A1628" }}>
+  <section style={{ background: "var(--brand-navy-deep)" }}>
     <div className="max-w-[1200px] mx-auto grid grid-cols-2 md:grid-cols-4 text-center">
       {CRO_STATS.map((s) => {
         const inner = <StatInner value={s.value} label={s.label} />;

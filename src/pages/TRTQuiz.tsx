@@ -34,7 +34,7 @@ const buildLeadNote = (
 ): string => {
   const lines: string[] = [];
   lines.push(`TRT Quiz v2 (3-step) . Score ${totalScore} (${bracket})`);
-  if (disqualified) lines.push("FLAG: prostate/breast cancer history — requires provider review.");
+  if (disqualified) lines.push("FLAG: prostate/breast cancer history. Requires provider review.");
   lines.push("");
   const selected = tiles.filter((t) => t !== "none");
   if (selected.length > 0) {
@@ -98,7 +98,7 @@ export default function TRTQuiz() {
     <>
       <SEO
         title="No-Cost TRT Assessment . 3 Quick Questions . MWC"
-        description="Take our 3-question testosterone assessment. See your results and book a face-to-face evaluation with a Virginia provider — no cost, no commitment."
+        description="Take our 3-question testosterone assessment. See your results and book a face-to-face evaluation with a Virginia provider. No cost, no commitment."
       />
 
       {/* Step 1 — Symptom tiles */}

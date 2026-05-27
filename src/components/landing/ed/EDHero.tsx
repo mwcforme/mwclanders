@@ -5,7 +5,7 @@ import { COPY } from "@/data/copy";
 const trustChecks = [
   "In-person Virginia visits, not an app",
   "Oral medications and injectable therapies",
-  "Billed discreetly, not as an ED clinic",
+  "Billed discreetly, not as an ED center",
   "No-cost consult, same-day labs",
 ];
 

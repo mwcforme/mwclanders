@@ -6,9 +6,9 @@ import { useBookingStore } from "@/domain/booking/bookingStore";
 import { CENTER_CALENDARS, type LocationKey } from "@/lib/ghlCalendars";
 
 const LOCATION_LABEL: Record<string, string> = {
-  richmond: "Richmond clinic",
-  "virginia-beach": "Virginia Beach clinic",
-  "newport-news": "Newport News clinic",
+  richmond: "Richmond center",
+  "virginia-beach": "Virginia Beach center",
+  "newport-news": "Newport News center",
 };
 
 const BookSchedule2 = () => {

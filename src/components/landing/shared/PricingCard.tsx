@@ -1,16 +1,26 @@
 /**
  * PricingCard — membership term card (12/24/30/36-month) for the Affordability page.
  */
+import { useState } from "react";
 import type { MembershipTerm } from "@/data/affordabilityContent";
 
-export const PricingCard = ({ term, badge, desc, featured }: MembershipTerm) => (
-  <div style={{
+export const PricingCard = ({ term, badge, desc, featured }: MembershipTerm) => {
+  const [hovered, setHovered] = useState(false);
+  return (
+  <div
+    onMouseEnter={() => setHovered(true)}
+    onMouseLeave={() => setHovered(false)}
+    style={{
     background: featured ? "var(--brand-navy-deep)" : "var(--bg-white)",
     borderRadius: "var(--radius-lg)",
-    boxShadow: "var(--shadow-md)",
+    boxShadow: hovered
+      ? "var(--shadow-lg, 0 12px 32px rgba(0,0,0,0.18))"
+      : "var(--shadow-md)",
     border: featured ? "none" : "1px solid var(--c-border-on-light)",
     borderTop: featured ? "4px solid var(--brand-cta)" : undefined,
     padding: "24px 28px",
+    transform: hovered ? "translateY(-3px)" : "translateY(0)",
+    transition: "transform 220ms ease, box-shadow 220ms ease",
   }}>
     <p style={{
       borderLeft: "3px solid var(--brand-cta)", paddingLeft: 10,
@@ -35,4 +45,5 @@ export const PricingCard = ({ term, badge, desc, featured }: MembershipTerm) => 
       {desc}
     </p>
   </div>
-);
+  );
+};
