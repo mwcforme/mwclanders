@@ -146,6 +146,13 @@ const ErrorFallback = ({ resetError }: { resetError: () => void }) => (
 class AppErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
   state = { error: null };
   static getDerivedStateFromError(e: Error) { return { error: e }; }
+  componentDidCatch(error: Error, info: { componentStack: string }) {
+    // Report to Sentry so we have a stack trace for every crash
+    import("@sentry/react").then(({ captureException }) => {
+      captureException(error, { extra: { componentStack: info.componentStack } });
+    }).catch(() => {});
+    console.error("[AppErrorBoundary]", error, info.componentStack);
+  }
   render() {
     if (this.state.error) {
       return (
