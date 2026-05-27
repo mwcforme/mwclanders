@@ -595,10 +595,10 @@ export default function BookSchedule() {
               </button>
             </div>
 
-            {/* 7-day strip — all days visible, week nav arrows above handle prev/next */}
+            {/* 5-day strip — first 5 days of the week, nav arrows handle prev/next */}
             <div className="px-4 sm:px-6 pb-4">
-              <div role="radiogroup" aria-label="Day" className="grid grid-cols-7 gap-1.5">
-                {dayCells.map((day, dayIdx) => (
+              <div role="radiogroup" aria-label="Day" className="grid grid-cols-5 gap-2">
+                {dayCells.slice(0, 5).map((day, dayIdx) => (
                   <DayPill key={`${weekStart.getTime()}-${dayIdx}`}
                     day={day} selected={dayIdx === selectedDayIdx}
                     onSelect={() => { if (day.full || day.closed) return; setSelectedDayIdx(dayIdx); setSelectedSlot(null); trackFunnelEvent("date_selected", { location: location ?? "" }); }} />
