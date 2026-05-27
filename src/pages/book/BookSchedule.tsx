@@ -219,7 +219,7 @@ function useScheduleState() {
 
   const locationSlug = location ? LOCATION_KEY_TO_SLUG[location] : null;
   const locationData = locationSlug ? LOCATIONS.find((l) => l.slug === locationSlug) : null;
-  const locationName = locationData?.name.replace("Men's Wellness Centers, ", "") ?? null;
+  const locationName = locationData ? locationData.name.replace("Men's Wellness Centers, ", "") + " center" : null;
 
   const customFields = {
     ...(symptom     ? { mwc_symptom:          symptom              } : {}),
