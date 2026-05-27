@@ -250,6 +250,12 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
     });
   };
 
+  // Guard after all hooks: unknown/stale location key — render nothing instead of crashing
+  if (!cal) {
+    console.warn("[GHLDayView] unknown location key:", location);
+    return null;
+  }
+
   return (
     <>
       {/* Fixed-bottom "Select a time" overlay — matches mwclocked mockup.
