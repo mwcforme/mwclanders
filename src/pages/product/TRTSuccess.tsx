@@ -112,15 +112,15 @@ export default function TRTSuccess() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: NAVY }}>
+    <div className="min-h-screen flex flex-col bg-background">
       <SEO
         title="You're All Set! | Men's Wellness Centers"
         description="Your TRT consultation request has been received. Your provider will be in touch shortly."
       />
       <TRTHeader minimal />
 
-      <main style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "80px 16px 48px" }}>
-        <div style={{ width: "100%", maxWidth: 560, textAlign: "center" }}>
+      <main className="flex-1 flex items-center justify-center" style={{ padding: "80px 16px 48px" }}>
+        <div className="w-full text-center" style={{ maxWidth: 560 }}>
 
           {/* Animated check circle */}
           <div style={{ marginBottom: 28 }}>
@@ -157,69 +157,47 @@ export default function TRTSuccess() {
           </div>
 
           {/* Heading */}
-          <h1 style={{
-            fontFamily: "Oswald, sans-serif", fontWeight: 700,
-            fontSize: "clamp(28px, 6vw, 40px)", color: "var(--c-text-on-dark)",
-            marginBottom: 12, lineHeight: 1.1,
-          }}>
+          <h1 className="font-display font-bold text-panel-foreground uppercase leading-tight mb-3" style={{ fontSize: "clamp(28px, 6vw, 40px)" }}>
             You're All Set!
           </h1>
-          <p style={{ color: "rgba(255,255,255,0.60)", fontSize: 16, marginBottom: 36, lineHeight: 1.5 }}>
+          <p className="text-base mb-9 leading-relaxed" style={{ color: "var(--c-text-on-light-muted)" }}>
             We've received everything we need. Your provider will be in touch shortly to confirm your appointment.
           </p>
 
           {/* Appointment summary card */}
-          <div style={{
-            background: "var(--bg-white)", borderRadius: 14, padding: "24px 24px",
-            marginBottom: 32, textAlign: "left",
-          }}>
-            <p style={{
-              // hardcoded-color-allow-next-line
-              fontSize: 11, fontWeight: 700, color: "var(--c-placeholder-light)",
-              letterSpacing: "0.1em", textTransform: "uppercase",
-              marginBottom: 12, fontFamily: "Inter, sans-serif",
-            }}>
+          <div className="bg-panel shadow-card rounded-2xl p-6 mb-8 text-left">
+            <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-white bg-panel-foreground rounded-md px-2 py-1 inline-block mb-3">
               Appointment Summary
             </p>
 
             <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 20 }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <span style={{ fontSize: 14, color: "var(--c-text-on-light-muted)", fontFamily: "Inter, sans-serif" }}>Location</span>
-                <span style={{ fontSize: 14, fontWeight: 600, color: NAVY, fontFamily: "Inter, sans-serif" }}>{locationLabel}</span>
+                <span className="text-sm text-panel-muted">Location</span>
+                <span className="text-sm font-semibold text-panel-foreground">{locationLabel}</span>
               </div>
               <div style={{ height: 1, background: "#F3F4F6" }} />
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
-                <span style={{ fontSize: 14, color: "var(--c-text-on-light-muted)", fontFamily: "Inter, sans-serif", flexShrink: 0 }}>Appointment</span>
-                <span style={{ fontSize: 14, fontWeight: 600, color: NAVY, fontFamily: "Inter, sans-serif", textAlign: "right" }}>{apptLabel}</span>
+                <span className="text-sm text-panel-muted flex-shrink-0">Appointment</span>
+                <span className="text-sm font-semibold text-panel-foreground text-right">{apptLabel}</span>
               </div>
             </div>
 
             {/* Calendar buttons */}
-            <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+            <div className="flex gap-2.5 flex-wrap">
               <a
                 href={buildGoogleCalendarUrl(calTitle, apptTime, locationLabel)}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{
-                  flex: 1, minWidth: 120, height: 44, borderRadius: 999,
-                  background: ORANGE, color: "var(--c-text-on-dark)", border: "none",
-                  fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 13,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  textDecoration: "none", cursor: "pointer",
-                }}
+                className="flex-1 min-w-[120px] h-11 rounded-full bg-primary text-white font-bold text-sm flex items-center justify-center no-underline shadow-cta hover:bg-primary-hover transition-colors"
+                style={{ fontFamily: "Inter, sans-serif" }}
               >
                 Google Calendar
               </a>
               <button
                 type="button"
                 onClick={handleIcsDownload}
-                style={{
-                  flex: 1, minWidth: 120, height: 44, borderRadius: 999,
-                  background: "transparent", border: `2px solid ${NAVY}`,
-                  color: NAVY, fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 13,
-                  cursor: "pointer",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                }}
+                className="flex-1 min-w-[120px] h-11 rounded-full bg-surface text-white font-bold text-sm flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity"
+                style={{ fontFamily: "Inter, sans-serif" }}
               >
                 Add .ics File
               </button>
@@ -227,31 +205,13 @@ export default function TRTSuccess() {
           </div>
 
           {/* Next steps */}
-          <div style={{ textAlign: "left", marginBottom: 32 }}>
+          <div className="text-left mb-8 space-y-4">
             {NEXT_STEPS.map((step, i) => (
-              <div
-                key={i}
-                style={{
-                  display: "flex", alignItems: "center", gap: 14,
-                  marginBottom: i < NEXT_STEPS.length - 1 ? 16 : 0,
-                }}
-              >
-                <div style={{
-                  width: 32, height: 32, borderRadius: "50%", flexShrink: 0,
-                  // hardcoded-color-allow-next-line
-                  background: "rgba(255,255,255,0.10)",
-                  // hardcoded-color-allow-next-line
-                  border: `1.5px solid rgba(255,255,255,0.35)`,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                }}>
-                  <span style={{
-                    fontFamily: "Oswald, sans-serif", fontWeight: 700,
-                    fontSize: 14, color: ORANGE,
-                  }}>
-                    {i + 1}
-                  </span>
+              <div key={i} className="flex items-center gap-3.5">
+                <div className="h-8 w-8 rounded-full flex-shrink-0 bg-primary/10 border border-primary/30 flex items-center justify-center">
+                  <span className="font-display font-bold text-sm text-primary">{i + 1}</span>
                 </div>
-                <span style={{ fontSize: 15, color: "rgba(255,255,255,0.80)", fontFamily: "Inter, sans-serif" }}>
+                <span className="text-[15px] text-panel-foreground" style={{ fontFamily: "Inter, sans-serif" }}>
                   {step}
                 </span>
               </div>
@@ -262,15 +222,7 @@ export default function TRTSuccess() {
           <button
             type="button"
             onClick={() => navigate("/")}
-            style={{
-              width: "100%", height: 56, borderRadius: 999,
-              background: ORANGE, color: "var(--c-text-on-dark)", border: "none",
-              fontFamily: "Oswald, sans-serif", fontWeight: 700,
-              fontSize: 18, letterSpacing: "0.04em", textTransform: "uppercase",
-              cursor: "pointer",
-              // hardcoded-color-allow-next-line
-              boxShadow: "0 4px 20px rgba(232,103,10,0.35)",
-            }}
+            className="w-full h-14 rounded-full bg-primary text-white font-display font-bold text-lg uppercase tracking-[0.04em] shadow-cta cursor-pointer hover:bg-primary-hover transition-colors"
           >
             Return to Home
           </button>

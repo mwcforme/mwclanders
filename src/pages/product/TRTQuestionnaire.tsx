@@ -333,14 +333,14 @@ export default function TRTQuestionnaire() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "var(--bg-white)" }}>
+    <div className="min-h-screen flex flex-col bg-background">
       <SEO
         title="Medical Intake | Men's Wellness Centers"
         description="Complete your 17-step medical intake for your testosterone consultation."
       />
       <TRTHeader minimal />
 
-      <main style={{ flex: 1, display: "flex", alignItems: "flex-start", justifyContent: "center", padding: "80px 16px 48px" }}>
+      <main className="flex-1 flex items-start justify-center" style={{ padding: "80px 16px 48px" }}>
         <div style={{ width: "100%", maxWidth: 600 }}>
 
           {/* Progress bar */}
@@ -349,7 +349,7 @@ export default function TRTQuestionnaire() {
               <span style={{ fontSize: 13, fontWeight: 600, color: NAVY, fontFamily: "Inter, sans-serif" }}>
                 Question {step} of {INTAKE_TOTAL_STEPS}
               </span>
-              <span style={{ fontSize: 13, color: "var(--c-placeholder-light)" }}>
+              <span style={{ fontSize: 13, color: "var(--c-text-on-light-muted)" }}>
                 {Math.round(pct)}% complete
               </span>
             </div>
@@ -364,16 +364,7 @@ export default function TRTQuestionnaire() {
           </div>
 
           {/* Question card */}
-          <div style={{
-            background: "var(--bg-white)",
-            borderRadius: 16,
-            // hardcoded-color-allow-next-line
-            boxShadow: "0 8px 40px rgba(11,16,41,0.10)",
-            padding: "32px 28px",
-            marginBottom: 20,
-            fontFamily: "Inter, sans-serif",
-            minHeight: 240,
-          }}>
+          <div className="bg-panel shadow-card rounded-2xl mb-5 font-sans" style={{ padding: "32px 28px", minHeight: 240 }}>
             {renderQuestion()}
           </div>
 
@@ -383,14 +374,7 @@ export default function TRTQuestionnaire() {
               <button
                 type="button"
                 onClick={() => setStep((s) => s - 1)}
-                style={{
-                  flex: 1, height: 52, borderRadius: 999,
-                  // hardcoded-color-allow-next-line
-                  background: "#F9FAFB", color: NAVY, border: "1.5px solid #E5E7EB",
-                  fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 15,
-                  cursor: "pointer",
-                  display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
-                }}
+                className="flex-1 h-[52px] rounded-full flex items-center justify-center gap-1.5 bg-panel border-[1.5px] border-panel-border text-panel-foreground font-display font-bold text-base cursor-pointer"
               >
                 <ArrowLeft size={16} strokeWidth={2.5} /> Back
               </button>
@@ -399,21 +383,12 @@ export default function TRTQuestionnaire() {
               type="button"
               onClick={handleNext}
               disabled={!canAdvance()}
-              style={{
-                flex: 2, height: 52, borderRadius: 999,
-                // hardcoded-color-allow-next-line
-                background: canAdvance() ? ORANGE : "#E5E7EB",
-                // hardcoded-color-allow-next-line
-                color: canAdvance() ? "var(--c-text-on-dark)" : "#636B80",
-                border: "none",
-                fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 16,
-                letterSpacing: "0.04em", textTransform: "uppercase",
-                cursor: canAdvance() ? "pointer" : "not-allowed",
-                display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-                transition: "background 150ms ease, color 150ms ease",
-                // hardcoded-color-allow-next-line
-                boxShadow: canAdvance() ? "0 4px 16px rgba(232,103,10,0.30)" : "none",
-              }}
+              className={[
+                "flex-[2] h-[52px] rounded-full flex items-center justify-center gap-2 font-display font-bold uppercase tracking-[0.04em] text-base transition-all",
+                canAdvance()
+                  ? "bg-primary text-white shadow-cta cursor-pointer"
+                  : "bg-disabled-light text-disabled-light-foreground cursor-not-allowed",
+              ].join(" ")}
             >
               {step === INTAKE_TOTAL_STEPS ? "Submit" : "Next"} <ArrowRight size={16} strokeWidth={2.5} />
             </button>

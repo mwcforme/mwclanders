@@ -216,7 +216,7 @@ export default function TRTGetStarted() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "var(--bg-white)" }}>
+    <div className="min-h-screen flex flex-col bg-background">
       <SEO
         title="Get Started with TRT | Men's Wellness Centers"
         description="Begin your no-cost testosterone consultation with a Virginia-licensed provider."
@@ -245,15 +245,8 @@ export default function TRTGetStarted() {
         </a>
       </header>
 
-      <main style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "80px 16px 48px" }}>
-        <div style={{
-          width: "100%", maxWidth: 480,
-          background: "var(--bg-white)",
-          borderRadius: 16,
-          // hardcoded-color-allow-next-line
-          boxShadow: "0 8px 40px rgba(11,16,41,0.10)",
-          overflow: "hidden",
-        }}>
+      <main className="flex-1 flex items-center justify-center" style={{ padding: "80px 16px 48px" }}>
+        <div className="bg-panel shadow-card rounded-2xl overflow-hidden w-full" style={{ maxWidth: 480 }}>
 
           {/* Step indicator */}
           <div style={{ padding: "16px 28px 0", textAlign: "center", borderBottom: "1px solid #F0F2F5" }}>
@@ -436,14 +429,13 @@ export default function TRTGetStarted() {
                 disabled={submitting}
                 style={{
                   width: "100%", height: 56, borderRadius: 999,
-                  background: ORANGE, color: "var(--c-text-on-dark)", border: "none",
+                  background: ORANGE, color: "#fff", border: "none",
                   fontFamily: "Oswald, sans-serif", fontWeight: 700,
                   fontSize: 18, letterSpacing: "0.04em", textTransform: "uppercase",
                   cursor: submitting ? "wait" : "pointer",
                   opacity: submitting ? 0.8 : 1,
                   display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-                  // hardcoded-color-allow-next-line
-                  boxShadow: "0 4px 20px rgba(232,103,10,0.35)",
+                  boxShadow: "var(--shadow-cta, 0 4px 20px rgba(232,103,10,0.35))",
                   transition: "opacity 150ms ease",
                 }}
               >
