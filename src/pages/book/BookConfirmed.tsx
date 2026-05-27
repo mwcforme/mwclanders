@@ -77,7 +77,7 @@ export default function BookConfirmed() {
         <div className="flex items-center justify-between gap-3">
           <div className="inline-flex items-center gap-2 min-w-0">
             <MapPin className="h-4 w-4 text-primary-hover flex-shrink-0" aria-hidden />
-            <p className="font-display text-sm font-bold uppercase tracking-[0.22em] text-text-muted truncate">
+            <p className="font-display text-sm font-bold uppercase tracking-[0.22em] truncate" style={{ color: 'var(--c-text-on-light-muted)' }}>
               {center.city}
             </p>
           </div>
@@ -144,7 +144,7 @@ export default function BookConfirmed() {
             <Calendar className="h-6 w-6" aria-hidden /> Add to Google Calendar
           </a>
           <a href={calLinks?.ics ?? "#"} download="appointment.ics"
-            className="inline-flex items-center justify-center gap-3 rounded-xl bg-surface text-foreground border-2 border-border hover:bg-surface-2 font-display font-bold uppercase tracking-wide px-5 py-5 text-base min-h-[60px]">
+            className="inline-flex items-center justify-center gap-3 rounded-xl bg-surface text-white hover:opacity-90 font-display font-bold uppercase tracking-wide px-5 py-5 text-base min-h-[60px]">
             <Calendar className="h-6 w-6" aria-hidden /> Apple or Outlook
           </a>
         </div>
@@ -179,7 +179,7 @@ export default function BookConfirmed() {
             <p className="font-display text-lg font-bold uppercase tracking-wide text-panel-foreground">
               What happens when you walk in
             </p>
-            <p className="mt-1 text-base text-panel-muted font-semibold">2 minute video</p>
+            <p className="mt-1 text-base font-semibold" style={{ color: 'var(--c-text-on-light-muted)' }}>2 minute video</p>
           </div>
         </section>
 
@@ -193,7 +193,7 @@ export default function BookConfirmed() {
         {/* Location */}
         <section className="mt-8 overflow-hidden rounded-2xl bg-panel text-panel-foreground shadow-card">
           <div className="p-6">
-            <p className="font-display text-sm font-bold uppercase tracking-[0.22em] text-panel-muted">Location</p>
+            <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-white bg-panel-foreground rounded-md px-2 py-1 inline-block mb-1">Location</p>
             <p className="mt-2 font-display text-2xl font-bold uppercase text-panel-foreground">{center.city}</p>
             <p className="mt-2 inline-flex items-center gap-2 text-base font-semibold text-primary-hover">
               <MapPin className="h-5 w-5" aria-hidden /> {center.driveTime}
@@ -213,7 +213,7 @@ export default function BookConfirmed() {
           </div>
           <div className="p-5 border-t border-panel-divider">
             <a href={mapsUrl} target="_blank" rel="noreferrer"
-              className="inline-flex items-center justify-center gap-3 w-full rounded-xl bg-foreground text-background font-display font-bold uppercase tracking-wide px-5 py-4 text-base hover:bg-foreground/85 min-h-[56px]">
+              className="inline-flex items-center justify-center gap-3 w-full rounded-xl font-display font-bold uppercase tracking-wide px-5 py-4 text-base min-h-[56px] text-white hover:opacity-90" style={{ background: 'var(--brand-navy-deep)' }}>
               <MapPin className="h-6 w-6" aria-hidden /> Get Directions
               <ChevronRight className="h-5 w-5" aria-hidden />
             </a>
@@ -222,7 +222,7 @@ export default function BookConfirmed() {
 
         {/* Email reminder */}
         <section className="mt-8 rounded-2xl bg-panel text-panel-foreground shadow-card p-6">
-          <p className="font-display text-sm font-bold uppercase tracking-[0.22em] text-panel-muted">Email Reminder</p>
+          <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-white bg-panel-foreground rounded-md px-2 py-1 inline-block mb-1">Email Reminder</p>
           <p className="mt-2 font-display text-2xl font-bold uppercase text-panel-foreground">Send my confirmation</p>
           <p className="mt-2 text-lg text-panel-foreground leading-snug">
             We'll email your appointment details and a reminder the day before.
@@ -248,18 +248,18 @@ export default function BookConfirmed() {
         </section>
 
         {/* Need to change */}
-        <section className="mt-8 rounded-2xl bg-surface border-2 border-border-subtle p-6 text-center">
-          <p className="font-display text-lg font-bold uppercase tracking-wide text-foreground">
+        <section className="mt-8 rounded-2xl bg-surface p-6 text-center">
+          <p className="font-display text-lg font-bold uppercase tracking-wide text-white">
             Need to change your appointment?
           </p>
-          <p className="mt-2 text-lg text-text-muted">We're happy to help. 24-hour notice is appreciated.</p>
+          <p className="mt-2 text-lg text-white/75">We're happy to help. 24-hour notice is appreciated.</p>
           <a href={`tel:${center.phone.replace(/\D/g,"")}`}
             className="mt-5 inline-flex items-center justify-center gap-3 rounded-xl bg-primary text-white hover:bg-primary-hover font-display font-bold uppercase tracking-wide px-6 py-5 text-lg shadow-cta min-h-[60px] w-full sm:w-auto">
             <Phone className="h-6 w-6" aria-hidden /> Call {center.phone}
           </a>
           <p className="mt-4">
             <Link to="/book/schedule"
-              className="inline-flex items-center justify-center gap-2 font-display font-bold uppercase tracking-wide text-foreground underline underline-offset-4 hover:text-primary px-3 py-2">
+              className="inline-flex items-center justify-center gap-2 font-display font-bold uppercase tracking-wide text-white/80 underline underline-offset-4 hover:text-white px-3 py-2">
               Or pick a different time
             </Link>
           </p>
