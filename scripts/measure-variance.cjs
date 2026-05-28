@@ -18,7 +18,7 @@ const DEMO_STATE = JSON.stringify({
     identity: { firstName: "Eric", lastName: "Smith", phone: "5555555555", email: "eric@test.com", ghlContactId: "demo" },
     service: "trt",
     location: "richmond",
-    appointmentTime: new Date(Date.now() + 2*24*60*60*1000).toISOString().replace(/T.*/, "T08:00:00-04:00"),
+    appointmentTime: "2026-05-26T08:00:00-04:00",  // fixed date matching lock reference
   },
   version: 0,
 });

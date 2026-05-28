@@ -81,7 +81,7 @@ function AppointmentDetailsInner({ apptDate, center, centered }: { apptDate: App
       <span style={{ fontSize: centered ? 15 : 19.125, fontWeight: 600, color: INK, paddingLeft: centered ? 0 : 24 }}>60 minutes · In-person</span>
       <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
         <MapPin size={centered ? 15 : 16} strokeWidth={2} style={{ color: COLORS.orangeHex, flexShrink: 0 }} />
-        <span style={{ fontSize: centered ? 15 : 19.125, fontWeight: 600, color: INK }}>{center.city}</span>
+        <span style={{ fontSize: centered ? 15 : 19.125, fontWeight: 600, color: INK }}>{center.cityStateZip.split(",")[0]}</span>
       </div>
     </div>
   );
@@ -144,7 +144,7 @@ export function BookConfirmedHero({ firstName, apptDate, center, checkDrawn }: P
       <div style={{ maxWidth: 640, margin: "0 auto", fontFamily: FONTS.body }}>
 
         {/* Check + headline */}
-        <div className="mwc-hero-intro" style={{ textAlign: "center", marginBottom: 34 }}>
+        <div className="mwc-hero-intro" style={{ textAlign: "center", marginBottom: 31 }}>
           <div style={{ position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
             <AnimatedCheck drawn={checkDrawn} />
             <CelebrationBurst active={checkDrawn} />
