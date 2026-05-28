@@ -92,6 +92,7 @@ export default function BookEntry() {
   const navigate       = useNavigate();
   const processed      = useRef(false);
   const [debugInfo, setDebugInfo] = useState<DebugInfo | null>(null);
+  const [error, setError]         = useState<string | null>(null);
 
   useEffect(() => {
     // Strict-mode / double-mount guard
@@ -142,9 +143,9 @@ export default function BookEntry() {
         setDebugInfo(buildDebug(reason));
         return;
       }
-      // Don't dump the user on the homepage — keep them in the funnel via
-      // the fallback lets-talk page, with the reason flagged for support.
-      navigate(`/book/lets-talk?handoff=${encodeURIComponent(reason)}`, { replace: true });
+      // Show inline error UI with phone fallback so the user is never left
+      // staring at a spinner. The reason is surfaced in the error state.
+      setError(reason);
     };
 
     if (!token) {
@@ -209,6 +210,10 @@ export default function BookEntry() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  if (error) {
+    return <ErrorScreen reason={error} />;
+  }
+
   if (debugInfo) {
     return <DebugPanel info={debugInfo} />;
   }
@@ -217,6 +222,56 @@ export default function BookEntry() {
 }
 
 // ── Sub-components ────────────────────────────────────────────────────────────
+
+function ErrorScreen({ reason }: { reason: string }) {
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-panel gap-6 px-6">
+      <div
+        aria-hidden="true"
+        style={{
+          width: 56,
+          height: 56,
+          borderRadius: "50%",
+          background: "rgba(167,33,28,0.12)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--c-error-on-light)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="8" x2="12" y2="12" />
+          <line x1="12" y1="16" x2="12.01" y2="16" />
+        </svg>
+      </div>
+      <div className="text-center max-w-sm">
+        <p className="text-base font-semibold text-panel-foreground">
+          Something went wrong. Please call us to book.
+        </p>
+        <p className="mt-2 text-sm" style={{ color: "var(--c-text-on-light-muted)" }}>
+          We&rsquo;re sorry for the inconvenience. Our team is ready to help.
+        </p>
+      </div>
+      <a
+        href={PHONE.tel}
+        className="inline-flex items-center gap-2 rounded-lg px-6 font-semibold"
+        style={{
+          height: 52,
+          background: "var(--brand-cta)",
+          color: "#ffffff",
+          fontSize: 18,
+          textDecoration: "none",
+          fontFamily: "Inter, sans-serif",
+        }}
+      >
+        {PHONE.display}
+      </a>
+      {process.env.NODE_ENV === "development" && (
+        <p className="text-xs" style={{ color: "var(--c-text-on-light-muted)" }}>reason: {reason}</p>
+      )}
+    </div>
+  );
+}
 
 function LoadingScreen() {
   return (
