@@ -59,9 +59,10 @@ const PREP_STEPS = [
 
 // Per-location video mapping — filename matches /public/videos/
 const LOCATION_VIDEO: Record<string, string> = {
-  "richmond":      "/videos/what-to-expect-richmond.mp4",
-  "newport-news":  "/videos/what-to-expect-hampton-roads.mp4",
-  "virginia-beach":"/videos/what-to-expect-hampton-roads.mp4",
+  // Keys match Location.slug values from locations.ts
+  "richmond-va":       "/videos/what-to-expect-richmond.mp4",
+  "newport-news-va":   "/videos/what-to-expect-hampton-roads.mp4",
+  "virginia-beach-va": "/videos/what-to-expect-hampton-roads.mp4",
 };
 const FALLBACK_VIDEO_SRC = "/videos/what-to-expect.mp4";
 

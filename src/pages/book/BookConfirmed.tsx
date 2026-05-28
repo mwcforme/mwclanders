@@ -71,10 +71,6 @@ export default function BookConfirmed() {
     window.scrollTo(0, 0);
     document.title = "Confirmed | Men's Wellness Centers";
     if (identity && !identity.phone && !identity.email) patchAction({ identity: undefined });
-    const t = setTimeout(() => {
-      setPlaying(true);
-    }, 800);
-    return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -191,24 +187,32 @@ export default function BookConfirmed() {
           aria-label="Video: What happens when you walk in"
         >
           <div className="relative aspect-video bg-background">
-            {!playing ? (
+            {/* Video always visible — play button overlay until user starts */}
+            <video
+              src={videoSrc}
+              poster="/images/video-poster.webp"
+              controls={playing}
+              playsInline
+              preload="none"
+              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+              onEnded={() => setPlaying(false)}
+            />
+            {!playing && (
               <button
                 type="button"
                 data-testid="button-play-video"
                 className="absolute inset-0 grid place-items-center group focus-visible:outline-none"
                 aria-label="Play video: What happens when you walk in. 2 minutes."
-                onClick={() => setPlaying(true)}
+                onClick={(e) => {
+                  const video = e.currentTarget.previousElementSibling as HTMLVideoElement;
+                  if (video) { video.play().catch(() => {}); }
+                  setPlaying(true);
+                }}
               >
                 <span className="grid h-24 w-24 place-items-center rounded-full bg-primary text-primary-foreground group-hover:bg-primary-hover transition-colors shadow-cta">
                   <Play className="h-10 w-10 ml-1" fill="currentColor" aria-hidden />
                 </span>
               </button>
-            ) : (
-              <video
-                src={videoSrc} poster="/images/video-poster.webp"
-                autoPlay muted controls playsInline
-                style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
-              />
             )}
 
           </div>
