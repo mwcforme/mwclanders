@@ -66,7 +66,7 @@ export default function BookConfirmed() {
     window.scrollTo(0, 0);
     if (identity && !identity.phone && !identity.email) patchAction({ identity: undefined });
     document.title = "Confirmed | Men's Wellness Centers";
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- mount-only: runs once on page load
   }, []);
 
   return (
