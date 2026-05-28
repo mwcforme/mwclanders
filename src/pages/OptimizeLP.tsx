@@ -520,6 +520,7 @@ export default function OptimizeLP() {
                   </div>
                   <div style={{ padding: "0 16px 16px" }}>
                     <a href="#hero"
+                      className="optimize-loc-cta"
                       style={{
                         display: "flex", alignItems: "center", justifyContent: "center",
                         height: 46, borderRadius: 8,
