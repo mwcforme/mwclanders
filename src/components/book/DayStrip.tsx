@@ -16,12 +16,10 @@
 import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { TIMEZONE } from "@/lib/ghlCalendars";
 import { isSundayInTimeZone } from "@/lib/etDate";
+import { ORANGE, INK } from "./ghlAccordionHelpers";
 
-const ORANGE   = "var(--brand-cta)";
-// hardcoded-color-allow-next-line — Midnight Navy fill for available chip
-const NAVY     = "#0B1029";
-// hardcoded-color-allow-next-line — Dark ink for text on white
-const INK      = "#0B1029";
+// NAVY = same as INK (#0B1029 / var(--brand-navy-deep)) — navy chip background
+const NAVY = INK;
 
 const ymd = (d: Date): string =>
   new Intl.DateTimeFormat("en-CA", {
