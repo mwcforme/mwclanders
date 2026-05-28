@@ -84,7 +84,7 @@ export default function BookConfirmed() {
               {center.city}
             </p>
           </div>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-success/15 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-success">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-success/10 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-success">
             <Check className="h-3.5 w-3.5" strokeWidth={3} aria-hidden /> Confirmed
           </span>
         </div>
@@ -231,7 +231,7 @@ export default function BookConfirmed() {
             We'll email your appointment details and a reminder the day before.
           </p>
           {sent ? (
-            <p role="status" className="mt-5 inline-flex items-center gap-2 px-4 py-3 rounded-lg bg-success/15 text-panel-foreground font-semibold text-base">
+            <p role="status" className="mt-5 inline-flex items-center gap-2 px-4 py-3 rounded-lg bg-success/10 text-panel-foreground font-semibold text-base">
               <Check className="h-5 w-5 text-success" aria-hidden /> Confirmation email sent!
             </p>
           ) : (

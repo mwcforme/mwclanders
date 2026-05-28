@@ -269,7 +269,7 @@ export default function OptimizeLP() {
           {/* Left: copy — renders first on mobile so it stacks above the form */}
           <div>
             <p className="inline-flex items-center gap-2 font-display text-xs font-bold uppercase tracking-[0.18em] text-panel-muted mb-4">
-              <MapPin className="h-4 w-4 text-primary flex-shrink-0" aria-hidden />
+              <MapPin className="h-4 w-4 text-primary-on-light flex-shrink-0" aria-hidden />
               Virginia · 3 Centers · Physician-led
             </p>
             <h1
@@ -277,7 +277,7 @@ export default function OptimizeLP() {
               style={{ fontSize: "clamp(28px, 8vw, 56px)" }}
             >
               Virginia's choice for{" "}
-              <span className="text-primary">TRT, ED, and weight loss.</span>
+              <span className="text-primary-on-light">TRT, ED, and weight loss.</span>
             </h1>
             <BodyText>
               Men's Wellness Centers is an in-person men's health practice with three Virginia locations. A licensed provider draws your labs, reviews them with you, and gives you a real protocol. Same visit. Same day.
@@ -298,12 +298,12 @@ export default function OptimizeLP() {
             {/* Trust row — wraps gracefully on mobile */}
             <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-panel-muted">
               <span className="inline-flex items-center gap-1.5">
-                <Star className="h-4 w-4 fill-primary text-primary" aria-hidden />
+                <Star className="h-4 w-4 fill-primary-hover text-primary-hover" aria-hidden />
                 <strong className="text-panel-foreground">4.9</strong> · 200+ Google reviews
               </span>
               <span><strong className="text-panel-foreground">10,000+</strong> Virginia members since 2015</span>
               <span className="inline-flex items-center gap-1.5">
-                <ShieldCheck className="h-4 w-4 text-primary" aria-hidden /> LegitScript certified
+                <ShieldCheck className="h-4 w-4 text-primary-on-light" aria-hidden /> LegitScript certified
               </span>
             </div>
           </div>
@@ -355,7 +355,7 @@ export default function OptimizeLP() {
             <div className="mt-8 grid md:grid-cols-2 gap-5 sm:gap-6">
               {/* "What you get here" — highlighted */}
               <div className="rounded-2xl bg-panel text-panel-foreground p-6 sm:p-8 shadow-card border-2 border-primary ring-1 ring-primary/20">
-                <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-primary mb-4">What you get here</p>
+                <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-panel-muted mb-4">What you get here</p>
                 <ul className="grid gap-3">
                   {["60-minute in-person visit at your local center","Virginia-licensed provider, same provider every visit","Full hormone panel drawn and reviewed on-site","Personalized protocol explained in plain language","Ongoing follow-up labs included","FSA and HSA accepted"].map(line => (
                     <li key={line} className="flex items-start gap-2.5 text-sm sm:text-base font-semibold text-panel-foreground">

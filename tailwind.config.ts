@@ -79,7 +79,10 @@ export default {
 				divider: 'hsl(var(--panel-divider) / <alpha-value>)',
 			},
 			success: {
-				DEFAULT: 'hsl(var(--success) / <alpha-value>)',
+				// DEFAULT = on-light value (#047857, 5.5:1 on white) — WCAG AA compliant
+				DEFAULT: 'hsl(var(--success-on-light) / <alpha-value>)',
+				// on-dark = brighter green (#10B981, 7.4:1 on navy)
+				'on-dark': 'hsl(var(--success) / <alpha-value>)',
 				foreground: 'hsl(var(--success-on-light) / <alpha-value>)',
 			},
 			disabled: {
@@ -89,6 +92,7 @@ export default {
 				'light-foreground': 'hsl(var(--disabled-light-foreground) / <alpha-value>)',
 			},
 			'primary-hover': 'hsl(var(--primary-hover) / <alpha-value>)',
+			'primary-on-light': 'hsl(var(--primary-on-light) / <alpha-value>)',
 		},
   		borderRadius: {
   			lg: 'var(--radius)',

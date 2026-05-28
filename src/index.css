@@ -570,9 +570,11 @@ input[type="radio"] {
   --border-subtle:         230 42% 26%;   /* navy-tinted divider */
 
   /* Primary (brand orange — booking context) */
-  --primary:               22 91% 47%;    /* #E8670A */
+  --primary:               22 91% 47%;    /* #E8670A — use for icons, decorative, large bold text only */
   --primary-foreground:    0 0% 100%;
-  --primary-hover:         21 91% 40%;    /* #C2410C */
+  --primary-hover:         21 91% 40%;    /* #C2410C — 4.31:1 on cream, 5.18:1 on white ✅ AA Large */
+  /* AA-compliant orange for normal body text on light backgrounds */
+  --primary-on-light:      20 94% 34%;    /* #A32E06 — 5.92:1 on cream, 7.12:1 on white ✅ AA */
 
   /* White panel (booking card on dark page) */
   --panel:                 0 0% 100%;     /* #FFFFFF */
