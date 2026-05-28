@@ -10,10 +10,11 @@
  */
 import { lazy, Suspense, useState } from "react";
 import {
-  Check, X, Star, Shield, MapPin, Phone,
+  Check, X, Star, MapPin, Phone,
   Clock, FlaskConical, UserCheck, ClipboardList, ChevronDown,
 } from "lucide-react";
 import { TRTHeader } from "@/components/landing/trt/TRTHeader";
+import { CredibilityBand } from "@/components/landing/trt/CredibilityBand";
 import { TRTHeroForm } from "@/components/landing/trt/TRTHeroForm";
 import { StickyMobileCTA } from "@/components/landing/trt/StickyMobileCTA";
 import { SectionReveal } from "@/components/landing/trt/SectionReveal";
@@ -231,21 +232,7 @@ export default function OptimizeLP() {
               ))}
             </ul>
 
-            {/* Social proof row */}
-            <div style={{
-              display: "flex", flexWrap: "wrap", gap: "8px 24px",
-              fontFamily: "Inter, sans-serif", fontSize: 14,
-              color: "rgba(255,255,255,0.60)",
-            }}>
-              <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                {[1,2,3,4,5].map(i => <Star key={i} size={14} style={{ fill: ORANGE, color: ORANGE }} aria-hidden />)}
-                <strong style={{ color: WHITE }}>4.9</strong> · 200+ verified reviews
-              </span>
-              <span><strong style={{ color: WHITE }}>10,000+</strong> Virginia members</span>
-              <span style={{ display: "flex", alignItems: "center", gap: 5 }}>
-                <Shield size={13} style={{ color: ORANGE }} aria-hidden /> LegitScript certified
-              </span>
-            </div>
+
           </div>
 
           {/* Right: hero form */}
@@ -254,6 +241,10 @@ export default function OptimizeLP() {
           </div>
         </div>
       </section>
+
+      {/* ── CREDIBILITY BAND ── full-width stat strip */}
+      <CredibilityBand />
+
       {/* ── WHY MWC ── cream bg */}
       <SectionReveal>
         <section style={{ background: CREAM, padding: "80px 0" }}>
