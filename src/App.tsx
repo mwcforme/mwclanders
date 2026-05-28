@@ -11,6 +11,7 @@ import NewLandingPage from "./pages/NewLandingPage";
 
 // ─── LAZY: everything else splits into separate chunks automatically ────────
 const NewWeightLoss   = lazy(() => import("./pages/NewWeightLoss"));
+const OptimizeLP      = lazy(() => import("./pages/OptimizeLP"));
 const NewED           = lazy(() => import("./pages/NewED"));
 const TRTLandingPage  = lazy(() => import("./pages/TRTLandingPage"));
 const TRTEducation    = lazy(() => import("./pages/TRTEducation"));
@@ -103,6 +104,7 @@ const App = () => (
           <Routes>
             {/* ── Landing pages ── */}
             <Route path="/"             element={<NewLandingPage />} />
+            <Route path="/optimize"     element={<OptimizeLP />} />
             <Route path="/trt"          element={<TRTLandingPage />} />
             <Route path="/ed"           element={<NewED />} />
             <Route path="/wl"           element={<NewWeightLoss />} />
