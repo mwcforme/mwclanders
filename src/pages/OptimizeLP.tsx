@@ -11,7 +11,7 @@
 import { lazy, Suspense, useState } from "react";
 import {
   Check, X, Star, MapPin, Phone,
-  Clock, FlaskConical, UserCheck, ClipboardList, ChevronDown,
+  Clock, FlaskConical, UserCheck, ChevronDown,
 } from "lucide-react";
 import { TRTHeader } from "@/components/landing/trt/TRTHeader";
 import { CredibilityBand } from "@/components/landing/trt/CredibilityBand";
