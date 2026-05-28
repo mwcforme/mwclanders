@@ -95,7 +95,7 @@ export default function TRTSuccess() {
 
     // Analytics event — no PHI
     trackFunnelEvent("product_trt_funnel_complete", { location: location ?? undefined });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- mount-only: confetti + GHL tag + analytics on page load
   }, []);
 
   const handleIcsDownload = () => {
