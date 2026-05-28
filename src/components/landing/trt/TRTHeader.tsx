@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import { trackCro } from "@/hooks/useAnalytics";
@@ -6,7 +6,6 @@ import { COPY } from "@/data/copy";
 
 export const TRTHeader = ({ minimal = false, hideCta = false }: { minimal?: boolean; hideCta?: boolean } = {}) => {
   const [scrolled, setScrolled] = useState(false);
-  const [_menuOpen, _setMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 100);
@@ -14,10 +13,9 @@ export const TRTHeader = ({ minimal = false, hideCta = false }: { minimal?: bool
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollTo = (id: string) => {
-    _setMenuOpen(false);
+  const scrollTo = useCallback((id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-  };
+  }, []);
 
 
   return (
