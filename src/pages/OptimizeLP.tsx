@@ -288,7 +288,7 @@ export default function OptimizeLP() {
                 border: `2px solid ${ORANGE}`,
                 padding: "32px 28px",
                 boxShadow: "0 4px 24px rgba(232,103,10,0.12)",
-                display: "flex", flexDirection: "column",
+                display: "flex", flexDirection: "column", height: "100%",
               }}>
                 <p style={{
                   fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700,
@@ -316,7 +316,7 @@ export default function OptimizeLP() {
                 border: "1px solid #E5E3E0",
                 padding: "32px 28px",
                 boxShadow: "0 2px 12px rgba(0,0,0,0.04)",
-                display: "flex", flexDirection: "column",
+                display: "flex", flexDirection: "column", height: "100%",
               }}>
                 <p style={{
                   fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700,
@@ -556,7 +556,7 @@ export default function OptimizeLP() {
               color: "var(--brand-navy)", lineHeight: 1.08, marginBottom: 32,
             }}>Straight answers.</h2>
             <div style={{
-              background: WHITE, borderRadius: 16, padding: "8px 28px",
+              background: WHITE, borderRadius: 16, padding: "8px clamp(16px, 5vw, 28px)",
               boxShadow: "0 2px 16px rgba(0,0,0,0.06)",
               border: "1px solid #E5E3E0",
             }}>
