@@ -13,9 +13,9 @@ import { BookHeader } from "@/components/book/BookHeader";
 import { TRTFooter } from "@/components/landing/trt/TRTFooter";
 import { LOCATIONS, getMapsSearchUrl, LOCATION_KEY_TO_SLUG, type Location } from "@/data/locations";
 import { EmailCapture } from "@/components/book/EmailCapture";
+import { TIMEZONE } from "@/lib/ghlCalendars";
 
 const DEFAULT_CENTER = LOCATIONS[0];
-const TIMEZONE = "America/New_York";
 
 function formatAppt(raw?: string) {
   if (!raw) return null;
