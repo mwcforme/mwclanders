@@ -15,6 +15,7 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { corsHeadersFor, jsonResponse, corsResponse } from "../_shared/cors.ts";
 import { sendEmail } from "../_shared/sendEmail.ts";
+import { sendSms } from "../_shared/sendSms.ts";
 
 const log = {
   info:  (msg: string, d?: Record<string, unknown>) => console.log(JSON.stringify({ level: "info",  fn: "slot-monitor", msg, ts: new Date().toISOString(), ...d })),
@@ -48,9 +49,13 @@ function shouldAlert(state: AlertState, key: string): boolean {
   return hoursSince >= DEDUP_HOURS;
 }
 
-async function sendAlert(_key: string, subject: string, html: string): Promise<void> {
+async function sendAlert(_key: string, subject: string, html: string, smsText?: string): Promise<void> {
   const result = await sendEmail({ to: ALERT_EMAIL, subject, html });
   if (!result.ok) log.error("sendgrid failed", { error: result.error });
+  if (smsText) {
+    const sms = await sendSms(smsText);
+    if (!sms.ok) log.warn("sms failed", { error: sms.error });
+  }
 }
 
 Deno.serve(async (req) => {
@@ -164,7 +169,9 @@ Deno.serve(async (req) => {
 </div>
 </body></html>`;
 
-    await sendAlert("", `[MWC Alert] ${alerts.length} slot issue${alerts.length > 1 ? "s" : ""} detected`, html);
+    const smsText = alerts.map(a => a.replace(/<[^>]+>/g, "").trim()).join(" | ").slice(0, 140);
+    await sendAlert("", `[MWC Alert] ${alerts.length} slot issue${alerts.length > 1 ? "s" : ""} detected`, html,
+      `MWC CALENDAR ALERT: ${alerts.length} issue${alerts.length > 1 ? "s" : ""} detected. ${smsText}`);
     log.info("alert sent", { count: alerts.length });
   }
 

@@ -11,6 +11,7 @@
  * Also callable manually: POST to /warm-ping (no body required).
  */
 import { jsonResponse, corsResponse } from "../_shared/cors.ts";
+import { sendSms } from "../_shared/sendSms.ts";
 
 const log = {
   info:  (msg: string, d?: Record<string, unknown>) => console.log(JSON.stringify({ level: "info",  fn: "warm-ping", msg, ts: new Date().toISOString(), ...d })),
@@ -68,6 +69,9 @@ Deno.serve(async (req) => {
   const failures = results.filter(r => !r.ok);
   if (failures.length > 0) {
     log.error("some pings failed", { failures: failures.map(f => `${f.name}: ${f.error}`) });
+    // SMS alert when a critical function is unreachable
+    const failNames = failures.map(f => f.name).join(", ");
+    await sendSms(`MWC INFRA ALERT: Edge function(s) unreachable: ${failNames}. Check Supabase dashboard immediately.`);
   } else {
     log.info("all pings ok", { results: results.map(r => `${r.name} ${r.ms}ms`) });
   }

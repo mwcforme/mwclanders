@@ -46,9 +46,15 @@ Deno.serve(async (req) => {
       day: "numeric", hour: "numeric", minute: "2-digit", hour12: true,
     }) + " ET" : "unknown";
     const locLabel = { richmond: "Richmond", "virginia-beach": "Virginia Beach", "newport-news": "Newport News" }[location as string] ?? location;
+    // SMS for booking abandon — always critical
+    const abandonSms = await sendSms(
+      `MWC BOOKING LOST: Appointment abandoned after ${retries} retries. ${locLabel} \u00b7 ${apptTime}. GHL contact: ${ghlId.slice(0, 8)}... Manual booking required.`
+    );
+    if (!abandonSms.ok) log.warn("abandon sms failed", { error: abandonSms.error });
+
     const result = await sendEmail({
       to: "eobrien@menswellnesscenters.com",
-      subject: `ACTION REQUIRED — Booking abandoned after ${retries} retries — ${locLabel} · ${apptTime}`,
+      subject: `ACTION REQUIRED \u2014 Booking abandoned after ${retries} retries \u2014 ${locLabel} \u00b7 ${apptTime}`,
       html: `<div style="font-family:Arial,sans-serif;max-width:600px;padding:24px">
         <h2 style="color:#dc2626;margin:0 0 8px">Booking Abandoned — Manual Action Required</h2>
         <p style="color:#555;margin:0 0 16px">A booking intent failed after ${retries} retries and was abandoned. The GHL appointment was NOT created. Please book this manually.</p>
@@ -186,9 +192,29 @@ Deno.serve(async (req) => {
 
   if (!result.ok) {
     log.error("sendgrid error", { error: result.error, subject });
-    return json(502, { ok: false, error: result.error });
   }
 
-  log.info("email sent", { subject });
-  return json(200, { ok: true });
+  // SMS for failed GHL sync and new confirmed leads (not partials — too noisy)
+  let smsSent = false;
+  if (isFailed) {
+    const sms = await sendSms(
+      `MWC ACTION NEEDED: GHL sync failed for ${name || phone || "unknown"}${locationLabel ? " \u00b7 " + locationLabel : ""}. Check admin: book.menswellnesscenters.com/admin/leads`
+    );
+    smsSent = sms.ok;
+    if (!sms.ok) log.warn("sms failed", { error: sms.error });
+  } else if (!isPartial) {
+    // New confirmed lead — SMS with name, service, location
+    const smsBody = [
+      `MWC NEW LEAD: ${name || "Unknown"}`,
+      serviceLabel ? serviceLabel : null,
+      locationLabel ? locationLabel : null,
+      phone ? phone.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3") : null,
+    ].filter(Boolean).join(" \u00b7 ");
+    const sms = await sendSms(smsBody);
+    smsSent = sms.ok;
+    if (!sms.ok) log.warn("sms failed", { error: sms.error });
+  }
+
+  log.info("notification sent", { subject, emailOk: result.ok, smsSent });
+  return json(200, { ok: true, emailOk: result.ok, smsSent });
 });

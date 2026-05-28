@@ -15,6 +15,7 @@
  */
 import { createAdminClient } from "../_shared/supabaseAdmin.ts";
 import { sendEmail } from "../_shared/sendEmail.ts";
+import { sendSms } from "../_shared/sendSms.ts";
 import { corsResponse, jsonResponse } from "../_shared/cors.ts";
 
 const ALERT_TO = "eobrien@menswellnesscenters.com";
@@ -111,7 +112,15 @@ Deno.serve(async (req) => {
       log.info("alert email sent", { count: stuckLeads.length });
     }
 
-    return jsonResponse(200, { ok: true, stuckCount: stuckLeads.length, alertSent: emailResult.ok });
+    // SMS alert — short and actionable
+    const smsResult = await sendSms(
+      `MWC ALERT: ${stuckLeads.length} lead${stuckLeads.length > 1 ? "s" : ""} stuck in pending >5min. Check admin panel: book.menswellnesscenters.com/admin/leads`
+    );
+    if (!smsResult.ok) {
+      log.warn("sms alert failed", { error: smsResult.error });
+    }
+
+    return jsonResponse(200, { ok: true, stuckCount: stuckLeads.length, alertSent: emailResult.ok, smsSent: smsResult.ok });
 
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
