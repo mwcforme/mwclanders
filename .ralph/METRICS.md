@@ -50,3 +50,4 @@
 | iter | task | LOC delta | tsc errors | notes |
 |------|------|-----------|------------|-------|
 | baseline | — | 24,271 | 0 | golden tag: ralph-golden-20260528-0243 |
+| final | all 25 tasks | 24,281 (+10 for doc comments) | 0 | 0 ESLint warnings (was 8) |
