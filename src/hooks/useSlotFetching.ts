@@ -91,7 +91,6 @@ export function useSlotFetching(
       window.clearInterval(interval);
       window.removeEventListener("focus", onFocus);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [calendarId, location, weekStart, refreshNonce]);
 
   return { slotsByDay, loading, loadError };
