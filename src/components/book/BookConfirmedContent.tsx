@@ -57,7 +57,18 @@ const PREP_STEPS = [
   { n: "3", text: "Plan for 60 minutes." },
 ] as const;
 
-const EXPECT_VIDEO_SRC = "/videos/what-to-expect.mp4";
+// Per-location video mapping — filename matches /public/videos/
+const LOCATION_VIDEO: Record<string, string> = {
+  "richmond":      "/videos/what-to-expect-richmond.mp4",
+  "newport-news":  "/videos/what-to-expect-hampton-roads.mp4",
+  "virginia-beach":"/videos/what-to-expect-hampton-roads.mp4",
+};
+const FALLBACK_VIDEO_SRC = "/videos/what-to-expect.mp4";
+
+function getVideoSrc(locationSlug?: string): string {
+  if (!locationSlug) return FALLBACK_VIDEO_SRC;
+  return LOCATION_VIDEO[locationSlug] ?? FALLBACK_VIDEO_SRC;
+}
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
@@ -82,72 +93,130 @@ function OutcomeCard() {
   );
 }
 
-function VideoCard() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [playing, setPlaying] = useState(false);
+function PlayButton({ onClick }: { onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label="Play video"
+      style={{
+        position: "absolute", inset: 0, width: "100%", height: "100%",
+        background: "transparent", border: "none", cursor: "pointer",
+        display: "flex", alignItems: "center", justifyContent: "center",
+      }}
+    >
+      <div style={{
+        width: 72, height: 72, borderRadius: "50%",
+        background: COLORS.orangeHex,
+        display: "flex", alignItems: "center", justifyContent: "center",
+        // hardcoded-color-allow-next-line
+        boxShadow: "0 8px 32px -8px rgba(232,103,10,0.65)",
+        flexShrink: 0,
+      }}>
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden>
+          <polygon points="9,6 23,14 9,22" fill="#FFFFFF" />
+        </svg>
+      </div>
+    </button>
+  );
+}
 
-  const handlePlay = () => {
-    if (videoRef.current) {
-      videoRef.current.play();
-      setPlaying(true);
+// Full-screen video modal (desktop only — hidden on mobile)
+function VideoModal({ src, onClose }: { src: string; onClose: () => void }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  // Auto-play when modal opens
+  const handleMount = (el: HTMLVideoElement | null) => {
+    if (el) { (ref as React.MutableRefObject<HTMLVideoElement>).current = el; el.play().catch(() => {}); }
+  };
+
+  // Close on Escape
+  const handleKey = (e: React.KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+
+  return (
+    <div
+      role="dialog" aria-modal aria-label="Video player" onKeyDown={handleKey}
+      style={{
+        position: "fixed", inset: 0, zIndex: 9000,
+        // hardcoded-color-allow-next-line
+        background: "rgba(0,0,0,0.88)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        padding: 24,
+      }}
+      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+    >
+      <div style={{ position: "relative", width: "100%", maxWidth: 960, borderRadius: 12, overflow: "hidden" }}>
+        <video
+          ref={handleMount}
+          src={src}
+          controls autoPlay playsInline
+          style={{ width: "100%", display: "block", background: "#000" }}
+          onEnded={onClose}
+        />
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close video"
+          style={{
+            position: "absolute", top: 12, right: 12,
+            width: 40, height: 40, borderRadius: "50%",
+            // hardcoded-color-allow-next-line
+            background: "rgba(0,0,0,0.60)", border: "none", cursor: "pointer",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            color: "#fff", fontSize: 20, lineHeight: 1,
+          }}
+        >
+          ×
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function VideoCard({ locationSlug }: { locationSlug?: string }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [playing, setPlaying]     = useState(false); // mobile inline
+  const [modalOpen, setModalOpen] = useState(false); // desktop modal
+  const src = getVideoSrc(locationSlug);
+
+  // On desktop: open modal. On mobile: play inline.
+  const handleClick = () => {
+    const isDesktop = window.innerWidth >= 768;
+    if (isDesktop) {
+      setModalOpen(true);
+    } else {
+      if (videoRef.current) { videoRef.current.play(); setPlaying(true); }
     }
   };
 
   return (
-    <div style={WHITE_CARD}>
-      {/* Video area with custom play button overlay */}
-      <div style={{ position: "relative", width: "100%", paddingBottom: "56%", background: "#0B1029", borderBottom: DIVIDER }}>
-        <video
-          ref={videoRef}
-          src={EXPECT_VIDEO_SRC}
-          poster="/images/video-poster.webp"
-          loop={false} playsInline preload="none"
-          aria-label="What to expect at your visit — 2 minute overview"
-          controls={playing}
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", border: 0 }}
-          onEnded={() => setPlaying(false)}
-        />
-        {/* Custom play button overlay — hidden once playing */}
-        {!playing && (
-          <button
-            type="button"
-            onClick={handlePlay}
-            aria-label="Play video"
-            style={{
-              position: "absolute", inset: 0,
-              width: "100%", height: "100%",
-              background: "transparent",
-              border: "none", cursor: "pointer",
-              display: "flex", alignItems: "center", justifyContent: "center",
-            }}
-          >
-            <div style={{
-              width: 72, height: 72, borderRadius: "50%",
-              background: COLORS.orangeHex,
-              display: "flex", alignItems: "center", justifyContent: "center",
-              // hardcoded-color-allow-next-line
-              boxShadow: "0 8px 32px -8px rgba(232,103,10,0.65)",
-              flexShrink: 0,
-            }}>
-              {/* Play triangle */}
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden>
-                <polygon points="9,6 23,14 9,22" fill="#FFFFFF" />
-              </svg>
-            </div>
-          </button>
-        )}
+    <>
+      <div style={WHITE_CARD}>
+        <div style={{ position: "relative", width: "100%", paddingBottom: "56%", background: "#0B1029", borderBottom: DIVIDER }}>
+          {/* Inline video — mobile only once playing */}
+          <video
+            ref={videoRef}
+            src={src}
+            poster="/images/video-poster.webp"
+            loop={false} playsInline preload="none"
+            aria-label="What to expect at your visit"
+            controls={playing}
+            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", border: 0 }}
+            onEnded={() => setPlaying(false)}
+          />
+          {!playing && <PlayButton onClick={handleClick} />}
+        </div>
+        <div style={{ padding: "18px 20px 14px" }}>
+          <p style={{ fontFamily: FONTS.body, fontSize: 19.125, fontWeight: 700, color: INK, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 6 }}>
+            What happens when you walk in
+          </p>
+          <p style={{ fontFamily: FONTS.body, fontSize: 17, fontWeight: 600, color: INK_MUTED, margin: 0 }}>
+            2 minute video
+          </p>
+        </div>
       </div>
-      <div style={{ padding: "18px 20px 14px" }}>
-        {/* 19.125px weight 700 uppercase */}
-        <p style={{ fontFamily: FONTS.body, fontSize: 19.125, fontWeight: 700, color: INK, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 6 }}>
-          What happens when you walk in
-        </p>
-        {/* 17px weight 600 rgb(72,86,106) */}
-        <p style={{ fontFamily: FONTS.body, fontSize: 17, fontWeight: 600, color: INK_MUTED, margin: 0 }}>
-          2 minute video
-        </p>
-      </div>
-    </div>
+      {/* Desktop modal */}
+      {modalOpen && <VideoModal src={src} onClose={() => setModalOpen(false)} />}
+    </>
   );
 }
 
@@ -338,7 +407,7 @@ export function BookConfirmedContent({ center, mapsSearchUrl, mapsEmbedUrl, emai
       <div style={{ maxWidth: 640, margin: "0 auto", display: "flex", flexDirection: "column", gap: 16, paddingTop: 20, fontFamily: FONTS.body }}>
         {calLinks && <CalendarButtons calLinks={calLinks} />}
         <OutcomeCard />
-        <VideoCard />
+        <VideoCard locationSlug={center.slug} />
         <PrepCard />
         <LocationCard center={center} mapsSearchUrl={mapsSearchUrl} mapsEmbedUrl={mapsEmbedUrl} />
         {!emailCaptured && <EmailCard contactId={contactId} onComplete={onEmailCaptured} />}

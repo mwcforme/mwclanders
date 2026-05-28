@@ -61,8 +61,17 @@ export default function BookConfirmed() {
   const appt      = formatAppt(effectiveAppt);
   const calLinks  = appt ? buildCalendarLinks(appt.iso, center.fullAddress) : null;
 
-  const [sent, setSent]     = useState(false);
-  const [playing, setPlaying] = useState(false);
+  const [sent, setSent]       = useState(false);
+  const [playing, setPlaying]   = useState(false);
+  const [videoModal, setVideoModal] = useState(false);
+
+  // Location-based video src
+  const LOCATION_VIDEO: Record<string, string> = {
+    "richmond":      "/videos/what-to-expect-richmond.mp4",
+    "newport-news":  "/videos/what-to-expect-hampton-roads.mp4",
+    "virginia-beach":"/videos/what-to-expect-hampton-roads.mp4",
+  };
+  const videoSrc = LOCATION_VIDEO[slug ?? ""] ?? "/videos/what-to-expect.mp4";
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -167,15 +176,37 @@ export default function BookConfirmed() {
               <button type="button"
                 className="absolute inset-0 grid place-items-center group focus-visible:outline-none"
                 aria-label="Play video: What happens when you walk in. 2 minutes."
-                onClick={() => setPlaying(true)}>
+                onClick={() => {
+                  if (window.innerWidth >= 768) { setVideoModal(true); }
+                  else { setPlaying(true); }
+                }}>
                 <span className="grid h-24 w-24 place-items-center rounded-full bg-primary text-white group-hover:bg-primary-hover transition-colors shadow-cta">
                   <Play className="h-10 w-10 ml-1" fill="currentColor" aria-hidden />
                 </span>
               </button>
             ) : (
-              <video src="/videos/what-to-expect.mp4" poster="/images/video-poster.webp"
+              <video src={videoSrc} poster="/images/video-poster.webp"
                 autoPlay controls playsInline
                 style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+            )}
+            {/* Desktop modal overlay */}
+            {videoModal && (
+              <div
+                role="dialog" aria-modal aria-label="Video player"
+                style={{ position: "fixed", inset: 0, zIndex: 9000, background: "rgba(0,0,0,0.88)", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}
+                onClick={(e) => { if (e.target === e.currentTarget) setVideoModal(false); }}
+              >
+                <div style={{ position: "relative", width: "100%", maxWidth: 960, borderRadius: 12, overflow: "hidden" }}>
+                  <video src={videoSrc} controls autoPlay playsInline
+                    style={{ width: "100%", display: "block", background: "#000" }}
+                    onEnded={() => setVideoModal(false)}
+                  />
+                  <button type="button" onClick={() => setVideoModal(false)}
+                    aria-label="Close video"
+                    style={{ position: "absolute", top: 12, right: 12, width: 40, height: 40, borderRadius: "50%", background: "rgba(0,0,0,0.60)", border: "none", cursor: "pointer", color: "#fff", fontSize: 20, display: "flex", alignItems: "center", justifyContent: "center" }}
+                  >×</button>
+                </div>
+              </div>
             )}
           </div>
           <div className="bg-panel px-6 py-5 border-t border-panel-divider">
