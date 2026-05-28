@@ -59,20 +59,7 @@ export const TRTFooter = () => {
             </div>
           </div>
 
-          {/* Locations */}
-          <div>
-            {col("Locations")}
-            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-              {/* hardcoded-color-allow-next-line */}
-              {li(<span style={{ color: "rgba(255,255,255,0.75)" }}>Richmond</span>)}
-              {/* hardcoded-color-allow-next-line */}
-              {li(<span style={{ color: "rgba(255,255,255,0.75)" }}>Newport News</span>)}
-              {/* hardcoded-color-allow-next-line */}
-              {li(<span style={{ color: "rgba(255,255,255,0.75)" }}>Virginia Beach</span>)}
-            </ul>
-          </div>
-
-          {/* Contact */}
+          {/* Contact — location names are already embedded with phone numbers below; no separate Locations column needed */}
           <div>
             {col("Contact")}
             <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>

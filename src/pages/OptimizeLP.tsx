@@ -107,7 +107,7 @@ const LOCATIONS_DATA = [
 function FAQItem({ q, a, defaultOpen = false }: { q: string; a: string; defaultOpen?: boolean }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <div style={{ borderBottom: "1px solid rgba(255,255,255,0.10)" }}>
+    <div style={{ borderBottom: "1px solid #E5E3E0" }}>
       <button
         type="button"
         onClick={() => setOpen(v => !v)}
@@ -123,7 +123,7 @@ function FAQItem({ q, a, defaultOpen = false }: { q: string; a: string; defaultO
         <span style={{
           fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: "clamp(16px,3.5vw,19px)",
           textTransform: "uppercase", letterSpacing: "0.03em",
-          color: WHITE, lineHeight: 1.25,
+          color: "var(--brand-navy)", lineHeight: 1.25,
         }}>{q}</span>
         <ChevronDown
           size={20}
@@ -138,7 +138,7 @@ function FAQItem({ q, a, defaultOpen = false }: { q: string; a: string; defaultO
       {open && (
         <p style={{
           fontFamily: "Inter, sans-serif", fontSize: 16, lineHeight: 1.7,
-          color: "rgba(255,255,255,0.80)", paddingBottom: 22,
+          color: "var(--c-text-on-light-muted)", paddingBottom: 22,
         }}>{a}</p>
       )}
     </div>
@@ -254,42 +254,6 @@ export default function OptimizeLP() {
           </div>
         </div>
       </section>
-
-      {/* ── PROVIDER PHOTO BAND ── */}
-      <SectionReveal>
-        <div style={{ position: "relative", overflow: "hidden", height: 320 }} aria-hidden>
-          <img
-            src="/assets/lp/provider-consultation-wide.webp"
-            alt=""
-            loading="lazy"
-            decoding="async"
-            style={{
-              width: "100%", height: "100%", objectFit: "cover",
-              objectPosition: "center 30%", filter: "brightness(0.45)",
-            }}
-          />
-          <div style={{
-            position: "absolute", inset: 0,
-            display: "flex", alignItems: "center", justifyContent: "center",
-            flexDirection: "column", gap: 12,
-          }}>
-            <p style={{
-              fontFamily: "Oswald, sans-serif", fontWeight: 700,
-              fontSize: "clamp(24px,4vw,40px)", textTransform: "uppercase",
-              color: WHITE, letterSpacing: "0.06em", textAlign: "center",
-            }}>
-              Virginia-licensed providers. In-person. Every time.
-            </p>
-            <p style={{
-              fontFamily: "Inter, sans-serif", fontSize: 16,
-              color: "rgba(255,255,255,0.70)", textAlign: "center",
-            }}>
-              Not a rotating telehealth roster. The same physician at the same center.
-            </p>
-          </div>
-        </div>
-      </SectionReveal>
-
       {/* ── WHY MWC ── cream bg */}
       <SectionReveal>
         <section style={{ background: CREAM, padding: "80px 0" }}>
