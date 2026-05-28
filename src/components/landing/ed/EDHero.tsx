@@ -1,12 +1,14 @@
-import { Check, Star } from "lucide-react";
+import { ChevronRight, Star } from "lucide-react";
 import { TRTHeroForm } from "@/components/landing/trt/TRTHeroForm";
 import { COPY } from "@/data/copy";
+import { GBP_REVIEWS_URL } from "@/data/testimonials";
 
-const trustChecks = [
-  "In-person Virginia visits, not an app",
-  "Oral medications and injectable therapies",
-  "Billed discreetly, not as an ED center",
-  "No-cost consult, same-day labs",
+const SYMPTOMS = [
+  "It started gradually. Now it's affecting everything.",
+  "Pills from online clinics aren't working.",
+  "You haven't told your doctor. This isn't something they handle.",
+  "You want a real diagnosis, not a subscription.",
+  "Private. In-person. A provider who actually knows your case.",
 ];
 
 const COLORS = {
@@ -18,10 +20,6 @@ const COLORS = {
 };
 
 export const EDHero = () => {
-  const scrollToForm = () => {
-    document.getElementById("hero-form")?.scrollIntoView({ behavior: "smooth", block: "center" });
-  };
-
   return (
     <section
       id="hero"
@@ -35,131 +33,122 @@ export const EDHero = () => {
         Skip to lead form
       </a>
 
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          opacity: 0.06,
-          backgroundImage:
-            "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")",
-          backgroundSize: "220px 220px",
-        }}
-      />
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-          // hardcoded-color-allow-next-line
-        "radial-gradient(ellipse 60% 50% at 85% 10%, rgba(232,103,10,0.18) 0%, rgba(11,16,41,0) 60%)",
-        }}
-      />
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-          // hardcoded-color-allow-next-line
-        "radial-gradient(ellipse 100% 80% at 50% 50%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.55) 100%)",
-        }}
-      />
+      {/* Grain */}
+      <div aria-hidden="true" className="absolute inset-0 pointer-events-none" style={{
+        opacity: 0.06,
+        backgroundImage: "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")",
+        backgroundSize: "220px 220px",
+      }} />
 
-      <div className="relative z-10 w-full max-w-[1280px] mx-auto px-5 sm:px-6 pt-24 pb-12 lg:pt-32 lg:pb-24 grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-8 lg:gap-16 items-center">
-        <div>
+      {/* Radial behind H1 */}
+      <div aria-hidden="true" className="absolute inset-0 pointer-events-none" style={{
+        // hardcoded-color-allow-next-line
+        background: "radial-gradient(ellipse 50% 50% at 28% 45%, rgba(27,43,75,0.55) 0%, rgba(11,16,41,0) 70%)",
+      }} />
+
+      {/* Orange glow top-right */}
+      <div aria-hidden="true" className="absolute inset-0 pointer-events-none" style={{
+        // hardcoded-color-allow-next-line
+        background: "radial-gradient(ellipse 60% 50% at 85% 10%, rgba(232,103,10,0.18) 0%, rgba(11,16,41,0) 60%)",
+      }} />
+
+      {/* Vignette */}
+      <div aria-hidden="true" className="absolute inset-0 pointer-events-none" style={{
+        // hardcoded-color-allow-next-line
+        background: "radial-gradient(ellipse 100% 80% at 50% 50%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.55) 100%)",
+      }} />
+
+      <div className="relative z-10 w-full max-w-[1280px] mx-auto px-5 sm:px-6 pt-24 pb-12 lg:pt-32 lg:pb-24 grid grid-cols-1 lg:grid-cols-[1fr_460px] gap-8 lg:gap-16 items-stretch">
+
+        {/* LEFT */}
+        <div className="flex flex-col">
           <h1
             className="font-bold uppercase"
             style={{
               fontFamily: "Oswald, 'Bebas Neue', Anton, sans-serif",
-              fontSize: "clamp(48px, 6vw, 96px)",
-              lineHeight: 0.95,
+              fontSize: "clamp(36px, 9vw, 96px)",
+              lineHeight: 1.0,
               letterSpacing: "-0.01em",
               color: COLORS.cream,
               fontWeight: 700,
             }}
           >
-            VIRGINIA&rsquo;S CHOICE
-            <br />
-            <span style={{ color: COLORS.orange }}>FOR ED THERAPY</span>
+            <span style={{ display: "block", whiteSpace: "nowrap" }}>VIRGINIA&rsquo;S CHOICE</span>
+            <span style={{ display: "block", color: COLORS.orange, whiteSpace: "nowrap" }}>FOR ED THERAPY</span>
           </h1>
 
           <p
-            className="mt-6 max-w-[520px]"
+            className="mt-6 w-full"
             style={{
               // hardcoded-color-allow-next-line
-              color: "rgba(245,240,235,0.85)",
+              color: "rgba(245,240,235,0.88)",
               fontFamily: "Inter, sans-serif",
-              fontSize: 18,
-              lineHeight: 1.5,
+              fontSize: 19,
+              lineHeight: 1.6,
             }}
           >
             A licensed Virginia provider diagnoses the cause. Not a pill subscription. A real protocol built around your labs, with treatment options that go beyond what online clinics can offer.
           </p>
 
-          <div
-            className="mt-5 flex flex-col items-start gap-1.5"
-            style={{ color: COLORS.cream, fontFamily: "Inter, sans-serif" }}
+          {/* Star rating — linked to Google reviews */}
+          <a
+            href={GBP_REVIEWS_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4"
+            style={{ display: "inline-flex", alignItems: "center", gap: 8, textDecoration: "none" }}
           >
-            <span className="flex items-center gap-0.5">
+            <span style={{ display: "flex", gap: 2 }}>
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className="h-4 w-4" fill={COLORS.gold} stroke={COLORS.gold} />
+                <Star key={i} size={14} fill={COLORS.gold} stroke={COLORS.gold} />
               ))}
             </span>
-            <span style={{ fontSize: 14 }}>4.9 · 191 verified Google reviews</span>
-          </div>
+            {/* hardcoded-color-allow-next-line */}
+            <span style={{ fontSize: 13, fontWeight: 600, color: "rgba(245,240,235,0.80)", fontFamily: "Inter, sans-serif" }}>4.9 · 191 verified Google reviews</span>
+          </a>
 
-          <ul className="mt-7 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 max-w-[560px]">
-            {trustChecks.map((t) => (
-              <li
-                key={t}
-                className="flex items-center gap-2.5"
-                style={{ color: COLORS.cream, fontFamily: "Inter, sans-serif" }}
-              >
-                <Check className="h-[18px] w-[18px] flex-shrink-0" strokeWidth={3} style={{ color: COLORS.orange }} />
-                <span style={{ fontSize: 16, fontWeight: 500 }}>{t}</span>
-              </li>
+          {/* Service pills */}
+          <div className="mt-8 flex flex-wrap gap-2">
+            {["Sildenafil + Tadalafil", "TriMix + PT-141", "100% Private"].map(label => (
+              <span key={label} style={{
+                display: "inline-flex", alignItems: "center",
+                padding: "6px 14px",
+                borderRadius: 999,
+                border: "1.5px solid rgba(232,103,10,0.50)",
+                background: "rgba(232,103,10,0.10)",
+                fontFamily: "Inter, sans-serif",
+                fontSize: 13, fontWeight: 700,
+                letterSpacing: "0.06em", textTransform: "uppercase",
+                color: "rgba(245,240,235,0.90)",
+              }}>{label}</span>
             ))}
-          </ul>
+          </div>
 
-          <button
-            type="button"
-            onClick={scrollToForm}
-            className="lg:hidden mt-7 w-full uppercase font-bold cursor-pointer"
-            style={{
-              height: 56,
-              background: COLORS.orange,
-              color: "var(--c-text-on-dark)",
-              fontSize: 14,
-              border: "none",
-              borderRadius: 8,
-              letterSpacing: "0.08em",
-              fontFamily: "Inter, sans-serif",
-            }}
-          >
-            Book My Discreet Visit
-          </button>
-
-          <div
-            className="mt-6"
-            style={{
-              // hardcoded-color-allow-next-line
-              color: "rgba(245,240,235,0.60)",
-              fontFamily: "Inter, sans-serif",
-              fontSize: 12,
-            }}
-          >
-            Medically reviewed by licensed Virginia providers. Individual results vary.
+          {/* Symptom statements */}
+          <div className="mt-8 flex flex-col gap-4">
+            {SYMPTOMS.map((text) => (
+              <div key={text} style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <ChevronRight size={16} strokeWidth={1.75} aria-hidden style={{ color: COLORS.orange, flexShrink: 0 }} />
+                {/* hardcoded-color-allow-next-line */}
+                <span style={{ fontFamily: "Inter, sans-serif", fontSize: 16, fontWeight: 500, color: "rgba(245,240,235,0.88)", lineHeight: 1.4 }}>{text}</span>
+              </div>
+            ))}
           </div>
         </div>
 
+        {/* RIGHT — form, no outer wrapper */}
         <div id="hero-form" className="w-full flex lg:justify-end">
-          <TRTHeroForm
-            service="ed"
-            heading="This isn't something your GP is trained for."
-            subheading="Provider-led ED care. Private, in-person. Same or next day."
-            ctaLabel={COPY.cta.bookDiscreetVisit}
-            formId="hero-ed"
-          />
+          <div className="w-full">
+            <TRTHeroForm
+              service="ed"
+              heading="This isn't something your GP is trained for."
+              subheading="Provider-led ED care. Private, in-person. Same or next day."
+              ctaLabel={COPY.cta.bookDiscreetVisit}
+              formId="hero-ed"
+            />
+          </div>
         </div>
+
       </div>
     </section>
   );
