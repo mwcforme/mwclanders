@@ -27,7 +27,6 @@ const DEFAULT_DESC: Record<BookLayoutProps["page"], string> = {
 
 
 const BookLayout = ({ page, title, description, variant = "default", children }: BookLayoutProps) => {
-  const isConfirmation = variant === "confirmation";
   useEffect(() => {
     document.body.dataset.page = page;
     return () => {
