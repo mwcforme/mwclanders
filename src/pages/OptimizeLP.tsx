@@ -188,7 +188,7 @@ export default function OptimizeLP() {
         }} className="optimize-hero-grid">
 
           {/* Left: headline + proof */}
-          <div style={{ paddingTop: 32 }}>
+          <div style={{ paddingTop: 32, minWidth: 0 }}>
             <p style={{
               fontFamily: "Inter, sans-serif", fontSize: 12, fontWeight: 700,
               letterSpacing: "0.14em", textTransform: "uppercase",

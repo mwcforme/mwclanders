@@ -1,31 +1,27 @@
 /**
- * BookConfirmed — new Confirmed UI wired to real booking store data.
- * Design: /data/.openclaw/workspace/mwc-book-upload/client/src/pages/Confirmed.tsx
+ * BookConfirmed — confirmed page wired to real booking store data.
+ * UI: BookConfirmedHero + BookConfirmedContent (Ralph-matched design).
  */
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import {
-  Calendar, Check, MapPin, Clock, IdCard, FlaskConical,
-  ClipboardList, Droplet, Phone, ChevronRight, Play,
-} from "lucide-react";
 import { useBookingStore } from "@/domain/booking/bookingStore";
-import { BookHeader } from "@/components/book/BookHeader";
-import { TRTFooter } from "@/components/landing/trt/TRTFooter";
+import { BookConfirmedHero } from "@/components/book/BookConfirmedHero";
+import { BookConfirmedContent } from "@/components/book/BookConfirmedContent";
 import { LOCATIONS, getMapsSearchUrl, LOCATION_KEY_TO_SLUG, type Location } from "@/data/locations";
-import { EmailCapture } from "@/components/book/EmailCapture";
 
 const DEFAULT_CENTER = LOCATIONS[0];
 const TIMEZONE = "America/New_York";
 
-function formatAppt(raw?: string) {
+interface ApptDate { weekday: string; month: string; day: string; time: string; iso: string; }
+
+function formatAppt(raw?: string): ApptDate | null {
   if (!raw) return null;
   const d = new Date(raw);
   if (Number.isNaN(d.getTime())) return null;
   return {
-    monthShort: new Intl.DateTimeFormat("en-US", { month: "short", timeZone: TIMEZONE }).format(d).toUpperCase(),
-    day: new Intl.DateTimeFormat("en-US", { day: "numeric", timeZone: TIMEZONE }).format(d),
+    month:   new Intl.DateTimeFormat("en-US", { month: "short",   timeZone: TIMEZONE }).format(d).toUpperCase(),
+    day:     new Intl.DateTimeFormat("en-US", { day: "numeric",   timeZone: TIMEZONE }).format(d),
     weekday: new Intl.DateTimeFormat("en-US", { weekday: "short", timeZone: TIMEZONE }).format(d).toUpperCase(),
-    time: new Intl.DateTimeFormat("en-US", { hour: "numeric", minute: "2-digit", hour12: true, timeZone: TIMEZONE }).format(d).replace(/\u202f/g, " "),
+    time:    new Intl.DateTimeFormat("en-US", { hour: "numeric", minute: "2-digit", hour12: true, timeZone: TIMEZONE }).format(d).replace(/\u202f/g, " "),
     iso: raw,
   };
 }
@@ -42,290 +38,50 @@ function buildCalendarLinks(iso: string, address: string) {
 }
 
 export default function BookConfirmed() {
-  const routerLoc = useLocation();
-  const navState  = (routerLoc.state || {}) as { appointmentTime?: string };
-
   const appointmentTime = useBookingStore(s => s.appointmentTime);
   const location        = useBookingStore(s => s.location);
   const identity        = useBookingStore(s => s.identity);
   const patchAction     = useBookingStore(s => s.patch);
 
-  const effectiveAppt = appointmentTime || navState.appointmentTime;
-
   const slug   = location ? LOCATION_KEY_TO_SLUG[location] : null;
   const center: Location = (slug && LOCATIONS.find(l => l.slug === slug)) || DEFAULT_CENTER;
-  const mapsUrl     = getMapsSearchUrl(center);
-  const mapsEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(center.mapsQuery)}&output=embed`;
+
+  const mapsSearchUrl = getMapsSearchUrl(center);
+  const mapsEmbedUrl  = `https://www.google.com/maps?q=${encodeURIComponent(center.mapsQuery)}&output=embed`;
 
   const firstName = (identity?.firstName ?? "").trim().split(/\s+/)[0] || "";
-  const appt      = formatAppt(effectiveAppt);
-  const calLinks  = appt ? buildCalendarLinks(appt.iso, center.fullAddress) : null;
+  const apptDate  = formatAppt(appointmentTime);
+  const calLinks  = apptDate ? buildCalendarLinks(apptDate.iso, center.fullAddress) : null;
 
-  const [sent, setSent]       = useState(false);
-  const [playing, setPlaying]   = useState(false);
-  const [videoModal, setVideoModal] = useState(false);
-
-  // Location-based video src
-  const LOCATION_VIDEO: Record<string, string> = {
-    "richmond":      "/videos/what-to-expect-richmond.mp4",
-    "newport-news":  "/videos/what-to-expect-hampton-roads.mp4",
-    "virginia-beach":"/videos/what-to-expect-hampton-roads.mp4",
-  };
-  const videoSrc = LOCATION_VIDEO[slug ?? ""] ?? "/videos/what-to-expect.mp4";
+  const [emailCaptured, setEmailCaptured] = useState(false);
+  const [checkDrawn,    setCheckDrawn]    = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (identity && !identity.phone && !identity.email) patchAction({ identity: undefined });
     document.title = "Confirmed | Men's Wellness Centers";
-    // Auto-play video on load
-    const t = setTimeout(() => {
-      if (window.innerWidth >= 768) {
-        setVideoModal(true);
-      } else {
-        setPlaying(true);
-      }
-    }, 800);
+    if (identity && !identity.phone && !identity.email) patchAction({ identity: undefined });
+    const t = setTimeout(() => setCheckDrawn(true), 200);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground">
-      <BookHeader />
-      <main className="flex-1 mx-auto w-full max-w-2xl px-4 sm:px-6 pt-20 sm:pt-24 pb-24">
-
-        {/* Location + status row */}
-        <div className="flex items-center justify-between gap-3">
-          <div className="inline-flex items-center gap-2 min-w-0">
-            <MapPin className="h-4 w-4 text-primary-hover flex-shrink-0" aria-hidden />
-            <p className="font-display text-sm font-bold uppercase tracking-[0.22em] truncate" style={{ color: 'var(--c-text-on-light-muted)' }}>
-              {center.city}
-            </p>
-          </div>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-success/10 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-success">
-            <Check className="h-3.5 w-3.5" strokeWidth={3} aria-hidden /> Confirmed
-          </span>
-        </div>
-
-        {/* Hero */}
-        <div className="mt-4">
-          <h1 className="font-display text-[26px] sm:text-4xl font-bold leading-[1.1] text-foreground uppercase">
-            {firstName ? `You're booked, ${firstName}.` : "You're booked."}
-          </h1>
-          <p className="mt-2 text-base sm:text-lg text-text-muted leading-snug">
-            Your provider at Men's Wellness Centers is reserved. Here's everything you need.
-          </p>
-        </div>
-
-        {/* Appointment hero card */}
-        <section className="mt-5 rounded-2xl bg-panel text-panel-foreground p-5 sm:p-7 shadow-card border-2 border-panel-divider"
-          aria-label="Appointment details">
-          <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-white bg-panel-foreground rounded-md px-2 py-1 inline-block mb-1">
-            Your Appointment
-          </p>
-
-          {appt ? (
-            <div className="mt-4 flex flex-row items-center gap-4 sm:gap-6">
-              {/* Date block */}
-              <div className="flex-shrink-0 rounded-xl bg-primary text-white px-4 py-3 sm:px-6 sm:py-4 text-center w-[88px] sm:w-auto shadow-cta">
-                <p className="font-display text-xs sm:text-base font-bold uppercase tracking-[0.18em]">{appt.monthShort}</p>
-                <p className="font-display text-4xl sm:text-5xl font-bold leading-none mt-0.5">{appt.day}</p>
-                <p className="font-display text-xs sm:text-base font-bold uppercase tracking-[0.18em] mt-1">{appt.weekday}</p>
-              </div>
-              {/* Details */}
-              <div className="min-w-0 flex-1">
-                <p className="inline-flex items-center gap-2 sm:gap-3 font-display text-2xl sm:text-4xl font-bold text-panel-foreground">
-                  <Clock className="h-6 w-6 sm:h-7 sm:w-7 text-primary flex-shrink-0" aria-hidden /> {appt.time}
-                </p>
-                <p className="mt-2 text-sm sm:text-lg font-semibold text-panel-foreground">60 minutes · In-person</p>
-                <p className="inline-flex items-center gap-2 text-sm sm:text-lg font-semibold mt-1 text-panel-foreground">
-                  <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-primary flex-shrink-0" aria-hidden /> {center.city}
-                </p>
-              </div>
-            </div>
-          ) : (
-            <p className="mt-4 text-panel-muted text-base">Appointment time not found. Please check your confirmation email.</p>
-          )}
-
-          {/* Checklist */}
-          <ul className="mt-5 pt-5 border-t-2 border-panel-divider grid sm:grid-cols-3 gap-3 text-sm sm:text-base font-semibold text-panel-foreground">
-            {["No-cost consultation","Your provider reserved","Bring photo ID"].map(item => (
-              <li key={item} className="inline-flex items-start gap-2">
-                <Check className="h-5 w-5 mt-0.5 flex-shrink-0 text-success" aria-hidden strokeWidth={3} />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        {/* Calendar buttons */}
-        <div className="mt-6 grid sm:grid-cols-2 gap-4">
-          <a href={calLinks?.google ?? "#"} target="_blank" rel="noreferrer"
-            className="inline-flex items-center justify-center gap-3 rounded-xl bg-primary text-white hover:bg-primary-hover font-display font-bold uppercase tracking-wide px-5 py-5 text-base shadow-cta min-h-[60px]">
-            <Calendar className="h-6 w-6" aria-hidden /> Add to Google Calendar
-          </a>
-          <a href={calLinks?.ics ?? "#"} download="appointment.ics"
-            className="inline-flex items-center justify-center gap-3 rounded-xl bg-surface text-white hover:opacity-90 font-display font-bold uppercase tracking-wide px-5 py-5 text-base min-h-[60px]">
-            <Calendar className="h-6 w-6" aria-hidden /> Apple or Outlook
-          </a>
-        </div>
-
-        {/* What you'll leave with */}
-        <SectionCard eyebrow="What You'll Leave With" items={[
-          { icon: <Droplet className="h-6 w-6" />, text: "Your bloodwork results, explained in clear, straightforward language." },
-          { icon: <ClipboardList className="h-6 w-6" />, text: "A clear answer on whether treatment fits your situation." },
-          { icon: <FlaskConical className="h-6 w-6" />, text: "A personalized protocol you can start the same day, when medically appropriate." },
-        ]} />
-
-        {/* Video */}
-        <section className="mt-8 overflow-hidden rounded-2xl bg-panel text-panel-foreground shadow-card"
-          aria-label="Video: What happens when you walk in">
-          <div className="relative aspect-video bg-background">
-            {!playing ? (
-              <button type="button"
-                className="absolute inset-0 grid place-items-center group focus-visible:outline-none"
-                aria-label="Play video: What happens when you walk in. 2 minutes."
-                onClick={() => {
-                  if (window.innerWidth >= 768) { setVideoModal(true); }
-                  else { setPlaying(true); }
-                }}>
-                <span className="grid h-24 w-24 place-items-center rounded-full bg-primary text-white group-hover:bg-primary-hover transition-colors shadow-cta">
-                  <Play className="h-10 w-10 ml-1" fill="currentColor" aria-hidden />
-                </span>
-              </button>
-            ) : (
-              <video src={videoSrc} poster="/images/video-poster.webp"
-                autoPlay muted controls playsInline
-                style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
-            )}
-            {/* Desktop modal overlay */}
-            {videoModal && (
-              <div
-                role="dialog" aria-modal aria-label="Video player"
-                style={{ position: "fixed", inset: 0, zIndex: 9000, background: "rgba(0,0,0,0.88)", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}
-                onClick={(e) => { if (e.target === e.currentTarget) setVideoModal(false); }}
-              >
-                <div style={{ position: "relative", width: "100%", maxWidth: 960, borderRadius: 12, overflow: "hidden" }}>
-                  <video src={videoSrc} controls autoPlay playsInline
-                    style={{ width: "100%", display: "block", background: "#000" }}
-                    onEnded={() => setVideoModal(false)}
-                  />
-                  <button type="button" onClick={() => setVideoModal(false)}
-                    aria-label="Close video"
-                    style={{ position: "absolute", top: 12, right: 12, width: 40, height: 40, borderRadius: "50%", background: "rgba(0,0,0,0.60)", border: "none", cursor: "pointer", color: "#fff", fontSize: 20, display: "flex", alignItems: "center", justifyContent: "center" }}
-                  >×</button>
-                </div>
-              </div>
-            )}
-          </div>
-          <div className="bg-panel px-6 py-5 border-t border-panel-divider">
-            <p className="font-display text-lg font-bold uppercase tracking-wide text-panel-foreground">
-              What happens when you walk in
-            </p>
-            <p className="mt-1 text-base font-semibold" style={{ color: 'var(--c-text-on-light-muted)' }}>2 minute video</p>
-          </div>
-        </section>
-
-        {/* Before you arrive */}
-        <SectionCard eyebrow="Before You Arrive" ordered items={[
-          { icon: <IdCard className="h-6 w-6" />, text: "Bring your photo ID." },
-          { icon: <Droplet className="h-6 w-6" />, text: "Drink water. No need to fast." },
-          { icon: <Clock className="h-6 w-6" />, text: "Plan for 60 minutes." },
-        ]} />
-
-        {/* Location */}
-        <section className="mt-8 overflow-hidden rounded-2xl bg-panel text-panel-foreground shadow-card">
-          <div className="p-6">
-            <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-white bg-panel-foreground rounded-md px-2 py-1 inline-block mb-1">Location</p>
-            <p className="mt-2 font-display text-2xl font-bold uppercase text-panel-foreground">{center.city}</p>
-            <p className="mt-2 inline-flex items-center gap-2 text-base font-semibold text-primary-hover">
-              <MapPin className="h-5 w-5" aria-hidden /> {center.driveTime}
-            </p>
-            <address className="mt-4 not-italic text-lg leading-snug text-panel-foreground">
-              <a className="underline underline-offset-4 hover:text-primary font-semibold"
-                href={mapsUrl} target="_blank" rel="noreferrer">
-                {center.address}<br />{center.cityStateZip}
-              </a>
-            </address>
-            <p className="mt-4 text-base text-panel-foreground leading-relaxed">
-              <span className="inline-flex items-center gap-2 font-semibold">
-                <Clock className="h-5 w-5" aria-hidden /> Hours
-              </span>
-              <br />{center.hours}
-            </p>
-          </div>
-          <div className="p-5 border-t border-panel-divider">
-            <a href={mapsUrl} target="_blank" rel="noreferrer"
-              className="inline-flex items-center justify-center gap-3 w-full rounded-xl font-display font-bold uppercase tracking-wide px-5 py-4 text-base min-h-[56px] text-white hover:opacity-90" style={{ background: 'var(--brand-navy-deep)' }}>
-              <MapPin className="h-6 w-6" aria-hidden /> Get Directions
-              <ChevronRight className="h-5 w-5" aria-hidden />
-            </a>
-          </div>
-        </section>
-
-        {/* Email reminder — BUG 6 fix: use EmailCapture component for real API call */}
-        <section className="mt-8 rounded-2xl bg-panel text-panel-foreground shadow-card p-6">
-          <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-white bg-panel-foreground rounded-md px-2 py-1 inline-block mb-1">Email Reminder</p>
-          <p className="mt-2 font-display text-2xl font-bold uppercase text-panel-foreground">Send my confirmation</p>
-          <p className="mt-2 text-lg text-panel-foreground leading-snug">
-            We'll email your appointment details and a reminder the day before.
-          </p>
-          {sent ? (
-            <p role="status" className="mt-5 inline-flex items-center gap-2 px-4 py-3 rounded-lg bg-success/10 text-panel-foreground font-semibold text-base">
-              <Check className="h-5 w-5 text-success" aria-hidden /> Confirmation email sent!
-            </p>
-          ) : (
-            <div className="mt-5">
-              <EmailCapture
-                contactId={identity?.ghlContactId}
-                onComplete={() => setSent(true)}
-              />
-            </div>
-          )}
-        </section>
-
-        {/* Need to change */}
-        <section className="mt-8 rounded-2xl bg-surface p-6 text-center">
-          <p className="font-display text-lg font-bold uppercase tracking-wide text-white">
-            Need to change your appointment?
-          </p>
-          <p className="mt-2 text-lg text-white/75">We're happy to help. 24-hour notice is appreciated.</p>
-          <a href={`tel:${center.phone.replace(/\D/g,"")}`}
-            className="mt-5 inline-flex items-center justify-center gap-3 rounded-xl bg-primary text-white hover:bg-primary-hover font-display font-bold uppercase tracking-wide px-6 py-5 text-lg shadow-cta min-h-[60px] w-full sm:w-auto">
-            <Phone className="h-6 w-6" aria-hidden /> Call {center.phone}
-          </a>
-          <p className="mt-4">
-            <Link to="/book/schedule"
-              className="inline-flex items-center justify-center gap-2 font-display font-bold uppercase tracking-wide text-white/80 underline underline-offset-4 hover:text-white px-3 py-2">
-              Or pick a different time
-            </Link>
-          </p>
-        </section>
-      </main>
-      <TRTFooter />
+    <div style={{ minHeight: "100vh", background: "#0B1029" }}>
+      <BookConfirmedHero
+        firstName={firstName}
+        apptDate={apptDate}
+        center={center}
+        checkDrawn={checkDrawn}
+      />
+      <BookConfirmedContent
+        center={center}
+        mapsSearchUrl={mapsSearchUrl}
+        mapsEmbedUrl={mapsEmbedUrl}
+        emailCaptured={emailCaptured}
+        onEmailCaptured={() => setEmailCaptured(true)}
+        contactId={identity?.ghlContactId}
+        calLinks={calLinks}
+      />
     </div>
-  );
-}
-
-function SectionCard({ eyebrow, items, ordered }: {
-  eyebrow: string;
-  items: { icon: React.ReactNode; text: string }[];
-  ordered?: boolean;
-}) {
-  const Tag = ordered ? "ol" : "ul";
-  return (
-    <section className="mt-8 rounded-2xl bg-panel text-panel-foreground shadow-card p-6">
-      <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-white bg-panel-foreground rounded-md px-2 py-1 inline-block mb-1">{eyebrow}</p>
-      <Tag className="mt-5 space-y-5" aria-label={eyebrow}>
-        {items.map((item, i) => (
-          <li key={i} className="flex items-start gap-4">
-            <span className="grid h-12 w-12 flex-shrink-0 place-items-center rounded-full bg-primary text-white" aria-hidden>
-              {ordered ? <span className="font-display font-bold text-xl">{i + 1}</span> : item.icon}
-            </span>
-            <p className="text-lg sm:text-xl text-panel-foreground leading-snug pt-1.5">{item.text}</p>
-          </li>
-        ))}
-      </Tag>
-    </section>
   );
 }

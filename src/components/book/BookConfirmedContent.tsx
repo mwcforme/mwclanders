@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Calendar, MapPin, ChevronRight, ClipboardList, FlaskConical, Stethoscope } from "lucide-react";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
 import { EmailCapture } from "@/components/book/EmailCapture";
