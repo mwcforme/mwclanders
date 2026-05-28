@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import BookLayout from "@/components/book/BookLayout";
 import { ContactCard } from "@/components/book/ContactCard";
 import { PHONE } from "@/lib/constants";
+import { trackFunnelEvent } from "@/hooks/useAnalytics";
 
 const PHONE_DISPLAY = PHONE.display;
 const PHONE_TEL = PHONE.tel;
@@ -22,10 +23,8 @@ function isTeamAvailable(): boolean {
   return isWeekday && hour >= 8 && hour < 18;
 }
 
-function trackEvent(event: string, page: string) {
-  const dl = (window as unknown as { dataLayer?: unknown[] }).dataLayer;
-  if (typeof window !== "undefined" && dl) dl.push({ event, page });
-}
+const trackEvent = (event: string, page: string) =>
+  trackFunnelEvent(event, { page });
 
 /**
  * /book/lets-talk — Termination page for the "Something else" symptom path.
