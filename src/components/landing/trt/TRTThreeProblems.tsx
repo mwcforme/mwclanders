@@ -72,7 +72,7 @@ export const TRTThreeProblems = ({ onCta, headlineOverride }: TRTThreeProblemsPr
           />
           <div className="mt-4">
             <SectionSubhead center maxWidth={720}>
-              TRT, ED care, and medical weight loss in one Virginia center. Your provider reviews your labs in person, same day. No referrals, no waiting rooms, no generic protocols.
+              Most men treat these separately. We handle all three in a single in-person visit. Same provider. Same day. One plan built around your labs.
             </SectionSubhead>
           </div>
         </div>
