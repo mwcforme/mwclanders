@@ -16,7 +16,7 @@ If Vercel is up but the site is broken:
 
 ```bash
 # Instant rollback to last working deployment
-vercel rollback --token vcp_2RFtoW3hGYevXov9bPAYeFv55aJJBk6RKCAASaKikNFudnJZcf0fdhic
+vercel rollback --token VCP_TOKEN_REDACTED
 ```
 
 Or via Vercel dashboard: Deployments → find last green deploy → ⋯ → Promote to Production
@@ -36,14 +36,14 @@ cd /data/.openclaw/workspace/menswell
 git log --oneline -10
 
 # 2. Instant Vercel rollback (no rebuild needed)
-vercel rollback --token vcp_2RFtoW3hGYevXov9bPAYeFv55aJJBk6RKCAASaKikNFudnJZcf0fdhic
+vercel rollback --token VCP_TOKEN_REDACTED
 
 # 3. If rollback not available, revert the bad commit and deploy
 git revert HEAD --no-edit
 git push origin main
 # Then trigger a fresh Vercel build:
-vercel build --prod --token vcp_2RFtoW3hGYevXov9bPAYeFv55aJJBk6RKCAASaKikNFudnJZcf0fdhic
-vercel deploy --prod --prebuilt --token vcp_2RFtoW3hGYevXov9bPAYeFv55aJJBk6RKCAASaKikNFudnJZcf0fdhic
+vercel build --prod --token VCP_TOKEN_REDACTED
+vercel deploy --prod --prebuilt --token VCP_TOKEN_REDACTED
 ```
 
 **Recovery time target:** < 5 minutes

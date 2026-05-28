@@ -77,6 +77,15 @@ export default function BookConfirmed() {
     window.scrollTo(0, 0);
     if (identity && !identity.phone && !identity.email) patchAction({ identity: undefined });
     document.title = "Confirmed | Men's Wellness Centers";
+    // Auto-play video on load
+    const t = setTimeout(() => {
+      if (window.innerWidth >= 768) {
+        setVideoModal(true);
+      } else {
+        setPlaying(true);
+      }
+    }, 800);
+    return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -186,7 +195,7 @@ export default function BookConfirmed() {
               </button>
             ) : (
               <video src={videoSrc} poster="/images/video-poster.webp"
-                autoPlay controls playsInline
+                autoPlay muted controls playsInline
                 style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
             )}
             {/* Desktop modal overlay */}

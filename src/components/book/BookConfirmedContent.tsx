@@ -178,14 +178,28 @@ function VideoCard({ locationSlug }: { locationSlug?: string }) {
   const [modalOpen, setModalOpen] = useState(false); // desktop modal
   const src = getVideoSrc(locationSlug);
 
-  // On desktop: open modal. On mobile: play inline.
+  // Auto-play on mount — desktop opens modal, mobile plays inline (muted to satisfy browser policy)
+  useEffect(() => {
+    const isDesktop = window.innerWidth >= 768;
+    // Small delay so the confirmed page content renders first
+    const t = setTimeout(() => {
+      if (isDesktop) {
+        setModalOpen(true);
+      } else {
+        if (videoRef.current) {
+          videoRef.current.muted = true;
+          videoRef.current.play().then(() => setPlaying(true)).catch(() => {});
+        }
+      }
+    }, 800);
+    return () => clearTimeout(t);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleClick = () => {
     const isDesktop = window.innerWidth >= 768;
-    if (isDesktop) {
-      setModalOpen(true);
-    } else {
-      if (videoRef.current) { videoRef.current.play(); setPlaying(true); }
-    }
+    if (isDesktop) { setModalOpen(true); }
+    else { if (videoRef.current) { videoRef.current.muted = false; videoRef.current.play(); setPlaying(true); } }
   };
 
   return (
