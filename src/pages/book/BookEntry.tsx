@@ -207,7 +207,7 @@ export default function BookEntry() {
       console.error("[BookEntry] unexpected error", err);
       fail("unexpected_error");
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- mount-only: WP handoff runs once on entry
   }, []);
 
   if (error) {
