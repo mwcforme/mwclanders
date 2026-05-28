@@ -605,7 +605,7 @@ export default function OptimizeLP() {
       <style>{`
         @media (max-width: 767px) {
           .optimize-hero-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
-          .optimize-2col      { grid-template-columns: 1fr !important; }
+          .optimize-2col      { grid-template-columns: 1fr !important; flex-direction: column !important; }
           .optimize-3col      { grid-template-columns: 1fr !important; }
           .optimize-stats     { grid-template-columns: 1fr 1fr !important; }
         }
