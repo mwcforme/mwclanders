@@ -118,7 +118,10 @@ export function ReviewSheet({
               <span className="text-panel-muted">(60-minute visit)</span>
             </p>
             <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-panel-muted">
-              Physician-led · In-person
+              Physician-led · In-person · Labs drawn on-site
+            </p>
+            <p className="mt-2 text-xs text-panel-muted leading-snug">
+              Your provider's time is being held. Please arrive 5 minutes early.
             </p>
           </div>
         </div>

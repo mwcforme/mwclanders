@@ -8,7 +8,7 @@ import { useBookingStore } from "@/domain/booking/bookingStore";
 
 const OPTIONS = [
   { value: "energy", label: "Low energy or fatigue", icon: Zap },
-  { value: "sexual", label: "Sexual health concerns", icon: Heart },
+  { value: "sexual", label: "ED or sexual health", icon: Heart },
   { value: "weight", label: "Trouble losing weight", icon: Scale },
   { value: "other", label: "Something else", icon: HelpCircle },
 ] as const;
@@ -74,13 +74,13 @@ const BookSymptom = () => {
         {/* Heading */}
         <div className="px-5 pt-7 pb-5">
           <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-white bg-panel-foreground rounded-md px-2 py-1 inline-block mb-3">
-            Tell Us More
+            Your Provider Will Review This
           </p>
           <h1 className="font-display font-bold text-[clamp(28px,7vw,40px)] text-panel-foreground uppercase leading-tight mb-2">
             What brings you in?
           </h1>
           <p className="text-base" style={{ color: "var(--c-text-on-light-muted)" }}>
-            Pick the one that fits best.
+            Your provider will see this before your visit. Pick the one that fits best.
           </p>
         </div>
 

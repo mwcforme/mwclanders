@@ -230,7 +230,7 @@ export default function BookConfirmed() {
             Before You Arrive
           </p>
           <ol className="mt-5 space-y-5" aria-label="Before You Arrive">
-            {["Bring your photo ID.", "Drink water. No need to fast.", "Plan for 60 minutes."].map((text, i) => (
+            {["Bring a photo ID. Required at check-in.", "Wear loose sleeves. Labs are drawn on-site.", "Drink water. No need to fast.", "Plan for 60 minutes from arrival to checkout."].map((text, i) => (
               <li key={text} className="flex items-start gap-4">
                 <span className="grid h-12 w-12 flex-shrink-0 place-items-center rounded-full bg-primary text-primary-foreground" aria-hidden="true">
                   <span className="font-display font-bold text-xl">{i + 1}</span>
@@ -280,7 +280,7 @@ export default function BookConfirmed() {
           <p className="font-display text-sm font-bold uppercase tracking-[0.22em] text-panel-muted">Email Reminder</p>
           <p className="mt-2 font-display text-2xl font-bold uppercase text-panel-foreground">Send my confirmation</p>
           <p className="mt-2 text-lg text-panel-foreground leading-snug">
-            We'll email your appointment details and a reminder the day before.
+            We'll send your appointment details now and a reminder 24 hours before your visit.
           </p>
           {sent ? (
             <p role="status" className="mt-5 inline-flex items-center gap-2 px-4 py-3 rounded-lg bg-success/10 text-panel-foreground font-semibold text-base">
@@ -304,7 +304,7 @@ export default function BookConfirmed() {
           <p className="font-display text-lg font-bold uppercase tracking-wide text-foreground">
             Need to change your appointment?
           </p>
-          <p className="mt-2 text-lg text-text-muted">We're happy to help. 24-hour notice is appreciated.</p>
+          <p className="mt-2 text-lg text-text-muted">We're happy to help. Please give us 24-hour notice so we can offer your slot to another member.</p>
           <a
             href={`tel:${center.phone.replace(/\D/g, "")}`}
             data-testid="link-call-help"

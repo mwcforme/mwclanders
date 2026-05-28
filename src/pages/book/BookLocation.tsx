@@ -95,11 +95,14 @@ const BookLocation = () => {
         {/* Heading */}
         <div className="px-5 pt-7 pb-5">
           <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-white bg-panel-foreground rounded-md px-2 py-1 inline-block mb-3">
-            Book Your Visit
+            Your In-Person Visit
           </p>
           <h1 className="font-display font-bold text-[clamp(28px,7vw,40px)] text-panel-foreground uppercase leading-tight">
-            {firstName ? `${firstName}, choose` : "Choose"} your location.
+            {firstName ? `${firstName}, choose` : "Choose"} your center.
           </h1>
+          <p className="text-base mt-2" style={{ color: "var(--c-text-on-light-muted)" }}>
+            Your provider will be waiting at this location.
+          </p>
         </div>
 
         {/* Location options */}

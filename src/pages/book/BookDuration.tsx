@@ -55,13 +55,13 @@ const BookDuration = () => {
         {/* Heading */}
         <div className="px-5 pt-7 pb-5">
           <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-white bg-panel-foreground rounded-md px-2 py-1 inline-block mb-3">
-            About Your Symptoms
+            Preparing Your Visit
           </p>
           <h1 className="font-display font-bold text-[clamp(28px,7vw,40px)] text-panel-foreground uppercase leading-tight mb-2">
             When did you first notice this?
           </h1>
           <p className="text-base" style={{ color: "var(--c-text-on-light-muted)" }}>
-            A rough estimate is fine.
+            This helps your provider prepare for your visit. A rough estimate is fine.
           </p>
         </div>
 

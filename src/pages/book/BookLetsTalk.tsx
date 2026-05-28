@@ -1,12 +1,67 @@
-import { Phone, ArrowLeft } from "lucide-react";
+import { useState } from "react";
+import { Phone, ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import BookLayout from "@/components/book/BookLayout";
 import { ContactCard } from "@/components/book/ContactCard";
 import { PHONE } from "@/lib/constants";
+import { capturePartialLead } from "@/lib/partialCapture";
+import { formatPhone } from "@/data/croContent";
 
 const PHONE_DISPLAY = PHONE.display;
 const PHONE_TEL = PHONE.tel;
 const SMS_HREF = PHONE.sms;
+
+function CallbackForm() {
+  const [phone, setPhone]     = useState("");
+  const [sent, setSent]       = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const digits = phone.replace(/\D/g, "");
+    if (digits.length < 10) return;
+    setLoading(true);
+    await capturePartialLead({ phone, source: "lets-talk-callback" }).catch(() => {});
+    setSent(true);
+    setLoading(false);
+  };
+
+  return (
+    <div className="rounded-2xl bg-panel border border-panel-border p-6 mt-4">
+      <p className="font-display text-base font-bold uppercase tracking-wide text-panel-foreground mb-1">
+        Not a phone call person?
+      </p>
+      <p className="text-sm text-panel-muted mb-4">
+        Leave your number. We'll call you to match you with the right visit.
+      </p>
+      {sent ? (
+        <p className="text-sm font-semibold text-success">
+          Got it. We'll call you shortly.
+        </p>
+      ) : (
+        <form onSubmit={(e) => { void handleSubmit(e); }} className="flex gap-2">
+          <input
+            type="tel"
+            inputMode="tel"
+            autoComplete="tel"
+            placeholder="Your phone number"
+            value={phone}
+            onChange={(e) => setPhone(formatPhone(e.target.value))}
+            required
+            className="flex-1 rounded-xl border border-panel-border bg-background px-4 py-3 text-base text-panel-foreground placeholder:text-panel-muted focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+          <button
+            type="submit"
+            disabled={loading || phone.replace(/\D/g, "").length < 10}
+            className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-primary text-white font-display font-bold uppercase tracking-wide px-4 py-3 text-sm shadow-cta disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loading ? <Loader2 size={16} className="animate-spin" /> : <ArrowRight size={16} />}
+          </button>
+        </form>
+      )}
+    </div>
+  );
+}
 
 function isTeamAvailable(): boolean {
   const now = new Date();
@@ -76,6 +131,9 @@ const BookLetsTalk = () => {
               onSmsClick={() => trackEvent("sms_click", "lets-talk")}
             />
           </div>
+
+          {/* Callback form — capture leads who won't call */}
+          <CallbackForm />
 
           {/* Back link */}
           <div className="mt-10 text-center">

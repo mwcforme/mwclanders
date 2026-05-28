@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { Calendar, MapPin, ChevronRight, ClipboardList, FlaskConical, Stethoscope } from "lucide-react";
+import { Calendar, MapPin, ChevronRight, ClipboardList, FlaskConical, Stethoscope, Car } from "lucide-react";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
 import { EmailCapture } from "@/components/book/EmailCapture";
 import type { Location } from "@/data/locations";
@@ -52,9 +52,10 @@ const OUTCOME_ITEMS = [
 ] as const;
 
 const PREP_STEPS = [
-  { n: "1", text: "Bring your photo ID." },
-  { n: "2", text: "Drink water. No need to fast." },
-  { n: "3", text: "Plan for 60 minutes." },
+  { n: "1", text: "Bring a photo ID. Required at check-in." },
+  { n: "2", text: "Wear loose sleeves. Labs are drawn on-site." },
+  { n: "3", text: "Drink water. No need to fast before your visit." },
+  { n: "4", text: "Plan for 60 minutes from arrival to checkout." },
 ] as const;
 
 // Per-location video mapping — filename matches /public/videos/
@@ -267,14 +268,16 @@ function LocationCard({ center, mapsSearchUrl, mapsEmbedUrl }: { center: Locatio
           <a href={mapsSearchUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: 19.125, fontWeight: 600, color: INK, textDecoration: "underline", textUnderlineOffset: 3, lineHeight: 1.5 }}>
             {center.address}<br />{center.cityStateZip}
           </a>
+          <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
+            <Car size={16} strokeWidth={2} style={{ color: INK, flexShrink: 0, marginTop: 2 }} />
+            <span style={{ fontSize: 17, fontWeight: 600, color: INK }}>{center.parking}</span>
+          </div>
           <div>
             {/* "Hours": 17px weight 600 */}
             <p style={{ fontSize: 17, fontWeight: 600, color: INK, margin: "0 0 4px" }}>Hours</p>
             {/* Hours lines: 17px weight 400 */}
             <p style={{ fontSize: 17, fontWeight: 400, color: INK, margin: 0, lineHeight: 1.6 }}>
-              Mon &amp; Fri: 8am to 6pm<br />
-              Tue, Wed, Thu: 9am to 5pm<br />
-              Sat: 8am to 3pm
+              {center.hours}
             </p>
           </div>
         </div>
@@ -317,7 +320,7 @@ function EmailCard({ contactId, onComplete }: { contactId: string | undefined; o
       </p>
       {/* Body: 19.125px weight 400 */}
       <p style={{ ...BODY, marginBottom: 16 }}>
-        We'll email your appointment details and a reminder the day before.
+        We'll send your appointment details now and a reminder 24 hours before your visit.
       </p>
       <BookingErrorBoundary>
         <EmailCapture contactId={contactId} onComplete={onComplete} />
@@ -335,7 +338,7 @@ function RescheduleCard({ center }: { center: Location }) {
       </p>
       {/* Copy: 19.125px weight 400 rgb(203,213,225) */}
       <p style={{ fontFamily: FONTS.body, fontSize: 19.125, color: MUTED_BLUE, marginBottom: 24, fontWeight: 400 }}>
-        We're happy to help. 24-hour notice is appreciated.
+        We're happy to help. Please give us 24-hour notice so we can offer your slot to another member.
       </p>
       {/* Call btn: 19.125px weight 700 uppercase orange */}
       <a

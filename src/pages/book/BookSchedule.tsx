@@ -278,6 +278,17 @@ export default function BookSchedule() {
             </button>
           )}
 
+          {/* Visit details strip */}
+          <div className="mt-3 mb-1 flex flex-wrap items-center gap-x-4 gap-y-1" style={{ color: "rgba(255,255,255,0.65)", fontSize: 13, fontFamily: "Inter, sans-serif", fontWeight: 500 }}>
+            <span>60-min in-person visit</span>
+            <span aria-hidden style={{ color: "rgba(255,255,255,0.30)" }}>·</span>
+            <span>Labs drawn on-site</span>
+            <span aria-hidden style={{ color: "rgba(255,255,255,0.30)" }}>·</span>
+            <span>Results reviewed same visit</span>
+            <span aria-hidden style={{ color: "rgba(255,255,255,0.30)" }}>·</span>
+            <span>All times Eastern</span>
+          </div>
+
           {/* Booking panel */}
           <section className="mt-2 overflow-hidden rounded-2xl bg-panel text-panel-foreground shadow-card"
             aria-label="Choose your appointment day and time">
