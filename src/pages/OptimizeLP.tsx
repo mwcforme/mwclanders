@@ -582,7 +582,8 @@ export default function OptimizeLP() {
       </Suspense>
 
       <StickyMobileCTA />
-      <div className="md:hidden" style={{ height: 80 }} aria-hidden />
+      {/* Extra bottom clearance so sticky CTA never covers last content */}
+      <div className="md:hidden" style={{ height: 120 }} aria-hidden />
 
       {/* Responsive grid collapse */}
       <style>{`
