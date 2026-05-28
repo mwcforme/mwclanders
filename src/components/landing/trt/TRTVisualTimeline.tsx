@@ -19,7 +19,7 @@ const TIMELINE_STEPS = [
     num: 3,
     title: "Your Provider Reads Every Number With You",
     time: "Same visit",
-    desc: "In plain English. No waiting for a portal. No guessing.",
+    desc: "In plain language. No waiting for a portal. No guessing.",
   },
   {
     num: 4,

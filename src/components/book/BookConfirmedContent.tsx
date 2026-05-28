@@ -46,7 +46,7 @@ const BODY: React.CSSProperties = {
 // ─── Static data ──────────────────────────────────────────────────────────────
 
 const OUTCOME_ITEMS = [
-  { icon: <FlaskConical size={22} strokeWidth={1.75} style={{ color: "#FFFFFF" }} aria-hidden />, text: "Your bloodwork results, explained in plain English." },
+  { icon: <FlaskConical size={22} strokeWidth={1.75} style={{ color: "#FFFFFF" }} aria-hidden />, text: "Your bloodwork results, explained in clear, straightforward language." },
   { icon: <Stethoscope size={22} strokeWidth={1.75} style={{ color: "#FFFFFF" }} aria-hidden />, text: "A clear answer on whether treatment fits your situation." },
   { icon: <ClipboardList size={22} strokeWidth={1.75} style={{ color: "#FFFFFF" }} aria-hidden />, text: "A personalized protocol you can start the same day, when medically appropriate." },
 ] as const;

@@ -81,7 +81,7 @@ const FAQS = [
   },
   {
     q: "What happens at the first visit?",
-    a: "It's 60 minutes. Labs drawn in our on-site CLIA-certified lab. Your provider goes through every number with you before you leave and explains what it means in plain English. If treatment is appropriate, you walk out with a real protocol that day. If it's not appropriate, we'll tell you that too.",
+    a: "It's 60 minutes. Labs drawn in our on-site CLIA-certified lab. Your provider goes through every number with you before you leave and explains what it means in straightforward terms. If treatment is appropriate, you walk out with a real protocol that day. If it's not appropriate, we'll tell you that too.",
   },
   {
     q: "What does this cost?",
@@ -440,7 +440,7 @@ export default function OptimizeLP() {
                 },
                 {
                   n: "03", title: "Your provider reviews everything",
-                  body: "Sit down with a Virginia-licensed provider for 60 minutes. Every number explained in plain English. Walk out with a protocol if treatment fits.",
+                  body: "Sit down with a Virginia-licensed provider for 60 minutes. Every number explained clearly. Walk out with a protocol if treatment fits.",
                   icon: UserCheck,
                 },
               ].map(step => (

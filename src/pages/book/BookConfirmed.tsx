@@ -154,7 +154,7 @@ export default function BookConfirmed() {
 
         {/* What you'll leave with */}
         <SectionCard eyebrow="What You'll Leave With" items={[
-          { icon: <Droplet className="h-6 w-6" />, text: "Your bloodwork results, explained in plain English." },
+          { icon: <Droplet className="h-6 w-6" />, text: "Your bloodwork results, explained in clear, straightforward language." },
           { icon: <ClipboardList className="h-6 w-6" />, text: "A clear answer on whether treatment fits your situation." },
           { icon: <FlaskConical className="h-6 w-6" />, text: "A personalized protocol you can start the same day, when medically appropriate." },
         ]} />
