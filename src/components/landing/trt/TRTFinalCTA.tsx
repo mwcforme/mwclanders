@@ -1,6 +1,7 @@
 import { Check, MapPin } from "lucide-react";
 import { TRTHeroForm } from "@/components/landing/trt/TRTHeroForm";
 import { COPY } from "@/data/copy";
+import { Eyebrow } from "@/components/landing/shared/primitives";
 
 /** Trust chip text - must match design.regression.test.ts assertions. */
 const _TRUST_LINE = "HIPAA Compliant · No Spam, Ever";
@@ -10,6 +11,7 @@ export const TRTFinalCTA = () => {
     <section id="final-cta" className="py-14 md:py-20" style={{ background: "var(--brand-navy)" }}>
       <div className="max-w-[1200px] mx-auto px-6">
         <div className="text-center">
+          <Eyebrow center>Ready to Start?</Eyebrow>
           <h2
             className="font-bold uppercase"
             style={{

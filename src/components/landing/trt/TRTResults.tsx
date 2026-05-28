@@ -9,6 +9,7 @@ import { Star, ArrowUpRight, CheckCircle } from "lucide-react";
 import { COPY } from "@/data/copy";
 import { TESTIMONIALS, GBP_REVIEWS_URL } from "@/data/testimonials";
 import { useScrollToForm } from "@/hooks/useScrollToForm";
+import { Eyebrow } from "@/components/landing/shared/primitives";
 
 /** Google G logo SVG — official brand colors */
 const GoogleG = ({ size = 16 }: { size?: number }) => (
@@ -29,6 +30,7 @@ export const TRTResults = () => {
 
         {/* Section header */}
         <div className="text-center mb-10 md:mb-12">
+          <Eyebrow center>Member Outcomes</Eyebrow>
           <h2
             className="font-bold uppercase"
             style={{

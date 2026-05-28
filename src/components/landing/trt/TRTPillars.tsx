@@ -3,6 +3,7 @@ const imgLabs    = "/assets/lp/onsite-labs-centrifuge.webp";
 const imgMen     = "/assets/lp/man-bloodwork-clinic.webp";
 const imgTeam    = "/assets/lp/mwc-team.webp";
 import { Target } from "lucide-react";
+import { Eyebrow } from "@/components/landing/shared/primitives";
 
 const pillars = [
   {
@@ -60,6 +61,7 @@ const cardLeave = (e: React.MouseEvent<HTMLDivElement>) => {
 export const TRTPillars = () => (
   <section className="py-14 md:py-20" style={{ background: "var(--brand-navy)" }}>
     <div className="max-w-[1200px] mx-auto px-6">
+      <Eyebrow center>Our Difference</Eyebrow>
       <h2
         className="font-bold uppercase text-center mb-10 md:mb-12"
         style={{

@@ -20,7 +20,7 @@ export const TRT_FAQS: FaqItem[] = [
   },
   {
     q: "Is testosterone replacement therapy safe?",
-    a: "TRT is FDA-approved when prescribed and monitored by a licensed provider for patients with clinically diagnosed low testosterone. Like any prescription treatment, it has potential side effects, which your provider will review with you. Ongoing lab monitoring is part of every care plan.",
+    a: "TRT is FDA-approved when prescribed and monitored by a licensed provider for men with clinically diagnosed low testosterone. Like any prescription treatment, it has potential side effects, which your provider will review with you. Ongoing lab monitoring is part of every care plan.",
   },
   {
     q: "How is this different from Hims, Hone, or an online TRT clinic?",
@@ -35,7 +35,7 @@ export const TRT_FAQS: FaqItem[] = [
     a: "Plan for 60 minutes. Your labs are drawn on-site: a full hormone panel, not a standard GP metabolic panel. Your Virginia provider then reviews every result with you in the same visit, explains what they mean in plain language, and if treatment is appropriate, you leave with a protocol that day. No-cost consultation. No obligation to proceed.",
   },
   {
-    q: "How soon do patients typically notice changes?",
+    q: "How soon do members typically notice changes?",
     a: "Many members report initial changes in energy and mood within the first few weeks, with broader symptom improvements over 2 to 3 months. Individual results vary based on baseline labs, adherence, and individual health factors.",
   },
 ];

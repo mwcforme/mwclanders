@@ -104,7 +104,7 @@ export const WLHero = () => {
                 <Star key={i} className="h-4 w-4" fill={COLORS.gold} stroke={COLORS.gold} />
               ))}
             </span>
-            <span style={{ fontSize: 14 }}>4.9 average from 200+ verified Google reviews</span>
+            <span style={{ fontSize: 14 }}>4.9 · 191 verified Google reviews</span>
           </div>
 
           <ul className="mt-7 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 max-w-[560px]">

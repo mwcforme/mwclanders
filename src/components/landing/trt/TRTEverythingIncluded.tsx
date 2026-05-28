@@ -6,6 +6,7 @@
  * Dark navy background — breaks up the cream/white sections visually.
  */
 import { Check } from "lucide-react";
+import { Eyebrow } from "@/components/landing/shared/primitives";
 
 const INCLUDED = [
   "Labs drawn and reviewed on-site",
@@ -30,6 +31,7 @@ export const TRTEverythingIncluded = () => (
     <div className="max-w-[1100px] mx-auto px-6 py-16 md:py-20">
       {/* Heading */}
       <div className="text-center mb-12">
+        <Eyebrow center>What's Covered</Eyebrow>
         <h2
           style={{
             fontFamily: "Oswald, sans-serif",

@@ -163,7 +163,7 @@ You've been told your labs are normal. You don't feel normal. At Men's Wellness 
               ))}
             </span>
             {/* hardcoded-color-allow-next-line */}
-            <span style={{ fontSize: 13, fontWeight: 600, color: "rgba(245,240,235,0.80)", fontFamily: "Inter, sans-serif" }}>4.9 · 200+ Google reviews</span>
+            <span style={{ fontSize: 13, fontWeight: 600, color: "rgba(245,240,235,0.80)", fontFamily: "Inter, sans-serif" }}>4.9 · 191 verified Google reviews</span>
           </a>
 
           {/* What we treat — bridges reviews to symptoms */}

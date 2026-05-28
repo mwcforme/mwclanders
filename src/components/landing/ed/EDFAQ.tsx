@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { ChevronDown } from "lucide-react";
 import { COPY } from "@/data/copy";
 import { useScrollToForm } from "@/hooks/useScrollToForm";
+import { Eyebrow } from "@/components/landing/shared/primitives";
 
 const faqs = [
   {
@@ -53,6 +54,7 @@ export const EDFAQ = () => {
   return (
     <section id="faq" style={{ background: "var(--brand-cream)", scrollMarginTop: 64 }}>
       <div className="max-w-[820px] mx-auto px-6 py-16 md:py-24">
+        <Eyebrow center>Common Questions</Eyebrow>
         <h2 className="font-bold uppercase text-center" style={{ fontFamily: "Oswald, sans-serif", color: "var(--brand-navy)", fontSize: "clamp(26px, 3vw, 38px)", letterSpacing: "0.02em" }}>
           Frequently Asked Questions
         </h2>

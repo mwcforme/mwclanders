@@ -363,7 +363,7 @@ export default function OptimizeLP() {
             }} className="optimize-stats">
               {[
                 { n: "10,000+", l: "Virginia members" },
-                { n: "4.9★",   l: "200+ verified reviews" },
+                { n: "4.9★",   l: "191 verified reviews" },
                 { n: "3",      l: "Virginia centers" },
                 { n: "Same Day", l: "Labs drawn & reviewed" },
               ].map(s => (

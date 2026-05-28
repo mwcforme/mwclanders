@@ -3,6 +3,7 @@ import { ChevronDown } from "lucide-react";
 import { TRT_FAQS, type FaqItem } from "@/data/faqs";
 import { COPY } from "@/data/copy";
 import { useScrollToForm } from "@/hooks/useScrollToForm";
+import { Eyebrow } from "@/components/landing/shared/primitives";
 
 interface TRTFAQProps {
   extraFaqs?: FaqItem[];
@@ -28,6 +29,7 @@ export const TRTFAQ = ({ extraFaqs }: TRTFAQProps = {}) => {
   return (
     <section id="faq" style={{ background: "var(--brand-cream)", scrollMarginTop: 64 }}>
       <div className="max-w-[820px] mx-auto px-6 py-16 md:py-24">
+        <Eyebrow center>Common Questions</Eyebrow>
         <h2
           className="font-bold uppercase text-center"
           style={{

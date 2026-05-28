@@ -1,8 +1,8 @@
 import React from "react";
 
 // Eyebrow — small uppercase label above headings
-export const Eyebrow = ({ children }: { children: React.ReactNode }) => (
-  <p style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--brand-cta-accessible)", marginBottom: 12 }}>
+export const Eyebrow = ({ children, center = false }: { children: React.ReactNode; center?: boolean }) => (
+  <p style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--brand-cta-accessible)", marginBottom: 12, textAlign: center ? "center" : undefined }}>
     {children}
   </p>
 );
