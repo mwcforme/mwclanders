@@ -22,9 +22,12 @@ export function trackCro(slug: string, extra?: Record<string, unknown>) {
 /**
  * Track key booking funnel conversion events.
  * PII-safe: never pass names, phones, or emails as event properties.
+ *
+ * Accepts the 5 core funnel events plus any arbitrary string event name
+ * for one-off product-specific events (e.g. "product_trt_funnel_complete").
  */
 export function trackFunnelEvent(
-  event: "booking_started" | "location_selected" | "date_selected" | "time_selected" | "booking_completed",
+  event: "booking_started" | "location_selected" | "date_selected" | "time_selected" | "booking_completed" | (string & {}),
   extra?: Record<string, unknown>,
 ) {
   if (typeof window === "undefined") return;
