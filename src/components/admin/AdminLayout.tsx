@@ -34,10 +34,14 @@ export function AdminLayout({ title, children }: Props) {
   const [email, setEmail] = useState<string>("");
 
   useEffect(() => {
+    let cancelled = false;
     supabase.auth
       .getSession()
-      .then(({ data: { session } }) => setEmail(session?.user.email ?? ""))
+      .then(({ data: { session } }) => {
+        if (!cancelled) setEmail(session?.user.email ?? "");
+      })
       .catch(() => {});
+    return () => { cancelled = true; };
   }, []);
 
   const signOut = async () => {
