@@ -18,7 +18,7 @@ import { useConfirmAppointment } from "@/domain/booking/useConfirmAppointment";
 import { CENTER_CALENDARS, TIMEZONE, type LocationKey } from "@/lib/ghlCalendars";
 import { LOCATIONS, LOCATION_KEY_TO_SLUG } from "@/data/locations";
 import { PHONE } from "@/lib/constants";
-import { addDaysInTimeZone, isSundayInTimeZone } from "@/lib/etDate";
+import { addDaysInTimeZone, isSundayInTimeZone, ymdInTimeZone, dateFromYmdInTimeZone } from "@/lib/etDate";
 import { trackFunnelEvent } from "@/hooks/useAnalytics";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
 import { BookHeader } from "@/components/book/BookHeader";
@@ -65,7 +65,11 @@ export default function BookSchedule() {
 
   // ── Week state ─────────────────────────────────────────────────────────────
   const [weekStart, setWeekStart] = useState(() => {
-    const d = new Date(); d.setHours(0, 0, 0, 0); return d;
+    // Always anchor weekStart to today's date in US Eastern time.
+    // new Date() + setHours(0,0,0,0) uses the device's local timezone which
+    // is wrong for users in UTC or other timezones. Use ET-aware date instead.
+    const todayYmdET = ymdInTimeZone(new Date(), TIMEZONE);
+    return dateFromYmdInTimeZone(todayYmdET, TIMEZONE);
   });
 
   // ── Slot fetching (OPT 2 extracted hook; BUG 4 fix inside hook) ────────────
@@ -282,12 +286,15 @@ export default function BookSchedule() {
             <div className="flex items-center justify-between gap-3 px-4 sm:px-6 pt-3 pb-2">
               <button type="button"
                 onClick={() => {
-                  const d = new Date(weekStart);
-                  d.setDate(d.getDate() - 7);
-                  setWeekStart(d);
+                  // Don't allow navigating to weeks entirely in the past
+                  const prevStart = addDaysInTimeZone(weekStart, -7, TIMEZONE);
+                  const todayYmdET = ymdInTimeZone(new Date(), TIMEZONE);
+                  const prevEndYmd = ymdInTimeZone(addDaysInTimeZone(prevStart, 6, TIMEZONE), TIMEZONE);
+                  if (prevEndYmd < todayYmdET) return; // entire week is past
+                  setWeekStart(prevStart);
                   setSelectedDayIdx(null);
-                  setSelectedSlot(null);   // BUG 3 fix: clear stale slot on week change
-                  setReviewOpen(false);    // BUG 3 fix: close sheet so stale slot isn't shown
+                  setSelectedSlot(null);
+                  setReviewOpen(false);
                 }}
                 className="inline-flex h-9 w-9 items-center justify-center rounded-full border-[1.5px] border-panel-border text-panel-foreground hover:border-primary hover:text-primary-hover"
                 aria-label="Previous week">
@@ -298,12 +305,10 @@ export default function BookSchedule() {
               </h2>
               <button type="button"
                 onClick={() => {
-                  const d = new Date(weekStart);
-                  d.setDate(d.getDate() + 7);
-                  setWeekStart(d);
+                  setWeekStart(addDaysInTimeZone(weekStart, 7, TIMEZONE));
                   setSelectedDayIdx(null);
-                  setSelectedSlot(null);   // BUG 3 fix
-                  setReviewOpen(false);    // BUG 3 fix
+                  setSelectedSlot(null);
+                  setReviewOpen(false);
                 }}
                 className="inline-flex h-9 w-9 items-center justify-center rounded-full border-[1.5px] border-panel-border text-panel-foreground hover:border-primary hover:text-primary-hover"
                 aria-label="Next week">

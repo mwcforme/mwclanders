@@ -42,6 +42,14 @@ export function isTodayET(d: Date): boolean {
   }).format(new Date());
 }
 
+/** True if `d` is strictly before today in US Eastern time. */
+export function isPastDayET(d: Date): boolean {
+  const todayYmd = new Intl.DateTimeFormat("en-CA", {
+    timeZone: TIMEZONE, year: "numeric", month: "2-digit", day: "2-digit",
+  }).format(new Date());
+  return ymd(d) < todayYmd;
+}
+
 export function etHourOf(iso: string): number {
   const s = new Intl.DateTimeFormat("en-US", {
     timeZone: TIMEZONE, hour: "numeric", hour12: false,
@@ -51,7 +59,18 @@ export function etHourOf(iso: string): number {
 }
 
 export function dropPastAndOutOfHours(d: Date, slots: string[]): string[] {
-  const cutoffMs = isTodayET(d) ? Date.now() : 0;
+  // Past day (ET) → no slots at all.
+  // Today (ET)    → only future slots (cutoff = now, with 5-min buffer).
+  // Future day    → all slots within operating hours.
+  const BUFFER_MS = 5 * 60 * 1000; // 5-minute lead time so user can't book a slot starting "right now"
+  let cutoffMs: number;
+  if (isPastDayET(d)) {
+    cutoffMs = Infinity; // nothing passes
+  } else if (isTodayET(d)) {
+    cutoffMs = Date.now() + BUFFER_MS;
+  } else {
+    cutoffMs = 0; // future day — all slots pass
+  }
   return slots.filter(iso => {
     const h = etHourOf(iso);
     if (h < HOUR_MIN || h >= HOUR_MAX) return false;
