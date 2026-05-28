@@ -17,8 +17,7 @@ import { useConfirmAppointment } from "@/domain/booking/useConfirmAppointment";
 import { trackFunnelEvent } from "@/hooks/useAnalytics";
 import DayStrip from "./DayStrip";
 import TimeGrid from "./TimeGrid";
-
-const ORANGE = "var(--brand-cta)";
+import { ORANGE } from "./ghlAccordionHelpers";
 
 // ─── Supabase lazy import ─────────────────────────────────────────────────────
 
