@@ -30,11 +30,11 @@ export const CROFooter = () => {
           borderTop: "1px solid rgba(255,255,255,0.12)", paddingTop: 32,
           display: "flex", alignItems: "center", justifyContent: "center", gap: 40, flexWrap: "wrap",
         }}>
-          <img src="/images/badges/clia-color.webp" alt="CLIA Certified" style={{ height: 52, width: "auto" }} loading="lazy" decoding="async" />
+          <img src="/images/badges/clia-color.webp" alt="CLIA Certified" style={{ height: 52, width: "auto" }} width={120} height={52} loading="lazy" decoding="async" />
           <a href="https://www.legitscript.com/websites/?checker_keywords=menswellnesscenters.com" target="_blank" rel="noopener noreferrer">
-            <img src="/images/badges/legitscript-color.webp" alt="LegitScript Certified" style={{ height: 64, width: "auto" }} loading="lazy" decoding="async" />
+            <img src="/images/badges/legitscript-color.webp" alt="LegitScript Certified" style={{ height: 64, width: "auto" }} width={110} height={64} loading="lazy" decoding="async" />
           </a>
-          <img src="/images/badges/hipaa-color.webp" alt="HIPAA Compliant" style={{ height: 52, width: "auto" }} loading="lazy" decoding="async" />
+          <img src="/images/badges/hipaa-color.webp" alt="HIPAA Compliant" style={{ height: 52, width: "auto" }} width={120} height={52} loading="lazy" decoding="async" />
         </div>
         <div style={{
           marginTop: 32, paddingTop: 24,
