@@ -256,12 +256,12 @@ export default function BookSchedule() {
               <ArrowLeft className="h-4 w-4" aria-hidden />
             </button>
             <MapPin className="h-4 w-4 flex-shrink-0 text-primary" aria-hidden />
-            <span className="font-display text-sm font-bold uppercase tracking-wide text-panel-foreground">
+            <span className="font-display text-sm font-bold uppercase tracking-wide" style={{ color: "rgba(255,255,255,0.70)" }}>
               {clinicCity ?? "Select center"}
             </span>
           </div>
 
-          <h1 className="font-display text-2xl sm:text-3xl font-bold uppercase tracking-tight text-panel-foreground leading-tight">
+          <h1 className="font-display text-2xl sm:text-3xl font-bold uppercase tracking-tight leading-tight" style={{ color: "#FFFFFF" }}>
             {heading}
           </h1>
 
@@ -269,10 +269,10 @@ export default function BookSchedule() {
           {nextAvailable && !selectedSlot && (
             <button type="button"
               onClick={() => { setSelectedDayIdx(nextAvailable.idx); setSelectedSlot(nextAvailable.iso); }}
-              className="mt-1 inline-flex items-center gap-1.5 text-xs leading-tight text-panel-foreground hover:text-primary transition-colors">
+              className="mt-1 inline-flex items-center gap-1.5 text-xs leading-tight hover:text-primary transition-colors" style={{ color: "rgba(255,255,255,0.75)" }}>
               <span className="inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" aria-hidden />
               <span>
-                Next: <span className="whitespace-nowrap" style={{ color: "var(--c-text-on-light-muted)" }}>{nextAvailable.label}</span>
+                Next: <span className="whitespace-nowrap" style={{ color: "rgba(255,255,255,0.90)" }}>{nextAvailable.label}</span>
                 {" "}<span className="font-display font-bold uppercase tracking-wide text-primary underline underline-offset-2">Lock in →</span>
               </span>
             </button>
