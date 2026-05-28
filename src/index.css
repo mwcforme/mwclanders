@@ -1,5 +1,24 @@
 /* Fonts loaded via non-blocking <link> in index.html — @import removed to eliminate render-blocking request */
 
+/* Force font-display:swap for Google Fonts families — prevents FOIT/FOUT layout shift.
+   Google Fonts URL already includes display=swap but local overrides guard against
+   browser cache serving older @font-face rules without the swap descriptor. */
+@font-face {
+  font-family: 'Oswald';
+  font-display: swap;
+  src: local('Oswald');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-display: swap;
+  src: local('Montserrat');
+}
+@font-face {
+  font-family: 'Inter';
+  font-display: swap;
+  src: local('Inter');
+}
+
 /* MWC Locked overlay — non-destructive presentation refresh for /book/schedule
    and /book/confirmed. Matches https://mwclocked.pplx.app.
    IMPORTANT: This @import MUST stay above @tailwind directives —
