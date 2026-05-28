@@ -219,6 +219,7 @@ export default function OptimizeLP() {
             <p style={{
               fontFamily: "Inter, sans-serif", fontSize: 18, lineHeight: 1.65,
               color: "rgba(255,255,255,0.75)", maxWidth: 500, marginBottom: 32,
+              overflowWrap: "break-word",
             }}>
               Men's Wellness Centers is Virginia's in-person men's health practice. Three locations. A licensed provider who draws your labs on-site, reads them with you, and gives you a real answer the same visit.
             </p>
@@ -230,12 +231,13 @@ export default function OptimizeLP() {
                   display: "flex", alignItems: "flex-start", gap: 12,
                   fontFamily: "Inter, sans-serif", fontSize: 16,
                   color: "rgba(255,255,255,0.85)",
+                  minWidth: 0,
                 }}>
                   <span style={{
                     marginTop: 7, height: 6, width: 6, borderRadius: "50%",
                     background: ORANGE, flexShrink: 0,
                   }} aria-hidden />
-                  {s}
+                  <span style={{ minWidth: 0, overflowWrap: "break-word", flex: 1 }}>{s}</span>
                 </li>
               ))}
             </ul>
