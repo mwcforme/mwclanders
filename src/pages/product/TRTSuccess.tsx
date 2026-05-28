@@ -11,6 +11,7 @@ import { TRTFooter } from "@/components/landing/trt/TRTFooter";
 import { SEO } from "@/components/SEO";
 import { contactUpdater } from "@/services/contactUpdater";
 import { trackFunnelEvent } from "@/hooks/useAnalytics";
+import { TIMEZONE } from "@/lib/ghlCalendars";
 
 
 function formatApptTime(iso: string | undefined): string {
@@ -20,7 +21,7 @@ function formatApptTime(iso: string | undefined): string {
     return d.toLocaleString("en-US", {
       weekday: "long", month: "long", day: "numeric",
       hour: "numeric", minute: "2-digit", hour12: true,
-      timeZone: "America/New_York",
+      timeZone: TIMEZONE,
     });
   } catch {
     return iso;
