@@ -166,8 +166,25 @@ You've been told your labs are normal. You don't feel normal. At Men's Wellness 
             <span style={{ fontSize: 13, fontWeight: 600, color: "rgba(245,240,235,0.80)", fontFamily: "Inter, sans-serif" }}>4.9 · 200+ Google reviews</span>
           </a>
 
-          {/* Symptom statements — pushed to bottom with auto top margin */}
-          <div className="mt-auto pt-8 flex flex-col gap-4">
+          {/* What we treat — bridges reviews to symptoms */}
+          <div className="mt-8 flex flex-wrap gap-2">
+            {["Testosterone (TRT)", "ED Treatment", "Weight Loss"].map(label => (
+              <span key={label} style={{
+                display: "inline-flex", alignItems: "center",
+                padding: "6px 14px",
+                borderRadius: 999,
+                border: "1.5px solid rgba(232,103,10,0.50)",
+                background: "rgba(232,103,10,0.10)",
+                fontFamily: "Inter, sans-serif",
+                fontSize: 13, fontWeight: 700,
+                letterSpacing: "0.06em", textTransform: "uppercase",
+                color: "rgba(245,240,235,0.90)",
+              }}>{label}</span>
+            ))}
+          </div>
+
+          {/* Symptom statements */}
+          <div className="mt-8 flex flex-col gap-4">
             {[
               "Tired by noon. Coffee stopped working.",
               "Six months of training. Your body doesn't look like it.",

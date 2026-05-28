@@ -250,27 +250,7 @@ export default function OptimizeLP() {
 
           {/* Right: hero form */}
           <div style={{ paddingTop: 24 }}>
-            <div style={{
-              background: "rgba(255,255,255,0.04)",
-              border: "1px solid rgba(255,255,255,0.12)",
-              borderRadius: 16,
-              backdropFilter: "blur(8px)",
-              padding: "32px 28px",
-            }}>
-              <p style={{
-                fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 24,
-                textTransform: "uppercase", color: WHITE, marginBottom: 6,
-              }}>
-                Reserve your 60-minute visit.
-              </p>
-              <p style={{
-                fontFamily: "Inter, sans-serif", fontSize: 14,
-                color: "rgba(255,255,255,0.55)", marginBottom: 24,
-              }}>
-                No-cost. No obligation. Labs reviewed same visit.
-              </p>
-              <TRTHeroForm service="trt" formId="hero-opt" />
-            </div>
+            <TRTHeroForm service="trt" formId="hero-opt" />
           </div>
         </div>
       </section>
@@ -635,14 +615,7 @@ export default function OptimizeLP() {
             }}>
               60 minutes. Labs on-site. Results reviewed before you leave.
             </p>
-            <div style={{
-              background: "rgba(255,255,255,0.04)",
-              border: "1px solid rgba(255,255,255,0.12)",
-              borderRadius: 16, padding: "32px 28px",
-              textAlign: "left",
-            }}>
-              <TRTHeroForm service="trt" formId="cta-opt" />
-            </div>
+            <TRTHeroForm service="trt" formId="cta-opt" />
           </div>
         </section>
       </SectionReveal>
