@@ -11,7 +11,6 @@ interface BookLayoutProps {
   page: "symptom" | "duration" | "schedule" | "confirmed" | "lets-talk" | "contact" | "location";
   title: string;
   description?: string;
-  variant?: "default" | "confirmation";
   children: ReactNode;
 }
 
@@ -26,7 +25,7 @@ const DEFAULT_DESC: Record<BookLayoutProps["page"], string> = {
 };
 
 
-const BookLayout = ({ page, title, description, variant = "default", children }: BookLayoutProps) => {
+const BookLayout = ({ page, title, description, children }: BookLayoutProps) => {
   useEffect(() => {
     document.body.dataset.page = page;
     return () => {
