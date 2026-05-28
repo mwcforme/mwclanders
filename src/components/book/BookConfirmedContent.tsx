@@ -174,22 +174,15 @@ function VideoModal({ src, onClose }: { src: string; onClose: () => void }) {
 
 function VideoCard({ locationSlug }: { locationSlug?: string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [playing, setPlaying]     = useState(false); // mobile inline
-  const [modalOpen, setModalOpen] = useState(false); // desktop modal
+  const [playing, setPlaying] = useState(false);
   const src = getVideoSrc(locationSlug);
 
-  // Auto-play on mount — desktop opens modal, mobile plays inline (muted to satisfy browser policy)
+  // Auto-play embedded on mount (muted to satisfy browser autoplay policy)
   useEffect(() => {
-    const isDesktop = window.innerWidth >= 768;
-    // Small delay so the confirmed page content renders first
     const t = setTimeout(() => {
-      if (isDesktop) {
-        setModalOpen(true);
-      } else {
-        if (videoRef.current) {
-          videoRef.current.muted = true;
-          videoRef.current.play().then(() => setPlaying(true)).catch(() => {});
-        }
+      if (videoRef.current) {
+        videoRef.current.muted = true;
+        videoRef.current.play().then(() => setPlaying(true)).catch(() => {});
       }
     }, 800);
     return () => clearTimeout(t);
@@ -197,40 +190,37 @@ function VideoCard({ locationSlug }: { locationSlug?: string }) {
   }, []);
 
   const handleClick = () => {
-    const isDesktop = window.innerWidth >= 768;
-    if (isDesktop) { setModalOpen(true); }
-    else { if (videoRef.current) { videoRef.current.muted = false; videoRef.current.play(); setPlaying(true); } }
+    if (videoRef.current) {
+      videoRef.current.muted = false;
+      videoRef.current.play();
+      setPlaying(true);
+    }
   };
 
   return (
-    <>
-      <div style={WHITE_CARD}>
-        <div style={{ position: "relative", width: "100%", paddingBottom: "56%", background: "#0B1029", borderBottom: DIVIDER }}>
-          {/* Inline video — mobile only once playing */}
-          <video
-            ref={videoRef}
-            src={src}
-            poster="/images/video-poster.webp"
-            loop={false} playsInline preload="none"
-            aria-label="What to expect at your visit"
-            controls={playing}
-            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", border: 0 }}
-            onEnded={() => setPlaying(false)}
-          />
-          {!playing && <PlayButton onClick={handleClick} />}
-        </div>
-        <div style={{ padding: "18px 20px 14px" }}>
-          <p style={{ fontFamily: FONTS.body, fontSize: 19.125, fontWeight: 700, color: INK, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 6 }}>
-            What happens when you walk in
-          </p>
-          <p style={{ fontFamily: FONTS.body, fontSize: 17, fontWeight: 600, color: INK_MUTED, margin: 0 }}>
-            2 minute video
-          </p>
-        </div>
+    <div style={WHITE_CARD}>
+      <div style={{ position: "relative", width: "100%", paddingBottom: "56%", background: "#0B1029", borderBottom: DIVIDER }}>
+        <video
+          ref={videoRef}
+          src={src}
+          poster="/images/video-poster.webp"
+          loop={false} playsInline preload="none"
+          aria-label="What to expect at your visit"
+          controls={playing}
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", border: 0 }}
+          onEnded={() => setPlaying(false)}
+        />
+        {!playing && <PlayButton onClick={handleClick} />}
       </div>
-      {/* Desktop modal */}
-      {modalOpen && <VideoModal src={src} onClose={() => setModalOpen(false)} />}
-    </>
+      <div style={{ padding: "18px 20px 14px" }}>
+        <p style={{ fontFamily: FONTS.body, fontSize: 19.125, fontWeight: 700, color: INK, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 6 }}>
+          What happens when you walk in
+        </p>
+        <p style={{ fontFamily: FONTS.body, fontSize: 17, fontWeight: 600, color: INK_MUTED, margin: 0 }}>
+          2 minute video
+        </p>
+      </div>
+    </div>
   );
 }
 
