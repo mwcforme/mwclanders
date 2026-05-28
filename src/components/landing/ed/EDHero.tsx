@@ -109,7 +109,7 @@ export const EDHero = () => {
 
           {/* Service pills */}
           <div className="mt-8 flex flex-wrap gap-2">
-            {["Sildenafil + Tadalafil", "TriMix + PT-141", "100% Private"].map(label => (
+            {["In-Person Virginia Visits", "Oral + Injectable Therapy", "100% Private"].map(label => (
               <span key={label} style={{
                 display: "inline-flex", alignItems: "center",
                 padding: "6px 14px",

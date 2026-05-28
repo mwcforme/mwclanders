@@ -29,7 +29,7 @@ const NewED = () => {
     <div className="min-h-screen flex flex-col" style={{ fontFamily: "Inter, sans-serif" }}>
       <SEO
         title="ED Therapy in Virginia | Discreet, In-Person | Men's Wellness Centers"
-        description="In-person ED treatment with a licensed Virginia provider. Sildenafil, Tadalafil, TriMix, and PT-141 when clinically appropriate. 100% confidential."
+        description="In-person ED treatment with a licensed Virginia provider. Oral and injectable therapies when clinically appropriate. 100% confidential."
       />
       <TRTHeader />
       <main className="flex-1">

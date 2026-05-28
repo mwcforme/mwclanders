@@ -7,11 +7,11 @@ import { Eyebrow } from "@/components/landing/shared/primitives";
 const faqs = [
   {
     q: "How much weight can I expect to lose?",
-    a: "In manufacturer trials, GLP-1 medications like semaglutide and tirzepatide produced an average of 15-20% body weight loss when paired with diet and exercise changes. Your provider will set a realistic target based on your starting labs and health history. Individual results vary.",
+    a: "In manufacturer trials, GLP-1 medications produced an average of 15-20% body weight loss when paired with diet and exercise changes. Your provider will set a realistic target based on your starting labs and health history. Individual results vary.",
   },
   {
     q: "Which medications do you prescribe?",
-    a: "When clinically appropriate, we prescribe FDA-approved GLP-1 medications including semaglutide and tirzepatide, plus supporting tools like lipotropic injections and metabolic protocols. Selection is based on your labs, history, and goals.",
+    a: "When clinically appropriate, we prescribe FDA-approved GLP-1 medications, plus supporting tools like lipotropic injections and metabolic protocols. Selection is based on your labs, history, and goals.",
   },
   {
     q: "Does insurance cover this?",

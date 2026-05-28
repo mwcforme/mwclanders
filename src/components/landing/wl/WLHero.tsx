@@ -109,7 +109,7 @@ export const WLHero = () => {
 
           {/* Service pills */}
           <div className="mt-8 flex flex-wrap gap-2">
-            {["Semaglutide", "Tirzepatide", "FSA + HSA Accepted"].map(label => (
+            {["GLP-1 Medications", "Provider-Supervised", "FSA + HSA Accepted"].map(label => (
               <span key={label} style={{
                 display: "inline-flex", alignItems: "center",
                 padding: "6px 14px",

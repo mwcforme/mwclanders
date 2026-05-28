@@ -11,7 +11,7 @@ const faqs = [
   },
   {
     q: "What treatments do you offer?",
-    a: "FDA-approved oral medications including Sildenafil and Tadalafil, plus injectable options like TriMix and PT-141 for men who do not respond to oral therapy. Your provider chooses based on labs, medical history, and what has and has not worked for you in the past.",
+    a: "FDA-approved oral and injectable medications, selected by your provider based on your labs, medical history, and what has and has not worked for you in the past. Treatment options go beyond what most online services can prescribe.",
   },
   {
     q: "I tried pills from an online site and they did nothing.",
@@ -19,7 +19,7 @@ const faqs = [
   },
   {
     q: "How is this different from Hims, BlueChew, or online ED?",
-    a: "We are an in-person Virginia center, not a chat-and-ship pharmacy. You see the same provider at the same center, your labs are drawn on-site, and your treatment includes options online services do not carry, like TriMix and PT-141.",
+    a: "We are an in-person Virginia center, not a chat-and-ship pharmacy. You see the same provider at the same center, your labs are drawn on-site, and your treatment options include medications that online services cannot prescribe.",
   },
   {
     q: "Does insurance cover this?",

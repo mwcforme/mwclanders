@@ -29,7 +29,7 @@ const NewWeightLoss = () => {
     <div className="min-h-screen flex flex-col" style={{ fontFamily: "Inter, sans-serif" }}>
       <SEO
         title="Medical Weight Loss for Men in Virginia | Men's Wellness Centers"
-        description="Provider-supervised GLP-1 weight loss in Virginia. Semaglutide, tirzepatide, and a real provider you actually meet. FSA and HSA accepted."
+        description="Provider-supervised medical weight loss in Virginia. GLP-1 medications and a real provider you actually meet. FSA and HSA accepted."
       />
       <TRTHeader />
       <main className="flex-1">
