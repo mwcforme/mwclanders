@@ -6,10 +6,7 @@
  */
 import { ArrowRight } from "lucide-react";
 import { TIMEZONE } from "@/lib/ghlCalendars";
-
-const ORANGE = "var(--brand-cta)";
-// hardcoded-color-allow-next-line
-const INK    = "#0B1029";
+import { ORANGE, INK } from "./ghlAccordionHelpers";
 
 const fmtTimeParts = (iso: string): { time: string; ampm: string; hour: number } => {
   const d = new Date(iso);
