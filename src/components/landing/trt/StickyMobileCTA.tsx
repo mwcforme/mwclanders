@@ -60,8 +60,9 @@ export const StickyMobileCTA = () => {
         backdropFilter: "blur(12px)",
         WebkitBackdropFilter: "blur(12px)",
         borderTop: "1px solid rgba(255,255,255,0.08)",
-        padding: `12px 16px max(14px, env(safe-area-inset-bottom)) 16px`,
-        boxShadow: "0 -8px_24px rgba(0,0,0,0.40)",
+        padding: "12px 16px",
+        paddingBottom: "max(14px, env(safe-area-inset-bottom))",
+        boxShadow: "0 -8px 24px rgba(0,0,0,0.40)",
       }}
       aria-hidden={!show}
     >
@@ -79,7 +80,7 @@ export const StickyMobileCTA = () => {
         {COPY.cta.bookConsult}
       </button>
       <p className="text-center mt-1.5" style={{ fontFamily: "Inter, sans-serif", fontSize: 11, color: "rgba(255,255,255,0.55)" }}>
-        60-minute in-person visit · Men's Wellness Centers
+        60-minute in-person visit · Men&apos;s Wellness Centers
       </p>
     </div>
   );

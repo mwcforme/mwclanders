@@ -40,7 +40,7 @@ export function ContactCard({ type, phoneDisplay, phoneTel, smsHref, onCallClick
             {isCall ? "Call us" : "Prefer to text?"}
           </h2>
           <p style={{ color: "#5A6478", fontSize: 14, fontWeight: 500, lineHeight: 1.35, marginTop: 2 }}>
-            {isCall ? "Mon–Fri 8am–6pm · Sat 8am–4pm. A real person picks up." : "Same number. We reply same day."}
+            {isCall ? "Mon to Fri 8am to 6pm · Sat 8am to 4pm. A real person picks up." : "Same number. We reply same day."}
           </p>
         </div>
       </div>
