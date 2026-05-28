@@ -14,6 +14,7 @@ import { useBookingStore } from "@/domain/booking/bookingStore";
 import { PHONE } from "@/lib/constants";
 import { SEO } from "@/components/SEO";
 import { trackFunnelEvent } from "@/hooks/useAnalytics";
+import { SectionReveal } from "@/components/landing/trt/SectionReveal";
 
 const TRTFooter = lazy(() =>
   import("@/components/landing/trt/TRTFooter").then(m => ({ default: m.TRTFooter }))
@@ -85,22 +86,39 @@ function LeadForm({ idSuffix = "" }: { idSuffix?: string }) {
 
   return (
     <form ref={formRef} onSubmit={onSubmit}
-      className="rounded-2xl bg-panel text-panel-foreground p-6 shadow-card border-2 border-panel-divider"
+      className="rounded-2xl bg-panel text-panel-foreground p-6 sm:p-8 shadow-card border-2 border-panel-divider"
       aria-label="Reserve your visit">
 
       <h2 className="font-display text-2xl font-bold uppercase tracking-tight text-panel-foreground leading-tight mb-1">
         Reserve your 60-minute visit.
       </h2>
-      <p className="text-sm mb-5" style={{ color: "var(--c-text-on-light-muted)" }}>
+      <p className="text-sm mb-5 text-panel-muted">
         No-cost. No obligation. Labs reviewed on the same visit.
       </p>
 
       <div className="flex flex-col gap-3">
-        <input type="text" name="name" required placeholder="Your name"
-          className="w-full rounded-xl border-[1.5px] border-panel-border bg-background text-panel-foreground placeholder:text-panel-muted px-4 h-12 text-base focus:outline-none focus:border-primary transition-colors" />
-        <input type="tel" name="phone" required placeholder="Phone number"
-          className="w-full rounded-xl border-[1.5px] border-panel-border bg-background text-panel-foreground placeholder:text-panel-muted px-4 h-12 text-base focus:outline-none focus:border-primary transition-colors" />
+        {/* Name */}
+        <input
+          type="text"
+          name={`name${idSuffix}`}
+          id={`opt-name${idSuffix}`}
+          autoComplete="name"
+          required
+          placeholder="Your name"
+          className="w-full rounded-xl border-[1.5px] border-panel-border bg-background text-panel-foreground placeholder:text-panel-muted px-4 min-h-[52px] text-base focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 focus:ring-offset-1 transition-colors"
+        />
+        {/* Phone */}
+        <input
+          type="tel"
+          name={`phone${idSuffix}`}
+          id={`opt-phone${idSuffix}`}
+          autoComplete="tel"
+          required
+          placeholder="Phone number"
+          className="w-full rounded-xl border-[1.5px] border-panel-border bg-background text-panel-foreground placeholder:text-panel-muted px-4 min-h-[52px] text-base focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 focus:ring-offset-1 transition-colors"
+        />
 
+        {/* Location radio */}
         <fieldset>
           <legend className="text-xs font-bold uppercase tracking-[0.12em] text-panel-muted mb-2 block">
             Closest location
@@ -108,8 +126,14 @@ function LeadForm({ idSuffix = "" }: { idSuffix?: string }) {
           <div className="grid grid-cols-3 gap-2">
             {LOCATIONS_DATA.map(loc => (
               <label key={loc.city} className="cursor-pointer">
-                <input type="radio" name="location" value={loc.key} required className="sr-only optimize-radio" />
-                <span className="optimize-radio-label block text-center py-2.5 px-1 rounded-xl border-[1.5px] border-panel-border bg-background text-panel-foreground text-[11px] font-bold uppercase tracking-wider transition-colors select-none">
+                <input
+                  type="radio"
+                  name={`location${idSuffix}`}
+                  value={loc.key}
+                  required
+                  className="sr-only optimize-radio"
+                />
+                <span className="optimize-radio-label block text-center py-3 px-1 rounded-xl border-[1.5px] border-panel-border bg-background text-panel-foreground text-[11px] font-bold uppercase tracking-wider transition-colors duration-200 select-none">
                   {loc.city === "Virginia Beach" ? "VA Beach" : loc.city === "Newport News" ? "Newport" : loc.city}
                 </span>
               </label>
@@ -118,21 +142,30 @@ function LeadForm({ idSuffix = "" }: { idSuffix?: string }) {
         </fieldset>
       </div>
 
-      <label className="mt-4 flex items-start gap-2.5 cursor-pointer">
-        <input type="checkbox" required className="mt-0.5 h-4 w-4 accent-primary flex-shrink-0" />
+      {/* TCPA */}
+      <label className="mt-4 flex items-start gap-3 cursor-pointer min-h-[44px]">
+        <input
+          type="checkbox"
+          required
+          className="mt-0.5 h-5 w-5 accent-primary flex-shrink-0 cursor-pointer"
+          aria-label="TCPA consent"
+        />
         <span className="text-[11px] leading-snug text-panel-muted">
           I agree to receive SMS and calls from Men's Wellness Centers. Msg &amp; data rates may apply. Reply STOP to opt out. Not a condition of service.
         </span>
       </label>
 
       {error && (
-        <div className="mt-3 rounded-xl border border-panel-border bg-background px-4 py-3 text-sm font-semibold text-panel-foreground">
-          {error}{" "}<a href={PHONE.tel} className="text-primary underline underline-offset-2">{PHONE.display}</a>
+        <div role="alert" className="mt-3 rounded-xl border border-red-300 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
+          {error}{" "}<a href={PHONE.tel} className="underline underline-offset-2">{PHONE.display}</a>
         </div>
       )}
 
-      <button type="submit" disabled={submitting}
-        className="mt-5 w-full h-14 rounded-xl bg-primary text-white font-display font-bold uppercase tracking-[0.12em] text-base shadow-cta hover:bg-primary-hover transition-colors disabled:opacity-60 disabled:cursor-wait flex items-center justify-center gap-2">
+      <button
+        type="submit"
+        disabled={submitting}
+        className="mt-5 w-full min-h-[56px] rounded-xl bg-primary text-white font-display font-bold uppercase tracking-[0.12em] text-base shadow-cta hover:bg-primary-hover transition-colors duration-200 disabled:opacity-60 disabled:cursor-wait flex items-center justify-center gap-2"
+      >
         {submitting ? "Booking…" : <><span>Get Started</span><ArrowRight className="h-5 w-5" aria-hidden /></>}
       </button>
       <p className="mt-2.5 text-center text-[11px] text-panel-muted">
@@ -150,35 +183,68 @@ function FAQItem({ q, a, idx }: { q: string; a: string; idx: number }) {
   const [open, setOpen] = useState(idx === 0);
   return (
     <div className="border-b border-panel-divider last:border-b-0">
-      <button type="button" onClick={() => setOpen(v => !v)}
-        className="w-full flex items-center justify-between gap-4 py-5 text-left bg-transparent border-0 cursor-pointer"
-        aria-expanded={open}>
+      <button
+        type="button"
+        onClick={() => setOpen(v => !v)}
+        className="w-full flex items-center justify-between gap-4 min-h-[56px] py-3 text-left bg-transparent border-0 cursor-pointer"
+        aria-expanded={open}
+      >
         <span className="font-display text-base font-bold uppercase tracking-wide text-panel-foreground">{q}</span>
-        <ChevronDown className={`h-5 w-5 text-primary flex-shrink-0 transition-transform ${open ? "rotate-180" : ""}`} aria-hidden />
+        <ChevronDown className={`h-5 w-5 text-primary flex-shrink-0 transition-transform duration-200 ${open ? "rotate-180" : ""}`} aria-hidden />
       </button>
-      {open && <p className="pb-5 text-base leading-relaxed" style={{ color: "var(--c-text-on-light-muted)" }}>{a}</p>}
+      {open && (
+        <p className="pb-5 text-base leading-relaxed text-panel-muted">{a}</p>
+      )}
     </div>
   );
 }
 
 // ─── Section helpers ──────────────────────────────────────────────────────────
 
-// Eyebrow matches schedule page section labels (dark navy, tracked caps, no orange on light)
-const Eyebrow = ({ children, onDark = false }: { children: React.ReactNode; onDark?: boolean }) => (
-  <p className={`font-display text-xs font-bold uppercase tracking-[0.18em] mb-2 ${onDark ? "text-white/75" : "text-panel-muted"}`}>
+const Eyebrow = ({
+  children,
+  onDark = false,
+  center = false,
+}: {
+  children: React.ReactNode;
+  onDark?: boolean;
+  center?: boolean;
+}) => (
+  <p
+    className={`font-display text-xs font-bold uppercase tracking-[0.18em] mb-2 ${onDark ? "text-white/70" : "text-panel-muted"} ${center ? "text-center" : ""}`}
+  >
     {children}
   </p>
 );
 
-const SectionHeading = ({ children, onDark = false }: { children: React.ReactNode; onDark?: boolean }) => (
-  <h2 className={`font-display text-3xl sm:text-4xl font-bold uppercase leading-tight mb-4 ${onDark ? "text-white" : "text-panel-foreground"}`}>
+const SectionHeading = ({
+  children,
+  onDark = false,
+  center = false,
+}: {
+  children: React.ReactNode;
+  onDark?: boolean;
+  center?: boolean;
+}) => (
+  <h2
+    className={`font-display text-2xl sm:text-3xl md:text-4xl font-bold uppercase leading-tight mb-4 ${onDark ? "text-white" : "text-panel-foreground"} ${center ? "text-center" : ""}`}
+  >
     {children}
   </h2>
 );
 
-const BodyText = ({ children, onDark = false, center = false }: { children: React.ReactNode; onDark?: boolean; center?: boolean }) => (
-  <p className={`text-lg leading-relaxed ${onDark ? "text-white/80" : ""} ${center ? "text-center" : ""}`}
-    style={onDark ? undefined : { color: "var(--c-text-on-light-muted)" }}>
+const BodyText = ({
+  children,
+  onDark = false,
+  center = false,
+}: {
+  children: React.ReactNode;
+  onDark?: boolean;
+  center?: boolean;
+}) => (
+  <p
+    className={`text-base sm:text-lg leading-relaxed ${onDark ? "text-white/80" : "text-panel-muted"} ${center ? "text-center" : ""}`}
+  >
     {children}
   </p>
 );
@@ -199,14 +265,17 @@ export default function OptimizeLP() {
 
       {/* ── Hero: cream bg ── */}
       <section id="reserve" className="pt-16">
-        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 py-10 sm:py-14 grid md:grid-cols-[1.15fr_1fr] gap-8 md:gap-12 items-start">
-          {/* Left: copy */}
+        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 py-8 sm:py-14 grid md:grid-cols-[1.15fr_1fr] gap-8 md:gap-12 items-start">
+          {/* Left: copy — renders first on mobile so it stacks above the form */}
           <div>
             <p className="inline-flex items-center gap-2 font-display text-xs font-bold uppercase tracking-[0.18em] text-panel-muted mb-4">
               <MapPin className="h-4 w-4 text-primary flex-shrink-0" aria-hidden />
               Virginia · 3 Centers · Physician-led
             </p>
-            <h1 className="font-display text-4xl sm:text-5xl font-bold uppercase leading-[1.04] text-panel-foreground mb-4">
+            <h1
+              className="font-display font-bold uppercase leading-[1.04] tracking-tight text-panel-foreground mb-5"
+              style={{ fontSize: "clamp(28px, 8vw, 56px)" }}
+            >
               Virginia's choice for{" "}
               <span className="text-primary">TRT, ED, and weight loss.</span>
             </h1>
@@ -226,7 +295,8 @@ export default function OptimizeLP() {
                 </li>
               ))}
             </ul>
-            <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2" style={{ color: "var(--c-text-on-light-muted)", fontSize: 14 }}>
+            {/* Trust row — wraps gracefully on mobile */}
+            <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-panel-muted">
               <span className="inline-flex items-center gap-1.5">
                 <Star className="h-4 w-4 fill-primary text-primary" aria-hidden />
                 <strong className="text-panel-foreground">4.9</strong> · 200+ Google reviews
@@ -237,202 +307,242 @@ export default function OptimizeLP() {
               </span>
             </div>
           </div>
-          {/* Right: sticky form */}
-          <div className="md:sticky md:top-20">
+          {/* Right: sticky form — full-width on mobile */}
+          <div className="w-full md:sticky md:top-20">
             <LeadForm />
           </div>
         </div>
       </section>
 
       {/* ── Who this is for: bg-surface (dark) ── */}
-      <section className="bg-surface py-12 sm:py-16">
-        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
-          <Eyebrow onDark>Who this is for</Eyebrow>
-          <SectionHeading onDark>Built for Virginia men over 35 who feel off and want a real answer.</SectionHeading>
-          <BodyText onDark>
-            Most members are 38 to 62, working, with a family. They've already been told their labs are normal. They want a 60-minute conversation with a Virginia-licensed provider who specializes in men's health.
-          </BodyText>
-          <div className="mt-8 grid sm:grid-cols-3 gap-4">
-            {[
-              { title: "Low energy and recovery", body: "Energy drops in the afternoon. Workouts feel harder. Sleep is broken. You suspect testosterone is involved.", icon: Beaker },
-              { title: "Sexual health concerns", body: "ED, lower libido, or both. You want an in-person evaluation, not a questionnaire from an app.", icon: UserCheck },
-              { title: "Weight that will not move", body: "You're training and eating clean. The scale won't budge. You want a lab-guided GLP-1 protocol with monitoring.", icon: ClipboardList },
-            ].map(({ title, body, icon: Icon }) => (
-              <div key={title}
-                className="rounded-2xl bg-panel text-panel-foreground p-5 sm:p-6 shadow-card border border-panel-divider"
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(-3px)"; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}
-                style={{ transition: "transform 220ms ease" }}>
-                <Icon className="h-6 w-6 text-primary" aria-hidden />
-                <h3 className="mt-3 font-display text-lg font-bold uppercase text-panel-foreground">{title}</h3>
-                <p className="mt-2 text-sm leading-relaxed" style={{ color: "var(--c-text-on-light-muted)" }}>{body}</p>
-              </div>
-            ))}
+      <SectionReveal>
+        <section className="bg-surface py-12 sm:py-20">
+          <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
+            <Eyebrow onDark>Who this is for</Eyebrow>
+            <SectionHeading onDark>Built for Virginia men over 35 who feel off and want a real answer.</SectionHeading>
+            <BodyText onDark>
+              Most members are 38 to 62, working, with a family. They've already been told their labs are normal. They want a 60-minute conversation with a Virginia-licensed provider who specializes in men's health.
+            </BodyText>
+            <div className="mt-8 grid sm:grid-cols-3 gap-5 sm:gap-6">
+              {[
+                { title: "Low energy and recovery", body: "Energy drops in the afternoon. Workouts feel harder. Sleep is broken. You suspect testosterone is involved.", icon: Beaker },
+                { title: "Sexual health concerns", body: "ED, lower libido, or both. You want an in-person evaluation, not a questionnaire from an app.", icon: UserCheck },
+                { title: "Weight that will not move", body: "You're training and eating clean. The scale won't budge. You want a lab-guided GLP-1 protocol with monitoring.", icon: ClipboardList },
+              ].map(({ title, body, icon: Icon }) => (
+                <div
+                  key={title}
+                  className="rounded-2xl bg-panel text-panel-foreground p-6 sm:p-8 shadow-card border border-panel-divider transition-transform duration-200 hover:-translate-y-1"
+                >
+                  <Icon className="h-6 w-6 text-primary" aria-hidden />
+                  <h3 className="mt-3 font-display text-lg font-bold uppercase text-panel-foreground">{title}</h3>
+                  <p className="mt-2 text-base sm:text-lg leading-relaxed text-panel-muted">{body}</p>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </SectionReveal>
 
       {/* ── Why MWC: bg-background (cream) ── */}
-      <section className="bg-background py-12 sm:py-16">
-        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
-          <Eyebrow>Why Men's Wellness Centers</Eyebrow>
-          <SectionHeading>Local. In-person. Built for men.</SectionHeading>
-          <BodyText>
-            Telehealth brands send you a questionnaire and a shipping label. We sit you down with a Virginia-licensed provider, draw your labs on-site, and review every number with you the same visit.
-          </BodyText>
-          <div className="mt-8 grid md:grid-cols-2 gap-5">
-            <div className="rounded-2xl bg-panel text-panel-foreground p-6 sm:p-7 shadow-card border-2 border-primary">
-              <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-panel-muted mb-4">What you get here</p>
-              <ul className="grid gap-3">
-                {["60-minute in-person visit at your local center","Virginia-licensed provider, same provider every visit","Full hormone panel drawn and reviewed on-site","Personalized protocol explained in plain language","Ongoing follow-up labs included","FSA and HSA accepted"].map(line => (
-                  <li key={line} className="flex items-start gap-2.5 text-base font-semibold text-panel-foreground">
-                    <Check className="h-5 w-5 mt-0.5 flex-shrink-0 text-success" aria-hidden strokeWidth={3} />
-                    {line}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="rounded-2xl bg-panel text-panel-foreground p-6 sm:p-7 shadow-card border border-panel-divider">
-              <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-panel-muted mb-4">What you will not find here</p>
-              <ul className="grid gap-3">
-                {["Mail-order questionnaires and chatbots","Rotating clinicians who do not know your case","Hidden fees or auto-renewing subscriptions","Call centers between you and your provider","Generic protocols from a chart range","Pressure to start treatment the same day"].map(line => (
-                  <li key={line} className="flex items-start gap-2.5 text-base" style={{ color: "var(--c-text-on-light-muted)" }}>
-                    <X className="h-5 w-5 mt-0.5 flex-shrink-0" style={{ color: "var(--c-text-on-light-muted)" }} aria-hidden strokeWidth={2.5} />
-                    {line}
-                  </li>
-                ))}
-              </ul>
+      <SectionReveal>
+        <section className="bg-background py-12 sm:py-20">
+          <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
+            <Eyebrow>Why Men's Wellness Centers</Eyebrow>
+            <SectionHeading>Local. In-person. Built for men.</SectionHeading>
+            <BodyText>
+              Telehealth brands send you a questionnaire and a shipping label. We sit you down with a Virginia-licensed provider, draw your labs on-site, and review every number with you the same visit.
+            </BodyText>
+            <div className="mt-8 grid md:grid-cols-2 gap-5 sm:gap-6">
+              {/* "What you get here" — highlighted */}
+              <div className="rounded-2xl bg-panel text-panel-foreground p-6 sm:p-8 shadow-card border-2 border-primary ring-1 ring-primary/20">
+                <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-primary mb-4">What you get here</p>
+                <ul className="grid gap-3">
+                  {["60-minute in-person visit at your local center","Virginia-licensed provider, same provider every visit","Full hormone panel drawn and reviewed on-site","Personalized protocol explained in plain language","Ongoing follow-up labs included","FSA and HSA accepted"].map(line => (
+                    <li key={line} className="flex items-start gap-2.5 text-sm sm:text-base font-semibold text-panel-foreground">
+                      <Check className="h-5 w-5 mt-0.5 flex-shrink-0 text-success" aria-hidden strokeWidth={3} />
+                      {line}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              {/* "What you will not find here" — equal visual weight */}
+              <div className="rounded-2xl bg-panel text-panel-foreground p-6 sm:p-8 shadow-card border border-panel-divider">
+                <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-panel-foreground mb-4">What you will not find here</p>
+                <ul className="grid gap-3">
+                  {["Mail-order questionnaires and chatbots","Rotating clinicians who do not know your case","Hidden fees or auto-renewing subscriptions","Call centers between you and your provider","Generic protocols from a chart range","Pressure to start treatment the same day"].map(line => (
+                    <li key={line} className="flex items-start gap-2.5 text-sm sm:text-base text-panel-muted">
+                      <X className="h-5 w-5 mt-0.5 flex-shrink-0 text-panel-muted" aria-hidden strokeWidth={2.5} />
+                      {line}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </SectionReveal>
 
       {/* ── Trust: bg-surface (dark) ── */}
-      <section className="bg-surface py-12 sm:py-16">
-        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
-          <Eyebrow onDark>Trust and proof</Eyebrow>
-          <SectionHeading onDark>10,000+ Virginia members. 4.9 stars. Verified.</SectionHeading>
-          <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {[{ stat: "10,000+", label: "Virginia members" },{ stat: "4.9★", label: "200+ Google reviews" },{ stat: "3", label: "Virginia centers" },{ stat: "Same-day", label: "Labs in your visit" }].map(s => (
-              <div key={s.label} className="rounded-2xl bg-panel text-panel-foreground p-4 sm:p-5 text-center shadow-card">
-                <p className="font-display text-3xl sm:text-4xl font-bold text-primary leading-none">{s.stat}</p>
-                <p className="mt-2 text-xs font-bold uppercase tracking-[0.1em] text-panel-muted">{s.label}</p>
-              </div>
-            ))}
-          </div>
-          <div className="mt-6 grid sm:grid-cols-2 gap-4">
-            {REVIEWS.map(r => (
-              <figure key={r.name} className="rounded-2xl bg-panel text-panel-foreground p-5 shadow-card border border-panel-divider m-0">
-                <div className="flex gap-1 mb-3">
-                  {Array.from({ length: 5 }).map((_, i) => <Star key={i} className="h-4 w-4 fill-primary text-primary" aria-hidden />)}
+      <SectionReveal>
+        <section className="bg-surface py-12 sm:py-20">
+          <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
+            <Eyebrow onDark>Trust and proof</Eyebrow>
+            <SectionHeading onDark>10,000+ Virginia members. 4.9 stars. Verified.</SectionHeading>
+            {/* Stats — 2×2 on mobile, 4-col on desktop */}
+            <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-5 sm:gap-6">
+              {[
+                { stat: "10,000+", label: "Virginia members" },
+                { stat: "4.9★",   label: "200+ Google reviews" },
+                { stat: "3",      label: "Virginia centers" },
+                { stat: "Same-day", label: "Labs in your visit" },
+              ].map(s => (
+                <div key={s.label} className="rounded-2xl bg-panel text-panel-foreground p-4 sm:p-5 text-center shadow-card">
+                  <p className="font-display text-3xl sm:text-4xl font-bold text-primary leading-none">{s.stat}</p>
+                  <p className="mt-2 text-xs font-bold uppercase tracking-[0.1em] text-panel-muted">{s.label}</p>
                 </div>
-                <blockquote className="text-base text-panel-foreground leading-relaxed mb-3">"{r.text}"</blockquote>
-                <figcaption className="text-sm text-panel-muted">
-                  <strong className="text-panel-foreground">{r.name}</strong> · {r.when} · Verified Google review
-                </figcaption>
-              </figure>
-            ))}
+              ))}
+            </div>
+            {/* Review cards — 1-col mobile, 2-col tablet+ */}
+            <div className="mt-6 grid sm:grid-cols-2 gap-5 sm:gap-6">
+              {REVIEWS.map(r => (
+                <figure key={r.name} className="rounded-2xl bg-panel text-panel-foreground p-5 shadow-card border border-panel-divider m-0">
+                  <div className="flex gap-1 mb-3" aria-label="5 stars">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} className="h-4 w-4 fill-primary text-primary" aria-hidden />
+                    ))}
+                  </div>
+                  <blockquote className="text-sm sm:text-base text-panel-foreground leading-relaxed mb-3">"{r.text}"</blockquote>
+                  <figcaption className="text-sm text-panel-muted">
+                    <strong className="text-panel-foreground">{r.name}</strong> · {r.when} · Verified Google review
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+            <p className="mt-4 text-xs text-white/50">Reviews reflect individual experiences. Individual results vary.</p>
+            <div className="mt-8 pt-8 border-t border-white/10 flex flex-wrap gap-x-8 gap-y-3">
+              {[
+                { label: "LegitScript certified",      icon: ShieldCheck },
+                { label: "CLIA certified lab",          icon: Beaker },
+                { label: "HIPAA compliant",             icon: ShieldCheck },
+                { label: "Virginia-licensed providers", icon: UserCheck },
+              ].map(({ label, icon: Icon }) => (
+                <div key={label} className="flex items-center gap-2 text-sm font-semibold text-white/90">
+                  <Icon className="h-4 w-4 text-primary" aria-hidden /> {label}
+                </div>
+              ))}
+            </div>
           </div>
-          <p className="mt-4 text-xs text-white/50">Reviews reflect individual experiences. Individual results vary.</p>
-          <div className="mt-8 pt-8 border-t border-white/10 flex flex-wrap gap-x-8 gap-y-3">
-            {[{ label: "LegitScript certified", icon: ShieldCheck },{ label: "CLIA certified lab", icon: Beaker },{ label: "HIPAA compliant", icon: ShieldCheck },{ label: "Virginia-licensed providers", icon: UserCheck }].map(({ label, icon: Icon }) => (
-              <div key={label} className="flex items-center gap-2 text-sm font-semibold text-white/90">
-                <Icon className="h-4 w-4 text-primary" aria-hidden /> {label}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
+      </SectionReveal>
 
       {/* ── 3 steps: bg-background (cream) ── */}
-      <section className="bg-background py-12 sm:py-16">
-        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
-          <Eyebrow>What happens after you book</Eyebrow>
-          <SectionHeading>Three steps. One visit. Real answers.</SectionHeading>
-          <div className="mt-8 grid sm:grid-cols-3 gap-5">
-            {[
-              { n: "01", title: "Pick a time, lock it in", body: "Choose your center and a 60-minute window. Most members book inside 60 seconds. Confirmation by text and email." },
-              { n: "02", title: "Labs drawn on arrival", body: "Show up 10 minutes early. A full hormone panel drawn on-site in our CLIA-certified lab. Results processed during your visit." },
-              { n: "03", title: "Your provider reviews everything", body: "Sit down with a Virginia-licensed provider for 60 minutes. Walk out with a personalized protocol when clinically appropriate." },
-            ].map(step => (
-              <div key={step.n} className="rounded-2xl bg-panel text-panel-foreground p-6 shadow-card border border-panel-divider">
-                <p className="font-display text-5xl font-bold text-primary leading-none">{step.n}</p>
-                <h3 className="mt-3 font-display text-lg font-bold uppercase text-panel-foreground">{step.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed" style={{ color: "var(--c-text-on-light-muted)" }}>{step.body}</p>
-              </div>
-            ))}
-          </div>
-          {/* Mid-page CTA */}
-          <div className="mt-10 rounded-2xl bg-panel text-panel-foreground p-6 sm:p-8 shadow-card border-2 border-primary flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
-            <div>
-              <p className="font-display text-2xl font-bold uppercase text-panel-foreground mb-1">Reserve your no-cost 60-minute visit.</p>
-              <p className="text-sm" style={{ color: "var(--c-text-on-light-muted)" }}>Same-day appointments at Richmond, Newport News, and Virginia Beach.</p>
+      <SectionReveal>
+        <section className="bg-background py-12 sm:py-20">
+          <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
+            <Eyebrow>What happens after you book</Eyebrow>
+            <SectionHeading>Three steps. One visit. Real answers.</SectionHeading>
+            {/* 1-col mobile, 3-col desktop */}
+            <div className="mt-8 grid sm:grid-cols-3 gap-5 sm:gap-6">
+              {[
+                { n: "01", title: "Pick a time, lock it in", body: "Choose your center and a 60-minute window. Most members book inside 60 seconds. Confirmation by text and email." },
+                { n: "02", title: "Labs drawn on arrival", body: "Show up 10 minutes early. A full hormone panel drawn on-site in our CLIA-certified lab. Results processed during your visit." },
+                { n: "03", title: "Your provider reviews everything", body: "Sit down with a Virginia-licensed provider for 60 minutes. Walk out with a personalized protocol when clinically appropriate." },
+              ].map(step => (
+                <div key={step.n} className="rounded-2xl bg-panel text-panel-foreground p-6 sm:p-8 shadow-card border border-panel-divider">
+                  <p className="font-display text-5xl sm:text-6xl font-bold text-primary leading-none">{step.n}</p>
+                  <h3 className="mt-3 font-display text-lg font-bold uppercase text-panel-foreground">{step.title}</h3>
+                  <p className="mt-2 text-base sm:text-lg leading-relaxed text-panel-muted">{step.body}</p>
+                </div>
+              ))}
             </div>
-            <a href="#reserve" className="inline-flex items-center justify-center gap-2 h-14 px-7 rounded-xl bg-primary text-white font-display font-bold uppercase tracking-[0.12em] text-base shadow-cta hover:bg-primary-hover transition-colors w-full sm:w-auto flex-shrink-0">
-              Book My Visit <ArrowRight className="h-5 w-5" aria-hidden />
-            </a>
+            {/* Mid-page CTA */}
+            <div className="mt-10 rounded-2xl bg-panel text-panel-foreground p-6 sm:p-8 shadow-card border-2 border-primary flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+              <div>
+                <p className="font-display text-2xl font-bold uppercase text-panel-foreground mb-1">Reserve your no-cost 60-minute visit.</p>
+                <p className="text-sm text-panel-muted">Same-day appointments at Richmond, Newport News, and Virginia Beach.</p>
+              </div>
+              <a
+                href="#reserve"
+                className="inline-flex items-center justify-center gap-2 min-h-[56px] px-7 rounded-xl bg-primary text-white font-display font-bold uppercase tracking-[0.12em] text-base shadow-cta hover:bg-primary-hover transition-colors duration-200 w-full sm:w-auto flex-shrink-0"
+              >
+                Book My Visit <ArrowRight className="h-5 w-5" aria-hidden />
+              </a>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </SectionReveal>
 
       {/* ── Locations: bg-surface (dark) ── */}
-      <section className="bg-surface py-12 sm:py-16">
-        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
-          <Eyebrow onDark>Three Virginia centers</Eyebrow>
-          <SectionHeading onDark>Pick the location closest to you.</SectionHeading>
-          <div className="mt-8 grid sm:grid-cols-3 gap-5">
-            {LOCATIONS_DATA.map(loc => (
-              <div key={loc.city} className="rounded-2xl bg-panel text-panel-foreground p-5 shadow-card border border-panel-divider">
-                <p className="font-display text-xl font-bold uppercase text-panel-foreground">{loc.city}</p>
-                <p className="mt-1 text-sm text-panel-muted">{loc.addr}</p>
-                <p className="mt-3 flex items-center gap-2 text-sm font-semibold text-panel-foreground">
-                  <MapPin className="h-4 w-4 text-primary flex-shrink-0" aria-hidden /> {loc.drive}
-                </p>
-                <p className="mt-1.5 flex items-center gap-2 text-sm font-semibold text-panel-foreground">
-                  <Phone className="h-4 w-4 text-primary flex-shrink-0" aria-hidden /> {loc.phone}
-                </p>
-                <a href="#reserve" className="mt-4 flex w-full items-center justify-center h-11 rounded-xl bg-primary text-white font-display font-bold uppercase tracking-[0.12em] text-sm shadow-cta hover:bg-primary-hover transition-colors">
-                  Book No-Cost Visit
-                </a>
-              </div>
-            ))}
+      <SectionReveal>
+        <section className="bg-surface py-12 sm:py-20">
+          <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
+            <Eyebrow onDark>Three Virginia centers</Eyebrow>
+            <SectionHeading onDark>Pick the location closest to you.</SectionHeading>
+            {/* 1-col mobile, 3-col desktop */}
+            <div className="mt-8 grid sm:grid-cols-3 gap-5 sm:gap-6">
+              {LOCATIONS_DATA.map(loc => (
+                <div key={loc.city} className="rounded-2xl bg-panel text-panel-foreground p-5 sm:p-6 shadow-card border border-panel-divider">
+                  <p className="font-display text-xl font-bold uppercase text-panel-foreground">{loc.city}</p>
+                  <p className="mt-1 text-sm text-panel-muted">{loc.addr}</p>
+                  <p className="mt-3 flex items-center gap-2 text-sm font-semibold text-panel-foreground">
+                    <MapPin className="h-4 w-4 text-primary flex-shrink-0" aria-hidden /> {loc.drive}
+                  </p>
+                  <p className="mt-1.5 flex items-center gap-2 text-sm font-semibold text-panel-foreground">
+                    <Phone className="h-4 w-4 text-primary flex-shrink-0" aria-hidden /> {loc.phone}
+                  </p>
+                  <a
+                    href="#reserve"
+                    className="mt-4 flex w-full items-center justify-center min-h-[44px] px-4 rounded-xl bg-primary text-white font-display font-bold uppercase tracking-[0.12em] text-sm shadow-cta hover:bg-primary-hover transition-colors duration-200"
+                  >
+                    Book No-Cost Visit
+                  </a>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </SectionReveal>
 
       {/* ── FAQ: bg-background (cream) ── */}
-      <section className="bg-background py-12 sm:py-16">
-        <div className="mx-auto w-full max-w-3xl px-4 sm:px-6">
-          <Eyebrow>Common questions</Eyebrow>
-          <SectionHeading>Answers before you book.</SectionHeading>
-          <div className="mt-6 rounded-2xl bg-panel text-panel-foreground px-6 shadow-card border border-panel-divider">
-            {FAQS.map((f, i) => <FAQItem key={f.q} q={f.q} a={f.a} idx={i} />)}
+      <SectionReveal>
+        <section className="bg-background py-12 sm:py-20">
+          <div className="mx-auto w-full max-w-3xl px-4 sm:px-6">
+            <Eyebrow>Common questions</Eyebrow>
+            <SectionHeading>Answers before you book.</SectionHeading>
+            <div className="mt-6 rounded-2xl bg-panel text-panel-foreground px-4 sm:px-6 shadow-card border border-panel-divider">
+              {FAQS.map((f, i) => <FAQItem key={f.q} q={f.q} a={f.a} idx={i} />)}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </SectionReveal>
 
       {/* ── Final CTA form: bg-surface (dark) ── */}
-      <section className="bg-surface py-12 sm:py-16">
-        <div className="mx-auto w-full max-w-xl px-4 sm:px-6 text-center">
-          <Eyebrow onDark center>One unambiguous next step</Eyebrow>
-          <SectionHeading onDark>Reserve your no-cost visit.</SectionHeading>
-          <BodyText onDark center>Most members finish booking in under 60 seconds.</BodyText>
-          <div className="mt-6">
-            <LeadForm idSuffix="-bottom" />
+      <SectionReveal>
+        <section className="bg-surface py-12 sm:py-20">
+          <div className="mx-auto w-full max-w-lg sm:max-w-xl px-4 sm:px-6 text-center">
+            <Eyebrow onDark center>One unambiguous next step</Eyebrow>
+            <SectionHeading onDark center>Reserve your no-cost visit.</SectionHeading>
+            <BodyText onDark center>Most members finish booking in under 60 seconds.</BodyText>
+            <div className="mt-6">
+              <LeadForm idSuffix="-bottom" />
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </SectionReveal>
 
       <Suspense fallback={null}>
         <TRTFooter />
       </Suspense>
 
-      {/* Mobile sticky CTA */}
+      {/* Mobile sticky CTA — hidden on sm+ */}
       <div className="sm:hidden fixed bottom-0 inset-x-0 z-30 border-t border-border-subtle bg-background/97 backdrop-blur px-4 pt-3 pb-[max(0.875rem,env(safe-area-inset-bottom))] shadow-[0_-8px_24px_-12px_rgba(0,0,0,0.6)]">
-        <a href="#reserve" className="w-full flex items-center justify-center gap-2 rounded-2xl bg-primary text-white font-display font-bold uppercase tracking-wider text-base py-4 shadow-cta hover:bg-primary-hover transition-colors">
+        <a
+          href="#reserve"
+          className="w-full flex items-center justify-center gap-2 rounded-2xl bg-primary text-white font-display font-bold uppercase tracking-wider text-base min-h-[52px] shadow-cta hover:bg-primary-hover transition-colors duration-200"
+        >
           Book My No-Cost Visit
         </a>
-        <p className="text-center text-[11px] text-text-muted mt-1.5">60-minute in-person visit · Men's Wellness Centers</p>
+        <p className="text-center text-[11px] text-panel-muted mt-1.5">60-minute in-person visit · Men's Wellness Centers</p>
       </div>
       <div className="sm:hidden h-24" aria-hidden />
     </div>
