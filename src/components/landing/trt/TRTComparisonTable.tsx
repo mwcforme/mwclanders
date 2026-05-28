@@ -17,7 +17,7 @@ const COMPARE_ROWS: {
     tele: "Not available", teleType: "x",
   },
   {
-    label: "Same-Day Results",
+    label: "Same-Day Lab Results",
     mwc: "Same visit",   mwcType: "check",
     primary: "Days later", primaryType: "x",
     tele: "Days later",    teleType: "x",

@@ -3,7 +3,7 @@ const STEPS = [
     num: "01",
     title: "Comprehensive Lab Testing",
     body: "We draw blood on-site and measure your full hormone panel: total testosterone, free testosterone, SHBG, estradiol, PSA, CBC, and metabolic markers. Results are reviewed with your provider the same visit.",
-    badge: "Same-Day Results",
+    badge: "Same-Day Lab Results",
   },
   {
     num: "02",

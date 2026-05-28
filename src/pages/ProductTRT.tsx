@@ -83,7 +83,7 @@ const ProductTRT = () => {
     }}>
       <SEO
         title="Testosterone Replacement Therapy | Men's Wellness Centers"
-        description="In-person TRT at Virginia's physician-led men's health practice. On-site labs, same-day results, and personalized protocols. No-cost consultation."
+        description="In-person TRT at Virginia's physician-led men's health practice. On-site labs, same-day lab results, and personalized protocols. No-cost consultation."
       />
       <style>{GLOBAL_STYLES}</style>
 
@@ -171,7 +171,7 @@ const ProductTRT = () => {
               <ul style={{ listStyle: "none", margin: "0 0 28px", padding: 0, display: "flex", flexDirection: "column", gap: 12 }}>
                 {[
                   "On-site labs drawn at your appointment -- no outside visits",
-                  "Results reviewed same day by a licensed Virginia provider",
+                  "Lab results reviewed same day by a licensed Virginia provider",
                   "Personalized protocol built for your numbers, not a template",
                 ].map((line) => (
                   <li key={line} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
