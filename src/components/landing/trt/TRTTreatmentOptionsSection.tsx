@@ -11,7 +11,7 @@ interface TRTTreatmentOptionsSectionProps {
 const TRT_BULLETS = [
   "Clinician-prescribed, monitored with regular labs",
   "Multiple delivery options available",
-  "Most patients notice improvements within weeks",
+  "Many members report improvements within the first weeks of treatment",
   "Protocol adjusted based on ongoing labs",
 ] as const;
 

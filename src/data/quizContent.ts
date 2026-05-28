@@ -146,7 +146,7 @@ export const FAQ_ITEMS: { q: string; a: string }[] = [
   },
   {
     q: "How much will the medication cost?",
-    a: "Most patients pay between $99 and $199 per month depending on the protocol. Your first visit and consult are on us.",
+    a: "Most members pay between $99 and $199 per month depending on the protocol. Your first visit and consultation are at no cost.",
   },
   {
     q: "How fast will I see results?",

@@ -10,7 +10,7 @@ import { Eyebrow } from "./TRTProductHelpers";
 const BENEFITS = [
   "Increased energy and vitality throughout the day",
   "Improved body composition and muscle retention",
-  "Enhanced sexual health and performance",
+  "Improved sexual health and libido",
   "Sharper mental clarity and focus",
   "Better quality sleep",
   "Improved mood and motivation",

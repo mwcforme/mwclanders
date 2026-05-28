@@ -36,6 +36,6 @@ export const TRT_FAQS: FaqItem[] = [
   },
   {
     q: "How soon do patients typically notice changes?",
-    a: "Many patients report initial changes in energy and mood within the first few weeks, with broader symptom improvements over 2 to 3 months. Individual results vary based on baseline labs, adherence, and individual health factors.",
+    a: "Many members report initial changes in energy and mood within the first few weeks, with broader symptom improvements over 2 to 3 months. Individual results vary based on baseline labs, adherence, and individual health factors.",
   },
 ];

@@ -29,11 +29,11 @@ const FAQ_ITEMS: FaqItem[] = [
   },
   {
     q: "What results can I expect from TRT?",
-    a: "Men on clinician-supervised TRT commonly report increased energy, improved body composition, better sexual health, sharper mental focus, and improved sleep quality. Individual results vary and depend on your baseline levels and overall health.",
+    a: "Members on clinician-supervised TRT commonly report increased energy, improved body composition, better libido, sharper mental focus, and improved sleep quality. Individual results vary and depend on your baseline levels and overall health.",
   },
   {
     q: "How soon will I notice improvement?",
-    a: "Most patients begin to notice changes within 4–8 weeks. Energy and mood often improve first, followed by body composition and libido over the following months. Your provider monitors your labs regularly and adjusts your protocol as needed.",
+    a: "Many members report noticing initial changes within the first several weeks. Energy and mood often improve first, followed by body composition and overall wellbeing over time. Your provider monitors your labs regularly and adjusts your protocol as needed.",
   },
 ];
 

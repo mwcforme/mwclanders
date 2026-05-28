@@ -18,7 +18,7 @@ interface CROLocationSelectorProps {
 
 export const CROLocationSelector = ({ formId, value, onChange, error }: CROLocationSelectorProps) => {
   return (
-    <div role="radiogroup" aria-label="Select clinic location" aria-required="true">
+    <div role="radiogroup" aria-label="Select center location" aria-required="true">
       <p style={{
         fontSize: 11, fontWeight: 700, letterSpacing: "0.09em", textTransform: "uppercase",
         // hardcoded-color-allow-next-line

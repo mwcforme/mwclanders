@@ -21,7 +21,7 @@ export const LocationSelector = ({ value, onChange, error }: LocationSelectorPro
   const [hovered, setHovered] = useState<LocationKey | null>(null);
 
   return (
-    <div role="radiogroup" aria-label="Select clinic location" aria-required="true">
+    <div role="radiogroup" aria-label="Select center location" aria-required="true">
       <p style={{
         fontSize: 11, fontWeight: 700, letterSpacing: "0.09em", textTransform: "uppercase",
         // hardcoded-color-allow-next-line

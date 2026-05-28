@@ -514,7 +514,7 @@ export default function OptimizeLP() {
                     <p style={{ display: "flex", alignItems: "center", gap: 6, fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 600, color: "var(--brand-navy)", marginBottom: 4 }}>
                       <MapPin size={14} style={{ color: ORANGE }} aria-hidden /> {loc.drive}
                     </p>
-                    <a href={`tel:${loc.phone.replace(/\D/g,"")}`} style={{ display: "flex", alignItems: "center", gap: 6, fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 600, color: "var(--brand-navy)", textDecoration: "none" }}>
+                    <a href={`tel:${loc.phone.replace(/\D/g,"")}`} style={{ display: "flex", alignItems: "center", gap: 6, fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 600, color: ORANGE, textDecoration: "none" }}>
                       <Phone size={14} style={{ color: ORANGE }} aria-hidden /> {loc.phone}
                     </a>
                   </div>
@@ -609,6 +609,9 @@ export default function OptimizeLP() {
           .optimize-stats     { grid-template-columns: 1fr 1fr !important; }
         }
         .optimize-hero-grid { padding-bottom: 80px; }
+        .optimize-loc-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+        .optimize-loc-cta { transition: opacity 150ms, transform 150ms; }
+        .optimize-phone-link:hover { text-decoration: underline; }
       `}</style>
     </div>
   );

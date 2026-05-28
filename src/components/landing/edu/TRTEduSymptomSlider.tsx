@@ -54,7 +54,7 @@ const SYMPTOMS = [
   {
     icon: "❤️",
     label: "Libido",
-    title: "Drop in Libido & Sexual Performance",
+    title: "Reduced Libido & Sexual Health Concerns",
     body: "Testosterone supports libido by activating androgen receptors in the brain.",
     bullets: [
       "Lower testosterone levels can make sex feel less frequent or less satisfying.",
