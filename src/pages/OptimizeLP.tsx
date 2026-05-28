@@ -278,7 +278,7 @@ export default function OptimizeLP() {
             </h2>
 
             <div style={{
-              display: "grid", gridTemplateColumns: "1fr 1fr",
+              display: "flex", flexDirection: "row",
               gap: 24, alignItems: "stretch",
             }} className="optimize-2col">
               {/* What you get */}
@@ -287,7 +287,7 @@ export default function OptimizeLP() {
                 border: `2px solid ${ORANGE}`,
                 padding: "32px 28px",
                 boxShadow: "0 4px 24px rgba(232,103,10,0.12)",
-                display: "flex", flexDirection: "column", alignSelf: "stretch",
+                display: "flex", flexDirection: "column", flex: 1,
               }}>
                 <p style={{
                   fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700,
@@ -315,7 +315,7 @@ export default function OptimizeLP() {
                 border: "1px solid #E5E3E0",
                 padding: "32px 28px",
                 boxShadow: "0 2px 12px rgba(0,0,0,0.04)",
-                display: "flex", flexDirection: "column", alignSelf: "stretch",
+                display: "flex", flexDirection: "column", flex: 1,
               }}>
                 <p style={{
                   fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700,
