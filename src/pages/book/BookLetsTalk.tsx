@@ -4,6 +4,7 @@ import BookLayout from "@/components/book/BookLayout";
 import { ContactCard } from "@/components/book/ContactCard";
 import { PHONE } from "@/lib/constants";
 import { trackFunnelEvent } from "@/hooks/useAnalytics";
+import { TIMEZONE } from "@/lib/ghlCalendars";
 
 const PHONE_DISPLAY = PHONE.display;
 const PHONE_TEL = PHONE.tel;
@@ -12,7 +13,7 @@ const SMS_HREF = PHONE.sms;
 function isTeamAvailable(): boolean {
   const now = new Date();
   const et = new Intl.DateTimeFormat("en-US", {
-    timeZone: "America/New_York", hour: "numeric", minute: "numeric",
+    timeZone: TIMEZONE, hour: "numeric", minute: "numeric",
     weekday: "short", hour12: false,
   }).formatToParts(now);
   const day = et.find((p) => p.type === "weekday")?.value ?? "";
