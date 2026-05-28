@@ -28,6 +28,7 @@ import { LocationSelector } from "@/components/landing/trt/LocationSelector";
 import { TCPADisclaimer } from "@/components/landing/trt/TCPADisclaimer";
 import { formatPhone, type LocationKey } from "@/data/croContent";
 import { PHONE } from "@/lib/constants";
+import { useUtmFields } from "@/hooks/useUtmFields";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -121,6 +122,7 @@ export default function FormEmbed() {
   }
 
   const busy = controller.status === "submitting";
+  const utmFields = useUtmFields();
 
   // ── Render ──────────────────────────────────────────────────────────────────
   return (
@@ -256,6 +258,11 @@ export default function FormEmbed() {
                 onChange={(v) => { setTcpa(v); setErrors((p) => ({ ...p, tcpa: "" })); }}
                 error={errors.tcpa}
               />
+
+              {/* Hidden UTM fields — read by pixels and tag managers on submit */}
+              {Object.entries(utmFields).map(([key, val]) =>
+                val ? <input key={key} type="hidden" name={key} value={val} /> : null
+              )}
 
               {/* Submit */}
               <button

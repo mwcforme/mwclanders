@@ -11,6 +11,7 @@ import { TRTFooter } from "@/components/landing/trt/TRTFooter";
 import { SEO } from "@/components/SEO";
 import { useBookingStore } from "@/domain/booking/bookingStore";
 import { capturePartialLead, markSessionSubmitted } from "@/lib/partialCapture";
+import { useUtmFields } from "@/hooks/useUtmFields";
 import { upsertContact } from "@/lib/ghlCalendars";
 
 const ORANGE = "var(--brand-cta)";
@@ -136,6 +137,7 @@ export default function TRTGetStarted() {
   });
   const [errors, setErrors] = useState<FieldErrors>({});
   const [submitting, setSubmitting] = useState(false);
+  const utmFields = useUtmFields();
 
   const firstRef = useRef<HTMLInputElement>(null);
   const lastRef  = useRef<HTMLInputElement>(null);
@@ -421,6 +423,11 @@ export default function TRTGetStarted() {
                   </p>
                 )}
               </div>
+
+              {/* Hidden UTM fields — read by pixels and tag managers on submit */}
+              {Object.entries(utmFields).map(([key, val]) =>
+                val ? <input key={key} type="hidden" name={key} value={val} /> : null
+              )}
 
               {/* CTA */}
               <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>

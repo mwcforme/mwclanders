@@ -12,6 +12,7 @@ import { heroLeadSchema, type HeroLeadInput } from "@/domain/leads/leadFormSchem
 import { enterBookingFunnel } from "@/domain/booking/bookingEntry";
 import { COPY } from "@/data/copy";
 import { capturePartialLead, markSessionSubmitted } from "@/lib/partialCapture";
+import { useUtmFields } from "@/hooks/useUtmFields";
 import { trackFunnelEvent } from "@/hooks/useAnalytics";
 import { formatPhone, getLocationFromUrl, type LocationKey } from "@/data/croContent";
 import { FloatInput } from "@/components/landing/shared/FloatInput";
@@ -52,6 +53,8 @@ export const TRTHeroForm = ({
   const phoneRef    = useRef<HTMLInputElement>(null);
   const locationRef = useRef<HTMLDivElement>(null);
   const tcpaRef     = useRef<HTMLDivElement>(null);
+
+  const utmFields = useUtmFields();
 
   const controller = useLeadSubmitController<HeroLeadInput>({
     schema: heroLeadSchema,
@@ -134,6 +137,11 @@ export const TRTHeroForm = ({
           <div ref={tcpaRef}>
             <TCPADisclaimer id={`${formId}-tcpa`} checked={tcpa} onChange={(v) => { setTcpa(v); clearErr("tcpa"); }} error={errors.tcpa} />
           </div>
+
+          {/* Hidden UTM / click-id fields — read by pixels and tag managers on submit */}
+          {Object.entries(utmFields).map(([key, val]) =>
+            val ? <input key={key} type="hidden" name={key} value={val} /> : null
+          )}
 
           <button type="submit" disabled={isSubmitting} style={{
             marginTop: 4, width: "100%", height: 54, background: ORANGE, color: WHITE, border: "none",
