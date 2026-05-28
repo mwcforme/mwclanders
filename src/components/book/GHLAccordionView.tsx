@@ -103,7 +103,7 @@ const GHLAccordionView = ({ location, firstName, lastName, email, phone, source,
       .catch((e: Error) => { if (!cancelled) setLoadError(e.message || "Could not load times."); })
       .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentional: only re-fetch when location changes
   }, [location]);
 
   const canConfirm = Boolean(selectedSlot);
