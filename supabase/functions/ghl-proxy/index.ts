@@ -1,6 +1,38 @@
-// ghl-proxy v5 — prod only (stage removed 2026-05-25)
+// ghl-proxy v6 — rate limiting + health endpoint added
 import { corsHeadersFor, jsonResponse, corsResponse } from "../_shared/cors.ts";
 import { detectEnv, tryGetGhlCreds, GHL_API_BASE, GHL_API_VERSION } from "../_shared/ghlEnv.ts";
+
+// ─── Rate limiter ────────────────────────────────────────────────────────────
+// In-memory per-isolate window. Limits: 15 req/min for upsert/appointments,
+// 60 req/min for free-slots (slot fetching is read-only, higher traffic expected).
+const RATE_WINDOWS = new Map<string, { count: number; resetAt: number }>();
+
+function rateLimitKey(ip: string, path: string): string {
+  const bucket = path === "/contacts/upsert" || path.includes("/appointments") ? "write" : "read";
+  return `${ip}:${bucket}`;
+}
+
+function checkRateLimit(ip: string, path: string): boolean {
+  const key = rateLimitKey(ip, path);
+  const limit = key.endsWith(":write") ? 15 : 60; // req/min
+  const now = Date.now();
+  const window = RATE_WINDOWS.get(key);
+  if (!window || now > window.resetAt) {
+    RATE_WINDOWS.set(key, { count: 1, resetAt: now + 60_000 });
+    return true; // allowed
+  }
+  if (window.count >= limit) return false; // blocked
+  window.count++;
+  return true;
+}
+
+// Purge stale keys every 5 min to prevent unbounded growth in long-lived isolates
+setInterval(() => {
+  const now = Date.now();
+  for (const [k, v] of RATE_WINDOWS.entries()) {
+    if (now > v.resetAt + 60_000) RATE_WINDOWS.delete(k);
+  }
+}, 300_000);
 
 const log = {
   info:  (msg: string, data?: Record<string, unknown>) => console.log(JSON.stringify({ level: "info",  fn: "ghl-proxy", msg, ts: new Date().toISOString(), ...data })),
@@ -166,11 +198,42 @@ function validateBody(method: string, path: string, body: unknown): { ok: true; 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return corsResponse(req);
 
+  // ── Health check endpoint ────────────────────────────────────────────
+  // GET /health — used by uptime monitors and warm-ping cron.
+  // Returns 200 + GHL creds status without touching GHL API.
+  const url = new URL(req.url);
+  if (req.method === "GET" && url.pathname.endsWith("/health")) {
+    const creds = tryGetGhlCreds();
+    return jsonResponse(200, {
+      ok: true,
+      fn: "ghl-proxy",
+      credsOk: !!creds,
+      ts: new Date().toISOString(),
+    }, req);
+  }
+
+  // ── Rate limiting ───────────────────────────────────────────────
+  const clientIp = req.headers.get("x-forwarded-for")?.split(",")[0].trim() ??
+    req.headers.get("x-real-ip") ?? "unknown";
+
+  let bodyText: string;
+  try {
+    bodyText = await req.text();
+  } catch {
+    return jsonResponse(400, { error: "Invalid body" });
+  }
+
   let payload: ProxyRequest;
   try {
-    payload = await req.json();
+    payload = JSON.parse(bodyText);
   } catch {
     return jsonResponse(400, { error: "Invalid JSON body" });
+  }
+
+  const cleanPathForRateLimit = (payload.path ?? "").split("?")[0];
+  if (!checkRateLimit(clientIp, cleanPathForRateLimit)) {
+    log.warn("rate limited", { ip: clientIp, path: cleanPathForRateLimit });
+    return jsonResponse(429, { ok: false, status: 429, error: "Rate limit exceeded. Try again shortly.", data: null }, req);
   }
 
   const creds = tryGetGhlCreds();

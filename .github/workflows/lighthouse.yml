@@ -1,10 +1,8 @@
 name: Lighthouse CI
-# Reference only — not yet active in CI/CD pipeline.
-# Wire up by uncommenting the `on:` trigger when ready.
-# on:
-#   push:
-#     branches: [main]
+
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -12,17 +10,36 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
+
       - run: npm ci
+
+      # Build and serve locally for Lighthouse against our own bundle.
+      # Production URL tests are unreliable in CI (DNS propagation lag).
       - run: npm run build
+
+      - name: Install serve
+        run: npm install -g serve
+
+      - name: Start preview server
+        run: serve dist -p 4173 &
+        shell: bash
+
+      - name: Wait for server
+        run: npx wait-on http://localhost:4173 --timeout 30000
+
       - name: Run Lighthouse CI
         uses: treosh/lighthouse-ci-action@v11
         with:
           urls: |
             http://localhost:4173/
-            http://localhost:4173/book/location
+            http://localhost:4173/trt
+            http://localhost:4173/ed
+            http://localhost:4173/wl
           uploadArtifacts: true
           temporaryPublicStorage: true
           budgetPath: ./.github/lighthouse-budget.json

@@ -2,14 +2,49 @@
   {
     "path": "/",
     "resourceSizes": [
-      { "resourceType": "script", "budget": 400 },
-      { "resourceType": "stylesheet", "budget": 50 },
-      { "resourceType": "image", "budget": 500 }
+      { "resourceType": "script",     "budget": 400 },
+      { "resourceType": "stylesheet", "budget": 50  },
+      { "resourceType": "image",      "budget": 500 }
     ],
     "timings": [
-      { "metric": "first-contentful-paint", "budget": 2000 },
+      { "metric": "first-contentful-paint",  "budget": 2000 },
       { "metric": "largest-contentful-paint", "budget": 2500 },
-      { "metric": "cumulative-layout-shift", "budget": 0.1 }
+      { "metric": "cumulative-layout-shift",  "budget": 0.1  },
+      { "metric": "total-blocking-time",      "budget": 300  },
+      { "metric": "interactive",              "budget": 3500 }
+    ]
+  },
+  {
+    "path": "/trt",
+    "resourceSizes": [
+      { "resourceType": "script",     "budget": 450 },
+      { "resourceType": "stylesheet", "budget": 50  },
+      { "resourceType": "image",      "budget": 600 }
+    ],
+    "timings": [
+      { "metric": "first-contentful-paint",  "budget": 2000 },
+      { "metric": "largest-contentful-paint", "budget": 2500 },
+      { "metric": "cumulative-layout-shift",  "budget": 0.1  },
+      { "metric": "total-blocking-time",      "budget": 300  },
+      { "metric": "interactive",              "budget": 3500 }
+    ]
+  },
+  {
+    "path": "/ed",
+    "timings": [
+      { "metric": "first-contentful-paint",  "budget": 2000 },
+      { "metric": "largest-contentful-paint", "budget": 2500 },
+      { "metric": "cumulative-layout-shift",  "budget": 0.1  },
+      { "metric": "total-blocking-time",      "budget": 300  }
+    ]
+  },
+  {
+    "path": "/wl",
+    "timings": [
+      { "metric": "first-contentful-paint",  "budget": 2000 },
+      { "metric": "largest-contentful-paint", "budget": 2500 },
+      { "metric": "cumulative-layout-shift",  "budget": 0.1  },
+      { "metric": "total-blocking-time",      "budget": 300  }
     ]
   }
 ]

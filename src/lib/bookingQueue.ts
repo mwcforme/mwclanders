@@ -14,8 +14,8 @@
 const getSupabase = () => import("@/integrations/supabase/legacy").then(m => m.supabase);
 
 const QUEUE_KEY = "mwc_booking_queue_v1";
-const MAX_RETRIES = 5;
-const RETRY_DELAY_MS = 30_000; // 30s between retries
+const MAX_RETRIES = 20;          // ~10 min of retries before giving up
+const RETRY_DELAY_MS = 30_000;   // 30s between retries
 
 export interface QueuedBooking {
   id: string;              // client-generated UUID
@@ -135,7 +135,7 @@ export async function flushBookingQueue(): Promise<void> {
   const supabase = await getSupabase();
   for (const booking of q) {
     if (booking.retries >= MAX_RETRIES) {
-      // Give up — escalate to Supabase for manual review
+      // Give up — escalate to Supabase for manual review + fire ops alert
       void Promise.resolve(supabase.from("booking_event_log").insert({
         event_type: "error",
         location: booking.location as never,
@@ -145,6 +145,18 @@ export async function flushBookingQueue(): Promise<void> {
         error: `Abandoned after ${MAX_RETRIES} retries: ${booking.lastError}`,
         meta: { queued: true, abandoned: true } as never,
       })).catch(() => {});
+      // Fire ops alert via edge function so the team can manually book in GHL
+      void supabase.functions.invoke("lead-notify", {
+        body: {
+          type: "booking_abandoned",
+          contactId: booking.contactId,
+          location: booking.location,
+          slotIso: booking.slotIso,
+          retries: booking.retries,
+          lastError: booking.lastError ?? "unknown",
+          queuedAt: booking.queuedAt,
+        },
+      }).catch(() => {}); // fire-and-forget, never block UX
       removeFromQueue(booking.id);
       continue;
     }

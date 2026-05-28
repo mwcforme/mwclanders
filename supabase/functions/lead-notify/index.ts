@@ -35,6 +35,41 @@ Deno.serve(async (req) => {
   try { payload = await req.json(); }
   catch { return json(400, { error: "invalid json" }); }
 
+  // ── Handle booking_abandoned alert from bookingQueue ────────────────────
+  if (payload.type === "booking_abandoned") {
+    const { contactId: ghlId, location, slotIso, retries, lastError, queuedAt } = payload as {
+      type: string; contactId: string; location: string; slotIso: string;
+      retries: number; lastError: string; queuedAt: string;
+    };
+    const apptTime = slotIso ? new Date(slotIso).toLocaleString("en-US", {
+      timeZone: "America/New_York", weekday: "short", month: "short",
+      day: "numeric", hour: "numeric", minute: "2-digit", hour12: true,
+    }) + " ET" : "unknown";
+    const locLabel = { richmond: "Richmond", "virginia-beach": "Virginia Beach", "newport-news": "Newport News" }[location as string] ?? location;
+    const result = await sendEmail({
+      to: "eobrien@menswellnesscenters.com",
+      subject: `ACTION REQUIRED — Booking abandoned after ${retries} retries — ${locLabel} · ${apptTime}`,
+      html: `<div style="font-family:Arial,sans-serif;max-width:600px;padding:24px">
+        <h2 style="color:#dc2626;margin:0 0 8px">Booking Abandoned — Manual Action Required</h2>
+        <p style="color:#555;margin:0 0 16px">A booking intent failed after ${retries} retries and was abandoned. The GHL appointment was NOT created. Please book this manually.</p>
+        <table style="width:100%;border-collapse:collapse;font-size:14px">
+          <tr><td style="padding:6px 0;color:#6b7280;width:140px">GHL Contact ID</td><td><a href="https://app.gohighlevel.com/contacts/${ghlId}" style="color:#e8670a">${ghlId}</a></td></tr>
+          <tr><td style="padding:6px 0;color:#6b7280">Location</td><td>${locLabel}</td></tr>
+          <tr><td style="padding:6px 0;color:#6b7280">Appointment Slot</td><td>${apptTime}</td></tr>
+          <tr><td style="padding:6px 0;color:#6b7280">Retries</td><td>${retries}</td></tr>
+          <tr><td style="padding:6px 0;color:#6b7280">Last Error</td><td style="color:#dc2626">${lastError}</td></tr>
+          <tr><td style="padding:6px 0;color:#6b7280">Queued At</td><td>${new Date(queuedAt).toLocaleString("en-US", { timeZone: "America/New_York" })} ET</td></tr>
+        </table>
+        <div style="margin-top:20px">
+          <a href="https://app.gohighlevel.com/contacts/${ghlId}" style="display:inline-block;padding:10px 18px;background:#e8670a;color:#fff;text-decoration:none;border-radius:6px;font-weight:bold;margin-right:10px">Open in GHL</a>
+          <a href="https://book.menswellnesscenters.com/admin/leads" style="display:inline-block;padding:10px 18px;background:#0b1029;color:#fff;text-decoration:none;border-radius:6px;font-weight:bold">Admin Panel</a>
+        </div>
+      </div>`,
+    });
+    log.info("booking abandoned alert sent", { ghlId, location, slotIso, sent: result.ok });
+    return json(200, { ok: true, type: "booking_abandoned", alertSent: result.ok });
+  }
+
   const record = (payload.record ?? payload) as Record<string, unknown>;
 
   const name      = record.name        as string | null;
