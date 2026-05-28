@@ -15,7 +15,7 @@ export function BookHeader() {
         backdropFilter: "blur(12px)",
         WebkitBackdropFilter: "blur(12px)",
         borderBottom: "1px solid rgba(255,255,255,0.06)",
-        height: 64,
+        height: 48,
       }}
     >
       <div
@@ -37,9 +37,9 @@ export function BookHeader() {
               (e.currentTarget as HTMLImageElement).src = "/logos/Text_Logo_white.png";
             }}
             alt="Men's Wellness Centers"
-            style={{ height: 32, width: "auto" }}
-            width={160}
-            height={32}
+            style={{ height: 26, width: "auto" }}
+            width={130}
+            height={26}
           />
         </Link>
 

@@ -243,47 +243,43 @@ export default function BookSchedule() {
     <BookingErrorBoundary>
       <div className="min-h-screen flex flex-col bg-background text-foreground">
         <BookHeader />
-        <main className="flex-1 mx-auto w-full max-w-2xl lg:max-w-5xl px-4 sm:px-6 pt-20 pb-32 sm:pb-12">
+        <main className="flex-1 mx-auto w-full max-w-2xl lg:max-w-5xl px-4 sm:px-6 pt-14 pb-32 sm:pb-12">
 
-          {/* Back */}
-          <button type="button" onClick={() => navigate(-1)}
-            className="inline-flex items-center gap-2 text-base font-semibold text-panel-foreground hover:text-primary -ml-2 px-2">
-            <ArrowLeft className="h-5 w-5" aria-hidden /> Back
-          </button>
-
-          {/* Location row */}
-          <div className="mt-4 flex items-center gap-3 min-h-[36px]">
-            <MapPin className="h-5 w-5 flex-shrink-0 text-primary" aria-hidden />
-            <span className="font-display text-xl font-bold uppercase tracking-wide text-panel-foreground">
+          {/* Compact above-fold header: Back · Location · Headline on one tight block */}
+          <div className="flex items-center gap-2 mb-2">
+            <button type="button" onClick={() => navigate(-1)}
+              className="inline-flex items-center gap-1 text-sm font-semibold text-panel-foreground hover:text-primary -ml-1 px-1 py-1">
+              <ArrowLeft className="h-4 w-4" aria-hidden />
+            </button>
+            <MapPin className="h-4 w-4 flex-shrink-0 text-primary" aria-hidden />
+            <span className="font-display text-sm font-bold uppercase tracking-wide text-panel-foreground">
               {clinicCity ?? "Select center"}
             </span>
           </div>
 
-          {/* Headline */}
-          <h1 className="mt-2 font-display text-3xl sm:text-4xl font-bold uppercase tracking-tight text-panel-foreground leading-tight">
+          <h1 className="font-display text-2xl sm:text-3xl font-bold uppercase tracking-tight text-panel-foreground leading-tight">
             {heading}
           </h1>
-          <p className="mt-1 text-base" style={{ color: "var(--c-text-on-light-muted)" }}>60-minute complimentary medical consultation.</p>
 
-          {/* Next available shortcut */}
+          {/* Next available shortcut — inline, tight */}
           {nextAvailable && !selectedSlot && (
             <button type="button"
               onClick={() => { setSelectedDayIdx(nextAvailable.idx); setSelectedSlot(nextAvailable.iso); }}
-              className="mt-2.5 inline-flex items-center gap-2 text-sm leading-tight text-panel-foreground hover:text-primary transition-colors">
-              <span className="inline-block h-2 w-2 flex-shrink-0 rounded-full bg-primary" aria-hidden />
+              className="mt-1 inline-flex items-center gap-1.5 text-xs leading-tight text-panel-foreground hover:text-primary transition-colors">
+              <span className="inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" aria-hidden />
               <span>
                 Next: <span className="whitespace-nowrap" style={{ color: "var(--c-text-on-light-muted)" }}>{nextAvailable.label}</span>
-                {" "}<span className="ml-1 font-display font-bold uppercase tracking-wide text-primary underline underline-offset-4">Lock in →</span>
+                {" "}<span className="font-display font-bold uppercase tracking-wide text-primary underline underline-offset-2">Lock in →</span>
               </span>
             </button>
           )}
 
           {/* Booking panel */}
-          <section className="mt-3 overflow-hidden rounded-2xl bg-panel text-panel-foreground shadow-card"
+          <section className="mt-2 overflow-hidden rounded-2xl bg-panel text-panel-foreground shadow-card"
             aria-label="Choose your appointment day and time">
 
             {/* Week navigator */}
-            <div className="flex items-center justify-between gap-3 px-4 sm:px-6 pt-4 pb-3">
+            <div className="flex items-center justify-between gap-3 px-4 sm:px-6 pt-3 pb-2">
               <button type="button"
                 onClick={() => {
                   const d = new Date(weekStart);
@@ -316,7 +312,7 @@ export default function BookSchedule() {
             </div>
 
             {/* 5-day strip */}
-            <div className="px-4 sm:px-6 pb-4">
+            <div className="px-4 sm:px-6 pb-3">
               <div role="radiogroup" aria-label="Day" className="grid grid-cols-5 gap-2">
                 {dayCells.slice(0, 5).map((day, dayIdx) => (
                   <DayPill

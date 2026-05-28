@@ -39,7 +39,7 @@ const BookLayout = ({ page, title, description, variant = "default", children }:
     <div className="min-h-screen flex flex-col bg-background overflow-x-hidden" style={{ fontFamily: "Inter, sans-serif" }}>
       <SEO title={title} description={description || DEFAULT_DESC[page]} />
       <BookHeader />
-      <main className="flex-1 pt-16 animate-in fade-in duration-200">{children}</main>
+      <main className="flex-1 pt-12 animate-in fade-in duration-200">{children}</main>
       <Suspense fallback={null}>
         <TRTFooter />
       </Suspense>
