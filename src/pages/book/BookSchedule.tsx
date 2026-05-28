@@ -12,7 +12,7 @@
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, MapPin, Phone } from "lucide-react";
+import { ArrowLeft, ChevronLeft, ChevronRight, MapPin, Phone } from "lucide-react";
 import { useBookingStore } from "@/domain/booking/bookingStore";
 import { useConfirmAppointment } from "@/domain/booking/useConfirmAppointment";
 import { CENTER_CALENDARS, TIMEZONE, type LocationKey } from "@/lib/ghlCalendars";
