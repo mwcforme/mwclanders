@@ -43,7 +43,7 @@ export interface Location {
 export const LOCATIONS: Location[] = [
   {
     slug: "richmond-va",
-    city: "Glen Allen",
+    city: "Richmond",
     region: "richmond",
     name: "Men's Wellness Centers, Richmond",
     address: "4050 Innslake Dr, Suite 360",

@@ -25,7 +25,7 @@ const OPTIONS: LocationOption[] = [
   {
     key: "richmond",
     label: "Richmond",
-    address: "Glen Allen, VA",
+    address: "Richmond, VA",
     driveTime: "5 min from I-64",
   },
   {

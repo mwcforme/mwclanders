@@ -65,7 +65,7 @@ const REVIEWS = [
     text: "Been going about six months now. Way better energy, better workouts, sleeping straight through the night. Wish I'd done this years ago.",
   },
   {
-    name: "Bobby M.", location: "Glen Allen, VA",
+    name: "Bobby M.", location: "Richmond, VA",
     text: "Always greeted by name. It feels like a personal visit, not a transaction. That matters when you're talking about this kind of stuff.",
   },
   {
@@ -98,7 +98,7 @@ const FAQS = [
 ];
 
 const LOCATIONS_DATA = [
-  { city: "Richmond",       addr: "4050 Innslake Dr, Suite 360", cityState: "Glen Allen, VA 23060",    phone: "(804) 346-4636", drive: "5 min from I-64",            key: "richmond" },
+  { city: "Richmond",       addr: "4050 Innslake Dr, Suite 360", cityState: "Richmond, VA 23060",    phone: "(804) 346-4636", drive: "5 min from I-64",            key: "richmond" },
   { city: "Newport News",   addr: "12860 Jefferson Ave, Suite 203", cityState: "Newport News, VA 23602", phone: "(757) 806-6263", drive: "3 min from I-64, Exit 258A", key: "newport-news" },
   { city: "Virginia Beach", addr: "4252 Holland Rd, Suite 104",  cityState: "Virginia Beach, VA 23452", phone: "(757) 612-4428", drive: "5 min from I-264",            key: "virginia-beach" },
 ];

@@ -18,7 +18,7 @@ const CARDS = [
   {
     slug:      "richmond" as const,
     locSlug:   "richmond-va" as const,
-    city:      "Glen Allen",
+    city:      "Richmond",
     region:    "Richmond Area",
     driveTime: "5 min from I-64",
   },

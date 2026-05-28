@@ -2,7 +2,7 @@ import { Phone, MapPin } from "lucide-react";
 import { trackCro } from "@/hooks/useAnalytics";
 
 const LOCATIONS = [
-  { name: "Richmond / Glen Allen", phone: "804-207-5399", href: "/book/location?location=richmond" },
+  { name: "Richmond", phone: "804-207-5399", href: "/book/location?location=richmond" },
   { name: "Virginia Beach", phone: "757-806-6263", href: "/book/location?location=virginia-beach" },
   { name: "Newport News", phone: "757-806-6263", href: "/book/location?location=newport-news" },
 ];
