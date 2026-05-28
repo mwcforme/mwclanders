@@ -10,7 +10,7 @@ import { ArrowRight, Calendar, Clock, Lock, X } from "lucide-react";
 import { TIMEZONE } from "@/lib/ghlCalendars";
 import {
   type DayCell,
-  DOW_SHORT, MONTHS_UPPER, MONTHS_SHORT,
+  DOW_SHORT, MONTHS_UPPER,
   HOLD_SECONDS,
   fmtTimeParts, formatLongFull,
 } from "@/lib/scheduleUtils";
