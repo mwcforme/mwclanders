@@ -191,11 +191,19 @@ export default function OptimizeLP() {
           <div style={{ paddingTop: 32 }}>
             <p style={{
               fontFamily: "Inter, sans-serif", fontSize: 12, fontWeight: 700,
-              letterSpacing: "0.18em", textTransform: "uppercase",
+              letterSpacing: "0.14em", textTransform: "uppercase",
               color: ORANGE, marginBottom: 18,
-              display: "flex", alignItems: "center", gap: 8,
+              display: "flex", alignItems: "flex-start", gap: 6, flexWrap: "wrap",
             }}>
-              <MapPin size={13} aria-hidden /> Virginia · Richmond · Newport News · Virginia Beach
+              <span style={{ display: "flex", alignItems: "center", gap: 5, flexShrink: 0 }}>
+                <MapPin size={13} aria-hidden /> Virginia
+              </span>
+              <span aria-hidden style={{ opacity: 0.5 }}>·</span>
+              <span style={{ flexShrink: 0 }}>Richmond</span>
+              <span aria-hidden style={{ opacity: 0.5 }}>·</span>
+              <span style={{ flexShrink: 0 }}>Newport News</span>
+              <span aria-hidden style={{ opacity: 0.5 }}>·</span>
+              <span style={{ flexShrink: 0 }}>Virginia Beach</span>
             </p>
 
             <h1 style={{
