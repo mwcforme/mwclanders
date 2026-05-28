@@ -3,7 +3,6 @@ import { PHONE } from "@/lib/constants";
 import { Component, type ReactNode } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ServicesProvider } from "@/app/providers/ServicesProvider";
-import { MobileFooterBar } from "./components/shared/MobileFooterBar";
 import { BookingRouteGuard } from "./domain/booking/bookingRouteGuard";
 
 // ─── EAGER: TRT landing page is the PPC entry point — zero delay ───────────
@@ -151,7 +150,6 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
-        <MobileFooterBar />
       </ServicesProvider>
     </BrowserRouter>
   </AppErrorBoundary>

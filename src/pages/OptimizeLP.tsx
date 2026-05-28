@@ -7,7 +7,7 @@ import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Check, X, Star, ShieldCheck, MapPin, Phone,
-  Beaker, UserCheck, ClipboardList, ArrowRight, ChevronDown,
+  FlaskConical, UserCheck, ClipboardList, ArrowRight, ChevronDown,
 } from "lucide-react";
 import { BookHeader } from "@/components/book/BookHeader";
 import { useBookingStore } from "@/domain/booking/bookingStore";
@@ -325,7 +325,7 @@ export default function OptimizeLP() {
             </BodyText>
             <div className="mt-8 grid sm:grid-cols-3 gap-5 sm:gap-6">
               {[
-                { title: "Low energy and recovery", body: "Energy drops in the afternoon. Workouts feel harder. Sleep is broken. You suspect testosterone is involved.", icon: Beaker },
+                { title: "Low energy and recovery", body: "Energy drops in the afternoon. Workouts feel harder. Sleep is broken. You suspect testosterone is involved.", icon: FlaskConical },
                 { title: "Sexual health concerns", body: "ED, lower libido, or both. You want an in-person evaluation, not a questionnaire from an app.", icon: UserCheck },
                 { title: "Weight that will not move", body: "You're training and eating clean. The scale won't budge. You want a lab-guided GLP-1 protocol with monitoring.", icon: ClipboardList },
               ].map(({ title, body, icon: Icon }) => (
@@ -422,7 +422,7 @@ export default function OptimizeLP() {
             <div className="mt-8 pt-8 border-t border-white/10 flex flex-wrap gap-x-8 gap-y-3">
               {[
                 { label: "LegitScript certified",      icon: ShieldCheck },
-                { label: "CLIA certified lab",          icon: Beaker },
+                { label: "CLIA certified lab",          icon: FlaskConical },
                 { label: "HIPAA compliant",             icon: ShieldCheck },
                 { label: "Virginia-licensed providers", icon: UserCheck },
               ].map(({ label, icon: Icon }) => (
