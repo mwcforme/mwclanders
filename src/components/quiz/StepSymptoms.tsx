@@ -14,7 +14,7 @@ interface StepSymptomsProps {
 /**
  * Step 1 of /quiz. Sequential unlock per category (last category unlocks all),
  * inline error state on submit, sticky CTA.
- * Progress maps 0–60% based on answered count.
+ * Progress maps 0-60% based on answered count.
  */
 export function StepSymptoms({ symptoms, onChange, onSubmit }: StepSymptomsProps) {
   const [showErrors, setShowErrors] = useState(false);

@@ -1,7 +1,7 @@
 import { type ReactNode } from "react";
 
 interface QuizShellProps {
-  /** 0–100 progress percentage. */
+  /** 0-100 progress percentage. */
   progress: number;
   children: ReactNode;
   /** Sticky CTA at bottom of viewport. Pass null to hide. */

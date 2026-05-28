@@ -46,7 +46,7 @@ const formatPhone = (v: string) => {
  * the Finalizing transition.
  * - Email is optional (labelled as such).
  * - State/dropdown removed.
- * Progress: 75–95%.
+ * Progress: 75-95%.
  */
 export function StepLead({
   initial, totalScore, bracket, disqualified, tags,

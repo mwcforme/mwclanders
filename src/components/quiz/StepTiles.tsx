@@ -13,7 +13,7 @@ interface StepTilesProps {
  * Step 1 of simplified /quiz.
  * 8 large tap-friendly tiles. Multi-select. "None" is mutually exclusive.
  * Single screen, no scrolling needed on mobile.
- * Progress: 0–40%.
+ * Progress: 0-40%.
  */
 export function StepTiles({ selectedTiles, onChange, onSubmit }: StepTilesProps) {
   const hasSelection = selectedTiles.length > 0;

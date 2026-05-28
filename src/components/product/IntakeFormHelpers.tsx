@@ -116,7 +116,7 @@ export function CheckGroup({
   );
 }
 
-/** Numeric 1–10 range slider with labeled endpoints. */
+/** Numeric 1-10 range slider with labeled endpoints. */
 export function SliderInput({
   value,
   onChange,

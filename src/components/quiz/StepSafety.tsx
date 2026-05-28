@@ -16,7 +16,7 @@ interface StepSafetyProps {
 /**
  * Step 2 of simplified /quiz. Single yes/no cancer history disqualifier.
  * Selecting Yes or No advances automatically — no separate Continue button.
- * Progress: 40–75%.
+ * Progress: 40-75%.
  */
 export function StepSafety({ onAnswer }: StepSafetyProps) {
   const progress = 60;
