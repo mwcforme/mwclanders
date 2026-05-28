@@ -12,7 +12,7 @@ const SURFACES = {
   BookConfirmed: { dev: `${BASE_URL}/book/confirmed`, lock: "https://mwclocked.pplx.app/#/confirmed" },
 };
 
-// Demo booking state for BookConfirmed — matches reference (Richmond, 8:00 AM)
+// Demo booking state — seeds both BookConfirmed and BookSchedule
 const DEMO_STATE = JSON.stringify({
   state: {
     identity: { firstName: "Eric", lastName: "Smith", phone: "5555555555", email: "eric@test.com", ghlContactId: "demo" },
@@ -28,8 +28,8 @@ async function shot(url, vp, outPath, surface) {
   const ctx = await browser.newContext({ viewport: { width: Number(vp), height: 900 } });
   const page = await ctx.newPage();
   try {
-    // For BookConfirmed dev shot: seed sessionStorage before navigation
-    if (surface === "BookConfirmed" && !url.includes("mwclocked")) {
+    // Seed sessionStorage for any dev booking surface (guard requires state)
+    if (!url.includes("mwclocked")) {
       const origin = new URL(url).origin;
       await page.goto(origin + "/", { waitUntil: "domcontentloaded", timeout: 20000 });
       await page.evaluate((state) => {
