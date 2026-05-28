@@ -7,7 +7,7 @@ const SYMPTOMS = [
   "It started gradually. Now it's affecting everything.",
   "Pills from online clinics aren't working.",
   "You haven't told your doctor. This isn't something they handle.",
-  "You want a real diagnosis, not a subscription.",
+  "You want a real evaluation, not a subscription.",
   "Private. In-person. A provider who actually knows your case.",
 ];
 
@@ -87,7 +87,7 @@ export const EDHero = () => {
               lineHeight: 1.6,
             }}
           >
-            A licensed Virginia provider diagnoses the cause. Not a pill subscription. A real protocol built around your labs, with treatment options that go beyond what online clinics can offer.
+            A licensed Virginia provider evaluates the cause. Not a pill subscription. A real protocol built around your labs, with treatment options that go beyond what online clinics can offer.
           </p>
 
           {/* Star rating — linked to Google reviews */}

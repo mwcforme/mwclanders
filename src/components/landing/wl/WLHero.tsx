@@ -141,7 +141,7 @@ export const WLHero = () => {
           <div className="w-full">
             <TRTHeroForm
               service="wl"
-              heading="Diets don't fail you. The wrong diagnosis does."
+              heading="Diets don't fail you. The wrong approach does."
               subheading="Provider-supervised weight loss that treats the whole man. Same-day availability."
               ctaLabel={COPY.cta.seeIfIQualify}
               formId="hero-wl"

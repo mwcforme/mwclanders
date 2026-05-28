@@ -23,8 +23,8 @@ const SERVICES = [
   {
     id: "ed",
     eyebrow: "ED TREATMENT",
-    headline: "In-person diagnosis. Clinical answers.",
-    body: "ED has a vascular cause and a medical solution. An in-person evaluation with a Virginia-licensed provider, same-day, with FDA-approved options reviewed on site.",
+    headline: "In-person evaluation. Clinical answers.",
+    body: "ED has a physiological cause and a medical solution. An in-person evaluation with a Virginia-licensed provider, same-day, with FDA-approved options reviewed on site.",
     cta: COPY.cta.bookConsult,
     href: "/ed",
     Icon: HeartPulse,
