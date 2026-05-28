@@ -6,7 +6,7 @@ const resemble = require("resemblejs");
 const fs = require("fs");
 const path = require("path");
 
-const BASE_URL = "https://book.menswellnesscenters.com";
+const BASE_URL = "https://mwclanders.vercel.app";
 const SURFACES = {
   BookSchedule:  { dev: `${BASE_URL}/book/schedule`,  lock: "https://mwclocked.pplx.app/#/" },
   BookConfirmed: { dev: `${BASE_URL}/book/confirmed`, lock: "https://mwclocked.pplx.app/#/confirmed" },
