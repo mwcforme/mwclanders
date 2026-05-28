@@ -55,8 +55,6 @@ export default function BookConfirmed() {
   const slug   = location ? LOCATION_KEY_TO_SLUG[location] : null;
   const center: Location = (slug && LOCATIONS.find(l => l.slug === slug)) || DEFAULT_CENTER;
   const mapsUrl     = getMapsSearchUrl(center);
-  const mapsEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(center.mapsQuery)}&output=embed`;
-
   const firstName = (identity?.firstName ?? "").trim().split(/\s+/)[0] || "";
   const appt      = formatAppt(effectiveAppt);
   const calLinks  = appt ? buildCalendarLinks(appt.iso, center.fullAddress) : null;
