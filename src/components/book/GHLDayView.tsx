@@ -208,8 +208,7 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
       window.clearInterval(interval);
       window.removeEventListener("focus", onFocus);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentional: days/cal/selected* are derived
-    // from weekStart/location and must NOT independently trigger re-fetches.
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentional: days/cal/selected* derived from weekStart/location; must NOT trigger re-fetches independently
   }, [weekStart, location, refreshNonce]);
 
   useEffect(() => {
