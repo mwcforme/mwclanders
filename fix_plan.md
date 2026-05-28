@@ -45,9 +45,12 @@ Last updated: 2026-05-28
   Run: grep -rn "<img" src/pages/ src/components/ | grep -v "width=\|height="
   Many images in booking funnel may be missing. Fix with explicit dimensions.
 
-- [ ] MWC-011: Duplicate GTM triggers on page view
-  index.html fires: gtag('config', 'G-286547777') synchronously AND GTM is deferred.
-  If GTM also has a GA4 config tag, it fires twice. Audit GTM container.
+- [ ] MWC-011: Duplicate GTM triggers on page view [NEEDS_GTM_AUDIT]
+  index.html fires: gtag('config', 'G-286547777', { send_page_view: false }) — inline config does NOT fire a page_view.
+  GA4 anonymize_ip: true is set. url_passthrough: true is set on sensitive /book/ paths.
+  CANNOT FIX FROM CODE: if GTM container has a GA4 Configuration tag that fires on All Pages,
+  it will send a second page_view. Requires GTM container access to audit/fix.
+  Action needed: open GTM-5X9DB23T, check for GA4 Configuration tag firing trigger, disable or set send_page_view=false there.
 
 ## BACKLOG
 

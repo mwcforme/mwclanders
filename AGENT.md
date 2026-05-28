@@ -16,3 +16,4 @@
 - vercel.json headers apply to the Vercel deployment at book.menswellnesscenters.com — verify with `curl -I https://book.menswellnesscenters.com/` to confirm headers are live
 - BookEntry.tsx uses useSearchParams() to preserve UTM params through WP handoff
 - Dead code still in repo: BookConfirmedHero.tsx, BookConfirmedContent.tsx, GHLDayView.tsx, DayStrip.tsx, TimeGrid.tsx (used only by now-deleted BookSchedule2 route) — safe to delete
+- MWC-011 (Duplicate GA4 page_view): index.html already has send_page_view: false AND anonymize_ip: true AND url_passthrough: true on /book/ paths. Cannot fix duplicate page_view from code — requires GTM container audit. Open GTM-5X9DB23T, check if a GA4 Configuration tag fires on All Pages (it will double-fire). Disable page_view on the GTM-side GA4 tag or change its trigger to fire only on custom events.
