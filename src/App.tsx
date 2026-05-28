@@ -35,6 +35,10 @@ const BookConfirmed = lazy(() => import("./pages/book/BookConfirmed"));
 const BookLetsTalk  = lazy(() => import("./pages/book/BookLetsTalk"));
 const BookEntry     = lazy(() => import("./pages/book/BookEntry"));
 
+// Dev / QA preview routes (seed store without real booking flow)
+const BookDevConfirmed = lazy(() => import("./pages/book/BookDevPreview").then(m => ({ default: m.BookDevConfirmed })));
+const BookDevSchedule  = lazy(() => import("./pages/book/BookDevPreview").then(m => ({ default: m.BookDevSchedule })));
+
 // Legal
 const PrivacyPolicy     = lazy(() => import("./pages/legal/PrivacyPolicy"));
 const TermsOfService    = lazy(() => import("./pages/legal/TermsOfService"));
@@ -123,6 +127,9 @@ const App = () => (
             {/* ── Booking funnel ── */}
             <Route path="/book"         element={<Navigate to="/book/location" replace />} />
             <Route path="/book/entry"   element={<BookEntry />} />
+            {/* Dev QA routes — seed store without full booking flow */}
+            <Route path="/book/dev-confirmed" element={<Suspense fallback={null}><BookDevConfirmed /></Suspense>} />
+            <Route path="/book/dev-schedule"  element={<Suspense fallback={null}><BookDevSchedule /></Suspense>} />
             <Route element={<BookingRouteGuard />}>
               <Route path="/book/location"  element={<BookLocation />} />
               <Route path="/book/symptom"   element={<BookSymptom />} />
