@@ -12,8 +12,6 @@ import { SEO } from "@/components/SEO";
 import { contactUpdater } from "@/services/contactUpdater";
 import { trackFunnelEvent } from "@/hooks/useAnalytics";
 
-const ORANGE = "var(--brand-cta)";
-const NAVY   = "var(--brand-navy-deep)";
 
 function formatApptTime(iso: string | undefined): string {
   if (!iso) return "—";
