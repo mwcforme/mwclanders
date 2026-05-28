@@ -10,6 +10,7 @@ import { TRTHeader } from "@/components/landing/trt/TRTHeader";
 import { TRTFooter } from "@/components/landing/trt/TRTFooter";
 import { SEO } from "@/components/SEO";
 import { contactUpdater } from "@/services/contactUpdater";
+import { trackFunnelEvent } from "@/hooks/useAnalytics";
 
 const ORANGE = "var(--brand-cta)";
 const NAVY   = "var(--brand-navy-deep)";
@@ -94,10 +95,7 @@ export default function TRTSuccess() {
     if (contactId) contactUpdater.addTag(contactId, "funnel-complete").catch(() => {});
 
     // Analytics event — no PHI
-    (window as Window & { dataLayer?: unknown[] }).dataLayer?.push({
-      event: "product_trt_funnel_complete",
-      location: location ?? undefined,
-    });
+    trackFunnelEvent("product_trt_funnel_complete", { location: location ?? undefined });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
