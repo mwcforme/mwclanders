@@ -245,15 +245,8 @@ export default function OptimizeLP() {
 
           </div>
 
-          {/* Right: hero form — subtle glass anchor on dark navy */}
-          <div style={{
-            paddingTop: 24,
-            borderRadius: 20,
-            border: "1px solid rgba(255,255,255,0.10)",
-            background: "rgba(255,255,255,0.03)",
-            padding: 24,
-            boxShadow: "0 8px 40px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.07)",
-          }}>
+          {/* Right: hero form — no outer wrapper, form card is self-contained */}
+          <div>
             <TRTHeroForm service="trt" formId="hero-opt" />
           </div>
         </div>
