@@ -208,8 +208,9 @@ function FAQItem({ q, a, idx, dark = false }: { q: string; a: string; idx: numbe
 }
 
 // ─── Section primitives ───────────────────────────────────────────────────────
+// Eyebrow: orange on dark, dark-navy on light (matches LP primitives.tsx contrast rules)
 const Eyebrow = ({ children, dark = false }: { children: React.ReactNode; dark?: boolean }) => (
-  <p style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: ORANGE, marginBottom: 10 }}>{children}</p>
+  <p style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: dark ? ORANGE : ON_LIGHT, marginBottom: 10, borderLeft: dark ? "none" : `3px solid ${ORANGE}`, paddingLeft: dark ? 0 : 10 }}>{children}</p>
 );
 
 const Heading = ({ children, dark = false, center = false }: { children: React.ReactNode; dark?: boolean; center?: boolean }) => (
@@ -240,8 +241,8 @@ export default function OptimizeLP() {
       <section id="reserve" style={{ ...sectionStyle(CREAM), paddingTop: 96 }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "start" }} className="optimize-hero-grid">
           <div>
-            <p style={{ fontFamily: "Inter, sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: ORANGE, display: "flex", alignItems: "center", gap: 6, marginBottom: 16 }}>
-              <MapPin size={14} aria-hidden /> Virginia · 3 Centers · Physician-led
+            <p style={{ fontFamily: "Inter, sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: ON_LIGHT, display: "flex", alignItems: "center", gap: 6, marginBottom: 16, borderLeft: `3px solid ${ORANGE}`, paddingLeft: 10 }}>
+              <MapPin size={14} style={{ color: ORANGE }} aria-hidden /> Virginia · 3 Centers · Physician-led
             </p>
             <h1 style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: "clamp(34px, 5vw, 56px)", textTransform: "uppercase", color: ON_LIGHT, lineHeight: 1.05, marginBottom: 20 }}>
               Virginia's choice for{" "}
@@ -315,7 +316,7 @@ export default function OptimizeLP() {
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginTop: 36 }} className="optimize-2col">
               {/* What you get */}
               <div style={{ background: "#FFFFFF", border: `2px solid ${ORANGE}`, borderRadius: 16, padding: "28px 24px", boxShadow: "0 4px 24px rgba(0,0,0,0.07)" }}>
-                <p style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 16 }}>What you get here</p>
+                <p style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ON_LIGHT, marginBottom: 16, borderLeft: `3px solid ${ORANGE}`, paddingLeft: 8 }}>What you get here</p>
                 <ul style={{ display: "grid", gap: 12 }}>
                   {["60-minute in-person visit at your local center","Virginia-licensed provider, same provider every visit","Full hormone panel drawn and reviewed on-site","Personalized protocol explained in plain language","Ongoing follow-up labs included","FSA and HSA accepted"].map(line => (
                     <li key={line} style={{ display: "flex", alignItems: "flex-start", gap: 10, fontFamily: "Inter, sans-serif", fontSize: 15, fontWeight: 600, color: ON_LIGHT }}>
@@ -327,7 +328,7 @@ export default function OptimizeLP() {
               </div>
               {/* What you won't find */}
               <div style={{ background: "#FAFAF9", border: "1px solid #E5E3E0", borderRadius: 16, padding: "28px 24px" }}>
-                <p style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: MUTED, marginBottom: 16 }}>What you will not find here</p>
+                <p style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ON_LIGHT, marginBottom: 16 }}>What you will not find here</p>
                 <ul style={{ display: "grid", gap: 12 }}>
                   {["Mail-order questionnaires and chatbots","Rotating clinicians who do not know your case","Hidden fees or auto-renewing subscriptions","Call centers between you and your provider","Generic protocols from a chart range","Pressure to start treatment the same day"].map(line => (
                     <li key={line} style={{ display: "flex", alignItems: "flex-start", gap: 10, fontFamily: "Inter, sans-serif", fontSize: 15, color: MUTED }}>
@@ -371,7 +372,7 @@ export default function OptimizeLP() {
                 </figure>
               ))}
             </div>
-            <p style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: "rgba(255,255,255,0.40)", marginBottom: 40 }}>Reviews reflect individual experiences. Individual results vary.</p>
+            <p style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: "rgba(255,255,255,0.65)", marginBottom: 40 }}>Reviews reflect individual experiences. Individual results vary.</p>
             {/* Badges */}
             <div style={{ borderTop: "1px solid rgba(255,255,255,0.12)", paddingTop: 32, display: "flex", flexWrap: "wrap", gap: "12px 36px" }}>
               {[{ label: "LegitScript certified", icon: ShieldCheck },{ label: "CLIA certified on-site lab", icon: Beaker },{ label: "HIPAA compliant", icon: ShieldCheck },{ label: "Virginia-licensed providers", icon: UserCheck }].map(({ label, icon: Icon }) => (
