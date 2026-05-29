@@ -183,6 +183,28 @@ You've been told your labs are normal. You don't feel normal. At Men's Wellness 
             ))}
           </div>
 
+          {/* Objection-handling chips */}
+          <div className="mt-5 flex flex-wrap gap-2">
+            {[
+              "No insurance needed",
+              "100% confidential",
+              "Same- or next-day availability",
+            ].map(label => (
+              <span key={label} style={{
+                display: "inline-flex", alignItems: "center",
+                padding: "5px 12px",
+                borderRadius: 999,
+                border: "1.5px solid rgba(245,240,235,0.25)",
+                background: "rgba(245,240,235,0.08)",
+                fontFamily: "Inter, sans-serif",
+                fontSize: 12, fontWeight: 600,
+                letterSpacing: "0.04em",
+                // hardcoded-color-allow-next-line
+                color: "rgba(245,240,235,0.80)",
+              }}>{label}</span>
+            ))}
+          </div>
+
           {/* Symptom statements */}
           <div className="mt-8 flex flex-col gap-4">
             {[
