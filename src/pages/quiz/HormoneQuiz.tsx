@@ -471,39 +471,53 @@ function StepResult({ answers, onSuccess }: { answers: Answers; onSuccess: () =>
               ? "A 60-minute consultation may be worth your time."
               : "A conversation may still be worth it."}
           </h2>
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 17, lineHeight: 1.65, color: "rgba(255,255,255,0.78)" }}>
+          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 17, lineHeight: 1.65, color: "rgba(255,255,255,0.78)", marginBottom: 28 }}>
             {bucket === "consult"
               ? "Your answers suggest it may be worth sitting down with a physician at Men's Wellness Centers. During your visit, the team reviews your goals, draws labs on-site, and walks through options when clinically appropriate."
               : "Even if you are still researching, a no-cost 60-minute consultation can help you understand your options before you commit to anything."}
           </p>
+          <a href="#reserve-form"
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 8,
+              height: 52, padding: "0 28px", borderRadius: 10, border: "none",
+              background: ORANGE, color: WHITE, cursor: "pointer",
+              fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 15,
+              letterSpacing: "0.06em", textTransform: "uppercase", textDecoration: "none",
+              // hardcoded-color-allow-next-line
+              boxShadow: "0 4px 20px rgba(232,103,10,0.40)",
+            }}>
+            Reserve My No-Cost Visit <ArrowRight size={16} aria-hidden />
+          </a>
         </div>
       </section>
 
       {/* Form — cream */}
       <section style={{ background: CREAM, padding: "56px 0" }}>
         <div style={{ maxWidth: 640, margin: "0 auto", padding: "0 24px" }}>
-          {/* Steps */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 16, marginBottom: 48 }}>
+          {/* Steps — stacked on mobile */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 40 }}>
             {[
-              { icon: <Clock size={20} style={{ color: ORANGE }} aria-hidden />,         label: "Book your slot",         body: "Pick a center and a time online." },
-              { icon: <FlaskConical size={20} style={{ color: ORANGE }} aria-hidden />,  label: "Labs on arrival",        body: "Full panel drawn in our on-site lab." },
-              { icon: <UserCheck size={20} style={{ color: ORANGE }} aria-hidden />,     label: "Review everything",      body: "Your provider goes through every number before you leave." },
+              { n: "1", Icon: Clock,        label: "Book your slot",     body: "Pick a center and a time online. Same- or next-day availability." },
+              { n: "2", Icon: FlaskConical, label: "Labs on arrival",    body: "Full hormone panel drawn in our on-site CLIA-certified lab." },
+              { n: "3", Icon: UserCheck,    label: "Results reviewed",   body: "Your provider goes through every number before you leave." },
             ].map(step => (
               <div key={step.label} style={{
-                background: WHITE, borderRadius: 14, padding: "20px 16px",
+                background: WHITE, borderRadius: 14, padding: "16px 18px",
                 // hardcoded-color-allow-next-line
-                border: "1px solid rgba(11,16,41,0.10)", boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
-                textAlign: "center",
+                border: "1px solid rgba(11,16,41,0.10)", boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+                display: "flex", alignItems: "flex-start", gap: 14,
               }}>
-                <div style={{ marginBottom: 10 }}>{step.icon}</div>
-                <p style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 16, textTransform: "uppercase", color: INK, marginBottom: 6 }}>{step.label}</p>
-                <p style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: "rgba(11,16,41,0.60)", lineHeight: 1.5 }}>{step.body}</p>
+                <div style={{ width: 36, height: 36, borderRadius: "50%", background: ORANGE, color: WHITE, fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 16, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>{step.n}</div>
+                <div>
+                  <p style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 16, textTransform: "uppercase", color: INK, margin: "0 0 4px" }}>{step.label}</p>
+                  <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "rgba(11,16,41,0.60)", lineHeight: 1.5, margin: 0 }}>{step.body}</p>
+                </div>
               </div>
             ))}
           </div>
 
           {/* Form card */}
-          <div style={{
+          <div id="reserve-form" style={{
             background: WHITE, borderRadius: 18, overflow: "hidden",
             // hardcoded-color-allow-next-line
             boxShadow: "0 4px 32px rgba(0,0,0,0.10)", border: "1px solid rgba(11,16,41,0.08)",
@@ -598,6 +612,12 @@ function StepResult({ answers, onSuccess }: { answers: Answers; onSuccess: () =>
           <p style={{ fontFamily: "Inter, sans-serif", fontSize: 11, color: "rgba(11,16,41,0.50)", lineHeight: 1.6, textAlign: "center", marginTop: 20 }}>
             This quiz is not a diagnosis. Treatment requires a clinical evaluation and is provided only when medically appropriate.
           </p>
+          <div style={{ textAlign: "center", marginTop: 16 }}>
+            <button type="button" onClick={() => window.location.reload()}
+              style={{ background: "none", border: "none", cursor: "pointer", fontFamily: "Inter, sans-serif", fontSize: 13, color: "rgba(11,16,41,0.45)", textDecoration: "underline" }}>
+              Retake the quiz
+            </button>
+          </div>
         </div>
       </section>
     </>
