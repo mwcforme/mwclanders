@@ -39,9 +39,11 @@ interface TRTHeroFormProps {
 }
 
 export const TRTHeroForm = ({
-  service   = "trt",
-  ctaLabel  = COPY.cta.bookConsult,
-  formId    = "hf",
+  service    = "trt",
+  heading,
+  subheading,
+  ctaLabel   = COPY.cta.bookConsult,
+  formId     = "hf",
 }: TRTHeroFormProps = {}) => {
   const [name,     setName]     = useState("");
   const [phone,    setPhone]    = useState("");
@@ -114,14 +116,14 @@ export const TRTHeroForm = ({
           fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 20, lineHeight: 1.2,
           color: "var(--brand-cream)", textTransform: "uppercase", letterSpacing: "0.02em", marginBottom: 8,
         }}>
-          Start Feeling Like Yourself Again.
+          {heading ?? "Start Feeling Like Yourself Again."}
         </h2>
         <p style={{
           fontFamily: "Inter, sans-serif", fontSize: 13, lineHeight: 1.5,
           // hardcoded-color-allow-next-line
           color: "rgba(245,240,235,0.70)", marginBottom: 8,
         }}>
-          No-cost 60-min visit. Same-day labs. No insurance needed.
+          {subheading ?? "No-cost 60-min visit. Same-day labs. No insurance needed."}
         </p>
         <form onSubmit={handleSubmit} noValidate style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           <FloatInput id={`${formId}-name`} label="Name" type="text" autoComplete="given-name" placeholder="John"

@@ -62,7 +62,7 @@ export const TRTManifesto = ({ ctaScrollTarget = "final-cta" }: TRTManifestoProp
                 <span>James T., 48, Norfolk</span>
               </span>
               {/* hardcoded-color-allow-next-line */}
-              <span className="block mt-1" style={{ fontSize: 11, color: "rgba(255,255,255,0.50)", fontStyle: "normal" }}>Verified patient. Individual results vary.</span>
+              <span className="block mt-1" style={{ fontSize: 11, color: "rgba(255,255,255,0.50)", fontStyle: "normal" }}>Verified member. Individual results vary.</span>
             </figcaption>
           </figure>
 
