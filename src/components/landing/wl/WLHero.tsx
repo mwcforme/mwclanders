@@ -77,20 +77,21 @@ export const WLHero = () => {
             <span style={{ display: "block", color: COLORS.orange, whiteSpace: "nowrap" }}>FOR WEIGHT LOSS</span>
           </h1>
 
-          <p
-            className="mt-6 w-full"
-            style={{
-              // hardcoded-color-allow-next-line
-              color: "rgba(245,240,235,0.88)",
-              fontFamily: "Inter, sans-serif",
-              fontSize: 19,
-              lineHeight: 1.6,
-            }}
-          >
-            Provider-supervised weight loss medications with a clinician who adjusts your dose, watches your labs, and shows up for every visit. Not a chatbot. Not a pill in the mail.
-          </p>
+          {/* Photo — immediately under H1, best aspect ratio for this image */}
+          <div className="mt-6 rounded-xl overflow-hidden" style={{ aspectRatio: "16/9", position: "relative", flexShrink: 0 }}>
+            <img
+              src="/assets/lp/doctor-patient-exam.webp"
+              alt="Licensed provider drawing labs on-site at Men's Wellness Centers Virginia"
+              style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%", display: "block" }}
+              width={720} height={405} loading="eager" decoding="async"
+            />
+            <div aria-hidden style={{
+              position: "absolute", bottom: 0, left: 0, right: 0, height: "35%",
+              background: "linear-gradient(to top, rgba(11,16,41,0.70) 0%, transparent 100%)", pointerEvents: "none",
+            }} />
+          </div>
 
-          {/* Star rating — linked to Google reviews */}
+          {/* Stars — anchored to photo for social proof proximity */}
           <a
             href={GBP_REVIEWS_URL}
             target="_blank"
@@ -107,8 +108,22 @@ export const WLHero = () => {
             <span style={{ fontSize: 13, fontWeight: 600, color: "rgba(245,240,235,0.80)", fontFamily: "Inter, sans-serif" }}>4.9 · 191 verified Google reviews</span>
           </a>
 
-          {/* Service pills */}
-          <div className="mt-8 flex flex-wrap gap-2">
+          {/* Body copy */}
+          <p
+            className="mt-5 w-full"
+            style={{
+              // hardcoded-color-allow-next-line
+              color: "rgba(245,240,235,0.88)",
+              fontFamily: "Inter, sans-serif",
+              fontSize: 19,
+              lineHeight: 1.6,
+            }}
+          >
+            Provider-supervised weight loss medications with a clinician who adjusts your dose, watches your labs, and shows up for every visit. Not a chatbot. Not a pill in the mail.
+          </p>
+
+          {/* Single combined pill row — service + objection chips together */}
+          <div className="mt-5 flex flex-wrap gap-2">
             {["GLP-1 Medications", "Provider-Supervised", "FSA + HSA Accepted"].map(label => (
               <span key={label} style={{
                 display: "inline-flex", alignItems: "center",
@@ -122,27 +137,27 @@ export const WLHero = () => {
                 color: "rgba(245,240,235,0.90)",
               }}>{label}</span>
             ))}
+            {["No insurance needed", "Same- or next-day"].map(label => (
+              <span key={label} style={{
+                display: "inline-flex", alignItems: "center",
+                padding: "5px 12px",
+                borderRadius: 999,
+                border: "1.5px solid rgba(245,240,235,0.22)",
+                background: "rgba(245,240,235,0.07)",
+                fontFamily: "Inter, sans-serif",
+                fontSize: 12, fontWeight: 600,
+                letterSpacing: "0.04em",
+                // hardcoded-color-allow-next-line
+                color: "rgba(245,240,235,0.75)",
+              }}>{label}</span>
+            ))}
           </div>
 
-          {/* Doctor + patient photo */}
-          <div className="mt-6 rounded-xl overflow-hidden" style={{ aspectRatio: "16/7", position: "relative", flexShrink: 0 }}>
-            <img
-              src="/assets/lp/doctor-patient-exam.webp"
-              alt="Licensed provider examining a patient at Men's Wellness Centers Virginia"
-              style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%", display: "block" }}
-              width={720} height={315} loading="eager" decoding="async"
-            />
-            <div aria-hidden style={{
-              position: "absolute", bottom: 0, left: 0, right: 0, height: "40%",
-              background: "linear-gradient(to top, rgba(11,16,41,0.65) 0%, transparent 100%)", pointerEvents: "none",
-            }} />
-          </div>
-
-          {/* Symptom statements */}
-          <div className="mt-8 flex flex-col gap-4">
+          {/* Symptom statements — now visible without scrolling */}
+          <div className="mt-6 flex flex-col gap-3">
             {SYMPTOMS.map((text) => (
-              <div key={text} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <ChevronRight size={16} strokeWidth={1.75} aria-hidden style={{ color: COLORS.orange, flexShrink: 0 }} />
+              <div key={text} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
+                <ChevronRight size={16} strokeWidth={1.75} aria-hidden style={{ color: COLORS.orange, flexShrink: 0, marginTop: 3 }} />
                 {/* hardcoded-color-allow-next-line */}
                 <span style={{ fontFamily: "Inter, sans-serif", fontSize: 16, fontWeight: 500, color: "rgba(245,240,235,0.88)", lineHeight: 1.4 }}>{text}</span>
               </div>

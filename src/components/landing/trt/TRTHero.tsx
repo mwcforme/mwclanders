@@ -136,20 +136,21 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
             </span>
           </h1>
 
-          <p
-            className="mt-6 w-full"
-            style={{
-              // hardcoded-color-allow-next-line
-              color: "rgba(245,240,235,0.88)",
-              fontFamily: "Inter, sans-serif",
-              fontSize: 19,
-              lineHeight: 1.6,
-            }}
-          >
-You've been told your labs are normal. You don't feel normal. At Men's Wellness Centers, a licensed provider reviews your bloodwork and talks to you. Same visit. Same day. No referrals. No waiting rooms. No script.
-          </p>
+          {/* Photo — immediately under H1 */}
+          <div className="mt-6 rounded-xl overflow-hidden" style={{ aspectRatio: "16/9", position: "relative", flexShrink: 0 }}>
+            <img
+              src="/assets/lp/doctor-patient-exam.webp"
+              alt="Licensed provider drawing labs on-site at Men's Wellness Centers Virginia"
+              style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%", display: "block" }}
+              width={720} height={405} loading="eager" decoding="async"
+            />
+            <div aria-hidden style={{
+              position: "absolute", bottom: 0, left: 0, right: 0, height: "35%",
+              background: "linear-gradient(to top, rgba(11,16,41,0.70) 0%, transparent 100%)", pointerEvents: "none",
+            }} />
+          </div>
 
-          {/* Google reviews */}
+          {/* Stars — anchored to photo */}
           <a
             href={GBP_REVIEWS_URL}
             target="_blank"
@@ -166,8 +167,22 @@ You've been told your labs are normal. You don't feel normal. At Men's Wellness 
             <span style={{ fontSize: 13, fontWeight: 600, color: "rgba(245,240,235,0.80)", fontFamily: "Inter, sans-serif" }}>4.9 · 191 verified Google reviews</span>
           </a>
 
-          {/* What we treat — bridges reviews to symptoms */}
-          <div className="mt-8 flex flex-wrap gap-2">
+          {/* Body copy */}
+          <p
+            className="mt-5 w-full"
+            style={{
+              // hardcoded-color-allow-next-line
+              color: "rgba(245,240,235,0.88)",
+              fontFamily: "Inter, sans-serif",
+              fontSize: 19,
+              lineHeight: 1.6,
+            }}
+          >
+You've been told your labs are normal. You don't feel normal. At Men's Wellness Centers, a licensed provider reviews your bloodwork and talks to you. Same visit. Same day. No referrals. No waiting rooms. No script.
+          </p>
+
+          {/* Combined pill row — service + objection chips */}
+          <div className="mt-5 flex flex-wrap gap-2">
             {["Testosterone (TRT)", "ED Treatment", "Weight Loss"].map(label => (
               <span key={label} style={{
                 display: "inline-flex", alignItems: "center",
@@ -181,46 +196,24 @@ You've been told your labs are normal. You don't feel normal. At Men's Wellness 
                 color: "rgba(245,240,235,0.90)",
               }}>{label}</span>
             ))}
-          </div>
-
-          {/* Doctor + patient photo */}
-          <div className="mt-6 rounded-xl overflow-hidden" style={{ aspectRatio: "16/7", position: "relative", flexShrink: 0 }}>
-            <img
-              src="/assets/lp/doctor-patient-exam.webp"
-              alt="Licensed provider examining a patient at Men's Wellness Centers Virginia"
-              style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%", display: "block" }}
-              width={720} height={315} loading="eager" decoding="async"
-            />
-            <div aria-hidden style={{
-              position: "absolute", bottom: 0, left: 0, right: 0, height: "40%",
-              background: "linear-gradient(to top, rgba(11,16,41,0.65) 0%, transparent 100%)", pointerEvents: "none",
-            }} />
-          </div>
-
-          {/* Objection-handling chips */}
-          <div className="mt-5 flex flex-wrap gap-2">
-            {[
-              "No insurance needed",
-              "100% confidential",
-              "Same- or next-day availability",
-            ].map(label => (
+            {["No insurance needed", "100% confidential", "Same- or next-day"].map(label => (
               <span key={label} style={{
                 display: "inline-flex", alignItems: "center",
                 padding: "5px 12px",
                 borderRadius: 999,
-                border: "1.5px solid rgba(245,240,235,0.25)",
-                background: "rgba(245,240,235,0.08)",
+                border: "1.5px solid rgba(245,240,235,0.22)",
+                background: "rgba(245,240,235,0.07)",
                 fontFamily: "Inter, sans-serif",
                 fontSize: 12, fontWeight: 600,
                 letterSpacing: "0.04em",
                 // hardcoded-color-allow-next-line
-                color: "rgba(245,240,235,0.80)",
+                color: "rgba(245,240,235,0.75)",
               }}>{label}</span>
             ))}
           </div>
 
-          {/* Symptom statements */}
-          <div className="mt-8 flex flex-col gap-4">
+          {/* Symptom statements — now visible without scrolling */}
+          <div className="mt-6 flex flex-col gap-3">
             {[
               "Tired by noon. Coffee stopped working.",
               "Six months of training. Your body doesn't look like it.",
@@ -228,8 +221,8 @@ You've been told your labs are normal. You don't feel normal. At Men's Wellness 
               "Labs are fine. You\u2019re not.",
               "Forty-two years old and sleeping like you're eighty.",
             ].map((text) => (
-              <div key={text} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <ChevronRight size={16} strokeWidth={1.75} aria-hidden style={{ color: COLORS.orange, flexShrink: 0 }} />
+              <div key={text} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
+                <ChevronRight size={16} strokeWidth={1.75} aria-hidden style={{ color: COLORS.orange, flexShrink: 0, marginTop: 3 }} />
                 {/* hardcoded-color-allow-next-line */}
                 <span style={{ fontFamily: "Inter, sans-serif", fontSize: 16, fontWeight: 500, color: "rgba(245,240,235,0.88)", lineHeight: 1.4 }}>{text}</span>
               </div>
