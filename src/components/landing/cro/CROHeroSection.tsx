@@ -1,10 +1,30 @@
 /**
  * CROHeroSection — hero with rotating service words, symptom list, and inline form.
+ *
+ * Dynamic H1: if utm_term (or keyword) is present in the URL, the second line of
+ * the H1 replaces the rotating service text with the sanitized keyword value.
+ * Fallback: rotation continues as normal when no parameter is present.
+ *
+ * Supported params (checked in order): utm_term, keyword, kw, term
+ * The value is decoded, stripped of HTML, title-cased, and capped at 60 chars.
  */
 import { useState, useEffect } from "react";
 import { ChevronRight, ArrowRight } from "lucide-react";
 import { CROHeroForm } from "./CROHeroForm";
 import { ROTATING_SERVICES, SYMPTOMS } from "@/data/croContent";
+
+/** Read + sanitize a keyword from URL params. Returns null if absent/unsafe. */
+function readKeyword(): string | null {
+  if (typeof window === "undefined") return null;
+  const p = new URLSearchParams(window.location.search);
+  const raw = p.get("utm_term") ?? p.get("keyword") ?? p.get("kw") ?? p.get("term");
+  if (!raw) return null;
+  // Decode, strip tags, collapse whitespace, cap length
+  const decoded = decodeURIComponent(raw).replace(/<[^>]*>/g, "").replace(/[^a-zA-Z0-9 '\-]/g, " ").replace(/\s+/g, " ").trim().slice(0, 60);
+  if (!decoded) return null;
+  // Title-case
+  return decoded.replace(/\b\w/g, (c) => c.toUpperCase());
+}
 
 const RotatingService = () => {
   const [index, setIndex] = useState(0);
@@ -26,6 +46,12 @@ const RotatingService = () => {
 };
 
 export const CROHeroSection = () => {
+  const [keyword, setKeyword] = useState<string | null>(null);
+
+  useEffect(() => {
+    setKeyword(readKeyword());
+  }, []);
+
   const scrollToForm = () => {
     document.getElementById("hero-form")?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
@@ -55,7 +81,16 @@ export const CROHeroSection = () => {
             color: "var(--brand-cream)", fontWeight: 700,
           }}>
             <span style={{ display: "block", whiteSpace: "nowrap" }}>VIRGINIA&rsquo;S CHOICE</span>
-            <span style={{ display: "block", color: "var(--brand-cta)" }}>FOR <RotatingService /></span>
+            {keyword ? (
+              // Dynamic: keyword from utm_term / keyword / kw / term param
+              <span style={{ display: "block", color: "var(--brand-cta)", whiteSpace: "nowrap",
+                fontSize: keyword.length > 20 ? "clamp(24px, 5vw, 64px)" : undefined }}>
+                FOR {keyword}
+              </span>
+            ) : (
+              // Default: rotating service
+              <span style={{ display: "block", color: "var(--brand-cta)" }}>FOR <RotatingService /></span>
+            )}
           </h1>
           {/* hardcoded-color-allow-next-line */}
           <p className="mt-6 w-full" style={{ color: "rgba(245,240,235,0.88)", fontFamily: "Inter, sans-serif", fontSize: 19, lineHeight: 1.6 }}>
