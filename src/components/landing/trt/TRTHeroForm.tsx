@@ -113,10 +113,16 @@ export const TRTHeroForm = ({
         <h2 style={{
           fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 20, lineHeight: 1.2,
           color: "var(--brand-cream)", textTransform: "uppercase", letterSpacing: "0.02em", marginBottom: 8,
-          whiteSpace: "nowrap",
         }}>
-          Reserve Your 60-Minute Visit.
+          Start Feeling Like Yourself Again.
         </h2>
+        <p style={{
+          fontFamily: "Inter, sans-serif", fontSize: 13, lineHeight: 1.5,
+          // hardcoded-color-allow-next-line
+          color: "rgba(245,240,235,0.70)", marginBottom: 8,
+        }}>
+          No-cost 60-min visit. Same-day labs. No insurance needed.
+        </p>
         <form onSubmit={handleSubmit} noValidate style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           <FloatInput id={`${formId}-name`} label="Name" type="text" autoComplete="given-name" placeholder="John"
             value={name} inputRef={nameRef} error={errors.name} ariaInvalid={!!errors.name}
