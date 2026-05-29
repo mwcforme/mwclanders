@@ -398,8 +398,16 @@ export default function OptimizeLP() {
                   <figcaption style={{
                     fontFamily: "Inter, sans-serif", fontSize: 13,
                     color: "var(--c-text-on-light-muted)",
+                    display: "flex", flexDirection: "column", gap: 4,
                   }}>
-                    <strong style={{ color: "var(--brand-navy)" }}>{r.name}</strong>{" · "}{r.location}{" · "}Verified Google review
+                    <span><strong style={{ color: "var(--brand-navy)" }}>{r.name}</strong>{" · "}{r.location}</span>
+                    <span style={{
+                      display: "inline-flex", alignItems: "center", gap: 4,
+                      fontSize: 11, fontWeight: 600, color: "#1a73e8",
+                    }}>
+                      <svg width="11" height="11" viewBox="0 0 24 24" aria-hidden fill="none" stroke="#1a73e8" strokeWidth="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                      Verified Google Review
+                    </span>
                   </figcaption>
                 </figure>
               ))}
