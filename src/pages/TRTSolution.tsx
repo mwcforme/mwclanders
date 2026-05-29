@@ -3,7 +3,7 @@
  * Problem/Solution CRO lander. Dark navy hero, cream/white sections.
  * No SectionReveal (removed for instant render on PPC traffic).
  */
-import { lazy, Suspense } from "react";
+import { useState } from "react";
 import { Star, Check, X, ChevronDown } from "lucide-react";
 import { TRTHeader }        from "@/components/landing/trt/TRTHeader";
 import { TRTHeroForm }      from "@/components/landing/trt/TRTHeroForm";
@@ -16,7 +16,6 @@ import { SEO }              from "@/components/SEO";
 import { useScrollDepth }   from "@/hooks/useAnalytics";
 import { useState }         from "react";
 
-const TRTLocations = lazy(() => import("@/components/landing/trt/TRTLocations").then(m => ({ default: m.TRTLocations })));
 
 const NAVY   = "var(--brand-navy-deep)";
 const CREAM  = "var(--brand-cream)";
@@ -295,9 +294,32 @@ const TRTSolution = () => {
                 color: "rgba(245,240,235,0.75)", marginBottom: 32 }}>
                 {COPY.offer.finalSubhead}
               </p>
-              <Suspense fallback={null}>
-                <TRTLocations />
-              </Suspense>
+              <div style={{ display: "flex", flexDirection: "column", gap: 0,
+                // hardcoded-color-allow-next-line
+                borderTop: "1px solid rgba(255,255,255,0.10)" }}>
+                {[
+                  { city: "Richmond", drive: "5 min from I-64", href: "tel:8043464636", phone: "(804) 346-4636" },
+                  { city: "Newport News", drive: "3 min from I-64, Exit 258A", href: "tel:7578066263", phone: "(757) 806-6263" },
+                  { city: "Virginia Beach", drive: "5 min from I-264", href: "tel:7576124428", phone: "(757) 612-4428" },
+                ].map(loc => (
+                  <div key={loc.city} style={{ display: "flex", alignItems: "center", justifyContent: "space-between",
+                    gap: 12, padding: "14px 0",
+                    // hardcoded-color-allow-next-line
+                    borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+                    <div>
+                      <p style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 15,
+                        textTransform: "uppercase", color: CREAM, margin: "0 0 2px" }}>{loc.city}</p>
+                      <p style={{ fontFamily: "Inter, sans-serif", fontSize: 12,
+                        // hardcoded-color-allow-next-line
+                        color: "rgba(245,240,235,0.50)", margin: 0 }}>{loc.drive}</p>
+                    </div>
+                    <a href={loc.href} style={{ fontFamily: "Inter, sans-serif", fontSize: 14,
+                      fontWeight: 700, color: ORANGE, textDecoration: "none", whiteSpace: "nowrap" }}>
+                      {loc.phone}
+                    </a>
+                  </div>
+                ))}
+              </div>
             </div>
             <div>
               <TRTHeroForm service="trt" formId="trt-sol-cta"
