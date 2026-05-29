@@ -7,7 +7,7 @@
  */
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Check } from "lucide-react";
+import { ArrowLeft, Check, Star } from "lucide-react";
 import BookLayout from "@/components/book/BookLayout";
 import { useBookingStore } from "@/domain/booking/bookingStore";
 import { contactUpdater } from "@/services/contactUpdater";
@@ -103,6 +103,22 @@ const BookLocation = () => {
           <p className="text-base mt-2" style={{ color: "var(--c-text-on-light-muted)" }}>
             Your provider will be waiting at this location.
           </p>
+        </div>
+
+        {/* Trust strip */}
+        <div className="px-5 pb-4">
+          <div className="flex items-center gap-2 flex-wrap">
+            <div className="flex items-center gap-0.5">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} size={12} fill="var(--brand-cta)" stroke="var(--brand-cta)" aria-hidden />
+              ))}
+            </div>
+            <span className="text-xs font-semibold" style={{ color: "var(--c-text-on-light-muted)" }}>
+              4.9 · 191 Google reviews
+            </span>
+            <span className="text-xs" style={{ color: "var(--c-text-on-light-muted)" }}>·</span>
+            <span className="text-xs font-semibold" style={{ color: "var(--c-text-on-light-muted)" }}>10,000+ Virginia members since 2015</span>
+          </div>
         </div>
 
         {/* Location options */}
