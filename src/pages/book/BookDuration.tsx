@@ -5,10 +5,10 @@ import BookLayout from "@/components/book/BookLayout";
 import { useBookingStore, type UrgencyTier, type Duration } from "@/domain/booking/bookingStore";
 
 const OPTIONS = [
-  { value: "lt6mo", label: "Less than 6 months", urgency: "early" as UrgencyTier },
-  { value: "6to12mo", label: "6 to 12 months", urgency: "building" as UrgencyTier },
-  { value: "1to2yr", label: "1 to 2 years", urgency: "overdue" as UrgencyTier },
-  { value: "gt2yr", label: "More than 2 years", urgency: "long_overdue" as UrgencyTier },
+  { value: "lt6mo", label: "Less than 6 months", sub: "Recent changes are easiest to address", urgency: "early" as UrgencyTier },
+  { value: "6to12mo", label: "6 to 12 months", sub: "A pattern is forming", urgency: "building" as UrgencyTier },
+  { value: "1to2yr", label: "1 to 2 years", sub: "Your body has been asking for help", urgency: "overdue" as UrgencyTier },
+  { value: "gt2yr", label: "More than 2 years", sub: "You've waited long enough", urgency: "long_overdue" as UrgencyTier },
 ] as const;
 
 const BookDuration = () => {
@@ -61,7 +61,7 @@ const BookDuration = () => {
             When did you first notice this?
           </h1>
           <p className="text-base" style={{ color: "var(--c-text-on-light-muted)" }}>
-            This helps your provider prepare for your visit. A rough estimate is fine.
+            Your provider reviews this before you arrive. No exact date needed.
           </p>
         </div>
 
@@ -84,9 +84,14 @@ const BookDuration = () => {
                   "cursor-pointer",
                 ].join(" ")}
               >
-                <span className="font-display text-base font-bold uppercase tracking-wide text-panel-foreground flex-1">
-                  {o.label}
-                </span>
+                <div className="flex-1 min-w-0">
+                  <div className="font-display text-base font-bold uppercase tracking-wide text-panel-foreground">
+                    {o.label}
+                  </div>
+                  <div className="text-sm mt-0.5" style={{ color: "var(--c-text-on-light-muted)" }}>
+                    {o.sub}
+                  </div>
+                </div>
                 {isSelected && <ChevronRight size={16} className="text-primary flex-shrink-0" aria-hidden />}
               </button>
             );
