@@ -90,7 +90,10 @@ export default function BookConfirmed() {
             {firstName ? `You're booked, ${firstName}.` : "You're booked."}
           </h1>
           <p className="mt-4 text-lg sm:text-xl text-text-muted leading-snug">
-            Your provider is reserved. Here's everything you need.
+            Your in-person visit is locked in. Your provider will be ready for you.
+          </p>
+          <p className="mt-2 text-base text-text-muted">
+            Same-day labs drawn on-site. Results reviewed before you leave.
           </p>
         </div>
 
