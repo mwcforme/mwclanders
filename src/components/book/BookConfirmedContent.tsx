@@ -11,7 +11,7 @@ import { COLORS, FONTS, CAL_BUTTON_BASE } from "@/lib/bookingTokens";
 // hardcoded-color-allow-next-line
 const INK          = "#0A0F29";   // rgb(10,15,41)
 // hardcoded-color-allow-next-line
-const INK_MUTED    = "#485666";   // rgb(72,86,106) — eyebrows + "2 minute video"
+const INK_MUTED    = "#485666";   // rgb(72,86,106) — eyebrows + "60 second video"
 // hardcoded-color-allow-next-line
 const ORANGE_DRIVE = "#C34A09";   // rgb(195,74,9)  — drive time
 // hardcoded-color-allow-next-line
@@ -219,7 +219,7 @@ function VideoCard({ locationSlug }: { locationSlug?: string }) {
           What happens when you walk in
         </p>
         <p style={{ fontFamily: FONTS.body, fontSize: 17, fontWeight: 600, color: INK_MUTED, margin: 0 }}>
-          2 minute video
+          60 second video
         </p>
       </div>
     </div>

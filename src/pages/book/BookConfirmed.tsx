@@ -220,7 +220,7 @@ export default function BookConfirmed() {
             <p className="font-display text-lg font-bold uppercase tracking-wide text-panel-foreground">
               What happens when you walk in
             </p>
-            <p className="mt-1 text-base text-panel-muted font-semibold">2 minute video</p>
+            <p className="mt-1 text-base text-panel-muted font-semibold">60 second video</p>
           </div>
         </section>
 
