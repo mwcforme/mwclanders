@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
-import { Zap, Heart, Scale, HelpCircle, ArrowLeft, ChevronRight } from "lucide-react";
+import { Zap, Heart, Scale, HelpCircle, ArrowLeft, ChevronRight, Star } from "lucide-react";
 import BookLayout from "@/components/book/BookLayout";
 
 import { useBookingStore } from "@/domain/booking/bookingStore";
@@ -82,6 +82,19 @@ const BookSymptom = () => {
           <p className="text-base" style={{ color: "var(--c-text-on-light-muted)" }}>
             Your provider will see this before your visit. Pick the one that fits best.
           </p>
+
+          {/* Trust strip */}
+          <div className="flex items-center gap-2 flex-wrap mt-3">
+            <div className="flex items-center gap-0.5">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} size={11} fill="var(--brand-cta)" stroke="var(--brand-cta)" aria-hidden />
+              ))}
+            </div>
+            <span className="text-xs font-semibold" style={{ color: "var(--c-text-on-light-muted)" }}>
+              4.9 · 191 Google reviews
+            </span>
+            <span className="text-xs font-semibold" style={{ color: "var(--c-text-on-light-muted)" }}>· Same-day availability</span>
+          </div>
         </div>
 
         {/* Options */}
