@@ -56,6 +56,10 @@ const RequireAdmin  = lazy(() =>
   import("./components/admin/RequireAdmin").then((m) => ({ default: m.RequireAdmin }))
 );
 
+const TRTSolution = lazy(() => import("./pages/TRTSolution"));
+const EDSolution  = lazy(() => import("./pages/EDSolution"));
+const WLSolution  = lazy(() => import("./pages/WLSolution"));
+
 const FormEmbed = lazy(() => import("./pages/FormEmbed"));
 const NotFound  = lazy(() => import("./pages/NotFound"));
 
@@ -155,6 +159,10 @@ const App = () => (
             <Route path="/admin/leads"    element={<RequireAdmin><AdminLeads /></RequireAdmin>} />
             <Route path="/admin/events"   element={<RequireAdmin><AdminEvents /></RequireAdmin>} />
             <Route path="/admin/analytics" element={<RequireAdmin><AdminAnalytics /></RequireAdmin>} />
+
+            <Route path="/trt-solution" element={<TRTSolution />} />
+            <Route path="/ed-solution"  element={<EDSolution />} />
+            <Route path="/wl-solution"  element={<WLSolution />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
