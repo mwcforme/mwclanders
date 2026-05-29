@@ -23,9 +23,11 @@ const TRTQuestionnaire = lazy(() => import("./pages/product/TRTQuestionnaire"));
 const TRTSuccess       = lazy(() => import("./pages/product/TRTSuccess"));
 
 // Quiz funnel
-const TRTQuiz         = lazy(() => import("./pages/TRTQuiz"));
-const TRTQuizApproved = lazy(() => import("./pages/TRTQuizApproved"));
-const HormoneQuiz     = lazy(() => import("./pages/quiz/HormoneQuiz"));
+const TRTQuiz          = lazy(() => import("./pages/TRTQuiz"));
+const TRTQuizApproved  = lazy(() => import("./pages/TRTQuizApproved"));
+const HormoneQuiz      = lazy(() => import("./pages/quiz/HormoneQuiz"));
+const ShortQuiz        = lazy(() => import("./pages/ShortQuiz"));
+const ShortQuizApproved = lazy(() => import("./pages/ShortQuizApproved"));
 
 // Booking funnel
 const BookLocation = lazy(() => import("./pages/book/BookLocation"));
@@ -126,9 +128,11 @@ const App = () => (
             <Route path="/product/trt/success"      element={<TRTSuccess />} />
 
             {/* ── Quiz funnel ── */}
-            <Route path="/quiz"          element={<TRTQuiz />} />
-            <Route path="/quiz/approved" element={<TRTQuizApproved />} />
-            <Route path="/check"         element={<HormoneQuiz />} />
+            <Route path="/quiz"               element={<TRTQuiz />} />
+            <Route path="/quiz/approved"     element={<TRTQuizApproved />} />
+            <Route path="/check"             element={<HormoneQuiz />} />
+            <Route path="/short-quiz"        element={<ShortQuiz />} />
+            <Route path="/short-quiz/approved" element={<ShortQuizApproved />} />
 
             {/* ── Booking funnel ── */}
             <Route path="/book"         element={<Navigate to="/book/location" replace />} />
