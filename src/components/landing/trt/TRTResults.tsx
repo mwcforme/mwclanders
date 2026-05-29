@@ -221,7 +221,7 @@ export const TRTResults = () => {
               href={GBP_REVIEWS_URL}
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: "var(--brand-navy)", textDecoration: "underline", textUnderlineOffset: 3 }}
+              style={{ color: "var(--brand-navy)", textDecoration: "underline", textUnderlineOffset: 3, display: "inline-flex", alignItems: "center", minHeight: 44, padding: "0 2px" }}
             >
               See all 191 reviews →
             </a>

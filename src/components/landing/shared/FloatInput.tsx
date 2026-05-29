@@ -12,6 +12,7 @@ const WHITE   = "var(--bg-white)";
 
 export interface FloatInputProps {
   id: string;
+  name?: string;
   label: string;
   type?: string;
   inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"];
@@ -28,7 +29,7 @@ export interface FloatInputProps {
 }
 
 export const FloatInput = ({
-  id, label, type = "text", inputMode, autoComplete,
+  id, name, label, type = "text", inputMode, autoComplete,
   value, onChange, onFocus, onBlur,
   error, icon, inputRef, placeholder, ariaInvalid,
 }: FloatInputProps) => {
@@ -54,7 +55,7 @@ export const FloatInput = ({
           {icon}
         </div>
         <input
-          id={id} ref={inputRef} type={type} inputMode={inputMode} autoComplete={autoComplete}
+          id={id} name={name ?? id} ref={inputRef} type={type} inputMode={inputMode} autoComplete={autoComplete}
           placeholder={focused ? placeholder : ""} value={value} aria-invalid={ariaInvalid}
           onChange={(e) => onChange(e.target.value)}
           onFocus={() => { setFocused(true); onFocus?.(); }}

@@ -23,8 +23,8 @@ export const TRT_FAQS: FaqItem[] = [
     a: "TRT is FDA-approved when prescribed and monitored by a licensed provider for men with clinically diagnosed low testosterone. Like any prescription treatment, it has potential side effects, which your provider will review with you. Ongoing lab monitoring is part of every care plan.",
   },
   {
-    q: "How is this different from Hims, Hone, or an online TRT clinic?",
-    a: "We're in-person only. You see the same licensed provider at the same center, labs are drawn on-site and reviewed that day, and your provider knows your full case. No mail-order chatbots, no rotating clinicians, no waiting on shipping.",
+    q: "How is this different from online or mail-order TRT services?",
+    a: "We're in-person only. You see the same licensed provider at the same center, labs are drawn on-site and reviewed that day, and your provider knows your full case. No mail-order chatbots, no remote sign-offs, no waiting on shipping.",
   },
   {
     q: "How do I know if testosterone treatment is right for me?",

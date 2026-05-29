@@ -19,7 +19,7 @@ export const TRTFooter = () => {
   );
 
   const li = (content: React.ReactNode) => (
-    <li style={{ marginBottom: 14, fontSize: 14, color: "rgba(255,255,255,0.75)" }}>
+    <li style={{ marginBottom: 4, fontSize: 14, color: "rgba(255,255,255,0.75)", minHeight: 44, display: "flex", alignItems: "center" }}>
       {content}
     </li>
   );
@@ -142,8 +142,10 @@ export const TRTFooter = () => {
           }}
         >
           {[
+            "Treatment requires a clinical evaluation and is provided only when medically appropriate.",
+            "Individual results vary. Treatment is provided by licensed physicians at Men's Wellness Centers.",
             "The information presented on this website is provided for general informational purposes only and is not intended to constitute medical advice, diagnosis, or treatment. Men's Wellness Centers does not provide medical advice through this website, and nothing on this website should be relied upon as a substitute for an in-person evaluation, diagnosis, or consultation with a licensed healthcare professional. All content on this website, including text, images, graphics, testimonials, educational materials, and other information, is informational in nature only and is not intended to influence medical decision-making. Any reliance on information contained on this website is solely at the discretion and risk of the reader.",
-            "Men's Wellness Centers provides care through in-center visits at its Virginia locations and telehealth consultations. Medical services are provided following an individualized evaluation and are rendered by licensed medical professionals exercising independent clinical judgment. All ED care and men's health services at Men's Wellness Centers are provided by licensed medical professionals exercising independent clinical judgment following individualized patient evaluations. Care protocols are selected based on each patient's health profile, lab results, and medical history. Men's Wellness Centers makes no representations, guarantees, or warranties regarding outcomes, effectiveness, or suitability of any ED care for any individual. Individual results and responses vary.",
+            "Men's Wellness Centers provides care through in-center visits at its Virginia locations. Medical services are provided following an individualized evaluation and are rendered by licensed medical professionals exercising independent clinical judgment. All ED care and men's health services at Men's Wellness Centers are provided by licensed medical professionals exercising independent clinical judgment following individualized patient evaluations. Care protocols are selected based on each patient's health profile, lab results, and medical history. Men's Wellness Centers makes no representations, guarantees, or warranties regarding outcomes, effectiveness, or suitability of any care for any individual.",
             "Testimonials and reviews on this website reflect individual experiences only and are not intended to represent typical outcomes. Testimonials are not intended to make medical claims or to suggest that any service provided by Men's Wellness Centers diagnoses, treats, cures, mitigates, or prevents any disease or medical condition.",
           ].map((text, i) => (
             <p key={i} style={{ fontSize: 12, lineHeight: 1.65, color: "rgba(255,255,255,0.50)", margin: 0, overflowWrap: "break-word", wordBreak: "break-word", maxWidth: "100%" }}>
@@ -176,13 +178,16 @@ export const TRTFooter = () => {
           <span>© {year} Men's Wellness Centers</span>
           <span>|</span>
           {/* hardcoded-color-allow-next-line */}
-          <Link to="/prescribing-policy" style={{ color: "rgba(255,255,255,0.50)", textDecoration: "none" }}>Safety Policy</Link>
+          <Link to="/prescribing-policy" style={{ color: "rgba(255,255,255,0.50)", textDecoration: "none", minHeight: 44, display: "flex", alignItems: "center" }}>Safety Policy</Link>
           <span>|</span>
           {/* hardcoded-color-allow-next-line */}
-          <Link to="/terms-of-service" style={{ color: "rgba(255,255,255,0.50)", textDecoration: "none" }}>Terms &amp; Agreement</Link>
+          <Link to="/terms-of-service" style={{ color: "rgba(255,255,255,0.50)", textDecoration: "none", minHeight: 44, display: "flex", alignItems: "center" }}>Terms of Service</Link>
           <span>|</span>
           {/* hardcoded-color-allow-next-line */}
-          <Link to="/privacy-policy" style={{ color: "rgba(255,255,255,0.50)", textDecoration: "none" }}>Notice of Privacy Practices</Link>
+          <Link to="/privacy-policy" style={{ color: "rgba(255,255,255,0.50)", textDecoration: "none", minHeight: 44, display: "flex", alignItems: "center" }}>Privacy Policy</Link>
+          <span>|</span>
+          {/* hardcoded-color-allow-next-line */}
+          <Link to="/privacy-policy" style={{ color: "rgba(255,255,255,0.50)", textDecoration: "none", minHeight: 44, display: "flex", alignItems: "center" }}>HIPAA Notice</Link>
         </div>
       </div>
     </footer>

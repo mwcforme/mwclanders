@@ -141,7 +141,7 @@ export const TRTEverythingIncluded = () => (
                   lineHeight: 1.5,
                 }}
               >
-                <span style={{ color: "rgba(255,255,255,0.50)", fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 16, flexShrink: 0, lineHeight: 1, marginTop: 2 }}>—</span>
+                <span aria-hidden="true" style={{ color: "rgba(255,255,255,0.50)", fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 16, flexShrink: 0, lineHeight: 1, marginTop: 2 }}>&#x2715;</span>
                 {item}
               </li>
             ))}

@@ -53,7 +53,7 @@ export const TESTIMONIALS: Testimonial[] = [
     photoUrl:
       "https://lh3.googleusercontent.com/a/ACg8ocJ7abOwzDd2NUVrtPpWct5U-fTyx139sPIyjlw1uh3LVItVUg=w80-h80-c-rp-mo-br100",
     quote:
-      "Have been going for about 6 months now and feel way better — energy throughout the day, better workouts, better sleep. Meredith is very knowledgeable and helpful.",
+      "Have been going for about 6 months now and feel way better: energy throughout the day, better workouts, better sleep. Meredith is very knowledgeable and helpful.",
   },
   {
     name: "Jeremiah N.",
@@ -66,7 +66,7 @@ export const TESTIMONIALS: Testimonial[] = [
     photoUrl:
       "https://lh3.googleusercontent.com/a/ACg8ocIXWOuLtodaCLb6b8qKM4ASsrTHe0vBT8VsjVBaKKhg60qo7g=w80-h80-c-rp-mo-br100",
     quote:
-      "10/10. I was able to make a same-day appointment online. Reception was friendly and made for a comfortable setting. I was promptly called back at the prescribed time and had my vitals and blood work taken. Dr. Papariello listened to my concerns, addressed the underlying issues, and discussed options before we came to a very acceptable conclusion. Take back your health — don't suffer in silence.",
+      "10/10. I was able to make a same-day appointment online. Reception was friendly and made for a comfortable setting. I was promptly called back at the prescribed time and had my vitals and blood work taken. Dr. Papariello listened to my concerns, addressed the underlying issues, and discussed options before we came to a very acceptable conclusion. Take back your health. Don't suffer in silence.",
   },
   {
     name: "Bobby M.",
@@ -79,7 +79,7 @@ export const TESTIMONIALS: Testimonial[] = [
     photoUrl:
       "https://lh3.googleusercontent.com/a/ACg8ocL8NOWXCAi7d1Jbw0uqehn2zNTvhA8v0cOEBabJtM5r8s9ddA=w80-h80-c-rp-mo-br100",
     quote:
-      "Excellent service and I'm always greeted by name, which makes me feel like it's a personal visit — not a doctor's office.",
+      "Excellent service and I'm always greeted by name, which makes me feel like it's a personal visit, not a doctor's office.",
   },
   {
     name: "Floyd K.",
