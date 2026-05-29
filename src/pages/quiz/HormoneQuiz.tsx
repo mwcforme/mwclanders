@@ -766,7 +766,7 @@ export default function HormoneQuiz() {
         <StepResult answers={answers} onSuccess={() => setSubmitted(true)} />
       )}
 
-
+      <TRTFooter />
     </div>
   );
 }
