@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Star, ChevronRight } from "lucide-react";
 import { GBP_REVIEWS_URL } from "@/data/testimonials";
 import { TRTHeroForm } from "./TRTHeroForm";
@@ -8,6 +8,22 @@ import { TRTHeroForm } from "./TRTHeroForm";
 
 // Rotating services for home route only
 const ROTATING_SERVICES = ["TESTOSTERONE", "ED THERAPY", "WEIGHT LOSS", "MEN'S HEALTH"];
+
+/** Read + sanitize a keyword from URL params. Returns null if absent/unsafe. */
+function readKeyword(): string | null {
+  if (typeof window === "undefined") return null;
+  const p = new URLSearchParams(window.location.search);
+  const raw = p.get("utm_term") ?? p.get("keyword") ?? p.get("kw") ?? p.get("term");
+  if (!raw) return null;
+  const decoded = decodeURIComponent(raw)
+    .replace(/<[^>]*>/g, "")
+    .replace(/[^a-zA-Z0-9 '\-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 60);
+  if (!decoded) return null;
+  return decoded.replace(/\b\w/g, (c) => c.toUpperCase());
+}
 
 // Renders all words stacked — only active word visible via opacity.
 // Container width locked to longest word. Zero layout shift.
@@ -46,9 +62,15 @@ interface TRTHeroProps {
 
 export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
   // headline prop = static (TRT/ED/WL dedicated LPs)
-  // no prop = home route with rotation
+  // no prop = home route with rotation (or dynamic keyword)
   const isStatic = !!headline;
   const h = headline ?? { line1: "VIRGINIA'S CHOICE", line2: "FOR MEN'S HEALTH", line2Color: COLORS.orange };
+
+  const [keyword, setKeyword] = useState<string | null>(null);
+  useEffect(() => {
+    if (!isStatic) setKeyword(readKeyword());
+  }, [isStatic]);
+
   return (
     <section
       id="hero"
@@ -131,9 +153,21 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
             }}
           >
             <span style={{ display: "block", whiteSpace: "nowrap" }}>VIRGINIA&rsquo;S CHOICE</span>
-            <span style={{ display: "block", color: COLORS.orange, whiteSpace: "nowrap" }}>
-              {isStatic ? h.line2 : <>FOR <RotatingService /></>}
-            </span>
+            {isStatic ? (
+              <span style={{ display: "block", color: COLORS.orange, whiteSpace: "nowrap" }}>{h.line2}</span>
+            ) : keyword ? (
+              // Dynamic H1: utm_term / keyword / kw / term param
+              <span style={{
+                display: "block", color: COLORS.orange,
+                whiteSpace: "nowrap",
+                fontSize: keyword.length > 22 ? "clamp(24px, 5vw, 64px)" : undefined,
+              }}>FOR {keyword}</span>
+            ) : (
+              // Default rotating text
+              <span style={{ display: "block", color: COLORS.orange, whiteSpace: "nowrap" }}>
+                FOR <RotatingService />
+              </span>
+            )}
           </h1>
 
           {/* Photo — immediately under H1 */}
