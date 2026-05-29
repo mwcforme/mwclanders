@@ -61,9 +61,9 @@ export default function BookConfirmed() {
   const [playing, setPlaying] = useState(false);
   // Location-based video src
   const LOCATION_VIDEO: Record<string, string> = {
-    "richmond-va":      "/videos/what-to-expect-richmond.mp4",
-    "newport-news-va":  "/videos/what-to-expect-hampton-roads.mp4",
-    "virginia-beach-va":"/videos/what-to-expect-hampton-roads.mp4",
+    "richmond-va":       "/videos/what-to-expect-hampton-roads.mp4",
+    "newport-news-va":   "/videos/what-to-expect-richmond.mp4",
+    "virginia-beach-va": "/videos/what-to-expect-richmond.mp4",
   };
   const videoSrc = LOCATION_VIDEO[center.slug] ?? "/videos/what-to-expect.mp4";
 

@@ -61,9 +61,11 @@ const PREP_STEPS = [
 // Per-location video mapping — filename matches /public/videos/
 const LOCATION_VIDEO: Record<string, string> = {
   // Keys match Location.slug values from locations.ts
-  "richmond-va":       "/videos/what-to-expect-richmond.mp4",
-  "newport-news-va":   "/videos/what-to-expect-hampton-roads.mp4",
-  "virginia-beach-va": "/videos/what-to-expect-hampton-roads.mp4",
+  // Richmond: provider in white lab coat (gray walls)
+  // VB + NPN: provider in navy scrubs (orange chairs)
+  "richmond-va":       "/videos/what-to-expect-hampton-roads.mp4",
+  "newport-news-va":   "/videos/what-to-expect-richmond.mp4",
+  "virginia-beach-va": "/videos/what-to-expect-richmond.mp4",
 };
 const FALLBACK_VIDEO_SRC = "/videos/what-to-expect.mp4";
 
