@@ -38,4 +38,12 @@ export const TRT_FAQS: FaqItem[] = [
     q: "How soon do members typically notice changes?",
     a: "Many members report initial changes in energy and mood within the first few weeks, with broader symptom improvements over 2 to 3 months. Individual results vary based on baseline labs, adherence, and individual health factors.",
   },
+  {
+    q: "Is this completely private? Will my employer or insurance find out?",
+    a: "Yes, completely private. We do not bill insurance, so there are no insurance claims and nothing appears on your EOB or employer health records. Your visit, your labs, and your treatment plan stay between you and your provider. We are HIPAA-compliant and do not share your information with third parties.",
+  },
+  {
+    q: "What if I start and decide it isn't for me?",
+    a: "You are never locked in. You can pause or stop treatment at any time at no charge. Our providers will review your options, including a monitored wind-down plan if that is appropriate for your situation. Most men who stop treatment do so because their goals changed, not because of side effects. We will support whatever decision makes sense for you.",
+  },
 ];
