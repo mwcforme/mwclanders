@@ -1,4 +1,4 @@
-const imgManifesto = "/assets/lp/provider-consultation-trt.webp";
+const imgManifesto = "/images/patient-trt.webp";
 import { Quote } from "lucide-react";
 import { COPY } from "@/data/copy";
 import { Eyebrow } from "@/components/landing/shared/primitives";
