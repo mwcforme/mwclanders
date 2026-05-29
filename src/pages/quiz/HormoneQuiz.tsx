@@ -21,6 +21,7 @@ import { useLeadSubmitController } from "@/domain/leads/useLeadSubmitController"
 import { m } from "@/lib/miniSchema";
 import { getAttribution } from "@/lib/attribution";
 import { PHONE } from "@/lib/constants";
+import { LOCATIONS, getLocationFromUrl, type LocationKey } from "@/data/croContent";
 
 // ─── Tokens ───────────────────────────────────────────────────────────────────
 const NAVY   = "var(--brand-navy-deep)";
@@ -95,11 +96,14 @@ function getBucket(a: Answers): "consult" | "soft" {
 }
 
 // ─── Schema ──────────────────────────────────────────────────────────────────
+const VALID_LOCS = ["richmond", "virginia-beach", "newport-news"] as const;
+
 const quizLeadSchema = m.object({
   firstName: m.str().trim().min(1, "Please enter your first name.").max(60, ""),
   phone: m.str()
     .transform((v: string) => v.replace(/\D/g, ""))
     .refine((d: string) => d.length === 10, "Please enter a valid 10-digit phone number."),
+  location: m.enumField(VALID_LOCS, "Please select a center location."),
 });
 
 const fmt = (v: string) => {
@@ -410,9 +414,11 @@ function StepResult({ answers, onSuccess }: { answers: Answers; onSuccess: () =>
   const bucket = getBucket(answers);
   const [firstName, setFirstName] = useState("");
   const [phone, setPhone] = useState("");
+  const [location, setLocation] = useState<LocationKey | "">(() => getLocationFromUrl());
   const [errors, setErrors] = useState<Record<string, string>>({});
   const firstRef = useRef<HTMLInputElement>(null);
   const phoneRef = useRef<HTMLInputElement>(null);
+  const locationRef = useRef<HTMLDivElement>(null);
   const attr = getAttribution();
 
   const controller = useLeadSubmitController({
@@ -431,6 +437,7 @@ function StepResult({ answers, onSuccess }: { answers: Answers; onSuccess: () =>
       firstName: v.firstName,
       phone: v.phone,
       customFields: { mwc_funnel_service: "quiz_low_t", mwc_lp_slug: "/check" },
+      source: v.location || undefined,
     }),
     toastOnError: false,
     onSuccess: () => { track("quiz_submit_success", { bucket }); onSuccess(); },
@@ -439,7 +446,7 @@ function StepResult({ answers, onSuccess }: { answers: Answers; onSuccess: () =>
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     track("quiz_submit_attempt", { bucket });
-    void controller.submit({ firstName: firstName.trim(), phone });
+    void controller.submit({ firstName: firstName.trim(), phone, location: location as typeof VALID_LOCS[number] });
   };
 
   useEffect(() => {
@@ -450,70 +457,33 @@ function StepResult({ answers, onSuccess }: { answers: Answers; onSuccess: () =>
     setErrors(m);
     if (m.firstName) firstRef.current?.focus();
     else if (m.phone) phoneRef.current?.focus();
+    else if (m.location) locationRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
   }, [controller.fieldErrors]);
 
   const clearErr = (k: string) => setErrors(p => { const { [k]: _, ...r } = p; return r; });
 
   return (
     <>
-      {/* Result band — navy, paddingTop clears BookHeader (48px) + breathing room */}
-      <section style={{ background: NAVY, paddingTop: 80, paddingBottom: 56 }}>
-        <div style={{ maxWidth: 640, margin: "0 auto", padding: "0 24px" }}>
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 14 }}>
-            Your Result
-          </p>
-          <h2 style={{
-            fontFamily: "Oswald, sans-serif", fontWeight: 700,
-            fontSize: "clamp(26px, 4vw, 40px)", textTransform: "uppercase",
-            color: WHITE, lineHeight: 1.1, marginBottom: 16,
-          }}>
-            {bucket === "consult"
-              ? "A 60-minute consultation may be worth your time."
-              : "A conversation may still be worth it."}
-          </h2>
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 17, lineHeight: 1.65, color: "rgba(255,255,255,0.78)", marginBottom: 28 }}>
-            {bucket === "consult"
-              ? "Your answers suggest it may be worth sitting down with a physician at Men's Wellness Centers. During your visit, the team reviews your goals, draws labs on-site, and walks through options when clinically appropriate."
-              : "Even if you are still researching, a no-cost 60-minute consultation can help you understand your options before you commit to anything."}
-          </p>
-          <a href="#reserve-form"
-            style={{
-              display: "inline-flex", alignItems: "center", gap: 8,
-              height: 52, padding: "0 28px", borderRadius: 10, border: "none",
-              background: ORANGE, color: WHITE, cursor: "pointer",
-              fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 15,
-              letterSpacing: "0.06em", textTransform: "uppercase", textDecoration: "none",
-              // hardcoded-color-allow-next-line
-              boxShadow: "0 4px 20px rgba(232,103,10,0.40)",
-            }}>
-            Reserve My No-Cost Visit <ArrowRight size={16} aria-hidden />
-          </a>
-        </div>
-      </section>
+      {/* FORM FIRST — above fold on result step */}
+      <section style={{ background: CREAM, paddingTop: 24, paddingBottom: 32 }}>
+        <div style={{ maxWidth: 560, margin: "0 auto", padding: "0 20px" }}>
 
-      {/* Form — cream */}
-      <section style={{ background: CREAM, padding: "56px 0" }}>
-        <div style={{ maxWidth: 640, margin: "0 auto", padding: "0 24px" }}>
-          {/* Steps — stacked on mobile */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 40 }}>
-            {[
-              { n: "1", Icon: Clock,        label: "Book your slot",     body: "Pick a center and a time online. Same- or next-day availability." },
-              { n: "2", Icon: FlaskConical, label: "Labs on arrival",    body: "Full hormone panel drawn in our on-site CLIA-certified lab." },
-              { n: "3", Icon: UserCheck,    label: "Results reviewed",   body: "Your provider goes through every number before you leave." },
-            ].map(step => (
-              <div key={step.label} style={{
-                background: WHITE, borderRadius: 14, padding: "16px 18px",
-                // hardcoded-color-allow-next-line
-                border: "1px solid rgba(11,16,41,0.10)", boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
-                display: "flex", alignItems: "flex-start", gap: 14,
-              }}>
-                <div style={{ width: 36, height: 36, borderRadius: "50%", background: ORANGE, color: WHITE, fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 16, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>{step.n}</div>
-                <div>
-                  <p style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 16, textTransform: "uppercase", color: INK, margin: "0 0 4px" }}>{step.label}</p>
-                  <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "rgba(11,16,41,0.60)", lineHeight: 1.5, margin: 0 }}>{step.body}</p>
-                </div>
-              </div>
-            ))}
+          {/* Result badge — compact, above form */}
+          <div style={{
+            background: INK, borderRadius: 12, padding: "16px 18px", marginBottom: 20,
+            display: "flex", alignItems: "flex-start", gap: 14,
+          }}>
+            <div style={{ width: 32, height: 32, borderRadius: "50%", background: ORANGE, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <Check size={16} color={WHITE} strokeWidth={3} aria-hidden />
+            </div>
+            <div>
+              <p style={{ fontFamily: "Inter, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, margin: "0 0 4px" }}>Your Result</p>
+              <p style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 17, textTransform: "uppercase", color: WHITE, lineHeight: 1.15, margin: 0 }}>
+                {bucket === "consult"
+                  ? "A consultation may be worth your time."
+                  : "A conversation may still be worth it."}
+              </p>
+            </div>
           </div>
 
           {/* Form card */}
@@ -522,62 +492,90 @@ function StepResult({ answers, onSuccess }: { answers: Answers; onSuccess: () =>
             // hardcoded-color-allow-next-line
             boxShadow: "0 4px 32px rgba(0,0,0,0.10)", border: "1px solid rgba(11,16,41,0.08)",
           }}>
-            {/* Card header */}
-            <div style={{ background: INK, padding: "20px 24px" }}>
-              <p style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 20, textTransform: "uppercase", color: WHITE, marginBottom: 4 }}>
+            <div style={{ background: INK, padding: "18px 22px" }}>
+              <p style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 19, textTransform: "uppercase", color: WHITE, marginBottom: 3 }}>
                 Reserve your no-cost visit.
               </p>
-              <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "rgba(255,255,255,0.65)" }}>
+              <p style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: "rgba(255,255,255,0.65)", margin: 0 }}>
                 Same- or next-day availability at 3 Virginia centers.
               </p>
             </div>
 
-            {/* Form */}
-            <form onSubmit={submit} noValidate style={{ padding: "24px", display: "flex", flexDirection: "column", gap: 16 }}>
+            <form onSubmit={submit} noValidate style={{ padding: "20px 22px", display: "flex", flexDirection: "column", gap: 14 }}>
               {/* First name */}
-              <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
                 <label htmlFor="lq-first" style={{ fontFamily: "Inter, sans-serif", fontSize: 13, fontWeight: 600, color: INK }}>First name</label>
                 <input
                   id="lq-first" ref={firstRef} type="text" autoComplete="given-name" placeholder="John"
                   value={firstName} onChange={e => { setFirstName(e.target.value); clearErr("firstName"); }}
                   style={{
-                    height: 52, borderRadius: 10, padding: "0 16px",
+                    height: 52, borderRadius: 10, padding: "0 14px",
                     // hardcoded-color-allow-next-line
                     border: `1.5px solid ${errors.firstName ? "#DC2626" : "rgba(11,16,41,0.20)"}`,
                     fontFamily: "Inter, sans-serif", fontSize: 16, color: INK,
-                    outline: "none", width: "100%", boxSizing: "border-box",
+                    outline: "none", width: "100%", boxSizing: "border-box" as const,
                   }}
                   aria-invalid={!!errors.firstName}
                 />
-                {errors.firstName && <p role="alert" style={{ fontSize: 12, color: "#DC2626", fontFamily: "Inter, sans-serif" }}>{errors.firstName}</p>}
+                {errors.firstName && <p role="alert" style={{ fontSize: 12, color: "#DC2626", fontFamily: "Inter, sans-serif", margin: 0 }}>{errors.firstName}</p>}
               </div>
 
               {/* Phone */}
-              <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
                 <label htmlFor="lq-phone" style={{ fontFamily: "Inter, sans-serif", fontSize: 13, fontWeight: 600, color: INK }}>Phone number</label>
                 <input
                   id="lq-phone" ref={phoneRef} type="tel" inputMode="tel" autoComplete="tel" placeholder="(555) 000-0000"
                   value={phone} onChange={e => { setPhone(fmt(e.target.value)); clearErr("phone"); }}
                   style={{
-                    height: 52, borderRadius: 10, padding: "0 16px",
+                    height: 52, borderRadius: 10, padding: "0 14px",
                     // hardcoded-color-allow-next-line
                     border: `1.5px solid ${errors.phone ? "#DC2626" : "rgba(11,16,41,0.20)"}`,
                     fontFamily: "Inter, sans-serif", fontSize: 16, color: INK,
-                    outline: "none", width: "100%", boxSizing: "border-box",
+                    outline: "none", width: "100%", boxSizing: "border-box" as const,
                   }}
                   aria-invalid={!!errors.phone}
                 />
-                {errors.phone && <p role="alert" style={{ fontSize: 12, color: "#DC2626", fontFamily: "Inter, sans-serif" }}>{errors.phone}</p>}
+                {errors.phone && <p role="alert" style={{ fontSize: 12, color: "#DC2626", fontFamily: "Inter, sans-serif", margin: 0 }}>{errors.phone}</p>}
+              </div>
+
+              {/* Location */}
+              <div ref={locationRef} style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+                <label htmlFor="lq-location" style={{ fontFamily: "Inter, sans-serif", fontSize: 13, fontWeight: 600, color: INK }}>Nearest center</label>
+                <div style={{ position: "relative" }}>
+                  <select
+                    id="lq-location"
+                    value={location}
+                    onChange={e => { setLocation(e.target.value as LocationKey); clearErr("location"); }}
+                    style={{
+                      height: 52, borderRadius: 10, padding: "0 40px 0 14px",
+                      // hardcoded-color-allow-next-line
+                      border: `1.5px solid ${errors.location ? "#DC2626" : "rgba(11,16,41,0.20)"}`,
+                      fontFamily: "Inter, sans-serif", fontSize: 16, color: location ? INK : "rgba(11,16,41,0.40)",
+                      background: WHITE, outline: "none",
+                      width: "100%", boxSizing: "border-box" as const,
+                      appearance: "none" as const, WebkitAppearance: "none" as const,
+                      cursor: "pointer",
+                    }}
+                    aria-invalid={!!errors.location}
+                  >
+                    <option value="" disabled>Select a Virginia center</option>
+                    {LOCATIONS.map(({ key, label }) => (
+                      <option key={key} value={key}>{label}</option>
+                    ))}
+                  </select>
+                  <MapPin size={16} style={{ position: "absolute", right: 14, top: "50%", transform: "translateY(-50%)", color: ORANGE, pointerEvents: "none" }} aria-hidden />
+                </div>
+                {errors.location && <p role="alert" style={{ fontSize: 12, color: "#DC2626", fontFamily: "Inter, sans-serif", margin: 0 }}>{errors.location}</p>}
               </div>
 
               {/* TCPA */}
-              <p style={{ fontSize: 11, color: "rgba(11,16,41,0.50)", lineHeight: 1.5, fontFamily: "Inter, sans-serif" }}>
+              <p style={{ fontSize: 11, color: "rgba(11,16,41,0.50)", lineHeight: 1.5, fontFamily: "Inter, sans-serif", margin: 0 }}>
                 By submitting, you agree to receive SMS/calls from Men's Wellness Centers. Msg &amp; data rates may apply. Reply STOP to opt out.{" "}
                 <a href="/privacy-policy" style={{ color: ORANGE, textDecoration: "none" }}>Privacy Policy</a>
               </p>
 
               {controller.error && !Object.keys(errors).length && (
-                <p role="alert" style={{ fontSize: 13, color: "#DC2626", fontFamily: "Inter, sans-serif" }}>
+                <p role="alert" style={{ fontSize: 13, color: "#DC2626", fontFamily: "Inter, sans-serif", margin: 0 }}>
                   Something went wrong. Try again or call us directly.
                 </p>
               )}
@@ -598,9 +596,8 @@ function StepResult({ answers, onSuccess }: { answers: Answers; onSuccess: () =>
                   : <>Reserve My 60-Minute Visit <ArrowRight size={16} aria-hidden /></>}
               </button>
 
-              {/* Tap-to-call */}
               <div style={{ textAlign: "center" }}>
-                <p style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: "rgba(11,16,41,0.55)", marginBottom: 8 }}>Prefer to call?</p>
+                <p style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: "rgba(11,16,41,0.55)", marginBottom: 6 }}>Prefer to call?</p>
                 <a href={PHONE.tel} style={{ display: "inline-flex", alignItems: "center", gap: 7, color: ORANGE, fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 15, textDecoration: "none" }}>
                   <Phone size={15} aria-hidden /> {PHONE.display}
                 </a>
@@ -608,15 +605,41 @@ function StepResult({ answers, onSuccess }: { answers: Answers; onSuccess: () =>
             </form>
           </div>
 
-          {/* Disclaimer */}
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 11, color: "rgba(11,16,41,0.50)", lineHeight: 1.6, textAlign: "center", marginTop: 20 }}>
+          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 11, color: "rgba(11,16,41,0.45)", lineHeight: 1.6, textAlign: "center", marginTop: 16 }}>
             This quiz is not a diagnosis. Treatment requires a clinical evaluation and is provided only when medically appropriate.
           </p>
-          <div style={{ textAlign: "center", marginTop: 16 }}>
+          <div style={{ textAlign: "center", marginTop: 12 }}>
             <button type="button" onClick={() => window.location.reload()}
-              style={{ background: "none", border: "none", cursor: "pointer", fontFamily: "Inter, sans-serif", fontSize: 13, color: "rgba(11,16,41,0.45)", textDecoration: "underline" }}>
+              style={{ background: "none", border: "none", cursor: "pointer", fontFamily: "Inter, sans-serif", fontSize: 13, color: "rgba(11,16,41,0.40)", textDecoration: "underline" }}>
               Retake the quiz
             </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Result detail + steps — below fold */}
+      <section style={{ background: NAVY, padding: "48px 0" }}>
+        <div style={{ maxWidth: 560, margin: "0 auto", padding: "0 20px" }}>
+          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 12 }}>What Happens Next</p>
+          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 16, lineHeight: 1.65, color: "rgba(255,255,255,0.75)", marginBottom: 32 }}>
+            {bucket === "consult"
+              ? "Your answers suggest it may be worth sitting down with a physician. During your visit, the team reviews your goals, draws labs on-site, and walks through options when clinically appropriate."
+              : "Even if you are still researching, a no-cost 60-minute consultation can help you understand your options before you commit to anything."}
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {[
+              { n: "1", label: "Book your slot",   body: "Pick your center and a time online." },
+              { n: "2", label: "Labs on arrival",  body: "Full hormone panel drawn in our on-site lab, same visit." },
+              { n: "3", label: "Results reviewed", body: "Your provider goes through every number before you leave." },
+            ].map(step => (
+              <div key={step.n} style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
+                <div style={{ width: 32, height: 32, borderRadius: "50%", background: ORANGE, color: WHITE, fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 15, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>{step.n}</div>
+                <div>
+                  <p style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 15, textTransform: "uppercase", color: WHITE, margin: "3px 0 3px" }}>{step.label}</p>
+                  <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "rgba(255,255,255,0.60)", lineHeight: 1.5, margin: 0 }}>{step.body}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
