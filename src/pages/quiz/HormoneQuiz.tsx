@@ -14,9 +14,8 @@ import {
   UserCheck, ArrowRight, Zap, Target, Dumbbell, Brain,
   Moon, Heart, Circle, Loader2, Shield, Award,
 } from "lucide-react";
-import { TRTHeader } from "@/components/landing/trt/TRTHeader";
-import { StickyMobileCTA } from "@/components/landing/trt/StickyMobileCTA";
 import { TRTFooter } from "@/components/landing/trt/TRTFooter";
+import { BookHeader } from "@/components/book/BookHeader";
 import { SEO } from "@/components/SEO";
 import { useLeadSubmitController } from "@/domain/leads/useLeadSubmitController";
 import { m } from "@/lib/miniSchema";
@@ -185,7 +184,7 @@ function StepIntro({ onStart }: { onStart: () => void }) {
   return (
     <>
       {/* Hero — dark navy, matches /optimize */}
-      <section id="hero" style={{ background: NAVY, paddingTop: 88, paddingBottom: 64, position: "relative", overflow: "hidden" }}>
+      <section id="hero" style={{ background: NAVY, paddingTop: 64, paddingBottom: 64, position: "relative", overflow: "hidden" }}>
         {/* Grain */}
         <div aria-hidden style={{
           position: "absolute", inset: 0, pointerEvents: "none", opacity: 0.05,
@@ -275,11 +274,10 @@ function StepIntro({ onStart }: { onStart: () => void }) {
       <section style={{ background: CREAM, borderBottom: "1px solid rgba(11,16,41,0.08)" }}>
         <div style={{ maxWidth: 760, margin: "0 auto", padding: "22px 24px", display: "flex", flexWrap: "wrap", gap: "10px 28px", justifyContent: "center" }}>
           {[
-            { Icon: Award,      text: "LegitScript certified" },
-            { Icon: Shield,     text: "100% private" },
-            { Icon: FlaskConical, text: "In-clinic labs" },
-            { Icon: UserCheck,  text: "Physician-led care" },
-            { Icon: Clock,      text: "Same- or next-day availability" },
+            { Icon: Award,       text: "LegitScript certified" },
+            { Icon: Shield,      text: "100% private" },
+            { Icon: FlaskConical, text: "In-clinic labs, same visit" },
+            { Icon: Clock,       text: "Same- or next-day availability" },
           ].map(({ Icon, text }) => (
             <span key={text} style={{ display: "inline-flex", alignItems: "center", gap: 7, fontFamily: "Inter, sans-serif", fontSize: 13, fontWeight: 600, color: INK }}>
               <Icon size={14} style={{ color: ORANGE, flexShrink: 0 }} aria-hidden />
@@ -458,8 +456,8 @@ function StepResult({ answers, onSuccess }: { answers: Answers; onSuccess: () =>
 
   return (
     <>
-      {/* Result band — navy */}
-      <section style={{ background: NAVY, padding: "56px 0" }}>
+      {/* Result band — navy, paddingTop clears BookHeader (48px) + breathing room */}
+      <section style={{ background: NAVY, paddingTop: 80, paddingBottom: 56 }}>
         <div style={{ maxWidth: 640, margin: "0 auto", padding: "0 24px" }}>
           <p style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 14 }}>
             Your Result
@@ -692,11 +690,11 @@ export default function HormoneQuiz() {
       />
 
       <div ref={topRef} />
-      <TRTHeader />
+      <BookHeader />
 
       {/* Sticky back button for quiz steps */}
       {quizStep !== "intro" && quizStep !== "result" && !submitted && (
-        <div style={{ position: "sticky", top: 64, zIndex: 40, background: CREAM, borderBottom: "1px solid rgba(11,16,41,0.08)", padding: "10px 20px" }}>
+        <div style={{ position: "sticky", top: 48, zIndex: 40, background: CREAM, borderBottom: "1px solid rgba(11,16,41,0.08)", padding: "10px 20px" }}>
           <div style={{ maxWidth: 640, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <button type="button" onClick={back}
               style={{ background: "none", border: "none", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 600, color: "rgba(11,16,41,0.60)" }}>
@@ -725,8 +723,7 @@ export default function HormoneQuiz() {
         <StepResult answers={answers} onSuccess={() => setSubmitted(true)} />
       )}
 
-      <StickyMobileCTA />
-      <div className="md:hidden" style={{ height: 72 }} aria-hidden="true" />
+
     </div>
   );
 }
