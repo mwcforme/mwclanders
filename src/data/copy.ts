@@ -29,6 +29,8 @@ export const COPY = {
     callNow: "Call Now",
     /** Sticky mobile bar primary action — short, action-oriented. */
     getLabsChecked: "Get My Labs Checked",
+    /** Pricing/affordability page CTA — emphasizes no-cost first visit. */
+    bookNoCostVisit: "Book My No-Cost Visit",
   },
   badge: {
     /** Hero pill / trust chip describing the offer. */

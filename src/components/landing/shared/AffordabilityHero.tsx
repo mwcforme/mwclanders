@@ -4,6 +4,7 @@
  */
 import { useNavigate } from "react-router-dom";
 import { eyebrow } from "@/data/affordabilityContent";
+import { COPY } from "@/data/copy";
 
 const OfferCard = ({ price, priceSuffix, title, body }: { price: string; priceSuffix?: string; title: string; body: string }) => (
   <div className="flex-1 rounded-xl p-6" style={{
@@ -48,10 +49,10 @@ export const AffordabilityHero = () => {
           style={{ height: 56, minHeight: 56, background: "var(--brand-cta)", color: "var(--c-text-on-dark)", fontSize: "clamp(16px, 3.5vw, 18px)", letterSpacing: "0.06em", fontFamily: "Inter, sans-serif", whiteSpace: "nowrap" }}
           onMouseEnter={(e) => { e.currentTarget.style.background = "var(--brand-cta-hover)"; }}
           onMouseLeave={(e) => { e.currentTarget.style.background = "var(--brand-cta)"; }}>
-          Book My No-Cost Visit
+          {COPY.cta.bookNoCostVisit}
         </button>
         <p style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: "var(--c-text-on-dark-muted)", marginTop: 10, marginBottom: 0 }}>
-          Pricing reviewed in writing at your visit. No commitment required.
+          Same- or next-day availability at all 3 Virginia locations. Pricing reviewed in writing at your visit. No commitment required.
         </p>
       </div>
     </section>
