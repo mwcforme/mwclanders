@@ -124,6 +124,20 @@ export const EDHero = () => {
             ))}
           </div>
 
+          {/* Doctor + patient photo */}
+          <div className="mt-6 rounded-xl overflow-hidden" style={{ aspectRatio: "16/7", position: "relative", flexShrink: 0 }}>
+            <img
+              src="/assets/lp/doctor-patient-exam.webp"
+              alt="Licensed provider examining a patient at Men's Wellness Centers Virginia"
+              style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%", display: "block" }}
+              width={720} height={315} loading="eager" decoding="async"
+            />
+            <div aria-hidden style={{
+              position: "absolute", bottom: 0, left: 0, right: 0, height: "40%",
+              background: "linear-gradient(to top, rgba(11,16,41,0.65) 0%, transparent 100%)", pointerEvents: "none",
+            }} />
+          </div>
+
           {/* Symptom statements */}
           <div className="mt-8 flex flex-col gap-4">
             {SYMPTOMS.map((text) => (
