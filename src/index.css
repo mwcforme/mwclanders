@@ -594,3 +594,93 @@ input[type="radio"] {
   --disabled-light:        214 32% 91%;   /* #E2E8F0 light chip bg */
   --disabled-light-foreground: 215 25% 27%; /* #334155 slate-700 — 9.2:1 on #E2E8F0 ✅ */
 }
+
+/* ── Quiz /check — light shell override ────────────────────────────────────
+   Forces white-card / cream-bg design on the hormone quiz page regardless
+   of the global dark mode set on <html class="dark">.
+   Mirrors the light-mode token values from @layer base. */
+.quiz-light-shell {
+  /* Page background */
+  background: #F5F0EB;
+  /* Override semantic tokens for the quiz tree */
+  --background: 36 33% 94%;          /* #F5F0EB cream */
+  --foreground: 230 60% 10%;         /* #0B1029 navy */
+  --card: 0 0% 100%;                 /* #FFFFFF white */
+  --card-foreground: 230 60% 10%;
+  --panel: 0 0% 100%;
+  --panel-foreground: 230 60% 10%;
+  --panel-muted: 215 19% 35%;
+  --panel-border: 214 32% 91%;
+  --panel-divider: 214 32% 91%;
+  --primary: 24 90% 47%;             /* orange #E8670A */
+  --primary-foreground: 0 0% 100%;
+  --primary-hover: 24 90% 40%;
+  --muted: 215 19% 35%;
+  --muted-foreground: 215 19% 35%;
+  --border: 214 32% 85%;
+  --input: 0 0% 100%;
+  --ring: 24 90% 47%;
+  --disabled: 214 32% 91%;
+  --disabled-foreground: 215 19% 55%;
+  --success: 158 64% 40%;
+  --shadow-card: 0 2px 12px rgba(0,0,0,0.06);
+  color: #0B1029;
+}
+
+.quiz-light-shell .bg-panel {
+  background: #FFFFFF !important;
+}
+.quiz-light-shell .bg-panel-foreground {
+  background: #0B1029 !important;
+}
+.quiz-light-shell .text-panel-foreground {
+  color: #0B1029 !important;
+}
+.quiz-light-shell .text-panel-muted {
+  color: #475569 !important;
+}
+.quiz-light-shell .border-panel-border,
+.quiz-light-shell .border-panel-divider {
+  border-color: #E2E8F0 !important;
+}
+.quiz-light-shell .bg-primary {
+  background: #E8670A !important;
+}
+.quiz-light-shell .bg-primary\/10 {
+  background: rgba(232,103,10,0.10) !important;
+}
+.quiz-light-shell .text-primary {
+  color: #C45A09 !important;
+}
+.quiz-light-shell .bg-background {
+  background: #FFFFFF !important;
+}
+.quiz-light-shell .shadow-card {
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06) !important;
+}
+.quiz-light-shell .shadow-cta {
+  box-shadow: 0 4px 20px rgba(232,103,10,0.35) !important;
+}
+.quiz-light-shell .hover\:bg-primary-hover:hover {
+  background: #CF5C09 !important;
+}
+.quiz-light-shell input {
+  background: #FFFFFF !important;
+  color: #0B1029 !important;
+  border-color: #CBD5E1 !important;
+}
+.quiz-light-shell input::placeholder {
+  color: #94A3B8 !important;
+}
+.quiz-light-shell input:focus {
+  border-color: #E8670A !important;
+}
+.quiz-light-shell .text-success { color: #15803D !important; }
+.quiz-light-shell .bg-success\/15 { background: rgba(21,128,61,0.12) !important; }
+.quiz-light-shell .ring-success { --tw-ring-color: #15803D; }
+.quiz-light-shell .bg-disabled { background: #E2E8F0 !important; }
+.quiz-light-shell .text-disabled-foreground { color: #94A3B8 !important; }
+.quiz-light-shell .border-destructive { border-color: #DC2626 !important; }
+.quiz-light-shell .text-destructive { color: #DC2626 !important; }
+.quiz-light-shell .border-primary\/30 { border-color: rgba(232,103,10,0.30) !important; }
+.quiz-light-shell .border-primary { border-color: #E8670A !important; }

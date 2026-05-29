@@ -118,7 +118,7 @@ function QuizLayout({ children, step, onBack }: {
 }) {
   const pct = step === 1 ? 0 : ((step - 2) / TOTAL_QUIZ_STEPS) * 100;
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "var(--brand-cream, #F5F0EB)" }}>
+    <div className="min-h-screen flex flex-col quiz-light-shell">
       <BookHeader />
       {/* Progress bar */}
       {step > 1 && step < 6 && (
