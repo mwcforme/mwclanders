@@ -278,8 +278,20 @@ export default function BookSchedule() {
             </button>
           )}
 
+          {/* Trust strip */}
+          <div className="mt-2 flex items-center gap-2 flex-wrap">
+            <div className="flex items-center gap-0.5">
+              {[...Array(5)].map((_, i) => (
+                <svg key={i} width="11" height="11" viewBox="0 0 24 24" aria-hidden fill="var(--brand-cta)">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                </svg>
+              ))}
+            </div>
+            <span className="text-xs font-semibold" style={{ color: "rgba(255,255,255,0.65)" }}>4.9 · 191 Google reviews · 10,000+ Virginia members</span>
+          </div>
+
           {/* Visit details strip */}
-          <div className="mt-3 mb-1 flex flex-wrap items-center gap-x-4 gap-y-1" style={{ color: "rgba(255,255,255,0.65)", fontSize: 13, fontFamily: "Inter, sans-serif", fontWeight: 500 }}>
+          <div className="mt-2 mb-1 flex flex-wrap items-center gap-x-4 gap-y-1" style={{ color: "rgba(255,255,255,0.65)", fontSize: 13, fontFamily: "Inter, sans-serif", fontWeight: 500 }}>
             <span>60-min in-person visit</span>
             <span aria-hidden style={{ color: "rgba(255,255,255,0.30)" }}>·</span>
             <span>Labs drawn on-site</span>
