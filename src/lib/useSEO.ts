@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 const ORIGIN = "https://book.menswellnesscenters.com";
-const DEFAULT_OG = `${ORIGIN}/og-image.png`;
+const DEFAULT_OG = `${ORIGIN}/og-image.jpg`;
 
 function setMeta(attr: string, attrName: string, content: string): void {
   let el = document.head.querySelector(`meta[${attr}="${attrName}"]`) as HTMLMetaElement | null;
