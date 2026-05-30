@@ -6,24 +6,29 @@
 import { m } from "@/lib/miniSchema";
 
 export const nameField  = m.str().trim().min(1, "Full name is required").max(100, "Name must be under 100 characters");
+
 // MWC-012: reject dummy/invalid US phone numbers
+// Rules based on NANP (North American Numbering Plan):
+//   - Area codes (NPA): cannot start with 0 or 1; N11 codes reserved
+//   - 555-0100 to 555-0199 are fictitious (movies/TV)
+//   - All-same-digit and obvious sequential patterns are test/junk numbers
 function isValidUsPhone(digits: string): boolean {
   if (digits.length !== 10) return false;
   const areaCode = digits.slice(0, 3);
   const exchange = digits.slice(3, 6);
-  // Reject invalid area codes (0xx, 1xx not valid NPA)
+  // Reject invalid area codes: 0xx or 1xx not valid NPA
   if (areaCode[0] === "0" || areaCode[0] === "1") return false;
-  // Reject invalid exchanges (0xx, 1xx not valid NXX)
-  if (exchange[0] === "0" || exchange[0] === "1") return false;
-  // Reject 555-0100–555-0199 (fictitious range) and 555-0000–555-0099
-  if (areaCode === "555" && exchange === "555") return false;
-  if (exchange === "555" && parseInt(digits.slice(6)) <= 199) return false;
-  // Reject all-same digit (1111111111, 0000000000, etc.)
+  // Reject N11 service codes as area codes (211, 311, 411, 511, 611, 711, 811, 911)
+  if (/^[2-9]11$/.test(areaCode)) return false;
+  // Reject 555-0000 to 555-0199 fictitious subscriber range
+  if (areaCode === "555" && exchange === "555" && parseInt(digits.slice(6)) <= 199) return false;
+  // Reject all-same-digit numbers (1111111111, 0000000000, etc.)
   if (/^(\d)\1{9}$/.test(digits)) return false;
-  // Reject sequential patterns (1234567890)
+  // Reject obvious sequential test patterns
   if (digits === "1234567890" || digits === "0987654321") return false;
   return true;
 }
+
 export const phoneField = m.str()
   .transform((v: string) => v.replace(/\D/g, ""))
   .refine((d: string) => isValidUsPhone(d), "Please enter a valid US phone number");
