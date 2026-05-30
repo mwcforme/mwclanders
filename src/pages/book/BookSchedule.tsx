@@ -23,6 +23,7 @@ import { trackFunnelEvent } from "@/hooks/useAnalytics";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
 import { BookHeader } from "@/components/book/BookHeader";
 import { TRTFooter } from "@/components/landing/trt/TRTFooter";
+import { LocationContextBar } from "@/components/book/LocationContextBar";
 import { DayPill } from "@/components/book/DayPill";
 import { SlotGroup } from "@/components/book/SlotGroup";
 import { ReviewSheet } from "@/components/book/ReviewSheet";
@@ -267,22 +268,13 @@ export default function BookSchedule() {
               </span>
             </div>
 
-            {/* Headline — calm, clear */}
+            {/* Headline */}
             <h1 className="font-display text-2xl sm:text-3xl font-bold uppercase tracking-tight leading-tight" style={{ color: "#FFFFFF" }}>
               {firstName ? `Choose a time, ${firstName}.` : "Choose your appointment time."}
             </h1>
 
-            {/* Visit type — 3 small inline chips, no wrapping pill */}
-            <div className="mt-3 flex flex-wrap gap-2">
-              {["In-person visit", "60 minutes", "Labs on-site"].map(tag => (
-                <span key={tag}
-                  className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold"
-                  style={{ background: "rgba(232,103,10,0.12)", border: "1px solid rgba(232,103,10,0.30)", color: "rgba(255,255,255,0.88)" }}>
-                  <span className="h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" aria-hidden />
-                  {tag}
-                </span>
-              ))}
-            </div>
+            {/* Location context bar — address, directions, visit type, local phone */}
+            {locationData && <LocationContextBar location={locationData} />}
 
             {/* Next available shortcut */}
             {nextAvailable && !selectedSlot && (
@@ -294,11 +286,6 @@ export default function BookSchedule() {
                 Next available: <span className="font-semibold ml-1" style={{ color: "rgba(255,255,255,0.85)" }}>{nextAvailable.label}</span>
               </button>
             )}
-
-            {/* Subtle trust line */}
-            <p className="mt-2 text-xs" style={{ color: "rgba(255,255,255,0.40)", fontFamily: "Inter, sans-serif" }}>
-              4.9 ★ 191 Google reviews &middot; 10,000+ Virginia members
-            </p>
           </div>
 
           {/* Booking panel */}
