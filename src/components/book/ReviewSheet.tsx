@@ -150,16 +150,6 @@ export function ReviewSheet({
               </div>
             )}
 
-            {/* What to expect chips */}
-            <div className="flex flex-wrap gap-1.5">
-              {["Physician-led", "Labs on-site", "Results same visit"].map(tag => (
-                <span key={tag} className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold"
-                  style={{ background: "rgba(232,103,10,0.08)", color: "var(--primary-hover)", border: "1px solid rgba(232,103,10,0.20)" }}>
-                  {tag}
-                </span>
-              ))}
-            </div>
-
             {/* Arrival note */}
             <p className="mt-3 text-xs text-panel-muted leading-snug">
               Please arrive 5 minutes early. Your provider will be ready for you.
