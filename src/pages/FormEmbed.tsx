@@ -54,6 +54,8 @@ export default function FormEmbed() {
   const theme    = (params.get("theme")    as Theme    | null) ?? "dark";
   const source   = params.get("source") ?? "form-embed";
   const initLoc  = (params.get("location") as LocationKey | null) ?? "";
+  // ?embed=1 or source=wp-* — suppress header copy when used inside an iframe embed
+  const isEmbed  = params.get("embed") === "1" || source.startsWith("wp-");
 
   const [name,     setName]     = useState("");
   const [phone,    setPhone]    = useState("");
@@ -139,43 +141,46 @@ export default function FormEmbed() {
     >
       <div style={{ width: "100%", maxWidth: 420 }}>
 
-        {/* Service label */}
-        <p style={{
-          textAlign: "center",
-          fontSize: 11,
-          fontWeight: 700,
-          letterSpacing: "0.12em",
-          textTransform: "uppercase",
-          color: "var(--brand-cta-accessible)",
-          marginBottom: 12,
-        }}>
-          {SERVICE_LABELS[service] ?? "Men's Health"}
-        </p>
+        {/* Service label + headline — hidden in WP iframe embed mode */}
+        {!isEmbed && (
+          <>
+            <p style={{
+              textAlign: "center",
+              fontSize: 11,
+              fontWeight: 700,
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              color: "var(--brand-cta-accessible)",
+              marginBottom: 12,
+            }}>
+              {SERVICE_LABELS[service] ?? "Men's Health"}
+            </p>
 
-        {/* Headline */}
-        <h1 style={{
-          fontFamily:  "Oswald, sans-serif",
-          fontWeight:  700,
-          fontSize:    "clamp(22px, 5vw, 30px)",
-          lineHeight:  1.1,
-          letterSpacing: "0.01em",
-          textTransform: "uppercase",
-          color:       isDark ? "var(--brand-cream)" : "var(--brand-navy-deep)",
-          textAlign:   "center",
-          marginBottom: 6,
-        }}>
-          Book Your No-Cost Consultation
-        </h1>
+            <h1 style={{
+              fontFamily:  "Oswald, sans-serif",
+              fontWeight:  700,
+              fontSize:    "clamp(22px, 5vw, 30px)",
+              lineHeight:  1.1,
+              letterSpacing: "0.01em",
+              textTransform: "uppercase",
+              color:       isDark ? "var(--brand-cream)" : "var(--brand-navy-deep)",
+              textAlign:   "center",
+              marginBottom: 6,
+            }}>
+              Book Your No-Cost Consultation
+            </h1>
 
-        <p style={{
-          textAlign:  "center",
-          fontSize:   14,
-          color:      isDark ? "rgba(245,240,235,0.75)" : "rgba(11,16,41,0.65)",
-          marginBottom: 24,
-          lineHeight: 1.5,
-        }}>
-          Same-day availability · Licensed Virginia providers
-        </p>
+            <p style={{
+              textAlign:  "center",
+              fontSize:   14,
+              color:      isDark ? "rgba(245,240,235,0.75)" : "rgba(11,16,41,0.65)",
+              marginBottom: 24,
+              lineHeight: 1.5,
+            }}>
+              Same-day availability · Licensed Virginia providers
+            </p>
+          </>
+        )}
 
         {/* Card */}
         <div style={{
