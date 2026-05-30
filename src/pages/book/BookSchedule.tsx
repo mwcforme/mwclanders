@@ -249,56 +249,53 @@ export default function BookSchedule() {
         <BookHeader />
         <main className="flex-1 mx-auto w-full max-w-2xl lg:max-w-5xl px-4 sm:px-6 pt-14 pb-32 sm:pb-12">
 
-          {/* Compact above-fold header: Back · Location · Headline on one tight block */}
-          <div className="flex items-center gap-2 mb-2">
-            <button type="button" onClick={() => navigate(-1)}
-              className="inline-flex items-center gap-1 text-sm font-semibold text-panel-foreground hover:text-primary -ml-1 px-1 py-1">
-              <ArrowLeft className="h-4 w-4" aria-hidden />
-            </button>
-            <MapPin className="h-4 w-4 flex-shrink-0 text-primary" aria-hidden />
-            <span className="font-display text-sm font-bold uppercase tracking-wide" style={{ color: "rgba(255,255,255,0.70)" }}>
-              {clinicCity ?? "Select center"}
-            </span>
-          </div>
+          {/* ── Page header ── */}
+          <div className="mb-4">
 
-          <h1 className="font-display text-2xl sm:text-3xl font-bold uppercase tracking-tight leading-tight" style={{ color: "#FFFFFF" }}>
-            {heading}
-          </h1>
-
-          {/* Next available shortcut — inline, tight */}
-          {nextAvailable && !selectedSlot && (
-            <button type="button"
-              onClick={() => { setSelectedDayIdx(nextAvailable.idx); setSelectedSlot(nextAvailable.iso); }}
-              className="mt-1 inline-flex items-center gap-1.5 text-xs leading-tight hover:text-primary transition-colors" style={{ color: "rgba(255,255,255,0.75)" }}>
-              <span className="inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" aria-hidden />
-              <span>
-                Next: <span className="whitespace-nowrap" style={{ color: "rgba(255,255,255,0.90)" }}>{nextAvailable.label}</span>
-                {" "}<span className="font-display font-bold uppercase tracking-wide text-primary underline underline-offset-2">Lock in →</span>
+            {/* Back + location breadcrumb */}
+            <div className="flex items-center gap-2 mb-4">
+              <button type="button" onClick={() => navigate(-1)}
+                className="inline-flex items-center gap-1 text-sm font-semibold hover:text-primary -ml-1 px-1 py-1"
+                style={{ color: "rgba(255,255,255,0.70)" }}>
+                <ArrowLeft className="h-4 w-4" aria-hidden />
+                Back
+              </button>
+              <span style={{ color: "rgba(255,255,255,0.25)" }}>/</span>
+              <span className="inline-flex items-center gap-1.5 text-sm font-semibold" style={{ color: "rgba(255,255,255,0.70)" }}>
+                <MapPin className="h-3.5 w-3.5 text-primary flex-shrink-0" aria-hidden />
+                {clinicCity ?? "Select center"}
               </span>
-            </button>
-          )}
-
-          {/* Trust strip */}
-          <div className="mt-2 flex items-center gap-2 flex-wrap">
-            <div className="flex items-center gap-0.5">
-              {[...Array(5)].map((_, i) => (
-                <svg key={i} width="11" height="11" viewBox="0 0 24 24" aria-hidden fill="var(--brand-cta)">
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                </svg>
-              ))}
             </div>
-            <span className="text-xs font-semibold" style={{ color: "rgba(255,255,255,0.65)" }}>4.9 · 191 Google reviews · 10,000+ Virginia members</span>
-          </div>
 
-          {/* Visit details strip */}
-          <div className="mt-2 mb-1 flex flex-wrap items-center gap-x-4 gap-y-1" style={{ color: "rgba(255,255,255,0.65)", fontSize: 13, fontFamily: "Inter, sans-serif", fontWeight: 500 }}>
-            <span>60-min in-person visit</span>
-            <span aria-hidden style={{ color: "rgba(255,255,255,0.30)" }}>·</span>
-            <span>Labs drawn on-site</span>
-            <span aria-hidden style={{ color: "rgba(255,255,255,0.30)" }}>·</span>
-            <span>Results reviewed same visit</span>
-            <span aria-hidden style={{ color: "rgba(255,255,255,0.30)" }}>·</span>
-            <span>All times Eastern</span>
+            {/* Headline — calm, clear */}
+            <h1 className="font-display text-2xl sm:text-3xl font-bold uppercase tracking-tight leading-tight" style={{ color: "#FFFFFF" }}>
+              {firstName ? `Choose a time, ${firstName}.` : "Choose your appointment time."}
+            </h1>
+
+            {/* Visit type pill — in-person made obvious */}
+            <div className="mt-3 inline-flex items-center gap-2 rounded-xl px-3 py-1.5"
+              style={{ background: "rgba(232,103,10,0.12)", border: "1px solid rgba(232,103,10,0.35)" }}>
+              <span className="h-2 w-2 rounded-full bg-primary flex-shrink-0" aria-hidden />
+              <span className="text-xs font-bold uppercase tracking-[0.08em]" style={{ color: "rgba(255,255,255,0.90)" }}>
+                In-person visit · 60 minutes · Labs drawn on-site
+              </span>
+            </div>
+
+            {/* Next available shortcut */}
+            {nextAvailable && !selectedSlot && (
+              <button type="button"
+                onClick={() => { setSelectedDayIdx(nextAvailable.idx); setSelectedSlot(nextAvailable.iso); }}
+                className="mt-2 flex items-center gap-1.5 text-sm font-medium hover:text-primary transition-colors"
+                style={{ color: "rgba(255,255,255,0.60)" }}>
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" aria-hidden />
+                Next available: <span className="font-semibold" style={{ color: "rgba(255,255,255,0.85)" }}>{nextAvailable.label}</span>
+              </button>
+            )}
+
+            {/* Subtle trust line */}
+            <p className="mt-2 text-xs" style={{ color: "rgba(255,255,255,0.45)", fontFamily: "Inter, sans-serif" }}>
+              4.9 ★ 191 Google reviews · 10,000+ Virginia members · All times Eastern
+            </p>
           </div>
 
           {/* Booking panel */}
