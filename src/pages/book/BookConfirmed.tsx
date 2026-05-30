@@ -12,6 +12,7 @@ import { useBookingStore } from "@/domain/booking/bookingStore";
 import { LOCATIONS, getMapsSearchUrl, LOCATION_KEY_TO_SLUG, type Location } from "@/data/locations";
 import { EmailCapture } from "@/components/book/EmailCapture";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
+import { BookHeader } from "@/components/book/BookHeader";
 
 const DEFAULT_CENTER = LOCATIONS[0];
 const TIMEZONE = "America/New_York";
@@ -76,7 +77,8 @@ export default function BookConfirmed() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <main className="flex-1 mx-auto w-full max-w-2xl px-4 sm:px-6 pt-8 pb-24">
+      <BookHeader />
+      <main className="flex-1 mx-auto w-full max-w-2xl px-4 sm:px-6 pt-20 pb-16">
 
         {/* ── Hero ── */}
         <div className="text-center">
@@ -89,10 +91,10 @@ export default function BookConfirmed() {
           <h1 className="mt-3 font-display text-[34px] sm:text-5xl font-bold leading-[1.1] text-foreground uppercase">
             {firstName ? `You're booked, ${firstName}.` : "You're booked."}
           </h1>
-          <p className="mt-4 text-lg sm:text-xl text-text-muted leading-snug">
+          <p className="mt-4 text-lg sm:text-xl leading-snug" style={{ color: "rgba(255,255,255,0.90)" }}>
             Your in-person visit is locked in. Your provider will be ready for you.
           </p>
-          <p className="mt-2 text-base text-text-muted">
+          <p className="mt-2 text-base" style={{ color: "rgba(255,255,255,0.75)" }}>
             Same-day labs drawn on-site. Results reviewed before you leave.
           </p>
         </div>
@@ -327,6 +329,30 @@ export default function BookConfirmed() {
         </section>
 
       </main>
+
+      {/* Footer */}
+      <footer style={{
+        // hardcoded-color-allow-next-line
+        borderTop: "1px solid rgba(255,255,255,0.08)",
+        padding: "20px 24px",
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        flexWrap: "wrap", gap: 12,
+      }}>
+        <img
+          src="/logos/Text_Logo_white.webp"
+          onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/logos/Text_Logo_white.png"; }}
+          alt="Men's Wellness Centers"
+          style={{ height: 20, width: "auto", opacity: 0.7 }}
+        />
+        <div style={{ display: "flex", gap: 20, alignItems: "center", flexWrap: "wrap" }}>
+          <a href="tel:8663444955" style={{ color: "rgba(255,255,255,0.60)", fontSize: 13, fontFamily: "Inter, sans-serif", fontWeight: 600, textDecoration: "none" }}>
+            (866) 344-4955
+          </a>
+          <span style={{ color: "rgba(255,255,255,0.30)", fontSize: 12, fontFamily: "Inter, sans-serif" }}>
+            &copy; {new Date().getFullYear()} Men&apos;s Wellness Centers
+          </span>
+        </div>
+      </footer>
     </div>
   );
 }
