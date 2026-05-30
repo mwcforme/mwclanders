@@ -139,6 +139,45 @@
       setTimeout(loadAnalytics, 5000);
     </script>
 
+    <!--
+      Meta Pixel: 2886337471511821
+      fbq stub initialised synchronously — no events lost.
+      Actual fbevents.js loads after first user interaction (mirrors GTM/GA4 pattern).
+      PHI guard above already sanitises /book/* URLs before this block fires.
+    -->
+    <script>
+      (function() {
+        // Stub — queues calls until fbevents.js loads
+        if (window.fbq) return;
+        var n = window.fbq = function() {
+          n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+        };
+        if (!window._fbq) window._fbq = n;
+        n.push = n; n.loaded = true; n.version = '2.0'; n.queue = [];
+
+        fbq('init', '2886337471511821');
+        fbq('track', 'PageView');
+
+        // Deferred load — fires on first interaction or after 5s
+        var _pixelLoaded = false;
+        function loadPixel() {
+          if (_pixelLoaded) return;
+          _pixelLoaded = true;
+          var t = document.createElement('script');
+          t.async = true;
+          t.src = 'https://connect.facebook.net/en_US/fbevents.js';
+          document.head.appendChild(t);
+        }
+        ['click', 'scroll', 'keydown', 'touchstart', 'mousemove'].forEach(function(evt) {
+          document.addEventListener(evt, loadPixel, { once: true, passive: true, capture: true });
+        });
+        setTimeout(loadPixel, 5000);
+      })();
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=2886337471511821&ev=PageView&noscript=1"
+    /></noscript>
+
     <!-- Microsoft Clarity — deferred, prod-only, env-gated -->
     <script>
       (function () {
