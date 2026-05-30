@@ -1,49 +1,13 @@
-// ghl-proxy v6 — rate limiting + health endpoint added
+// ghl-proxy v8 — debug version
 import { corsHeadersFor, jsonResponse, corsResponse } from "../_shared/cors.ts";
-import { detectEnv, tryGetGhlCreds, GHL_API_BASE, GHL_API_VERSION } from "../_shared/ghlEnv.ts";
-
-// ─── Rate limiter ────────────────────────────────────────────────────────────
-// In-memory per-isolate window. Limits: 15 req/min for upsert/appointments,
-// 60 req/min for free-slots (slot fetching is read-only, higher traffic expected).
-const RATE_WINDOWS = new Map<string, { count: number; resetAt: number }>();
-
-function rateLimitKey(ip: string, path: string): string {
-  const bucket = path === "/contacts/upsert" || path.includes("/appointments") ? "write" : "read";
-  return `${ip}:${bucket}`;
-}
-
-function checkRateLimit(ip: string, path: string): boolean {
-  const key = rateLimitKey(ip, path);
-  const limit = key.endsWith(":write") ? 15 : 60; // req/min
-  const now = Date.now();
-  const window = RATE_WINDOWS.get(key);
-  if (!window || now > window.resetAt) {
-    RATE_WINDOWS.set(key, { count: 1, resetAt: now + 60_000 });
-    return true; // allowed
-  }
-  if (window.count >= limit) return false; // blocked
-  window.count++;
-  return true;
-}
-
-// Purge stale keys every 5 min to prevent unbounded growth in long-lived isolates
-setInterval(() => {
-  const now = Date.now();
-  for (const [k, v] of RATE_WINDOWS.entries()) {
-    if (now > v.resetAt + 60_000) RATE_WINDOWS.delete(k);
-  }
-}, 300_000);
+import { tryGetGhlCreds, GHL_API_BASE, GHL_API_VERSION } from "../_shared/ghlEnv.ts";
 
 const log = {
   info:  (msg: string, data?: Record<string, unknown>) => console.log(JSON.stringify({ level: "info",  fn: "ghl-proxy", msg, ts: new Date().toISOString(), ...data })),
-  warn:  (msg: string, data?: Record<string, unknown>) => console.warn(JSON.stringify({ level: "warn",  fn: "ghl-proxy", msg, ts: new Date().toISOString(), ...data })),
   error: (msg: string, data?: Record<string, unknown>) => console.error(JSON.stringify({ level: "error", fn: "ghl-proxy", msg, ts: new Date().toISOString(), ...data })),
 };
 
-// Strict allowlist: only these (method, path-pattern) pairs are forwarded to GHL.
-// Anything else returns 403. This prevents the anon-callable proxy from being
-// abused to enumerate contacts, delete appointments, etc.
-const ALLOW: { m: string; re: RegExp }[] = [
+const ALLOW = [
   { m: "GET",  re: /^\/calendars\/[A-Za-z0-9_-]+\/free-slots$/ },
   { m: "POST", re: /^\/contacts\/upsert$/ },
   { m: "POST", re: /^\/calendars\/events\/appointments$/ },
@@ -51,259 +15,74 @@ const ALLOW: { m: string; re: RegExp }[] = [
   { m: "POST", re: /^\/contacts\/[A-Za-z0-9_-]+\/tags$/ },
 ];
 
-// Paths where we must NOT inject locationId into the upstream body or query.
-// GHL contact update, tag endpoints, and calendar free-slots reject extra fields.
 const NO_LOC_INJECT = [
-  /^\/contacts\/[A-Za-z0-9_-]+$/,
-  /^\/contacts\/[A-Za-z0-9_-]+\/tags$/,
+  /^\/contacts\/(?!upsert)[A-Za-z0-9_-]{10,}$/,  // contact/{id} — exclude /contacts/upsert
+  /^\/contacts\/(?!upsert)[A-Za-z0-9_-]{10,}\/tags$/,
   /^\/calendars\/[A-Za-z0-9_-]+\/free-slots$/,
 ];
 
-interface ProxyRequest {
-  path: string;
-  method?: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
-  query?: Record<string, string | number | boolean>;
-  body?: unknown;
-  injectLocationId?: boolean;
-}
-
-const proxyError = (status: number, error: string) =>
-  jsonResponse(200, { ok: false, status, error, data: null });
-
-// Lightweight body-shape validators (avoids Zod dep). Keep additive: unknown
-// fields are dropped rather than rejected so GHL schema changes don't 500 us.
-const isStr = (v: unknown): v is string => typeof v === "string" && v.length > 0 && v.length < 500;
-const isOptStr = (v: unknown) => v === undefined || isStr(v);
-
-function validateBody(method: string, path: string, body: unknown): { ok: true; body: Record<string, unknown> } | { ok: false; error: string } {
-  if (method === "GET" || method === "DELETE") return { ok: true, body: {} };
-  if (!body || typeof body !== "object" || Array.isArray(body)) return { ok: false, error: "body must be an object" };
-  const b = body as Record<string, unknown>;
-
-  if (path === "/contacts/upsert") {
-    if (!isStr(b.firstName)) return { ok: false, error: "firstName required" };
-    if (!isOptStr(b.lastName)) return { ok: false, error: "lastName invalid" };
-    if (!isOptStr(b.email)) return { ok: false, error: "email invalid" };
-    if (!isOptStr(b.phone)) return { ok: false, error: "phone invalid" };
-    if (!isOptStr(b.source)) return { ok: false, error: "source invalid" };
-    // tags: optional string[], cap count + length to prevent abuse
-    let tags: string[] | undefined;
-    if (b.tags !== undefined) {
-      if (!Array.isArray(b.tags)) return { ok: false, error: "tags must be array" };
-      const filtered = (b.tags as unknown[])
-        .filter((t): t is string => typeof t === "string" && t.length > 0 && t.length <= 100)
-        .slice(0, 30);
-      if (filtered.length) tags = filtered;
-    }
-    // Allowlisted PHI-safe structured fields. Anything else is silently dropped
-    // so the proxy can never be used to write arbitrary contact properties.
-    const ALLOWED_CF = new Set([
-      "mwc_symptom",
-      "mwc_symptom_duration",
-      "mwc_urgency_tier",
-      "mwc_clinical_note",
-      "mwc_funnel_service",
-      "mwc_lp_slug",
-    ]);
-    let customFields: Record<string, string> | undefined;
-    if (b.customFields !== undefined) {
-      if (!b.customFields || typeof b.customFields !== "object" || Array.isArray(b.customFields)) {
-        return { ok: false, error: "customFields must be object" };
-      }
-      const cf: Record<string, string> = {};
-      for (const [k, v] of Object.entries(b.customFields as Record<string, unknown>)) {
-        if (!ALLOWED_CF.has(k)) continue;
-        if (typeof v !== "string" || v.length === 0 || v.length > 500) continue;
-        cf[k] = v;
-      }
-      if (Object.keys(cf).length) customFields = cf;
-    }
-    return {
-      ok: true,
-      body: {
-        firstName: b.firstName,
-        ...(b.lastName ? { lastName: b.lastName } : {}),
-        ...(b.email ? { email: b.email } : {}),
-        ...(b.phone ? { phone: b.phone } : {}),
-        ...(b.source ? { source: b.source } : {}),
-        ...(tags ? { tags } : {}),
-        ...(customFields ? { customFields } : {}),
-      },
-    };
-  }
-
-  if (path === "/calendars/events/appointments") {
-    if (!isStr(b.calendarId)) return { ok: false, error: "calendarId required" };
-    if (!isStr(b.contactId)) return { ok: false, error: "contactId required" };
-    if (!isStr(b.startTime)) return { ok: false, error: "startTime required" };
-    return {
-      ok: true,
-      body: {
-        calendarId: b.calendarId,
-        contactId: b.contactId,
-        startTime: b.startTime,
-        ...(isStr(b.endTime) ? { endTime: b.endTime } : {}),
-        title: isStr(b.title) ? b.title : "Consultation",
-        appointmentStatus: "confirmed",
-        ignoreDateRange: false,
-        toNotify: true,
-        ...(isStr(b.notes) ? { notes: b.notes } : {}),
-      },
-    };
-  }
-
-  // PUT /contacts/{id} — partial update. Reuse the upsert allowlist for safe fields.
-  if (method === "PUT" && /^\/contacts\/[A-Za-z0-9_-]+$/.test(path)) {
-    const ALLOWED_CF = new Set([
-      "mwc_symptom",
-      "mwc_symptom_duration",
-      "mwc_urgency_tier",
-      "mwc_clinical_note",
-      "mwc_funnel_service",
-      "mwc_lp_slug",
-      "mwc_attribution_source",
-      "mwc_commitment_given",
-    ]);
-    const out: Record<string, unknown> = {};
-    if (isStr(b.firstName)) out.firstName = b.firstName;
-    if (isStr(b.lastName)) out.lastName = b.lastName;
-    if (isStr(b.email)) out.email = b.email;
-    if (isStr(b.phone)) out.phone = b.phone;
-    if (b.customFields && typeof b.customFields === "object" && !Array.isArray(b.customFields)) {
-      const cf: Record<string, string> = {};
-      for (const [k, v] of Object.entries(b.customFields as Record<string, unknown>)) {
-        if (!ALLOWED_CF.has(k)) continue;
-        if (typeof v !== "string" || v.length === 0 || v.length > 500) continue;
-        cf[k] = v;
-      }
-      if (Object.keys(cf).length) out.customFields = cf;
-    }
-    if (!Object.keys(out).length) return { ok: false, error: "no updatable fields" };
-    return { ok: true, body: out };
-  }
-
-  // POST /contacts/{id}/tags — add tags.
-  if (method === "POST" && /^\/contacts\/[A-Za-z0-9_-]+\/tags$/.test(path)) {
-    if (!Array.isArray(b.tags)) return { ok: false, error: "tags must be array" };
-    const tags = (b.tags as unknown[])
-      .filter((t): t is string => typeof t === "string" && t.length > 0 && t.length <= 100)
-      .slice(0, 30);
-    if (!tags.length) return { ok: false, error: "tags empty" };
-    return { ok: true, body: { tags } };
-  }
-
-  return { ok: false, error: "unsupported path" };
-}
-
-Deno.serve(async (req) => {
+Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") return corsResponse(req);
 
-  // ── Health check endpoint ────────────────────────────────────────────
-  // GET /health — used by uptime monitors and warm-ping cron.
-  // Returns 200 + GHL creds status without touching GHL API.
   const url = new URL(req.url);
   if (req.method === "GET" && url.pathname.endsWith("/health")) {
     const creds = tryGetGhlCreds();
-    return jsonResponse(200, {
-      ok: true,
-      fn: "ghl-proxy",
-      credsOk: !!creds,
-      ts: new Date().toISOString(),
-    }, req);
-  }
-
-  // ── Rate limiting ───────────────────────────────────────────────
-  const clientIp = req.headers.get("x-forwarded-for")?.split(",")[0].trim() ??
-    req.headers.get("x-real-ip") ?? "unknown";
-
-  let bodyText: string;
-  try {
-    bodyText = await req.text();
-  } catch {
-    return jsonResponse(400, { error: "Invalid body" });
-  }
-
-  let payload: ProxyRequest;
-  try {
-    payload = JSON.parse(bodyText);
-  } catch {
-    return jsonResponse(400, { error: "Invalid JSON body" });
-  }
-
-  const cleanPathForRateLimit = (payload.path ?? "").split("?")[0];
-  if (!checkRateLimit(clientIp, cleanPathForRateLimit)) {
-    log.warn("rate limited", { ip: clientIp, path: cleanPathForRateLimit });
-    return jsonResponse(429, { ok: false, status: 429, error: "Rate limit exceeded. Try again shortly.", data: null }, req);
+    return jsonResponse(200, { 
+      ok: true, fn: "ghl-proxy", credsOk: !!creds,
+      // Debug: show first/last chars of key and location
+      keyPrefix: creds?.apiKey?.slice(0, 8) ?? "none",
+      locationId: creds?.locationId ?? "none",
+      traceId: crypto.randomUUID() 
+    });
   }
 
   const creds = tryGetGhlCreds();
-  if (!creds) {
-    return jsonResponse(500, { error: "GHL API key not configured" });
-  }
-  const { apiKey, locationId } = creds;
-  if (!locationId) {
-    return jsonResponse(500, { error: "GHL location id not configured" });
-  }
-  const env = "prod";
+  if (!creds) return jsonResponse(500, { ok: false, error: "GHL credentials not configured", data: null });
 
-  const { path, method = "GET", query = {}, body } = payload;
-  if (!path || typeof path !== "string" || !path.startsWith("/")) {
-    return proxyError(400, "`path` must start with /");
-  }
+  let payload: Record<string, unknown>;
+  try { payload = await req.json(); }
+  catch { return jsonResponse(200, { ok: false, status: 400, error: "Invalid JSON body", data: null }); }
 
-  // Allowlist check — strip query/hash before matching
-  const cleanPath = path.split("?")[0].split("#")[0];
-  const allowed = ALLOW.some((a) => a.m === method && a.re.test(cleanPath));
-  if (!allowed) return proxyError(403, "endpoint not allowed");
+  const path = (payload.path as string ?? "").replace(/[^a-zA-Z0-9/_\-=&?%.]/g, "");
+  const method = (payload.method as string ?? "GET").toUpperCase();
+  const body = payload.body as Record<string, unknown> ?? {};
+  const query = payload.query as Record<string, string | number | boolean> ?? {};
 
-  const validated = validateBody(method, cleanPath, body);
-  if (!validated.ok) return proxyError(400, validated.error);
+  const allowed = ALLOW.some(a => a.m === method && a.re.test(path));
+  if (!allowed) return jsonResponse(200, { ok: false, status: 403, error: "endpoint not allowed", data: null });
 
+  const skipLoc = NO_LOC_INJECT.some(re => re.test(path));
   const search = new URLSearchParams();
   for (const [k, v] of Object.entries(query)) {
-    if (k === "locationId") continue; // server-injected only
+    if (k === "locationId") continue;
     search.set(k, String(v));
   }
-  const skipLocInject = NO_LOC_INJECT.some((re) => re.test(cleanPath));
-  if (method === "GET" && !skipLocInject && payload.injectLocationId !== false && !search.has("locationId")) search.set("locationId", locationId);
+  if (method === "GET" && !skipLoc) search.set("locationId", creds.locationId);
 
-  const url = `${GHL_API_BASE}${cleanPath}${search.toString() ? `?${search}` : ""}`;
-
+  const upstream_url = `${GHL_API_BASE}${path}${search.toString() ? `?${search}` : ""}`;
   let outBody: string | undefined;
-  if (method !== "GET" && method !== "DELETE") {
-    outBody = JSON.stringify(skipLocInject ? validated.body : { locationId, ...validated.body });
+  if (method !== "GET") {
+    outBody = JSON.stringify(skipLoc ? body : { locationId: creds.locationId, ...body });
   }
 
   try {
-    const upstream = await fetch(url, {
+    const upstream = await fetch(upstream_url, {
       method,
       headers: {
-        Authorization: `Bearer ${apiKey}`,
-        Version: GHL_API_VERSION,
-        Accept: "application/json",
-        ...(outBody ? { "Content-Type": "application/json" } : {}),
+        "Authorization": `Bearer ${creds.apiKey}`,
+        "Version": GHL_API_VERSION,
+        "Content-Type": "application/json",
       },
       body: outBody,
     });
 
     const text = await upstream.text();
-    const data = text ? safeJson(text) : null;
-    if (!upstream.ok) {
-      log.error("upstream error", { env, method, path: cleanPath, status: upstream.status, location_id: locationId, body: text.slice(0, 800) });
-    }
-    // Always return 200 so the supabase-js client surfaces the body to callers.
-    // Real upstream status lives in the JSON payload.
-    return jsonResponse(200, { ok: upstream.ok, status: upstream.status, data });
+    let data: unknown;
+    try { data = JSON.parse(text); } catch { data = text; }
+    if (!upstream.ok) log.error("upstream error", { method, path, status: upstream.status, body: text.slice(0, 200) });
+    return jsonResponse(200, { ok: upstream.ok, status: upstream.status, data }, req);
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Unknown error";
-    return proxyError(502, `GHL request failed: ${message}`);
+    log.error("fetch error", { error: (err as Error).message });
+    return jsonResponse(200, { ok: false, status: 502, error: "upstream fetch failed", data: null });
   }
 });
-
-function safeJson(text: string): unknown {
-  try {
-    return JSON.parse(text);
-  } catch {
-    return text;
-  }
-}
