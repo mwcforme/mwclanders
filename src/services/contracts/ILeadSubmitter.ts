@@ -17,6 +17,8 @@ export interface LeadInput {
   email?: string;
   phone?: string;
   source?: string;
+  /** Location key for GHL location tag (richmond / virginia-beach / newport-news). */
+  location?: string;
   tags?: string[];
   /** PHI-safe structured fields written to GHL contact custom fields only. */
   customFields?: MwcCustomFields;

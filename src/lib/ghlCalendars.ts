@@ -74,12 +74,21 @@ export async function bookAppointment(input: BookAppointmentInput) {
   });
 }
 
+/** Maps location keys to GHL location tags. */
+const LOCATION_TAGS: Record<string, string> = {
+  "richmond":       "location_rva",
+  "virginia-beach": "location_vba",
+  "newport-news":   "location_npn",
+};
+
 export interface UpsertContactInput {
   firstName: string;
   lastName?: string;
   email?: string;
   phone?: string;
   source?: string;
+  /** Location key — used to apply the correct location tag (location_rva / location_vba / location_npn). */
+  location?: string;
   tags?: string[];
   /** PHI-safe structured fields routed to GHL contact custom fields only. */
   customFields?: Partial<Record<
@@ -95,10 +104,13 @@ export interface UpsertContactInput {
 
 /** Upsert a contact and return its id (idempotent on email/phone). */
 export async function upsertContact(input: UpsertContactInput): Promise<string> {
-  // Always stamp book_react_app on every contact created from this React app.
-  // Merge with any caller-supplied tags, deduplicated.
-  const REQUIRED_TAGS = ["book_react_app"];
-  const allTags = Array.from(new Set([...REQUIRED_TAGS, ...(input.tags ?? [])]));
+  // Always stamp book_react_app + appropriate location tag.
+  // Merge with caller-supplied tags, deduplicated.
+  const requiredTags = ["book_react_app"];
+  if (input.location && LOCATION_TAGS[input.location]) {
+    requiredTags.push(LOCATION_TAGS[input.location]);
+  }
+  const allTags = Array.from(new Set([...requiredTags, ...(input.tags ?? [])]));
 
   const res = await ghl<{ contact?: { id: string }; new?: boolean }>({
     path: "/contacts/upsert",

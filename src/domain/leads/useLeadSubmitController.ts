@@ -137,6 +137,8 @@ export function useLeadSubmitController<TInput>(
       ...base,
       source: opts.source ?? base.source ?? "lead-form",
       tags: [...(opts.tags ?? []), ...(base.tags ?? []), ...attributionTags(attr)],
+      // Pass location so upsertContact can apply the correct location tag
+      location: typeof v.location === "string" ? v.location : (base.location ?? undefined),
     };
 
     // ── Persist to Supabase (fire-and-forget) ─────────────────────────────

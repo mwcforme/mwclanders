@@ -36,7 +36,8 @@ export function pushWpPartialLead(payload: WpHandoffPayload): void {
     upsertContact({
       firstName: payload.firstName,
       phone:     `+1${payload.phone.replace(/\D/g, "")}`,
-      ...(payload.email   ? { email: payload.email }   : {}),
+      ...(payload.email    ? { email: payload.email }       : {}),
+      ...(payload.location ? { location: payload.location } : {}),
       source: "wordpress-form",
       tags:   ["source:wp-form", "status:partial"],
       ...(payload.service ? { customFields: { mwc_funnel_service: payload.service as Service } } : {}),

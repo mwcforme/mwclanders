@@ -111,7 +111,13 @@ function validate(c: CanonicalLead): { ok: true } | { ok: false; error: string }
 
 async function forwardToGhl(c: CanonicalLead, accessToken: string, locationId: string): Promise<{ contactId: string }> {
   const { firstName, lastName } = splitName(c.fullName);
+  const LOCATION_TAGS: Record<string, string> = {
+    "richmond":       "location_rva",
+    "virginia-beach": "location_vba",
+    "newport-news":   "location_npn",
+  };
   const tags = ["external-intake", "book_react_app"];
+  if (c.location && LOCATION_TAGS[c.location]) tags.push(LOCATION_TAGS[c.location]);
   if (c.form_source_label) tags.push(`form:${c.form_source_label}`);
   if (c.utm_source) tags.push(`utm_source:${c.utm_source}`);
   if (c.location) tags.push(`location:${c.location}`);
