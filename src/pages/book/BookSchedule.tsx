@@ -272,29 +272,32 @@ export default function BookSchedule() {
               {firstName ? `Choose a time, ${firstName}.` : "Choose your appointment time."}
             </h1>
 
-            {/* Visit type pill — in-person made obvious */}
-            <div className="mt-3 inline-flex items-center gap-2 rounded-xl px-3 py-1.5"
-              style={{ background: "rgba(232,103,10,0.12)", border: "1px solid rgba(232,103,10,0.35)" }}>
-              <span className="h-2 w-2 rounded-full bg-primary flex-shrink-0" aria-hidden />
-              <span className="text-xs font-bold uppercase tracking-[0.08em]" style={{ color: "rgba(255,255,255,0.90)" }}>
-                In-person visit · 60 minutes · Labs drawn on-site
-              </span>
+            {/* Visit type — 3 small inline chips, no wrapping pill */}
+            <div className="mt-3 flex flex-wrap gap-2">
+              {["In-person visit", "60 minutes", "Labs on-site"].map(tag => (
+                <span key={tag}
+                  className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold"
+                  style={{ background: "rgba(232,103,10,0.12)", border: "1px solid rgba(232,103,10,0.30)", color: "rgba(255,255,255,0.88)" }}>
+                  <span className="h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" aria-hidden />
+                  {tag}
+                </span>
+              ))}
             </div>
 
             {/* Next available shortcut */}
             {nextAvailable && !selectedSlot && (
               <button type="button"
                 onClick={() => { setSelectedDayIdx(nextAvailable.idx); setSelectedSlot(nextAvailable.iso); }}
-                className="mt-2 flex items-center gap-1.5 text-sm font-medium hover:text-primary transition-colors"
+                className="mt-3 flex items-center gap-1.5 text-sm font-medium hover:text-primary transition-colors"
                 style={{ color: "rgba(255,255,255,0.60)" }}>
                 <span className="inline-block h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" aria-hidden />
-                Next available: <span className="font-semibold" style={{ color: "rgba(255,255,255,0.85)" }}>{nextAvailable.label}</span>
+                Next available: <span className="font-semibold ml-1" style={{ color: "rgba(255,255,255,0.85)" }}>{nextAvailable.label}</span>
               </button>
             )}
 
             {/* Subtle trust line */}
-            <p className="mt-2 text-xs" style={{ color: "rgba(255,255,255,0.45)", fontFamily: "Inter, sans-serif" }}>
-              4.9 ★ 191 Google reviews · 10,000+ Virginia members · All times Eastern
+            <p className="mt-2 text-xs" style={{ color: "rgba(255,255,255,0.40)", fontFamily: "Inter, sans-serif" }}>
+              4.9 ★ 191 Google reviews &middot; 10,000+ Virginia members &middot; All times ET
             </p>
           </div>
 
