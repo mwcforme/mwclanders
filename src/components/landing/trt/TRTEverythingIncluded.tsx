@@ -161,7 +161,7 @@ export const TRTEverythingIncluded = () => (
                 fontFamily: "Oswald, sans-serif",
                 fontWeight: 700,
                 fontSize: 44,
-                color: "var(--brand-cta-accessible)",  /* #BF5608 — 4.62:1 on navy, passes AA */
+                color: "var(--brand-cta)",  /* #E8670A — 5.69:1 on navy ✅ AA; 44px Oswald = large text, also 3:1 min applies */
                 lineHeight: 1,
               }}
             >

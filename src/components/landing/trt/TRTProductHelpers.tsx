@@ -110,7 +110,9 @@ export const Eyebrow = ({
       fontWeight: 700,
       letterSpacing: "0.14em",
       textTransform: "uppercase" as const,
-      color: onLight ? "var(--brand-cta)" : "var(--brand-cta-accessible)",
+      /* a11y: onLight=true → accessible orange on light bg (5.22:1 white / 4.61:1 cream ✅)
+             onLight=false → brand orange on dark bg (5.69:1 navy ✅) */
+      color: onLight ? "var(--brand-cta-accessible)" : "var(--brand-cta)",
       borderLeft: "3px solid var(--brand-cta)",
       paddingLeft: 10,
       lineHeight: 1,

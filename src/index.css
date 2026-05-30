@@ -65,11 +65,11 @@
 
     /* CTA fill — brand orange.
        #E8670A: 3.29:1 vs white — passes AA for large text (≥18px or ≥14px bold).
-       --brand-cta-accessible: #BF5608 — 4.62:1 vs white — passes AA for ALL text sizes.
-       Use --brand-cta-accessible for small/normal text on orange (header pill, sticky bar). */
+       --brand-cta-accessible: #B84A08 — 5.22:1 vs white, 4.61:1 vs cream — passes AA for ALL text sizes on any light surface.
+       Use --brand-cta-accessible for small/normal text on light backgrounds; use --brand-cta on dark backgrounds. */
     --brand-cta: #E8670A;
     --brand-cta-hover: #CF5B09;
-    --brand-cta-accessible: #BF5608;  /* darkened for AA on any text size */
+    --brand-cta-accessible: #B84A08;  /* 5.22:1 on white ✅, 4.61:1 on cream ✅ — AA for all text sizes on any light surface */
 
     /* Text on light surfaces */
     --c-text-on-light: #000033;        /* 17:1 on white */
@@ -650,7 +650,7 @@ input[type="radio"] {
   background: rgba(232,103,10,0.10) !important;
 }
 .quiz-light-shell .text-primary {
-  color: #C45A09 !important;
+  color: #B84A08 !important; /* was #C45A09 (4.36:1 FAIL) → #B84A08 5.22:1 ✅ */
 }
 .quiz-light-shell .bg-background {
   background: #FFFFFF !important;

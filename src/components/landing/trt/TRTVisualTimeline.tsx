@@ -139,7 +139,8 @@ export const TRTVisualTimeline = ({ onSchedule }: { onSchedule: () => void }) =>
                   marginBottom: 12,
                 }}>
                   <Clock size={12} strokeWidth={2} style={{ color: "var(--brand-cta)" }} />
-                  <span style={{ fontSize: 12, fontWeight: 700, color: "var(--brand-cta-accessible)", letterSpacing: "0.04em" }}>
+                  {/* a11y: dark pill bg → use brand-cta (#E8670A, 4.87:1 on pill ✅) not accessible variant */}
+                  <span style={{ fontSize: 12, fontWeight: 700, color: "var(--brand-cta)", letterSpacing: "0.04em" }}>
                     {step.time}
                   </span>
                 </div>

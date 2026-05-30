@@ -166,7 +166,8 @@ export const TRTComparisonTable = () => (
                 }}>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
                     <CellIcon type={row.mwcType} />
-                    <span style={{ fontSize: 13, fontWeight: 700, color: row.mwcType === "text" ? "var(--brand-cta)" : "var(--brand-navy)" }}>
+                    {/* a11y: text cells use accessible orange (5.22:1 on white ✅); icon/check cells use brand-navy */}
+                    <span style={{ fontSize: 13, fontWeight: 700, color: row.mwcType === "text" ? "var(--brand-cta-accessible)" : "var(--brand-navy)" }}>
                       {row.mwc}
                     </span>
                   </div>

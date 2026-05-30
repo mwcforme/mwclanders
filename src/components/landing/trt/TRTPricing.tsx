@@ -124,7 +124,7 @@ export const TRTPricing = ({ className }: TRTPricingProps) => {
               fontWeight: 600,
               letterSpacing: "0.04em",
               textTransform: "uppercase",
-              color: "var(--brand-cta)",
+              color: "var(--brand-cta-accessible)",  /* was --brand-cta (3.29:1 FAIL) → #B84A08 5.22:1 ✅ on white */
               marginBottom: 24,
             }}
           >
