@@ -80,6 +80,24 @@ Deno.serve(async (req: Request) => {
     let data: unknown;
     try { data = JSON.parse(text); } catch { data = text; }
     if (!upstream.ok) log.error("upstream error", { method, path, status: upstream.status, body: text.slice(0, 200) });
+
+    // Auto-apply tags after upsert — GHL ignores inline tags on /contacts/upsert
+    if (upstream.ok && method === "POST" && path === "/contacts/upsert") {
+      const tagsToApply = (body as Record<string, unknown>).tags as string[] | undefined;
+      const contactId = (data as Record<string, Record<string, Record<string, string>>>)?.contact?.id;
+      if (tagsToApply?.length && contactId) {
+        fetch(`${GHL_API_BASE}/contacts/${contactId}/tags`, {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${creds.apiKey}`,
+            "Version": GHL_API_VERSION,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ tags: tagsToApply }),
+        }).catch((err: Error) => log.error("tag apply failed", { error: err.message, contactId }));
+      }
+    }
+
     return jsonResponse(200, { ok: upstream.ok, status: upstream.status, data }, req);
   } catch (err) {
     log.error("fetch error", { error: (err as Error).message });
