@@ -104,14 +104,7 @@ export interface UpsertContactInput {
 
 /** Upsert a contact and return its id (idempotent on email/phone). */
 export async function upsertContact(input: UpsertContactInput): Promise<string> {
-  // Always stamp book_react_app + appropriate location tag.
-  // Merge with caller-supplied tags, deduplicated.
-  const requiredTags = ["book_react_app"];
-  if (input.location && LOCATION_TAGS[input.location]) {
-    requiredTags.push(LOCATION_TAGS[input.location]);
-  }
-  const allTags = Array.from(new Set([...requiredTags, ...(input.tags ?? [])]));
-
+  // Step 1: upsert the contact (creates or updates based on phone/email dedup)
   const res = await ghl<{ contact?: { id: string }; new?: boolean }>({
     path: "/contacts/upsert",
     method: "POST",
@@ -121,7 +114,6 @@ export async function upsertContact(input: UpsertContactInput): Promise<string> 
       ...(input.email ? { email: input.email } : {}),
       ...(input.phone ? { phone: input.phone } : {}),
       ...(input.source ? { source: input.source } : {}),
-      tags: allTags,
       ...(input.customFields && Object.keys(input.customFields).length
         ? { customFields: input.customFields }
         : {}),
@@ -129,5 +121,25 @@ export async function upsertContact(input: UpsertContactInput): Promise<string> 
   });
   const id = res.data?.contact?.id;
   if (!id) throw new Error("GHL upsertContact: missing contact id");
+
+  // Step 2: apply required tags via dedicated /contacts/{id}/tags endpoint.
+  // GHL's upsert API does not reliably apply tags inline; the tags endpoint
+  // is the authoritative path and works on both new and existing contacts.
+  const requiredTags = ["book_react_app"];
+  if (input.location && LOCATION_TAGS[input.location]) {
+    requiredTags.push(LOCATION_TAGS[input.location]);
+  }
+  const allTags = Array.from(new Set([...requiredTags, ...(input.tags ?? [])]));
+
+  // Fire-and-forget — never block the booking flow on tag application.
+  // Tags endpoint is idempotent (adds only, never removes existing tags).
+  void ghl({
+    path: `/contacts/${id}/tags`,
+    method: "POST",
+    body: { tags: allTags },
+  }).catch((err) => {
+    console.warn("[upsertContact] tag apply failed", err);
+  });
+
   return id;
 }

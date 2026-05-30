@@ -129,7 +129,6 @@ async function forwardToGhl(c: CanonicalLead, accessToken: string, locationId: s
     ...(c.phone ? { phone: c.phone } : {}),
     locationId,
     source: c.form_source_label ?? "wordpress-intake",
-    tags,
   };
 
   const res = await fetch(`${GHL_API_BASE}/contacts/upsert`, {
@@ -146,6 +145,18 @@ async function forwardToGhl(c: CanonicalLead, accessToken: string, locationId: s
   const data = JSON.parse(text);
   const contactId = data?.contact?.id ?? data?.id;
   if (!contactId) throw new Error("GHL response missing contact id");
+
+  // Apply tags via dedicated endpoint — more reliable than inline upsert tags
+  await fetch(`${GHL_API_BASE}/contacts/${contactId}/tags`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+      Version: GHL_API_VERSION,
+    },
+    body: JSON.stringify({ tags }),
+  }).catch((err) => console.warn("[lead-intake] tag apply failed", err));
+
   return { contactId };
 }
 
