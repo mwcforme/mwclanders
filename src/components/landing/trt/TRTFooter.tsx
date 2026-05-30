@@ -187,7 +187,7 @@ export const TRTFooter = () => {
           <Link to="/privacy-policy" style={{ color: "rgba(255,255,255,0.50)", textDecoration: "none", minHeight: 44, display: "flex", alignItems: "center" }}>Privacy Policy</Link>
           <span>|</span>
           {/* hardcoded-color-allow-next-line */}
-          <Link to="/privacy-policy" style={{ color: "rgba(255,255,255,0.50)", textDecoration: "none", minHeight: 44, display: "flex", alignItems: "center" }}>HIPAA Notice</Link>
+          <Link to="/privacy-policy#hipaa" style={{ color: "rgba(255,255,255,0.50)", textDecoration: "none", minHeight: 44, display: "flex", alignItems: "center" }}>HIPAA Notice</Link>
         </div>
       </div>
     </footer>

@@ -22,9 +22,9 @@ export default function PrivacyPolicy() {
         We do not sell personal information. We share contact and scheduling details with our practice management system (GoHighLevel) and with our medical staff for the purpose of providing care. We share aggregated, hashed marketing data with Google and Meta for ad measurement and matching, in accordance with their published policies.
       </p>
 
-      <H2>Health information (HIPAA)</H2>
+      <H2 id="hipaa">Health information (HIPAA)</H2>
       <p>
-        Information you provide through this website before becoming a patient is not protected health information under HIPAA. Once you become a patient of Men's Wellness Centers, your medical record is governed by our HIPAA Notice of Privacy Practices, available at any of our centers.
+        Information you provide through this website before becoming a patient is not protected health information under HIPAA. Once you become a patient of Men's Wellness Centers, your medical record is governed by our HIPAA Notice of Privacy Practices, available at any of our centers. A copy of our Notice of Privacy Practices is available upon request at any Men's Wellness Centers location, or by emailing privacy@menswellnesscenters.com.
       </p>
 
       <H2>Cookies and tracking</H2>

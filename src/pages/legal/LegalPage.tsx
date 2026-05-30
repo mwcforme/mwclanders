@@ -44,6 +44,6 @@ export const LegalPage = ({ title, updated, children }: LegalPageProps) => {
   );
 };
 
-export const H2 = ({ children }: { children: ReactNode }) => (
-  <h2 className="mt-10 text-2xl text-panel-foreground font-display" style={{ letterSpacing: "0.02em" }}>{children}</h2>
+export const H2 = ({ children, id }: { children: ReactNode; id?: string }) => (
+  <h2 id={id} className="mt-10 text-2xl text-panel-foreground font-display" style={{ letterSpacing: "0.02em" }}>{children}</h2>
 );
