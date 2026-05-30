@@ -35,11 +35,13 @@ export interface ReviewSheetProps {
   redirect?: RedirectState | null;
   /** Location label e.g. "Richmond" or "Newport News" */
   locationLabel?: string | null;
+  /** Full street address */
+  locationAddress?: string | null;
 }
 
 export function ReviewSheet({
   firstName, slotIso, day, onCommit, onChangeTime,
-  confirming, error, redirect, locationLabel,
+  confirming, error, redirect, locationLabel, locationAddress,
 }: ReviewSheetProps) {
   const [secondsLeft, setSecondsLeft] = useState(HOLD_SECONDS);
 
@@ -112,28 +114,55 @@ export function ReviewSheet({
 
         <div className="h-px bg-panel-divider" aria-hidden />
 
-        {/* Appointment detail row */}
-        <div className="px-6 py-5 flex items-start gap-4">
-          <span className="grid h-10 w-10 flex-shrink-0 place-items-center rounded-full bg-primary/10 text-primary" aria-hidden>
-            <Calendar className="h-5 w-5" />
-          </span>
-          <div>
-            <p className="font-display text-base font-bold uppercase tracking-wide text-panel-foreground">Consultation</p>
-            <p className="mt-1 text-sm leading-snug text-panel-foreground">
-              {dayLong}<br />
-              {slotLabel} <span className="text-panel-muted">to</span> {endTimeLabel}{" "}
-              <span className="text-panel-muted">(60-minute visit)</span>
+        {/* Appointment card */}
+        <div className="mx-4 sm:mx-6 my-4 rounded-2xl overflow-hidden" style={{ border: "1.5px solid var(--panel-divider)" }}>
+
+          {/* Card header — type badge */}
+          <div className="px-4 py-2.5 flex items-center gap-2" style={{ background: "var(--panel-divider)" }}>
+            <Calendar className="h-4 w-4 text-primary flex-shrink-0" aria-hidden />
+            <span className="text-xs font-bold uppercase tracking-[0.1em] text-panel-foreground">In-Person Consultation</span>
+          </div>
+
+          {/* Card body */}
+          <div className="px-4 py-4">
+
+            {/* Date + time */}
+            <p className="text-base font-bold text-panel-foreground">{dayLong}</p>
+            <p className="mt-0.5 text-sm text-panel-muted">
+              {slotLabel} – {endTimeLabel}
+              <span className="ml-1.5 inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-xs font-semibold text-primary">60 min</span>
             </p>
-            <p className="mt-1 text-xs font-bold uppercase tracking-wide text-panel-foreground">
-              Physician-led · In-person · Labs drawn on-site
-            </p>
-            {locationLabel && (
-              <p className="mt-1 text-xs font-semibold text-panel-muted">
-                📍 {locationLabel}
-              </p>
+
+            {/* Divider */}
+            <div className="my-3 h-px bg-panel-divider" />
+
+            {/* What to expect chips */}
+            <div className="flex flex-wrap gap-1.5 mb-3">
+              {["Physician-led", "Labs on-site", "Results same visit"].map(tag => (
+                <span key={tag} className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold"
+                  style={{ background: "rgba(232,103,10,0.08)", color: "var(--primary-hover)", border: "1px solid rgba(232,103,10,0.20)" }}>
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            {/* Location */}
+            {(locationLabel || locationAddress) && (
+              <div className="flex items-start gap-2 rounded-xl px-3 py-2.5" style={{ background: "var(--panel-divider)" }}>
+                <svg className="h-4 w-4 flex-shrink-0 mt-0.5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                  <circle cx="12" cy="9" r="2.5"/>
+                </svg>
+                <div>
+                  {locationLabel && <p className="text-xs font-bold text-panel-foreground">{locationLabel} Center</p>}
+                  {locationAddress && <p className="text-xs text-panel-muted mt-0.5">{locationAddress}</p>}
+                </div>
+              </div>
             )}
-            <p className="mt-2 text-xs text-panel-muted leading-snug">
-              Your provider's time is being held. Please arrive 5 minutes early.
+
+            {/* Arrival note */}
+            <p className="mt-3 text-xs text-panel-muted leading-snug">
+              Please arrive 5 minutes early. Your provider will be ready for you.
             </p>
           </div>
         </div>

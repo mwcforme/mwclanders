@@ -417,6 +417,7 @@ export default function BookSchedule() {
             error={bookingError}                       // BUG 1 fix: surface error to user
             redirect={bookingRedirect}                 // BUG 1 fix: show redirect countdown
             locationLabel={cal?.label ?? null}
+            locationAddress={locationData?.fullAddress ?? null}
           />
         )}
       </div>
