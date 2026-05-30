@@ -116,6 +116,17 @@ async function forwardToGhl(c: CanonicalLead, accessToken: string, locationId: s
     "virginia-beach": "location_vba",
     "newport-news":   "location_npn",
   };
+  const LOCATION_FIELDS: Record<string, { preferred: string; city: string }> = {
+    "richmond":       { preferred: "Richmond, VA",      city: "Richmond" },
+    "virginia-beach": { preferred: "Virginia Beach, VA", city: "Virginia Beach" },
+    "newport-news":   { preferred: "Newport News, VA",   city: "Newport News" },
+  };
+  const locFieldValues = c.location && LOCATION_FIELDS[c.location]
+    ? [
+        { id: "c8u5gHvM9fx1d6WADcQG", value: LOCATION_FIELDS[c.location].preferred },
+        { id: "i3FP2Vqv0HaMU86dkbzO", value: LOCATION_FIELDS[c.location].city },
+      ]
+    : [];
   const tags = ["external-intake", "book_react_app"];
   if (c.location && LOCATION_TAGS[c.location]) tags.push(LOCATION_TAGS[c.location]);
   if (c.form_source_label) tags.push(`form:${c.form_source_label}`);
@@ -129,6 +140,7 @@ async function forwardToGhl(c: CanonicalLead, accessToken: string, locationId: s
     ...(c.phone ? { phone: c.phone } : {}),
     locationId,
     source: c.form_source_label ?? "wordpress-intake",
+    ...(locFieldValues.length ? { customFields: locFieldValues } : {}),
   };
 
   const res = await fetch(`${GHL_API_BASE}/contacts/upsert`, {

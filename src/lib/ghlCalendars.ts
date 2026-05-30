@@ -81,6 +81,18 @@ const LOCATION_TAGS: Record<string, string> = {
   "newport-news":   "location_npn",
 };
 
+/**
+ * Maps location keys to GHL custom field values.
+ * Field IDs confirmed from live contact inspection:
+ *   c8u5gHvM9fx1d6WADcQG = Preferred Location (full display name, dropdown)
+ *   i3FP2Vqv0HaMU86dkbzO = Location (short city name)
+ */
+const LOCATION_CUSTOM_FIELDS: Record<string, { preferred: string; city: string }> = {
+  "richmond":       { preferred: "Richmond, VA",      city: "Richmond" },
+  "virginia-beach": { preferred: "Virginia Beach, VA", city: "Virginia Beach" },
+  "newport-news":   { preferred: "Newport News, VA",   city: "Newport News" },
+};
+
 export interface UpsertContactInput {
   firstName: string;
   lastName?: string;
@@ -123,9 +135,19 @@ export async function upsertContact(input: UpsertContactInput): Promise<string> 
       ...(input.phone ? { phone: input.phone } : {}),
       ...(input.source ? { source: input.source } : {}),
       tags: allTags,
-      ...(input.customFields && Object.keys(input.customFields).length
-        ? { customFields: input.customFields }
-        : {}),
+      // Location custom fields — set Preferred Location + Location city fields
+      ...(input.location && LOCATION_CUSTOM_FIELDS[input.location] ? {
+        customFields: [
+          { id: "c8u5gHvM9fx1d6WADcQG", value: LOCATION_CUSTOM_FIELDS[input.location].preferred },
+          { id: "i3FP2Vqv0HaMU86dkbzO", value: LOCATION_CUSTOM_FIELDS[input.location].city },
+          // Merge any additional mwc_ caller fields
+          ...(input.customFields
+            ? Object.entries(input.customFields).map(([key, value]) => ({ key, field_value: value }))
+            : []),
+        ],
+      } : input.customFields && Object.keys(input.customFields).length ? {
+        customFields: Object.entries(input.customFields).map(([key, value]) => ({ key, field_value: value })),
+      } : {}),
     },
   });
   const id = res.data?.contact?.id;
