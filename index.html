@@ -174,9 +174,7 @@
         setTimeout(loadPixel, 5000);
       })();
     </script>
-    <noscript><img height="1" width="1" style="display:none"
-      src="https://www.facebook.com/tr?id=2886337471511821&ev=PageView&noscript=1"
-    /></noscript>
+    <!-- Meta Pixel noscript fallback moved to <body> (Vite HTML parser rejects <img> in <noscript> in <head>) -->
 
     <!-- Microsoft Clarity — deferred, prod-only, env-gated -->
     <script>
@@ -234,6 +232,10 @@
     <!-- GTM noscript fallback — must be immediately after <body> -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5X9DB23T"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- Meta Pixel noscript fallback -->
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=2886337471511821&ev=PageView&noscript=1"
+    /></noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
