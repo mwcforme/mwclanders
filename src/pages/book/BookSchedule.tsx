@@ -185,10 +185,12 @@ export default function BookSchedule() {
     ...(lpSlug      ? { mwc_lp_slug: lpSlug }                   : {}),
   }), [symptom, duration, urgencyTier, note, service, lpSlug]);
 
-  const onCommit = useCallback(async () => {
+  const onCommit = useCallback(async (capturedEmail?: string) => {
     if (!selectedSlot || confirming) return;
     setConfirming(true);
     trackFunnelEvent("appointment_committed", { slot: selectedSlot, location: location ?? "" });
+    // MWC-005: use captured email from ReviewSheet if provided, fall back to stored identity email
+    const emailToUse = capturedEmail || identity?.email;
     if (!identity?.phone) {
       setAppointmentTime(selectedSlot);
       navigate("/book/confirmed", { state: { appointmentTime: selectedSlot } });
@@ -198,14 +200,12 @@ export default function BookSchedule() {
       slotIso: selectedSlot,
       location: location as LocationKey,
       firstName, lastName,
-      email: identity?.email,
+      email: emailToUse,
       phone: identity.phone,
       source: source ?? "mwc-book-funnel",
       urgencyTier,
       customFields,
     });
-    // BUG 2 fix: only clear local confirming — button disabled is driven by
-    // hookSubmitting || confirming, so hook reset will also release the button.
     if (!ok) setConfirming(false);
   }, [selectedSlot, confirming, location, firstName, lastName, identity, source, urgencyTier, customFields, setAppointmentTime, navigate, confirmBooking]);
 

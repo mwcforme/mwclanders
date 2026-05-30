@@ -5,8 +5,8 @@
  * BUG 1 fix: Renders booking error and redirect countdown when confirmCtl fails.
  * BUG 7/OPT 4 fix: Uses MONTHS_UPPER directly instead of MONTHS_SHORT + .toUpperCase().
  */
-import { useEffect, useMemo, useState } from "react";
-import { ArrowRight, Calendar, Clock, Lock, X } from "lucide-react";
+import { useEffect, useMemo, useState, useRef } from "react";
+import { ArrowRight, Calendar, Clock, Lock, X, Mail } from "lucide-react";
 import { TIMEZONE } from "@/lib/ghlCalendars";
 import {
   type DayCell,
@@ -25,7 +25,7 @@ export interface ReviewSheetProps {
   firstName: string;
   slotIso: string;
   day: DayCell;
-  onCommit: () => void;
+  onCommit: (email?: string) => void;
   onChangeTime: () => void;
   /** Combined isSubmitting state: hookSubmitting || localConfirming (BUG 2 fix applied in parent). */
   confirming: boolean;
@@ -44,6 +44,7 @@ export function ReviewSheet({
   confirming, error, redirect, locationLabel, locationAddress,
 }: ReviewSheetProps) {
   const [secondsLeft, setSecondsLeft] = useState(HOLD_SECONDS);
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
     const id = window.setInterval(() => setSecondsLeft(s => Math.max(0, s - 1)), 1000);
@@ -172,7 +173,48 @@ export function ReviewSheet({
             </p>
           )}
 
-          <button type="button" onClick={onCommit} disabled={confirming}
+          {/* MWC-005: Optional email capture before committing */}
+          <div style={{ marginBottom: 12 }}>
+            <label htmlFor="rs-email" style={{
+              display: "block", fontSize: 11, fontWeight: 700,
+              letterSpacing: "0.08em", textTransform: "uppercase",
+              color: "var(--panel-muted, rgba(255,255,255,0.55))",
+              marginBottom: 6, fontFamily: "Inter, sans-serif",
+            }}>
+              Email <span style={{ fontWeight: 400, textTransform: "none", letterSpacing: 0 }}>(optional)</span>
+            </label>
+            <div style={{ position: "relative" }}>
+              <Mail size={14} strokeWidth={2} style={{
+                position: "absolute", left: 12, top: "50%",
+                transform: "translateY(-50%)",
+                color: "var(--brand-cta)", pointerEvents: "none",
+              }} />
+              <input
+                id="rs-email"
+                type="email"
+                autoComplete="email"
+                inputMode="email"
+                placeholder="you@email.com"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                style={{
+                  width: "100%", boxSizing: "border-box",
+                  padding: "10px 12px 10px 34px",
+                  borderRadius: 10,
+                  border: "1.5px solid var(--panel-divider, rgba(255,255,255,0.12))",
+                  background: "var(--panel-bg, rgba(255,255,255,0.05))",
+                  color: "var(--panel-foreground, #fff)",
+                  fontSize: 14, fontFamily: "Inter, sans-serif",
+                  outline: "none",
+                }}
+              />
+            </div>
+            <p style={{ fontSize: 11, color: "var(--panel-muted, rgba(255,255,255,0.40))", marginTop: 4, fontFamily: "Inter, sans-serif" }}>
+              Where should we send your confirmation and reminders?
+            </p>
+          </div>
+
+          <button type="button" onClick={() => onCommit(email.trim() || undefined)} disabled={confirming}
             className="w-full inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-4 font-display font-bold uppercase tracking-wider text-lg bg-primary text-white hover:bg-primary-hover shadow-cta disabled:opacity-60 disabled:cursor-wait">
             <Lock className="h-5 w-5" aria-hidden strokeWidth={2.5} />
             {confirming ? "Booking…" : firstName ? `Lock it in, ${firstName}` : "Lock it in"}

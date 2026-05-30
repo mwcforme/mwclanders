@@ -15,7 +15,12 @@ export const StickyMobileCTA = () => {
   useEffect(() => {
     const onScroll = () => {
       const hero = document.getElementById("hero");
-      setVisible(hero ? window.scrollY > hero.offsetHeight * 0.6 : window.scrollY > 400);
+      // MWC-003 fix: was inverted. Bar should be HIDDEN while hero is on screen,
+      // then REVEALED once hero scrolls out — and stay revealed.
+      const threshold = hero
+        ? hero.offsetTop + hero.offsetHeight * 0.8
+        : 500;
+      setVisible(window.scrollY > threshold);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();

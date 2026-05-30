@@ -13,7 +13,6 @@ import { LOCATIONS, getMapsSearchUrl, LOCATION_KEY_TO_SLUG, type Location } from
 import { EmailCapture } from "@/components/book/EmailCapture";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
 import { BookHeader } from "@/components/book/BookHeader";
-import { trackFunnelEvent } from "@/hooks/useAnalytics";
 import { trackConversion } from "@/lib/capi";
 
 const DEFAULT_CENTER = LOCATIONS[0];
@@ -48,6 +47,7 @@ export default function BookConfirmed() {
   const location        = useBookingStore(s => s.location);
   const identity        = useBookingStore(s => s.identity);
   const lpSlug          = useBookingStore(s => s.lpSlug);
+  const service         = useBookingStore(s => s.service);
   const patchAction     = useBookingStore(s => s.patch);
 
   const slug   = location ? LOCATION_KEY_TO_SLUG[location] : null;
@@ -76,18 +76,29 @@ export default function BookConfirmed() {
     document.title = "Confirmed | Men's Wellness Centers";
     if (identity && !identity.phone && !identity.email) patchAction({ identity: undefined });
 
-    // MWC-002: Belt-and-suspenders conversion fire on confirmed page render.
-    // useConfirmAppointment also fires this on API success, but if navigation
-    // is delayed or the user deep-links here, this ensures the event fires.
-    trackFunnelEvent("booking_completed", { location: location ?? "" });
+    // MWC-002: Fire booking_complete exactly once on confirmed render.
+    // booking_id = contactId+slot dedup key; guards against double-fire on re-render.
+    const bookingId = [identity?.ghlContactId, appointmentTime].filter(Boolean).join("_") || crypto.randomUUID();
+    if (typeof window !== "undefined") {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: "booking_complete",
+        booking_id: bookingId,
+        location: (location ?? "").replace("-", "_"),
+        service: service ?? "general",
+        appt_value: 150,
+        currency: "USD",
+      });
+    }
     void trackConversion("Schedule", {
+      event_id: bookingId,
       user_data: {
         phone: identity?.phone,
         email: identity?.email,
         first_name: identity?.firstName,
         last_name: identity?.lastName,
       },
-      custom_data: { content_name: "booking_confirmed", lp_slug: lpSlug ?? undefined },
+      custom_data: { content_name: "booking_confirmed", value: 150, currency: "USD", lp_slug: lpSlug ?? undefined },
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -203,8 +214,8 @@ export default function BookConfirmed() {
           </ul>
         </section>
 
-        {/* ── Video ── */}
-        <section
+        {/* ── Video — hidden until a real asset is loaded (MWC-013) ── */}
+        {false && <section
           className="mt-8 overflow-hidden rounded-2xl bg-panel text-panel-foreground shadow-card"
           aria-label="Video: What happens when you walk in"
         >
@@ -244,7 +255,7 @@ export default function BookConfirmed() {
             </p>
             <p className="mt-1 text-base text-panel-muted font-semibold">60 second video</p>
           </div>
-        </section>
+        </section>}
 
         {/* ── Before You Arrive ── */}
         <section className="mt-8 rounded-2xl bg-panel text-panel-foreground shadow-card p-6">
