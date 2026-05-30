@@ -115,27 +115,30 @@ describe("BookSchedule", () => {
   it("shows personalized heading when firstName is set", async () => {
     useBookingStore.getState().reset();
     useBookingStore.getState().patch({
+      location: "richmond", // required to render schedule, not location picker
       identity: { firstName: "Eric", lastName: "", phone: "5551234567", email: "" },
     });
     const BookSchedule = (await import("@/pages/book/BookSchedule")).default;
     renderWithProviders(<BookSchedule />);
-    expect(document.body.textContent).toMatch(/ERIC.*LOCK IN A TIME/i);
+    // Heading is "Choose a time, Eric." when firstName is set
+    expect(document.body.textContent).toMatch(/Choose a time, Eric/i);
   });
 
   it("shows fallback heading when firstName is falsy", async () => {
     // Verify with undefined, empty string
     for (const name of [undefined, ""] as const) {
       useBookingStore.getState().reset();
-      if (name !== undefined) {
-        useBookingStore.getState().patch({
-          identity: { firstName: name, lastName: "", phone: "5551234567", email: "" },
-        });
-      }
+      useBookingStore.getState().patch({
+        location: "richmond", // required to render schedule, not location picker
+        ...(name !== undefined
+          ? { identity: { firstName: name, lastName: "", phone: "5551234567", email: "" } }
+          : {}),
+      });
       const { default: BookSchedule } = await import("@/pages/book/BookSchedule");
       renderWithProviders(<BookSchedule />);
-      // Fallback: no name prefix, just LOCK IN A TIME
+      // Fallback: "Choose your appointment time." when no firstName
       const text = document.body.textContent ?? "";
-      expect(text).toMatch(/LOCK IN A TIME/i);
+      expect(text).toMatch(/Choose your appointment time/i);
       expect(text).not.toMatch(/undefined/i);
       document.body.innerHTML = "";
     }

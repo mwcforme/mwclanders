@@ -66,7 +66,8 @@ describe("LegalPage", () => {
         </LegalPage>
       </Wrapper>,
     );
-    expect(screen.getByText("Privacy Policy")).toBeInTheDocument();
+    // Use getByRole to target the H1 specifically — footer nav also contains "Privacy Policy"
+    expect(screen.getByRole("heading", { name: "Privacy Policy", level: 1 })).toBeInTheDocument();
   });
 
   it("renders last updated date", () => {

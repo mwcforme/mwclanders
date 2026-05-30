@@ -190,7 +190,7 @@ describe("flushBookingQueue", () => {
       error: null,
     });
 
-    // Inject a pre-exhausted booking directly
+    // Inject a pre-exhausted booking directly (retries >= MAX_RETRIES=20)
     const exhausted = {
       id: "exhausted-1",
       slotIso: "2024-07-15T13:00:00Z",
@@ -199,7 +199,7 @@ describe("flushBookingQueue", () => {
       calendarId: "cal-1",
       source: "test",
       queuedAt: new Date().toISOString(),
-      retries: 5, // MAX_RETRIES
+      retries: 20, // MAX_RETRIES
     };
     localStorage.setItem("mwc_booking_queue_v1", JSON.stringify([exhausted]));
 
