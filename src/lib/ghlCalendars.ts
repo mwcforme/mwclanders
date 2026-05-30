@@ -95,6 +95,11 @@ export interface UpsertContactInput {
 
 /** Upsert a contact and return its id (idempotent on email/phone). */
 export async function upsertContact(input: UpsertContactInput): Promise<string> {
+  // Always stamp book_react_app on every contact created from this React app.
+  // Merge with any caller-supplied tags, deduplicated.
+  const REQUIRED_TAGS = ["book_react_app"];
+  const allTags = Array.from(new Set([...REQUIRED_TAGS, ...(input.tags ?? [])]));
+
   const res = await ghl<{ contact?: { id: string }; new?: boolean }>({
     path: "/contacts/upsert",
     method: "POST",
@@ -104,7 +109,7 @@ export async function upsertContact(input: UpsertContactInput): Promise<string> 
       ...(input.email ? { email: input.email } : {}),
       ...(input.phone ? { phone: input.phone } : {}),
       ...(input.source ? { source: input.source } : {}),
-      ...(input.tags && input.tags.length ? { tags: input.tags } : {}),
+      tags: allTags,
       ...(input.customFields && Object.keys(input.customFields).length
         ? { customFields: input.customFields }
         : {}),
