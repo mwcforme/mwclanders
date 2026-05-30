@@ -111,7 +111,7 @@ function validate(c: CanonicalLead): { ok: true } | { ok: false; error: string }
 
 async function forwardToGhl(c: CanonicalLead, accessToken: string, locationId: string): Promise<{ contactId: string }> {
   const { firstName, lastName } = splitName(c.fullName);
-  const tags = ["external-intake"];
+  const tags = ["external-intake", "book_react_app"];
   if (c.form_source_label) tags.push(`form:${c.form_source_label}`);
   if (c.utm_source) tags.push(`utm_source:${c.utm_source}`);
   if (c.location) tags.push(`location:${c.location}`);
