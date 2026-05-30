@@ -121,7 +121,7 @@ function bracket(total: number): { label: string; color: string; message: string
 
 // ─── Shared styles ────────────────────────────────────────────────────────────
 
-const NAVY = "#000814";
+const NAVY = "#0B1029"; // brand navy
 const CREAM = "var(--brand-cream)";
 const ORANGE = "var(--brand-cta)";
 // hardcoded-color-allow-next-line
@@ -210,7 +210,7 @@ function ShortQuizShell({ children, topContent }: { children: React.ReactNode; t
       {/* Header */}
       <div style={{
         // hardcoded-color-allow-next-line
-        background: "rgba(0,8,20,0.95)", backdropFilter: "blur(8px)",
+        background: "rgba(11,16,41,0.95)", backdropFilter: "blur(8px)",
         padding: "12px 20px", display: "flex", alignItems: "center", justifyContent: "space-between",
         position: "sticky", top: 0, zIndex: 40,
         // hardcoded-color-allow-next-line
@@ -218,7 +218,7 @@ function ShortQuizShell({ children, topContent }: { children: React.ReactNode; t
       }}>
         <img src="/logos/Text_Logo_white.webp"
           onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/logos/Text_Logo_white.png"; }}
-          alt="Men's Wellness Centers" style={{ height: 22, width: "auto" }} width={140} height={22} loading="lazy" decoding="async" />
+          alt="Men's Wellness Centers" style={{ height: 22, width: "auto" }} width={140} height={22} loading="eager" decoding="async" />
         <a href="tel:+18663444955" style={{
           fontFamily: "Inter, sans-serif", fontSize: 13, fontWeight: 700,
           // hardcoded-color-allow-next-line
@@ -371,7 +371,7 @@ export default function ShortQuiz() {
               onClick={() => setStep("quiz")}
               style={{
                 display: "block", width: "100%", maxWidth: 440, margin: "0 auto",
-                height: 56, borderRadius: 10,
+                height: 56, borderRadius: 12,
                 background: ORANGE, color: "#fff", border: "none",
                 fontFamily: "Inter, sans-serif", fontSize: 17, fontWeight: 800,
                 letterSpacing: "0.05em", textTransform: "uppercase",
@@ -462,7 +462,7 @@ export default function ShortQuiz() {
               setStep("results");
             }}
             style={{
-              display: "block", width: "100%", height: 56, borderRadius: 10,
+              display: "block", width: "100%", height: 56, borderRadius: 12,
               background: ORANGE, color: "#fff", border: "none",
               fontFamily: "Inter, sans-serif", fontSize: 17, fontWeight: 800,
               letterSpacing: "0.05em", textTransform: "uppercase",
@@ -506,7 +506,7 @@ export default function ShortQuiz() {
               width: 120, height: 120, borderRadius: "50%",
               border: `4px solid ${b.color}`,
               // hardcoded-color-allow-next-line
-              background: "rgba(0,8,20,0.70)",
+              background: "rgba(11,16,41,0.70)",
               marginBottom: 16,
             }}>
               <span style={{ fontFamily: "Oswald, sans-serif", fontSize: 36, fontWeight: 700, lineHeight: 1, color: b.color }}>{totalScore}</span>
@@ -598,7 +598,7 @@ export default function ShortQuiz() {
             type="submit"
             disabled={!valid || submitting}
             style={{
-              width: "100%", height: 56, borderRadius: 10,
+              width: "100%", height: 56, borderRadius: 12,
               background: ORANGE, color: "#fff", border: "none",
               fontFamily: "Inter, sans-serif", fontSize: 17, fontWeight: 800,
               letterSpacing: "0.05em", textTransform: "uppercase",

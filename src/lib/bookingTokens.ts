@@ -63,8 +63,8 @@ export const COLORS = {
 
 export const FONTS = {
   display: "Oswald, sans-serif",
-  body:    "Montserrat, Inter, sans-serif",
-  ui:      "Montserrat, Inter, sans-serif",
+  body:    "Inter, sans-serif",
+  ui:      "Inter, sans-serif",
 } as const;
 
 // ─── Reusable style objects ───────────────────────────────────────────────────

@@ -78,7 +78,7 @@ const PageLoader = () => (
 );
 
 const ErrorFallback = ({ resetError }: { resetError: () => void }) => (
-  <div role="alert" style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#000814", color: "var(--c-text-on-dark)", fontFamily: "Inter, sans-serif", padding: "24px", textAlign: "center" }}>
+  <div role="alert" style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#0B1029", color: "var(--c-text-on-dark)", fontFamily: "Inter, sans-serif", padding: "24px", textAlign: "center" }}>
     <div style={{ maxWidth: 480 }}>
       <h1 style={{ fontFamily: "Oswald, sans-serif", fontSize: 32, marginBottom: 12 }}>Something went wrong</h1>
       <p style={{ opacity: 0.8, marginBottom: 24 }}>

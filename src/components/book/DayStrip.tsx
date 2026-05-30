@@ -87,7 +87,7 @@ const DayStrip = ({
         </button>
 
         <div style={{
-          fontFamily: "Montserrat, Inter, sans-serif",
+          fontFamily: "Inter, sans-serif",
           fontSize: 13, fontWeight: 700, color: INK,
           letterSpacing: "0.10em",
         }}>
@@ -187,7 +187,7 @@ const DayStrip = ({
                 }}
               >
                 <span style={{
-                  fontFamily: "Montserrat, Inter, sans-serif",
+                  fontFamily: "Inter, sans-serif",
                   fontSize: 11, fontWeight: 700, letterSpacing: "0.12em",
                   color: labelColor,
                   lineHeight: 1,
@@ -205,7 +205,7 @@ const DayStrip = ({
                   {dayNum}
                 </span>
                 <span style={{
-                  fontFamily: "Montserrat, Inter, sans-serif",
+                  fontFamily: "Inter, sans-serif",
                   fontSize: 10, fontWeight: 600,
                   color: badgeColor,
                   lineHeight: 1, marginTop: 4,
@@ -221,7 +221,7 @@ const DayStrip = ({
         {/* Mobile-only swipe hint — hidden ≥768px via CSS */}
         <p className="mwc-day-strip-hint" style={{
           textAlign: "center",
-          fontFamily: "Montserrat, Inter, sans-serif",
+          fontFamily: "Inter, sans-serif",
           fontSize: 11, fontWeight: 500,
           // hardcoded-color-allow-next-line — matches mwclocked.pplx.app swipe hint: orange-tinted
           color: "rgba(232,103,10,0.55)",
@@ -233,7 +233,7 @@ const DayStrip = ({
 
         {loadError && (
           // hardcoded-color-allow-next-line
-          <div style={{ marginTop: 8, fontSize: 13, color: "#B91C1C", fontFamily: "Montserrat, Inter, sans-serif" }}>{loadError}</div>
+          <div style={{ marginTop: 8, fontSize: 13, color: "#B91C1C", fontFamily: "Inter, sans-serif" }}>{loadError}</div>
         )}
       </div>
     </>

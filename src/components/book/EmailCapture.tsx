@@ -75,7 +75,7 @@ export function EmailCapture({ contactId, onComplete }: Props) {
           width: "100%", height: 52,
           background: "var(--brand-cta)", color: "#FFFFFF",
           border: "none", borderRadius: 10,
-          fontFamily: "Montserrat, Inter, sans-serif",
+          fontFamily: "Inter, sans-serif",
           fontSize: 17, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase",
           cursor: loading ? "not-allowed" : "pointer",
           display: "flex", alignItems: "center", justifyContent: "center", gap: 8,

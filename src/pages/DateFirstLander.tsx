@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { ChevronRight, MapPin, Calendar, Clock, ArrowRight, Check, Star, Loader2 } from "lucide-react";
 import { SEO } from "@/components/SEO";
 import { TRTHeader } from "@/components/landing/trt/TRTHeader";
+import { TRTFooter } from "@/components/landing/trt/TRTFooter";
 import { TCPADisclaimer } from "@/components/landing/trt/TCPADisclaimer";
 import { useLeadSubmitController } from "@/domain/leads/useLeadSubmitController";
 import { heroLeadSchema } from "@/domain/leads/leadFormSchema";
@@ -425,7 +426,7 @@ export default function DateFirstLander() {
   const progress = step === "location" ? 15 : step === "date" ? 55 : 90;
 
   return (
-    <div style={{ background: NAVY, color: CREAM, minHeight: "100vh", fontFamily: "Inter, sans-serif" }}>
+    <div style={{ background: NAVY, color: CREAM, minHeight: "100vh", fontFamily: "Inter, sans-serif", overflowX: "hidden" }}>
       <SEO
         title="Book Your Visit · Men's Wellness Centers Virginia"
         description="Pick your appointment time first. 60-minute in-person visit. Labs drawn on-site. No cost, no insurance needed."
@@ -531,6 +532,8 @@ export default function DateFirstLander() {
           }
         }
       `}</style>
+
+      <TRTFooter />
     </div>
   );
 }

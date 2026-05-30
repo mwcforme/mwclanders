@@ -17,13 +17,11 @@ export function QuizShell({ progress, children, cta }: QuizShellProps) {
   const pct = Math.max(0, Math.min(100, Math.round(progress)));
   return (
     <div style={{
-      // hardcoded-color-allow-next-line
-      background: "#000814",
+      background: "var(--brand-navy-deep)",
       color: "var(--brand-cream)", minHeight: "100vh", fontFamily: "Inter, sans-serif",
     }}>
       {/* Progress bar (fixed at top, full-width) */}
-      {/* hardcoded-color-allow-next-line */}
-      <div className="fixed top-0 left-0 right-0 z-40" style={{ background: "rgba(0,8,20,0.92)", backdropFilter: "blur(8px)" }}>
+      <div className="fixed top-0 left-0 right-0 z-40" style={{ background: "rgba(11,16,41,0.92)", backdropFilter: "blur(8px)" }}>
         {/* hardcoded-color-allow-next-line */}
         <div className="h-1.5 w-full" style={{ background: "rgba(255,255,255,0.10)" }}>
           <div
@@ -32,7 +30,7 @@ export function QuizShell({ progress, children, cta }: QuizShellProps) {
           />
         </div>
         <div className="flex items-center justify-between px-5 md:px-8 h-12">
-          <img src="/logos/Text_Logo_white.webp" onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/logos/Text_Logo_white.png"; }} alt="Men's Wellness Centers" className="h-5 md:h-6 w-auto" width={150} height={24} loading="lazy" decoding="async" />
+          <img src="/logos/Text_Logo_white.webp" onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/logos/Text_Logo_white.png"; }} alt="Men's Wellness Centers" className="h-5 md:h-6 w-auto" width={150} height={24} loading="eager" decoding="async" />
           <span className="text-[11px] md:text-xs tabular-nums font-semibold tracking-wider" style={{ color: "var(--brand-cta-accessible)" }}>
             {pct}%
           </span>
@@ -57,7 +55,7 @@ export function QuizShell({ progress, children, cta }: QuizShellProps) {
           className="fixed left-0 right-0 bottom-0 z-40 px-4 pt-4"
           style={{
             // hardcoded-color-allow-next-line
-          background: "linear-gradient(to top, rgba(0,8,20,1) 60%, rgba(0,8,20,0))",
+          background: "linear-gradient(to top, rgba(11,16,41,1) 60%, rgba(11,16,41,0))",
             paddingBottom: "max(1rem, env(safe-area-inset-bottom))",
           }}
         >

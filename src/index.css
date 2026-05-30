@@ -139,8 +139,8 @@
     --chart-5: 44 7% 92%;
 
     --font-display: 'Oswald', sans-serif;   /* Display headings, hero H1, section titles */
-    --font-body: 'Montserrat', 'Inter', system-ui, sans-serif; /* Body text, labels, UI copy */
-    --font-sans: 'Montserrat', 'Inter', system-ui, sans-serif; /* Tailwind alias — keep in sync with --font-body */
+    --font-body: 'Inter', system-ui, sans-serif; /* Body text, labels, UI copy */
+    --font-sans: 'Inter', system-ui, sans-serif; /* Tailwind alias — keep in sync with --font-body */
 
     /* ----------------------------------------------------------------
        Border radius scale — use these, not hardcoded px values.

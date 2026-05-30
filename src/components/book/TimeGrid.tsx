@@ -43,7 +43,7 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
   // hardcoded-color-allow-next-line
   const emptyStyle = { padding: "20px 20px 24px", borderTop: "1px solid #F3F4F6" };
   // hardcoded-color-allow-next-line
-  const emptyTextStyle = { color: "#9CA3AF", fontSize: 15, fontWeight: 500, fontFamily: "Montserrat, Inter, sans-serif", lineHeight: 1.6 };
+  const emptyTextStyle = { color: "#9CA3AF", fontSize: 15, fontWeight: 500, fontFamily: "Inter, sans-serif", lineHeight: 1.6 };
 
   if (!selectedDay) return <div style={emptyStyle}><div style={emptyTextStyle}>{loading ? "Loading availability…" : "Pick a date above to see available times."}</div></div>;
   if (times.length === 0) return <div style={emptyStyle}><div style={emptyTextStyle}>No times available. Try another day.</div></div>;
@@ -79,7 +79,7 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
             <div key={period} style={{ marginTop: isFirst ? 16 : 20 }}>
               {/* Period label */}
               <p style={{
-                fontFamily: "Montserrat, Inter, sans-serif",
+                fontFamily: "Inter, sans-serif",
                 fontSize: 11, fontWeight: 700, letterSpacing: "0.12em",
                 textTransform: "uppercase",
                 // hardcoded-color-allow-next-line
@@ -116,7 +116,7 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
                     >
                       {/* Time + AM/PM — large time, small AM/PM label */}
                       <span style={{
-                        fontFamily: "Montserrat, Inter, sans-serif",
+                        fontFamily: "Inter, sans-serif",
                         fontWeight: 700,
                         fontSize: 22,
                         letterSpacing: "-0.01em",

@@ -221,7 +221,7 @@ export default function BookSchedule() {
   // ── No location → show location picker ───────────────────────────────────
   if (!cal) {
     return (
-      <div className="min-h-screen flex flex-col" style={{ background: "var(--brand-navy-deep)", fontFamily: "Montserrat, sans-serif" }}>
+      <div className="min-h-screen flex flex-col" style={{ background: "var(--brand-navy-deep)", fontFamily: "Inter, sans-serif" }}>
         <div style={{ display: "flex", flexDirection: "column", gap: 20, padding: "20px 16px 96px", maxWidth: 720, margin: "0 auto", width: "100%" }}>
           <button type="button" onClick={() => navigate(-1)}
             style={{ background: "transparent", border: 0, cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, color: "#fff", fontSize: 16, fontWeight: 600 }}>

@@ -284,7 +284,7 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
               background: "#1F274C",
               borderRadius: 17,
               display: "flex", alignItems: "center", justifyContent: "center",
-              fontFamily: "Montserrat, Inter, sans-serif",
+              fontFamily: "Inter, sans-serif",
               fontSize: 15, fontWeight: 700, letterSpacing: "0.08em",
               textTransform: "uppercase",
               color: "#FFFFFF",
@@ -301,7 +301,7 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
         border: "1px solid rgba(255,255,255,0.15)",
         borderRadius: 16,
         overflow: "hidden",
-        fontFamily: "Montserrat, Inter, system-ui, sans-serif",
+        fontFamily: "Inter, system-ui, sans-serif",
         // hardcoded-color-allow-next-line
         boxShadow: "0 20px 60px -10px rgba(0,0,0,0.40)",
       }}>
@@ -340,7 +340,7 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
               {selectedSlot && (
                 <p style={{
                   textAlign: "center",
-                  fontFamily: "Montserrat, Inter, sans-serif",
+                  fontFamily: "Inter, sans-serif",
                   fontSize: 14, fontWeight: 600,
                   // hardcoded-color-allow-next-line
                   color: "#374151",
@@ -363,7 +363,7 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
                   letterSpacing: "0.06em",
                   textTransform: "uppercase",
                   cursor: "pointer",
-                  fontFamily: "Montserrat, Inter, sans-serif",
+                  fontFamily: "Inter, sans-serif",
                   // hardcoded-color-allow-next-line
                   boxShadow: "0 10px 24px -8px rgba(232,103,10,0.55)",
                   transition: "all 150ms ease",
@@ -391,7 +391,7 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
                 letterSpacing: "0.08em",
                 textTransform: "uppercase",
                 cursor: "default",
-                fontFamily: "Montserrat, Inter, sans-serif",
+                fontFamily: "Inter, sans-serif",
                 opacity: 0.45,
               }}
             >

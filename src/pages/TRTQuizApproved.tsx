@@ -44,7 +44,7 @@ export default function TRTQuizApproved() {
     bracket === "Severe" ? 88 : bracket === "Moderate" ? 70 : bracket === "Mild" ? 45 : 22;
 
   return (
-    <div style={{ background: "var(--c-text-on-dark)", color: "var(--brand-navy-deep)", fontFamily: "Inter, sans-serif" }}>
+    <div style={{ background: "#FFFFFF", color: "var(--brand-navy-deep)", fontFamily: "Inter, sans-serif" }}>
       <SEO
         title={`${firstName}'s TRT Assessment Results . MWC`}
         description="Your personalized testosterone assessment results from Men's Wellness Centers."
@@ -91,7 +91,7 @@ function ResultsTopBar() {
       style={{ background: "var(--brand-navy-deep)", color: "var(--c-text-on-dark)" }}
     >
       <div className="mx-auto flex items-center justify-between px-5 md:px-8 h-14" style={{ maxWidth: 1180 }}>
-        <img src="/logos/Text_Logo_white.webp" onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/logos/Text_Logo_white.png"; }} alt="Men's Wellness Centers" className="h-5 md:h-6 w-auto" width={150} height={24} loading="lazy" decoding="async" />
+        <img src="/logos/Text_Logo_white.webp" onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/logos/Text_Logo_white.png"; }} alt="Men's Wellness Centers" className="h-5 md:h-6 w-auto" width={150} height={24} loading="eager" decoding="async" />
         <a
           href={PHONE_HREF}
           className="flex items-center gap-2 text-xs md:text-sm font-semibold"
@@ -139,7 +139,7 @@ function Section2Status({ indicatorPct, bracket, totalScore }: { indicatorPct: n
     <section
       className="mt-6 rounded-2xl p-6 md:p-8"
       style={{
-        background: "var(--c-text-on-dark)",
+        background: "#FFFFFF",
         // hardcoded-color-allow-next-line
         border: "1px solid #E5E7EB",
         // hardcoded-color-allow-next-line
@@ -172,7 +172,7 @@ function Section2Status({ indicatorPct, bracket, totalScore }: { indicatorPct: n
           style={{
             left: `calc(${indicatorPct}% - 10px)`,
             width: 20, height: 20,
-            background: "var(--c-text-on-dark)",
+            background: "#FFFFFF",
             // hardcoded-color-allow-next-line
             border: "3px solid var(--brand-navy-deep)",
             borderRadius: "50%",
@@ -233,7 +233,7 @@ function Section3Symptoms({ top }: { top: ReturnType<typeof topCategories> }) {
             <div
               key={c.id}
               className="rounded-xl p-4 flex items-center justify-between gap-3"
-              style={{ background: "var(--c-text-on-dark)", border: "1px solid #E5E7EB" }}
+              style={{ background: "#FFFFFF", border: "1px solid #E5E7EB" }}
             >
               <span className="font-semibold text-sm md:text-base" style={{ color: "var(--brand-navy-deep)" }}>
                 {c.shortLabel}
@@ -368,7 +368,7 @@ function Section6NextSteps() {
         {steps.map((s) => {
           const Icon = s.icon;
           return (
-            <div key={s.n} className="rounded-xl p-5" style={{ background: "var(--c-text-on-dark)", border: "1px solid #E5E7EB" }}>
+            <div key={s.n} className="rounded-xl p-5" style={{ background: "#FFFFFF", border: "1px solid #E5E7EB" }}>
               <div className="flex items-center gap-3 mb-3">
                 <span className="text-xs font-bold tracking-[0.14em]" style={{ color: "var(--brand-cta)" }}>
                   {s.n}
@@ -426,7 +426,7 @@ function Section7Offer({ ctaHref, ctaLabel, disqualified }: { ctaHref: string; c
         <div className="mt-7">
           <a
             href={ctaHref}
-            className="block w-full text-center rounded-md font-bold uppercase tracking-[0.08em] text-base md:text-lg transition-opacity"
+            className="block w-full text-center rounded-xl font-bold uppercase tracking-[0.08em] text-base md:text-lg transition-opacity"
             style={{
               background: "var(--brand-cta)",
               color: "var(--c-text-on-dark)",
@@ -457,7 +457,7 @@ function Section8Testimonials() {
       </h2>
       <div className="space-y-4">
         {RESULTS_TESTIMONIALS.map((t) => (
-          <div key={t.name} className="rounded-xl p-5" style={{ background: "var(--c-text-on-dark)", border: "1px solid #E5E7EB" }}>
+          <div key={t.name} className="rounded-xl p-5" style={{ background: "#FFFFFF", border: "1px solid #E5E7EB" }}>
             <div className="flex items-center gap-1 mb-2">
               {Array.from({ length: 5 }).map((_, i) => (
                 <Star key={i} size={14} fill="var(--brand-cta)" stroke="var(--brand-cta)" />
@@ -525,7 +525,7 @@ function Section10Faq() {
         {FAQ_ITEMS.map((f, i) => {
           const isOpen = open === i;
           return (
-            <div key={f.q} style={{ borderTop: i === 0 ? "none" : "1px solid #E5E7EB", background: "var(--c-text-on-dark)" }}>
+            <div key={f.q} style={{ borderTop: i === 0 ? "none" : "1px solid #E5E7EB", background: "#FFFFFF" }}>
               <button
                 type="button"
                 onClick={() => setOpen(isOpen ? null : i)}
@@ -562,7 +562,7 @@ function Footer({ ctaHref, ctaLabel }: { ctaHref: string; ctaLabel: string }) {
     <footer className="mt-14 mb-10">
       <a
         href={ctaHref}
-        className="block w-full text-center rounded-md font-bold uppercase tracking-[0.08em] text-base md:text-lg"
+        className="block w-full text-center rounded-xl font-bold uppercase tracking-[0.08em] text-base md:text-lg"
         style={{
           background: "var(--brand-cta)",
           color: "var(--c-text-on-dark)",

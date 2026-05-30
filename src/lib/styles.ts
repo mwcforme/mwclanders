@@ -46,7 +46,7 @@ export const CTA_BUTTON_BASE: CSSProperties = {
   color: "#FFF",
   borderRadius: 10,
   textDecoration: "none",
-  fontFamily: "Montserrat, Inter, sans-serif",
+  fontFamily: "Inter, sans-serif",
   fontWeight: 700,
   fontSize: 16,
   boxShadow: "0 10px 24px -8px rgba(232,103,10,0.55)",

@@ -9,8 +9,7 @@ import { RESULTS_TESTIMONIALS } from "@/data/quizContent";
 
 const PHONE_DISPLAY = "(866) 344-4955";
 const PHONE_HREF = "tel:+18663444955";
-// hardcoded-color-allow-next-line
-const NAVY = "#000814";
+const NAVY = "#0B1029"; // brand navy
 const CREAM = "var(--brand-cream)";
 const ORANGE = "var(--brand-cta)";
 // hardcoded-color-allow-next-line
@@ -33,13 +32,13 @@ export default function ShortQuizApproved() {
       {/* Header */}
       <div style={{
         // hardcoded-color-allow-next-line
-        background: "rgba(0,8,20,0.95)", borderBottom: `1px solid ${WHITE_12}`,
+        background: "rgba(11,16,41,0.95)", borderBottom: `1px solid ${WHITE_12}`,
         padding: "12px 20px", display: "flex", alignItems: "center", justifyContent: "space-between",
         position: "sticky", top: 0, zIndex: 40,
       }}>
         <img src="/logos/Text_Logo_white.webp"
           onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/logos/Text_Logo_white.png"; }}
-          alt="Men's Wellness Centers" style={{ height: 22, width: "auto" }} width={140} height={22} loading="lazy" decoding="async" />
+          alt="Men's Wellness Centers" style={{ height: 22, width: "auto" }} width={140} height={22} loading="eager" decoding="async" />
         <a href={PHONE_HREF} style={{
           fontFamily: "Inter, sans-serif", fontSize: 13, fontWeight: 700,
           // hardcoded-color-allow-next-line
@@ -133,7 +132,7 @@ export default function ShortQuizApproved() {
             Book directly and skip the callback — same-day appointments available at all Virginia locations.
           </p>
           <Link to="/book" style={{
-            display: "inline-block", padding: "14px 32px", borderRadius: 10,
+            display: "inline-block", padding: "14px 32px", borderRadius: 12,
             background: ORANGE, color: "#fff", textDecoration: "none",
             fontFamily: "Inter, sans-serif", fontSize: 16, fontWeight: 800,
             letterSpacing: "0.05em", textTransform: "uppercase",
@@ -195,6 +194,11 @@ export default function ShortQuizApproved() {
           <img src="/logos/Text_Logo_white.webp"
             onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/logos/Text_Logo_white.png"; }}
             alt="Men's Wellness Centers" style={{ height: 20, width: "auto", margin: "0 auto 12px" }} loading="lazy" decoding="async" />
+          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "6px 16px", marginBottom: 10 }}>
+            <a href="/privacy-policy" style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: CREAM_55, textDecoration: "underline" }}>Privacy Policy</a>
+            <a href="/terms-of-service" style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: CREAM_55, textDecoration: "underline" }}>Terms of Service</a>
+            <a href="/tcpa" style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: CREAM_55, textDecoration: "underline" }}>TCPA Disclosure</a>
+          </div>
           <p style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: CREAM_55 }}>
             © {new Date().getFullYear()} Men's Wellness Centers · CLIA Certified · LegitScript Certified · HIPAA Compliant
           </p>

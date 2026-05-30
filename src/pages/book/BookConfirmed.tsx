@@ -334,9 +334,9 @@ export default function BookConfirmed() {
       <footer style={{
         // hardcoded-color-allow-next-line
         borderTop: "1px solid rgba(255,255,255,0.08)",
-        padding: "20px 24px",
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-        flexWrap: "wrap", gap: 12,
+        padding: "20px 24px 28px",
+        display: "flex", flexDirection: "column", alignItems: "center",
+        gap: 14, textAlign: "center",
       }}>
         <img
           src="/logos/Text_Logo_white.webp"
@@ -344,14 +344,17 @@ export default function BookConfirmed() {
           alt="Men's Wellness Centers"
           style={{ height: 20, width: "auto", opacity: 0.7 }}
         />
-        <div style={{ display: "flex", gap: 20, alignItems: "center", flexWrap: "wrap" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "8px 20px", alignItems: "center", justifyContent: "center" }}>
           <a href="tel:8663444955" style={{ color: "rgba(255,255,255,0.60)", fontSize: 13, fontFamily: "Inter, sans-serif", fontWeight: 600, textDecoration: "none" }}>
             (866) 344-4955
           </a>
-          <span style={{ color: "rgba(255,255,255,0.30)", fontSize: 12, fontFamily: "Inter, sans-serif" }}>
-            &copy; {new Date().getFullYear()} Men&apos;s Wellness Centers
-          </span>
+          <Link to="/privacy-policy" style={{ color: "rgba(255,255,255,0.50)", fontSize: 12, fontFamily: "Inter, sans-serif", fontWeight: 500 }}>Privacy Policy</Link>
+          <Link to="/terms-of-service" style={{ color: "rgba(255,255,255,0.50)", fontSize: 12, fontFamily: "Inter, sans-serif", fontWeight: 500 }}>Terms of Service</Link>
+          <Link to="/tcpa" style={{ color: "rgba(255,255,255,0.50)", fontSize: 12, fontFamily: "Inter, sans-serif", fontWeight: 500 }}>TCPA Disclosure</Link>
         </div>
+        <span style={{ color: "rgba(255,255,255,0.30)", fontSize: 12, fontFamily: "Inter, sans-serif" }}>
+          &copy; {new Date().getFullYear()} Men&apos;s Wellness Centers
+        </span>
       </footer>
     </div>
   );

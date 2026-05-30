@@ -46,8 +46,7 @@ export function TransitionScreen({
   return (
     <div
       style={{
-        // hardcoded-color-allow-next-line
-        background: "#000814",
+        background: "var(--brand-navy-deep)",
         color: "var(--brand-cream)", minHeight: "100vh",
       }}
       className="flex flex-col items-center justify-center px-6 py-10"
@@ -58,7 +57,7 @@ export function TransitionScreen({
         className="h-7 md:h-8 w-auto mb-10"
         width={180}
         height={32}
-        loading="lazy"
+        loading="eager"
         decoding="async"
       />
 
