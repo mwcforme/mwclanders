@@ -36,7 +36,7 @@ export function AppointmentConfirmModal({ open, onOpenChange, selectedSlot, full
           </div>
           {selectedSlot && (
             <div style={{ fontSize: 16, color: INK, marginBottom: 4 }}>
-              {fmtFullDay(new Date(selectedSlot))} · {fmtTimeParts(selectedSlot).time} {fmtTimeParts(selectedSlot).ampm} ET
+              {fmtFullDay(new Date(selectedSlot))} · {fmtTimeParts(selectedSlot).time} {fmtTimeParts(selectedSlot).ampm}
             </div>
           )}
           <div style={{ fontSize: 14, color: MUTED }}>{cal.label}, In-person</div>

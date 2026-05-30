@@ -297,7 +297,7 @@ export default function BookSchedule() {
 
             {/* Subtle trust line */}
             <p className="mt-2 text-xs" style={{ color: "rgba(255,255,255,0.40)", fontFamily: "Inter, sans-serif" }}>
-              4.9 ★ 191 Google reviews &middot; 10,000+ Virginia members &middot; All times ET
+              4.9 ★ 191 Google reviews &middot; 10,000+ Virginia members
             </p>
           </div>
 
