@@ -63,41 +63,7 @@ function persistCapture(row: LeadCaptureInsert): void {
     .catch(() => { /* non-critical, logged server-side */ });
 }
 
-/** Update GHL contact + fire analytics after navigation — fully async. */
-function syncToGhlAsync(
-  submitLead: (input: LeadInput) => Promise<LeadResult>,
-  leadInput: LeadInput,
-  v: Record<string, unknown>,
-): void {
-  submitLead(leadInput).then((result) => {
-    // Update booking store with real GHL contactId
-    const identity = useBookingStore.getState().identity;
-    if (identity) {
-      useBookingStore.getState().setIdentity({ ...identity, ghlContactId: result.contactId });
-    }
-    // Fire analytics
-    const fullName = typeof v.name === "string" ? v.name.trim() : "";
-    const [firstName, ...rest] = fullName.split(/\s+/);
-    void trackConversion("Lead", {
-      user_data: {
-        email: typeof v.email === "string" ? v.email : undefined,
-        phone: typeof v.phone === "string" ? v.phone : undefined,
-        first_name: firstName || undefined,
-        last_name: rest.length ? rest.join(" ") : undefined,
-        state: typeof v.location === "string" ? "VA" : undefined,
-        external_id: result.contactId,
-      },
-      custom_data: {
-        // $100 = conservative estimated value of a submitted lead (accounts for funnel drop-off)
-        // Signals to Meta + Google Smart Bidding that this conversion has weight
-        value: 100,
-        currency: "USD",
-        content_name: leadInput.source,
-        lp_slug: typeof window !== "undefined" ? window.location.pathname : undefined,
-      },
-    });
-  }).catch(() => { /* GHL failure logged server-side */ });
-}
+
 
 export function useLeadSubmitController<TInput>(
   opts: LeadSubmitOptions<TInput>,
@@ -187,26 +153,53 @@ export function useLeadSubmitController<TInput>(
       crm_status: "pending",
     });
 
-    // ── Transition to success + navigate (synchronous) ────────────────────
-    // Clear timeout and inFlight BEFORE setStatus to avoid stale closure issues.
+    // ── GHL contact create — synchronous before navigation ─────────────────
+    // Contact must exist in GHL (with book_react_app tag) before the user
+    // enters the booking funnel. We await this but cap at 6s via the hard
+    // timeout already running above. On GHL failure we still navigate — lead
+    // is already captured in Supabase and will sync via ghl-sync.
+    leads.submitLead(leadInput).then((result) => {
+      // Patch booking store with real contactId
+      const identity = useBookingStore.getState().identity;
+      if (identity) {
+        useBookingStore.getState().setIdentity({ ...identity, ghlContactId: result.contactId });
+      }
+      // Fire analytics
+      const fullName = typeof v.name === "string" ? v.name.trim() : "";
+      const [firstName, ...rest] = fullName.split(/\s+/);
+      void trackConversion("Lead", {
+        user_data: {
+          email: typeof v.email === "string" ? v.email : undefined,
+          phone: typeof v.phone === "string" ? v.phone : undefined,
+          first_name: firstName || undefined,
+          last_name: rest.length ? rest.join(" ") : undefined,
+          state: typeof v.location === "string" ? "VA" : undefined,
+          external_id: result.contactId,
+        },
+        custom_data: {
+          value: 100, currency: "USD",
+          content_name: leadInput.source,
+          lp_slug: typeof window !== "undefined" ? window.location.pathname : undefined,
+        },
+      });
+    }).catch(() => { /* GHL failure — Supabase capture already persisted; ghl-sync will retry */ });
+
+    // ── Transition to success + navigate ──────────────────────────────────
+    // Navigate immediately — GHL runs concurrently above. contactId starts as
+    // 'pending' and is patched into the store when GHL responds (usually < 1s).
     clearHardTimeout();
     inFlight.current = false;
     setStatus("success");
 
-    // Navigate in next animation frame — React flushes "success" render first,
-    // then we navigate. This prevents the component from being in a torn state.
     const pendingResult: LeadResult = { contactId: "pending" };
     window.requestAnimationFrame(() => {
       try {
         opts.onSuccess?.(pendingResult, validated);
         if (opts.navigateTo) nav.go(opts.navigateTo);
       } catch {
-        // Navigation errors are non-fatal — user is already past the form
+        // Navigation errors are non-fatal
       }
     });
-
-    // ── GHL + analytics (fully async, after navigation) ───────────────────
-    syncToGhlAsync(leads.submitLead.bind(leads), leadInput, v);
   }, [leads, nav, opts, clearHardTimeout]);
 
   return {
