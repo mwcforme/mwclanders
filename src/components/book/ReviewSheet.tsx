@@ -136,19 +136,9 @@ export function ReviewSheet({
             {/* Divider */}
             <div className="my-3 h-px bg-panel-divider" />
 
-            {/* What to expect chips */}
-            <div className="flex flex-wrap gap-1.5 mb-3">
-              {["Physician-led", "Labs on-site", "Results same visit"].map(tag => (
-                <span key={tag} className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold"
-                  style={{ background: "rgba(232,103,10,0.08)", color: "var(--primary-hover)", border: "1px solid rgba(232,103,10,0.20)" }}>
-                  {tag}
-                </span>
-              ))}
-            </div>
-
             {/* Location */}
             {(locationLabel || locationAddress) && (
-              <div className="flex items-start gap-2 rounded-xl px-3 py-2.5" style={{ background: "var(--panel-divider)" }}>
+              <div className="flex items-start gap-2 rounded-xl px-3 py-2.5 mb-3" style={{ background: "var(--panel-divider)" }}>
                 <svg className="h-4 w-4 flex-shrink-0 mt-0.5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
                   <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
                   <circle cx="12" cy="9" r="2.5"/>
@@ -159,6 +149,16 @@ export function ReviewSheet({
                 </div>
               </div>
             )}
+
+            {/* What to expect chips */}
+            <div className="flex flex-wrap gap-1.5">
+              {["Physician-led", "Labs on-site", "Results same visit"].map(tag => (
+                <span key={tag} className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold"
+                  style={{ background: "rgba(232,103,10,0.08)", color: "var(--primary-hover)", border: "1px solid rgba(232,103,10,0.20)" }}>
+                  {tag}
+                </span>
+              ))}
+            </div>
 
             {/* Arrival note */}
             <p className="mt-3 text-xs text-panel-muted leading-snug">
