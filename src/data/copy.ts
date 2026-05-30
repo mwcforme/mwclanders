@@ -14,17 +14,17 @@
 export const COPY = {
   cta: {
     /** Primary booking CTA. Header, hero submit, locations, sticky bar, final CTA. */
-    bookConsult: "Book My In-Person Visit",
+    bookConsult: "Book My No-Cost Consultation",
     /** Results section CTA. */
-    startConsult: "Book My Physician Assessment",
+    startConsult: "Book My No-Cost Consultation",
     /** Inline link variant inside FAQ answers. */
     bookConsultInline: "book a no-cost consultation",
     /** ED service final-CTA + ED form card title. */
-    bookDiscreetVisit: "Book My Physician Assessment",
+    bookDiscreetVisit: "Book My No-Cost Consultation",
     /** WL service final-CTA + WL manifesto. */
-    seeIfIQualify: "Book My Physician Assessment",
+    seeIfIQualify: "Book My No-Cost Consultation",
     /** TRT manifesto secondary CTA. */
-    seeIfYouQualify: "Book My Physician Assessment",
+    seeIfYouQualify: "Book My No-Cost Consultation",
     /** Phone CTA prefix. */
     callNow: "Call Now",
     /** Sticky mobile bar primary action — short, action-oriented. */
@@ -43,7 +43,7 @@ export const COPY = {
   offer: {
     /** Hero subhead under the H1. */
     /** Final CTA / WL / ED subhead. */
-    finalSubhead: "No-cost consultation. Same- or next-day availability.",
+    finalSubhead: "No-cost consultation. Same-day availability.",
     /** Manifesto / proof closer. */
     manifestoTag: "No-obligation consult. Individual results vary.",
     /** Reschedule reassurance bullet. */

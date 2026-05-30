@@ -13,6 +13,8 @@ import { LOCATIONS, getMapsSearchUrl, LOCATION_KEY_TO_SLUG, type Location } from
 import { EmailCapture } from "@/components/book/EmailCapture";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
 import { BookHeader } from "@/components/book/BookHeader";
+import { trackFunnelEvent } from "@/hooks/useAnalytics";
+import { trackConversion } from "@/lib/capi";
 
 const DEFAULT_CENTER = LOCATIONS[0];
 const TIMEZONE = "America/New_York";
@@ -45,6 +47,7 @@ export default function BookConfirmed() {
   const appointmentTime = useBookingStore(s => s.appointmentTime);
   const location        = useBookingStore(s => s.location);
   const identity        = useBookingStore(s => s.identity);
+  const lpSlug          = useBookingStore(s => s.lpSlug);
   const patchAction     = useBookingStore(s => s.patch);
 
   const slug   = location ? LOCATION_KEY_TO_SLUG[location] : null;
@@ -72,6 +75,20 @@ export default function BookConfirmed() {
     window.scrollTo(0, 0);
     document.title = "Confirmed | Men's Wellness Centers";
     if (identity && !identity.phone && !identity.email) patchAction({ identity: undefined });
+
+    // MWC-002: Belt-and-suspenders conversion fire on confirmed page render.
+    // useConfirmAppointment also fires this on API success, but if navigation
+    // is delayed or the user deep-links here, this ensures the event fires.
+    trackFunnelEvent("booking_completed", { location: location ?? "" });
+    void trackConversion("Schedule", {
+      user_data: {
+        phone: identity?.phone,
+        email: identity?.email,
+        first_name: identity?.firstName,
+        last_name: identity?.lastName,
+      },
+      custom_data: { content_name: "booking_confirmed", lp_slug: lpSlug ?? undefined },
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
