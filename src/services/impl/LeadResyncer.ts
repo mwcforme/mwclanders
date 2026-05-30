@@ -28,6 +28,7 @@ export async function resyncLead(lead: ResyncLead): Promise<ResyncResult> {
     phone: lead.phone ?? undefined,
     location: lead.location ?? undefined,
     source: lead.source ?? "admin-resync",
+    tags: ["book_react_app"],
   };
 
   const { data, error } = await supabase.functions.invoke("ghl-proxy", {
