@@ -1,6 +1,11 @@
 /**
  * TCPADisclaimer — TCPA consent checkbox with disclaimer copy.
+ *
+ * ⚠️  ID uniqueness: always pass a unique `id` prop when multiple forms
+ * appear on the same page. The default uses React.useId() to guarantee
+ * uniqueness — never falls back to a static string.
  */
+import { useId } from "react";
 import { Check, AlertCircle } from "lucide-react";
 
 // hardcoded-color-allow-next-line
@@ -15,7 +20,10 @@ interface TCPADisclaimerProps {
   error?: string;
 }
 
-export const TCPADisclaimer = ({ id = "hf-tcpa", checked, onChange, error }: TCPADisclaimerProps) => (
+export const TCPADisclaimer = ({ id: idProp, checked, onChange, error }: TCPADisclaimerProps) => {
+  const generatedId = useId();
+  const id = idProp ?? `tcpa-${generatedId}`;
+  return (
   <div>
     <input id={id} type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)}
       aria-describedby={`${id}-text`} aria-invalid={!!error}
@@ -47,4 +55,5 @@ export const TCPADisclaimer = ({ id = "hf-tcpa", checked, onChange, error }: TCP
       </p>
     )}
   </div>
-);
+  );
+};

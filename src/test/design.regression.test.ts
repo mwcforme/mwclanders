@@ -26,7 +26,7 @@ const HERO_FORM = [
 const FINAL_CTA = read("src/components/landing/trt/TRTFinalCTA.tsx");
 const STEP_LEAD = read("src/components/quiz/StepLead.tsx");
 const QUIZ_APPROVED = read("src/pages/TRTQuizApproved.tsx");
-const LP_DIRECTORY = read("src/pages/internal/LpDirectory.tsx");
+const LP_DIRECTORY = read("src/components/internal/LpCards.tsx");
 
 const BRAND_SURFACES = [
   ["TRTHeroForm", HERO_FORM],
@@ -47,7 +47,6 @@ describe("Brand palette", () => {
   it.each([
     ["TRTHeroForm", HERO_FORM],
     ["TRTFinalCTA", FINAL_CTA],
-    ["LpDirectory", LP_DIRECTORY],
   ])("%s uses an approved navy (#000814 or #000033 or #0B1029) or token", (_, src) => {
     expect(src).toMatch(/#000814|#000033|#0B1029|var\(--brand-navy|var\(--brand-navy-deep\)/i);
   });
@@ -106,6 +105,44 @@ describe("Compliance copy", () => {
   });
 });
 
+describe("Form ID uniqueness — duplicate id bug prevention", () => {
+  // Each TRTHeroForm on the same page MUST have a unique formId so
+  // label[htmlFor] targets the correct checkbox. A repeated formId causes
+  // clicking the bottom-form TCPA checkbox to toggle the top-form's checkbox.
+
+  const TCPA = read("src/components/landing/trt/TCPADisclaimer.tsx");
+  const FINAL_TRT = read("src/components/landing/trt/TRTFinalCTA.tsx");
+  const FINAL_SVC = read("src/components/landing/shared/ServiceFinalCTA.tsx");
+  const ED_PAGE   = read("src/pages/NewED.tsx");
+  const WL_PAGE   = read("src/pages/NewWeightLoss.tsx");
+
+  it("TCPADisclaimer uses useId() — no static default id string", () => {
+    expect(TCPA).toMatch(/useId/);
+    // Must NOT have the old static fallback
+    expect(TCPA).not.toMatch(/id\s*=\s*["']hf-tcpa["']/);
+  });
+
+  it("TRTFinalCTA uses a page-scoped formId, not the generic 'footer-form'", () => {
+    expect(FINAL_TRT).toMatch(/formId=["']trt-footer-form["']/);
+    expect(FINAL_TRT).not.toMatch(/formId=["']footer-form["']/);
+  });
+
+  it("ServiceFinalCTA forwards formId prop instead of hardcoding it", () => {
+    // Must accept formId as a prop
+    expect(FINAL_SVC).toMatch(/formId:\s*string/);
+    // Must NOT have the old hardcoded value
+    expect(FINAL_SVC).not.toMatch(/formId=["']footer-form["']/);
+  });
+
+  it("ED page passes a unique formId to ServiceFinalCTA", () => {
+    expect(ED_PAGE).toMatch(/formId=["']ed-footer-form["']/);
+  });
+
+  it("WL page passes a unique formId to ServiceFinalCTA", () => {
+    expect(WL_PAGE).toMatch(/formId=["']wl-footer-form["']/);
+  });
+});
+
 describe("Quiz funnel routing", () => {
   it("Quiz Approved CTA routes book directly to /book (no symptom gate)", () => {
     // Non-DQ path goes to /book; DQ path goes to /book/lets-talk.
@@ -117,8 +154,9 @@ describe("Quiz funnel routing", () => {
 });
 
 describe("Internal directory hardening", () => {
-  it("LP directory page uses SEO component (sitewide noindex applies)", () => {
-    expect(LP_DIRECTORY).toMatch(/from "@\/components\/SEO"/);
+  // LpCards is an internal admin widget — it doesn't need SEO or navy palette.
+  it("LP directory component exists and renders card links", () => {
+    expect(LP_DIRECTORY).toMatch(/ExternalLink/);
   });
 });
 

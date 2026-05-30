@@ -21,10 +21,12 @@ interface ServiceFinalCTAProps {
   ctaLabel?: string;
   bullets: string[];
   intro: string;
+  /** Unique formId prefix — must be distinct from any other form on the same page */
+  formId: string;
 }
 
 export const ServiceFinalCTA = ({
-  service, headline, subhead, bullets, intro,
+  service, headline, subhead, bullets, intro, formId,
 }: ServiceFinalCTAProps) => {
   return (
     <section id="final-cta" className="py-14 md:py-20" style={{ background: "var(--brand-navy)" }}>
@@ -96,7 +98,7 @@ export const ServiceFinalCTA = ({
               <TRTHeroForm
                 service={service as Service}
                 ctaLabel={COPY.cta.bookConsult}
-                formId="footer-form"
+                formId={formId}
               />
             </div>
           </div>
