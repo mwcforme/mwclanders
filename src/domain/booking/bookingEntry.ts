@@ -22,6 +22,16 @@ export interface EnterBookingArgs {
   lpSlug?: string;
 }
 
+/** True when this app is running inside a cross-origin iframe. */
+function isEmbeddedInIframe(): boolean {
+  try {
+    return window.self !== window.top;
+  } catch {
+    // If access to window.top throws, we're definitely cross-origin framed.
+    return true;
+  }
+}
+
 export function enterBookingFunnel(
   args: EnterBookingArgs,
   navigate: NavigateFunction | ((path: string) => void),
@@ -36,12 +46,26 @@ export function enterBookingFunnel(
     lpSlug: args.lpSlug,
   });
 
-  // Location already set (full LP form) — skip straight to calendar.
-  if (args.location) {
-    navigate("/book/schedule");
+  const path = args.location ? "/book/schedule" : "/book/location";
+
+  // If running inside an iframe (e.g. WP embed), bust out to the parent
+  // window instead of navigating in-place — the full booking funnel must
+  // own the entire viewport.
+  if (isEmbeddedInIframe()) {
+    const fullUrl = `${window.location.origin}${path}`;
+    try {
+      // Tell the parent to take over navigation
+      window.parent.postMessage(
+        { type: "mwc-navigate", url: fullUrl },
+        "*",
+      );
+    } catch {
+      // Fallback: try direct top-level navigation
+      window.top!.location.href = fullUrl;
+    }
     return;
   }
 
-  // No location — go to location picker.
-  navigate("/book/location");
+  // Normal in-app navigation (not framed).
+  navigate(path);
 }
