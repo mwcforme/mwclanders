@@ -419,6 +419,7 @@ export default function BookSchedule() {
             confirming={hookSubmitting || confirming}  // BUG 2 fix: source of truth from hook
             error={bookingError}                       // BUG 1 fix: surface error to user
             redirect={bookingRedirect}                 // BUG 1 fix: show redirect countdown
+            locationLabel={cal?.label ?? null}
           />
         )}
       </div>

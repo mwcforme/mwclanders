@@ -33,11 +33,13 @@ export interface ReviewSheetProps {
   error?: string | null;
   /** Active redirect countdown state (BUG 1 fix). */
   redirect?: RedirectState | null;
+  /** Location label e.g. "Richmond" or "Newport News" */
+  locationLabel?: string | null;
 }
 
 export function ReviewSheet({
   firstName, slotIso, day, onCommit, onChangeTime,
-  confirming, error, redirect,
+  confirming, error, redirect, locationLabel,
 }: ReviewSheetProps) {
   const [secondsLeft, setSecondsLeft] = useState(HOLD_SECONDS);
 
@@ -122,9 +124,14 @@ export function ReviewSheet({
               {slotLabel} <span className="text-panel-muted">to</span> {endTimeLabel}{" "}
               <span className="text-panel-muted">(60-minute visit)</span>
             </p>
-            <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-panel-muted">
+            <p className="mt-1 text-xs font-bold uppercase tracking-wide text-panel-foreground">
               Physician-led · In-person · Labs drawn on-site
             </p>
+            {locationLabel && (
+              <p className="mt-1 text-xs font-semibold text-panel-muted">
+                📍 {locationLabel}
+              </p>
+            )}
             <p className="mt-2 text-xs text-panel-muted leading-snug">
               Your provider's time is being held. Please arrive 5 minutes early.
             </p>
