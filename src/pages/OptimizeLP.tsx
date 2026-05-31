@@ -290,20 +290,19 @@ export default function OptimizeLP() {
                 fontFamily: "Inter, sans-serif", fontSize: 13,
                 color: "rgba(255,255,255,0.55)", marginBottom: 6,
               }}>Prefer to call? We answer live.</p>
-              <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 16px" }}>
                 {LOCATIONS_DATA.map(loc => (
                   <a
                     key={loc.key}
                     href={`tel:${loc.phone.replace(/\D/g, "")}`}
                     style={{
-                      display: "flex", alignItems: "center", gap: 8,
-                      fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 600,
+                      display: "flex", alignItems: "center", gap: 6,
+                      fontFamily: "Inter, sans-serif", fontSize: 13, fontWeight: 600,
                       color: ORANGE, textDecoration: "none",
                     }}
                   >
-                    <Phone size={14} style={{ color: ORANGE, flexShrink: 0 }} aria-hidden />
-                    <span style={{ color: "rgba(255,255,255,0.70)", marginRight: 4 }}>{loc.city}:</span>
-                    {loc.phone}
+                    <Phone size={13} style={{ color: ORANGE, flexShrink: 0 }} aria-hidden />
+                    <span style={{ color: "rgba(255,255,255,0.65)" }}>{loc.city}: {loc.phone}</span>
                   </a>
                 ))}
               </div>
@@ -718,6 +717,42 @@ export default function OptimizeLP() {
               {FAQS.map((f, i) => (
                 <FAQItem key={f.q} q={f.q} a={f.a} defaultOpen={i === 0} />
               ))}
+              {/* Post-FAQ micro-CTA — captures visitors who read through all answers */}
+              <div style={{
+                padding: "20px 0 4px",
+                display: "flex", alignItems: "center", justifyContent: "space-between",
+                flexWrap: "wrap", gap: 12,
+              }}>
+                <p style={{
+                  fontFamily: "Inter, sans-serif", fontSize: 14,
+                  color: "var(--c-text-on-light-muted)",
+                }}>
+                  Still have questions? We answer live.
+                </p>
+                <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
+                  {LOCATIONS_DATA.slice(0, 1).map(loc => (
+                    <a
+                      key={loc.key}
+                      href={`tel:${loc.phone.replace(/\D/g, "")}`}
+                      style={{
+                        display: "flex", alignItems: "center", gap: 5,
+                        fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 600,
+                        color: ORANGE, textDecoration: "none",
+                      }}
+                    >
+                      <Phone size={14} style={{ color: ORANGE }} aria-hidden />
+                      {loc.phone}
+                    </a>
+                  ))}
+                  <a href="#hero" style={{
+                    display: "inline-flex", alignItems: "center", gap: 6,
+                    height: 38, padding: "0 18px", borderRadius: 8,
+                    background: ORANGE, color: WHITE,
+                    fontFamily: "Inter, sans-serif", fontSize: 13, fontWeight: 700,
+                    textDecoration: "none", letterSpacing: "0.05em", textTransform: "uppercase",
+                  }}>Book Visit</a>
+                </div>
+              </div>
             </div>
           </div>
         </section>
