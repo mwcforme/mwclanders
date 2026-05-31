@@ -282,6 +282,7 @@ export default function BookSchedule() {
                   textTransform: "uppercase",
                   color: "var(--c-text-on-dark)",
                   margin: 0,
+                  whiteSpace: "pre-line",
                 }}
               >
                 {firstName ? `${firstName}, take\ncontrol today.` : "Take\ncontrol today."}
