@@ -8,7 +8,7 @@
  *   - Copy is direct, specific, no corporate vagueness
  *   - Brand colors only: --brand-navy-deep, --brand-cream, --brand-cta
  */
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useState, useRef } from "react";
 import {
   Check, X, Star, MapPin, Phone,
   Clock, FlaskConical, UserCheck, ClipboardList, ChevronDown, ShieldCheck, Award, CreditCard, Zap, Heart, Scale,
@@ -107,6 +107,7 @@ const LOCATIONS_DATA = [
 
 function FAQItem({ q, a, defaultOpen = false }: { q: string; a: string; defaultOpen?: boolean }) {
   const [open, setOpen] = useState(defaultOpen);
+  const bodyRef = useRef<HTMLDivElement>(null);
   return (
     <div style={{ borderBottom: "1px solid #E5E3E0" }}>
       <button
@@ -120,6 +121,7 @@ function FAQItem({ q, a, defaultOpen = false }: { q: string; a: string; defaultO
           minHeight: 56,
         }}
         aria-expanded={open}
+        className="optimize-faq-btn"
       >
         <span style={{
           fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: "clamp(16px,3.5vw,19px)",
@@ -131,17 +133,28 @@ function FAQItem({ q, a, defaultOpen = false }: { q: string; a: string; defaultO
           style={{
             color: ORANGE, flexShrink: 0,
             transform: open ? "rotate(180deg)" : "none",
-            transition: "transform 220ms ease",
+            transition: "transform 240ms cubic-bezier(0.4,0,0.2,1)",
           }}
           aria-hidden
         />
       </button>
-      {open && (
+      {/* Smooth height animation via max-height + overflow */}
+      <div
+        ref={bodyRef}
+        style={{
+          overflow: "hidden",
+          maxHeight: open ? 600 : 0,
+          transition: open
+            ? "max-height 320ms cubic-bezier(0.4,0,0.2,1)"
+            : "max-height 240ms cubic-bezier(0.4,0,0.6,1)",
+        }}
+        aria-hidden={!open}
+      >
         <p style={{
           fontFamily: "Inter, sans-serif", fontSize: 16, lineHeight: 1.7,
           color: "var(--c-text-on-light-muted)", paddingBottom: 22,
         }}>{a}</p>
-      )}
+      </div>
     </div>
   );
 }
@@ -777,6 +790,17 @@ export default function OptimizeLP() {
         .optimize-phone-link:hover { text-decoration: underline; }
         .optimize-mid-cta:hover { opacity: 0.88; transform: translateY(-1px); }
         .optimize-mid-cta { transition: opacity 150ms, transform 150ms; }
+        /* Focus-visible rings for keyboard navigation */
+        .optimize-faq-btn:focus-visible {
+          outline: 2px solid var(--brand-cta);
+          outline-offset: 3px;
+          border-radius: 4px;
+        }
+        .optimize-mid-cta:focus-visible,
+        .optimize-loc-cta:focus-visible {
+          outline: 3px solid var(--brand-cta);
+          outline-offset: 4px;
+        }
       `}</style>
     </div>
   );
