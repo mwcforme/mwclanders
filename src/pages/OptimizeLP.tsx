@@ -11,7 +11,7 @@
 import { lazy, Suspense, useState, useRef } from "react";
 import {
   Check, X, Star, MapPin, Phone,
-  Clock, FlaskConical, UserCheck, ClipboardList, ChevronDown, ShieldCheck, Award, CreditCard, Zap, Heart, Scale,
+  Clock, FlaskConical, UserCheck, ClipboardList, ChevronDown, ShieldCheck, Award, CreditCard, Zap, Heart, Scale, CalendarCheck,
 } from "lucide-react";
 import { TRTHeader } from "@/components/landing/trt/TRTHeader";
 import { CredibilityBand } from "@/components/landing/trt/CredibilityBand";
@@ -401,6 +401,23 @@ export default function OptimizeLP() {
                   </div>
                 </div>
               ))}
+              {/* Full-width longevity badge — spans both columns, places "since 2015" at the hero form conversion point */}
+              <div role="listitem" style={{
+                gridColumn: "1 / -1",
+                display: "flex", alignItems: "center", gap: 8,
+                padding: "10px 14px", borderRadius: 8,
+                background: "rgba(255,255,255,0.04)",
+                border: "1px solid rgba(255,255,255,0.10)",
+              }}>
+                <CalendarCheck size={14} style={{ color: ORANGE, flexShrink: 0 }} aria-hidden />
+                <p style={{
+                  fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 600,
+                  color: "rgba(255,255,255,0.60)", margin: 0, lineHeight: 1.4,
+                }}>
+                  <strong style={{ color: "rgba(255,255,255,0.85)", fontWeight: 700 }}>Serving Virginia men since 2015</strong>
+                  {" - over 10,000 members treated across 3 centers."}
+                </p>
+              </div>
             </div>
             {/* HIPAA privacy assurance */}
             <p style={{
