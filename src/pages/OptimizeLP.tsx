@@ -42,6 +42,7 @@ const WHY_US = [
   "Same Virginia provider every visit — not a rotating list of strangers",
   "Labs drawn on-site, results in the same visit, not a week later",
   "60-minute in-person evaluation — not a 10-minute telehealth call",
+  "First visit — labs, evaluation, and review — at no cost to you",
   "Treatment only when clinically appropriate. We'll tell you if it's not.",
   "Follow-up labs and protocol adjustments are included — not billed as add-ons",
   "FSA and HSA accepted. No insurance games.",
@@ -579,9 +580,10 @@ export default function OptimizeLP() {
               color: "var(--brand-navy)", lineHeight: 1.08, marginBottom: 40,
             }}>Three steps. One visit.</h2>
 
-            <div style={{
-              display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20,
-            }} className="optimize-3col">
+            {/* Steps with visual connectors on desktop */}
+            <div className="optimize-steps-wrapper" style={{
+              display: "grid", gridTemplateColumns: "1fr 28px 1fr 28px 1fr", gap: 0, alignItems: "start",
+            }}>
               {[
                 {
                   n: "01", title: "Book your slot",
@@ -598,7 +600,7 @@ export default function OptimizeLP() {
                   body: "Sit down with a Virginia-licensed provider for 60 minutes. Every number explained clearly. Walk out with a protocol if treatment fits.",
                   icon: UserCheck,
                 },
-              ].map(step => (
+              ].flatMap((step, idx, arr) => [
                 <div key={step.n} style={{
                   background: WHITE, borderRadius: 14,
                   border: "1px solid #E5E3E0",
@@ -619,8 +621,19 @@ export default function OptimizeLP() {
                     fontFamily: "Inter, sans-serif", fontSize: 15,
                     color: "var(--c-text-on-light-muted)", lineHeight: 1.65,
                   }}>{step.body}</p>
-                </div>
-              ))}
+                </div>,
+                // Step connector arrow (hidden on mobile via CSS)
+                idx < arr.length - 1 ? (
+                  <div key={`connector-${idx}`} className="optimize-step-connector" aria-hidden style={{
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    paddingTop: 64,
+                  }}>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={ORANGE} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+                    </svg>
+                  </div>
+                ) : null,
+              ])}
             </div>
 
             {/* Mid-page CTA — captures desktop visitors primed by the process steps */}
@@ -863,6 +876,14 @@ export default function OptimizeLP() {
         .optimize-phone-link:hover { text-decoration: underline; }
         .optimize-mid-cta:hover { opacity: 0.88; transform: translateY(-1px); }
         .optimize-mid-cta { transition: opacity 150ms, transform 150ms; }
+        /* Step connectors: show on desktop, collapse on mobile */
+        .optimize-step-connector { display: flex; }
+        @media (max-width: 767px) {
+          .optimize-steps-wrapper {
+            grid-template-columns: 1fr !important;
+          }
+          .optimize-step-connector { display: none !important; }
+        }
         /* Focus-visible rings for keyboard navigation */
         .optimize-faq-btn:focus-visible {
           outline: 2px solid var(--brand-cta);
