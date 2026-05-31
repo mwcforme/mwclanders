@@ -35,6 +35,19 @@ async function shot(url, vp, outPath, surface) {
       await page.evaluate((state) => {
         sessionStorage.setItem("mwc_booking_state_v2", state);
       }, DEMO_STATE);
+      // Mock Date to 2026-05-31 ET to match lock reference (lock is anchored to this date)
+      await page.addInitScript(() => {
+        const FIXED_MS = new Date("2026-05-31T08:00:00-04:00").getTime();
+        const OrigDate = Date;
+        class MockDate extends OrigDate {
+          constructor(...args) {
+            if (args.length === 0) super(FIXED_MS); else super(...args);
+          }
+          static now() { return FIXED_MS; }
+        }
+        // @ts-ignore
+        window.Date = MockDate;
+      });
     }
     await page.goto(url, { waitUntil: "networkidle", timeout: 30000 });
     // Wait for web fonts to finish loading, force font download for Montserrat

@@ -1,6 +1,6 @@
 /**
  * SlotGroup — renders a labeled group of time slots (Morning / Afternoon / Evening).
- * Extracted from BookSchedule.tsx (OPT 1).
+ * Matches mwclocked.pplx.app/#/ reference design.
  */
 import { type TimeSlot } from "@/lib/scheduleUtils";
 
@@ -20,12 +20,11 @@ export function SlotGroup({
   if (slots.length === 0) return null;
   return (
     <div>
-      <h3 className="mb-2 font-display text-xs font-bold uppercase tracking-[0.16em] text-panel-foreground">
+      <h3 className="mb-3 font-display text-sm font-bold uppercase tracking-[0.18em] text-panel-foreground">
         {title}
       </h3>
-      <div className="h-px bg-panel-divider mb-2.5" aria-hidden />
       <div role="radiogroup" aria-label={`${title} time slots`}
-        className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-2">
+        className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-3">
         {slots.map((s, i) => {
           const idx = startIdx + i;
           const isSelected = selected === s.iso;
@@ -34,18 +33,19 @@ export function SlotGroup({
               key={s.iso}
               ref={el => (slotRefs.current[idx] = el)}
               type="button" role="radio" aria-checked={isSelected}
+              data-testid={`slot-${s.display.replace(/[: ]/g, "").replace(/\./g, "")}${s.meridiem}`}
               onKeyDown={e => onKey(e, idx)}
               onClick={() => setSelected(s.iso)}
               className={[
-                "h-[50px] rounded-xl px-2 inline-flex items-center justify-center transition-colors border-[1.5px]",
+                "min-h-[64px] rounded-2xl px-5 py-4 flex items-center justify-between transition-colors border-2",
                 isSelected
-                  ? "bg-primary text-primary-foreground border-primary shadow-cta"
+                  ? "bg-primary text-white border-primary shadow-cta"
                   : "bg-panel text-panel-foreground border-panel-border hover:border-primary",
               ].join(" ")}
             >
-              <span className="font-display text-base font-bold leading-none">
+              <span className="font-display text-2xl font-bold leading-none">
                 {s.display}
-                <span className="ml-1 text-[10px] font-bold uppercase tracking-wider opacity-75">{s.meridiem}</span>
+                <span className="ml-1.5 text-base font-bold uppercase tracking-wider">{s.meridiem}</span>
               </span>
             </button>
           );

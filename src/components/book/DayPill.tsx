@@ -1,13 +1,13 @@
 /**
- * DayPill — individual day selector pill in the booking schedule.
- * Extracted from BookSchedule.tsx (OPT 1).
+ * DayPill — individual day selector card in the booking schedule.
+ * Matches mwclocked.pplx.app/#/ reference design.
  */
 import { type DayCell, formatLong } from "@/lib/scheduleUtils";
 
 const DOW_UPPER = ["SUN","MON","TUE","WED","THU","FRI","SAT"] as const;
 
 const BASE =
-  "relative flex flex-col items-center justify-center gap-1 rounded-xl px-1 py-2.5 text-center select-none transition-colors min-h-[72px] cursor-pointer";
+  "snap-center relative flex-shrink-0 w-[112px] sm:w-auto rounded-2xl p-3 text-center select-none transition-colors";
 
 interface DayPillProps {
   day: DayCell;
@@ -18,17 +18,19 @@ interface DayPillProps {
 export function DayPill({ day, selected, onSelect }: DayPillProps) {
   const disabled = day.full || day.closed;
   const dow = DOW_UPPER[day.date.getDay()];
+  const dateNum = day.date.getDate();
 
   if (disabled) {
     return (
       <div
         role="radio" aria-checked={false} aria-disabled
         aria-label={`${formatLong(day.date)} — ${day.full ? "Fully booked" : "Closed"}`}
+        data-testid={`day-${dateNum}`}
         className={`${BASE} bg-disabled-light text-disabled-light-foreground`}
       >
-        <p className="font-display text-[10px] font-bold uppercase tracking-[0.1em]">{dow}</p>
-        <p className="font-display text-xl font-bold leading-none">{day.date.getDate()}</p>
-        <p className="text-[9px] font-bold uppercase">{day.full ? "Full" : "Closed"}</p>
+        <p className="font-display text-base font-bold uppercase tracking-wider">{dow}</p>
+        <p className="font-display text-3xl font-bold leading-none mt-1.5">{dateNum}</p>
+        <p className="mt-2 text-sm font-semibold">{day.full ? "Full" : "Closed"}</p>
       </div>
     );
   }
@@ -36,21 +38,23 @@ export function DayPill({ day, selected, onSelect }: DayPillProps) {
   if (selected) {
     return (
       <button type="button" onClick={onSelect} role="radio" aria-checked
+        data-testid={`day-${dateNum}`}
         className={`${BASE} bg-primary text-white shadow-cta`}>
-        <p className="font-display text-[10px] font-bold uppercase tracking-[0.1em] opacity-90">{dow}</p>
-        <p className="font-display text-xl font-bold leading-none">{day.date.getDate()}</p>
-        <span className="h-[5px] w-[5px] rounded-full bg-white" aria-hidden />
+        <p className="font-display text-base font-bold uppercase tracking-wider">{dow}</p>
+        <p className="font-display text-3xl font-bold leading-none mt-1.5">{dateNum}</p>
+        <p className="mt-2 text-sm font-bold">{day.slotsLeft} slots</p>
       </button>
     );
   }
 
   return (
     <button type="button" onClick={onSelect} role="radio" aria-checked={false}
+      data-testid={`day-${dateNum}`}
       aria-label={`${formatLong(day.date)} — ${day.slotsLeft} slots available`}
-      className={`${BASE} bg-panel text-panel-foreground border-[1.5px] border-panel-border hover:border-primary`}>
-      <p className="font-display text-[10px] font-bold uppercase tracking-[0.1em] text-panel-muted">{dow}</p>
-      <p className="font-display text-xl font-bold leading-none">{day.date.getDate()}</p>
-      <span className="h-[5px] w-[5px] rounded-full bg-primary" aria-hidden />
+      className={`${BASE} bg-background text-foreground border-2 border-border-subtle hover:border-primary`}>
+      <p className="font-display text-base font-bold uppercase tracking-wider text-text-muted">{dow}</p>
+      <p className="font-display text-3xl font-bold leading-none mt-1.5">{dateNum}</p>
+      <p className="mt-2 text-sm font-semibold text-text-muted">{day.slotsLeft} slots</p>
     </button>
   );
 }
