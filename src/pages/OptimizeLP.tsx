@@ -363,6 +363,12 @@ export default function OptimizeLP() {
               Your information is protected and never shared.
             </p>
           </div>
+          {/* Scroll indicator — desktop only, prompts exploration below the fold */}
+          <div className="optimize-scroll-hint" aria-hidden style={{
+            textAlign: "center", paddingBottom: 24, opacity: 0.4,
+          }}>
+            <ChevronDown size={22} style={{ color: WHITE }} />
+          </div>
         </div>
       </section>
 
@@ -398,11 +404,17 @@ export default function OptimizeLP() {
                 boxShadow: "0 4px 24px rgba(232,103,10,0.12)",
                 display: "flex", flexDirection: "column", flex: 1,
               }}>
-                <p style={{
-                  fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700,
-                  letterSpacing: "0.14em", textTransform: "uppercase",
-                  color: "var(--brand-navy)", marginBottom: 20,
-                }}>Men's Wellness Centers</p>
+                <div style={{ marginBottom: 20 }}>
+                  <p style={{
+                    fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700,
+                    letterSpacing: "0.14em", textTransform: "uppercase",
+                    color: "var(--brand-navy)", marginBottom: 4,
+                  }}>Men's Wellness Centers</p>
+                  <p style={{
+                    fontFamily: "Inter, sans-serif", fontSize: 12,
+                    color: "var(--c-text-on-light-muted)", lineHeight: 1.4,
+                  }}>Virginia state-licensed providers with men's health specialty training.</p>
+                </div>
                 <ul style={{ display: "grid", gap: 14 }}>
                   {WHY_US.map(line => (
                     <li key={line} style={{
@@ -897,6 +909,15 @@ export default function OptimizeLP() {
         .optimize-call-strip { display: none; }
         @media (max-width: 767px) {
           .optimize-call-strip { display: block; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.10); }
+        }
+        /* Scroll hint animation — desktop only */
+        @keyframes optimize-bounce {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(6px); }
+        }
+        .optimize-scroll-hint { animation: optimize-bounce 2s ease-in-out infinite; }
+        @media (max-width: 767px) {
+          .optimize-scroll-hint { display: none; }
         }
         .optimize-hero-grid { padding-bottom: 80px; }
         .optimize-loc-cta:hover { opacity: 0.88; transform: translateY(-1px); }
