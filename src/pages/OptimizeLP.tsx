@@ -331,26 +331,42 @@ export default function OptimizeLP() {
           <div id="hero-form">
             <TRTHeroForm service="trt" formId="hero-opt" />
 
-            {/* Trust micro-badges below form — reduce hesitation at the decision point */}
+            {/* Credential authority grid — 2×2 cards give each certification real visual weight */}
             <div style={{
-              display: "flex", flexWrap: "wrap", gap: "10px 16px",
-              marginTop: 16, justifyContent: "center",
-            }}>
+              display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8,
+              marginTop: 16,
+            }} role="list" aria-label="Credentials and certifications">
               {[
-                { icon: FlaskConical, label: "CLIA-Certified Lab" },
-                { icon: ShieldCheck,  label: "Virginia-Licensed Providers" },
-                { icon: Award,        label: "FDA-Approved TRT" },
-                { icon: CreditCard,   label: "FSA / HSA Accepted" },
-              ].map(({ icon: Icon, label }) => (
-                <span key={label} style={{
-                  display: "inline-flex", alignItems: "center", gap: 6,
-                  fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 600,
-                  color: "rgba(255,255,255,0.65)",
-                  letterSpacing: "0.04em",
+                { icon: FlaskConical, label: "CLIA-Certified Lab",       sub: "On-site hormone testing" },
+                { icon: ShieldCheck,  label: "Virginia-Licensed",         sub: "Board-certified providers" },
+                { icon: Award,        label: "FDA-Approved Treatments",   sub: "TRT, ED, and weight protocols" },
+                { icon: CreditCard,   label: "FSA / HSA Accepted",        sub: "No insurance required" },
+              ].map(({ icon: Icon, label, sub }) => (
+                <div key={label} role="listitem" style={{
+                  display: "flex", alignItems: "flex-start", gap: 8,
+                  padding: "10px 12px", borderRadius: 8,
+                  background: "rgba(255,255,255,0.06)",
+                  border: "1px solid rgba(255,255,255,0.12)",
                 }}>
-                  <Icon size={12} style={{ color: ORANGE, flexShrink: 0 }} aria-hidden />
-                  {label}
-                </span>
+                  <div style={{
+                    width: 28, height: 28, borderRadius: 6, flexShrink: 0,
+                    background: "rgba(232,103,10,0.18)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                  }}>
+                    <Icon size={14} style={{ color: ORANGE }} aria-hidden />
+                  </div>
+                  <div>
+                    <p style={{
+                      fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700,
+                      color: "rgba(255,255,255,0.88)", letterSpacing: "0.03em",
+                      lineHeight: 1.3, margin: 0, marginBottom: 2,
+                    }}>{label}</p>
+                    <p style={{
+                      fontFamily: "Inter, sans-serif", fontSize: 10,
+                      color: "rgba(255,255,255,0.45)", margin: 0, lineHeight: 1.3,
+                    }}>{sub}</p>
+                  </div>
+                </div>
               ))}
             </div>
             {/* HIPAA privacy assurance */}
@@ -910,12 +926,14 @@ export default function OptimizeLP() {
         @media (max-width: 767px) {
           .optimize-call-strip { display: block; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.10); }
         }
-        /* Scroll hint animation — desktop only */
+        /* Scroll hint animation — desktop only; disabled for reduced-motion preference */
         @keyframes optimize-bounce {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(6px); }
         }
-        .optimize-scroll-hint { animation: optimize-bounce 2s ease-in-out infinite; }
+        @media (prefers-reduced-motion: no-preference) {
+          .optimize-scroll-hint { animation: optimize-bounce 2s ease-in-out infinite; }
+        }
         @media (max-width: 767px) {
           .optimize-scroll-hint { display: none; }
         }
