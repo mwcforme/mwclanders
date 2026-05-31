@@ -474,6 +474,31 @@ export default function OptimizeLP() {
                 </ul>
               </div>
             </div>
+
+            {/* Bridge CTA — catches visitors convinced by comparison before Stats+Reviews scroll */}
+            <div style={{
+              marginTop: 36, display: "flex", flexDirection: "column", alignItems: "center", gap: 8,
+            }}>
+              <a
+                href="#hero"
+                className="optimize-mid-cta"
+                style={{
+                  display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 10,
+                  height: 50, padding: "0 32px", borderRadius: 10,
+                  background: ORANGE, color: WHITE,
+                  fontFamily: "Inter, sans-serif", fontSize: 15, fontWeight: 700,
+                  textDecoration: "none", letterSpacing: "0.06em", textTransform: "uppercase",
+                  boxShadow: "0 6px 24px rgba(232,103,10,0.30)",
+                }}
+              >
+                Book Your No-Cost Visit
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+              <p style={{
+                fontFamily: "Inter, sans-serif", fontSize: 12,
+                color: "var(--c-text-on-light-muted)",
+              }}>No obligation. Same-day and next-day slots available.</p>
+            </div>
           </div>
         </section>
       </SectionReveal>
