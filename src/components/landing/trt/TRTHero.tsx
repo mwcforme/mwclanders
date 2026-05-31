@@ -173,7 +173,7 @@ export const TRTHero = ({ headline }: TRTHeroProps = {}) => {
           {/* Photo — immediately under H1 */}
           <div className="mt-6 rounded-xl overflow-hidden" style={{ aspectRatio: "16/9", position: "relative", flexShrink: 0 }}>
             <img
-              src="/assets/lp/doctor-patient-exam.webp"
+              src="/assets/lp/hero-man-confident.webp"
               alt="Licensed provider drawing labs on-site at Men's Wellness Centers Virginia"
               style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%", display: "block" }}
               width={720} height={405} loading="eager" decoding="async"
