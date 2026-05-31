@@ -12,7 +12,7 @@
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, MapPin, Phone } from "lucide-react";
+import { ChevronLeft, ChevronRight, Phone } from "lucide-react";
 import { useBookingStore } from "@/domain/booking/bookingStore";
 import { useConfirmAppointment } from "@/domain/booking/useConfirmAppointment";
 import { CENTER_CALENDARS, TIMEZONE, type LocationKey } from "@/lib/ghlCalendars";
@@ -234,10 +234,6 @@ export default function BookSchedule() {
     return (
       <div className="min-h-screen flex flex-col" style={{ background: "var(--brand-navy-deep)", fontFamily: "Inter, sans-serif" }}>
         <div style={{ display: "flex", flexDirection: "column", gap: 20, padding: "20px 16px 96px", maxWidth: 720, margin: "0 auto", width: "100%" }}>
-          <button type="button" onClick={() => navigate(-1)}
-            style={{ background: "transparent", border: 0, cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6, color: "#fff", fontSize: 16, fontWeight: 600 }}>
-            <ArrowLeft size={18} /> Back
-          </button>
           <h1 style={{ fontFamily: "Oswald, sans-serif", fontSize: 28, color: "#fff", textTransform: "uppercase", fontWeight: 700 }}>
             Choose your center
           </h1>
@@ -258,14 +254,6 @@ export default function BookSchedule() {
     <BookingErrorBoundary>
       <div className="min-h-screen flex flex-col bg-background text-foreground">
         <main className="flex-1 mx-auto w-full max-w-2xl lg:max-w-5xl px-4 sm:px-6 pt-5 pb-40 sm:pb-12">
-
-          {/* Back */}
-          <button type="button" onClick={() => navigate(-1)}
-            data-testid="button-back"
-            className="inline-flex items-center gap-2 text-base font-semibold text-foreground hover:text-primary -ml-2 px-2 min-h-[48px]">
-            <ArrowLeft className="h-5 w-5" aria-hidden />
-            Back
-          </button>
 
           {/* Hero */}
           <div className="mt-7">
