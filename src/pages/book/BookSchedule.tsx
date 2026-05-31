@@ -291,9 +291,9 @@ export default function BookSchedule() {
               }`}
             >
               <div className="px-5 py-4 space-y-3">
-                <p className="font-display text-xs font-bold uppercase tracking-widest text-gray-400">Your center</p>
+                <p className="font-display text-xs font-bold uppercase tracking-widest text-gray-600">Your center</p>
                 <p className="text-base font-semibold text-gray-900">{locationData.name.replace("Men's Wellness Centers, ", "")}</p>
-                <p className="text-sm text-gray-500">{locationData.fullAddress}</p>
+                <p className="text-sm text-gray-700">{locationData.fullAddress}</p>
                 <div className="flex items-center gap-4 pt-1">
                   <a
                     href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationData.mapsQuery)}`}
@@ -312,7 +312,7 @@ export default function BookSchedule() {
                     {locationData.phone}
                   </a>
                 </div>
-                <p className="text-xs text-gray-400 pt-1">In-person &middot; 60 min &middot; Labs on-site</p>
+                <p className="text-xs text-gray-600 pt-1">In-person &middot; 60 min &middot; Labs on-site</p>
               </div>
             </div>
           )}
