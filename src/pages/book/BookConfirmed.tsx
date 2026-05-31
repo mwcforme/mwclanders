@@ -156,7 +156,7 @@ export default function BookConfirmed() {
 
           {/* Quick-confirm chips */}
           <ul
-            className="mt-5 pt-5 border-t border-panel-divider grid sm:grid-cols-2 gap-2 text-sm font-semibold text-panel-foreground"
+            className="mt-5 pt-5 border-t border-panel-divider grid sm:grid-cols-2 gap-2 text-sm font-sans font-medium text-panel-foreground"
             aria-label="Appointment details"
           >
             {["Labs drawn on-site", "Bring photo ID"].map(item => (
