@@ -184,33 +184,43 @@ export function ReviewSheet({
               Email <span style={{ fontWeight: 400, textTransform: "none", letterSpacing: 0 }}>(optional)</span>
             </label>
             <div style={{ position: "relative" }}>
-              <Mail size={14} strokeWidth={2} style={{
-                position: "absolute", left: 12, top: "50%",
+              <Mail size={15} strokeWidth={2} style={{
+                position: "absolute", left: 13, top: "50%",
                 transform: "translateY(-50%)",
                 color: "var(--brand-cta)", pointerEvents: "none",
               }} />
               <input
                 id="rs-email"
+                name="email"
                 type="email"
                 autoComplete="email"
                 inputMode="email"
-                placeholder="you@email.com"
+                aria-label="Email address for confirmation and reminders"
+                placeholder="your@email.com"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 style={{
                   width: "100%", boxSizing: "border-box",
-                  padding: "10px 12px 10px 34px",
-                  borderRadius: 10,
-                  border: "1.5px solid var(--panel-divider, rgba(255,255,255,0.12))",
-                  background: "var(--panel-bg, rgba(255,255,255,0.05))",
+                  padding: "12px 14px 12px 38px",
+                  borderRadius: 12,
+                  border: "2px solid var(--brand-cta, #E8670A)",
+                  background: "var(--panel-bg, rgba(255,255,255,0.06))",
                   color: "var(--panel-foreground, #fff)",
-                  fontSize: 14, fontFamily: "Inter, sans-serif",
+                  fontSize: 15, fontFamily: "Inter, sans-serif",
                   outline: "none",
+                  boxShadow: "0 0 0 0px var(--brand-cta)",
+                  transition: "box-shadow 0.15s ease, border-color 0.15s ease",
+                }}
+                onFocus={e => {
+                  e.currentTarget.style.boxShadow = "0 0 0 3px rgba(232,103,10,0.25)";
+                }}
+                onBlur={e => {
+                  e.currentTarget.style.boxShadow = "0 0 0 0px var(--brand-cta)";
                 }}
               />
             </div>
-            <p style={{ fontSize: 11, color: "var(--panel-muted, rgba(255,255,255,0.40))", marginTop: 4, fontFamily: "Inter, sans-serif" }}>
-              Where should we send your confirmation and reminders?
+            <p style={{ fontSize: 11, color: "var(--panel-muted, rgba(255,255,255,0.50))", marginTop: 5, fontFamily: "Inter, sans-serif" }}>
+              We'll send your confirmation + reminders here.
             </p>
           </div>
 
