@@ -255,10 +255,10 @@ export default function BookSchedule() {
   return (
     <BookingErrorBoundary>
       <div className="min-h-screen flex flex-col bg-background text-foreground">
-        <main className="flex-1 mx-auto w-full max-w-2xl lg:max-w-5xl px-4 sm:px-6 pt-4 pb-40 sm:pb-12">
+        <main className="flex-1 mx-auto w-full max-w-2xl lg:max-w-5xl px-4 sm:px-6 pt-5 pb-8">
 
           {/* Compact header */}
-          <h1 className="font-display text-2xl sm:text-3xl font-bold leading-tight text-foreground uppercase tracking-[0.01em]">
+          <h1 className="font-display text-3xl sm:text-4xl font-bold leading-tight text-foreground uppercase tracking-[0.01em]">
             {heading}
           </h1>
 
@@ -269,7 +269,7 @@ export default function BookSchedule() {
               onClick={() => setDrawerOpen(o => !o)}
               aria-expanded={drawerOpen}
               aria-controls="location-drawer"
-              className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-border-subtle bg-surface px-3 py-1.5 text-sm font-semibold text-foreground hover:border-primary transition-colors"
+              className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-sm font-semibold text-foreground hover:bg-white/20 transition-colors"
             >
               <MapPin className="h-3.5 w-3.5 text-primary" aria-hidden />
               {locationData.city}
@@ -292,11 +292,11 @@ export default function BookSchedule() {
             >
               <div className="px-5 py-4 space-y-3">
                 {/* Location pill — matches booking popup style */}
-                <div className="flex items-start gap-2 rounded-xl px-3 py-2.5" style={{ background: "var(--panel-divider)" }}>
-                  <MapPin className="h-4 w-4 flex-shrink-0 mt-0.5 text-primary" aria-hidden />
+                <div className="flex items-start gap-2 rounded-xl bg-slate-100 px-3 py-2.5">
+                  <MapPin className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "var(--brand-cta)" }} aria-hidden />
                   <div>
-                    <p className="text-xs font-bold text-panel-foreground">{locationData.name.replace("Men's Wellness Centers, ", "")} Center</p>
-                    <p className="text-xs text-panel-muted mt-0.5">{locationData.fullAddress}</p>
+                    <p className="text-xs font-bold text-gray-900">{locationData.name.replace("Men's Wellness Centers, ", "")} Center</p>
+                    <p className="text-xs text-gray-600 mt-0.5">{locationData.fullAddress}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
@@ -329,13 +329,13 @@ export default function BookSchedule() {
               onClick={() => { setSelectedDayIdx(nextAvailable.idx); setSelectedSlot(nextAvailable.iso); }}
               aria-label={`Lock in next available time: ${nextAvailable.label}`}
               data-testid="button-next-available"
-              className="mt-3 inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface px-3 py-1.5 text-sm font-semibold text-foreground hover:border-primary hover:bg-surface-2 transition-colors"
+              className="mt-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-sm font-semibold text-foreground hover:bg-white/20 transition-colors"
             >
               <span className="relative flex h-2 w-2 flex-shrink-0" aria-hidden="true">
                 <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-75 animate-ping" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
               </span>
-              Next available: <span className="text-primary font-bold">{nextAvailable.label}</span>
+              Next available: <span className="font-bold text-foreground">{nextAvailable.label}</span>
               <span className="text-text-muted" aria-hidden>&#8594;</span>
             </button>
           )}
@@ -345,7 +345,7 @@ export default function BookSchedule() {
             aria-label="Choose your appointment day and time">
 
             {/* Week navigator */}
-            <div className="flex items-center justify-between gap-3 px-4 sm:px-6 pt-5">
+            <div className="flex items-center justify-between gap-3 px-4 sm:px-6 pt-4">
               <button type="button"
                 onClick={() => {
                   const prevStart = addDaysInTimeZone(weekStart, -7, TIMEZONE);
@@ -357,12 +357,12 @@ export default function BookSchedule() {
                   setSelectedSlot(null);
                   setReviewOpen(false);
                 }}
-                className="inline-flex h-12 w-12 items-center justify-center rounded-full border-2 border-panel-border text-panel-foreground hover:border-primary hover:text-primary-hover"
+                className="inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-panel-border text-panel-foreground hover:border-primary hover:text-primary-hover"
                 data-testid="button-prev-week"
                 aria-label="Previous week">
                 <ChevronLeft className="h-6 w-6" aria-hidden />
               </button>
-              <h2 className="font-display text-base sm:text-lg font-semibold uppercase tracking-[0.15em] text-panel-foreground">
+              <h2 className="font-display text-sm sm:text-base font-bold uppercase tracking-[0.12em] text-panel-foreground">
                 {MONTHS_UPPER[days[0].getMonth()]} {days[0].getDate()} – {MONTHS_UPPER[days[6].getMonth()]} {days[6].getDate()}
               </h2>
               <button type="button"
@@ -372,7 +372,7 @@ export default function BookSchedule() {
                   setSelectedSlot(null);
                   setReviewOpen(false);
                 }}
-                className="inline-flex h-12 w-12 items-center justify-center rounded-full border-2 border-panel-border text-panel-foreground hover:border-primary hover:text-primary-hover"
+                className="inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-panel-border text-panel-foreground hover:border-primary hover:text-primary-hover"
                 data-testid="button-next-week"
                 aria-label="Next week">
                 <ChevronRight className="h-6 w-6" aria-hidden />
@@ -381,7 +381,7 @@ export default function BookSchedule() {
 
             {/* 7-day strip — 4 visible at a time, scroll for rest */}
             <div ref={dayGroupRef} role="radiogroup" aria-label="Day"
-              className="mt-4 flex gap-3 overflow-x-auto scroll-smooth snap-x snap-mandatory px-4 sm:px-6 pb-5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              className="mt-3 flex gap-2 overflow-x-auto scroll-smooth snap-x snap-mandatory px-4 sm:px-6 pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {dayCells.map((day, dayIdx) => (
                 <DayPill
                   key={`${weekStart.getTime()}-${dayIdx}`}

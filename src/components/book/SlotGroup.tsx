@@ -20,7 +20,7 @@ export function SlotGroup({
   if (slots.length === 0) return null;
   return (
     <div>
-      <h3 className="mb-3 font-display text-sm font-bold uppercase tracking-[0.18em] text-panel-foreground">
+      <h3 className="mb-3 font-display text-xs font-bold uppercase tracking-[0.1em] text-panel-muted">
         {title}
       </h3>
       <div role="radiogroup" aria-label={`${title} time slots`}

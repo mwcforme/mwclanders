@@ -7,7 +7,7 @@ import { type DayCell, formatLong } from "@/lib/scheduleUtils";
 const DOW_UPPER = ["SUN","MON","TUE","WED","THU","FRI","SAT"] as const;
 
 const BASE =
-  "snap-start relative flex-shrink-0 w-[calc(25%-9px)] sm:w-auto rounded-xl p-2 text-center select-none transition-colors";
+  "snap-start relative flex-none w-[calc(25%-6px)] sm:w-auto rounded-xl p-2 text-center select-none transition-colors";
 
 interface DayPillProps {
   day: DayCell;
