@@ -7,7 +7,7 @@ import { type DayCell, formatLong } from "@/lib/scheduleUtils";
 const DOW_UPPER = ["SUN","MON","TUE","WED","THU","FRI","SAT"] as const;
 
 const BASE =
-  "snap-start relative flex-none w-[calc(25%-6px)] sm:w-auto rounded-xl p-2 text-center select-none transition-colors";
+  "snap-start relative flex-none w-[calc(25%-6px)] sm:w-auto rounded-xl px-2 py-3 text-center select-none transition-all duration-150";
 
 interface DayPillProps {
   day: DayCell;
@@ -40,7 +40,7 @@ export function DayPill({ day, selected, onSelect, loading }: DayPillProps) {
     return (
       <button type="button" onClick={onSelect} role="radio" aria-checked
         data-testid={`day-${dateNum}`}
-        className={`${BASE} bg-primary text-white shadow-cta`}>
+        className={`${BASE} bg-primary text-white shadow-cta -translate-y-0.5`}>
         <p className="font-display text-xs font-bold uppercase tracking-wider">{dow}</p>
         <p className="font-display text-2xl font-bold leading-none mt-1">{dateNum}</p>
         <p className="mt-1 text-xs font-bold">{day.slotsLeft} slots</p>

@@ -275,9 +275,9 @@ export default function BookSchedule() {
               <h1
                 style={{
                   fontFamily: "Oswald, sans-serif",
-                  fontSize: "clamp(2.4rem, 7vw, 3.5rem)",
+                  fontSize: "clamp(2.8rem, 8vw, 4rem)",
                   fontWeight: 800,
-                  lineHeight: 1.05,
+                  lineHeight: 1.02,
                   letterSpacing: "-0.01em",
                   textTransform: "uppercase",
                   color: "var(--c-text-on-dark)",
@@ -342,9 +342,9 @@ export default function BookSchedule() {
               <h1
                 style={{
                   fontFamily: "Oswald, sans-serif",
-                  fontSize: "clamp(1.9rem, 5.5vw, 2.8rem)",
+                  fontSize: "clamp(2.3rem, 6.5vw, 3.2rem)",
                   fontWeight: 800,
-                  lineHeight: 1.1,
+                  lineHeight: 1.07,
                   letterSpacing: "-0.01em",
                   textTransform: "uppercase",
                   color: "var(--c-text-on-dark)",
@@ -502,7 +502,7 @@ export default function BookSchedule() {
           </div>
 
           {/* ── BOOKING PANEL ──────────────────────────────────────── */}
-          <section id="book" className="mt-4 overflow-hidden rounded-2xl bg-panel text-panel-foreground shadow-card"
+          <section id="book" className="mt-6 overflow-hidden rounded-2xl bg-panel text-panel-foreground shadow-card"
             aria-label="Choose your appointment day and time">
 
             {/* Week navigator */}
