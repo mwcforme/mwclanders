@@ -151,7 +151,7 @@ export const TRTHeroForm = ({
             val ? <input key={key} type="hidden" name={key} value={val} /> : null
           )}
 
-          <button type="submit" disabled={isSubmitting} style={{
+          <button type="submit" disabled={isSubmitting} className="trt-hero-form-submit" style={{
             marginTop: 4, width: "100%", height: 54, background: ORANGE, color: WHITE, border: "none",
             borderRadius: 8, fontSize: 16, fontWeight: 700, letterSpacing: "0.06em", fontFamily: "Inter, sans-serif",
             cursor: isSubmitting ? "wait" : "pointer", opacity: isSubmitting ? 0.80 : 1,

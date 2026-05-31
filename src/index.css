@@ -692,3 +692,13 @@ html.dark {
 .quiz-light-shell .text-destructive { color: #DC2626 !important; }
 .quiz-light-shell .border-primary\/30 { border-color: rgba(232,103,10,0.30) !important; }
 .quiz-light-shell .border-primary { border-color: #E8670A !important; }
+
+/* ── TRTHeroForm submit button — keyboard focus-visible ──────────────────────
+   The primary CTA form button uses inline styles + JS hover handlers.
+   This class provides the missing keyboard focus ring for accessibility.
+   Applied to all TRTHeroForm instances across all LP routes. */
+.trt-hero-form-submit:focus-visible {
+  outline: 3px solid var(--brand-cta);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px rgba(232, 103, 10, 0.25);
+}
