@@ -234,7 +234,7 @@ export default function OptimizeLP() {
               color: "rgba(255,255,255,0.75)", maxWidth: 500, marginBottom: 32,
               overflowWrap: "break-word",
             }}>
-              Men's Wellness Centers is Virginia's in-person men's health practice. Three locations. A licensed provider who draws your labs on-site, reads them with you, and gives you a real answer the same visit.
+              Three Virginia centers. One dedicated provider per visit. Labs drawn on-site and reviewed with you the same day.
             </p>
 
             {/* Services scope chips — rapid self-qualification for TRT/ED/Weight visitors */}
@@ -326,8 +326,8 @@ export default function OptimizeLP() {
 
           </div>
 
-          {/* Right: hero form — no outer wrapper, form card is self-contained */}
-          <div>
+          {/* Right: hero form — id="hero-form" lets StickyMobileCTA observe and hide when form is in view */}
+          <div id="hero-form">
             <TRTHeroForm service="trt" formId="hero-opt" />
 
             {/* Trust micro-badges below form — reduce hesitation at the decision point */}
