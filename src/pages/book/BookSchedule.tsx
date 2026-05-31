@@ -12,7 +12,7 @@
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronLeft, ChevronRight, Phone } from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronRight, ExternalLink, MapPin, Phone } from "lucide-react";
 import { useBookingStore } from "@/domain/booking/bookingStore";
 import { useConfirmAppointment } from "@/domain/booking/useConfirmAppointment";
 import { CENTER_CALENDARS, TIMEZONE, type LocationKey } from "@/lib/ghlCalendars";
@@ -225,7 +225,9 @@ export default function BookSchedule() {
     setConfirming(false);
   }, []);
 
-  const heading = firstName ? `${firstName}, lock in a time.` : "Lock in a time.";
+  const heading = firstName ? `Lock in a time, ${firstName}.` : "Lock in a time.";
+
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
@@ -253,46 +255,57 @@ export default function BookSchedule() {
   return (
     <BookingErrorBoundary>
       <div className="min-h-screen flex flex-col bg-background text-foreground">
-        <main className="flex-1 mx-auto w-full max-w-2xl lg:max-w-5xl px-4 sm:px-6 pt-5 pb-40 sm:pb-12">
+        <main className="flex-1 mx-auto w-full max-w-2xl lg:max-w-5xl px-4 sm:px-6 pt-4 pb-40 sm:pb-12">
 
-          {/* Hero */}
-          <div className="mt-7">
-            <h1 className="font-display text-[34px] sm:text-5xl font-bold leading-[1.1] text-foreground uppercase tracking-[0.01em]">
+          {/* Compact header row */}
+          <div className="flex items-start justify-between gap-3">
+            <h1 className="font-display text-2xl sm:text-3xl font-bold leading-tight text-foreground uppercase tracking-[0.01em]">
               {heading}
             </h1>
-            <p className="mt-3 text-lg sm:text-xl text-foreground">
-              {clinicCity ?? "Select center"}
-            </p>
-            <p className="mt-1 text-base sm:text-lg text-text-muted">
-              60-minute consult. No charge today.
-            </p>
+            {/* Location drawer trigger */}
+            {locationData && (
+              <button
+                type="button"
+                onClick={() => setDrawerOpen(o => !o)}
+                aria-expanded={drawerOpen}
+                aria-controls="location-drawer"
+                className="flex-shrink-0 inline-flex items-center gap-1.5 rounded-full border border-border-subtle bg-surface px-3 py-1.5 text-sm font-semibold text-foreground hover:border-primary transition-colors"
+              >
+                <MapPin className="h-3.5 w-3.5 text-primary" aria-hidden />
+                {locationData.city}
+                <ChevronDown
+                  className={`h-3.5 w-3.5 text-text-muted transition-transform duration-200 ${drawerOpen ? "rotate-180" : ""}`}
+                  aria-hidden
+                />
+              </button>
+            )}
           </div>
 
-          {/* Next available — prominent card */}
+          {/* Meta row — visit type */}
+          <p className="mt-1 text-sm text-text-muted">
+            In-person &middot; 60 min &middot; No charge today
+          </p>
+
+          {/* Next available — inline chip */}
           {nextAvailable && !selectedSlot && (
-            <button type="button"
+            <button
+              type="button"
               onClick={() => { setSelectedDayIdx(nextAvailable.idx); setSelectedSlot(nextAvailable.iso); }}
               aria-label={`Lock in next available time: ${nextAvailable.label}`}
               data-testid="button-next-available"
-              className="mt-6 group flex flex-wrap sm:flex-nowrap items-center justify-between gap-3 w-full rounded-xl border-2 border-border-subtle bg-surface px-5 py-4 text-left hover:border-primary hover:bg-surface-2 transition-colors min-h-[60px]">
-              <span className="flex items-center gap-3 min-w-0">
-                <span className="relative flex h-3 w-3 flex-shrink-0" aria-hidden="true">
-                  <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-75 animate-ping" />
-                  <span className="relative inline-flex h-3 w-3 rounded-full bg-primary" />
-                </span>
-                <span className="text-base sm:text-lg font-semibold text-foreground leading-tight">
-                  Next available: <span className="text-text-muted">{nextAvailable.label}</span>
-                </span>
+              className="mt-3 inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface px-3 py-1.5 text-sm font-semibold text-foreground hover:border-primary hover:bg-surface-2 transition-colors"
+            >
+              <span className="relative flex h-2 w-2 flex-shrink-0" aria-hidden="true">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-75 animate-ping" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
               </span>
-              <span className="flex-shrink-0 inline-flex items-center gap-2 font-display text-base font-bold uppercase tracking-wide text-primary-hover group-hover:text-primary transition-colors">
-                <Lock className="h-4 w-4" aria-hidden />
-                Lock in <span aria-hidden>&#8594;</span>
-              </span>
+              Next available: <span className="text-primary font-bold">{nextAvailable.label}</span>
+              <span className="text-text-muted" aria-hidden>&#8594;</span>
             </button>
           )}
 
           {/* Booking panel */}
-          <section id="book" className="mt-7 overflow-hidden rounded-2xl bg-panel text-panel-foreground shadow-card"
+          <section id="book" className="mt-4 overflow-hidden rounded-2xl bg-panel text-panel-foreground shadow-card"
             aria-label="Choose your appointment day and time">
 
             {/* Week navigator */}
@@ -384,6 +397,43 @@ export default function BookSchedule() {
             <Phone className="h-5 w-5 text-primary" aria-hidden />
             Need help? Call {PHONE.display}
           </a>
+
+          {/* Location drawer */}
+          {locationData && (
+            <div
+              id="location-drawer"
+              role="region"
+              aria-label="Location details"
+              className={`mt-4 overflow-hidden rounded-2xl border border-border-subtle bg-surface transition-all duration-300 ${
+                drawerOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0 pointer-events-none"
+              }`}
+            >
+              <div className="px-5 py-4 space-y-3">
+                <p className="font-display text-sm font-bold uppercase tracking-widest text-text-muted">Your center</p>
+                <p className="text-base font-semibold text-foreground">{locationData.name.replace("Men's Wellness Centers, ", "")}</p>
+                <p className="text-sm text-text-muted">{locationData.fullAddress}</p>
+                <div className="flex items-center gap-4 pt-1">
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationData.mapsQuery)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+                  >
+                    <ExternalLink className="h-3.5 w-3.5" aria-hidden />
+                    Directions
+                  </a>
+                  <a
+                    href={locationData.phoneHref}
+                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+                  >
+                    <Phone className="h-3.5 w-3.5" aria-hidden />
+                    {locationData.phone}
+                  </a>
+                </div>
+                <p className="text-xs text-text-muted pt-1">In-person &middot; 60 min &middot; Labs on-site</p>
+              </div>
+            </div>
+          )}
         </main>
 
         {/* Mobile sticky CTA — only when no slot picked */}
