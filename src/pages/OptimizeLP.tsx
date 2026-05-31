@@ -320,8 +320,8 @@ export default function OptimizeLP() {
             {/* Social proof bridge — connects symptom recognition to MWC's track record */}
             <div style={{
               marginBottom: 20, padding: "14px 16px", borderRadius: 10,
-              background: "rgba(232,103,10,0.10)",
-              border: "1px solid rgba(232,103,10,0.25)",
+              background: "rgba(255,255,255,0.07)",
+              border: "1px solid rgba(255,255,255,0.15)",
               display: "flex", alignItems: "flex-start", gap: 10,
             }}>
               <Star size={15} style={{ color: ORANGE, flexShrink: 0, marginTop: 2, fill: ORANGE }} aria-hidden />
