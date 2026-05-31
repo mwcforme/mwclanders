@@ -195,7 +195,7 @@
   }
 
   .dark {
-    --background: 240 100% 10%;
+    --background: 230 60% 10%;  /* matches lock: hsl(230,60%,10%) */
     --foreground: 0 0% 100%;
     --card: 240 29% 14%;
     --card-foreground: 0 0% 100%;
@@ -211,9 +211,10 @@
     --accent-foreground: 0 0% 100%;
     --destructive: 0 72% 40%;  /* was 0 84% 60% (~#F16060, 2.9:1 on white FAIL) → #B91C1C 7.4:1 ✅ */
     --destructive-foreground: 0 0% 100%;
-    --border: 240 20% 20%;
+    --border: 215 20% 65%;  /* matches lock */
     --input: 240 20% 20%;
     --ring: 0 0% 100%;
+    --text-muted: 213 27% 84%;  /* matches lock: hsl(213,27%,84%) = rgb(203,213,225) */
   }
 }
 
@@ -593,6 +594,13 @@ input[type="radio"] {
   --disabled-foreground:   215 20% 65%;
   --disabled-light:        214 32% 91%;   /* #E2E8F0 light chip bg */
   --disabled-light-foreground: 215 25% 27%; /* #334155 slate-700 — 9.2:1 on #E2E8F0 ✅ */
+}
+
+/* Dark-mode token overrides — html.dark has specificity (0,1,1) which beats :root (0,1,0) */
+html.dark {
+  --background: 230 60% 10%;     /* matches lock: hsl(230,60%,10%) */
+  --text-muted: 213 27% 84%;     /* matches lock: rgb(203,213,225) readable on dark bg */
+  --border: 215 20% 65%;         /* matches lock */
 }
 
 /* ── Quiz /check — light shell override ────────────────────────────────────

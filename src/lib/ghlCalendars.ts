@@ -82,16 +82,38 @@ const LOCATION_TAGS: Record<string, string> = {
 };
 
 /**
- * Maps location keys to GHL custom field values.
- * Field IDs confirmed from live contact inspection:
- *   c8u5gHvM9fx1d6WADcQG = Preferred Location (full display name, dropdown)
- *   i3FP2Vqv0HaMU86dkbzO = Location (short city name)
+ * GHL custom field IDs — confirmed from live contact inspection on working funnel.
+ * All IDs are scoped to location Ghstz8eIsHWLeXek47dk.
  */
-const LOCATION_CUSTOM_FIELDS: Record<string, { preferred: string; city: string }> = {
-  "richmond":       { preferred: "Richmond, VA",      city: "Richmond" },
-  "virginia-beach": { preferred: "Virginia Beach, VA", city: "Virginia Beach" },
-  "newport-news":   { preferred: "Newport News, VA",   city: "Newport News" },
+const GHL_FIELDS = {
+  preferredLocation: "Cou856tOhaxW62vwehVI", // Preferred Location (dropdown)
+  trafficSource:     "Np2WHxON2I4DVnYjZh3e", // Traffic Source (Facebook, Google, etc.)
+  landingPageUrl:    "UZBaHuKr9PpFNro47it7", // Landing Page URL
+  utmCampaign:       "Vh0MH504ujQfBh0Q5UFx", // Campaign name (utm_campaign)
+  utmMedium:         "ssEvmmfe1tz5H4fiMHZR", // UTM medium (paid, organic, etc.)
+  utmContent:        "thwe93MxRDzS2SO9pxxC", // UTM content / ad set
+  adId:              "1Wo5z9YpDh9Lv64IBEoa", // Ad ID (fbclid / gclid)
+  ipAddress:         "RrRyWKMSzZvu6MFGXTZb", // IP address
+} as const;
+
+/** Maps location keys to Preferred Location display values. */
+const LOCATION_DISPLAY: Record<string, string> = {
+  "richmond":       "Richmond, VA",
+  "virginia-beach": "Virginia Beach, VA",
+  "newport-news":   "Newport News, VA",
 };
+
+/** Maps utm_source to Traffic Source display value. */
+function trafficSourceLabel(utmSource?: string): string | undefined {
+  if (!utmSource) return undefined;
+  const s = utmSource.toLowerCase();
+  if (s.includes("facebook") || s.includes("fb")) return "Facebook";
+  if (s.includes("google"))  return "Google";
+  if (s.includes("bing") || s.includes("microsoft")) return "Bing";
+  if (s.includes("tiktok")) return "TikTok";
+  if (s.includes("instagram")) return "Instagram";
+  return utmSource;
+}
 
 export interface UpsertContactInput {
   firstName: string;
@@ -99,9 +121,20 @@ export interface UpsertContactInput {
   email?: string;
   phone?: string;
   source?: string;
-  /** Location key — used to apply the correct location tag (location_rva / location_vba / location_npn). */
+  /** Location key — used to apply location tag + Preferred Location custom field. */
   location?: string;
   tags?: string[];
+  /** Marketing attribution — mapped to GHL custom fields. */
+  attribution?: {
+    utm_source?: string;
+    utm_medium?: string;
+    utm_campaign?: string;
+    utm_content?: string;
+    gclid?: string;
+    fbclid?: string;
+    msclkid?: string;
+    landing_page_url?: string;
+  };
   /** PHI-safe structured fields routed to GHL contact custom fields only. */
   customFields?: Partial<Record<
     | "mwc_symptom"
@@ -135,19 +168,35 @@ export async function upsertContact(input: UpsertContactInput): Promise<string> 
       ...(input.phone ? { phone: input.phone } : {}),
       ...(input.source ? { source: input.source } : {}),
       tags: allTags,
-      // Location custom fields — set Preferred Location + Location city fields
-      ...(input.location && LOCATION_CUSTOM_FIELDS[input.location] ? {
-        customFields: [
-          { id: "c8u5gHvM9fx1d6WADcQG", value: LOCATION_CUSTOM_FIELDS[input.location].preferred },
-          { id: "i3FP2Vqv0HaMU86dkbzO", value: LOCATION_CUSTOM_FIELDS[input.location].city },
-          // Merge any additional mwc_ caller fields
-          ...(input.customFields
-            ? Object.entries(input.customFields).map(([key, value]) => ({ key, field_value: value }))
-            : []),
-        ],
-      } : input.customFields && Object.keys(input.customFields).length ? {
-        customFields: Object.entries(input.customFields).map(([key, value]) => ({ key, field_value: value })),
-      } : {}),
+      // Build custom fields array matching GHL field IDs from live funnel
+      customFields: (() => {
+        const cf: Array<{ id: string; fieldValue: string }> = [];
+        const a = input.attribution ?? {};
+
+        // Preferred Location
+        if (input.location && LOCATION_DISPLAY[input.location]) {
+          cf.push({ id: GHL_FIELDS.preferredLocation, fieldValue: LOCATION_DISPLAY[input.location] });
+        }
+        // Traffic Source
+        const src = trafficSourceLabel(a.utm_source);
+        if (src) cf.push({ id: GHL_FIELDS.trafficSource, fieldValue: src });
+        // UTM fields
+        if (a.utm_campaign) cf.push({ id: GHL_FIELDS.utmCampaign, fieldValue: a.utm_campaign });
+        if (a.utm_medium)   cf.push({ id: GHL_FIELDS.utmMedium,   fieldValue: a.utm_medium });
+        if (a.utm_content)  cf.push({ id: GHL_FIELDS.utmContent,  fieldValue: a.utm_content });
+        // Ad ID (fbclid preferred, fallback gclid/msclkid)
+        const adId = a.fbclid ?? a.gclid ?? a.msclkid;
+        if (adId) cf.push({ id: GHL_FIELDS.adId, fieldValue: adId });
+        // Landing page URL
+        if (a.landing_page_url) cf.push({ id: GHL_FIELDS.landingPageUrl, fieldValue: a.landing_page_url });
+        // Additional mwc_ fields from caller
+        if (input.customFields) {
+          for (const [key, value] of Object.entries(input.customFields)) {
+            if (value) cf.push({ id: key, fieldValue: value });
+          }
+        }
+        return cf;
+      })(),
     },
   });
   const id = res.data?.contact?.id;

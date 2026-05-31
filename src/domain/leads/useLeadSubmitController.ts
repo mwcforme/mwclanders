@@ -137,8 +137,19 @@ export function useLeadSubmitController<TInput>(
       ...base,
       source: opts.source ?? base.source ?? "lead-form",
       tags: [...(opts.tags ?? []), ...(base.tags ?? []), ...attributionTags(attr)],
-      // Pass location so upsertContact can apply the correct location tag
+      // Pass location so upsertContact can apply the correct location tag + custom fields
       location: typeof v.location === "string" ? v.location : (base.location ?? undefined),
+      // Pass full attribution so GHL custom fields are populated (utm, gclid, landing page)
+      attribution: {
+        utm_source:   attr.utm_source,
+        utm_medium:   attr.utm_medium,
+        utm_campaign: attr.utm_campaign,
+        utm_content:  attr.utm_content,
+        gclid:        attr.gclid,
+        fbclid:       attr.fbclid,
+        msclkid:      attr.msclkid,
+        landing_page_url: typeof window !== "undefined" ? window.location.href : undefined,
+      },
     };
 
     // ── Persist to Supabase (fire-and-forget) ─────────────────────────────
