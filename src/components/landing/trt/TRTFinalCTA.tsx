@@ -99,7 +99,7 @@ export const TRTFinalCTA = () => {
             <div className="w-full lg:max-w-[440px]">
               <TRTHeroForm
                 heading="Your labs might be 'normal.' The man's symptoms say otherwise."
-                subheading="We treat the man's symptoms, not just the numbers. Same-day availability."
+                subheading="Your symptoms are real. Same-day labs. Same-day answers."
                 ctaLabel={COPY.cta.bookConsult}
                 formId="trt-footer-form"
               />

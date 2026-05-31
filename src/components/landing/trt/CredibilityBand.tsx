@@ -11,7 +11,7 @@ interface Stat {
 }
 
 const stats: Stat[] = [
-  { value: "10,000+", label: "Virginia Members\nSince 2015", slug: "credibility_band_count", scrollTo: "results" },
+  { value: "10,000+", label: "Virginia Members", slug: "credibility_band_count", scrollTo: "results" },
   { value: "3", label: "Virginia\nCenters", slug: "credibility_band_locations", scrollTo: "locations" },
   { value: "4.9★", label: "Google Rating\n191 Verified Reviews", slug: "credibility_band_reviews", href: GBP_REVIEWS_URL },
   { value: "Same-Day", label: "Lab Results\nSame Visit", slug: "credibility_band_offer", scrollTo: "hero" },

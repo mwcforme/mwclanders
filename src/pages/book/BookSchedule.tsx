@@ -273,7 +273,7 @@ export default function BookSchedule() {
               {heading}
             </h1>
             <p className="mt-3 text-lg sm:text-xl text-foreground">
-              {clinicCity ? `${clinicCity}.` : "Select center."}
+              {clinicCity ?? "Select center"}
             </p>
             <p className="mt-1 text-base sm:text-lg text-text-muted">
               60-minute consult. No charge today.
@@ -367,9 +367,7 @@ export default function BookSchedule() {
               {loading && (
                 <p className="text-panel-muted text-sm font-semibold py-4 text-center">Loading availability…</p>
               )}
-              {!loading && selectedDayIdx === null && (
-                <p className="text-panel-muted text-sm font-semibold py-4 text-center">Pick a date above to see available times.</p>
-              )}
+
               {!loading && selectedDayIdx !== null && timeSlots.length === 0 && (
                 <p className="text-panel-muted text-sm font-semibold py-4 text-center">No times available for this day. Try another.</p>
               )}

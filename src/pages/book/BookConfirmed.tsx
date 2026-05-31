@@ -30,12 +30,15 @@ function formatAppt(raw?: string) {
   };
 }
 
-function buildCalendarLinks(iso: string, address: string) {
+const SERVICE_LABELS: Record<string, string> = { trt: "testosterone", ed: "ED care", wl: "weight loss", general: "men's health" };
+
+function buildCalendarLinks(iso: string, address: string, service?: string | null) {
   const start = new Date(iso);
   const end   = new Date(start.getTime() + 60 * 60 * 1000);
   const fmt   = (d: Date) => d.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
   const title = "Men's Wellness Centers Appointment";
-  const desc  = "Your no-cost testosterone consultation. Bring photo ID.";
+  const serviceLabel = SERVICE_LABELS[service ?? "general"] ?? "men's health";
+  const desc  = `Your no-cost ${serviceLabel} consultation. Bring photo ID.`;
   const google = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${fmt(start)}/${fmt(end)}&location=${encodeURIComponent(address)}&details=${encodeURIComponent(desc)}`;
   const ics    = ["BEGIN:VCALENDAR","VERSION:2.0","BEGIN:VEVENT",`DTSTART:${fmt(start)}`,`DTEND:${fmt(end)}`,`SUMMARY:${title}`,`LOCATION:${address}`,`DESCRIPTION:${desc}`,"END:VEVENT","END:VCALENDAR"].join("\r\n");
   return { google, ics: `data:text/calendar;charset=utf-8,${encodeURIComponent(ics)}` };
@@ -58,7 +61,7 @@ export default function BookConfirmed() {
 
   const firstName = (identity?.firstName ?? "").trim().split(/\s+/)[0] || "";
   const appt      = formatAppt(appointmentTime);
-  const calLinks  = appt ? buildCalendarLinks(appt.iso, center.fullAddress) : null;
+  const calLinks  = appt ? buildCalendarLinks(appt.iso, center.fullAddress, service) : null;
 
   const [sent, setSent]       = useState(false);
   const [playing, setPlaying] = useState(false);
@@ -127,10 +130,6 @@ export default function BookConfirmed() {
           className="mt-8 rounded-2xl bg-panel text-panel-foreground p-6 sm:p-8 shadow-card border-2 border-panel-divider"
           aria-label="Appointment details"
         >
-          <p className="font-display text-sm font-bold uppercase tracking-[0.22em] text-panel-muted">
-            Your Appointment
-          </p>
-
           {appt ? (
             <div className="mt-5 flex flex-col sm:flex-row sm:items-center gap-6">
               {/* Date block — full width on mobile */}
@@ -156,12 +155,12 @@ export default function BookConfirmed() {
             </p>
           )}
 
-          {/* Checklist */}
+          {/* Quick-confirm chips */}
           <ul
-            className="mt-6 pt-6 border-t-2 border-panel-divider grid sm:grid-cols-3 gap-3 text-base font-semibold text-panel-foreground"
-            aria-label="Appointment checklist"
+            className="mt-6 pt-6 border-t-2 border-panel-divider grid sm:grid-cols-2 gap-3 text-base font-semibold text-panel-foreground"
+            aria-label="Appointment details"
           >
-            {["No-cost consultation", "Your provider reserved", "Bring photo ID"].map(item => (
+            {["Labs drawn on-site", "Bring photo ID"].map(item => (
               <li key={item} className="inline-flex items-start gap-2">
                 <Check className="h-5 w-5 mt-0.5 flex-shrink-0 text-success" aria-hidden strokeWidth={3} />
                 <span>{item}</span>
@@ -196,8 +195,8 @@ export default function BookConfirmed() {
           <ul className="mt-5 space-y-5" aria-label="What You'll Leave With">
             {[
               { Icon: Droplet,       text: "Your bloodwork results, explained in plain English." },
-              { Icon: ClipboardList, text: "A clear answer on whether treatment fits your situation." },
-              { Icon: FlaskConical,  text: "A personalized protocol you can start the same day, when medically appropriate." },
+              { Icon: ClipboardList, text: "A clear answer on whether treatment is right for you." },
+              { Icon: FlaskConical,  text: "A personalized care plan, built around your labs." },
             ].map(({ Icon, text }) => (
               <li key={text} className="flex items-start gap-4">
                 <span className="grid h-12 w-12 flex-shrink-0 place-items-center rounded-full bg-primary text-primary-foreground" aria-hidden="true">
@@ -305,10 +304,9 @@ export default function BookConfirmed() {
 
         {/* ── Email Reminder ── */}
         <section className="mt-8 rounded-2xl bg-panel text-panel-foreground shadow-card p-6">
-          <p className="font-display text-sm font-bold uppercase tracking-[0.22em] text-panel-muted">Email Reminder</p>
-          <p className="mt-2 font-display text-2xl font-bold uppercase text-panel-foreground">Send my confirmation</p>
+          <p className="font-display text-sm font-bold uppercase tracking-[0.22em] text-panel-muted">Confirmation Email</p>
           <p className="mt-2 text-lg text-panel-foreground leading-snug">
-            We'll email your appointment details and a reminder the day before.
+            Get your appointment details and a reminder the day before.
           </p>
           {sent ? (
             <p role="status" className="mt-5 inline-flex items-center gap-2 px-4 py-3 rounded-lg bg-success/10 text-panel-foreground font-semibold text-base">
@@ -332,7 +330,7 @@ export default function BookConfirmed() {
           <p className="font-display text-lg font-bold uppercase tracking-wide text-foreground">
             Need to change your appointment?
           </p>
-          <p className="mt-2 text-lg text-text-muted">We're happy to help. 24-hour notice is appreciated.</p>
+          <p className="mt-2 text-lg text-text-muted">Call us and we'll get it sorted.</p>
           <a
             href={`tel:${center.phone.replace(/\D/g, "")}`}
             data-testid="link-call-help"

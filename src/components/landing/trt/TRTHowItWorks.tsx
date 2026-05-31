@@ -16,7 +16,7 @@ const steps = [
   {
     num: "3",
     title: "Walk Out With Your Protocol Locked In",
-    desc: "A plan dialed in to your labs and your goals. When clinically appropriate, members may begin treatment the same visit.",
+    desc: "A care plan built around your labs and your goals. Most members start treatment the same visit.",
   },
 ];
 
