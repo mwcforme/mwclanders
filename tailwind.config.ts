@@ -114,7 +114,7 @@ export default {
   			'accordion-up': 'accordion-up 0.2s ease-out'
   		},
 		fontFamily: {
-			sans: ['Inter', 'system-ui', 'sans-serif'],
+			sans: ['Montserrat', 'Inter', 'system-ui', 'sans-serif'],
 			display: ['Oswald', 'sans-serif'],
 		},
 		boxShadow: {

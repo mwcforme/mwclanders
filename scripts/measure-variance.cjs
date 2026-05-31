@@ -37,7 +37,14 @@ async function shot(url, vp, outPath, surface) {
       }, DEMO_STATE);
     }
     await page.goto(url, { waitUntil: "networkidle", timeout: 30000 });
-    // Wait for fonts + animations to settle
+    // Wait for web fonts to finish loading, force font download for Montserrat
+    await page.evaluate(async () => {
+      await document.fonts.load('600 19px Montserrat');
+      await document.fonts.load('700 19px Montserrat');
+      await document.fonts.load('400 19px Montserrat');
+      await document.fonts.ready;
+    }).catch(() => {});
+    // Allow extra settle for re-render with correct fonts
     await page.waitForTimeout(2000);
     await page.screenshot({ path: outPath, fullPage: false });
   } finally {
