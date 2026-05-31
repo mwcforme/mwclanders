@@ -286,6 +286,43 @@ export default function BookSchedule() {
             In-person &middot; 60 min &middot; No charge today
           </p>
 
+          {/* Location drawer — sits under header, above calendar */}
+          {locationData && (
+            <div
+              id="location-drawer"
+              role="region"
+              aria-label="Location details"
+              className={`overflow-hidden rounded-2xl border border-border-subtle transition-all duration-300 ${
+                drawerOpen ? "mt-3 max-h-96 opacity-100 bg-white" : "max-h-0 opacity-0 pointer-events-none"
+              }`}
+            >
+              <div className="px-5 py-4 space-y-3">
+                <p className="font-display text-xs font-bold uppercase tracking-widest text-gray-400">Your center</p>
+                <p className="text-base font-semibold text-gray-900">{locationData.name.replace("Men's Wellness Centers, ", "")}</p>
+                <p className="text-sm text-gray-500">{locationData.fullAddress}</p>
+                <div className="flex items-center gap-4 pt-1">
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationData.mapsQuery)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+                  >
+                    <ExternalLink className="h-3.5 w-3.5" aria-hidden />
+                    Directions
+                  </a>
+                  <a
+                    href={locationData.phoneHref}
+                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+                  >
+                    <Phone className="h-3.5 w-3.5" aria-hidden />
+                    {locationData.phone}
+                  </a>
+                </div>
+                <p className="text-xs text-gray-400 pt-1">In-person &middot; 60 min &middot; Labs on-site</p>
+              </div>
+            </div>
+          )}
+
           {/* Next available — inline chip */}
           {nextAvailable && !selectedSlot && (
             <button
@@ -398,42 +435,6 @@ export default function BookSchedule() {
             Need help? Call {PHONE.display}
           </a>
 
-          {/* Location drawer */}
-          {locationData && (
-            <div
-              id="location-drawer"
-              role="region"
-              aria-label="Location details"
-              className={`mt-4 overflow-hidden rounded-2xl border border-border-subtle bg-surface transition-all duration-300 ${
-                drawerOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0 pointer-events-none"
-              }`}
-            >
-              <div className="px-5 py-4 space-y-3">
-                <p className="font-display text-sm font-bold uppercase tracking-widest text-text-muted">Your center</p>
-                <p className="text-base font-semibold text-foreground">{locationData.name.replace("Men's Wellness Centers, ", "")}</p>
-                <p className="text-sm text-text-muted">{locationData.fullAddress}</p>
-                <div className="flex items-center gap-4 pt-1">
-                  <a
-                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationData.mapsQuery)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
-                  >
-                    <ExternalLink className="h-3.5 w-3.5" aria-hidden />
-                    Directions
-                  </a>
-                  <a
-                    href={locationData.phoneHref}
-                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
-                  >
-                    <Phone className="h-3.5 w-3.5" aria-hidden />
-                    {locationData.phone}
-                  </a>
-                </div>
-                <p className="text-xs text-text-muted pt-1">In-person &middot; 60 min &middot; Labs on-site</p>
-              </div>
-            </div>
-          )}
         </main>
 
         {/* Mobile sticky CTA — only when no slot picked */}
