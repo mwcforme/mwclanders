@@ -248,7 +248,7 @@ export default function OptimizeLP() {
             </div>
 
             {/* Symptom list */}
-            <ul style={{ display: "grid", gap: 12, marginBottom: 36 }}>
+            <ul style={{ display: "grid", gap: 12, marginBottom: 28 }}>
               {SYMPTOMS.map(s => (
                 <li key={s} style={{
                   display: "flex", alignItems: "flex-start", gap: 12,
@@ -265,6 +265,31 @@ export default function OptimizeLP() {
               ))}
             </ul>
 
+
+            {/* Mobile-only tap-to-call strip — hidden on desktop via CSS */}
+            <div className="optimize-call-strip" style={{ marginBottom: 0 }}>
+              <p style={{
+                fontFamily: "Inter, sans-serif", fontSize: 13,
+                color: "rgba(255,255,255,0.55)", marginBottom: 6,
+              }}>Prefer to call? We answer live.</p>
+              <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                {LOCATIONS_DATA.map(loc => (
+                  <a
+                    key={loc.key}
+                    href={`tel:${loc.phone.replace(/\D/g, "")}`}
+                    style={{
+                      display: "flex", alignItems: "center", gap: 8,
+                      fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 600,
+                      color: ORANGE, textDecoration: "none",
+                    }}
+                  >
+                    <Phone size={14} style={{ color: ORANGE, flexShrink: 0 }} aria-hidden />
+                    <span style={{ color: "rgba(255,255,255,0.70)", marginRight: 4 }}>{loc.city}:</span>
+                    {loc.phone}
+                  </a>
+                ))}
+              </div>
+            </div>
 
           </div>
 
@@ -740,6 +765,11 @@ export default function OptimizeLP() {
           .optimize-2col      { grid-template-columns: 1fr !important; flex-direction: column !important; }
           .optimize-3col      { grid-template-columns: 1fr !important; }
           .optimize-stats     { grid-template-columns: 1fr 1fr !important; }
+        }
+        /* Show tap-to-call strip on mobile, hide on desktop */
+        .optimize-call-strip { display: none; }
+        @media (max-width: 767px) {
+          .optimize-call-strip { display: block; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.10); }
         }
         .optimize-hero-grid { padding-bottom: 80px; }
         .optimize-loc-cta:hover { opacity: 0.88; transform: translateY(-1px); }
