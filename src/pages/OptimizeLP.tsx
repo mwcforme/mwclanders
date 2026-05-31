@@ -906,12 +906,12 @@ export default function OptimizeLP() {
               fontFamily: "Oswald, sans-serif", fontWeight: 700,
               fontSize: "clamp(28px,4vw,44px)", textTransform: "uppercase",
               color: WHITE, lineHeight: 1.08, marginBottom: 12,
-            }}>Reserve your no-cost visit.</h2>
+            }}>Walk out with answers. Not guesses.</h2>
             <p style={{
               fontFamily: "Inter, sans-serif", fontSize: 16,
               color: "rgba(255,255,255,0.60)", marginBottom: 24,
             }}>
-              60 minutes. Labs on-site. Results reviewed before you leave.
+              Labs drawn on-site and reviewed with your Virginia provider the same visit. 60 minutes. No insurance required.
             </p>
 
             {/* What's included — visual breakdown removes price/commitment anxiety */}
