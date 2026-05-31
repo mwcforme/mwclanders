@@ -128,7 +128,8 @@ const TimeGrid = ({ selectedDay, times, selectedSlot, loading, onSlotSelect }: T
                           fontSize: 12,
                           fontWeight: 600,
                           lineHeight: 1,
-                          color: active ? "rgba(255,255,255,0.80)" : "rgba(11,16,41,0.60)",
+                          // WCAG AA: rgba/80 on #B84A08=3.91:1 FAIL for 12px → solid white 5.22:1 ✅
+                          color: active ? "#FFFFFF" : "rgba(11,16,41,0.60)",
                         }}>
                           {ampm}
                         </span>
