@@ -7,7 +7,7 @@ import { type DayCell, formatLong } from "@/lib/scheduleUtils";
 const DOW_UPPER = ["SUN","MON","TUE","WED","THU","FRI","SAT"] as const;
 
 const BASE =
-  "snap-center relative flex-shrink-0 w-[112px] sm:w-auto rounded-2xl p-3 text-center select-none transition-colors";
+  "snap-start relative flex-shrink-0 w-[calc(25%-9px)] sm:w-auto rounded-xl p-2 text-center select-none transition-colors";
 
 interface DayPillProps {
   day: DayCell;
@@ -28,9 +28,9 @@ export function DayPill({ day, selected, onSelect }: DayPillProps) {
         data-testid={`day-${dateNum}`}
         className={`${BASE} bg-disabled-light text-disabled-light-foreground`}
       >
-        <p className="font-display text-base font-bold uppercase tracking-wider">{dow}</p>
-        <p className="font-display text-3xl font-bold leading-none mt-1.5">{dateNum}</p>
-        <p className="mt-2 text-sm font-semibold">{day.full ? "Full" : "Closed"}</p>
+        <p className="font-display text-xs font-bold uppercase tracking-wider">{dow}</p>
+        <p className="font-display text-2xl font-bold leading-none mt-1">{dateNum}</p>
+        <p className="mt-1 text-xs font-semibold">{day.full ? "Full" : "Closed"}</p>
       </div>
     );
   }
@@ -40,9 +40,9 @@ export function DayPill({ day, selected, onSelect }: DayPillProps) {
       <button type="button" onClick={onSelect} role="radio" aria-checked
         data-testid={`day-${dateNum}`}
         className={`${BASE} bg-primary text-white shadow-cta`}>
-        <p className="font-display text-base font-bold uppercase tracking-wider">{dow}</p>
-        <p className="font-display text-3xl font-bold leading-none mt-1.5">{dateNum}</p>
-        <p className="mt-2 text-sm font-bold">{day.slotsLeft} slots</p>
+        <p className="font-display text-xs font-bold uppercase tracking-wider">{dow}</p>
+        <p className="font-display text-2xl font-bold leading-none mt-1">{dateNum}</p>
+        <p className="mt-1 text-xs font-bold">{day.slotsLeft} slots</p>
       </button>
     );
   }
@@ -52,9 +52,9 @@ export function DayPill({ day, selected, onSelect }: DayPillProps) {
       data-testid={`day-${dateNum}`}
       aria-label={`${formatLong(day.date)} — ${day.slotsLeft} slots available`}
       className={`${BASE} bg-background text-foreground border-2 border-border-subtle hover:border-primary`}>
-      <p className="font-display text-base font-bold uppercase tracking-wider text-text-muted">{dow}</p>
-      <p className="font-display text-3xl font-bold leading-none mt-1.5">{dateNum}</p>
-      <p className="mt-2 text-sm font-semibold text-text-muted">{day.slotsLeft} slots</p>
+      <p className="font-display text-xs font-bold uppercase tracking-wider text-text-muted">{dow}</p>
+      <p className="font-display text-2xl font-bold leading-none mt-1">{dateNum}</p>
+      <p className="mt-1 text-xs font-semibold text-text-muted">{day.slotsLeft} slots</p>
     </button>
   );
 }

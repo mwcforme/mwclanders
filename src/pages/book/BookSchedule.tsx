@@ -375,9 +375,9 @@ export default function BookSchedule() {
               </button>
             </div>
 
-            {/* 7-day strip — horizontal scroll on mobile */}
+            {/* 7-day strip — 4 visible at a time, scroll for rest */}
             <div ref={dayGroupRef} role="radiogroup" aria-label="Day"
-              className="mt-4 flex sm:grid sm:grid-cols-4 lg:grid-cols-7 gap-3 overflow-x-auto sm:overflow-visible scroll-smooth snap-x snap-mandatory px-4 sm:px-6 pb-5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              className="mt-4 flex gap-3 overflow-x-auto scroll-smooth snap-x snap-mandatory px-4 sm:px-6 pb-5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {dayCells.map((day, dayIdx) => (
                 <DayPill
                   key={`${weekStart.getTime()}-${dayIdx}`}
