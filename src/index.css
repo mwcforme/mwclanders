@@ -242,7 +242,7 @@
   body {
     @apply bg-background text-foreground font-sans;
     font-size: 17px;
-    line-height: 1.7;
+    line-height: 1.6;
     color: var(--c-text-on-light-muted);
   }
 
