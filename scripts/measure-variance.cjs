@@ -36,8 +36,9 @@ async function shot(url, vp, outPath, surface) {
         sessionStorage.setItem("mwc_booking_state_v2", state);
       }, DEMO_STATE);
     }
-    await page.goto(url, { waitUntil: "domcontentloaded", timeout: 25000 });
-    await page.waitForTimeout(5000);
+    await page.goto(url, { waitUntil: "networkidle", timeout: 30000 });
+    // Wait for fonts + animations to settle
+    await page.waitForTimeout(2000);
     await page.screenshot({ path: outPath, fullPage: false });
   } finally {
     await browser.close();

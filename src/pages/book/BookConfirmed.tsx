@@ -114,7 +114,7 @@ export default function BookConfirmed() {
           <p className="mt-6 font-display text-base font-bold uppercase tracking-[0.22em] text-success">
             Appointment Confirmed
           </p>
-          <h1 className="mt-3 font-display text-[34px] sm:text-5xl font-bold leading-[1.1] text-foreground uppercase">
+          <h1 className="mt-3 font-display text-[34px] sm:text-5xl font-bold leading-[1.1] text-foreground uppercase tracking-[0.01em]">
             {firstName ? `You're booked, ${firstName}.` : "You're booked."}
           </h1>
           <p className="mt-4 text-lg sm:text-xl text-text-muted leading-snug">
