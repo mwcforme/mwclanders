@@ -235,7 +235,7 @@ export default function OptimizeLP() {
               color: "rgba(255,255,255,0.75)", maxWidth: 500, marginBottom: 32,
               overflowWrap: "break-word",
             }}>
-              Three Virginia centers. One dedicated provider per visit. Labs drawn on-site and reviewed with you the same day.
+              Actual answers, not guesses. Labs drawn on-site and reviewed with you the same visit - by the same Virginia provider every time.
             </p>
 
             {/* Services scope chips — rapid self-qualification for TRT/ED/Weight visitors */}
