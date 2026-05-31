@@ -666,7 +666,7 @@ export default function OptimizeLP() {
       {/* ── FINAL CTA ── navy with form */}
       <SectionReveal>
         <section id="final-cta" style={{ background: NAVY, padding: "80px 0" }}>
-          <div style={{ maxWidth: 600, margin: "0 auto", padding: "0 24px", textAlign: "center" }}>
+          <div style={{ maxWidth: 640, margin: "0 auto", padding: "0 24px", textAlign: "center" }}>
             <p style={{
               fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700,
               letterSpacing: "0.18em", textTransform: "uppercase",
@@ -679,11 +679,48 @@ export default function OptimizeLP() {
             }}>Reserve your no-cost visit.</h2>
             <p style={{
               fontFamily: "Inter, sans-serif", fontSize: 16,
-              color: "rgba(255,255,255,0.60)", marginBottom: 32,
+              color: "rgba(255,255,255,0.60)", marginBottom: 24,
             }}>
               60 minutes. Labs on-site. Results reviewed before you leave.
             </p>
+
+            {/* What's included — visual breakdown removes price/commitment anxiety */}
+            <div style={{
+              display: "flex", justifyContent: "center", flexWrap: "wrap",
+              gap: "12px 24px", marginBottom: 32,
+            }}>
+              {[
+                { icon: FlaskConical, label: "Full hormone panel" },
+                { icon: UserCheck,    label: "60-min provider eval" },
+                { icon: ClipboardList,label: "Results before you leave" },
+              ].map(({ icon: Icon, label }) => (
+                <span key={label} style={{
+                  display: "inline-flex", alignItems: "center", gap: 7,
+                  fontFamily: "Inter, sans-serif", fontSize: 13, fontWeight: 600,
+                  color: "rgba(255,255,255,0.80)",
+                }}>
+                  <span style={{
+                    display: "inline-flex", alignItems: "center", justifyContent: "center",
+                    width: 28, height: 28, borderRadius: "50%",
+                    background: "rgba(232,103,10,0.18)",
+                    flexShrink: 0,
+                  }}>
+                    <Icon size={14} style={{ color: ORANGE }} aria-hidden />
+                  </span>
+                  {label}
+                </span>
+              ))}
+            </div>
+
             <TRTHeroForm service="trt" formId="cta-opt" />
+
+            {/* Risk-reversal micro-copy */}
+            <p style={{
+              fontFamily: "Inter, sans-serif", fontSize: 12,
+              color: "rgba(255,255,255,0.40)", marginTop: 16,
+            }}>
+              No obligation. No pressure. If treatment is not right for you, your provider will tell you.
+            </p>
           </div>
         </section>
       </SectionReveal>
