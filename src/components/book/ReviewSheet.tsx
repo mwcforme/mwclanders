@@ -75,24 +75,16 @@ export function ReviewSheet({
   const redirectSecs = redirect ? Math.ceil(redirect.remainingMs / 1000) : null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center"
+    <div className="fixed inset-0 z-50 flex items-center justify-center"
       role="dialog" aria-modal aria-labelledby="review-title">
       <button type="button" aria-label="Close" onClick={onChangeTime}
         className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
       <div
-        className="relative w-full max-w-2xl bg-panel text-panel-foreground rounded-t-3xl sm:rounded-3xl sm:mb-0 shadow-card"
+        className="relative w-full max-w-md mx-4 bg-panel text-panel-foreground rounded-3xl shadow-card"
         style={{ animation: "slideUp 280ms cubic-bezier(0.22,1,0.36,1)" }}>
         <style>{`
-          @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-          @media (min-width: 640px) {
-            @keyframes slideUp { from { transform: translateY(16px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-          }
+          @keyframes slideUp { from { transform: translateY(12px) scale(0.98); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
         `}</style>
-
-        {/* Drag handle — hidden on desktop */}
-        <div className="flex justify-center pt-2.5 pb-1 sm:hidden">
-          <span className="h-1 w-10 rounded-full bg-panel-divider" aria-hidden />
-        </div>
 
         {/* Desktop close button */}
         <button type="button" onClick={onChangeTime}
