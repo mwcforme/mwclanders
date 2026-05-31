@@ -37,15 +37,15 @@ export function SlotGroup({
               onKeyDown={e => onKey(e, idx)}
               onClick={() => setSelected(s.iso)}
               className={[
-                "min-h-[64px] rounded-2xl px-5 py-4 flex items-center justify-between transition-colors border-2",
+                "min-h-[48px] rounded-xl px-3 py-2.5 flex items-center justify-between transition-colors border-2",
                 isSelected
                   ? "bg-primary text-white border-primary shadow-cta"
                   : "bg-panel text-panel-foreground border-panel-border hover:border-primary",
               ].join(" ")}
             >
-              <span className="font-display text-2xl font-bold leading-none">
+              <span className="font-display text-base font-bold leading-none">
                 {s.display}
-                <span className="ml-1.5 text-base font-bold uppercase tracking-wider">{s.meridiem}</span>
+                <span className="ml-1 text-xs font-bold uppercase tracking-wider">{s.meridiem}</span>
               </span>
             </button>
           );
