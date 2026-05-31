@@ -284,6 +284,22 @@ export default function OptimizeLP() {
             </ul>
 
 
+            {/* Social proof bridge — connects symptom recognition to MWC's track record */}
+            <div style={{
+              marginBottom: 20, padding: "14px 16px", borderRadius: 10,
+              background: "rgba(232,103,10,0.10)",
+              border: "1px solid rgba(232,103,10,0.25)",
+              display: "flex", alignItems: "flex-start", gap: 10,
+            }}>
+              <Star size={15} style={{ color: ORANGE, flexShrink: 0, marginTop: 2, fill: ORANGE }} aria-hidden />
+              <p style={{
+                fontFamily: "Inter, sans-serif", fontSize: 13, lineHeight: 1.55,
+                color: "rgba(255,255,255,0.80)", margin: 0,
+              }}>
+                <strong style={{ color: WHITE }}>10,000+ Virginia men</strong> have addressed these exact concerns at Men's Wellness Centers since 2015.
+              </p>
+            </div>
+
             {/* Mobile-only tap-to-call strip — hidden on desktop via CSS */}
             <div className="optimize-call-strip" style={{ marginBottom: 0 }}>
               <p style={{
