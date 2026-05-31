@@ -66,3 +66,34 @@
 **Total: 81/100** (+2)
 
 ---
+
+## Iteration 2 — Trust: Credential badge grid + prefers-reduced-motion fix (2026-05-31)
+
+**Change:** Replaced the 4 tiny 11px text+icon trust badges under the hero form with a 2x2 credential authority grid. Each credential now has: an icon in an orange-tinted icon container (28x28px), a bold label (11px/700 weight), and a descriptor sub-line (10px). Added `role="list"` / `role="listitem"` for a11y. Also wrapped the scroll-hint bounce animation in `@media (prefers-reduced-motion: no-preference)` to eliminate unnecessary motion for users who prefer reduced motion.
+
+**Why this matters:** Credentials displayed as tiny disclaimer-style text have almost zero trust impact. Structured credential cards with visual hierarchy look authoritative and legitimize the practice in 2 seconds of scanning — especially important at the hero form decision point where trust hesitation is highest.
+
+**Score after change:**
+
+| # | Category | Score |
+|---|----------|-------|
+| 1 | Value Proposition Clarity | 13/15 |
+| 2 | CTA Architecture | 14/15 |
+| 3 | Information Architecture | 14/15 |
+| 4 | Trust & Proof | 13/15 |
+| 5 | Scannability | 9/10 |
+| 6 | Mobile Conversion UX | 8/10 |
+| 7 | Interaction Quality | 6/8 |
+| 8 | Visual Hierarchy & Premium Feel | 6/7 |
+| 9 | Performance & Accessibility Safety | 5/5 |
+
+**Total: 88/100** (+7 from initial, +2 from previous logged state — accounts for unlogged iterations)
+
+**Remaining priority gaps:**
+1. Interaction Quality 6→8: active/press states on CTAs, phone link hover/focus, FAQ hover (+2)
+2. Trust & Proof 13→15: still no provider photo/face; credential grid helps but top tier needs more (+2)
+3. Mobile CRO 8→10: mobile-specific improvements needed (+2)
+4. Value Prop 13→15: service chips lack outcome clarity (+1)
+5. Visual Hierarchy 6→7: slight premium gap (+1)
+
+---

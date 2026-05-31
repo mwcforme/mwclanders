@@ -312,6 +312,7 @@ export default function OptimizeLP() {
                   <a
                     key={loc.key}
                     href={`tel:${loc.phone.replace(/\D/g, "")}`}
+                    className="optimize-phone-link"
                     style={{
                       display: "flex", alignItems: "center", gap: 6,
                       fontFamily: "Inter, sans-serif", fontSize: 13, fontWeight: 600,
@@ -753,7 +754,7 @@ export default function OptimizeLP() {
                     <p style={{ display: "flex", alignItems: "center", gap: 6, fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 600, color: "var(--brand-navy)", marginBottom: 4 }}>
                       <MapPin size={14} style={{ color: ORANGE }} aria-hidden /> {loc.drive}
                     </p>
-                    <a href={`tel:${loc.phone.replace(/\D/g,"")}`} style={{ display: "flex", alignItems: "center", gap: 6, fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 600, color: ORANGE, textDecoration: "none" }}>
+                    <a href={`tel:${loc.phone.replace(/\D/g,"")}`} className="optimize-phone-link" style={{ display: "flex", alignItems: "center", gap: 6, fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 600, color: ORANGE, textDecoration: "none" }}>
                       <Phone size={14} style={{ color: ORANGE }} aria-hidden /> {loc.phone}
                     </a>
                   </div>
@@ -819,6 +820,7 @@ export default function OptimizeLP() {
                     <a
                       key={loc.key}
                       href={`tel:${loc.phone.replace(/\D/g, "")}`}
+                      className="optimize-phone-link"
                       style={{
                         display: "flex", alignItems: "center", gap: 5,
                         fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 600,
@@ -940,7 +942,6 @@ export default function OptimizeLP() {
         .optimize-hero-grid { padding-bottom: 80px; }
         .optimize-loc-cta:hover { opacity: 0.88; transform: translateY(-1px); }
         .optimize-loc-cta { transition: opacity 150ms, transform 150ms; }
-        .optimize-phone-link:hover { text-decoration: underline; }
         .optimize-mid-cta:hover { opacity: 0.88; transform: translateY(-1px); }
         .optimize-mid-cta { transition: opacity 150ms, transform 150ms; }
         /* Step connectors: show on desktop, collapse on mobile */
@@ -957,10 +958,36 @@ export default function OptimizeLP() {
           outline-offset: 3px;
           border-radius: 4px;
         }
+        .optimize-faq-btn:hover {
+          background: rgba(232,103,10,0.04);
+          border-radius: 6px;
+        }
         .optimize-mid-cta:focus-visible,
         .optimize-loc-cta:focus-visible {
           outline: 3px solid var(--brand-cta);
           outline-offset: 4px;
+        }
+        .optimize-mid-cta:active,
+        .optimize-loc-cta:active {
+          opacity: 0.82;
+          transform: scale(0.97) translateY(0);
+          transition: opacity 80ms, transform 80ms;
+        }
+        /* Phone link interaction states */
+        .optimize-phone-link {
+          transition: opacity 150ms;
+        }
+        .optimize-phone-link:hover {
+          opacity: 0.78;
+          text-decoration: underline;
+        }
+        .optimize-phone-link:active {
+          opacity: 0.60;
+        }
+        .optimize-phone-link:focus-visible {
+          outline: 2px solid var(--brand-cta);
+          outline-offset: 3px;
+          border-radius: 3px;
         }
       `}</style>
     </div>
