@@ -85,7 +85,7 @@ const ErrorFallback = ({ resetError }: { resetError: () => void }) => (
         Please refresh the page or call us at{" "}
         <a href={PHONE.tel} style={{ color: "#E8670A" }}>{PHONE.display}</a>.
       </p>
-      <button type="button" onClick={resetError} style={{ background: "#E8670A", color: "var(--c-text-on-dark)", border: "none", borderRadius: 999, padding: "12px 28px", fontWeight: 600, cursor: "pointer" }}>
+      <button type="button" onClick={resetError} style={{ background: "var(--brand-cta)", color: "var(--c-text-on-dark)", border: "none", borderRadius: 999, padding: "12px 28px", fontWeight: 600, cursor: "pointer" }}>  {/* was #E8670A 3.29:1 FAIL → var(--brand-cta) #B84A08 5.22:1 ✅ */}
         Try again
       </button>
     </div>

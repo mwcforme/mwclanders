@@ -82,7 +82,7 @@ export default function AdminSync() {
           type="button"
           onClick={runSync}
           disabled={busy !== null}
-          className="flex h-10 items-center gap-2 rounded-md bg-[#E8670A] px-4 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50"
+          className="flex h-10 items-center gap-2 rounded-md bg-[#B84A08] px-4 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50"
         >
           {busy === "sync" ? (
             <Loader2 size={14} className="animate-spin" />
@@ -174,7 +174,7 @@ export default function AdminSync() {
         </div>
       )}
 
-      <p className="mt-3 text-xs text-white/40">
+      <p className="mt-3 text-xs text-white/55">
         Showing the most recent 50 sync runs. Auto-refreshes every 30 s while a
         run is active.
       </p>

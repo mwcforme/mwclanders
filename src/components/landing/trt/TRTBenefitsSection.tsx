@@ -137,8 +137,7 @@ export const TRTBenefitsSection = memo(() => (
                     width: 22,
                     height: 22,
                     borderRadius: "50%",
-                    background:
-                      "linear-gradient(135deg, #E8670A 0%, #F07820 100%)",
+                    background: "var(--brand-cta)",  /* was gradient #E8670A→#F07820; white check on #F07820=2.83:1 FAIL → #B84A08 5.22:1 ✅ */
                     display: "inline-flex",
                     alignItems: "center",
                     justifyContent: "center",

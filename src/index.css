@@ -399,7 +399,7 @@
 .bookv2-funnel input:focus,
 .bookv2-funnel textarea:focus,
 .bookv2-funnel select:focus {
-  border: 1.5px solid #E8670A !important;
+  border: 1.5px solid #B84A08 !important; /* was #E8670A on #F5F3F0=2.89:1 FAIL → #B84A08=4.59:1 ✅ */
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06), 0 0 0 3px rgba(232, 103, 10, 0.1) !important;
   outline: none !important;
 }
@@ -443,7 +443,7 @@ input[type="radio"] {
 
 .mwc-appt-date-pill {
   /* Large pill — mobile — reference is ~301px wide (86% of 350px card), br ~17px, h ~219px */
-  background: #E8670A;
+  background: var(--brand-cta);  /* was #E8670A; white/85 on #E8670A=2.81:1 FAIL → white on #B84A08=5.22:1 ✅ */
   border-radius: 17px;
   padding: 20px 24px 36px;
   display: flex;
@@ -457,7 +457,7 @@ input[type="radio"] {
 .mwc-appt-date-square {
   /* Small square — desktop (hidden on mobile) */
   display: none;
-  background: #E8670A;
+  background: var(--brand-cta);  /* was #E8670A — see mwc-appt-date-pill note */
   border-radius: 14px;
   min-width: 80px;
   padding: 14px 10px;
@@ -621,7 +621,7 @@ html.dark {
   --panel-muted: 215 19% 35%;
   --panel-border: 214 32% 91%;
   --panel-divider: 214 32% 91%;
-  --primary: 24 90% 47%;             /* orange #E8670A */
+  --primary: 22 91% 38%;             /* orange #B84A08 (was #E8670A — updated to match global --brand-cta) */
   --primary-foreground: 0 0% 100%;
   --primary-hover: 24 90% 40%;
   --muted: 215 19% 35%;
@@ -682,7 +682,7 @@ html.dark {
   color: var(--c-placeholder-on-white) !important; /* was #94A3B8 (2.56:1 FAIL) → #636B80 5.32:1 ✅ */
 }
 .quiz-light-shell input:focus {
-  border-color: #E8670A !important;
+  border-color: #B84A08 !important; /* was #E8670A on white=2.91:1 FAIL → #B84A08=5.22:1 ✅ */
 }
 .quiz-light-shell .text-success { color: #15803D !important; }
 .quiz-light-shell .bg-success\/15 { background: rgba(21,128,61,0.12) !important; }
@@ -692,7 +692,7 @@ html.dark {
 .quiz-light-shell .border-destructive { border-color: #DC2626 !important; }
 .quiz-light-shell .text-destructive { color: #DC2626 !important; }
 .quiz-light-shell .border-primary\/30 { border-color: rgba(232,103,10,0.30) !important; }
-.quiz-light-shell .border-primary { border-color: #E8670A !important; }
+.quiz-light-shell .border-primary { border-color: #B84A08 !important; } /* was #E8670A on cream=2.91:1 FAIL → #B84A08=4.61:1 ✅ */
 
 /* ── TRTHeroForm submit button — keyboard focus-visible ──────────────────────
    The primary CTA form button uses inline styles + JS hover handlers.

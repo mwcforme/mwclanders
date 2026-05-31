@@ -52,7 +52,8 @@ function CheckIcon() {
 }
 
 function DateBlock({ apptDate }: { apptDate: ApptDate }) {
-  const textStyle = { fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 12, color: "rgba(255,255,255,0.85)" as const, letterSpacing: "0.10em", textTransform: "uppercase" as const };
+  // WCAG AA: rgba(255,255,255,0.85) on #E8670A=2.81:1 FAIL for 12px text → use solid white on #B84A08=5.22:1 ✅
+  const textStyle = { fontFamily: FONT_OSWALD, fontWeight: 700, fontSize: 12, color: "#FFFFFF" as const, letterSpacing: "0.10em", textTransform: "uppercase" as const };
   return (
     <>
       {/* Pill (mobile) */}
