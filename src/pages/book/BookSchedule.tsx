@@ -386,6 +386,7 @@ export default function BookSchedule() {
                 <DayPill
                   key={`${weekStart.getTime()}-${dayIdx}`}
                   day={day}
+                  loading={loading}
                   selected={dayIdx === selectedDayIdx}
                   onSelect={() => {
                     if (day.full || day.closed) return;

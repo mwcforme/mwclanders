@@ -13,10 +13,11 @@ interface DayPillProps {
   day: DayCell;
   selected: boolean;
   onSelect: () => void;
+  loading?: boolean;
 }
 
-export function DayPill({ day, selected, onSelect }: DayPillProps) {
-  const disabled = day.full || day.closed || day.slotsLeft === 0;
+export function DayPill({ day, selected, onSelect, loading }: DayPillProps) {
+  const disabled = day.full || day.closed || (!loading && day.slotsLeft === 0);
   const dow = DOW_UPPER[day.date.getDay()];
   const dateNum = day.date.getDate();
 
