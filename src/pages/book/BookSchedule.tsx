@@ -281,11 +281,6 @@ export default function BookSchedule() {
             )}
           </div>
 
-          {/* Meta row — visit type */}
-          <p className="mt-1 text-sm text-text-muted">
-            In-person &middot; 60 min &middot; No charge today
-          </p>
-
           {/* Location drawer — sits under header, above calendar */}
           {locationData && (
             <div
