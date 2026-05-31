@@ -11,7 +11,7 @@
 import { lazy, Suspense, useState } from "react";
 import {
   Check, X, Star, MapPin, Phone,
-  Clock, FlaskConical, UserCheck, ClipboardList, ChevronDown,
+  Clock, FlaskConical, UserCheck, ClipboardList, ChevronDown, ShieldCheck, Award, CreditCard,
 } from "lucide-react";
 import { TRTHeader } from "@/components/landing/trt/TRTHeader";
 import { CredibilityBand } from "@/components/landing/trt/CredibilityBand";
@@ -248,6 +248,29 @@ export default function OptimizeLP() {
           {/* Right: hero form — no outer wrapper, form card is self-contained */}
           <div>
             <TRTHeroForm service="trt" formId="hero-opt" />
+
+            {/* Trust micro-badges below form — reduce hesitation at the decision point */}
+            <div style={{
+              display: "flex", flexWrap: "wrap", gap: "10px 16px",
+              marginTop: 16, justifyContent: "center",
+            }}>
+              {[
+                { icon: FlaskConical, label: "CLIA-Certified Lab" },
+                { icon: ShieldCheck,  label: "Virginia-Licensed Providers" },
+                { icon: Award,        label: "FDA-Approved TRT" },
+                { icon: CreditCard,   label: "FSA / HSA Accepted" },
+              ].map(({ icon: Icon, label }) => (
+                <span key={label} style={{
+                  display: "inline-flex", alignItems: "center", gap: 6,
+                  fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 600,
+                  color: "rgba(255,255,255,0.65)",
+                  letterSpacing: "0.04em",
+                }}>
+                  <Icon size={12} style={{ color: ORANGE, flexShrink: 0 }} aria-hidden />
+                  {label}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </section>
