@@ -250,8 +250,8 @@ export default function OptimizeLP() {
                 <div key={label} style={{
                   display: "inline-flex", alignItems: "flex-start", gap: 8,
                   padding: "8px 14px", borderRadius: 12,
-                  background: "rgba(232,103,10,0.12)",
-                  border: "1px solid rgba(232,103,10,0.30)",
+                  background: "rgba(255,255,255,0.08)",
+                  border: "1px solid rgba(255,255,255,0.18)",
                   flexDirection: "column", minWidth: 0,
                 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
@@ -263,7 +263,7 @@ export default function OptimizeLP() {
                   </div>
                   <span style={{
                     fontFamily: "Inter, sans-serif", fontSize: 10,
-                    color: "rgba(255,255,255,0.50)", lineHeight: 1.3,
+                    color: "rgba(255,255,255,0.65)", lineHeight: 1.3,
                     marginLeft: 20, // align under the label text
                   }}>{outcome}</span>
                 </div>
@@ -366,8 +366,8 @@ export default function OptimizeLP() {
 
             {/* Credential authority grid — 2×2 cards give each certification real visual weight */}
             <div style={{
-              display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8,
-              marginTop: 16,
+              display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10,
+              marginTop: 20,
             }} role="list" aria-label="Credentials and certifications">
               {[
                 { icon: FlaskConical, label: "CLIA-Certified Lab",       sub: "On-site hormone testing" },
@@ -377,13 +377,13 @@ export default function OptimizeLP() {
               ].map(({ icon: Icon, label, sub }) => (
                 <div key={label} role="listitem" style={{
                   display: "flex", alignItems: "flex-start", gap: 8,
-                  padding: "10px 12px", borderRadius: 8,
-                  background: "rgba(255,255,255,0.06)",
-                  border: "1px solid rgba(255,255,255,0.12)",
+                  padding: "14px 14px", borderRadius: 10,
+                  background: "rgba(255,255,255,0.08)",
+                  border: "1px solid rgba(255,255,255,0.15)",
                 }}>
                   <div style={{
                     width: 28, height: 28, borderRadius: 6, flexShrink: 0,
-                    background: "rgba(232,103,10,0.18)",
+                    background: "rgba(255,255,255,0.10)",
                     display: "flex", alignItems: "center", justifyContent: "center",
                   }}>
                     <Icon size={14} style={{ color: ORANGE }} aria-hidden />
@@ -396,7 +396,7 @@ export default function OptimizeLP() {
                     }}>{label}</p>
                     <p style={{
                       fontFamily: "Inter, sans-serif", fontSize: 10,
-                      color: "rgba(255,255,255,0.45)", margin: 0, lineHeight: 1.3,
+                      color: "rgba(255,255,255,0.70)", margin: 0, lineHeight: 1.3,
                     }}>{sub}</p>
                   </div>
                 </div>
@@ -405,14 +405,14 @@ export default function OptimizeLP() {
               <div role="listitem" style={{
                 gridColumn: "1 / -1",
                 display: "flex", alignItems: "center", gap: 8,
-                padding: "10px 14px", borderRadius: 8,
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(255,255,255,0.10)",
+                padding: "12px 14px", borderRadius: 10,
+                background: "rgba(255,255,255,0.06)",
+                border: "1px solid rgba(255,255,255,0.14)",
               }}>
                 <CalendarCheck size={14} style={{ color: ORANGE, flexShrink: 0 }} aria-hidden />
                 <p style={{
                   fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 600,
-                  color: "rgba(255,255,255,0.60)", margin: 0, lineHeight: 1.4,
+                  color: "rgba(255,255,255,0.75)", margin: 0, lineHeight: 1.4,
                 }}>
                   <strong style={{ color: "rgba(255,255,255,0.85)", fontWeight: 700 }}>Serving Virginia men since 2015</strong>
                   {" - over 10,000 members treated across 3 centers."}
@@ -422,7 +422,7 @@ export default function OptimizeLP() {
             {/* HIPAA privacy assurance */}
             <p style={{
               fontFamily: "Inter, sans-serif", fontSize: 11,
-              color: "rgba(255,255,255,0.40)", marginTop: 10, textAlign: "center",
+              color: "rgba(255,255,255,0.55)", marginTop: 12, textAlign: "center",
               display: "flex", alignItems: "center", justifyContent: "center", gap: 5,
             }}>
               <ShieldCheck size={11} style={{ color: "rgba(255,255,255,0.40)", flexShrink: 0 }} aria-hidden />
@@ -973,7 +973,7 @@ export default function OptimizeLP() {
                   <span style={{
                     display: "inline-flex", alignItems: "center", justifyContent: "center",
                     width: 28, height: 28, borderRadius: "50%",
-                    background: "rgba(232,103,10,0.18)",
+                    background: "rgba(255,255,255,0.10)",
                     flexShrink: 0,
                   }}>
                     <Icon size={14} style={{ color: ORANGE }} aria-hidden />
