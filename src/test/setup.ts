@@ -1,5 +1,9 @@
 import "@testing-library/jest-dom";
 
+// Stub browser APIs not implemented in jsdom
+window.scrollTo = () => {};
+Object.defineProperty(window, "scrollTo", { writable: true, value: () => {} });
+
 Object.defineProperty(window, "matchMedia", {
   writable: true,
   value: (query: string) => ({

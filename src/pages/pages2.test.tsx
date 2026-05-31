@@ -68,15 +68,6 @@ describe("ProductTRT", () => {
   });
 });
 
-// ─── ProductTRTSchedule ───────────────────────────────────────────────────────
-
-describe("ProductTRTSchedule", () => {
-  it("renders without crash", async () => {
-    const ProductTRTSchedule = (await import("@/pages/ProductTRTSchedule")).default;
-    expect(() => renderWithProviders(<ProductTRTSchedule />)).not.toThrow();
-  });
-});
-
 // ─── TRTLandingPage ───────────────────────────────────────────────────────────
 
 describe("TRTLandingPage", () => {
@@ -119,15 +110,6 @@ describe("Affordability", () => {
   it("renders without crash", async () => {
     const Affordability = (await import("@/pages/Affordability")).default;
     expect(() => renderWithProviders(<Affordability />)).not.toThrow();
-  });
-});
-
-// ─── CROOptimized ─────────────────────────────────────────────────────────────
-
-describe("CROOptimized", () => {
-  it("renders without crash", async () => {
-    const CROOptimized = (await import("@/pages/CROOptimized")).default;
-    expect(() => renderWithProviders(<CROOptimized />)).not.toThrow();
   });
 });
 

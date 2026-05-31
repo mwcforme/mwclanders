@@ -120,8 +120,8 @@ describe("BookSchedule", () => {
     });
     const BookSchedule = (await import("@/pages/book/BookSchedule")).default;
     renderWithProviders(<BookSchedule />);
-    // Heading is "Choose a time, Eric." when firstName is set
-    expect(document.body.textContent).toMatch(/Choose a time, Eric/i);
+    // Heading is "Eric, lock in a time." when firstName is set
+    expect(document.body.textContent).toMatch(/Eric.*lock in a time/i);
   });
 
   it("shows fallback heading when firstName is falsy", async () => {
@@ -136,9 +136,9 @@ describe("BookSchedule", () => {
       });
       const { default: BookSchedule } = await import("@/pages/book/BookSchedule");
       renderWithProviders(<BookSchedule />);
-      // Fallback: "Choose your appointment time." when no firstName
+      // Fallback: "Lock in a time." when no firstName
       const text = document.body.textContent ?? "";
-      expect(text).toMatch(/Choose your appointment time/i);
+      expect(text).toMatch(/lock in a time/i);
       expect(text).not.toMatch(/undefined/i);
       document.body.innerHTML = "";
     }

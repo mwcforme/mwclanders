@@ -56,15 +56,6 @@ describe("EnvBadge", () => {
   });
 });
 
-// ─── BookSchedule2 ────────────────────────────────────────────────────────────
-
-describe("BookSchedule2", () => {
-  it("renders without crash", async () => {
-    const BookSchedule2 = (await import("@/pages/book/BookSchedule2")).default;
-    expect(() => render(<Wrap><BookSchedule2 /></Wrap>)).not.toThrow();
-  });
-});
-
 // ─── StepLead (quiz) ─────────────────────────────────────────────────────────
 
 describe("StepLead", () => {

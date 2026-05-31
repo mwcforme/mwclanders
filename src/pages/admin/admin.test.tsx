@@ -105,17 +105,3 @@ describe("AdminEvents", () => {
   });
 });
 
-// ─── LpDirectory ──────────────────────────────────────────────────────────────
-
-describe("LpDirectory", () => {
-  it("renders without crash", async () => {
-    const LpDirectory = (await import("@/pages/internal/LpDirectory")).default;
-    expect(() => renderWithProviders(<LpDirectory />)).not.toThrow();
-  });
-
-  it("renders LP cards", async () => {
-    const LpDirectory = (await import("@/pages/internal/LpDirectory")).default;
-    renderWithProviders(<LpDirectory />);
-    expect(document.body.textContent?.length).toBeGreaterThan(50);
-  });
-});

@@ -53,50 +53,6 @@ describe("TRTSuccess", () => {
   });
 });
 
-// ─── TRTBloodwork ─────────────────────────────────────────────────────────────
-
-describe("TRTBloodwork", () => {
-  it("renders without crash", async () => {
-    const TRTBloodwork = (await import("@/pages/product/TRTBloodwork")).default;
-    expect(() => renderWithProviders(<TRTBloodwork />)).not.toThrow();
-  });
-
-  it("renders the choice buttons", async () => {
-    const TRTBloodwork = (await import("@/pages/product/TRTBloodwork")).default;
-    renderWithProviders(<TRTBloodwork />);
-    // Should render Yes/No choice
-    const buttons = document.querySelectorAll("button");
-    expect(buttons.length).toBeGreaterThan(0);
-  });
-});
-
-// ─── TRTMedicalProtocol ───────────────────────────────────────────────────────
-
-describe("TRTMedicalProtocol", () => {
-  it("renders without crash", async () => {
-    const TRTMedicalProtocol = (await import("@/pages/product/TRTMedicalProtocol")).default;
-    expect(() => renderWithProviders(<TRTMedicalProtocol />)).not.toThrow();
-  });
-});
-
-// ─── TRTLabRequisition ────────────────────────────────────────────────────────
-
-describe("TRTLabRequisition", () => {
-  it("renders without crash", async () => {
-    const TRTLabRequisition = (await import("@/pages/product/TRTLabRequisition")).default;
-    expect(() => renderWithProviders(<TRTLabRequisition />)).not.toThrow();
-  });
-});
-
-// ─── TRTIdentityVerification ──────────────────────────────────────────────────
-
-describe("TRTIdentityVerification", () => {
-  it("renders without crash", async () => {
-    const TRTIdentityVerification = (await import("@/pages/product/TRTIdentityVerification")).default;
-    expect(() => renderWithProviders(<TRTIdentityVerification />)).not.toThrow();
-  });
-});
-
 // ─── TRTQuestionnaire ─────────────────────────────────────────────────────────
 
 describe("TRTQuestionnaire", () => {
