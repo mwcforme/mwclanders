@@ -210,8 +210,21 @@ export function ReviewSheet({
             {confirming ? "Booking…" : firstName ? `Lock it in, ${firstName}` : "Lock it in"}
             <ArrowRight className="h-5 w-5" aria-hidden />
           </button>
+          {/* Social proof nudge */}
+          <p style={{
+            textAlign: "center",
+            fontSize: 11,
+            fontFamily: "Inter, sans-serif",
+            fontWeight: 600,
+            color: "rgba(71,85,105,0.85)",
+            marginTop: 8,
+            marginBottom: 2,
+          }}>
+            Join 400+ men who have already taken this step
+          </p>
+
           <button type="button" onClick={onChangeTime}
-            className="mt-2 w-full inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-2.5 font-display text-sm font-bold uppercase tracking-wider text-panel-muted hover:text-panel-foreground">
+            className="mt-1 w-full inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-2.5 font-display text-sm font-bold uppercase tracking-wider text-panel-muted hover:text-panel-foreground">
             Change time
           </button>
         </div>

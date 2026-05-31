@@ -111,23 +111,79 @@ export default function BookConfirmed() {
 
         {/* ── Hero ── */}
         <div className="text-center">
-          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-success/15 ring-4 ring-success" aria-hidden="true">
+          {/* Animated checkmark */}
+          <div
+            className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-success/15 ring-4 ring-success"
+            aria-hidden="true"
+            style={{ animation: "confirmScale 0.5s cubic-bezier(0.34,1.56,0.64,1) both" }}
+          >
+            <style>{`
+              @keyframes confirmScale {
+                from { transform: scale(0.4); opacity: 0; }
+                to   { transform: scale(1);   opacity: 1; }
+              }
+              @media (prefers-reduced-motion: reduce) {
+                [style*="confirmScale"] { animation: none !important; }
+              }
+            `}</style>
             <Check className="h-10 w-10 text-success" strokeWidth={3} aria-hidden />
           </div>
           <p className="mt-6 font-display text-base font-bold uppercase tracking-[0.22em] text-success">
             Appointment Confirmed
           </p>
-          <h1 className="mt-3 font-display text-3xl sm:text-4xl font-bold leading-tight text-foreground uppercase tracking-[0.01em]">
-            {firstName ? `You're booked, ${firstName}.` : "You're booked."}
+          <h1
+            className="mt-3 font-display font-bold leading-tight text-foreground uppercase tracking-[0.01em]"
+            style={{ fontSize: "clamp(2rem, 6vw, 3rem)" }}
+          >
+            {firstName ? `You're in, ${firstName}.` : "You're in."}
           </h1>
-          <p className="mt-3 text-base text-text-muted leading-snug">
+          <p className="mt-3 text-base leading-snug" style={{ color: "rgba(255,255,255,0.65)" }}>
             Your provider is reserved. Here's everything you need.
           </p>
+          {/* Social proof */}
+          <div style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 6,
+            marginTop: 12,
+            background: "rgba(255,255,255,0.07)",
+            border: "1px solid rgba(255,255,255,0.12)",
+            borderRadius: 999,
+            padding: "6px 14px",
+          }}>
+            <Check style={{ width: 12, height: 12, color: "var(--c-success-on-dark)", flexShrink: 0 }} strokeWidth={3} aria-hidden />
+            <span style={{
+              fontFamily: "Inter, sans-serif",
+              fontSize: 12,
+              fontWeight: 600,
+              color: "rgba(255,255,255,0.80)",
+            }}>400+ men have already started their journey</span>
+          </div>
         </div>
+
+        {/* ── Add to Calendar — moved up for no-show prevention ── */}
+        {calLinks && (
+          <div className="mt-6 grid sm:grid-cols-2 gap-4">
+            <a
+              href={calLinks.google} target="_blank" rel="noreferrer"
+              data-testid="button-add-google-top"
+              className="inline-flex items-center justify-center gap-3 rounded-xl bg-primary text-primary-foreground hover:bg-primary-hover font-display font-bold uppercase tracking-wide px-5 py-4 text-base shadow-cta min-h-[56px]"
+            >
+              <Calendar className="h-5 w-5" aria-hidden /> Add to Google Calendar
+            </a>
+            <a
+              href={calLinks.ics} download="appointment.ics"
+              data-testid="button-add-ics-top"
+              className="inline-flex items-center justify-center gap-3 rounded-xl bg-surface text-foreground border-2 border-border hover:bg-surface-2 font-display font-bold uppercase tracking-wide px-5 py-4 text-base min-h-[56px]"
+            >
+              <Calendar className="h-5 w-5" aria-hidden /> Apple or Outlook
+            </a>
+          </div>
+        )}
 
         {/* ── Appointment card ── */}
         <section
-          className="mt-8 rounded-2xl bg-panel text-panel-foreground p-6 sm:p-8 shadow-card border-2 border-panel-divider"
+          className="mt-6 rounded-2xl bg-panel text-panel-foreground p-6 sm:p-8 shadow-card border-2 border-panel-divider"
           aria-label="Appointment details"
         >
           {appt ? (
@@ -194,23 +250,7 @@ export default function BookConfirmed() {
           </div>
         </section>
 
-        {/* ── Calendar buttons ── */}
-        <div className="mt-6 grid sm:grid-cols-2 gap-4">
-          <a
-            href={calLinks?.google ?? "#"} target="_blank" rel="noreferrer"
-            data-testid="button-add-google"
-            className="inline-flex items-center justify-center gap-3 rounded-xl bg-primary text-primary-foreground hover:bg-primary-hover font-display font-bold uppercase tracking-wide px-5 py-5 text-base shadow-cta min-h-[60px]"
-          >
-            <Calendar className="h-6 w-6" aria-hidden /> Add to Google Calendar
-          </a>
-          <a
-            href={calLinks?.ics ?? "#"} download="appointment.ics"
-            data-testid="button-add-ics"
-            className="inline-flex items-center justify-center gap-3 rounded-xl bg-surface text-foreground border-2 border-border hover:bg-surface-2 font-display font-bold uppercase tracking-wide px-5 py-5 text-base min-h-[60px]"
-          >
-            <Calendar className="h-6 w-6" aria-hidden /> Apple or Outlook
-          </a>
-        </div>
+        {/* Calendar buttons already shown at the top of the page — removed duplicate */}
 
         {/* ── What You'll Leave With ── */}
         <section className="mt-8 rounded-2xl bg-panel text-panel-foreground shadow-card p-6">
