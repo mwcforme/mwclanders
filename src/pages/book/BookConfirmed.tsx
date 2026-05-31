@@ -117,10 +117,10 @@ export default function BookConfirmed() {
           <p className="mt-6 font-display text-base font-bold uppercase tracking-[0.22em] text-success">
             Appointment Confirmed
           </p>
-          <h1 className="mt-3 font-display text-[34px] sm:text-5xl font-bold leading-[1.1] text-foreground uppercase tracking-[0.01em]">
+          <h1 className="mt-3 font-display text-3xl sm:text-4xl font-bold leading-tight text-foreground uppercase tracking-[0.01em]">
             {firstName ? `You're booked, ${firstName}.` : "You're booked."}
           </h1>
-          <p className="mt-4 text-lg sm:text-xl text-text-muted leading-snug">
+          <p className="mt-3 text-base text-text-muted leading-snug">
             Your provider is reserved. Here's everything you need.
           </p>
         </div>
@@ -131,22 +131,21 @@ export default function BookConfirmed() {
           aria-label="Appointment details"
         >
           {appt ? (
-            <div className="mt-5 flex flex-col sm:flex-row sm:items-center gap-6">
-              {/* Date block — full width on mobile */}
-              <div className="flex-shrink-0 rounded-xl bg-primary text-primary-foreground px-6 py-4 text-center w-full sm:w-auto shadow-cta">
-                <p className="font-display text-base font-bold uppercase tracking-[0.18em]">{appt.month}</p>
-                <p className="font-display text-6xl sm:text-5xl font-bold leading-none mt-1">{appt.day}</p>
-                <p className="font-display text-base font-bold uppercase tracking-[0.18em] mt-2">{appt.weekday}</p>
-              </div>
-              {/* Details — centered on mobile */}
-              <div className="min-w-0 flex-1 text-center sm:text-left">
-                <p className="inline-flex items-center gap-3 font-display text-3xl sm:text-4xl font-bold text-panel-foreground">
-                  <Clock className="h-7 w-7 text-primary-hover flex-shrink-0" aria-hidden /> {appt.time}
-                </p>
-                <p className="mt-3 text-lg font-semibold text-panel-foreground">60 minutes · In-person</p>
-                <p className="inline-flex items-center gap-2 text-lg font-semibold mt-1 text-panel-foreground">
-                  <MapPin className="h-5 w-5 text-primary-hover flex-shrink-0" aria-hidden /> {physicalCity}
-                </p>
+            <div className="mt-4 space-y-3">
+              {/* Date + time row */}
+              <div className="flex items-center gap-3">
+                <div className="flex-shrink-0 rounded-xl bg-primary text-primary-foreground px-4 py-3 text-center min-w-[64px] shadow-cta">
+                  <p className="font-display text-xs font-bold uppercase tracking-wider">{appt.month}</p>
+                  <p className="font-display text-3xl font-bold leading-none mt-0.5">{appt.day}</p>
+                  <p className="font-display text-xs font-bold uppercase tracking-wider mt-0.5">{appt.weekday}</p>
+                </div>
+                <div>
+                  <p className="font-display text-2xl font-bold text-panel-foreground">{appt.time}</p>
+                  <p className="mt-0.5 text-sm text-panel-muted">60 minutes &middot; In-person</p>
+                  <p className="inline-flex items-center gap-1.5 text-sm text-panel-muted mt-0.5">
+                    <MapPin className="h-3.5 w-3.5 text-primary flex-shrink-0" aria-hidden /> {physicalCity}
+                  </p>
+                </div>
               </div>
             </div>
           ) : (
@@ -157,12 +156,12 @@ export default function BookConfirmed() {
 
           {/* Quick-confirm chips */}
           <ul
-            className="mt-6 pt-6 border-t-2 border-panel-divider grid sm:grid-cols-2 gap-3 text-base font-semibold text-panel-foreground"
+            className="mt-5 pt-5 border-t border-panel-divider grid sm:grid-cols-2 gap-2 text-sm font-semibold text-panel-foreground"
             aria-label="Appointment details"
           >
             {["Labs drawn on-site", "Bring photo ID"].map(item => (
-              <li key={item} className="inline-flex items-start gap-2">
-                <Check className="h-5 w-5 mt-0.5 flex-shrink-0 text-success" aria-hidden strokeWidth={3} />
+              <li key={item} className="inline-flex items-center gap-2">
+                <Check className="h-4 w-4 flex-shrink-0 text-success" aria-hidden strokeWidth={3} />
                 <span>{item}</span>
               </li>
             ))}
@@ -189,20 +188,20 @@ export default function BookConfirmed() {
 
         {/* ── What You'll Leave With ── */}
         <section className="mt-8 rounded-2xl bg-panel text-panel-foreground shadow-card p-6">
-          <p className="font-display text-sm font-bold uppercase tracking-[0.22em] text-panel-muted">
+          <p className="font-display text-xs font-bold uppercase tracking-[0.1em] text-panel-muted">
             What You'll Leave With
           </p>
-          <ul className="mt-5 space-y-5" aria-label="What You'll Leave With">
+          <ul className="mt-4 space-y-4" aria-label="What You'll Leave With">
             {[
               { Icon: Droplet,       text: "Your bloodwork results, explained in plain English." },
               { Icon: ClipboardList, text: "A clear answer on whether treatment is right for you." },
               { Icon: FlaskConical,  text: "A personalized care plan, built around your labs." },
             ].map(({ Icon, text }) => (
-              <li key={text} className="flex items-start gap-4">
-                <span className="grid h-12 w-12 flex-shrink-0 place-items-center rounded-full bg-primary text-primary-foreground" aria-hidden="true">
-                  <Icon className="h-6 w-6" />
+              <li key={text} className="flex items-start gap-3">
+                <span className="grid h-9 w-9 flex-shrink-0 place-items-center rounded-full bg-primary text-primary-foreground" aria-hidden="true">
+                  <Icon className="h-4 w-4" />
                 </span>
-                <p className="text-lg sm:text-xl text-panel-foreground leading-snug pt-1.5">{text}</p>
+                <p className="text-base text-panel-foreground leading-snug pt-1">{text}</p>
               </li>
             ))}
           </ul>
@@ -253,16 +252,16 @@ export default function BookConfirmed() {
 
         {/* ── Before You Arrive ── */}
         <section className="mt-8 rounded-2xl bg-panel text-panel-foreground shadow-card p-6">
-          <p className="font-display text-sm font-bold uppercase tracking-[0.22em] text-panel-muted">
+          <p className="font-display text-xs font-bold uppercase tracking-[0.1em] text-panel-muted">
             Before You Arrive
           </p>
-          <ol className="mt-5 space-y-5" aria-label="Before You Arrive">
+          <ol className="mt-4 space-y-4" aria-label="Before You Arrive">
             {["Bring your photo ID.", "Drink water. No need to fast.", "Plan for 60 minutes."].map((text, i) => (
-              <li key={text} className="flex items-start gap-4">
-                <span className="grid h-12 w-12 flex-shrink-0 place-items-center rounded-full bg-primary text-primary-foreground" aria-hidden="true">
-                  <span className="font-display font-bold text-xl">{i + 1}</span>
+              <li key={text} className="flex items-start gap-3">
+                <span className="grid h-9 w-9 flex-shrink-0 place-items-center rounded-full bg-primary text-primary-foreground" aria-hidden="true">
+                  <span className="font-display font-bold text-base">{i + 1}</span>
                 </span>
-                <p className="text-lg sm:text-xl text-panel-foreground leading-snug pt-1.5">{text}</p>
+                <p className="text-base text-panel-foreground leading-snug pt-1">{text}</p>
               </li>
             ))}
           </ol>
@@ -271,26 +270,25 @@ export default function BookConfirmed() {
         {/* ── Location ── */}
         <section className="mt-8 overflow-hidden rounded-2xl bg-panel text-panel-foreground shadow-card">
           <div className="p-6">
-            <p className="font-display text-sm font-bold uppercase tracking-[0.22em] text-panel-muted">Location</p>
-            <p className="mt-2 font-display text-2xl font-bold uppercase text-panel-foreground">{physicalCity}</p>
-            <p className="mt-2 inline-flex items-center gap-2 text-base font-semibold text-primary-hover">
-              <MapPin className="h-5 w-5" aria-hidden /> {center.driveTime}
+
+            <p className="font-display text-xs font-bold uppercase tracking-[0.1em] text-panel-muted">Location</p>
+            <p className="mt-1 font-display text-xl font-bold uppercase text-panel-foreground">{physicalCity}</p>
+            <p className="mt-1 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+              <MapPin className="h-3.5 w-3.5" aria-hidden /> {center.driveTime}
             </p>
-            <address className="mt-4 not-italic text-lg leading-snug text-panel-foreground">
+            <address className="mt-3 not-italic">
               <a
-                className="underline underline-offset-4 hover:text-primary-hover font-semibold"
+                className="text-sm font-semibold text-panel-foreground underline underline-offset-4 hover:text-primary leading-snug"
                 href={mapsUrl} target="_blank" rel="noreferrer"
                 data-testid="link-address"
               >
                 {center.address}<br />{center.cityStateZip}
               </a>
             </address>
-            <p className="mt-4 text-base text-panel-foreground leading-relaxed">
-              <span className="inline-flex items-center gap-2 font-semibold">
-                <Clock className="h-5 w-5" aria-hidden /> Hours
-              </span>
-              <br />{center.hours}
-            </p>
+            <div className="mt-3 flex items-start gap-2">
+              <Clock className="h-4 w-4 flex-shrink-0 mt-0.5 text-panel-muted" aria-hidden />
+              <p className="text-sm text-panel-muted leading-snug">{center.hours}</p>
+            </div>
           </div>
           <div className="p-5 border-t border-panel-divider">
             <a
@@ -304,8 +302,8 @@ export default function BookConfirmed() {
 
         {/* ── Email Reminder ── */}
         <section className="mt-8 rounded-2xl bg-panel text-panel-foreground shadow-card p-6">
-          <p className="font-display text-sm font-bold uppercase tracking-[0.22em] text-panel-muted">Confirmation Email</p>
-          <p className="mt-2 text-lg text-panel-foreground leading-snug">
+          <p className="font-display text-xs font-bold uppercase tracking-[0.1em] text-panel-muted">Confirmation Email</p>
+          <p className="mt-2 text-base text-panel-foreground leading-snug">
             Get your appointment details and a reminder the day before.
           </p>
           {sent ? (
