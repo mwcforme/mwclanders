@@ -5,7 +5,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { AdminLayout }  from "@/components/admin/AdminLayout";
 import { AdminError, AdminLoading } from "@/components/admin/AdminFeedback";
-import { supabase }     from "@/integrations/supabase/legacy";
+import { fetchConversionStats } from "@/services/impl/AdminStatsService";
 
 import { AnalyticsToolCards }  from "@/components/admin/AnalyticsToolCards";
 import { AnalyticsSetupGuide } from "@/components/admin/AnalyticsSetupGuide";
@@ -22,32 +22,8 @@ export default function AdminAnalytics() {
     setLoading(true);
     setError(null);
     try {
-      const [total, booked, partial, synced, failed, byLocation, bySource] =
-        await Promise.all([
-          supabase.from("lead_captures").select("id", { count: "exact", head: true }),
-          supabase.from("lead_captures").select("id", { count: "exact", head: true }).eq("crm_status", "booked"),
-          supabase.from("lead_captures").select("id", { count: "exact", head: true }).eq("crm_status", "partial"),
-          supabase.from("lead_captures").select("id", { count: "exact", head: true }).in("crm_status", ["synced", "ok"]),
-          supabase.from("lead_captures").select("id", { count: "exact", head: true }).eq("crm_status", "failed"),
-          supabase.from("lead_captures").select("location").order("location"),
-          supabase.from("lead_captures").select("source").order("source"),
-        ]);
-
-      const locMap: Record<string, number> = {};
-      (byLocation.data ?? []).forEach((r) => { const k = r.location ?? "(unknown)"; locMap[k] = (locMap[k] ?? 0) + 1; });
-
-      const srcMap: Record<string, number> = {};
-      (bySource.data ?? []).forEach((r) => { const k = r.source ?? "(direct)"; srcMap[k] = (srcMap[k] ?? 0) + 1; });
-
-      setStats({
-        totalLeads: total.count ?? 0,
-        bookedLeads: booked.count ?? 0,
-        partialLeads: partial.count ?? 0,
-        syncedLeads: synced.count ?? 0,
-        failedLeads: failed.count ?? 0,
-        leadsByLocation: Object.entries(locMap).map(([location, count]) => ({ location, count })).sort((a, b) => b.count - a.count).slice(0, 10),
-        leadsBySource:   Object.entries(srcMap).map(([source, count]) => ({ source, count })).sort((a, b) => b.count - a.count).slice(0, 10),
-      });
+      const data = await fetchConversionStats();
+      setStats(data);
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : "Failed to load analytics");
     } finally {

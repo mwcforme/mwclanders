@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { supabase } from "@/integrations/supabase/legacy";
+import { fetchQuickStats, fetchRecentLeads, fetchLastSyncRun } from "@/services/impl/AdminStatsService";
 import { AlertCircle, Calendar, RefreshCw, TrendingUp, Users } from "lucide-react";
 import { AdminError } from "@/components/admin/AdminFeedback";
 import { StatCard } from "@/components/admin/StatCard";
@@ -42,22 +43,13 @@ export default function AdminOverview() {
     setStatsLoading(true);
     setStatsError(null);
     try {
-      const now = new Date();
-      const since24h = new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString();
-      const since48h = new Date(now.getTime() - 48 * 60 * 60 * 1000).toISOString();
-      const [total, today, yesterday, bookings, partial] = await Promise.all([
-        supabase.from("lead_captures").select("id", { count: "exact", head: true }),
-        supabase.from("lead_captures").select("id", { count: "exact", head: true }).gte("created_at", since24h),
-        supabase.from("lead_captures").select("id", { count: "exact", head: true }).gte("created_at", since48h).lt("created_at", since24h),
-        supabase.from("lead_captures").select("id", { count: "exact", head: true }).eq("crm_status", "booked"),
-        supabase.from("lead_captures").select("id", { count: "exact", head: true }).eq("crm_status", "partial"),
-      ]);
+      const data = await fetchQuickStats();
       setStats({
-        totalLeads: total.count ?? 0,
-        leadsToday: today.count ?? 0,
-        leadsYesterday: yesterday.count ?? 0,
-        bookings: bookings.count ?? 0,
-        partialLeads: partial.count ?? 0,
+        totalLeads: data.totalLeads,
+        leadsToday: data.leadsToday,
+        leadsYesterday: data.leadsYesterday,
+        bookings: data.bookings,
+        partialLeads: data.partialLeads,
       });
     } catch (e: unknown) {
       setStatsError(e instanceof Error ? e.message : "Failed to load stats");

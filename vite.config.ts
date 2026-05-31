@@ -50,8 +50,8 @@ export default defineConfig(({ mode }) => ({
           // Supabase — network heavy, separate chunk
           "vendor-supabase": ["@supabase/supabase-js"],
           // vendor-forms removed — zod replaced by miniSchema (no external dep)
-          // Tiny utilities — always needed, very cheap (<5KB)
-          "vendor-utils": ["clsx", "tailwind-merge", "class-variance-authority"],
+          // vendor-utils removed — clsx/tailwind-merge/cva only used in dead ui/ scaffolding
+          // Tree-shaken into nothing; removing the manual chunk avoids the empty 0-byte file
           // Heavier UI primitives — only loaded when a route that needs them loads
           // Unused Radix packages (react-label, react-separator, react-slot, react-toggle)
           // are kept as dependencies but NOT listed here — Vite tree-shakes them
