@@ -603,8 +603,21 @@ export default function OptimizeLP() {
                   background: WHITE, borderRadius: 14, padding: "22px 24px",
                   margin: 0, boxShadow: "0 4px 24px rgba(0,0,0,0.25)",
                 }}>
-                  <div style={{ display: "flex", gap: 3, marginBottom: 12 }}>
-                    {[1,2,3,4,5].map(i => <Star key={i} size={14} style={{ fill: ORANGE, color: ORANGE }} aria-hidden />)}
+                  {/* Avatar + stars row */}
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
+                    <div style={{
+                      width: 38, height: 38, borderRadius: "50%", flexShrink: 0,
+                      background: NAVY,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                    }} aria-hidden>
+                      <span style={{
+                        fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 16,
+                        color: CREAM, lineHeight: 1, userSelect: "none",
+                      }}>{r.name.charAt(0)}</span>
+                    </div>
+                    <div style={{ display: "flex", gap: 3 }}>
+                      {[1,2,3,4,5].map(i => <Star key={i} size={14} style={{ fill: ORANGE, color: ORANGE }} aria-hidden />)}
+                    </div>
                   </div>
                   <blockquote style={{
                     fontFamily: "Inter, sans-serif", fontSize: 15, lineHeight: 1.65,
