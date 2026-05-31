@@ -16,7 +16,7 @@ interface DayPillProps {
 }
 
 export function DayPill({ day, selected, onSelect }: DayPillProps) {
-  const disabled = day.full || day.closed;
+  const disabled = day.full || day.closed || day.slotsLeft === 0;
   const dow = DOW_UPPER[day.date.getDay()];
   const dateNum = day.date.getDate();
 
@@ -24,13 +24,13 @@ export function DayPill({ day, selected, onSelect }: DayPillProps) {
     return (
       <div
         role="radio" aria-checked={false} aria-disabled
-        aria-label={`${formatLong(day.date)} — ${day.full ? "Fully booked" : "Closed"}`}
+        aria-label={`${formatLong(day.date)} — ${day.closed ? "Closed" : "Fully booked"}`}
         data-testid={`day-${dateNum}`}
         className={`${BASE} bg-disabled-light text-disabled-light-foreground`}
       >
         <p className="font-display text-xs font-bold uppercase tracking-wider">{dow}</p>
         <p className="font-display text-2xl font-bold leading-none mt-1">{dateNum}</p>
-        <p className="mt-1 text-xs font-semibold">{day.full ? "Full" : "Closed"}</p>
+        <p className="mt-1 text-xs font-semibold">{day.closed ? "Closed" : "Full"}</p>
       </div>
     );
   }
