@@ -239,7 +239,7 @@ export default function OptimizeLP() {
             </p>
 
             {/* Services scope chips — rapid self-qualification for TRT/ED/Weight visitors */}
-            <div style={{
+            <div className="optimize-service-chips" style={{
               display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 24,
             }}>
               {[
@@ -259,6 +259,29 @@ export default function OptimizeLP() {
                   {label}
                 </span>
               ))}
+            </div>
+
+            {/* Mobile-only early CTA — gives immediately-convinced visitors a direct path to the form */}
+            <div className="optimize-mobile-early-cta" aria-hidden="false">
+              <a
+                href="#hero-form"
+                className="optimize-mid-cta"
+                style={{
+                  display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
+                  width: "100%", height: 48, borderRadius: 10,
+                  background: ORANGE, color: WHITE,
+                  fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 700,
+                  textDecoration: "none", letterSpacing: "0.06em", textTransform: "uppercase",
+                  boxShadow: "0 6px 20px rgba(232,103,10,0.35)",
+                }}
+              >
+                Reserve My No-Cost Visit
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+              <p style={{
+                fontFamily: "Inter, sans-serif", fontSize: 12,
+                color: "rgba(255,255,255,0.45)", textAlign: "center", margin: 0,
+              }}>30 seconds. No insurance. No obligation.</p>
             </div>
 
             {/* Symptom list */}
@@ -480,7 +503,7 @@ export default function OptimizeLP() {
               marginTop: 36, display: "flex", flexDirection: "column", alignItems: "center", gap: 8,
             }}>
               <a
-                href="#hero"
+                href="#hero-form"
                 className="optimize-mid-cta"
                 style={{
                   display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 10,
@@ -624,7 +647,7 @@ export default function OptimizeLP() {
             {/* CTA after social proof peak — catch visitors persuaded by reviews before they continue scrolling */}
             <div style={{ marginTop: 40, display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
               <a
-                href="#hero"
+                href="#hero-form"
                 className="optimize-mid-cta"
                 style={{
                   display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 10,
@@ -721,7 +744,7 @@ export default function OptimizeLP() {
             {/* Mid-page CTA — captures desktop visitors primed by the process steps */}
             <div style={{ marginTop: 40, textAlign: "center" }}>
               <a
-                href="#hero"
+                href="#hero-form"
                 className="optimize-mid-cta"
                 style={{
                   display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 10,
@@ -784,7 +807,7 @@ export default function OptimizeLP() {
                     </a>
                   </div>
                   <div style={{ padding: "0 16px 16px" }}>
-                    <a href="#hero"
+                    <a href="#hero-form"
                       className="optimize-loc-cta"
                       style={{
                         display: "flex", alignItems: "center", justifyContent: "center",
@@ -856,7 +879,7 @@ export default function OptimizeLP() {
                       {loc.phone}
                     </a>
                   ))}
-                  <a href="#hero" style={{
+                  <a href="#hero-form" style={{
                     display: "inline-flex", alignItems: "center", gap: 6,
                     height: 38, padding: "0 18px", borderRadius: 8,
                     background: ORANGE, color: WHITE,
@@ -970,6 +993,27 @@ export default function OptimizeLP() {
         .optimize-call-strip { display: none; }
         @media (max-width: 767px) {
           .optimize-call-strip { display: block; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.10); }
+        }
+        /* Mobile-only early CTA — hidden on desktop since form is already side-by-side */
+        .optimize-mobile-early-cta { display: none; }
+        @media (max-width: 767px) {
+          .optimize-mobile-early-cta {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin: 4px 0 16px;
+          }
+        }
+        /* Service chips: horizontal scroll on mobile to prevent awkward wrapping */
+        @media (max-width: 767px) {
+          .optimize-service-chips {
+            flex-wrap: nowrap !important;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding-bottom: 2px;
+          }
+          .optimize-service-chips::-webkit-scrollbar { display: none; }
         }
         /* Scroll hint animation — desktop only; disabled for reduced-motion preference */
         @keyframes optimize-bounce {
