@@ -5,14 +5,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  Calendar, Check, MapPin, Clock, Phone, Play, Send,
+  Calendar, Check, MapPin, Clock, Phone, Play,
   Droplet, ClipboardList, FlaskConical,
 } from "lucide-react";
 import { useBookingStore } from "@/domain/booking/bookingStore";
 import { LOCATIONS, getMapsSearchUrl, LOCATION_KEY_TO_SLUG, type Location } from "@/data/locations";
 import { EmailCapture } from "@/components/book/EmailCapture";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
-import { BookHeader } from "@/components/book/BookHeader";
 import { trackConversion } from "@/lib/capi";
 
 const DEFAULT_CENTER = LOCATIONS[0];
@@ -105,8 +104,7 @@ export default function BookConfirmed() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <BookHeader />
-      <main className="flex-1 mx-auto w-full max-w-2xl px-4 sm:px-6 pt-20 pb-16">
+      <main className="flex-1 mx-auto w-full max-w-2xl px-4 sm:px-6 pt-8 pb-24">
 
         {/* ── Hero ── */}
         <div className="text-center">
@@ -119,11 +117,8 @@ export default function BookConfirmed() {
           <h1 className="mt-3 font-display text-[34px] sm:text-5xl font-bold leading-[1.1] text-foreground uppercase">
             {firstName ? `You're booked, ${firstName}.` : "You're booked."}
           </h1>
-          <p className="mt-4 text-lg sm:text-xl leading-snug" style={{ color: "rgba(255,255,255,0.90)" }}>
-            Your in-person visit is locked in. Your provider will be ready for you.
-          </p>
-          <p className="mt-2 text-base" style={{ color: "rgba(255,255,255,0.75)" }}>
-            Same-day labs drawn on-site. Results reviewed before you leave.
+          <p className="mt-4 text-lg sm:text-xl text-text-muted leading-snug">
+            Your provider is reserved. Here's everything you need.
           </p>
         </div>
 
@@ -214,8 +209,8 @@ export default function BookConfirmed() {
           </ul>
         </section>
 
-        {/* ── Video — hidden until a real asset is loaded (MWC-013) ── */}
-        {false && <section
+        {/* ── Video ── */}
+        <section
           className="mt-8 overflow-hidden rounded-2xl bg-panel text-panel-foreground shadow-card"
           aria-label="Video: What happens when you walk in"
         >
@@ -255,7 +250,7 @@ export default function BookConfirmed() {
             </p>
             <p className="mt-1 text-base text-panel-muted font-semibold">60 second video</p>
           </div>
-        </section>}
+        </section>
 
         {/* ── Before You Arrive ── */}
         <section className="mt-8 rounded-2xl bg-panel text-panel-foreground shadow-card p-6">
@@ -263,7 +258,7 @@ export default function BookConfirmed() {
             Before You Arrive
           </p>
           <ol className="mt-5 space-y-5" aria-label="Before You Arrive">
-            {["Bring a photo ID. Required at check-in.", "Wear loose sleeves. Labs are drawn on-site.", "Drink water. No need to fast.", "Plan for 60 minutes from arrival to checkout."].map((text, i) => (
+            {["Bring your photo ID.", "Drink water. No need to fast.", "Plan for 60 minutes."].map((text, i) => (
               <li key={text} className="flex items-start gap-4">
                 <span className="grid h-12 w-12 flex-shrink-0 place-items-center rounded-full bg-primary text-primary-foreground" aria-hidden="true">
                   <span className="font-display font-bold text-xl">{i + 1}</span>
@@ -313,7 +308,7 @@ export default function BookConfirmed() {
           <p className="font-display text-sm font-bold uppercase tracking-[0.22em] text-panel-muted">Email Reminder</p>
           <p className="mt-2 font-display text-2xl font-bold uppercase text-panel-foreground">Send my confirmation</p>
           <p className="mt-2 text-lg text-panel-foreground leading-snug">
-            We'll send your appointment details now and a reminder 24 hours before your visit.
+            We'll email your appointment details and a reminder the day before.
           </p>
           {sent ? (
             <p role="status" className="mt-5 inline-flex items-center gap-2 px-4 py-3 rounded-lg bg-success/10 text-panel-foreground font-semibold text-base">
@@ -337,7 +332,7 @@ export default function BookConfirmed() {
           <p className="font-display text-lg font-bold uppercase tracking-wide text-foreground">
             Need to change your appointment?
           </p>
-          <p className="mt-2 text-lg text-text-muted">We're happy to help. Please give us 24-hour notice so we can offer your slot to another member.</p>
+          <p className="mt-2 text-lg text-text-muted">We're happy to help. 24-hour notice is appreciated.</p>
           <a
             href={`tel:${center.phone.replace(/\D/g, "")}`}
             data-testid="link-call-help"
@@ -357,33 +352,6 @@ export default function BookConfirmed() {
         </section>
 
       </main>
-
-      {/* Footer */}
-      <footer style={{
-        // hardcoded-color-allow-next-line
-        borderTop: "1px solid rgba(255,255,255,0.08)",
-        padding: "20px 24px 28px",
-        display: "flex", flexDirection: "column", alignItems: "center",
-        gap: 14, textAlign: "center",
-      }}>
-        <img
-          src="/logos/Text_Logo_white.webp"
-          onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/logos/Text_Logo_white.png"; }}
-          alt="Men's Wellness Centers"
-          style={{ height: 20, width: "auto", opacity: 0.7 }}
-        />
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "8px 20px", alignItems: "center", justifyContent: "center" }}>
-          <a href="tel:8663444955" style={{ color: "rgba(255,255,255,0.60)", fontSize: 13, fontFamily: "Inter, sans-serif", fontWeight: 600, textDecoration: "none" }}>
-            (866) 344-4955
-          </a>
-          <Link to="/privacy-policy" style={{ color: "rgba(255,255,255,0.50)", fontSize: 12, fontFamily: "Inter, sans-serif", fontWeight: 500 }}>Privacy Policy</Link>
-          <Link to="/terms-of-service" style={{ color: "rgba(255,255,255,0.50)", fontSize: 12, fontFamily: "Inter, sans-serif", fontWeight: 500 }}>Terms of Service</Link>
-          <Link to="/tcpa" style={{ color: "rgba(255,255,255,0.50)", fontSize: 12, fontFamily: "Inter, sans-serif", fontWeight: 500 }}>TCPA Disclosure</Link>
-        </div>
-        <span style={{ color: "rgba(255,255,255,0.30)", fontSize: 12, fontFamily: "Inter, sans-serif" }}>
-          &copy; {new Date().getFullYear()} Men&apos;s Wellness Centers
-        </span>
-      </footer>
     </div>
   );
 }
