@@ -38,14 +38,14 @@ const SYMPTOMS = [
   "Your doctor says everything looks normal. You don't feel normal.",
 ];
 
-const WHY_US = [
-  "Same Virginia provider every visit — not a rotating list of strangers",
-  "Labs drawn on-site, results in the same visit, not a week later",
-  "60-minute in-person evaluation — not a 10-minute telehealth call",
-  "First visit — labs, evaluation, and review — at no cost to you",
-  "Treatment only when clinically appropriate. We'll tell you if it's not.",
-  "Follow-up labs and protocol adjustments are included — not billed as add-ons",
-  "FSA and HSA accepted. No insurance games.",
+const WHY_US: { key: string; detail: string }[] = [
+  { key: "Same Virginia provider every visit",        detail: "not a rotating list of strangers" },
+  { key: "Labs drawn and reviewed on-site",           detail: "same visit, not a week later" },
+  { key: "60-minute in-person evaluation",            detail: "not a 10-minute telehealth call" },
+  { key: "First visit at no cost",                    detail: "labs, evaluation, and results review included" },
+  { key: "Treatment only when clinically appropriate", detail: "we'll tell you directly if it isn't" },
+  { key: "Follow-up labs and adjustments included",   detail: "never billed as add-ons" },
+  { key: "FSA and HSA accepted",                      detail: "no insurance required" },
 ];
 
 const WHY_NOT = [
@@ -456,15 +456,17 @@ export default function OptimizeLP() {
                   }}>Virginia state-licensed providers with men's health specialty training.</p>
                 </div>
                 <ul style={{ display: "grid", gap: 14 }}>
-                  {WHY_US.map(line => (
-                    <li key={line} style={{
+                  {WHY_US.map(({ key, detail }) => (
+                    <li key={key} style={{
                       display: "flex", alignItems: "flex-start", gap: 10,
                       fontFamily: "Inter, sans-serif", fontSize: 15,
-                      fontWeight: 600, color: "var(--brand-navy)",
                       lineHeight: 1.4,
                     }}>
                       <Check size={17} style={{ color: "#047857", flexShrink: 0, marginTop: 2 }} strokeWidth={3} aria-hidden />
-                      {line}
+                      <span>
+                        <strong style={{ fontWeight: 700, color: "var(--brand-navy)" }}>{key}</strong>
+                        <span style={{ color: "var(--c-text-on-light-muted)", fontWeight: 400 }}>{" - "}{detail}</span>
+                      </span>
                     </li>
                   ))}
                 </ul>
