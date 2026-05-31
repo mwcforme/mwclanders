@@ -112,6 +112,17 @@ export default function BookSchedule() {
     }
   }, [firstAvailableIdx, loading, selectedDayIdx]);
 
+  // Scroll the day picker to center the selected day pill
+  useEffect(() => {
+    if (selectedDayIdx === null || !dayGroupRef.current) return;
+    const el = dayGroupRef.current;
+    const pill = el.children[selectedDayIdx] as HTMLElement | undefined;
+    if (!pill) return;
+    const pillCenter = pill.offsetLeft + pill.offsetWidth / 2;
+    const containerCenter = el.offsetWidth / 2;
+    el.scrollLeft = pillCenter - containerCenter;
+  }, [selectedDayIdx]);
+
   // Open review sheet when slot picked
   useEffect(() => {
     if (selectedSlot) {
@@ -144,7 +155,8 @@ export default function BookSchedule() {
   }, [firstAvailableIdx, dayCells, days, slotsByDay]);
 
   // ── Keyboard navigation for slot grid ─────────────────────────────────────
-  const slotRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const slotRefs    = useRef<(HTMLButtonElement | null)[]>([]);
+  const dayGroupRef  = useRef<HTMLDivElement | null>(null);
 
   const handleSlotKey = (e: React.KeyboardEvent<HTMLButtonElement>, idx: number) => {
     if (!["ArrowRight","ArrowLeft","ArrowDown","ArrowUp"].includes(e.key)) return;
@@ -331,7 +343,7 @@ export default function BookSchedule() {
             </div>
 
             {/* 7-day strip — horizontal scroll on mobile */}
-            <div role="radiogroup" aria-label="Day"
+            <div ref={dayGroupRef} role="radiogroup" aria-label="Day"
               className="mt-4 flex sm:grid sm:grid-cols-4 lg:grid-cols-7 gap-3 overflow-x-auto sm:overflow-visible scroll-smooth snap-x snap-mandatory px-4 sm:px-6 pb-5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {dayCells.map((day, dayIdx) => (
                 <DayPill
