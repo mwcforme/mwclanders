@@ -478,6 +478,29 @@ export default function OptimizeLP() {
                 </div>
               ))}
             </div>
+
+            {/* Mid-page CTA — captures desktop visitors primed by the process steps */}
+            <div style={{ marginTop: 40, textAlign: "center" }}>
+              <a
+                href="#hero"
+                className="optimize-mid-cta"
+                style={{
+                  display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 10,
+                  height: 56, padding: "0 40px", borderRadius: 10,
+                  background: ORANGE, color: WHITE,
+                  fontFamily: "Inter, sans-serif", fontSize: 16, fontWeight: 700,
+                  textDecoration: "none", letterSpacing: "0.06em", textTransform: "uppercase",
+                  boxShadow: "0 6px 24px rgba(232,103,10,0.35)",
+                }}
+              >
+                Book Your No-Cost Visit
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+              <p style={{
+                fontFamily: "Inter, sans-serif", fontSize: 13,
+                color: "var(--c-text-on-light-muted)", marginTop: 10,
+              }}>Same-day and next-day slots available. No insurance required.</p>
+            </div>
           </div>
         </section>
       </SectionReveal>
@@ -616,6 +639,8 @@ export default function OptimizeLP() {
         .optimize-loc-cta:hover { opacity: 0.88; transform: translateY(-1px); }
         .optimize-loc-cta { transition: opacity 150ms, transform 150ms; }
         .optimize-phone-link:hover { text-decoration: underline; }
+        .optimize-mid-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+        .optimize-mid-cta { transition: opacity 150ms, transform 150ms; }
       `}</style>
     </div>
   );
