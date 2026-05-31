@@ -55,7 +55,7 @@ function ToolCard({ name, desc, url, Icon }: Tool) {
         <div className="font-semibold text-white text-sm">{name}</div>
         <div className="mt-0.5 text-xs text-white/50 leading-relaxed">{desc}</div>
       </div>
-      <span className="ml-auto shrink-0 text-xs text-white/40 group-hover:text-white/70 transition-colors">Open →</span>
+      <span className="ml-auto shrink-0 text-xs text-white/55 group-hover:text-white/80 transition-colors">Open →</span>
     </a>
   );
 }

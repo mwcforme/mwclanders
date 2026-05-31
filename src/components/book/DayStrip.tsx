@@ -152,9 +152,11 @@ const DayStrip = ({
             const bg = selected ? ORANGE : isDisabled ? "transparent" : NAVY;
             // Text colors invert based on chip surface
             const isOnDark = selected || (!isDisabled);
-            const labelColor = isOnDark ? "rgba(255,255,255,0.78)" : "rgba(11,16,41,0.65)";
+            // WCAG AA: on orange bg (#B84A08) rgba/78 = 3.80:1 FAIL for 11px text.
+            // Use solid white on selected (orange), semi-white on available (navy: 11.98:1 ✅).
+            const labelColor = selected ? "#FFFFFF" : (!isDisabled ? "rgba(255,255,255,0.78)" : "rgba(11,16,41,0.65)");
             const numColor   = isOnDark ? "#FFFFFF" : INK;
-            const badgeColor = isOnDark ? "rgba(255,255,255,0.85)" : "rgba(11,16,41,0.60)";
+            const badgeColor = selected ? "#FFFFFF" : (!isDisabled ? "rgba(255,255,255,0.85)" : "rgba(11,16,41,0.60)");
 
             return (
               <button

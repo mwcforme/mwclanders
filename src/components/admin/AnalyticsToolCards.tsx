@@ -45,7 +45,7 @@ export const AnalyticsToolCards = () => (
                   {tool.badge}
                 </span>
               </div>
-              <ExternalLink size={14} strokeWidth={1.75} className="text-white/30 group-hover:text-white/60" />
+              <ExternalLink size={14} strokeWidth={1.75} className="text-white/50 group-hover:text-white/70" />
             </div>
             <div>
               <div className="font-semibold text-white">{tool.name}</div>

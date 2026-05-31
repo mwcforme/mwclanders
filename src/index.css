@@ -67,9 +67,9 @@
        #E8670A: 3.29:1 vs white — passes AA for large text (≥18px or ≥14px bold).
        --brand-cta-accessible: #B84A08 — 5.22:1 vs white, 4.61:1 vs cream — passes AA for ALL text sizes on any light surface.
        Use --brand-cta-accessible for small/normal text on light backgrounds; use --brand-cta on dark backgrounds. */
-    --brand-cta: #E8670A;
-    --brand-cta-hover: #CF5B09;
-    --brand-cta-accessible: #B84A08;  /* 5.22:1 on white ✅, 4.61:1 on cream ✅ — AA for all text sizes on any light surface */
+    --brand-cta: #B84A08;  /* was #E8670A (3.29:1 white FAIL) → #B84A08 5.22:1 white ✅ 4.61:1 cream ✅ — AA all text sizes */
+    --brand-cta-hover: #CF5B09;  /* hover affordance; base state is --brand-cta */
+    --brand-cta-accessible: #B84A08;  /* same as --brand-cta; kept for back-compat */
 
     /* Text on light surfaces */
     --c-text-on-light: #000033;        /* 17:1 on white */
@@ -108,7 +108,7 @@
     --card-foreground: 0 0% 0%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 0%;
-    --primary: 0 0% 0%;
+    --primary: 0 0% 0%;  /* Tailwind primary (shadcn) stays black — not the brand CTA orange */
     --primary-foreground: 0 0% 100%;
     --secondary: 44 7% 92%;
     --secondary-foreground: 0 0% 0%;
@@ -311,9 +311,10 @@
   }
 }
 
-/* Focus-visible — dual-tone ring, visible on both navy and cream */
+/* Focus-visible — dual-tone ring, visible on both navy and cream.
+   Uses --brand-cta (#B84A08): 4.61:1 vs cream ✅, 5.22:1 vs white ✅, 3.74:1 vs navy ✅ (SC 1.4.11) */
 :focus-visible {
-  outline: 2px solid var(--brand-accent);
+  outline: 2px solid var(--brand-cta);
   outline-offset: 2px;
   box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.85);
 }
@@ -572,9 +573,9 @@ input[type="radio"] {
   --border-subtle:         230 42% 26%;   /* navy-tinted divider */
 
   /* Primary (brand orange — booking context) */
-  --primary:               22 91% 47%;    /* #E8670A — use for icons, decorative, large bold text only */
-  --primary-foreground:    0 0% 100%;
-  --primary-hover:         21 91% 40%;    /* #C2410C — 4.31:1 on cream, 5.18:1 on white ✅ AA Large */
+  --primary:               22 91% 38%;    /* was 47% (#E8670A 3.29:1 white FAIL) → 38% (#B84A08) 5.22:1 white ✅ AA all sizes */
+  --primary-foreground:    0 0% 100%;     /* white on #B84A08 = 5.22:1 ✅ */
+  --primary-hover:         21 91% 40%;    /* #C2410C — slightly lighter hover for visual affordance */
   /* AA-compliant orange for normal body text on light backgrounds */
   --primary-on-light:      20 94% 34%;    /* #A32E06 — 5.92:1 on cream, 7.12:1 on white ✅ AA */
 
@@ -652,7 +653,7 @@ html.dark {
   border-color: #E2E8F0 !important;
 }
 .quiz-light-shell .bg-primary {
-  background: #E8670A !important;
+  background: #B84A08 !important; /* was #E8670A — aligned with new --brand-cta */
 }
 .quiz-light-shell .bg-primary\/10 {
   background: rgba(232,103,10,0.10) !important;
@@ -670,7 +671,7 @@ html.dark {
   box-shadow: 0 4px 20px rgba(232,103,10,0.35) !important;
 }
 .quiz-light-shell .hover\:bg-primary-hover:hover {
-  background: #CF5C09 !important;
+  background: #A83808 !important; /* hover darker than new base #B84A08 */
 }
 .quiz-light-shell input {
   background: #FFFFFF !important;
@@ -678,7 +679,7 @@ html.dark {
   border-color: #CBD5E1 !important;
 }
 .quiz-light-shell input::placeholder {
-  color: #94A3B8 !important;
+  color: var(--c-placeholder-on-white) !important; /* was #94A3B8 (2.56:1 FAIL) → #636B80 5.32:1 ✅ */
 }
 .quiz-light-shell input:focus {
   border-color: #E8670A !important;

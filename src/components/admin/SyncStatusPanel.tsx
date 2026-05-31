@@ -52,7 +52,7 @@ export function SyncStatusPanel({
       {error && <AdminError message={error} />}
 
       {loading ? (
-        <div className="flex items-center gap-2 text-white/40">
+        <div className="flex items-center gap-2 text-white/55">
           <Loader2 size={14} className="animate-spin" /> Loading…
         </div>
       ) : lastSync ? (
@@ -89,14 +89,14 @@ export function SyncStatusPanel({
           )}
         </div>
       ) : (
-        <div className="text-sm text-white/40">No sync runs found.</div>
+        <div className="text-sm text-white/55">No sync runs found.</div>
       )}
 
       <div className="mt-4 border-t border-white/8 pt-4">
         <button
           type="button"
           onClick={() => navigate("/admin/sync")}
-          className="text-xs text-white/40 hover:text-white/70 transition-colors print:hidden"
+          className="text-xs text-white/55 hover:text-white/80 transition-colors print:hidden"
         >
           View full sync history →
         </button>

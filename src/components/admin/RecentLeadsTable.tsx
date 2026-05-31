@@ -30,7 +30,7 @@ export function RecentLeadsTable({ leads, loading }: Props) {
         <button
           type="button"
           onClick={() => navigate("/admin/leads")}
-          className="text-xs text-white/40 hover:text-white/70 transition-colors print:hidden"
+          className="text-xs text-white/55 hover:text-white/80 transition-colors print:hidden"
         >
           View all →
         </button>
@@ -42,7 +42,7 @@ export function RecentLeadsTable({ leads, loading }: Props) {
           </div>
         ) : (
           <table className="w-full text-left text-sm">
-            <thead className="border-b border-white/10 text-xs uppercase tracking-wider text-white/40 print:border-gray-200 print:text-gray-800">
+            <thead className="border-b border-white/10 text-xs uppercase tracking-wider text-white/55 print:border-gray-200 print:text-gray-800">
               <tr>
                 <Th>Name</Th>
                 <Th>Phone</Th>
@@ -74,7 +74,7 @@ export function RecentLeadsTable({ leads, loading }: Props) {
                   <Td>
                     <StatusPill status={lead.crm_status} />
                   </Td>
-                  <Td className="text-right text-xs text-white/40 whitespace-nowrap">
+                  <Td className="text-right text-xs text-white/55 whitespace-nowrap">
                     {timeAgo(lead.created_at)}
                   </Td>
                 </tr>

@@ -73,7 +73,9 @@ export const AccordionDay = memo(function AccordionDay({
   const isTomorrow = isTomorrowET(day);
   const ribbon = isToday ? "TODAY" : isTomorrow ? "TMRW" : null;
   const headerBg = isExpanded ? ORANGE : INK;
-  const headerColor = isExpanded ? INK : "var(--c-text-on-dark)";
+  // WCAG AA: INK (#0B1029) on #B84A08 = 3.74:1 FAILS for 11px text.
+  // white on #B84A08 = 5.22:1 ✅; white on INK = 19.5:1 ✅ — use white always.
+  const headerColor = "var(--c-text-on-dark)";
   const disabled = !available;
   const badgeText = isSunday ? "Closed" : !available ? "Full" : `${count} slots`;
 

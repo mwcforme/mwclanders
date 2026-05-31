@@ -32,7 +32,7 @@ interface LeadBreakdownBarsProps {
 export const LeadBreakdownBars = ({ stats }: LeadBreakdownBarsProps) => (
   <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
     <div className="rounded-xl border border-white/8 bg-[#070B1F] p-5 print:border-gray-300">
-      <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-white/40 print:text-gray-800">
+      <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-white/55 print:text-gray-800">
         Leads by Location
       </h4>
       <div className="space-y-2">
@@ -41,13 +41,13 @@ export const LeadBreakdownBars = ({ stats }: LeadBreakdownBarsProps) => (
             total={stats.totalLeads} barColor="bg-[var(--brand-cta)]" />
         ))}
         {!stats.leadsByLocation.length && (
-          <p className="text-xs text-white/40">No data yet.</p>
+          <p className="text-xs text-white/55">No data yet.</p>
         )}
       </div>
     </div>
 
     <div className="rounded-xl border border-white/8 bg-[#070B1F] p-5 print:border-gray-300">
-      <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-white/40 print:text-gray-800">
+      <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-white/55 print:text-gray-800">
         Leads by Source
       </h4>
       <div className="space-y-2">
@@ -56,7 +56,7 @@ export const LeadBreakdownBars = ({ stats }: LeadBreakdownBarsProps) => (
             total={stats.totalLeads} barColor="bg-blue-500" />
         ))}
         {!stats.leadsBySource.length && (
-          <p className="text-xs text-white/40">No data yet.</p>
+          <p className="text-xs text-white/55">No data yet.</p>
         )}
       </div>
     </div>
