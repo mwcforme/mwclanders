@@ -392,7 +392,7 @@ export default function BookSchedule() {
         {!reviewOpen && (
           <div className="sm:hidden fixed bottom-0 inset-x-0 z-30 border-t border-border-subtle bg-background/97 backdrop-blur px-4 pt-3 pb-[max(0.875rem,env(safe-area-inset-bottom))] shadow-[0_-8px_24px_-12px_rgba(0,0,0,0.6)]">
             <button type="button" disabled
-              className="w-full inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-4 font-display font-bold uppercase tracking-wider text-base bg-disabled text-disabled-foreground cursor-not-allowed">
+              className="w-full inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-5 font-display font-bold uppercase tracking-wider text-lg transition-colors bg-disabled text-disabled-foreground cursor-not-allowed">
               Select a time
             </button>
           </div>
