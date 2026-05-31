@@ -238,26 +238,35 @@ export default function OptimizeLP() {
               Actual answers, not guesses. Labs drawn on-site and reviewed with you the same visit - by the same Virginia provider every time.
             </p>
 
-            {/* Services scope chips — rapid self-qualification for TRT/ED/Weight visitors */}
+            {/* Services scope chips — two-line: service name + outcome for instant value clarity */}
             <div className="optimize-service-chips" style={{
               display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 24,
             }}>
               {[
-                { icon: Zap,   label: "Testosterone Therapy" },
-                { icon: Heart, label: "ED Treatment" },
-                { icon: Scale, label: "Weight Management" },
-              ].map(({ icon: Icon, label }) => (
-                <span key={label} style={{
-                  display: "inline-flex", alignItems: "center", gap: 6,
-                  padding: "6px 12px", borderRadius: 20,
-                  background: "rgba(232,103,10,0.15)",
-                  border: "1px solid rgba(232,103,10,0.35)",
-                  fontFamily: "Inter, sans-serif", fontSize: 12, fontWeight: 600,
-                  color: "rgba(255,255,255,0.80)", letterSpacing: "0.04em",
+                { icon: Zap,   label: "Testosterone Therapy", outcome: "Energy, drive, and performance" },
+                { icon: Heart, label: "ED Treatment",         outcome: "Effective and discreet" },
+                { icon: Scale, label: "Weight Management",    outcome: "Clinical protocols, real results" },
+              ].map(({ icon: Icon, label, outcome }) => (
+                <div key={label} style={{
+                  display: "inline-flex", alignItems: "flex-start", gap: 8,
+                  padding: "8px 14px", borderRadius: 12,
+                  background: "rgba(232,103,10,0.12)",
+                  border: "1px solid rgba(232,103,10,0.30)",
+                  flexDirection: "column", minWidth: 0,
                 }}>
-                  <Icon size={12} style={{ color: ORANGE }} aria-hidden />
-                  {label}
-                </span>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                    <Icon size={12} style={{ color: ORANGE, flexShrink: 0 }} aria-hidden />
+                    <span style={{
+                      fontFamily: "Inter, sans-serif", fontSize: 12, fontWeight: 700,
+                      color: "rgba(255,255,255,0.88)", letterSpacing: "0.04em",
+                    }}>{label}</span>
+                  </div>
+                  <span style={{
+                    fontFamily: "Inter, sans-serif", fontSize: 10,
+                    color: "rgba(255,255,255,0.50)", lineHeight: 1.3,
+                    marginLeft: 20, // align under the label text
+                  }}>{outcome}</span>
+                </div>
               ))}
             </div>
 
