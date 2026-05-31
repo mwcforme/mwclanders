@@ -11,8 +11,8 @@
  *   src/lib/scheduleUtils.ts
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { ChevronLeft, ChevronRight, MapPin, Phone, Star, ShieldCheck, Clock4, Lock } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { ChevronDown, ChevronLeft, ChevronRight, ExternalLink, MapPin, Phone } from "lucide-react";
 import { useBookingStore } from "@/domain/booking/bookingStore";
 import { useConfirmAppointment } from "@/domain/booking/useConfirmAppointment";
 import { CENTER_CALENDARS, TIMEZONE, type LocationKey } from "@/lib/ghlCalendars";
@@ -21,6 +21,7 @@ import { PHONE } from "@/lib/constants";
 import { addDaysInTimeZone, isSundayInTimeZone, ymdInTimeZone, dateFromYmdInTimeZone } from "@/lib/etDate";
 import { trackFunnelEvent } from "@/hooks/useAnalytics";
 import BookingErrorBoundary from "@/components/book/BookingErrorBoundary";
+import { Lock } from "lucide-react";
 import { DayPill } from "@/components/book/DayPill";
 import { SlotGroup } from "@/components/book/SlotGroup";
 import { ReviewSheet } from "@/components/book/ReviewSheet";
@@ -226,8 +227,7 @@ export default function BookSchedule() {
 
   const heading = firstName ? `Lock in a time, ${firstName}.` : "Lock in a time.";
 
-  const [searchParams] = useSearchParams();
-  const isVariantB = searchParams.get("v") === "b";
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
@@ -257,253 +257,91 @@ export default function BookSchedule() {
       <div className="min-h-screen flex flex-col bg-background text-foreground">
         <main className="flex-1 mx-auto w-full max-w-2xl lg:max-w-5xl px-4 sm:px-6 pt-5 pb-8">
 
-          {/* ── HEADER — Variant A / Variant B ─────────────────────── */}
-          {isVariantB ? (
-            /* Variant B: Bold editorial */
-            <div style={{ marginBottom: 4 }}>
-              <p style={{
-                fontFamily: "Oswald, sans-serif",
-                fontSize: 11,
-                fontWeight: 700,
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                color: "var(--brand-accent)",
-                marginBottom: 8,
-              }}>
-                Your consultation awaits
-              </p>
-              <h1
-                style={{
-                  fontFamily: "Oswald, sans-serif",
-                  fontSize: "clamp(2.8rem, 8vw, 4rem)",
-                  fontWeight: 800,
-                  lineHeight: 1.02,
-                  letterSpacing: "-0.01em",
-                  textTransform: "uppercase",
-                  color: "var(--c-text-on-dark)",
-                  margin: 0,
-                  whiteSpace: "pre-line",
-                }}
-              >
-                {firstName ? `${firstName}, take\ncontrol today.` : "Take\ncontrol today."}
-              </h1>
-              {/* Social proof badge */}
-              <div style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 6,
-                marginTop: 12,
-                background: "rgba(255,255,255,0.08)",
-                border: "1px solid rgba(255,255,255,0.14)",
-                borderRadius: 999,
-                padding: "6px 14px",
-              }}>
-                <Star
-                  style={{ width: 13, height: 13, fill: "var(--brand-accent)", color: "var(--brand-accent)", flexShrink: 0 }}
-                  aria-hidden
-                />
-                <span style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: 12,
-                  fontWeight: 700,
-                  color: "rgba(255,255,255,0.90)",
-                  letterSpacing: "0.01em",
-                }}>4.9 stars &middot; 400+ men seen this year</span>
-              </div>
-              {/* Location label */}
-              {locationData && (
-                <div style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 6,
-                  marginTop: 10,
-                }}>
-                  <MapPin style={{ width: 14, height: 14, color: "var(--brand-accent)", flexShrink: 0 }} aria-hidden />
-                  <span style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: 13,
-                    fontWeight: 600,
-                    color: "rgba(255,255,255,0.70)",
-                  }}>{locationData.city} Men's Wellness Center</span>
-                </div>
-              )}
-            </div>
-          ) : (
-            /* Variant A: Clean & confident */
-            <div style={{ marginBottom: 4 }}>
-              <p style={{
-                fontFamily: "Oswald, sans-serif",
-                fontSize: 11,
-                fontWeight: 700,
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                color: "var(--brand-accent)",
-                marginBottom: 8,
-              }}>Almost done</p>
-              <h1
-                style={{
-                  fontFamily: "Oswald, sans-serif",
-                  fontSize: "clamp(2.3rem, 6.5vw, 3.2rem)",
-                  fontWeight: 800,
-                  lineHeight: 1.07,
-                  letterSpacing: "-0.01em",
-                  textTransform: "uppercase",
-                  color: "var(--c-text-on-dark)",
-                  margin: 0,
-                }}
-              >
-                {heading}
-              </h1>
-              {locationData && (
-                <div style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 6,
-                  marginTop: 8,
-                }}>
-                  <MapPin style={{ width: 13, height: 13, color: "var(--brand-accent)", flexShrink: 0 }} aria-hidden />
-                  <span style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: 13,
-                    fontWeight: 600,
-                    color: "rgba(255,255,255,0.65)",
-                  }}>{locationData.city} Men's Wellness Center</span>
-                </div>
-              )}
-            </div>
-          )}
+          {/* Compact header */}
+          <h1 className="font-display text-3xl sm:text-4xl font-bold leading-tight text-foreground uppercase tracking-[0.01em]">
+            {heading}
+          </h1>
 
-          {/* ── NEXT AVAILABLE — featured card ─────────────────────── */}
-          {nextAvailable && !selectedSlot && (
-            <div
-              style={{
-                marginTop: 20,
-                borderRadius: 14,
-                border: "1px solid rgba(255,255,255,0.10)",
-                borderLeft: "3px solid var(--brand-accent)",
-                background: "rgba(255,255,255,0.07)",
-                padding: "14px 16px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: 12,
-              }}
+          {/* Location drawer trigger — own line */}
+          {locationData && (
+            <button
+              type="button"
+              onClick={() => setDrawerOpen(o => !o)}
+              aria-expanded={drawerOpen}
+              aria-controls="location-drawer"
+              className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-sm font-semibold text-foreground hover:bg-white/20 transition-colors"
             >
-              <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
-                <span
-                  style={{ position: "relative", display: "flex", flexShrink: 0, width: 10, height: 10 }}
-                  aria-hidden
-                >
-                  <span style={{
-                    position: "absolute",
-                    inset: 0,
-                    borderRadius: "50%",
-                    background: "var(--brand-accent)",
-                    opacity: 0.75,
-                    animation: "ping 1.5s cubic-bezier(0,0,0.2,1) infinite",
-                  }} />
-                  <span style={{
-                    position: "relative",
-                    width: 10,
-                    height: 10,
-                    borderRadius: "50%",
-                    background: "var(--brand-accent)",
-                    display: "inline-block",
-                  }} />
-                  <style>{`@keyframes ping { 75%,100% { transform: scale(2); opacity: 0; } }`}</style>
-                </span>
-                <div style={{ minWidth: 0 }}>
-                  <p style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: 11,
-                    fontWeight: 700,
-                    letterSpacing: "0.08em",
-                    textTransform: "uppercase",
-                    color: "var(--brand-accent)",
-                    margin: 0,
-                    marginBottom: 2,
-                  }}>Next available</p>
-                  <p style={{
-                    fontFamily: "Oswald, sans-serif",
-                    fontSize: 17,
-                    fontWeight: 700,
-                    color: "var(--c-text-on-dark)",
-                    margin: 0,
-                    letterSpacing: "0.01em",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                  }}>{nextAvailable.label}</p>
+              <MapPin className="h-3.5 w-3.5 text-primary" aria-hidden />
+              {locationData.city}
+              <ChevronDown
+                className={`h-3.5 w-3.5 text-text-muted transition-transform duration-200 ${drawerOpen ? "rotate-180" : ""}`}
+                aria-hidden
+              />
+            </button>
+          )}
+
+          {/* Location drawer — sits under header, above calendar */}
+          {locationData && (
+            <div
+              id="location-drawer"
+              role="region"
+              aria-label="Location details"
+              className={`overflow-hidden rounded-2xl border border-border-subtle transition-all duration-300 ${
+                drawerOpen ? "mt-3 max-h-96 opacity-100 bg-white" : "max-h-0 opacity-0 pointer-events-none"
+              }`}
+            >
+              <div className="px-5 py-4 space-y-3">
+                {/* Location pill — matches booking popup style */}
+                <div className="flex items-start gap-2 rounded-xl bg-slate-100 px-3 py-2.5">
+                  <MapPin className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "var(--brand-cta)" }} aria-hidden />
+                  <div>
+                    <p className="text-xs font-bold text-gray-900">{locationData.name.replace("Men's Wellness Centers, ", "")} Men's Wellness Center</p>
+                    <p className="text-xs text-gray-600 mt-0.5">{locationData.fullAddress}</p>
+                  </div>
                 </div>
+                <div className="flex items-center gap-4">
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationData.mapsQuery)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+                  >
+                    <ExternalLink className="h-3.5 w-3.5" aria-hidden />
+                    Directions
+                  </a>
+                  <a
+                    href={locationData.phoneHref}
+                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+                  >
+                    <Phone className="h-3.5 w-3.5" aria-hidden />
+                    {locationData.phone}
+                  </a>
+                </div>
+                <p className="text-xs text-gray-600">In-person &middot; 60 min &middot; Labs on-site</p>
               </div>
-              <button
-                type="button"
-                onClick={() => { setSelectedDayIdx(nextAvailable.idx); setSelectedSlot(nextAvailable.iso); }}
-                aria-label={`Lock in next available time: ${nextAvailable.label}`}
-                data-testid="button-next-available"
-                style={{
-                  flexShrink: 0,
-                  background: "var(--brand-cta)",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: 10,
-                  padding: "10px 18px",
-                  fontFamily: "Oswald, sans-serif",
-                  fontWeight: 700,
-                  fontSize: 14,
-                  letterSpacing: "0.06em",
-                  textTransform: "uppercase",
-                  cursor: "pointer",
-                  whiteSpace: "nowrap",
-                  boxShadow: "0 4px 14px rgba(184,74,8,0.40)",
-                  transition: "filter 0.15s ease, transform 0.12s ease",
-                }}
-                onMouseEnter={e => { e.currentTarget.style.filter = "brightness(1.1)"; e.currentTarget.style.transform = "translateY(-1px)"; }}
-                onMouseLeave={e => { e.currentTarget.style.filter = ""; e.currentTarget.style.transform = ""; }}
-              >
-                Book This
-              </button>
             </div>
           )}
 
-          {/* ── TRUST STRIP ────────────────────────────────────────── */}
-          <div style={{
-            marginTop: 16,
-            display: "flex",
-            alignItems: "center",
-            gap: 6,
-            flexWrap: "wrap",
-          }} aria-label="Trust signals">
-            {[
-              { Icon: Clock4,      label: "Same-week appts" },
-              { Icon: ShieldCheck, label: "Labs on-site" },
-              { Icon: MapPin,      label: "No commitment" },
-            ].map(({ Icon, label }) => (
-              <div
-                key={label}
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 5,
-                  background: "rgba(255,255,255,0.06)",
-                  border: "1px solid rgba(255,255,255,0.09)",
-                  borderRadius: 999,
-                  padding: "5px 11px",
-                }}
-              >
-                <Icon style={{ width: 12, height: 12, color: "var(--brand-accent)", flexShrink: 0 }} aria-hidden />
-                <span style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: 12,
-                  fontWeight: 600,
-                  color: "rgba(255,255,255,0.75)",
-                }}>{label}</span>
-              </div>
-            ))}
-          </div>
+          {/* Next available — inline chip */}
+          {nextAvailable && !selectedSlot && (
+            <button
+              type="button"
+              onClick={() => { setSelectedDayIdx(nextAvailable.idx); setSelectedSlot(nextAvailable.iso); }}
+              aria-label={`Lock in next available time: ${nextAvailable.label}`}
+              data-testid="button-next-available"
+              className="mt-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-sm font-semibold text-foreground hover:bg-white/20 transition-colors"
+            >
+              <span className="relative flex h-2 w-2 flex-shrink-0" aria-hidden="true">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-75 animate-ping" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
+              </span>
+              Next available: <span className="font-bold text-foreground">{nextAvailable.label}</span>
+              <span className="text-text-muted" aria-hidden>&#8594;</span>
+            </button>
+          )}
 
-          {/* ── BOOKING PANEL ──────────────────────────────────────── */}
-          <section id="book" className="mt-6 overflow-hidden rounded-2xl bg-panel text-panel-foreground shadow-card"
+          {/* Booking panel */}
+          <section id="book" className="mt-4 overflow-hidden rounded-2xl bg-panel text-panel-foreground shadow-card"
             aria-label="Choose your appointment day and time">
 
             {/* Week navigator */}
@@ -590,32 +428,11 @@ export default function BookSchedule() {
             </div>
           </section>
 
-          {/* ── HELP LINE ─────────────────────────────────────────────── */}
+          {/* Help line */}
           <a href={PHONE.tel}
-            style={{
-              marginTop: 20,
-              display: "flex",
-              width: "100%",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 10,
-              borderRadius: 16,
-              border: "1.5px solid rgba(255,255,255,0.10)",
-              background: "rgba(255,255,255,0.04)",
-              backdropFilter: "blur(8px)",
-              color: "rgba(255,255,255,0.75)",
-              padding: "14px 20px",
-              textDecoration: "none",
-              fontFamily: "Inter, sans-serif",
-              fontSize: 14,
-              fontWeight: 600,
-              transition: "background 0.15s ease",
-            }}
-            onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.07)"; }}
-            onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.04)"; }}
-          >
-            <Phone style={{ width: 16, height: 16, color: "var(--brand-accent)", flexShrink: 0 }} aria-hidden />
-            Prefer to talk? Call {PHONE.display}
+            className="mt-6 flex w-full items-center justify-center gap-3 rounded-2xl border-2 border-border text-foreground px-5 py-4">
+            <Phone className="h-5 w-5 text-primary" aria-hidden />
+            Need help? Call {PHONE.display}
           </a>
 
         </main>

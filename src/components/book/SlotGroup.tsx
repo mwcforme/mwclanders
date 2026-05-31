@@ -24,7 +24,7 @@ export function SlotGroup({
         {title}
       </h3>
       <div role="radiogroup" aria-label={`${title} time slots`}
-        className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+        className="grid grid-cols-3 lg:grid-cols-5 gap-2">
         {slots.map((s, i) => {
           const idx = startIdx + i;
           const isSelected = selected === s.iso;
@@ -37,7 +37,7 @@ export function SlotGroup({
               onKeyDown={e => onKey(e, idx)}
               onClick={() => setSelected(s.iso)}
               className={[
-                "min-h-[52px] rounded-xl px-3 py-2.5 flex items-center justify-center transition-all duration-150 border-2",
+                "min-h-[48px] rounded-xl px-3 py-2.5 flex items-center justify-between transition-colors border-2",
                 isSelected
                   ? "bg-primary text-white border-primary shadow-cta"
                   : "bg-panel text-panel-foreground border-panel-border hover:border-primary",
