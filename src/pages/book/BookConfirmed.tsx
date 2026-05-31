@@ -142,9 +142,7 @@ export default function BookConfirmed() {
                 <div>
                   <p className="font-display text-2xl font-bold text-panel-foreground">{appt.time}</p>
                   <p className="mt-0.5 text-sm text-panel-muted">60 minutes &middot; In-person</p>
-                  <p className="inline-flex items-center gap-1.5 text-sm text-panel-muted mt-0.5">
-                    <MapPin className="h-3.5 w-3.5 text-primary flex-shrink-0" aria-hidden /> {physicalCity}
-                  </p>
+                  <p className="mt-0.5 text-sm font-semibold text-panel-foreground">{physicalCity} Men's Wellness Center</p>
                 </div>
               </div>
             </div>
@@ -154,18 +152,46 @@ export default function BookConfirmed() {
             </p>
           )}
 
-          {/* Quick-confirm chips */}
-          <ul
-            className="mt-5 pt-5 border-t border-panel-divider grid sm:grid-cols-2 gap-2 text-sm font-sans font-medium text-panel-foreground"
-            aria-label="Appointment details"
-          >
-            {["Labs drawn on-site", "Bring photo ID"].map(item => (
-              <li key={item} className="inline-flex items-center gap-2">
-                <Check className="h-4 w-4 flex-shrink-0 text-success" aria-hidden strokeWidth={3} />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
+          {/* Location + quick-confirm */}
+          <div className="mt-5 pt-5 border-t border-panel-divider space-y-3">
+            {/* Address row */}
+            <div className="flex items-start gap-2">
+              <MapPin className="h-4 w-4 flex-shrink-0 mt-0.5 text-primary" aria-hidden />
+              <div>
+                <address className="not-italic">
+                  <a
+                    className="text-sm font-semibold text-panel-foreground underline underline-offset-4 hover:text-primary leading-snug"
+                    href={mapsUrl} target="_blank" rel="noreferrer"
+                    data-testid="link-address"
+                  >
+                    {center.address}, {center.cityStateZip}
+                  </a>
+                </address>
+                <p className="text-xs text-panel-muted mt-0.5">{center.driveTime}</p>
+              </div>
+            </div>
+            {/* Hours row */}
+            <div className="flex items-start gap-2">
+              <Clock className="h-4 w-4 flex-shrink-0 mt-0.5 text-panel-muted" aria-hidden />
+              <p className="text-xs text-panel-muted leading-snug">{center.hours}</p>
+            </div>
+            {/* Checklist */}
+            <ul className="pt-2 border-t border-panel-divider grid sm:grid-cols-2 gap-2 text-sm font-sans font-medium text-panel-foreground">
+              {["Labs drawn on-site", "Bring photo ID"].map(item => (
+                <li key={item} className="inline-flex items-center gap-2">
+                  <Check className="h-4 w-4 flex-shrink-0 text-success" aria-hidden strokeWidth={3} />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+            {/* Directions button */}
+            <a
+              href={mapsUrl} target="_blank" rel="noreferrer"
+              className="mt-1 inline-flex items-center justify-center gap-2 w-full rounded-xl font-display font-bold uppercase tracking-wide px-4 py-3 text-sm min-h-[48px] bg-surface text-foreground hover:opacity-90"
+            >
+              <MapPin className="h-4 w-4" aria-hidden /> Get Directions
+            </a>
+          </div>
         </section>
 
         {/* ── Calendar buttons ── */}
@@ -267,38 +293,6 @@ export default function BookConfirmed() {
           </ol>
         </section>
 
-        {/* ── Location ── */}
-        <section className="mt-8 overflow-hidden rounded-2xl bg-panel text-panel-foreground shadow-card">
-          <div className="p-6">
-
-            <p className="font-display text-xs font-bold uppercase tracking-[0.1em] text-panel-muted">Location</p>
-            <p className="mt-1 font-display text-xl font-bold uppercase text-panel-foreground">{physicalCity}</p>
-            <p className="mt-1 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
-              <MapPin className="h-3.5 w-3.5" aria-hidden /> {center.driveTime}
-            </p>
-            <address className="mt-3 not-italic">
-              <a
-                className="text-sm font-semibold text-panel-foreground underline underline-offset-4 hover:text-primary leading-snug"
-                href={mapsUrl} target="_blank" rel="noreferrer"
-                data-testid="link-address"
-              >
-                {center.address}<br />{center.cityStateZip}
-              </a>
-            </address>
-            <div className="mt-3 flex items-start gap-2">
-              <Clock className="h-4 w-4 flex-shrink-0 mt-0.5 text-panel-muted" aria-hidden />
-              <p className="text-sm text-panel-muted leading-snug">{center.hours}</p>
-            </div>
-          </div>
-          <div className="p-5 border-t border-panel-divider">
-            <a
-              href={mapsUrl} target="_blank" rel="noreferrer"
-              className="inline-flex items-center justify-center gap-3 w-full rounded-xl font-display font-bold uppercase tracking-wide px-5 py-4 text-base min-h-[56px] bg-surface text-foreground hover:opacity-90"
-            >
-              <MapPin className="h-6 w-6" aria-hidden /> Get Directions
-            </a>
-          </div>
-        </section>
 
         {/* ── Email Reminder ── */}
         <section className="mt-8 rounded-2xl bg-panel text-panel-foreground shadow-card p-6">
