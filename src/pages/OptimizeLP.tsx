@@ -919,6 +919,24 @@ export default function OptimizeLP() {
               ))}
             </div>
 
+            {/* Provider authority strip — removes "is this a real doctor?" hesitation at peak intent */}
+            <div style={{
+              display: "flex", alignItems: "flex-start", gap: 12,
+              padding: "14px 16px", borderRadius: 10, marginBottom: 20,
+              background: "rgba(255,255,255,0.06)",
+              border: "1px solid rgba(255,255,255,0.12)",
+              textAlign: "left",
+            }}>
+              <UserCheck size={20} style={{ color: ORANGE, flexShrink: 0, marginTop: 2 }} aria-hidden />
+              <p style={{
+                fontFamily: "Inter, sans-serif", fontSize: 13, lineHeight: 1.6,
+                color: "rgba(255,255,255,0.72)", margin: 0,
+              }}>
+                <strong style={{ color: WHITE }}>Virginia Board of Medicine licensed providers.</strong>{" "}
+                No chatbots. No physician assistants standing in for a doctor. A licensed clinician who specializes in men's health reviews your labs and your case - personally, every visit.
+              </p>
+            </div>
+
             <TRTHeroForm service="trt" formId="cta-opt" />
 
             {/* Risk-reversal micro-copy */}
