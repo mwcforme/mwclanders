@@ -11,7 +11,7 @@
 import { lazy, Suspense, useState } from "react";
 import {
   Check, X, Star, MapPin, Phone,
-  Clock, FlaskConical, UserCheck, ClipboardList, ChevronDown, ShieldCheck, Award, CreditCard,
+  Clock, FlaskConical, UserCheck, ClipboardList, ChevronDown, ShieldCheck, Award, CreditCard, Zap, Heart, Scale,
 } from "lucide-react";
 import { TRTHeader } from "@/components/landing/trt/TRTHeader";
 import { CredibilityBand } from "@/components/landing/trt/CredibilityBand";
@@ -223,6 +223,29 @@ export default function OptimizeLP() {
             }}>
               Men's Wellness Centers is Virginia's in-person men's health practice. Three locations. A licensed provider who draws your labs on-site, reads them with you, and gives you a real answer the same visit.
             </p>
+
+            {/* Services scope chips — rapid self-qualification for TRT/ED/Weight visitors */}
+            <div style={{
+              display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 24,
+            }}>
+              {[
+                { icon: Zap,   label: "Testosterone Therapy" },
+                { icon: Heart, label: "ED Treatment" },
+                { icon: Scale, label: "Weight Management" },
+              ].map(({ icon: Icon, label }) => (
+                <span key={label} style={{
+                  display: "inline-flex", alignItems: "center", gap: 6,
+                  padding: "6px 12px", borderRadius: 20,
+                  background: "rgba(232,103,10,0.15)",
+                  border: "1px solid rgba(232,103,10,0.35)",
+                  fontFamily: "Inter, sans-serif", fontSize: 12, fontWeight: 600,
+                  color: "rgba(255,255,255,0.80)", letterSpacing: "0.04em",
+                }}>
+                  <Icon size={12} style={{ color: ORANGE }} aria-hidden />
+                  {label}
+                </span>
+              ))}
+            </div>
 
             {/* Symptom list */}
             <ul style={{ display: "grid", gap: 12, marginBottom: 36 }}>
