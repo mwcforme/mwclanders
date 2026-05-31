@@ -257,29 +257,28 @@ export default function BookSchedule() {
       <div className="min-h-screen flex flex-col bg-background text-foreground">
         <main className="flex-1 mx-auto w-full max-w-2xl lg:max-w-5xl px-4 sm:px-6 pt-4 pb-40 sm:pb-12">
 
-          {/* Compact header row */}
-          <div className="flex items-start justify-between gap-3">
-            <h1 className="font-display text-2xl sm:text-3xl font-bold leading-tight text-foreground uppercase tracking-[0.01em]">
-              {heading}
-            </h1>
-            {/* Location drawer trigger */}
-            {locationData && (
-              <button
-                type="button"
-                onClick={() => setDrawerOpen(o => !o)}
-                aria-expanded={drawerOpen}
-                aria-controls="location-drawer"
-                className="flex-shrink-0 inline-flex items-center gap-1.5 rounded-full border border-border-subtle bg-surface px-3 py-1.5 text-sm font-semibold text-foreground hover:border-primary transition-colors"
-              >
-                <MapPin className="h-3.5 w-3.5 text-primary" aria-hidden />
-                {locationData.city}
-                <ChevronDown
-                  className={`h-3.5 w-3.5 text-text-muted transition-transform duration-200 ${drawerOpen ? "rotate-180" : ""}`}
-                  aria-hidden
-                />
-              </button>
-            )}
-          </div>
+          {/* Compact header */}
+          <h1 className="font-display text-2xl sm:text-3xl font-bold leading-tight text-foreground uppercase tracking-[0.01em]">
+            {heading}
+          </h1>
+
+          {/* Location drawer trigger — own line */}
+          {locationData && (
+            <button
+              type="button"
+              onClick={() => setDrawerOpen(o => !o)}
+              aria-expanded={drawerOpen}
+              aria-controls="location-drawer"
+              className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-border-subtle bg-surface px-3 py-1.5 text-sm font-semibold text-foreground hover:border-primary transition-colors"
+            >
+              <MapPin className="h-3.5 w-3.5 text-primary" aria-hidden />
+              {locationData.city}
+              <ChevronDown
+                className={`h-3.5 w-3.5 text-text-muted transition-transform duration-200 ${drawerOpen ? "rotate-180" : ""}`}
+                aria-hidden
+              />
+            </button>
+          )}
 
           {/* Location drawer — sits under header, above calendar */}
           {locationData && (
@@ -392,7 +391,7 @@ export default function BookSchedule() {
                 />
               ))}
             </div>
-            <p className="sm:hidden -mt-2 mb-2 text-center text-sm text-panel-muted">Swipe to see more days</p>
+
 
             <div className="h-px bg-panel-divider" aria-hidden />
             {/* Time slots */}
