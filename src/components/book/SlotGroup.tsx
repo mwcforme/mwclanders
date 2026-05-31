@@ -24,7 +24,7 @@ export function SlotGroup({
         {title}
       </h3>
       <div role="radiogroup" aria-label={`${title} time slots`}
-        className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+        className="grid grid-cols-3 lg:grid-cols-5 gap-2">
         {slots.map((s, i) => {
           const idx = startIdx + i;
           const isSelected = selected === s.iso;
