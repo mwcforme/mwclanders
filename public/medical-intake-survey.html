@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medical Intake — Men's Wellness Centers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0B1029;
+  --navy-mid: #161B3A;
+  --navy-light: #1E244A;
+  --orange: #E8670A;
+  --orange-dark: #C9560A;
+  --orange-pale: #FDF1E7;
+  --orange-border: #F3C9A6;
+  --ink: #0B1029;
+  --ink-soft: #3A4060;
+  --label: #2A2F4A;
+  --treat: #1E7A46;
+  --treat-bg: #EAF6EF;
+  --exclude: #B23A0E;
+  --exclude-bg: #FBEDE6;
+  --border: #D9DCE6;
+  --field-bg: #F6F7FA;
+  --white: #FFFFFF;
+  --radius: 12px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: var(--navy);
+  min-height: 100vh;
+  padding: 24px 16px 48px;
+  color: var(--ink);
+}
+
+/* ── TOP BAR ── */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 620px;
+  margin: 0 auto 20px;
+  padding: 0 4px;
+}
+.wordmark {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: #fff;
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.wordmark span { color: var(--orange); display: block; font-size: 13px; font-weight: 400; letter-spacing: 0.12em; margin-top: 2px; }
+.top-phone a {
+  color: var(--orange);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+/* ── CARD ── */
+.card {
+  background: var(--white);
+  max-width: 620px;
+  margin: 0 auto;
+  border-radius: 18px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── PROGRESS ── */
+.progress-area {
+  padding: 18px 28px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+}
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.progress-label { font-size: 12px; font-weight: 600; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.08em; }
+.progress-name { font-size: 12px; font-weight: 700; color: var(--orange); text-transform: uppercase; letter-spacing: 0.06em; }
+.progress-track { height: 4px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--orange); border-radius: 4px; transition: width 0.3s ease; }
+
+/* ── STEP BODY ── */
+.card-body { padding: 28px 28px 20px; flex: 1; }
+.step { display: none; }
+.step.active { display: block; }
+
+/* ── HEADINGS ── */
+h1.step-h1 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 10px;
+  line-height: 1.15;
+}
+.step-intro {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  margin-bottom: 22px;
+}
+
+/* ── SCOPE CARDS ── */
+.scope {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.scope-card {
+  border-radius: var(--radius);
+  padding: 14px;
+}
+.scope-card.treat { background: var(--treat-bg); border: 1.5px solid var(--treat); }
+.scope-card.exclude { background: var(--exclude-bg); border: 1.5px solid var(--exclude); }
+.scope-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+}
+.scope-card.treat .scope-badge { color: var(--treat); }
+.scope-card.exclude .scope-badge { color: var(--exclude); }
+.scope-badge svg { width: 14px; height: 14px; flex-shrink: 0; }
+.scope-list { list-style: none; }
+.scope-list li { font-size: 13px; font-weight: 500; color: var(--ink); padding: 3px 0; }
+
+/* ── QUESTION LABEL ── */
+.q-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--label);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+  display: block;
+}
+
+/* ── SINGLE SELECT OPTIONS ── */
+.opt-list { display: flex; flex-direction: column; gap: 8px; }
+.opt {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+.opt:hover { border-color: var(--orange); background: var(--orange-pale); }
+.opt.selected {
+  border-color: var(--orange);
+  background: var(--orange-pale);
+  box-shadow: 0 0 0 2px rgba(232,103,10,0.2);
+}
+.opt-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+.opt.selected .opt-icon { border-color: var(--orange); background: var(--orange); }
+.opt-check { display: none; }
+.opt.selected .opt-check { display: block; }
+.opt-text { font-size: 14px; font-weight: 500; color: var(--ink); flex: 1; }
+
+/* ── FORM FIELDS ── */
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.field { margin-bottom: 16px; }
+.field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--label);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 6px;
+}
+.field label .req { color: var(--orange); margin-left: 2px; }
+.field label .opt-tag { font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--ink-soft); margin-left: 4px; font-size: 11px; }
+.input-wrap { position: relative; }
+.input-wrap .icon { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--ink-soft); pointer-events: none; }
+.input-wrap input { padding-left: 38px; }
+input, select, textarea {
+  width: 100%;
+  background: var(--field-bg);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 14px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  color: var(--ink);
+  transition: border-color 0.15s, box-shadow 0.15s;
+  appearance: none;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(232,103,10,0.15);
+}
+textarea { resize: vertical; min-height: 100px; }
+.hint {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+.select-wrap { position: relative; }
+.select-wrap::after {
+  content: '';
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid var(--ink-soft);
+  pointer-events: none;
+}
+.select-wrap select { padding-right: 36px; cursor: pointer; }
+
+/* ── CHECKLIST ── */
+.checklist { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+.checklist.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.chk {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.15s;
+  user-select: none;
+  min-height: 52px;
+}
+.chk:hover { border-color: var(--orange); background: var(--orange-pale); }
+.chk.selected { border-color: var(--orange); background: var(--orange-pale); }
+.chk.full { grid-column: 1 / -1; }
+.chk-box {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+.chk.selected .chk-box { background: var(--orange); border-color: var(--orange); }
+.chk-label { font-size: 13px; font-weight: 500; color: var(--ink); }
+
+/* ── COMMIT BOX ── */
+.commit {
+  background: var(--orange-pale);
+  border: 1.5px solid var(--orange-border);
+  border-left: 4px solid var(--orange);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+.commit-icon { color: var(--orange); flex-shrink: 0; margin-top: 2px; }
+.commit-text { font-size: 14px; font-weight: 700; color: var(--ink); line-height: 1.5; }
+
+/* ── CONSENT BOX ── */
+.consent {
+  background: var(--field-bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  max-height: 280px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+.consent p { font-size: 13px; color: var(--ink-soft); line-height: 1.65; margin-bottom: 12px; }
+.consent p:last-child { margin-bottom: 0; }
+.consent strong { color: var(--ink); }
+
+/* ── FOOTER BUTTONS ── */
+.card-foot {
+  padding: 16px 28px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 10px;
+  background: var(--white);
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.08);
+}
+.btn {
+  font-family: 'Oswald', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border: 2px solid var(--navy);
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 14px 20px;
+  transition: all 0.15s;
+  min-height: 50px;
+}
+.btn-prev {
+  background: var(--white);
+  color: var(--navy);
+  min-width: 90px;
+}
+.btn-prev:hover { background: var(--field-bg); }
+.btn-prev:disabled { opacity: 0.35; cursor: not-allowed; }
+.btn-next {
+  background: var(--orange);
+  color: var(--white);
+  border-color: var(--orange-dark);
+  flex: 1;
+}
+.btn-next:hover { background: var(--orange-dark); }
+
+/* ── STAFF SECTION ── */
+.staff-banner {
+  background: var(--navy-mid);
+  border: 2px solid var(--orange);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.staff-banner-icon { color: var(--orange); flex-shrink: 0; }
+.staff-banner-title { font-family: 'Oswald', sans-serif; font-size: 18px; font-weight: 700; color: var(--white); text-transform: uppercase; letter-spacing: 0.05em; }
+.staff-banner-sub { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 3px; }
+
+.admin-wrap { background: var(--navy-mid); border-radius: var(--radius); padding: 20px; }
+.admin-section { margin-bottom: 22px; }
+.admin-section-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--navy-light);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.admin-tag {
+  font-size: 10px;
+  font-weight: 700;
+  background: var(--orange);
+  color: var(--white);
+  padding: 2px 7px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.admin-wrap .field label { color: rgba(255,255,255,0.6); }
+.admin-wrap input,
+.admin-wrap select,
+.admin-wrap textarea {
+  background: var(--navy-light);
+  border-color: rgba(255,255,255,0.12);
+  color: var(--white);
+}
+.admin-wrap input::placeholder,
+.admin-wrap textarea::placeholder { color: rgba(255,255,255,0.3); }
+.admin-wrap input:focus,
+.admin-wrap select:focus,
+.admin-wrap textarea:focus { border-color: var(--orange); box-shadow: 0 0 0 2px rgba(232,103,10,0.2); }
+.admin-wrap .select-wrap::after { border-top-color: rgba(255,255,255,0.4); }
+.admin-wrap .chk { border-color: rgba(255,255,255,0.15); background: var(--navy-light); }
+.admin-wrap .chk .chk-label { color: rgba(255,255,255,0.8); }
+.admin-wrap .chk:hover { border-color: var(--orange); background: rgba(232,103,10,0.1); }
+.admin-wrap .chk.selected { border-color: var(--orange); background: rgba(232,103,10,0.15); }
+.admin-wrap .chk-box { border-color: rgba(255,255,255,0.25); }
+.admin-wrap .hint { color: rgba(255,255,255,0.4); }
+.admin-wrap .q-label { color: rgba(255,255,255,0.55); }
+.admin-sym-group { margin-bottom: 14px; }
+.admin-sym-label { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+
+/* ── PAGE FOOTER ── */
+.page-footer {
+  max-width: 620px;
+  margin: 24px auto 0;
+  text-align: center;
+}
+.footer-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
+.footer-links a { font-size: 12px; color: rgba(255,255,255,0.45); text-decoration: none; }
+.footer-links a:hover { color: rgba(255,255,255,0.7); }
+.legitscript-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 8px 14px;
+  margin-bottom: 12px;
+}
+.ls-dot { width: 8px; height: 8px; background: #2ecc71; border-radius: 50%; }
+.ls-text { font-size: 12px; color: rgba(255,255,255,0.6); font-weight: 600; }
+.footer-disc { font-size: 11px; color: rgba(255,255,255,0.3); line-height: 1.5; }
+
+/* ── MOBILE ── */
+@media (max-width: 760px) {
+  body { padding: 16px 12px 40px; }
+  .card-body { padding: 22px 18px 16px; }
+  .progress-area { padding: 14px 18px 12px; }
+  .card-foot { padding: 12px 18px; }
+  .admin-wrap { padding: 16px; }
+}
+@media (max-width: 520px) {
+  body { padding: 12px 8px 32px; }
+  .top-phone { display: none; }
+  .card-body { padding: 18px 16px 14px; }
+  h1.step-h1 { font-size: 22px; }
+  .row2 { grid-template-columns: 1fr; gap: 0; }
+  .scope { grid-template-columns: 1fr; }
+  .card-foot { padding: 10px 14px; }
+  .btn { padding: 13px 16px; font-size: 14px; }
+  .opt { padding: 13px 14px; min-height: 56px; }
+  .chk { min-height: 56px; }
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="wordmark">MEN'S WELLNESS CENTERS<span>Medical Intake</span></div>
+  <div class="top-phone"><a href="tel:8663444955">866-344-4955</a></div>
+</div>
+
+<div class="card">
+  <div class="progress-area">
+    <div class="progress-meta">
+      <span class="progress-label" id="prog-label">Step 1 of 7</span>
+      <span class="progress-name" id="prog-name">Right Fit</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:14.3%"></div></div>
+  </div>
+
+  <div class="card-body">
+
+    <!-- ── STEP 1 ── -->
+    <section class="step active" data-step="1">
+      <h1 class="step-h1">Let's Make Sure We're the Right Fit</h1>
+      <p class="step-intro">Men's Wellness Centers is a physician-led men's health center. Your consultation is a 60-minute in-person visit at your local center. Here is what we do and do not handle.</p>
+      <div class="scope">
+        <div class="scope-card treat">
+          <div class="scope-badge">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,8 6,12 14,4"/></svg>
+            We Treat
+          </div>
+          <ul class="scope-list">
+            <li>Low testosterone</li>
+            <li>Erectile dysfunction</li>
+            <li>Medical weight loss</li>
+          </ul>
+        </div>
+        <div class="scope-card exclude">
+          <div class="scope-badge">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="3" x2="13" y2="13"/><line x1="13" y1="3" x2="3" y2="13"/></svg>
+            We Don't Treat
+          </div>
+          <ul class="scope-list">
+            <li>Primary care</li>
+            <li>Urgent care</li>
+            <li>STD care</li>
+          </ul>
+        </div>
+      </div>
+      <span class="q-label">What's the main reason you booked today? <span style="color:var(--orange)">*</span></span>
+      <div class="opt-list" id="reason-opts">
+        <div class="opt" onclick="selectOpt(this,'reason-opts')">
+          <div class="opt-icon"><svg class="opt-check" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="2,7 5.5,10.5 12,3"/></svg></div>
+          <span class="opt-text">Initial testosterone evaluation</span>
+        </div>
+        <div class="opt" onclick="selectOpt(this,'reason-opts')">
+          <div class="opt-icon"><svg class="opt-check" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="2,7 5.5,10.5 12,3"/></svg></div>
+          <span class="opt-text">Erectile dysfunction consultation</span>
+        </div>
+        <div class="opt" onclick="selectOpt(this,'reason-opts')">
+          <div class="opt-icon"><svg class="opt-check" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="2,7 5.5,10.5 12,3"/></svg></div>
+          <span class="opt-text">Weight loss consultation</span>
+        </div>
+        <div class="opt" onclick="selectOpt(this,'reason-opts')">
+          <div class="opt-icon"><svg class="opt-check" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="2,7 5.5,10.5 12,3"/></svg></div>
+          <span class="opt-text">Energy and wellness concerns</span>
+        </div>
+        <div class="opt" onclick="selectOpt(this,'reason-opts')">
+          <div class="opt-icon"><svg class="opt-check" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="2,7 5.5,10.5 12,3"/></svg></div>
+          <span class="opt-text">Something else</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── STEP 2 ── -->
+    <section class="step" data-step="2">
+      <h1 class="step-h1">First, Let's Get to Know You</h1>
+      <p class="step-intro">Tell us how to reach you. A Men's Wellness Centers team member will use this to confirm your 60-minute in-person consultation.</p>
+      <div class="row2">
+        <div class="field"><label>First Name <span class="req">*</span></label><input type="text" placeholder="Eric" required></div>
+        <div class="field"><label>Last Name <span class="req">*</span></label><input type="text" placeholder="O'Brien" required></div>
+      </div>
+      <div class="field">
+        <label>Phone <span class="req">*</span></label>
+        <div class="input-wrap">
+          <span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.08 6.08l1.27-.76a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.5v1.42z"/></svg></span>
+          <input type="tel" placeholder="(425) 753-0838" required>
+        </div>
+        <p class="hint">A team member calls within one business hour to schedule your visit.</p>
+      </div>
+      <div class="field">
+        <label>Email <span class="req">*</span></label>
+        <div class="input-wrap">
+          <span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+          <input type="email" placeholder="you@email.com" required>
+        </div>
+      </div>
+      <div class="field"><label>Date of Birth <span class="req">*</span></label><input type="date" required></div>
+      <div class="field">
+        <label>How did you hear about us? <span class="opt-tag">(Optional)</span></label>
+        <div class="select-wrap">
+          <select>
+            <option value="">Select one</option>
+            <option>Google search</option>
+            <option>Google or YouTube ad</option>
+            <option>Facebook or Instagram</option>
+            <option>Referred by a friend or family member</option>
+            <option>Referred by my doctor</option>
+            <option>Radio or podcast</option>
+            <option>Billboard or signage</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <p class="hint">Helps us reach more men who could use our care.</p>
+      </div>
+    </section>
+
+    <!-- ── STEP 3 ── -->
+    <section class="step" data-step="3">
+      <h1 class="step-h1">Your Health History</h1>
+      <p class="step-intro">Check anything that applies to you. This helps your physician plan a safe, personalized consultation.</p>
+      <span class="q-label">Have you ever been diagnosed with any of these? Check all that apply. <span style="color:var(--orange)">*</span></span>
+      <div class="checklist grid-2" id="health-chk">
+        <div class="chk full" onclick="toggleChk(this,'health-chk',true)">
+          <div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="1,6 4.5,9.5 11,2"/></svg></div>
+          <span class="chk-label">None of the above</span>
+        </div>
+        <div class="chk" onclick="toggleChk(this,'health-chk',false)">
+          <div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="1,6 4.5,9.5 11,2"/></svg></div>
+          <span class="chk-label">High blood pressure</span>
+        </div>
+        <div class="chk" onclick="toggleChk(this,'health-chk',false)">
+          <div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="1,6 4.5,9.5 11,2"/></svg></div>
+          <span class="chk-label">Heart disease</span>
+        </div>
+        <div class="chk" onclick="toggleChk(this,'health-chk',false)">
+          <div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="1,6 4.5,9.5 11,2"/></svg></div>
+          <span class="chk-label">Stroke</span>
+        </div>
+        <div class="chk" onclick="toggleChk(this,'health-chk',false)">
+          <div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="1,6 4.5,9.5 11,2"/></svg></div>
+          <span class="chk-label">Blood clots / DVT</span>
+        </div>
+        <div class="chk" onclick="toggleChk(this,'health-chk',false)">
+          <div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="1,6 4.5,9.5 11,2"/></svg></div>
+          <span class="chk-label">Diabetes</span>
+        </div>
+        <div class="chk" onclick="toggleChk(this,'health-chk',false)">
+          <div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="1,6 4.5,9.5 11,2"/></svg></div>
+          <span class="chk-label">Sleep apnea</span>
+        </div>
+        <div class="chk full" onclick="toggleChk(this,'health-chk',false)">
+          <div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="1,6 4.5,9.5 11,2"/></svg></div>
+          <span class="chk-label">Prostate condition</span>
+        </div>
+      </div>
+      <p class="hint">Your physician will review your full medical history in detail during your 60-minute in-person visit.</p>
+    </section>
+
+    <!-- ── STEP 4 ── -->
+    <section class="step" data-step="4">
+      <h1 class="step-h1">Medications You're Currently Taking</h1>
+      <p class="step-intro">List the name, dose, and how often you take each one. Include any supplements too.</p>
+      <div class="field">
+        <label>What are you taking right now?</label>
+        <textarea placeholder="e.g. Lisinopril 10mg daily, Vitamin D 2000 IU daily" rows="5"></textarea>
+        <p class="hint">If you're not taking anything, leave this blank. You can always add more during your visit.</p>
+      </div>
+    </section>
+
+    <!-- ── STEP 5 ── -->
+    <section class="step" data-step="5">
+      <h1 class="step-h1">Allergies We Should Know About</h1>
+      <p class="step-intro">Medications, foods, latex, or anything in your environment. This keeps your care safe.</p>
+      <div class="field">
+        <label>What are you allergic to?</label>
+        <textarea placeholder="e.g. Penicillin (rash), shellfish" rows="5"></textarea>
+        <p class="hint">If you don't have any allergies, leave this blank.</p>
+      </div>
+    </section>
+
+    <!-- ── STEP 6 ── -->
+    <section class="step" data-step="6">
+      <h1 class="step-h1">How You Live and Work</h1>
+      <p class="step-intro">Straight answers here help your physician build the right plan for you.</p>
+      <div class="field">
+        <label>What do you do for work?</label>
+        <input type="text" placeholder="e.g. Electrician, attorney, retired military">
+        <p class="hint">Helps your physician understand your physical demands and schedule.</p>
+      </div>
+      <span class="q-label">Do you drink alcohol?</span>
+      <div class="opt-list" id="alcohol-opts" style="margin-bottom:20px">
+        <div class="opt" onclick="selectOpt(this,'alcohol-opts')">
+          <div class="opt-icon"><svg class="opt-check" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="2,7 5.5,10.5 12,3"/></svg></div>
+          <span class="opt-text">Yes</span>
+        </div>
+        <div class="opt" onclick="selectOpt(this,'alcohol-opts')">
+          <div class="opt-icon"><svg class="opt-check" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="2,7 5.5,10.5 12,3"/></svg></div>
+          <span class="opt-text">No</span>
+        </div>
+        <div class="opt" onclick="selectOpt(this,'alcohol-opts')">
+          <div class="opt-icon"><svg class="opt-check" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="2,7 5.5,10.5 12,3"/></svg></div>
+          <span class="opt-text">Occasionally</span>
+        </div>
+      </div>
+      <span class="q-label">Do you smoke or use tobacco?</span>
+      <div class="opt-list" id="tobacco-opts">
+        <div class="opt" onclick="selectOpt(this,'tobacco-opts')">
+          <div class="opt-icon"><svg class="opt-check" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="2,7 5.5,10.5 12,3"/></svg></div>
+          <span class="opt-text">Yes</span>
+        </div>
+        <div class="opt" onclick="selectOpt(this,'tobacco-opts')">
+          <div class="opt-icon"><svg class="opt-check" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="2,7 5.5,10.5 12,3"/></svg></div>
+          <span class="opt-text">No</span>
+        </div>
+        <div class="opt" onclick="selectOpt(this,'tobacco-opts')">
+          <div class="opt-icon"><svg class="opt-check" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="2,7 5.5,10.5 12,3"/></svg></div>
+          <span class="opt-text">Former user</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── STEP 7 ── -->
+    <section class="step" data-step="7">
+      <h1 class="step-h1">Lock In Your Visit</h1>
+      <p class="step-intro">One signature confirms your spot. Your 60-minute in-person visit is reserved the moment you submit.</p>
+      <div class="commit">
+        <div class="commit-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="3"/><polyline points="9,12 11,14 15,10"/></svg>
+        </div>
+        <p class="commit-text">By submitting, you are committing to attend your scheduled 60-minute in-person visit at Men's Wellness Centers. If something comes up, call us and we will reschedule.</p>
+      </div>
+      <div class="consent">
+        <p>I confirm that the information I have provided in this intake is true, complete, and accurate to the best of my knowledge. I understand that providing incomplete or inaccurate information may affect the quality and safety of my care, and that I am responsible for updating my provider promptly if any of this information changes.</p>
+        <p>I voluntarily authorize the licensed medical providers and clinical staff of <strong>Men's Wellness Centers</strong> to perform the evaluations, examinations, diagnostic tests (including blood work and laboratory studies), and treatments they determine to be medically appropriate for my care. I understand that no guarantees have been made about the outcome of any treatment or examination. I am free to refuse any test or treatment, and I may withdraw my consent at any time.</p>
+        <p>I understand that some portions of my care may be provided in person at a Men's Wellness Centers location and other portions may be provided via telemedicine when my provider determines it is clinically appropriate. Telemedicine services have benefits and limitations. I have the right to refuse telemedicine and request an in-person visit at any time. All telemedicine encounters are subject to the same confidentiality protections as in-person visits.</p>
+        <p>I acknowledge that I have been provided with, or had the opportunity to review, the Notice of Privacy Practices, which describes how my protected health information (PHI) may be used and disclosed and how I may access this information.</p>
+      </div>
+      <div class="field">
+        <label>Type your full legal name to sign <span class="req">*</span></label>
+        <input type="text" id="sig-field" placeholder="Your full legal name" required>
+        <p class="hint">Treatment requires a clinical evaluation and is provided only when medically appropriate.</p>
+      </div>
+    </section>
+
+    <!-- ── STEP 8 — STAFF ── -->
+    <section class="step" data-step="8">
+      <div class="staff-banner">
+        <div class="staff-banner-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        </div>
+        <div>
+          <div class="staff-banner-title">Staff Use Only</div>
+          <div class="staff-banner-sub">Completed by contact center or on-site team. Not shown to the member.</div>
+        </div>
+      </div>
+      <div class="admin-wrap">
+
+        <div class="admin-section">
+          <div class="admin-section-title">Intake Logistics</div>
+          <div class="row2">
+            <div class="field"><label>Agent / Staff Name</label><input type="text" placeholder="Staff name"></div>
+            <div class="field"><label>Channel of Intake</label><div class="select-wrap"><select><option>Select</option><option>Phone</option><option>Online Form</option><option>Walk-in</option><option>SMS</option><option>Other</option></select></div></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label>Location / Center</label><div class="select-wrap"><select><option>Select</option><option>Richmond</option><option>Newport News</option><option>Virginia Beach</option></select></div></div>
+            <div class="field"><label>Consult Date</label><input type="date"></div>
+          </div>
+          <div class="field"><label>Consult Time</label><input type="time"></div>
+        </div>
+
+        <div class="admin-section">
+          <div class="admin-section-title">Member Address</div>
+          <div class="field"><label>Street Address</label><input type="text" placeholder="123 Main St"></div>
+          <div class="row2">
+            <div class="field"><label>City</label><input type="text"></div>
+            <div class="field"><label>State</label><input type="text" placeholder="VA"></div>
+          </div>
+          <div class="field"><label>Postal Code</label><input type="text" placeholder="23454"></div>
+        </div>
+
+        <div class="admin-section">
+          <div class="admin-section-title">Emergency Contact</div>
+          <div class="row2">
+            <div class="field"><label>Contact Name</label><input type="text"></div>
+            <div class="field"><label>Relationship</label><input type="text" placeholder="Spouse, sibling..."></div>
+          </div>
+          <div class="field"><label>Contact Phone</label><input type="tel"></div>
+        </div>
+
+        <div class="admin-section">
+          <div class="admin-section-title">Primary Care Provider</div>
+          <div class="row2">
+            <div class="field"><label>Provider Name</label><input type="text"></div>
+            <div class="field"><label>Practice Name</label><input type="text"></div>
+          </div>
+          <div class="field">
+            <label>May we contact the provider regarding care?</label>
+            <div class="select-wrap"><select><option>Select</option><option>Yes</option><option>No</option><option>Member unsure</option></select></div>
+          </div>
+        </div>
+
+        <div class="admin-section">
+          <div class="admin-section-title">Full Medical History <span class="admin-tag">Confirm in person</span></div>
+          <span class="q-label">Additional conditions (check all that apply)</span>
+          <div class="checklist grid-2" id="full-hist">
+            <div class="chk" onclick="toggleChk(this,'full-hist',false)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="1,6 4.5,9.5 11,2"/></svg></div><span class="chk-label">High cholesterol</span></div>
+            <div class="chk" onclick="toggleChk(this,'full-hist',false)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="1,6 4.5,9.5 11,2"/></svg></div><span class="chk-label">Thyroid disorder</span></div>
+            <div class="chk" onclick="toggleChk(this,'full-hist',false)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="1,6 4.5,9.5 11,2"/></svg></div><span class="chk-label">Depression or anxiety</span></div>
+            <div class="chk" onclick="toggleChk(this,'full-hist',false)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="1,6 4.5,9.5 11,2"/></svg></div><span class="chk-label">Cancer</span></div>
+            <div class="chk" onclick="toggleChk(this,'full-hist',false)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="1,6 4.5,9.5 11,2"/></svg></div><span class="chk-label">Sickle cell anemia</span></div>
+            <div class="chk" onclick="toggleChk(this,'full-hist',false)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="1,6 4.5,9.5 11,2"/></svg></div><span class="chk-label">Priapism</span></div>
+            <div class="chk full" onclick="toggleChk(this,'full-hist',false)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="1,6 4.5,9.5 11,2"/></svg></div><span class="chk-label">Peyronie's disease</span></div>
+          </div>
+          <p class="hint">Member intake only captures safety-gating conditions. Confirm the rest during the in-person visit.</p>
+        </div>
+
+        <div class="admin-section">
+          <div class="admin-section-title">Visit Reason and Hormone History</div>
+          <div class="field">
+            <label>Primary Reason for Visit</label>
+            <div class="select-wrap"><select><option>Select</option><option>Low testosterone or low energy</option><option>Erectile dysfunction</option><option>Medical weight loss</option><option>Overall performance and wellness</option><option>Other</option></select></div>
+          </div>
+          <div class="field"><label>Symptom Duration</label><input type="text" placeholder="e.g. 6 months, 2+ years"></div>
+          <div class="field">
+            <label>Prior Hormone Therapy</label>
+            <div class="select-wrap"><select><option>Select</option><option>No, never</option><option>Yes, currently</option><option>Yes, in the past</option></select></div>
+          </div>
+          <span class="q-label">Reported Symptoms</span>
+          <div class="admin-sym-group">
+            <div class="admin-sym-label">Physical</div>
+            <div class="checklist grid-2" id="sym-phys">
+              <div class="chk" onclick="toggleChk(this,'sym-phys',false)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="1,6 4.5,9.5 11,2"/></svg></div><span class="chk-label">Fatigue</span></div>
+              <div class="chk" onclick="toggleChk(this,'sym-phys',false)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="1,6 4.5,9.5 11,2"/></svg></div><span class="chk-label">Weight gain</span></div>
+              <div class="chk" onclick="toggleChk(this,'sym-phys',false)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="1,6 4.5,9.5 11,2"/></svg></div><span class="chk-label">Muscle loss</span></div>
+              <div class="chk" onclick="toggleChk(this,'sym-phys',false)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="1,6 4.5,9.5 11,2"/></svg></div><span class="chk-label">Poor sleep</span></div>
+            </div>
+          </div>
+          <div class="admin-sym-group">
+            <div class="admin-sym-label">Psychological</div>
+            <div class="checklist grid-2" id="sym-psych">
+              <div class="chk" onclick="toggleChk(this,'sym-psych',false)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="1,6 4.5,9.5 11,2"/></svg></div><span class="chk-label">Brain fog</span></div>
+              <div class="chk" onclick="toggleChk(this,'sym-psych',false)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="1,6 4.5,9.5 11,2"/></svg></div><span class="chk-label">Irritability</span></div>
+              <div class="chk" onclick="toggleChk(this,'sym-psych',false)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="1,6 4.5,9.5 11,2"/></svg></div><span class="chk-label">Low motivation</span></div>
+              <div class="chk" onclick="toggleChk(this,'sym-psych',false)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="1,6 4.5,9.5 11,2"/></svg></div><span class="chk-label">Mood changes</span></div>
+            </div>
+          </div>
+          <div class="admin-sym-group">
+            <div class="admin-sym-label">Sexual</div>
+            <div class="checklist grid-2" id="sym-sex">
+              <div class="chk" onclick="toggleChk(this,'sym-sex',false)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="1,6 4.5,9.5 11,2"/></svg></div><span class="chk-label">Low libido</span></div>
+              <div class="chk" onclick="toggleChk(this,'sym-sex',false)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="1,6 4.5,9.5 11,2"/></svg></div><span class="chk-label">Erectile dysfunction</span></div>
+              <div class="chk" onclick="toggleChk(this,'sym-sex',false)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="1,6 4.5,9.5 11,2"/></svg></div><span class="chk-label">Reduced morning erections</span></div>
+              <div class="chk" onclick="toggleChk(this,'sym-sex',false)"><div class="chk-box"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="1,6 4.5,9.5 11,2"/></svg></div><span class="chk-label">Performance concerns</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-section">
+          <div class="admin-section-title">Source and Attribution</div>
+          <div class="row2">
+            <div class="field"><label>Confirmed Source Channel</label><div class="select-wrap"><select><option>Select</option><option>Google search</option><option>Google Ads</option><option>Meta Ads</option><option>Referral</option><option>Radio</option><option>Billboard</option><option>Other</option></select></div></div>
+            <div class="field"><label>Campaign / UTM Reference</label><input type="text" placeholder="utm_campaign=..."></div>
+          </div>
+        </div>
+
+        <div class="admin-section">
+          <div class="admin-section-title">Verification and Payment</div>
+          <div class="row2">
+            <div class="field"><label>Photo ID Verified</label><div class="select-wrap"><select><option>Select</option><option>Yes</option><option>No</option><option>Pending</option></select></div></div>
+            <div class="field"><label>Labs Ordered</label><div class="select-wrap"><select><option>Select</option><option>Yes</option><option>No</option><option>Pending</option></select></div></div>
+          </div>
+          <div class="field"><label>Payment Method</label><div class="select-wrap"><select><option>Select</option><option>Cash</option><option>Credit card</option><option>HSA / FSA</option><option>Check</option><option>Other</option></select></div></div>
+        </div>
+
+        <div class="admin-section">
+          <div class="admin-section-title">Assignment and Notes</div>
+          <div class="field"><label>Provider Assigned</label><input type="text" placeholder="Provider name"></div>
+          <div class="field"><label>Internal Notes</label><textarea placeholder="Additional context for the care team..." rows="3"></textarea></div>
+          <div class="field"><label>Intake Reviewed By</label><input type="text" placeholder="Staff name"></div>
+        </div>
+
+      </div>
+    </section>
+
+  </div><!-- end card-body -->
+
+  <div class="card-foot">
+    <button class="btn btn-prev" id="btn-prev" onclick="prev()" disabled>&#8592; Prev</button>
+    <button class="btn btn-next" id="btn-next" onclick="next()">Next &#8594;</button>
+  </div>
+</div><!-- end card -->
+
+<div class="page-footer">
+  <div class="footer-links">
+    <a href="#">Safety Policy</a>
+    <a href="#">Terms of Agreement</a>
+    <a href="#">Privacy Practices</a>
+    <a href="#">HIPAA Notice</a>
+  </div>
+  <div style="margin-bottom:10px">
+    <div class="legitscript-badge">
+      <div class="ls-dot"></div>
+      <span class="ls-text">LegitScript Certified Healthcare Website</span>
+    </div>
+  </div>
+  <p class="footer-disc">Individual results vary. Treatment is provided by licensed physicians at Men's Wellness Centers.<br>Finding Your Edge Over Age.</p>
+</div>
+
+<script>
+const stepNames = ['Right Fit','About You','Health History','Medications','Allergies','Lifestyle','Lock In Your Visit','Staff Admin'];
+let current = 1;
+const total = 8;
+
+function render() {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  const active = document.querySelector(`.step[data-step="${current}"]`);
+  if (active) active.classList.add('active');
+
+  const labelEl = document.getElementById('prog-label');
+  const nameEl = document.getElementById('prog-name');
+  const fillEl = document.getElementById('prog-fill');
+  const prevBtn = document.getElementById('btn-prev');
+  const nextBtn = document.getElementById('btn-next');
+
+  if (current <= 7) {
+    labelEl.textContent = `Step ${current} of 7`;
+    fillEl.style.width = `${(current / 7) * 100}%`;
+  } else {
+    labelEl.textContent = 'Staff Section';
+    fillEl.style.width = '100%';
+  }
+  nameEl.textContent = stepNames[current - 1];
+
+  prevBtn.disabled = current === 1;
+
+  if (current === 7) {
+    nextBtn.textContent = 'Confirm My Visit';
+  } else if (current === 8) {
+    nextBtn.textContent = 'Save Intake';
+  } else {
+    nextBtn.textContent = 'Next \u2192';
+  }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function next() {
+  if (current === 7) {
+    const sig = document.getElementById('sig-field');
+    if (!sig || !sig.value.trim()) {
+      sig.focus();
+      sig.style.borderColor = 'var(--orange)';
+      alert('Please type your full legal name to sign and confirm your visit.');
+      return;
+    }
+    alert("You're confirmed. Your 60-minute in-person visit at Men's Wellness Centers is reserved. A team member will call to lock in your time.");
+    current = 8;
+    render();
+    return;
+  }
+  if (current === 8) {
+    alert('Intake saved.');
+    return;
+  }
+  if (current < total) { current++; render(); }
+}
+
+function prev() {
+  if (current > 1) { current--; render(); }
+}
+
+function selectOpt(el, groupId) {
+  document.querySelectorAll(`#${groupId} .opt`).forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function toggleChk(el, groupId, isExclusive) {
+  const group = document.getElementById(groupId);
+  const allChks = group.querySelectorAll('.chk');
+  const noneChk = allChks[0]; // first item is "None of the above" for member history
+
+  if (isExclusive) {
+    // Clicking "None of the above"
+    const wasSelected = el.classList.contains('selected');
+    allChks.forEach(c => c.classList.remove('selected'));
+    if (!wasSelected) el.classList.add('selected');
+  } else {
+    // Clicking any other option — deselect "None" if it's there
+    if (el.classList.contains('selected')) {
+      el.classList.remove('selected');
+    } else {
+      el.classList.add('selected');
+      // If group has a "None" first item that was selected, clear it
+      if (noneChk && noneChk !== el && noneChk.classList.contains('selected')) {
+        noneChk.classList.remove('selected');
+      }
+    }
+  }
+}
+
+// Init
+render();
+</script>
+</body>
+</html>
