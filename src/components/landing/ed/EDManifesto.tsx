@@ -56,7 +56,7 @@ export const EDManifesto = () => {
 
       <div className="order-1 md:order-2">
         <img
-          src="/assets/lp/provider-exam-stethoscope.webp"
+          src="/assets/lp/exam-room-face-exam.webp"
           decoding="async"
           alt="Patient having labs reviewed with a provider at a Men's Wellness Center in Virginia"
           className="rounded-2xl object-cover w-full aspect-[4/3] md:aspect-auto md:h-[460px]"

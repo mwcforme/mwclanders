@@ -80,7 +80,7 @@ export const WLHero = () => {
           {/* Photo — immediately under H1, best aspect ratio for this image */}
           <div className="mt-6 rounded-xl overflow-hidden" style={{ aspectRatio: "16/9", position: "relative", flexShrink: 0 }}>
             <img
-              src="/assets/lp/hero-man-confident.webp"
+              src="/assets/lp/man-confident-gray-hair-earbuds.webp"
               alt="Licensed provider drawing labs on-site at Men's Wellness Centers Virginia"
               style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%", display: "block" }}
               width={720} height={405} loading="eager" decoding="async"

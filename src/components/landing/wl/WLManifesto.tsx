@@ -57,7 +57,7 @@ export const WLManifesto = () => {
 
       <div className="order-1 md:order-2">
         <img
-          src="/assets/lp/provider-consultation-wide.webp"
+          src="/assets/lp/provider-female-office-files.webp"
           alt="Provider reviewing weight loss protocol with patient at Men's Wellness Centers"
           className="rounded-2xl object-cover w-full aspect-[4/3] md:aspect-auto md:h-[460px]"
           width={600}
