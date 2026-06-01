@@ -14,14 +14,29 @@ interface DayPillProps {
   selected: boolean;
   onSelect: () => void;
   loading?: boolean;
+  preview?: boolean; // 8th day — show date only, no slot label
 }
 
-export function DayPill({ day, selected, onSelect, loading }: DayPillProps) {
-  const disabled = day.full || day.closed || (!loading && day.slotsLeft === 0);
+export function DayPill({ day, selected, onSelect, loading, preview }: DayPillProps) {
+  const disabled = preview || day.full || day.closed || (!loading && day.slotsLeft === 0);
   const dow = DOW_UPPER[day.date.getDay()];
   const dateNum = day.date.getDate();
 
   if (disabled) {
+    // Preview day (8th) — date only, no label
+    if (preview) {
+      return (
+        <div
+          role="radio" aria-checked={false} aria-disabled
+          aria-label={formatLong(day.date)}
+          data-testid={`day-${dateNum}`}
+          className={`${BASE} bg-disabled-light text-disabled-light-foreground opacity-50`}
+        >
+          <p className="font-display text-xs font-bold uppercase tracking-wider">{dow}</p>
+          <p className="font-display text-2xl font-bold leading-none mt-1">{dateNum}</p>
+        </div>
+      );
+    }
     return (
       <div
         role="radio" aria-checked={false} aria-disabled

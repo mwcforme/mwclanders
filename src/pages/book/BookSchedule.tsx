@@ -80,7 +80,7 @@ export default function BookSchedule() {
 
   // ── Build 7-day array ──────────────────────────────────────────────────────
   const days = useMemo(() =>
-    Array.from({ length: 7 }, (_, i) => addDaysInTimeZone(weekStart, i, TIMEZONE)),
+    Array.from({ length: 8 }, (_, i) => addDaysInTimeZone(weekStart, i, TIMEZONE)),
     [weekStart],
   );
 
@@ -363,7 +363,7 @@ export default function BookSchedule() {
                 <ChevronLeft className="h-6 w-6" aria-hidden />
               </button>
               <h2 className="font-display text-sm sm:text-base font-bold uppercase tracking-[0.12em] text-panel-foreground">
-                {MONTHS_UPPER[days[0].getMonth()]} {days[0].getDate()} – {MONTHS_UPPER[days[6].getMonth()]} {days[6].getDate()}
+                {MONTHS_UPPER[days[0].getMonth()]} {days[0].getDate()} – {MONTHS_UPPER[days[7].getMonth()]} {days[7].getDate()}
               </h2>
               <button type="button"
                 onClick={() => {
@@ -388,6 +388,7 @@ export default function BookSchedule() {
                   day={day}
                   loading={loading}
                   selected={dayIdx === selectedDayIdx}
+                  preview={dayIdx === 7} /* 8th day — date only, beyond booking window */
                   onSelect={() => {
                     if (day.full || day.closed) return;
                     setSelectedDayIdx(dayIdx);
