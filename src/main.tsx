@@ -1,4 +1,5 @@
 import { createRoot } from "react-dom/client";
+import "./brand-tokens.css"; // MWC brand token system v1.3.0 — source of truth
 // react-helmet-async removed — replaced by useSEO hook (direct DOM manipulation)
 // @vercel/analytics and @vercel/speed-insights replaced with native script injection
 // (saves ~14KB raw from index chunk; same auto-tracking behavior)

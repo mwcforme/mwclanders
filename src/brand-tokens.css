@@ -1,0 +1,265 @@
+/* ============================================================
+   Men's Wellness Centers — Design Tokens
+   Version 1.3.0  ·  Generated from tokens.json (source of truth)
+   v1.3.0: Reverted to basic site orange #E8732A (menswellnesscenters.com)
+           as ACCENT (icons/links/eyebrows/glow/focus). PRIMARY button +
+           selected chip = DEEP orange-800 #CA4A0E + WHITE text (4.67:1).
+           Hover #D35F1A. Bright #FF6B2C navy-text scheme retired.
+   v1.2.1: Selected chip/control fill brightened to orange-500
+           #FF6B2C with NAVY text (matches primary button; the deep
+           #CA4A0E fill read brown). Checkbox checked-fill stays
+           #CA4A0E (white check needs 4.67:1).
+   v1.2.0: PRIMARY button is bright orange-500 #FF6B2C WITH glow;
+           text on it is NAVY (6.6:1, white on orange is banned at
+           2.84:1); hover DEEPENS to #F2630C. Added WHITE secondary
+           CTA (white fill + navy text, 18.7:1) for dark backgrounds.
+           orange-800 #CA4A0E kept for white-text button + chips.
+   v1.1.0: resting button -> orange-800 #CA4A0E (AA any size);
+           hover lifts brighter to orange-600 #F2630C; disabled
+           text -> navy-70; placeholder is hint-only.
+   ------------------------------------------------------------
+   ------------------------------------------------------------
+   RULE: Reference these variables. Never hard-code raw hex or px
+   in component code. To change a value, edit tokens.json, then
+   regenerate this file and the spec.
+   Layer order: --p-* primitive  ->  --c-* semantic/component.
+   ============================================================ */
+
+:root {
+  /* ---------- PRIMITIVE: color ---------- */
+  --p-navy-900: #0B1029;   /* canonical Midnight Navy */
+  --p-navy-800: #161B3A;   /* elevated dark surface (use sparingly) */
+  --p-navy-700: #1E244A;   /* hairline border on dark */
+  --p-deep-navy: #122256;  /* alternate brighter dark surface / logo bg (white text 15.1:1 AAA) */
+  --p-near-black: #0D0807; /* max-contrast premium dark surface / logo bg (white text 19.9:1 AAA) */
+  --p-cream-50: #F5F0EB;   /* warm off-white */
+  --p-white:    #FFFFFF;
+  --p-ink-900:  #0B1029;   /* text on light */
+  /* NO GRAY: muted/border/placeholder/disabled derive from navy or cream at opacity */
+  --p-cream-70: rgba(245,240,235,0.70); /* muted text on dark  (8.4:1 AAA) */
+  --p-cream-55: rgba(245,240,235,0.55); /* subtle/caption on dark */
+  --p-cream-14: rgba(245,240,235,0.14); /* hairline border on dark */
+  --p-cream-06: rgba(245,240,235,0.06); /* faint fill on dark */
+  --p-navy-70:  rgba(11,16,41,0.70);    /* muted text on light (6.7:1 AA) */
+  --p-navy-55:  rgba(11,16,41,0.55);    /* PLACEHOLDER HINT ONLY (4.15:1, exempt). Never sole label; never informational text. */
+  --p-navy-70b: rgba(11,16,41,0.70);    /* disabled label on light (reads off, not broken) */
+  --p-navy-25:  rgba(11,16,41,0.25);    /* input border / hairline on light */
+  --p-orange-800: #CA4A0E; /* DEEP: PRIMARY BUTTON FILL + selected chip + checkbox checked fill. Pairs with WHITE text/check 4.67:1 (AA any size). */
+  --p-orange-600: #D35F1A; /* PRIMARY-button HOVER (deepens from #CA4A0E). White text 3.87:1 large/transient. */
+  --p-orange-500: #E8732A; /* Basic site orange (menswellnesscenters.com). ACCENT ONLY: icons/dots/links-on-navy/eyebrows/glow/focus. On navy 6.17:1. NOT a button fill. */
+  --p-orange-300: #FFE4CC; /* soft tint */
+  --p-success-300: #5DD68A;/* success on dark (replaces all teal) */
+  --p-success-700: #0B7A4B;/* success on light */
+  --p-error-300: #FF8A8A;  /* error on dark */
+  --p-error-700: #A7211C;  /* error on light */
+  --p-warning-400: #E8A23A;
+  --p-glow-orange: rgba(232,115,42,0.40);
+
+  /* ---------- PRIMITIVE: font ---------- */
+  --p-font-display:   "Oswald", "Arial Narrow", sans-serif; /* NO Bebas Neue */
+  --p-font-marketing: "Montserrat", system-ui, sans-serif;
+  --p-font-ui:        "Inter", system-ui, sans-serif;
+  --p-fw-regular: 400;
+  --p-fw-medium: 500;
+  --p-fw-semibold: 600;
+  --p-fw-bold: 700;
+  --p-fw-extrabold: 800;
+
+  /* ---------- PRIMITIVE: spacing (4px base) ---------- */
+  --p-space-0: 0px;   --p-space-1: 4px;   --p-space-2: 8px;
+  --p-space-3: 12px;  --p-space-4: 16px;  --p-space-5: 20px;
+  --p-space-6: 24px;  --p-space-8: 32px;  --p-space-10: 40px;
+  --p-space-12: 48px; --p-space-16: 64px; --p-space-20: 80px;
+  --p-space-24: 96px;
+
+  /* ---------- PRIMITIVE: radius ---------- */
+  --p-radius-none: 0px;
+  --p-radius-sm: 4px;    /* chips, badges */
+  --p-radius-md: 8px;    /* CANONICAL: buttons, inputs, selectables */
+  --p-radius-lg: 16px;   /* CANONICAL: cards, panels, modals */
+  --p-radius-pill: 999px;/* pills/tags only */
+
+  /* ---------- PRIMITIVE: border ---------- */
+  --p-border-hairline: 1px;
+  --p-border-control: 2px;
+
+  /* ---------- PRIMITIVE: shadow ---------- */
+  --p-shadow-sm: 0 1px 2px rgba(0,0,0,.06), 0 1px 1px rgba(0,0,0,.04);
+  --p-shadow-md: 0 4px 6px rgba(0,0,0,.07), 0 2px 4px rgba(0,0,0,.05);
+  --p-shadow-lg: 0 10px 15px rgba(0,0,0,.08), 0 4px 6px rgba(0,0,0,.05);
+  --p-shadow-xl: 0 20px 25px rgba(0,0,0,.10), 0 8px 10px rgba(0,0,0,.06);
+  --p-shadow-cta: 0 4px 16px rgba(232,115,42,.40);
+
+  /* ---------- PRIMITIVE: motion ---------- */
+  --p-motion-fast: 0.12s ease;
+  --p-motion-base: 0.20s ease;
+  --p-motion-slow: 0.35s ease;
+
+  /* ============================================================
+     SEMANTIC (intent) — reference primitives only
+     ============================================================ */
+  --c-surface-page-dark:  var(--p-navy-900);
+  --c-surface-page-light: var(--p-cream-50);
+  --c-surface-card-dark:  var(--p-navy-900);   /* elevate via border+shadow */
+  --c-surface-card-light: var(--p-white);
+  --c-surface-input:      var(--p-white);
+  --c-surface-selected:   var(--p-orange-800); /* selected chip = deep #CA4A0E, matches primary button; text on it is WHITE (4.67:1) */
+
+  --c-text-on-dark:        var(--p-cream-50);
+  --c-text-on-dark-strong: var(--p-white);
+  --c-text-on-dark-muted:  var(--p-cream-70);
+  --c-text-on-dark-subtle: var(--p-cream-55);
+  --c-text-on-light:       var(--p-ink-900);
+  --c-text-on-light-muted: var(--p-navy-70);
+  --c-text-on-input:       var(--p-ink-900);
+  --c-text-placeholder:    var(--p-navy-55);
+  --c-text-on-action:      var(--p-white);    /* WHITE text on the deep orange primary button (4.67:1). */
+  --c-text-on-action-deep: var(--p-white);    /* alias: WHITE text on deep orange-800 (4.67:1). */
+  --c-text-link-on-dark:   var(--p-orange-500);
+
+  --c-action-primary-bg:        var(--p-orange-800); /* PRIMARY deep #CA4A0E WITH glow */
+  --c-action-primary-bg-hover:  var(--p-orange-600); /* HOVER DEEPENS to #D35F1A */
+  --c-action-primary-fg:        var(--p-white);      /* WHITE text (4.67:1). */
+  --c-action-primary-glow:      var(--p-shadow-cta);
+  --c-action-primary-deep-bg:   var(--p-orange-800); /* alias of primary: deep #CA4A0E + WHITE text */
+  --c-action-primary-deep-fg:   var(--p-white);
+  --c-action-secondary-bg:      var(--p-white);      /* WHITE secondary CTA on dark (white fill + navy text, 18.7:1) */
+  --c-action-secondary-fg:      var(--p-ink-900);
+  --c-action-ghost-bg:          transparent;         /* tertiary ghost on dark */
+  --c-action-ghost-fg:          var(--p-cream-50);
+  --c-action-disabled-bg:       var(--p-navy-25);
+  --c-action-disabled-fg:       var(--p-navy-70b);
+
+  --c-border-input:       var(--p-navy-25);
+  --c-border-input-focus: var(--p-orange-500);
+  --c-border-input-error: var(--p-error-700);
+  --c-border-on-dark:     var(--p-cream-14);
+  --c-border-card-light:  var(--p-navy-25);
+
+  --c-accent:             var(--p-orange-500);
+
+  --c-success-on-dark:  var(--p-success-300);
+  --c-success-on-light: var(--p-success-700);
+  --c-error-on-dark:    var(--p-error-300);
+  --c-error-on-light:   var(--p-error-700);
+  --c-warning:          var(--p-warning-400);
+
+  --c-focus-ring-color:  var(--p-orange-500);
+  --c-focus-ring-width:  3px;
+  --c-focus-ring-offset: 2px;
+
+  /* ---------- SEMANTIC: alternate dark surfaces ---------- */
+  --c-surface-page-deep-navy:  var(--p-deep-navy);  /* richer/brighter dark hero */
+  --c-surface-page-near-black: var(--p-near-black);  /* premium max-contrast dark */
+
+  /* ---------- COMPONENT: logo ---------- */
+  /* Single-fill marks. Recolor only to an approved brand color below. */
+  --c-logo-white:        var(--p-white);
+  --c-logo-midnight-navy:var(--p-navy-900);
+  --c-logo-deep-navy:    var(--p-deep-navy);
+  --c-logo-near-black:   var(--p-near-black);
+  --c-logo-accent:       var(--p-orange-500); /* bug-only accent, never full wordmark */
+}
+
+/* ============================================================
+   BASE TYPOGRAPHY HELPERS (optional utility classes)
+   ============================================================ */
+.mwc-display { font-family: var(--p-font-display); font-weight: 700; line-height: .95; letter-spacing: -.01em; text-transform: uppercase; font-size: clamp(40px, 8vw, 96px); }
+.mwc-h1 { font-family: var(--p-font-display); font-weight: 700; line-height: 1; text-transform: uppercase; font-size: clamp(32px, 5vw, 56px); }
+.mwc-h2 { font-family: var(--p-font-display); font-weight: 700; line-height: 1.05; letter-spacing: .01em; text-transform: uppercase; font-size: clamp(24px, 3vw, 36px); }
+.mwc-h3 { font-family: var(--p-font-display); font-weight: 700; line-height: 1.1; letter-spacing: .02em; text-transform: uppercase; font-size: 20px; }
+.mwc-eyebrow { font-family: var(--p-font-ui); font-weight: 700; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+.mwc-body { font-family: var(--p-font-marketing); font-weight: 400; font-size: 16px; line-height: 1.6; }
+.mwc-body-ui { font-family: var(--p-font-ui); font-weight: 400; font-size: 16px; line-height: 1.5; }
+.mwc-label { font-family: var(--p-font-ui); font-weight: 700; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.mwc-button-text { font-family: var(--p-font-ui); font-weight: 700; font-size: 16px; letter-spacing: .06em; }
+.mwc-caption { font-family: var(--p-font-ui); font-weight: 400; font-size: 13px; line-height: 1.45; }
+
+/* ============================================================
+   COMPONENT CLASSES — canonical, copy-paste ready
+   ============================================================ */
+
+/* Primary button */
+.mwc-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--p-space-2);
+  min-height: 52px; padding: 14px 24px;
+  font-family: var(--p-font-ui); font-weight: 700; font-size: 16px; letter-spacing: .06em;
+  color: var(--c-action-primary-fg); background: var(--c-action-primary-bg);
+  border: none; border-radius: var(--p-radius-md);
+  box-shadow: var(--c-action-primary-glow); cursor: pointer;
+  transition: background var(--p-motion-base), transform var(--p-motion-fast);
+}
+.mwc-btn:hover { background: var(--c-action-primary-bg-hover); }
+.mwc-btn:active { transform: translateY(1px); }
+.mwc-btn:focus-visible { outline: var(--c-focus-ring-width) solid var(--c-focus-ring-color); outline-offset: var(--c-focus-ring-offset); }
+.mwc-btn:disabled { background: var(--c-action-disabled-bg); color: var(--c-action-disabled-fg); box-shadow: none; cursor: not-allowed; }
+
+/* Deep primary variant (#CA4A0E + white text) — use where white-on-orange is required */
+.mwc-btn--deep {
+  background: var(--c-action-primary-deep-bg); color: var(--c-action-primary-deep-fg);
+}
+.mwc-btn--deep:hover { background: var(--p-orange-600); }
+
+/* WHITE secondary CTA (on dark/navy backgrounds) — white fill + navy text, 18.7:1 */
+.mwc-btn--secondary {
+  background: var(--c-action-secondary-bg); color: var(--c-action-secondary-fg);
+  border: none; box-shadow: none;
+}
+.mwc-btn--secondary:hover { background: var(--p-cream-50); }
+
+/* Ghost tertiary (on dark only) — transparent fill, cream border + text */
+.mwc-btn--ghost {
+  background: var(--c-action-ghost-bg); color: var(--c-action-ghost-fg);
+  border: 1px solid var(--c-border-on-dark); box-shadow: none;
+}
+.mwc-btn--ghost:hover { background: var(--p-cream-06); }
+
+/* Text input */
+.mwc-input {
+  width: 100%; height: 56px; padding: 0 16px;
+  background: var(--c-surface-input); color: var(--c-text-on-input);
+  font-family: var(--p-font-ui); font-size: 16px; font-weight: 400;
+  border: var(--p-border-control) solid var(--c-border-input);
+  border-radius: var(--p-radius-md);
+  transition: border-color var(--p-motion-base);
+}
+.mwc-input::placeholder { color: var(--c-text-placeholder); }
+.mwc-input.has-icon { padding-left: 44px; }
+.mwc-input:focus-visible { border-color: var(--c-border-input-focus); outline: var(--c-focus-ring-width) solid var(--c-focus-ring-color); outline-offset: 0; }
+.mwc-input[aria-invalid="true"] { border-color: var(--c-border-input-error); }
+.mwc-input:disabled { background: var(--p-navy-25); color: var(--p-navy-70b); }
+.mwc-input-error { color: var(--c-error-on-light); font-family: var(--p-font-ui); font-size: 13px; margin-top: 6px; }
+
+/* Label */
+.mwc-form-label {
+  display: block; margin-bottom: 8px;
+  font-family: var(--p-font-ui); font-weight: 700; font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+}
+.mwc-form-label--dark { color: var(--c-text-on-dark-muted); }
+.mwc-form-label--light { color: var(--c-text-on-light-muted); }
+.mwc-form-label .req { color: var(--c-accent); margin-left: 2px; }
+
+/* Selectable control (location/date/time) */
+.mwc-selectable {
+  display: inline-flex; align-items: center; gap: var(--p-space-2);
+  padding: 12px 16px; border-radius: var(--p-radius-md);
+  font-family: var(--p-font-ui); font-weight: 600; font-size: 15px;
+  cursor: pointer; transition: all var(--p-motion-base);
+}
+.mwc-selectable--on-dark { background: var(--p-cream-06); border: 1px solid var(--c-border-on-dark); color: var(--c-text-on-dark); }
+.mwc-selectable--on-light { background: var(--p-white); border: 1px solid var(--c-border-card-light); color: var(--c-text-on-light); }
+.mwc-selectable .icon { color: var(--c-accent); }
+.mwc-selectable[aria-pressed="true"],
+.mwc-selectable.is-selected {
+  background: var(--c-surface-selected); color: var(--c-text-on-action); border-color: transparent; /* white text on deep #CA4A0E chip (4.67:1) */
+}
+.mwc-selectable[aria-pressed="true"] .icon,
+.mwc-selectable.is-selected .icon { color: var(--c-text-on-action); }
+
+/* Card */
+.mwc-card { border-radius: var(--p-radius-lg); padding: var(--p-space-6); }
+.mwc-card--dark { background: var(--c-surface-card-dark); border: 1px solid var(--c-border-on-dark); }
+.mwc-card--light { background: var(--c-surface-card-light); border: 1px solid var(--c-border-card-light); box-shadow: var(--p-shadow-lg); }
+
+/* Checkbox */
+.mwc-checkbox { width: 20px; height: 20px; border-radius: var(--p-radius-sm); border: 2px solid var(--c-border-on-dark); accent-color: var(--p-orange-800); /* deep orange so white check holds 4.67:1 */ }

@@ -113,9 +113,22 @@ export default {
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out'
   		},
+		// ── MWC brand semantic aliases (v1.3.0) ───────────────────────────────────
+		// Use these in components instead of raw hex. Source: brand/tokens.json
+		action: { DEFAULT: '#CA4A0E', hover: '#D35F1A', deep: '#CA4A0E' },
+		'on-action': '#FFFFFF',       // white text on deep orange (4.67:1)
+		'on-action-deep': '#FFFFFF',  // alias
+		'brand-accent': '#E8732A',    // accent: icons/links/eyebrows/glow/focus
+		'surface-selected': '#CA4A0E', // selected chip = deep orange
+		'surface-deep-navy': '#122256',
+		'surface-near-black': '#0D0807',
+		'brand-success': '#5DD68A',
+		// ────────────────────────────────────────────────────────────────────────
 		fontFamily: {
-			sans: ['Montserrat', 'Inter', 'system-ui', 'sans-serif'],
-			display: ['Oswald', 'sans-serif'],
+			sans: ['Inter', 'Montserrat', 'system-ui', 'sans-serif'],
+			display: ['Oswald', '"Arial Narrow"', 'sans-serif'],
+			marketing: ['Montserrat', 'system-ui', 'sans-serif'],
+			ui: ['Inter', 'system-ui', 'sans-serif'],
 		},
 		boxShadow: {
 			sm: 'var(--shadow-sm)',
