@@ -697,7 +697,7 @@ html.dark {
 .quiz-light-shell .border-destructive { border-color: #DC2626 !important; }
 .quiz-light-shell .text-destructive { color: #DC2626 !important; }
 .quiz-light-shell .border-primary\/30 { border-color: rgba(232,115,42,0.30) !important; }
-.quiz-light-shell .border-primary { border-color: #E8732A !important; /* v1.3.0 accent */
+.quiz-light-shell .border-primary { border-color: #E8732A !important; /* v1.3.0 accent */ }
 
 /* ── TRTHeroForm submit button — keyboard focus-visible ──────────────────────
    The primary CTA form button uses inline styles + JS hover handlers.
