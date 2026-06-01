@@ -61,18 +61,18 @@
     --brand-cream: #F5F0EB;
 
     /* ── ORANGE SYSTEM v1.2.1 (tokens.json source of truth) ─────────────────
-       PRIMARY button + selected chip = bright #FF6B2C with NAVY text (6.6:1 AA).
+       PRIMARY button + selected chip = DEEP #CA4A0E with WHITE text (4.67:1 AA). v1.3.0
        WHITE text on #FF6B2C is BANNED (2.84:1 FAIL).
-       Hover deepens to #F2630C (navy text 4.0:1, transient/large).
+       Hover deepens to #D35F1A.
        Deep #CA4A0E = rare white-text button + checkbox checked-fill (white 4.67:1).
-       Accent (icons, dots, links on navy, glow) = #FF6B2C.
+       Accent = #E8732A (site orange). Glow rgba(232,115,42,0.40).
     ──────────────────────────────────────────────────────────────────────── */
-    --brand-accent:          #FF6B2C;  /* orange-500 — icons, dots, links on navy */
-    --brand-cta:             #FF6B2C;  /* orange-500 — primary button fill (bright, with glow) */
-    --brand-cta-hover:       #F2630C;  /* orange-600 — hover deepens; navy text stays */
+    --brand-accent:          #E8732A;  /* orange-500 — accent: icons, dots, links on navy, focus */
+    --brand-cta:             #CA4A0E;  /* orange-800 — primary button (deep, white text 4.67:1) */
+    --brand-cta-hover:       #D35F1A;  /* orange-600 — hover deepens */
     --brand-cta-deep:        #CA4A0E;  /* orange-800 — white-text button + checkbox checked-fill */
     --brand-cta-accessible:  #CA4A0E;  /* back-compat alias → orange-800 */
-    --brand-cta-text:        #0B1029;  /* NAVY text on bright #FF6B2C button (6.6:1) */
+    --brand-cta-text:        #FFFFFF;  /* WHITE text on deep #CA4A0E (4.67:1) */
     --brand-cta-deep-text:   #FFFFFF;  /* white text on deep #CA4A0E button (4.67:1) */
     --brand-success:         #5DD68A;  /* success on dark — replaces all teal */
 
@@ -319,7 +319,7 @@
 /* Focus-visible — dual-tone ring, visible on both navy and cream.
    Uses --brand-cta (#B84A08): 4.61:1 vs cream ✅, 5.22:1 vs white ✅, 3.74:1 vs navy ✅ (SC 1.4.11) */
 :focus-visible {
-  outline: 2px solid var(--brand-cta);
+  outline: 2px solid var(--brand-accent);
   outline-offset: 2px;
   box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.85);
 }
@@ -577,11 +577,11 @@ input[type="radio"] {
   /* Border */
   --border-subtle:         230 42% 26%;   /* navy-tinted divider */
 
-  /* Primary (brand orange — booking context) v1.2.1 ─ #FF6B2C bright + NAVY text */
-  --primary:               18 100% 58%;   /* #FF6B2C orange-500 — primary button + selected chip */
-  --primary-foreground:    230 60% 10%;   /* NAVY #0B1029 on bright orange (6.6:1 AA any size) */
-  --primary-hover:         19 93% 51%;    /* #F2630C orange-600 — hover deepens */
-  --primary-on-light:      18 100% 58%;   /* #FF6B2C — accent on light surfaces */
+  /* Primary (brand orange — booking context) v1.3.0 — #CA4A0E deep + WHITE text */
+  --primary:               18 79% 41%;    /* #CA4A0E orange-800 — deep, white text (v1.3.0) */
+  --primary-foreground:    0 0% 100%;     /* WHITE on deep orange (4.67:1) */
+  --primary-hover:         22 72% 46%;    /* #D35F1A orange-600 hover */
+  --primary-on-light:      18 79% 41%;    /* #CA4A0E accent on light */
   --primary-deep:          18 79% 41%;    /* #CA4A0E orange-800 — white-text button + checkbox */
 
   /* White panel (booking card on dark page) */
@@ -626,9 +626,9 @@ html.dark {
   --panel-muted: 215 19% 35%;
   --panel-border: 214 32% 91%;
   --panel-divider: 214 32% 91%;
-  --primary: 18 100% 58%;            /* #FF6B2C orange-500 (spec v1.2.1) */
+  --primary:               18 79% 41%;    /* #CA4A0E orange-800 — deep button (v1.3.0) */
   --primary-foreground: 230 60% 10%; /* NAVY text on bright orange (6.6:1) */
-  --primary-hover: 19 93% 51%;       /* #F2630C hover deepens */
+  --primary-hover:         22 72% 46%;    /* #D35F1A hover v1.3.0 */
   --muted: 215 19% 35%;
   --muted-foreground: 215 19% 35%;
   --border: 214 32% 85%;
@@ -658,13 +658,13 @@ html.dark {
   border-color: #E2E8F0 !important;
 }
 .quiz-light-shell .bg-primary {
-  background: #FF6B2C !important; /* spec v1.2.1 orange-500; text must be NAVY */
+  background: #CA4A0E !important; /* v1.3.0 deep orange */
 }
 .quiz-light-shell .bg-primary\/10 {
-  background: rgba(255,107,44,0.10) !important;
+  background: rgba(232,115,42,0.10) !important;
 }
 .quiz-light-shell .text-primary {
-  color: #CA4A0E !important; /* orange-800 on light — 5.22:1 on white ✅ */
+  color: #CA4A0E !important; /* orange-800 on light — 5.22:1 on white */
 }
 .quiz-light-shell .bg-background {
   background: #FFFFFF !important;
@@ -673,10 +673,10 @@ html.dark {
   box-shadow: 0 2px 12px rgba(0,0,0,0.06) !important;
 }
 .quiz-light-shell .shadow-cta {
-  box-shadow: 0 4px 16px rgba(255,107,44,0.40) !important; /* spec v1.2.1 glow */
+  box-shadow: 0 4px 16px rgba(232,115,42,0.40) !important; /* spec v1.2.1 glow */
 }
 .quiz-light-shell .hover\:bg-primary-hover:hover {
-  background: #F2630C !important; /* orange-600 hover (spec v1.2.1) */
+  background: #D35F1A !important; /* orange-600 hover v1.3.0 */
 }
 .quiz-light-shell input {
   background: #FFFFFF !important;
@@ -687,7 +687,7 @@ html.dark {
   color: var(--c-placeholder-on-white) !important; /* was #94A3B8 (2.56:1 FAIL) → #636B80 5.32:1 ✅ */
 }
 .quiz-light-shell input:focus {
-  border-color: #FF6B2C !important; /* orange-500 focus border */
+  border-color: #E8732A !important; /* orange-500 accent focus v1.3.0 border */
 }
 .quiz-light-shell .text-success { color: #0B7A4B !important; /* success-700 on light */ }
 .quiz-light-shell .bg-success\/15 { background: rgba(93,214,138,0.12) !important; /* success-300 tint */ }
@@ -696,8 +696,8 @@ html.dark {
 .quiz-light-shell .text-disabled-foreground { color: #94A3B8 !important; }
 .quiz-light-shell .border-destructive { border-color: #DC2626 !important; }
 .quiz-light-shell .text-destructive { color: #DC2626 !important; }
-.quiz-light-shell .border-primary\/30 { border-color: rgba(255,107,44,0.30) !important; }
-.quiz-light-shell .border-primary { border-color: #FF6B2C !important; } /* orange-500 */
+.quiz-light-shell .border-primary\/30 { border-color: rgba(232,115,42,0.30) !important; }
+.quiz-light-shell .border-primary { border-color: #E8732A !important; /* v1.3.0 accent */
 
 /* ── TRTHeroForm submit button — keyboard focus-visible ──────────────────────
    The primary CTA form button uses inline styles + JS hover handlers.

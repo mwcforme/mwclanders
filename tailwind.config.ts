@@ -125,7 +125,7 @@ export default {
 			xl: 'var(--shadow-xl)',
 			'2xl': 'var(--shadow-2xl)',
 			card: '0 10px 30px -10px rgba(0,0,0,0.6), 0 2px 0 0 rgba(255,255,255,0.04) inset',
-			cta: '0 4px 16px rgba(255,107,44,0.40)',  /* spec v1.2.1: orange-500 glow */
+			cta: '0 4px 16px rgba(232,115,42,0.40)',  /* spec v1.2.1: orange-500 glow */
 		}
   	}
   },
