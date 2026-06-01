@@ -171,7 +171,7 @@ const EDSolution = () => {
                   <div key={item} style={{ display: "flex", gap: 12, marginBottom: 14, alignItems: "flex-start" }}>
                     <X size={15} style={{
                       // hardcoded-color-allow-next-line
-                      color: "#EF4444", flexShrink: 0, marginTop: 2 }} />
+                      color: "var(--c-error-on-light, #A7211C)", flexShrink: 0, marginTop: 2 }} />
                     <span style={{ fontFamily: "Inter, sans-serif", fontSize: 15, lineHeight: 1.5,
                       // hardcoded-color-allow-next-line
                       color: "rgba(245,240,235,0.60)" }}>{item}</span>

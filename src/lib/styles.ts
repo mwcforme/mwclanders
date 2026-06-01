@@ -18,7 +18,7 @@ export const CARD_WHITE: CSSProperties = {
   background: "#FFFFFF",
   borderRadius: 14,
   overflow: "hidden",
-  border: "1px solid #F3F4F6",
+  border: "1px solid rgba(11,16,41,0.10)",
   boxShadow: "0 4px 16px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.80)",
 };
 
@@ -29,7 +29,7 @@ export const CARD_WHITE_PAD: CSSProperties = {
   background: "#FFFFFF",
   borderRadius: 14,
   padding: "18px 20px",
-  border: "1px solid #F3F4F6",
+  border: "1px solid rgba(11,16,41,0.10)",
   boxShadow: "0 4px 16px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.80)",
 };
 

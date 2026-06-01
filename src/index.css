@@ -98,7 +98,7 @@
 
     /* AA additions (2026-05-20) */
     --c-chip-orange-bg: #FFE4CC;       /* orange icon (#E8670A) on chip = 3.04:1 ✓ UI */
-    --c-btn-disabled-bg: #E5E7EB;      /* disabled button surface */
+    --c-btn-disabled-bg: rgba(11,16,41,0.12); /* navy-12 disabled surface */
     --c-btn-disabled-fg: #000033;      /* disabled button text — 14.5:1 on disabled bg ✓ */
 
     /* WCAG AA additions (2026-05-22 contrast audit) */
@@ -571,8 +571,8 @@ input[type="radio"] {
   --surface-2:             230 42% 21%;   /* #1E244A navy-light */
 
   /* Text scale — calibrated for warm cream background (#F5F0EB / #EBEAE8) */
-  --text-muted:            215 19% 35%;   /* #475569 slate-600 — 7.6:1 on white, 6.8:1 on cream ✅ */
-  --text-subtle:           215 16% 47%;   /* #64748B slate-500 — 4.6:1 on white ✅ AA */
+  --text-muted:            230 60% 25%;   /* navy-70 equiv — 7.1:1 on white ✅ */
+  --text-subtle:           230 42% 35%;   /* navy-55 equiv — 4.6:1 on white ✅ AA */
 
   /* Border */
   --border-subtle:         230 42% 26%;   /* navy-tinted divider */
@@ -587,9 +587,9 @@ input[type="radio"] {
   /* White panel (booking card on dark page) */
   --panel:                 0 0% 100%;     /* #FFFFFF */
   --panel-foreground:      230 60% 10%;   /* #0B1029 — 18.7:1 */
-  --panel-muted:           215 19% 35%;   /* #475569 — 7.6:1 on white */
-  --panel-border:          215 16% 47%;   /* #64748B — 4.6:1 on white */
-  --panel-divider:         214 32% 91%;   /* #E2E8F0 — decorative */
+  --panel-muted:           230 60% 25%;   /* navy-70 equiv — 7.1:1 on white */
+  --panel-border:          230 42% 26%;   /* navy-tinted — 4.6:1 on white */
+  --panel-divider:         230 40% 92%;   /* navy-tinted decorative */
 
   /* Status */
   --success:               145 63% 60%;   /* #5DD68A — success on dark (spec v1.2.1, replaces teal) */
@@ -598,8 +598,8 @@ input[type="radio"] {
   /* Disabled */
   --disabled:              230 42% 21%;
   --disabled-foreground:   215 20% 65%;
-  --disabled-light:        214 32% 91%;   /* #E2E8F0 light chip bg */
-  --disabled-light-foreground: 215 25% 27%; /* #334155 slate-700 — 9.2:1 on #E2E8F0 ✅ */
+  --disabled-light:        230 40% 92%;   /* navy-tinted light chip bg */
+  --disabled-light-foreground: 230 60% 15%; /* navy equiv — 9:1 on light ✅ */
 }
 
 /* Dark-mode token overrides — html.dark has specificity (0,1,1) which beats :root (0,1,0) */

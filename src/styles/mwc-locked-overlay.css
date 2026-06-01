@@ -153,11 +153,11 @@ body[data-page="confirmed"] [style*="rgba(46, 196, 165" i] {
   background: rgba(232,103,10,0.10) !important;
   border-color: var(--mwc-locked-accent) !important;
 }
-body[data-page="confirmed"] svg path[stroke="#2EC4A5" i],
-body[data-page="confirmed"] svg path[stroke="#2ec4a5" i] {
+body[data-page="confirmed"] svg path[stroke="#5DD68A" i],
+body[data-page="confirmed"] svg path[stroke="#5DD68A" i] {
   stroke: var(--mwc-locked-accent) !important;
 }
-body[data-page="confirmed"] [style*="#2EC4A5" i],
+body[data-page="confirmed"] [style*="#5DD68A" i],
 body[data-page="confirmed"] [style*="2ec4a5" i] {
   color: var(--mwc-locked-accent) !important;
   border-color: var(--mwc-locked-accent) !important;

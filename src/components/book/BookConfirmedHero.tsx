@@ -6,9 +6,9 @@ import { COLORS, FONTS } from "@/lib/bookingTokens";
 
 // Exact computed values from mwclocked.pplx.app/#/confirmed
 // hardcoded-color-allow-next-line
-const GREEN      = "#10B77F";          // rgb(16,183,127) — "Appointment Confirmed" label
+const GREEN      = "#5DD68A";          // success on dark (spec v1.3.0, replaces teal)
 // hardcoded-color-allow-next-line
-const GREEN_TINT = "rgba(16,183,127,0.15)"; // check circle bg
+const GREEN_TINT = "rgba(93,214,138,0.15)"; // check circle bg
 // hardcoded-color-allow-next-line
 const INK        = "#0A0F29";          // rgb(10,15,41) — body text on white cards
 // hardcoded-color-allow-next-line
