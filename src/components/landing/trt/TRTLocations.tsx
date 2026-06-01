@@ -229,7 +229,7 @@ export const TRTLocations = () => {
                           : "0 4px 12px rgba(11,16,41,0.20)",
                       }}
                     >
-                      {isSelected ? "Confirmed. Scroll to book" : "Book No-Cost Visit"}
+                      {isSelected ? "Confirmed. Scroll to book" : "Book in-person visit online"}
                       {isSelected
                         ? <Check size={16} strokeWidth={2.5} aria-hidden />
                         : <ArrowRight size={16} strokeWidth={2.5} aria-hidden />

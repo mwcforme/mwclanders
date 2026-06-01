@@ -141,7 +141,7 @@ const TRTSolution = () => {
             </div>
             <div id="hero-form" className="solution-hero-right">
               <TRTHeroForm service="trt" formId="trt-sol-hero"
-                heading="Reserve Your No-Cost Visit."
+                heading="Book in-person visit online"
                 subheading="60 minutes. Labs on-site. Results reviewed before you leave." />
             </div>
           </div>
@@ -323,7 +323,7 @@ const TRTSolution = () => {
             </div>
             <div>
               <TRTHeroForm service="trt" formId="trt-sol-cta"
-                heading="Book Your In-Person Visit."
+                heading="Book in-person visit online"
                 subheading="Labs drawn same day. Results reviewed before you leave." />
             </div>
           </div>

@@ -167,7 +167,7 @@ export default function FormEmbed() {
               textAlign:   "center",
               marginBottom: 6,
             }}>
-              Book Your No-Cost Visit
+              Book in-person visit online
             </h1>
 
             <p style={{
@@ -295,7 +295,7 @@ export default function FormEmbed() {
               >
                 {busy
                   ? <><Loader2 size={18} className="animate-spin" /> Submitting…</>
-                  : <>Book My Visit <ArrowRight size={18} strokeWidth={2.5} /></>
+                  : <>Book in-person visit online <ArrowRight size={18} strokeWidth={2.5} /></>
                 }
               </button>
 

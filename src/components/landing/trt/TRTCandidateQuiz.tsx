@@ -180,7 +180,7 @@ export const TRTCandidateQuiz = ({ onNavigateSchedule }: { onNavigateSchedule: (
                 letterSpacing: "0.02em",
               }}
             >
-              Book My No-Cost Lab Visit
+              Book in-person visit online
             </button>
           </div>
         )}

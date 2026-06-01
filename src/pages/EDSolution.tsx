@@ -124,7 +124,7 @@ const EDSolution = () => {
             </div>
             <div id="hero-form" className="solution-hero-right">
               <TRTHeroForm service="ed" formId="ed-sol-hero"
-                heading="Book Your Private In-Person Visit."
+                heading="Book in-person visit online"
                 subheading="No insurance filed. No employer notification. 100% confidential." />
             </div>
           </div>
@@ -286,7 +286,7 @@ const EDSolution = () => {
             </div>
             <div>
               <TRTHeroForm service="ed" formId="ed-sol-cta"
-                heading="Book Your Private Visit."
+                heading="Book in-person visit online"
                 subheading="100% confidential. No insurance filed. Virginia locations." />
             </div>
           </div>

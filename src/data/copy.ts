@@ -14,23 +14,23 @@
 export const COPY = {
   cta: {
     /** Primary booking CTA. Header, hero submit, locations, sticky bar, final CTA. */
-    bookConsult: "Book My No-Cost Visit",
+    bookConsult: "Book in-person visit online",
     /** Results section CTA. */
-    startConsult: "Book My No-Cost Visit",
+    startConsult: "Book in-person visit online",
     /** Inline link variant inside FAQ answers. */
-    bookConsultInline: "book a no-cost visit",
+    bookConsultInline: "book in-person visit online",
     /** ED service final-CTA + ED form card title. */
-    bookDiscreetVisit: "Book My No-Cost Visit",
+    bookDiscreetVisit: "Book in-person visit online",
     /** WL service final-CTA + WL manifesto. */
-    seeIfIQualify: "Book My No-Cost Visit",
+    seeIfIQualify: "Book in-person visit online",
     /** TRT manifesto secondary CTA. */
-    seeIfYouQualify: "Book My No-Cost Visit",
+    seeIfYouQualify: "Book in-person visit online",
     /** Phone CTA prefix. */
     callNow: "Call Now",
     /** Sticky mobile bar primary action — short, action-oriented. */
     getLabsChecked: "Get My Labs Checked",
     /** Pricing/affordability page CTA — emphasizes no-cost first visit. */
-    bookNoCostVisit: "Book My No-Cost Visit",
+    bookNoCostVisit: "Book in-person visit online",
   },
   badge: {
     /** Hero pill / trust chip describing the offer. */
