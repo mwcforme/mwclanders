@@ -85,7 +85,7 @@ export const TRTHeader = ({ minimal = false, hideCta = false }: { minimal?: bool
               onMouseEnter={(e) => { e.currentTarget.style.background = "#CF5C09"; e.currentTarget.style.transform = "translateY(-1px)"; }}
               onMouseLeave={(e) => { e.currentTarget.style.background = "var(--brand-cta)"; e.currentTarget.style.transform = "translateY(0)"; }}
             >
-              {COPY.cta.bookConsult}
+              {COPY.cta.headerCta}
             </button>
           )}
         </div>
