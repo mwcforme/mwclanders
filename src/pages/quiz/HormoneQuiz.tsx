@@ -494,7 +494,7 @@ function StepResult({ answers, onSuccess }: { answers: Answers; onSuccess: () =>
           }}>
             <div style={{ background: INK, padding: "18px 22px" }}>
               <p style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 19, textTransform: "uppercase", color: WHITE, marginBottom: 3 }}>
-                Book in-person visit online.
+                Book in-person visit.
               </p>
               <p style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: "rgba(255,255,255,0.65)", margin: 0 }}>
                 Same- or next-day availability at 3 Virginia centers.
@@ -593,7 +593,7 @@ function StepResult({ answers, onSuccess }: { answers: Answers; onSuccess: () =>
                 }}>
                 {controller.isSubmitting
                   ? <><Loader2 size={16} className="animate-spin" /> Reserving...</>
-                  : <>Book in-person visit online <ArrowRight size={16} aria-hidden /></>}
+                  : <>Book in-person visit <ArrowRight size={16} aria-hidden /></>}
               </button>
 
               <div style={{ textAlign: "center" }}>

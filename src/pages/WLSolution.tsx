@@ -124,7 +124,7 @@ const WLSolution = () => {
             </div>
             <div id="hero-form" className="solution-hero-right">
               <TRTHeroForm service="wl" formId="wl-sol-hero"
-                heading="Book in-person visit online"
+                heading="Book in-person visit"
                 subheading="Labs drawn same day. Your physician reviews the results with you." />
             </div>
           </div>
@@ -286,7 +286,7 @@ const WLSolution = () => {
             </div>
             <div>
               <TRTHeroForm service="wl" formId="wl-sol-cta"
-                heading="Book in-person visit online"
+                heading="Book in-person visit"
                 subheading="Labs drawn same day. Virginia locations. No insurance needed." />
             </div>
           </div>

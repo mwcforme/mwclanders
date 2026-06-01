@@ -33,7 +33,7 @@ export const AffordabilityMemberTerms = () => {
             style={{ height: 48, background: "var(--brand-cta)", color: "var(--c-text-on-dark)", fontSize: 14, letterSpacing: "0.05em", fontFamily: "Inter, sans-serif", whiteSpace: "nowrap" }}
             onMouseEnter={(e) => { e.currentTarget.style.background = "var(--brand-cta-hover)"; }}
             onMouseLeave={(e) => { e.currentTarget.style.background = "var(--brand-cta)"; }}>
-            Book in-person visit online
+            Book in-person visit
           </button>
         </div>
       </div>

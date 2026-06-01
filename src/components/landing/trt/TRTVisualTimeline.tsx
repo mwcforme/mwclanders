@@ -154,7 +154,7 @@ export const TRTVisualTimeline = ({ onSchedule }: { onSchedule: () => void }) =>
 
         <div style={{ textAlign: "center", marginTop: 48 }}>
           <OrangeCTA onClick={onSchedule} style={{ borderRadius: 999, height: 56, fontSize: 17, justifyContent: "center" }}>
-            Book in-person visit online <ArrowRight size={18} strokeWidth={2.5} />
+            Book in-person visit <ArrowRight size={18} strokeWidth={2.5} />
           </OrangeCTA>
         </div>
       </div>

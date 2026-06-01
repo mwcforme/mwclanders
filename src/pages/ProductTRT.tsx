@@ -187,7 +187,7 @@ const ProductTRT = () => {
               {/* CTA */}
               <div style={{ marginTop: 28 }}>
                 <OrangeCTA onClick={goSchedule} style={{ borderRadius: 999, height: 56, fontSize: 17, justifyContent: "center", width: "100%" }}>
-                  Book in-person visit online <ArrowRight size={18} strokeWidth={2.5} />
+                  Book in-person visit <ArrowRight size={18} strokeWidth={2.5} />
                 </OrangeCTA>
               </div>
             </div>
@@ -198,7 +198,7 @@ const ProductTRT = () => {
               <TRTHeroForm
                 service="trt"
                 heading="Reserve Your Visit"
-                ctaLabel="Book in-person visit online"
+                ctaLabel="Book in-person visit"
                 formId="product-trt"
               />
             </div>
@@ -256,7 +256,7 @@ const ProductTRT = () => {
               Your first visit is no-cost. Labs are drawn on-site. Results reviewed the same day.
             </p>
             <OrangeCTA onClick={goSchedule} style={{ borderRadius: 999, height: 56, fontSize: 17, margin: "0 auto" }}>
-              Book in-person visit online <ArrowRight size={18} strokeWidth={2.5} />
+              Book in-person visit <ArrowRight size={18} strokeWidth={2.5} />
             </OrangeCTA>
             <p style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", marginTop: 16 }}>
               Virginia-licensed providers · LegitScript Certified · HIPAA Compliant
