@@ -13,8 +13,8 @@ const SYMPTOMS = [
 
 const COLORS = {
   navyDeep: "var(--brand-navy-deep)",
-  cream: "var(--brand-cream)",
-  orange: "var(--brand-cta)",
+  cream: "#FFFFFF",       /* pure white — matches WP marketing site */
+  orange: "var(--brand-accent)", /* #E8732A accent for line 2 */
   // hardcoded-color-allow-next-line
   gold: "#C9A961",
 };

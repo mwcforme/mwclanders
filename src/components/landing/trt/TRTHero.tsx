@@ -50,8 +50,8 @@ const RotatingService = () => {
 
 const COLORS = {
   navyDeep: "var(--brand-navy-deep)",
-  cream: "var(--brand-cream)",
-  orange: "var(--brand-cta)",
+  cream: "#FFFFFF",       /* pure white — matches WP marketing site H1 */
+  orange: "var(--brand-accent)", /* #E8732A accent — used for line 2 accent only */
 };
 
 
