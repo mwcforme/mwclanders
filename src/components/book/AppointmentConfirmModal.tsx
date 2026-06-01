@@ -32,7 +32,7 @@ export function AppointmentConfirmModal({ open, onOpenChange, selectedSlot, full
             You're booking
           </div>
           <div style={{ fontSize: 16, fontWeight: 700, marginBottom: 8 }}>
-            New Patient Consultation (60 min)
+            New Patient Appointment (60 min)
           </div>
           {selectedSlot && (
             <div style={{ fontSize: 16, color: INK, marginBottom: 4 }}>

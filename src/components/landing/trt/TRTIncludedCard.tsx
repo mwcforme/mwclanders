@@ -29,7 +29,7 @@ export const TRTIncludedCard = () => (
     </div>
     {([
       { icon: <FlaskConical size={16} strokeWidth={1.75} color="var(--brand-cta)" />, title: "Full Hormone Lab Panel" },
-      { icon: <Stethoscope  size={16} strokeWidth={1.75} color="var(--brand-cta)" />, title: "Provider Consultation" },
+      { icon: <Stethoscope  size={16} strokeWidth={1.75} color="var(--brand-cta)" />, title: "Provider Visitsultation" },
       { icon: <ClipboardList size={16} strokeWidth={1.75} color="var(--brand-cta)" />, title: "Personalized Treatment Plan" },
     ] as const).map(({ icon, title }) => (
       <div key={title} style={{
@@ -63,7 +63,7 @@ export const TRTIncludedCard = () => (
     }}>
       <span style={{ fontWeight: 700, fontSize: 13, color: "rgba(255,255,255,0.65)" }}>Total</span>
       <span style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 20, color: "var(--brand-cta)" }}>
-        $0 No-cost consultation
+        $0 No-cost visit
       </span>
     </div>
   </div>

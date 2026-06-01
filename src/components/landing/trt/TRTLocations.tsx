@@ -212,7 +212,7 @@ export const TRTLocations = () => {
                     <button
                       type="button"
                       onClick={() => handleBook(card.slug)}
-                      aria-label={`Book a no-cost consultation at the ${card.city} center`}
+                      aria-label={`Book a no-cost visit at the ${card.city} center`}
                       style={{
                         width: "100%", minHeight: 52,
                         background: isSelected ? "var(--brand-cta)" : "var(--brand-navy)",
@@ -229,7 +229,7 @@ export const TRTLocations = () => {
                           : "0 4px 12px rgba(11,16,41,0.20)",
                       }}
                     >
-                      {isSelected ? "Confirmed. Scroll to book" : "Book No-Cost Consultation"}
+                      {isSelected ? "Confirmed. Scroll to book" : "Book No-Cost Visit"}
                       {isSelected
                         ? <Check size={16} strokeWidth={2.5} aria-hidden />
                         : <ArrowRight size={16} strokeWidth={2.5} aria-hidden />

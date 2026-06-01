@@ -221,7 +221,7 @@ export default function TRTGetStarted() {
     <div className="min-h-screen flex flex-col bg-background">
       <SEO
         title="Get Started with TRT | Men's Wellness Centers"
-        description="Begin your no-cost testosterone consultation with a Virginia-licensed provider."
+        description="Begin your no-cost testosterone visit with a Virginia-licensed provider."
       />
       {/* CRO Header - logo + phone only */}
       <header style={{
@@ -309,7 +309,7 @@ export default function TRTGetStarted() {
               <span style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 18, color: "var(--c-text-on-dark)" }}>
                 TRT In-Person{" "}
                 <span style={{ color: ORANGE }}>·</span>
-                {" "}No-Cost Consultation
+                {" "}No-Cost Visit
               </span>
             </div>
           </div>

@@ -73,7 +73,7 @@ async function attemptBooking(b: QueuedBooking): Promise<boolean> {
           calendarId: b.calendarId,
           contactId: b.contactId,
           startTime: b.slotIso,
-          title: "Consultation",
+          title: "Appointment",
           appointmentStatus: "confirmed",
           ignoreDateRange: false,
           toNotify: true,

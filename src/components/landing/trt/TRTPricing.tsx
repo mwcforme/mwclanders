@@ -188,7 +188,7 @@ export const TRTPricing = ({ className }: TRTPricingProps) => {
               e.currentTarget.style.background = "var(--brand-cta)";
             }}
           >
-            Start With a No-Cost Consultation
+            Start With a No-Cost Visit
           </button>
 
           <p

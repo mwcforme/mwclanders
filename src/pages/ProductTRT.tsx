@@ -197,7 +197,7 @@ const ProductTRT = () => {
               <TRTIncludedCard />
               <TRTHeroForm
                 service="trt"
-                heading="Reserve Your Consultation"
+                heading="Reserve Your Visit"
                 ctaLabel="Book My No-Cost Lab Visit"
                 formId="product-trt"
               />

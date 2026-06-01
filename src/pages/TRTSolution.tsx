@@ -57,8 +57,8 @@ const STEPS = [
 const FAQS = [
   { q: "How is this different from Hims or an online TRT provider?", a: "Online services are questionnaire-based. A physician never sees you in person and labs are often drawn after prescribing, not before. At Men's Wellness Centers, a Virginia-licensed physician evaluates you face to face, orders labs the same visit, and reviews results with you before any protocol is discussed." },
   { q: "What happens at my first visit?", a: "Your provider reviews your symptoms and history, draws labs on-site, and reviews results with you before you leave. No waiting for a callback. Typically 60 minutes start to finish." },
-  { q: "What does the no-cost consultation include?", a: "The first visit is at no charge: provider evaluation, in-center labs, and a full results review. We don't bill insurance for the first visit. FSA and HSA cards are accepted." },
-  { q: "When will I notice a difference?", a: "Individual results vary and depend on your baseline labs, lifestyle, and protocol. Your provider will set realistic expectations at your consultation based on your actual numbers." },
+  { q: "What does the no-cost visit include?", a: "The first visit is at no charge: provider evaluation, in-center labs, and a full results review. We don't bill insurance for the first visit. FSA and HSA cards are accepted." },
+  { q: "When will I notice a difference?", a: "Individual results vary and depend on your baseline labs, lifestyle, and protocol. Your provider will set realistic expectations at your appointment based on your actual numbers." },
   { q: "Is this covered by insurance?", a: "We don't bill insurance, but FSA and HSA cards are accepted. Many members find the straightforward cash pricing simpler than navigating prior authorizations and coverage limits." },
 ];
 

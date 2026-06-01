@@ -18,11 +18,11 @@ interface BookLayoutProps {
 const DEFAULT_DESC: Record<BookLayoutProps["page"], string> = {
   symptom: "Tell us what brought you in. Quick, two-question intake before scheduling at a Virginia center.",
   duration: "How long has this been going on? Helps your provider personalize your visit.",
-  schedule: "Pick a consultation time at a Men's Wellness Centers location in Virginia.",
-  confirmed: "Your consultation is booked. Center details and what to expect.",
+  schedule: "Pick a visit time at a Men's Wellness Centers location in Virginia.",
+  confirmed: "Your visit is booked. Center details and what to expect.",
   "lets-talk": "Talk to a Men's Wellness Centers care team member to figure out the right next step.",
-  contact: "Enter your contact details to book your consultation at a Virginia center.",
-  location: "Choose a Men's Wellness Centers location in Virginia for your consultation.",
+  contact: "Enter your contact details to book your visit at a Virginia center.",
+  location: "Choose a Men's Wellness Centers location in Virginia for your appointment.",
 };
 
 

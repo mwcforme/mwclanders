@@ -65,7 +65,7 @@ export async function bookAppointment(input: BookAppointmentInput) {
       contactId: input.contactId,
       startTime: input.startTime,
       ...(input.endTime ? { endTime: input.endTime } : {}),
-      title: input.title ?? `Consultation - ${cal.label}`,
+      title: input.title ?? `Appointment - ${cal.label}`,
       appointmentStatus: "confirmed",
       ignoreDateRange: false,
       toNotify: true,

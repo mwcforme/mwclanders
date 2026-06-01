@@ -15,7 +15,7 @@ export const AffordabilityMemberTerms = () => {
           fontFamily: "Oswald, sans-serif", fontSize: "clamp(28px, 3.5vw, 40px)",
           color: "var(--c-text-on-light)", fontWeight: 700, lineHeight: 1.1, marginTop: 0, marginBottom: 8,
         }}>
-          CHOOSE YOUR TERM AT THE CONSULTATION.
+          CHOOSE YOUR TERM AT YOUR VISIT.
         </h2>
         <p style={{ fontFamily: "Inter, sans-serif", fontSize: 16, color: "var(--c-text-on-light-muted)", lineHeight: 1.6, marginTop: 0, marginBottom: 40 }}>
           All terms reviewed in writing. No pressure to decide on the spot.
@@ -33,7 +33,7 @@ export const AffordabilityMemberTerms = () => {
             style={{ height: 48, background: "var(--brand-cta)", color: "var(--c-text-on-dark)", fontSize: 14, letterSpacing: "0.05em", fontFamily: "Inter, sans-serif", whiteSpace: "nowrap" }}
             onMouseEnter={(e) => { e.currentTarget.style.background = "var(--brand-cta-hover)"; }}
             onMouseLeave={(e) => { e.currentTarget.style.background = "var(--brand-cta)"; }}>
-            Reserve My Consultation
+            Reserve My Visit
           </button>
         </div>
       </div>

@@ -62,7 +62,7 @@ const NotFound = () => (
         borderRadius: 12, textDecoration: "none",
         fontWeight: 600, fontSize: 15, fontFamily: "Inter, sans-serif",
       }}>
-        Book a consultation
+        Book a visit
       </a>
     </div>
   </div>

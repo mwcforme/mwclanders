@@ -12,8 +12,8 @@ interface FaqItem {
 
 const FAQ_ITEMS: FaqItem[] = [
   {
-    q: "What is included in the no-cost consultation?",
-    a: "Your no-cost consultation includes a face-to-face visit with a licensed Virginia provider, a complete review of your symptoms and health history, and on-site lab work. You'll get your results and a personalized recommendation during the same visit. No waiting, no runaround.",
+    q: "What is included in the no-cost visit?",
+    a: "Your no-cost visit includes a face-to-face visit with a licensed Virginia provider, a complete review of your symptoms and health history, and on-site lab work. You'll get your results and a personalized recommendation during the same visit. No waiting, no runaround.",
   },
   {
     q: "What is testosterone replacement therapy (TRT)?",

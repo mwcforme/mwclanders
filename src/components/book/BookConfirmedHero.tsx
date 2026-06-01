@@ -14,7 +14,7 @@ const INK        = "#0A0F29";          // rgb(10,15,41) — body text on white c
 // hardcoded-color-allow-next-line
 const SUBTITLE   = "#CBD5E1";          // rgb(203,213,225) — subtitle text
 
-const CHECKLIST_ITEMS = ["No-cost consultation", "Your provider reserved", "Bring photo ID"] as const;
+const CHECKLIST_ITEMS = ["No-cost visit", "Your provider reserved", "Bring photo ID"] as const;
 
 interface ApptDate { weekday: string; month: string; day: string; time: string; iso: string; }
 interface Props {

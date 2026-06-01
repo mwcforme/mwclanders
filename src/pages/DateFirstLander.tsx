@@ -395,7 +395,7 @@ function ContactForm({
         </button>
 
         <p style={{ textAlign: "center", fontSize: 12, color: CREAM55, fontFamily: "Inter, sans-serif" }}>
-          No cost consultation. Labs drawn on-site. Results reviewed same visit.
+          No-cost visit. Labs drawn on-site. Results reviewed same visit.
         </p>
       </form>
     </div>
@@ -491,7 +491,7 @@ export default function DateFirstLander() {
             {/* What you get */}
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               {[
-                "No-cost initial consultation",
+                "No-cost initial visit",
                 "Labs drawn on-site, results same visit",
                 "Licensed Virginia provider, in person",
                 "No insurance needed · FSA/HSA accepted",

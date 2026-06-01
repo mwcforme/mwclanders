@@ -54,7 +54,7 @@ const STEPS = [
 
 const FAQS = [
   { q: "What makes medical weight loss different from a diet program?", a: "A diet program manages calories. Medical weight loss starts with understanding what your body is actually doing. Hormonal imbalances, thyroid function, and metabolic resistance all affect how your body manages weight. A physician-led evaluation identifies what's actually in the way." },
-  { q: "What does the no-cost consultation include?", a: "The first visit is at no charge: a full provider evaluation, in-center labs, and a results review with your physician. We don't bill insurance for the first visit. FSA and HSA cards are accepted." },
+  { q: "What does the no-cost visit include?", a: "The first visit is at no charge: a full provider evaluation, in-center labs, and a results review with your physician. We don't bill insurance for the first visit. FSA and HSA cards are accepted." },
   { q: "What happens at the first visit?", a: "Your provider reviews your history and symptoms, draws labs on-site, and reviews the results with you face to face before you leave. You walk out knowing what your labs show and whether treatment makes sense for your case." },
   { q: "Is this covered by insurance or HSA/FSA?", a: "We don't bill insurance, but FSA and HSA cards are accepted. Many members find the transparent cash pricing much simpler than dealing with prior authorizations." },
   { q: "How quickly will I see results?", a: "Individual results vary and depend on your baseline labs, protocol, and lifestyle. Your provider will discuss realistic expectations based on your actual numbers at the consultation." },

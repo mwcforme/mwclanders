@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { eyebrow } from "@/data/affordabilityContent";
 import { COPY } from "@/data/copy";
 
-const DISCLAIMER = "Treatment requires a clinical evaluation and is provided only when medically appropriate. Actual treatment plan, pricing, and medication type are determined by a licensed provider at your no-cost consultation. Financing is provided by third-party lenders, not Men's Wellness Centers. The $179/month example reflects a representative 36-month financed term; actual payment depends on creditworthiness, loan amount, APR, and repayment term. APR varies by lender. Not all applicants will qualify. This is not a credit offer or commitment to lend. FSA/HSA eligibility depends on your plan administrator. Membership terms and inclusions are reviewed in writing at your consultation prior to any commitment.";
+const DISCLAIMER = "Treatment requires a clinical evaluation and is provided only when medically appropriate. Actual treatment plan, pricing, and medication type are determined by a licensed provider at your no-cost visit. Financing is provided by third-party lenders, not Men's Wellness Centers. The $179/month example reflects a representative 36-month financed term; actual payment depends on creditworthiness, loan amount, APR, and repayment term. APR varies by lender. Not all applicants will qualify. This is not a credit offer or commitment to lend. FSA/HSA eligibility depends on your plan administrator. Membership terms and inclusions are reviewed in writing at your appointment prior to any commitment.";
 
 export const AffordabilityClosingCTA = () => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ export const AffordabilityClosingCTA = () => {
           fontFamily: "Oswald, sans-serif", fontSize: "clamp(28px, 4vw, 48px)",
           color: "var(--brand-cream)", fontWeight: 700, lineHeight: 1.1, marginTop: 0, marginBottom: 16,
         }}>
-          YOUR PRICING IS REVIEWED AT THE CONSULTATION.
+          YOUR PRICING IS REVIEWED AT YOUR VISIT.
         </h2>
         <p style={{ fontFamily: "Inter, sans-serif", fontSize: 17, color: "var(--c-text-on-dark-muted)", lineHeight: 1.65, maxWidth: 560, margin: "0 auto 32px" }}>
           Your provider walks every number with you in writing at your visit. You decide what to do with that information.

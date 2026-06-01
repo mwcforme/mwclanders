@@ -38,7 +38,7 @@ function buildCalendarLinks(iso: string, address: string, service?: string | nul
   const fmt   = (d: Date) => d.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
   const title = "Men's Wellness Centers Appointment";
   const serviceLabel = SERVICE_LABELS[service ?? "general"] ?? "men's health";
-  const desc  = `Your no-cost ${serviceLabel} consultation. Bring photo ID.`;
+  const desc  = `Your no-cost ${serviceLabel} visit. Bring photo ID.`;
   const google = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${fmt(start)}/${fmt(end)}&location=${encodeURIComponent(address)}&details=${encodeURIComponent(desc)}`;
   const ics    = ["BEGIN:VCALENDAR","VERSION:2.0","BEGIN:VEVENT",`DTSTART:${fmt(start)}`,`DTEND:${fmt(end)}`,`SUMMARY:${title}`,`LOCATION:${address}`,`DESCRIPTION:${desc}`,"END:VEVENT","END:VCALENDAR"].join("\r\n");
   return { google, ics: `data:text/calendar;charset=utf-8,${encodeURIComponent(ics)}` };

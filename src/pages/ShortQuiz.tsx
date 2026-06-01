@@ -485,7 +485,7 @@ export default function ShortQuiz() {
     <>
       <SEO
         title="Your TRT Assessment Results · Men's Wellness Centers"
-        description="See your Low T symptom score and book a no-cost provider consultation at Men's Wellness Centers."
+        description="See your Low T symptom score and book a no-cost visit at Men's Wellness Centers."
       />
       <ShortQuizShell
         topContent={

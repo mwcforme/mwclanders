@@ -136,7 +136,7 @@ const GHLDayView = ({ location, firstName, lastName, email, phone, source, urgen
           custom_data: {
             value: 500,
             currency: "USD",
-            content_name: "booked_consultation",
+            content_name: "booked_appointment",
             lp_slug: typeof window !== "undefined" ? window.location.pathname : undefined,
           },
         })

@@ -37,7 +37,7 @@ export interface CROHeroFormProps {
 
 export const CROHeroForm = ({
   service    = "trt",
-  heading    = "Claim Your No-Cost Consultation",
+  heading    = "Claim Your No-Cost Visit",
   subheading = "Labs drawn on-site. Results reviewed same visit. Leave with a plan.",
   ctaLabel   = "Claim My No-Cost Visit Today",
   formId     = "cro-hf",

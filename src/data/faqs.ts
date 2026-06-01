@@ -16,7 +16,7 @@ export const TRT_FAQS: FaqItem[] = [
   },
   {
     q: "What does treatment typically involve?",
-    a: "Treatment plans are personalized based on your labs and symptoms. Common options include clinician-prescribed hormone therapy administered through several delivery methods. Your provider will review the options that fit your situation at your consultation.",
+    a: "Treatment plans are personalized based on your labs and symptoms. Common options include clinician-prescribed hormone therapy administered through several delivery methods. Your provider will review the options that fit your situation at your appointment.",
   },
   {
     q: "Is testosterone replacement therapy safe?",

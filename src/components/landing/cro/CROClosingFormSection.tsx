@@ -26,7 +26,7 @@ export const CROClosingFormSection = () => (
       <CROHeroForm
         formId="cro-cf"
         source="cro-op-closing"
-        heading="Claim Your No-Cost Consultation"
+        heading="Claim Your No-Cost Visit"
         subheading="Labs drawn on-site. Results reviewed same visit. Leave with a plan."
       />
     </div>

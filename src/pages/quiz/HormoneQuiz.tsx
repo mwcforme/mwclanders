@@ -480,7 +480,7 @@ function StepResult({ answers, onSuccess }: { answers: Answers; onSuccess: () =>
               <p style={{ fontFamily: "Inter, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, margin: "0 0 4px" }}>Your Result</p>
               <p style={{ fontFamily: "Oswald, sans-serif", fontWeight: 700, fontSize: 17, textTransform: "uppercase", color: WHITE, lineHeight: 1.15, margin: 0 }}>
                 {bucket === "consult"
-                  ? "A consultation may be worth your time."
+                  ? "A visit may be worth your time."
                   : "A conversation may still be worth it."}
               </p>
             </div>
@@ -624,7 +624,7 @@ function StepResult({ answers, onSuccess }: { answers: Answers; onSuccess: () =>
           <p style={{ fontFamily: "Inter, sans-serif", fontSize: 16, lineHeight: 1.65, color: "rgba(255,255,255,0.75)", marginBottom: 32 }}>
             {bucket === "consult"
               ? "Your answers suggest it may be worth sitting down with a physician. During your visit, the team reviews your goals, draws labs on-site, and walks through options when clinically appropriate."
-              : "Even if you are still researching, a no-cost 60-minute consultation can help you understand your options before you commit to anything."}
+              : "Even if you are still researching, a no-cost 60-minute visit can help you understand your options before you commit to anything."}
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {[
@@ -663,7 +663,7 @@ function SuccessScreen() {
           You're on the list.
         </h2>
         <p style={{ fontFamily: "Inter, sans-serif", fontSize: 17, color: "rgba(11,16,41,0.70)", lineHeight: 1.65, marginBottom: 36 }}>
-          A Men's Wellness Centers team member will call you within one business hour to help reserve your 60-minute in-person consultation.
+          A Men's Wellness Centers team member will call you within one business hour to help reserve your 60-minute in-person visit.
         </p>
         <div style={{ background: WHITE, borderRadius: 16, padding: "24px", textAlign: "left", boxShadow: "0 2px 16px rgba(0,0,0,0.07)" }}>
           <p style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(11,16,41,0.50)", marginBottom: 18 }}>
@@ -729,7 +729,7 @@ export default function HormoneQuiz() {
     <div style={{ minHeight: "100vh" }}>
       <SEO
         title="Low-T Quiz | Men's Wellness Centers"
-        description="Take our 60-second low testosterone quiz. See if a no-cost 60-minute in-person consultation at Men's Wellness Centers may be worth your time."
+        description="Take our 60-second low testosterone quiz. See if a no-cost 60-minute in-person visit at Men's Wellness Centers may be worth your time."
       />
 
       <div ref={topRef} />

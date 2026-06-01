@@ -14,17 +14,17 @@
 export const COPY = {
   cta: {
     /** Primary booking CTA. Header, hero submit, locations, sticky bar, final CTA. */
-    bookConsult: "Book My No-Cost Consultation",
+    bookConsult: "Book My No-Cost Visit",
     /** Results section CTA. */
-    startConsult: "Book My No-Cost Consultation",
+    startConsult: "Book My No-Cost Visit",
     /** Inline link variant inside FAQ answers. */
-    bookConsultInline: "book a no-cost consultation",
+    bookConsultInline: "book a no-cost visit",
     /** ED service final-CTA + ED form card title. */
-    bookDiscreetVisit: "Book My No-Cost Consultation",
+    bookDiscreetVisit: "Book My No-Cost Visit",
     /** WL service final-CTA + WL manifesto. */
-    seeIfIQualify: "Book My No-Cost Consultation",
+    seeIfIQualify: "Book My No-Cost Visit",
     /** TRT manifesto secondary CTA. */
-    seeIfYouQualify: "Book My No-Cost Consultation",
+    seeIfYouQualify: "Book My No-Cost Visit",
     /** Phone CTA prefix. */
     callNow: "Call Now",
     /** Sticky mobile bar primary action — short, action-oriented. */
@@ -34,7 +34,7 @@ export const COPY = {
   },
   badge: {
     /** Hero pill / trust chip describing the offer. */
-    noCostConsult: "No-cost consultation",
+    noCostConsult: "No-cost visit",
     /** Stat-card value used in CredibilityBand. */
     offerValue: "No-Cost",
     /** Stat-card label paired with offerValue. */
@@ -43,7 +43,7 @@ export const COPY = {
   offer: {
     /** Hero subhead under the H1. */
     /** Final CTA / WL / ED subhead. */
-    finalSubhead: "No-cost consultation. Same-day availability.",
+    finalSubhead: "No-cost visit. Same-day availability.",
     /** Manifesto / proof closer. */
     manifestoTag: "No-obligation consult. Individual results vary.",
     /** Reschedule reassurance bullet. */

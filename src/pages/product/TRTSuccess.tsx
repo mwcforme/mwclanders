@@ -50,7 +50,7 @@ function buildIcsContent(startIso: string | undefined, location: string | undefi
     `DTEND:${fmt(end)}`,
     `SUMMARY:Men's Wellness Centers Appointment`,
     `LOCATION:${location ?? "Men's Wellness Centers"}`,
-    `DESCRIPTION:Your no-cost testosterone consultation`,
+    `DESCRIPTION:Your no-cost testosterone visit`,
     "END:VEVENT",
     "END:VCALENDAR",
   ].join("\r\n");
@@ -106,7 +106,7 @@ export default function TRTSuccess() {
     const blob = new Blob([content], { type: "text/calendar;charset=utf-8" });
     const url  = URL.createObjectURL(blob);
     const a    = document.createElement("a");
-    a.href = url; a.download = "trt-consultation.ics";
+    a.href = url; a.download = "trt-appointment.ics";
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -115,7 +115,7 @@ export default function TRTSuccess() {
     <div className="min-h-screen flex flex-col bg-background">
       <SEO
         title="You're All Set! | Men's Wellness Centers"
-        description="Your TRT consultation request has been received. Your provider will be in touch shortly."
+        description="Your TRT visit request has been received. Your provider will be in touch shortly."
       />
       <TRTHeader minimal />
 

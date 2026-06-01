@@ -336,7 +336,7 @@ export default function TRTQuestionnaire() {
     <div className="min-h-screen flex flex-col bg-background">
       <SEO
         title="Medical Intake | Men's Wellness Centers"
-        description="Complete your 17-step medical intake for your testosterone consultation."
+        description="Complete your 17-step medical intake for your testosterone visit."
       />
       <TRTHeader minimal />
 
