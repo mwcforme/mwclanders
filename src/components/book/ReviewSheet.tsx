@@ -183,7 +183,7 @@ export function ReviewSheet({
                   width: "100%", boxSizing: "border-box",
                   padding: "12px 14px 12px 38px",
                   borderRadius: 12,
-                  border: "2px solid var(--brand-cta, #E8670A)",
+                  border: "2px solid var(--brand-cta)",
                   background: "var(--panel-bg, rgba(255,255,255,0.06))",
                   color: "var(--panel-foreground, #fff)",
                   fontSize: 15, fontFamily: "Inter, sans-serif",

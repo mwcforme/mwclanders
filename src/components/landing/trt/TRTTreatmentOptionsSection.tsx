@@ -60,7 +60,7 @@ export const TRTTreatmentOptionsSection = ({ onSchedule }: TRTTreatmentOptionsSe
               "linear-gradient(145deg, #0B1029 0%, #0e1840 60%, #111B3A 100%)",
             borderRadius: 20,
             padding: "36px 32px",
-            borderTop: "3px solid #E8670A",
+            borderTop: "3px solid var(--brand-cta)",
             position: "relative",
             boxShadow: "0 8px 40px rgba(11,16,41,0.28)",
           }}
@@ -71,7 +71,7 @@ export const TRTTreatmentOptionsSection = ({ onSchedule }: TRTTreatmentOptionsSe
               position: "absolute",
               top: 24,
               right: 24,
-              background: "var(--brand-cta)",  /* was gradient #E8670A→#F07820; white/10px on #F07820=2.83:1 FAIL → #B84A08 5.22:1 ✅ */
+              background: "var(--brand-cta)",  /* was gradient var(--brand-cta)→#F07820; white/10px on #F07820=2.83:1 FAIL → #B84A08 5.22:1 ✅ */
               color: "#fff",
               fontSize: 10,
               fontWeight: 800,
@@ -79,7 +79,7 @@ export const TRTTreatmentOptionsSection = ({ onSchedule }: TRTTreatmentOptionsSe
               textTransform: "uppercase" as const,
               borderRadius: 999,
               padding: "5px 14px",
-              boxShadow: "0 3px 10px rgba(232,103,10,0.40)",
+              boxShadow: "0 3px 10px rgba(255,107,44,0.40)",
             }}
           >
             MOST POPULAR

@@ -32,8 +32,8 @@ export const COLORS = {
   bannerBg:      "#1A203D",
 
   // Brand
-  orange:        "var(--brand-cta)",        // #E8670A
-  orangeHex:     "#E8670A",
+  orange:        "var(--brand-cta)",        // #FF6B2C
+  orangeHex:     "#FF6B2C",
   orangeTint:    "rgba(232,103,10,0.10)",
   orangeGlow:    "rgba(232,103,10,0.55)",
   orangeIconBg:  "rgba(232,103,10,0.12)",

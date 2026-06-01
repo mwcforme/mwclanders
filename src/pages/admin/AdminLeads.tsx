@@ -159,7 +159,7 @@ export default function AdminLeads() {
         <select
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          className="h-10 rounded-md border border-white/10 bg-[#070B1F] px-3 text-sm focus:border-[#E8670A] focus:outline-none"
+          className="h-10 rounded-md border border-white/10 bg-[#070B1F] px-3 text-sm focus:border-[var(--brand-cta)] focus:outline-none"
         >
           <option value="unsynced">Not synced (failed + pending)</option>
           <option value="all">All statuses</option>

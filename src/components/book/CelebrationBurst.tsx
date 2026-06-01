@@ -15,7 +15,7 @@ const CELEBRATION_STYLES = `
 `;
 
 const BURST_COLORS = [
-  "#E8670A", "#C9A961", "#ffffff", "rgba(232,103,10,0.7)", "#F5F0EB",
+  "#FF6B2C", "#C9A961", "#ffffff", "rgba(232,103,10,0.7)", "#F5F0EB",
 ];
 
 interface Props {

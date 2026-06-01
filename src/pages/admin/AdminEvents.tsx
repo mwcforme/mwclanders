@@ -51,7 +51,7 @@ export default function AdminEvents() {
         <select
           value={type}
           onChange={(e) => setType(e.target.value)}
-          className="h-10 rounded-md border border-white/10 bg-[#070B1F] px-3 text-sm focus:border-[#E8670A] focus:outline-none"
+          className="h-10 rounded-md border border-white/10 bg-[#070B1F] px-3 text-sm focus:border-[var(--brand-cta)] focus:outline-none"
         >
           <option value="all">All event types</option>
           <option value="confirm_attempt">confirm_attempt</option>

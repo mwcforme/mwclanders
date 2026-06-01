@@ -60,7 +60,7 @@ export const TRTBenefitsSection = memo(() => (
           minHeight: 460,
           position: "relative",
           boxShadow:
-            "0 0 0 6px rgba(232,103,10,0.20), 0 0 60px rgba(232,103,10,0.15), 0 24px 60px rgba(0,0,0,0.40)",
+            "0 0 0 6px rgba(255,107,44,0.20), 0 0 60px rgba(255,107,44,0.15), 0 24px 60px rgba(0,0,0,0.40)",
         }}
       >
         <img
@@ -104,7 +104,7 @@ export const TRTBenefitsSection = memo(() => (
           <span style={{ color: "#fff", display: "block" }}>
             Benefits of
           </span>
-          <span style={{ color: "#E8670A", display: "block" }}>
+          <span style={{ color: "var(--brand-cta)", display: "block" }}>
             Testosterone Therapy
           </span>
         </h2>
@@ -137,12 +137,12 @@ export const TRTBenefitsSection = memo(() => (
                     width: 22,
                     height: 22,
                     borderRadius: "50%",
-                    background: "var(--brand-cta)",  /* was gradient #E8670A→#F07820; white check on #F07820=2.83:1 FAIL → #B84A08 5.22:1 ✅ */
+                    background: "var(--brand-cta)",  /* was gradient var(--brand-cta)→#F07820; white check on #F07820=2.83:1 FAIL → #B84A08 5.22:1 ✅ */
                     display: "inline-flex",
                     alignItems: "center",
                     justifyContent: "center",
                     flexShrink: 0,
-                    boxShadow: "0 2px 8px rgba(232,103,10,0.35)",
+                    boxShadow: "0 2px 8px rgba(255,107,44,0.35)",
                   }}
                 >
                   <Check size={12} strokeWidth={3} color="#fff" aria-hidden />

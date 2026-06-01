@@ -111,7 +111,7 @@ export const TRTProductFAQ = () => {
                     aria-hidden="true"
                     style={{
                       flexShrink: 0,
-                      color: "#E8670A",
+                      color: "var(--brand-cta)",
                       transition: "transform 0.22s",
                       transform: isOpen ? "rotate(180deg)" : "none",
                     }}
@@ -127,7 +127,7 @@ export const TRTProductFAQ = () => {
                       fontSize: 16,
                       color: "var(--c-text-on-light-muted)",
                       lineHeight: 1.75,
-                      borderLeft: "3px solid #E8670A",
+                      borderLeft: "3px solid var(--brand-cta)",
                       marginLeft: 28,
                     }}
                   >

@@ -16,12 +16,12 @@ interface SignTile {
 }
 
 const SIGN_TILES: SignTile[] = [
-  { icon: <Zap size={28} strokeWidth={1.75} color="#E8670A" />, label: "Fatigue" },
-  { icon: <Heart size={28} strokeWidth={1.75} color="#E8670A" />, label: "Low Libido" },
-  { icon: <Smile size={28} strokeWidth={1.75} color="#E8670A" />, label: "Mood Changes" },
-  { icon: <Moon size={28} strokeWidth={1.75} color="#E8670A" />, label: "Poor Sleep" },
-  { icon: <Dumbbell size={28} strokeWidth={1.75} color="#E8670A" />, label: "Reduced Strength" },
-  { icon: <Scale size={28} strokeWidth={1.75} color="#E8670A" />, label: "Weight Gain" },
+  { icon: <Zap size={28} strokeWidth={1.75} color="var(--brand-cta)" />, label: "Fatigue" },
+  { icon: <Heart size={28} strokeWidth={1.75} color="var(--brand-cta)" />, label: "Low Libido" },
+  { icon: <Smile size={28} strokeWidth={1.75} color="var(--brand-cta)" />, label: "Mood Changes" },
+  { icon: <Moon size={28} strokeWidth={1.75} color="var(--brand-cta)" />, label: "Poor Sleep" },
+  { icon: <Dumbbell size={28} strokeWidth={1.75} color="var(--brand-cta)" />, label: "Reduced Strength" },
+  { icon: <Scale size={28} strokeWidth={1.75} color="var(--brand-cta)" />, label: "Weight Gain" },
 ];
 
 /** Grid of low-T symptom tiles with stat callout and CTA. */
@@ -104,8 +104,8 @@ export const TRTSignsSection = memo(({ onSchedule }: TRTSignsSectionProps) => (
       <div
         style={{
           display: "inline-block",
-          background: "rgba(232,103,10,0.10)",
-          border: "1px solid rgba(232,103,10,0.30)",
+          background: "rgba(255,107,44,0.10)",
+          border: "1px solid rgba(255,107,44,0.30)",
           borderRadius: 16,
           padding: "24px 48px",
           marginBottom: 44,
@@ -125,7 +125,7 @@ export const TRTSignsSection = memo(({ onSchedule }: TRTSignsSectionProps) => (
               fontFamily: "Oswald, sans-serif",
               fontSize: 52,
               fontWeight: 800,
-              color: "#E8670A",
+              color: "var(--brand-cta)",
               display: "block",
               lineHeight: 1,
               margin: "4px 0",
@@ -147,7 +147,7 @@ export const TRTSignsSection = memo(({ onSchedule }: TRTSignsSectionProps) => (
             width: "100%",
             maxWidth: 500,
             justifyContent: "center",
-            boxShadow: "0 8px 36px rgba(232,103,10,0.50)",
+            boxShadow: "0 8px 36px rgba(255,107,44,0.50)",
           }}
         >
           Get Started Now <ArrowRight size={18} strokeWidth={2.5} />

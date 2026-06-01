@@ -72,7 +72,7 @@ const PageLoader = () => (
     style={{ minHeight: "100vh", background: "#0B1029", display: "flex", alignItems: "center", justifyContent: "center" }}
     aria-label="Loading"
   >
-    <div style={{ width: 36, height: 36, border: "3px solid rgba(232,103,10,0.25)", borderTopColor: "#E8670A", borderRadius: "50%", animation: "spin 0.7s linear infinite" }} />
+    <div style={{ width: 36, height: 36, border: "3px solid rgba(255,107,44,0.25)", borderTopColor: "var(--brand-cta)", borderRadius: "50%", animation: "spin 0.7s linear infinite" }} />
     <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
   </div>
 );
@@ -83,9 +83,9 @@ const ErrorFallback = ({ resetError }: { resetError: () => void }) => (
       <h1 style={{ fontFamily: "Oswald, sans-serif", fontSize: 32, marginBottom: 12 }}>Something went wrong</h1>
       <p style={{ opacity: 0.8, marginBottom: 24 }}>
         Please refresh the page or call us at{" "}
-        <a href={PHONE.tel} style={{ color: "#E8670A" }}>{PHONE.display}</a>.
+        <a href={PHONE.tel} style={{ color: "var(--brand-cta)" }}>{PHONE.display}</a>.
       </p>
-      <button type="button" onClick={resetError} style={{ background: "var(--brand-cta)", color: "var(--c-text-on-dark)", border: "none", borderRadius: 999, padding: "12px 28px", fontWeight: 600, cursor: "pointer" }}>  {/* was #E8670A 3.29:1 FAIL → var(--brand-cta) #B84A08 5.22:1 ✅ */}
+      <button type="button" onClick={resetError} style={{ background: "var(--brand-cta)", color: "var(--c-text-on-dark)", border: "none", borderRadius: 999, padding: "12px 28px", fontWeight: 600, cursor: "pointer" }}>  {/* was var(--brand-cta) 3.29:1 FAIL → var(--brand-cta) #B84A08 5.22:1 ✅ */}
         Try again
       </button>
     </div>
