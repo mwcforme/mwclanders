@@ -60,16 +60,21 @@
     --brand-navy-deep: #0B1029;
     --brand-cream: #F5F0EB;
 
-    /* Accent — display only (≥24px, ≥18.66px bold, or icon vs dark) */
-    --brand-accent: #E8670A;
-
-    /* CTA fill — brand orange.
-       #E8670A: 3.29:1 vs white — passes AA for large text (≥18px or ≥14px bold).
-       --brand-cta-accessible: #B84A08 — 5.22:1 vs white, 4.61:1 vs cream — passes AA for ALL text sizes on any light surface.
-       Use --brand-cta-accessible for small/normal text on light backgrounds; use --brand-cta on dark backgrounds. */
-    --brand-cta: #B84A08;  /* was #E8670A (3.29:1 white FAIL) → #B84A08 5.22:1 white ✅ 4.61:1 cream ✅ — AA all text sizes */
-    --brand-cta-hover: #CF5B09;  /* hover affordance; base state is --brand-cta */
-    --brand-cta-accessible: #B84A08;  /* same as --brand-cta; kept for back-compat */
+    /* ── ORANGE SYSTEM v1.2.1 (tokens.json source of truth) ─────────────────
+       PRIMARY button + selected chip = bright #FF6B2C with NAVY text (6.6:1 AA).
+       WHITE text on #FF6B2C is BANNED (2.84:1 FAIL).
+       Hover deepens to #F2630C (navy text 4.0:1, transient/large).
+       Deep #CA4A0E = rare white-text button + checkbox checked-fill (white 4.67:1).
+       Accent (icons, dots, links on navy, glow) = #FF6B2C.
+    ──────────────────────────────────────────────────────────────────────── */
+    --brand-accent:          #FF6B2C;  /* orange-500 — icons, dots, links on navy */
+    --brand-cta:             #FF6B2C;  /* orange-500 — primary button fill (bright, with glow) */
+    --brand-cta-hover:       #F2630C;  /* orange-600 — hover deepens; navy text stays */
+    --brand-cta-deep:        #CA4A0E;  /* orange-800 — white-text button + checkbox checked-fill */
+    --brand-cta-accessible:  #CA4A0E;  /* back-compat alias → orange-800 */
+    --brand-cta-text:        #0B1029;  /* NAVY text on bright #FF6B2C button (6.6:1) */
+    --brand-cta-deep-text:   #FFFFFF;  /* white text on deep #CA4A0E button (4.67:1) */
+    --brand-success:         #5DD68A;  /* success on dark — replaces all teal */
 
     /* Text on light surfaces */
     --c-text-on-light: #000033;        /* 17:1 on white */
@@ -572,12 +577,12 @@ input[type="radio"] {
   /* Border */
   --border-subtle:         230 42% 26%;   /* navy-tinted divider */
 
-  /* Primary (brand orange — booking context) */
-  --primary:               22 91% 38%;    /* was 47% (#E8670A 3.29:1 white FAIL) → 38% (#B84A08) 5.22:1 white ✅ AA all sizes */
-  --primary-foreground:    0 0% 100%;     /* white on #B84A08 = 5.22:1 ✅ */
-  --primary-hover:         21 91% 40%;    /* #C2410C — slightly lighter hover for visual affordance */
-  /* AA-compliant orange for normal body text on light backgrounds */
-  --primary-on-light:      20 94% 34%;    /* #A32E06 — 5.92:1 on cream, 7.12:1 on white ✅ AA */
+  /* Primary (brand orange — booking context) v1.2.1 ─ #FF6B2C bright + NAVY text */
+  --primary:               18 100% 58%;   /* #FF6B2C orange-500 — primary button + selected chip */
+  --primary-foreground:    230 60% 10%;   /* NAVY #0B1029 on bright orange (6.6:1 AA any size) */
+  --primary-hover:         19 93% 51%;    /* #F2630C orange-600 — hover deepens */
+  --primary-on-light:      18 100% 58%;   /* #FF6B2C — accent on light surfaces */
+  --primary-deep:          18 79% 41%;    /* #CA4A0E orange-800 — white-text button + checkbox */
 
   /* White panel (booking card on dark page) */
   --panel:                 0 0% 100%;     /* #FFFFFF */
@@ -587,7 +592,7 @@ input[type="radio"] {
   --panel-divider:         214 32% 91%;   /* #E2E8F0 — decorative */
 
   /* Status */
-  --success:               160 84% 39%;   /* #10B981 — 7.4:1 on dark */
+  --success:               145 63% 60%;   /* #5DD68A — success on dark (spec v1.2.1, replaces teal) */
   --success-on-light:      162 94% 24%;   /* #047857 — 5.5:1 on white */
 
   /* Disabled */
@@ -621,9 +626,9 @@ html.dark {
   --panel-muted: 215 19% 35%;
   --panel-border: 214 32% 91%;
   --panel-divider: 214 32% 91%;
-  --primary: 22 91% 38%;             /* orange #B84A08 (was #E8670A — updated to match global --brand-cta) */
-  --primary-foreground: 0 0% 100%;
-  --primary-hover: 24 90% 40%;
+  --primary: 18 100% 58%;            /* #FF6B2C orange-500 (spec v1.2.1) */
+  --primary-foreground: 230 60% 10%; /* NAVY text on bright orange (6.6:1) */
+  --primary-hover: 19 93% 51%;       /* #F2630C hover deepens */
   --muted: 215 19% 35%;
   --muted-foreground: 215 19% 35%;
   --border: 214 32% 85%;
@@ -653,13 +658,13 @@ html.dark {
   border-color: #E2E8F0 !important;
 }
 .quiz-light-shell .bg-primary {
-  background: #B84A08 !important; /* was #E8670A — aligned with new --brand-cta */
+  background: #FF6B2C !important; /* spec v1.2.1 orange-500; text must be NAVY */
 }
 .quiz-light-shell .bg-primary\/10 {
-  background: rgba(232,103,10,0.10) !important;
+  background: rgba(255,107,44,0.10) !important;
 }
 .quiz-light-shell .text-primary {
-  color: #B84A08 !important; /* was #C45A09 (4.36:1 FAIL) → #B84A08 5.22:1 ✅ */
+  color: #CA4A0E !important; /* orange-800 on light — 5.22:1 on white ✅ */
 }
 .quiz-light-shell .bg-background {
   background: #FFFFFF !important;
@@ -668,10 +673,10 @@ html.dark {
   box-shadow: 0 2px 12px rgba(0,0,0,0.06) !important;
 }
 .quiz-light-shell .shadow-cta {
-  box-shadow: 0 4px 20px rgba(232,103,10,0.35) !important;
+  box-shadow: 0 4px 16px rgba(255,107,44,0.40) !important; /* spec v1.2.1 glow */
 }
 .quiz-light-shell .hover\:bg-primary-hover:hover {
-  background: #A83808 !important; /* hover darker than new base #B84A08 */
+  background: #F2630C !important; /* orange-600 hover (spec v1.2.1) */
 }
 .quiz-light-shell input {
   background: #FFFFFF !important;
@@ -682,17 +687,17 @@ html.dark {
   color: var(--c-placeholder-on-white) !important; /* was #94A3B8 (2.56:1 FAIL) → #636B80 5.32:1 ✅ */
 }
 .quiz-light-shell input:focus {
-  border-color: #B84A08 !important; /* was #E8670A on white=2.91:1 FAIL → #B84A08=5.22:1 ✅ */
+  border-color: #FF6B2C !important; /* orange-500 focus border */
 }
-.quiz-light-shell .text-success { color: #15803D !important; }
-.quiz-light-shell .bg-success\/15 { background: rgba(21,128,61,0.12) !important; }
-.quiz-light-shell .ring-success { --tw-ring-color: #15803D; }
+.quiz-light-shell .text-success { color: #0B7A4B !important; /* success-700 on light */ }
+.quiz-light-shell .bg-success\/15 { background: rgba(93,214,138,0.12) !important; /* success-300 tint */ }
+.quiz-light-shell .ring-success { --tw-ring-color: #5DD68A; /* success-300 */ }
 .quiz-light-shell .bg-disabled { background: #E2E8F0 !important; }
 .quiz-light-shell .text-disabled-foreground { color: #94A3B8 !important; }
 .quiz-light-shell .border-destructive { border-color: #DC2626 !important; }
 .quiz-light-shell .text-destructive { color: #DC2626 !important; }
-.quiz-light-shell .border-primary\/30 { border-color: rgba(232,103,10,0.30) !important; }
-.quiz-light-shell .border-primary { border-color: #B84A08 !important; } /* was #E8670A on cream=2.91:1 FAIL → #B84A08=4.61:1 ✅ */
+.quiz-light-shell .border-primary\/30 { border-color: rgba(255,107,44,0.30) !important; }
+.quiz-light-shell .border-primary { border-color: #FF6B2C !important; } /* orange-500 */
 
 /* ── TRTHeroForm submit button — keyboard focus-visible ──────────────────────
    The primary CTA form button uses inline styles + JS hover handlers.

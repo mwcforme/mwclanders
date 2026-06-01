@@ -140,7 +140,7 @@ const MoodStats = ({ bullets }: { bullets: MoodBullet[] }) => (
         background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.35)",
         borderRadius: 10, padding: "14px 16px",
       }}>
-        <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 32, color: "var(--brand-cta)", lineHeight: 1, flexShrink: 0, width: 52 }}>
+        <span style={{ fontFamily: "'Oswald', 'Arial Narrow', sans-serif", fontSize: 32, color: "var(--brand-cta)", lineHeight: 1, flexShrink: 0, width: 52 }}>
           {b.highlight}
         </span>
         <span style={{ color: "rgba(255,255,255,0.75)", fontSize: 14, lineHeight: 1.5 }}>{b.text}</span>
@@ -191,7 +191,7 @@ export const TRTEduSymptomSlider = () => {
           <p style={{ color: "var(--brand-cta)", fontSize: 13, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
             Know the Signs
           </p>
-          <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: "clamp(36px, 7vw, 64px)", color: "#FFFFFF", lineHeight: 1.05, margin: "0 auto 16px" }}>
+          <h2 style={{ fontFamily: "'Oswald', 'Arial Narrow', sans-serif", fontSize: "clamp(36px, 7vw, 64px)", color: "#FFFFFF", lineHeight: 1.05, margin: "0 auto 16px" }}>
             LOW T DOESN'T HAPPEN ALL AT ONCE
           </h2>
           <p style={{ color: "rgba(255,255,255,0.55)", fontSize: 17, maxWidth: 540, margin: "0 auto" }}>
@@ -238,7 +238,7 @@ export const TRTEduSymptomSlider = () => {
             }}>
               {s.icon}
             </div>
-            <h3 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: "clamp(22px, 4vw, 34px)", color: "#FFFFFF", lineHeight: 1.1, margin: 0 }}>
+            <h3 style={{ fontFamily: "'Oswald', 'Arial Narrow', sans-serif", fontSize: "clamp(22px, 4vw, 34px)", color: "#FFFFFF", lineHeight: 1.1, margin: 0 }}>
               {s.title}
             </h3>
           </div>

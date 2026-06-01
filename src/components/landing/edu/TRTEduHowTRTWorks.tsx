@@ -39,7 +39,7 @@ export const TRTEduHowTRTWorks = () => (
         </p>
         <h2
           style={{
-            fontFamily: "'Bebas Neue', sans-serif",
+            fontFamily: "'Oswald', 'Arial Narrow', sans-serif",
             fontSize: "clamp(36px, 7vw, 60px)",
             color: "#FFFFFF",
             lineHeight: 1.05,
@@ -77,7 +77,7 @@ export const TRTEduHowTRTWorks = () => (
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  fontFamily: "'Bebas Neue', sans-serif",
+                  fontFamily: "'Oswald', 'Arial Narrow', sans-serif",
                   fontSize: 20,
                   color: "var(--brand-cta)",
                   flexShrink: 0,

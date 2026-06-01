@@ -333,7 +333,7 @@ export default function ShortQuiz() {
               FREE · 60 SECONDS · NO COMMITMENT
             </p>
             <h1 style={{
-              fontFamily: "Oswald, 'Bebas Neue', Anton, sans-serif",
+              fontFamily: "Oswald, 'Arial Narrow', sans-serif",
               fontSize: "clamp(34px, 7vw, 60px)", lineHeight: 1.0,
               letterSpacing: "0.01em", fontWeight: 700, color: CREAM, marginBottom: 20,
             }}>

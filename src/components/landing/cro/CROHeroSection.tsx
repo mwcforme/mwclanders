@@ -76,7 +76,7 @@ export const CROHeroSection = () => {
       <div className="relative z-10 w-full max-w-[1280px] mx-auto px-5 sm:px-6 pt-24 pb-12 lg:pt-28 lg:pb-20 grid grid-cols-1 lg:grid-cols-[1fr_460px] gap-8 lg:gap-12 items-start">
         <div className="flex flex-col">
           <h1 className="font-bold uppercase" style={{
-            fontFamily: "Oswald, 'Bebas Neue', Anton, sans-serif",
+            fontFamily: "Oswald, 'Arial Narrow', sans-serif",
             fontSize: "clamp(36px, 9vw, 96px)", lineHeight: 1.0, letterSpacing: "-0.01em",
             color: "var(--brand-cream)", fontWeight: 700,
           }}>

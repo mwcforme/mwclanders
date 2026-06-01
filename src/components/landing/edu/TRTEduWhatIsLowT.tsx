@@ -11,7 +11,7 @@ export const TRTEduWhatIsLowT = () => (
       </p>
       <h2
         style={{
-          fontFamily: "'Bebas Neue', sans-serif",
+          fontFamily: "'Oswald', 'Arial Narrow', sans-serif",
           fontSize: "clamp(36px, 7vw, 60px)",
           color: "#FFFFFF",
           lineHeight: 1.05,
@@ -59,7 +59,7 @@ export const TRTEduWhatIsLowT = () => (
           >
             <div
               style={{
-                fontFamily: "'Bebas Neue', sans-serif",
+                fontFamily: "'Oswald', 'Arial Narrow', sans-serif",
                 fontSize: 42,
                 color: "rgba(232,103,10,0.35)",
                 lineHeight: 1,

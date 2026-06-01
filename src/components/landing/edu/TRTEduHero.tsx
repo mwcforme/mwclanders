@@ -48,7 +48,7 @@ export const TRTEduHero = () => {
       {/* Headline */}
       <h1
         style={{
-          fontFamily: "'Bebas Neue', sans-serif",
+          fontFamily: "'Oswald', 'Arial Narrow', sans-serif",
           fontSize: "clamp(48px, 11vw, 96px)",
           fontWeight: 400,
           letterSpacing: "0.02em",

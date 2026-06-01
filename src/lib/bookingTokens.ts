@@ -9,11 +9,11 @@ import type { CSSProperties } from "react";
 export const COLORS = {
   // Green accent — exact computed color from mockup: rgb(16,183,127)
   // hardcoded-color-allow-next-line
-  teal:      "#10B77F",
+  teal:      "#5DD68A"  /* spec v1.2.1: success replaces teal */,
   // hardcoded-color-allow-next-line
-  tealTint:  "rgba(16,183,127,0.15)",
+  tealTint:  "rgba(93,214,138,0.15)",
   // hardcoded-color-allow-next-line
-  tealBorder: "#10B77F",
+  tealBorder: "#5DD68A",
   // Section label gray from mockup: rgb(72,86,106)
   // hardcoded-color-allow-next-line
   sectionGray: "#485666",

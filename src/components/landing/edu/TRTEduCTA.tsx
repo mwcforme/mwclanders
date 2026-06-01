@@ -23,7 +23,7 @@ export const TRTEduCTA = () => (
       </p>
       <h2
         style={{
-          fontFamily: "'Bebas Neue', sans-serif",
+          fontFamily: "'Oswald', 'Arial Narrow', sans-serif",
           fontSize: "clamp(40px, 8vw, 72px)",
           color: "#FFFFFF",
           lineHeight: 1.0,

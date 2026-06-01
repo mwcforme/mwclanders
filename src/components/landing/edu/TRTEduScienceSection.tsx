@@ -19,7 +19,7 @@ export const TRTEduScienceSection = () => (
         </p>
         <h2
           style={{
-            fontFamily: "'Bebas Neue', sans-serif",
+            fontFamily: "'Oswald', 'Arial Narrow', sans-serif",
             fontSize: "clamp(36px, 7vw, 60px)",
             color: "#FFFFFF",
             lineHeight: 1.05,
@@ -53,7 +53,7 @@ export const TRTEduScienceSection = () => (
           >
             <div
               style={{
-                fontFamily: "'Bebas Neue', sans-serif",
+                fontFamily: "'Oswald', 'Arial Narrow', sans-serif",
                 fontSize: "clamp(40px, 6vw, 60px)",
                 color: "var(--brand-cta)",
                 lineHeight: 1,

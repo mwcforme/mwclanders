@@ -65,7 +65,7 @@ export const WLHero = () => {
           <h1
             className="font-bold uppercase"
             style={{
-              fontFamily: "Oswald, 'Bebas Neue', Anton, sans-serif",
+              fontFamily: "Oswald, 'Arial Narrow', sans-serif",
               fontSize: "clamp(36px, 9vw, 96px)",
               lineHeight: 1.0,
               letterSpacing: "-0.01em",
